@@ -23,6 +23,13 @@
       padding: 0 20px;
     }
 
+    .menuButton {
+      position: fixed;
+      z-index: 9999999;
+      top: 20px;
+      left: 20px;
+    }
+
     section {
       margin-bottom: 20px;
     }
@@ -45,12 +52,12 @@
     }
 
     .sidebar {
+      transform: translateX(-100%);
       background-color: #f5f5f5;
       border-right: 1px solid #eee;
       height: 100%;
       left: 0;
       overflow: auto;
-      padding: 20px;
       position: fixed;
       top: 0;
       width: 200px;
@@ -78,7 +85,7 @@
       border-right: 1px solid #eee;
       height: 100%;
       /* overflow: auto; */
-      padding: 20px;
+      padding: 60px 20px;
       /* left: 0; */
       /* position: fixed; */
       /* top: 0; */

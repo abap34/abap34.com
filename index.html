@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <title>abap34</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 </head>
 
 <body>
+    <button class="menuButton"> 三 </button>
     <div class="sidebar">
         <a href="#about">About Me</a>
         <a href="#Skills & Works">Skills & Works</a>
@@ -66,21 +68,43 @@
         <p>&copy; 2023 abap34</p>
     </footer>
 
-    <!-- some animation -->
+    <script src="./main.js"></script>
     <script>
-        var i = 0;
-        var txt = 'abap34';
-        var speed = 100;
+        const menuButton = document.querySelector(".menuButton")
 
-        function typeWriter() {
-            if (i < txt.length) {
-                document.getElementById("demo").innerHTML += txt.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
+        let isMenuOpen = false
+
+        const onClick = () => {
+            if (isMenuOpen) {
+
+                gsap.to(".sidebar", {
+                    x: "-100%",
+                    duration: 1
+                })
+
+                gsap.to("img", {
+                    rotate: "-=360",
+                    duration: 1,
+                })
+            } else {
+
+                gsap.to(".sidebar", {
+                    x: "0",
+                    duration: 1
+                })
+
+                gsap.to("img", {
+                    rotate: "+=360",
+                    duration: 1,
+                })
             }
+
+            isMenuOpen = !isMenuOpen
         }
+
+
+        menuButton.addEventListener("click", onClick)
     </script>
 </body>
-
 
 </html>
