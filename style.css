@@ -31,7 +31,10 @@
     }
 
     .button {
+      display: inline-block;
       aspect-ratio: 1 / 1;
+      width: 30px;
+      height: 30px;
     }
 
     section {
