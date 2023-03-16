@@ -147,6 +147,8 @@
             padding-bottom: 10px;
         }
 
+        /* more rich header */
+        
 
 
         
@@ -164,6 +166,20 @@
         <a href="#contact">Contact Me</a>
     </div>
     <header>
+        <!-- some animation -->
+        <script>
+            var i = 0;
+            var txt = 'abap34';
+            var speed = 100;
+
+            function typeWriter() {
+                if (i < txt.length) {
+                    document.getElementById("demo").innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+        </script>
         <img src="myicon.png" alt="myicon" width="100" height="100">
         <h1>abap34's Website</h1>
     </header>
@@ -173,7 +189,7 @@
 
         <section id="about">
             <h2>About Me</h2>
-            <p>B1 at Tokyo Institute of Technology, majoring comoputer science.
+            <p>B1 at Tokyo Institute of Technology, majoring in comoputer science.
                 I have a strong interest in both the engineering and mathematical aspects of machine learning. </p>
             <p>You can find me on <a href="https://github.com/abap34/">GitHub</a> and <a
                     href="https://twitter.com/abap34/">Twitter</a>.</p>
