@@ -11,7 +11,11 @@
 </head>
 
 <body>
-    <button class="menuButton"> 三 </button>
+    <div class="buttonGroup">
+        <button class="menuButton"> 三 </button>
+        <button class="plusButton"> + </button>
+    </div>
+
     <div class="sidebar">
         <a href="#about">About Me</a>
         <a href="#Skills & Works">Skills & Works</a>
@@ -31,7 +35,7 @@
 
         <section id="about">
             <h2>About Me</h2>
-            <p>B1 at Tokyo Institute of Technology, majoring in comoputer science.
+            <p>B1 at Tokyo Institute of Technology, majoring in comoputer science.<br>
                 I have a strong interest in both the engineering and mathematical aspects of machine learning. </p>
             <p>You can find me on <a href="https://github.com/abap34/">GitHub</a> and <a
                     href="https://twitter.com/abap34/">Twitter</a>.</p>
@@ -39,9 +43,9 @@
         <section id="Skillss & Works">
             <h2>Skills & Work Experience</h2>
             <h3>Language & Frameworks</h3>
-            <p>Python, Julia, PyTorch, Keras</p>
+            <p>Python, Julia </p>
             <h3>Work Experience</h3>
-            <p>2022 Research on DeepLearning at <a href="https://www.d-itlab.co.jp/">Denso IT Lab </a></p>
+            <p>2022 Researcher at <a href="https://www.d-itlab.co.jp/">Denso IT Lab </a></p>
             <p>2023 SWE at <a href="https://xica.net/">XICA</a> </p>
         </section>
         <section id="projects">
@@ -71,12 +75,12 @@
     <script src="./main.js"></script>
     <script>
         const menuButton = document.querySelector(".menuButton")
+        const plusButton = document.querySelector(".plusButton")
 
         let isMenuOpen = false
 
         const onClick = () => {
             if (isMenuOpen) {
-
                 gsap.to(".sidebar", {
                     x: "-100%",
                     duration: 1
@@ -104,6 +108,9 @@
 
 
         menuButton.addEventListener("click", onClick)
+        plusButton.addEventListener("click", () => {
+            menuButton.textContent = "四"
+        })
     </script>
 </body>
 

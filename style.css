@@ -23,11 +23,15 @@
       padding: 0 20px;
     }
 
-    .menuButton {
+    .buttonGroup {
       position: fixed;
       z-index: 9999999;
       top: 20px;
       left: 20px;
+    }
+
+    .button {
+      aspect-ratio: 1 / 1;
     }
 
     section {
