@@ -1,0 +1,28 @@
+name: Update article
+on:
+  issues:
+    types: [labeled]
+    labels: [submit]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      - name: Update files
+        run: |
+          echo "actiontest v0.0" >> public/posts/helloworld.html
+      - name: Commit changes
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "gh action test"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
