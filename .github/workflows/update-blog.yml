@@ -25,11 +25,14 @@ jobs:
       - name: Build page
         run: |
           python3 blog_builder/build.py raw.md settings.json
-      - name: Update blog
+      - name: Commit changes
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add .
+          git commit -m "Update files"
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           branch: main
-          committer_name: ${{ env.GIT_USER_NAME }}
-          committer_email: ${{ env.GIT_USER_EMAIL }}
-          commit_message: ${{ github.event.issue.title }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
