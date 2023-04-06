@@ -3,7 +3,7 @@ import sys
 import os
 import yaml
 
-def build_article(raw_file, settings_file, output_file):
+def build_article(raw_file, settings_file):
     with open(raw_file, 'r') as f:
         markdown = f.read()
     
