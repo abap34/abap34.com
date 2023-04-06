@@ -24,7 +24,7 @@ jobs:
           python3 blog_builder/parse.py tmp.json raw.md settings.json
       - name: Build page
         run: |
-          python3 blog_builder/build.py raw.md settings.json 
+          python3 blog_builder/build.py raw.md settings.json
       - name: Update blog
         uses: ad-m/github-push-action@master
         with:
