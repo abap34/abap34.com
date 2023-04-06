@@ -16,6 +16,9 @@ jobs:
         run: |
           BODY=$(curl "https://api.github.com/repos/abap34/my-site/issues/${{ github.event.issue.number }}")
           echo "$BODY" > tmp.json
+      - name: Python Setup
+        run: |
+          pip install mistune
       - name: Parse json
         run: |
           python3 blog_builder/parse.py tmp.json raw.md settings.json
