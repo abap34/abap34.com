@@ -25,5 +25,5 @@ jobs:
           branch: main
           committer_name: ${{ env.GIT_USER_NAME }}
           committer_email: ${{ env.GIT_USER_EMAIL }}
-          commit_message: ${{ github.event.issue.title }
+          commit_message: ${{ github.event.issue.title }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
