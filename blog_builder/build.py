@@ -1,11 +1,14 @@
 import mistune
 import sys
+import os
 import yaml
 
 def build_article(raw_file, settings_file, output_file):
     with open(raw_file, 'r') as f:
         markdown = f.read()
     
+    output_file = 'public/posts/' + raw_file.split('\n')[0] + '.html'
+
     with open(settings_file, 'r') as f:
         data = yaml.safe_load(f)
     
@@ -30,9 +33,12 @@ def build_article(raw_file, settings_file, output_file):
         f.write(header)
         f.write(body)
 
+    os.remove(raw_file)
+    os.remove(settings_file)
+
+
 if __name__ == '__main__':
     raw_file = sys.argv[1]
     settings_file = sys.argv[2]
-    output_file = sys.argv[3]
 
-    build_article(raw_file, settings_file, output_file)
+    build_article(raw_file, settings_file)
