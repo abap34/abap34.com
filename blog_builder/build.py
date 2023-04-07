@@ -115,7 +115,7 @@ def markdown_to_html(title, date, tags, body):
 <body>
   <header>
     <p>@abap34</p>
-    <a href="https://www.abap34.com/index.html">←TopPage</a>
+    <a href="https://www.abap34.com/index.html">←Top</a>
   </header>
   <main>
     <article>
