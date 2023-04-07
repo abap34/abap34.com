@@ -72,8 +72,7 @@
                             const { title, post_date, tags, url } = post;
                             const postHtml = `
             <div class="post">
-              <h4><a href="${url}">${title}</a></h4>
-              <div class="post-meta">${post_date} | ${tags}</div>
+              <h4>${post_date} | <a href="${url}">${title}</a></h4>
             </div>`;
                             html += postHtml;
                         }
