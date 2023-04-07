@@ -8,7 +8,18 @@ import time
 
 
 def markdown_to_html(title, date, tags, body):
+    body = body.split('\n')[1:]
+    
+    tags_html = "<div class=\"tags\">"
+    for tag in tags:
+        tags_html += f"<span class=\"tag\">{tag}</span>"
+    tags_html += "</div>"
+
+    date_html = f"<time datetime=\"{date}\">{date}</time>"
+
     body_html = mistune.markdown(body)
+
+
     return f"""
 <!DOCTYPE html>
 <html>
@@ -109,6 +120,8 @@ def markdown_to_html(title, date, tags, body):
     <article>
       <p>
         <h1>{title}</h1>
+        {date_html}
+        {tags_html}
         {body_html}
       </p>
     </article>
