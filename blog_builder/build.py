@@ -49,8 +49,7 @@ def build_article(raw_file, settings_file):
     html = markdown_to_html(title, date, tags, mistune.markdown(markdown))
     with open(output_file, 'w') as f:
         f.write(html)
-    os.remove(raw_file)
-    os.remove(settings_file)
+    
 
     with open('posts.json', 'r') as f:
         posts = json.load(f)
@@ -72,6 +71,9 @@ def build_article(raw_file, settings_file):
     with open('recent_posts.json', 'w') as f:
         json.dump(recent_posts, f)
 
+    os.remove('tmp.json')
+    os.remove(raw_file)
+    os.remove(settings_file)
 
     
       
