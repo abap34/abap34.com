@@ -10,26 +10,115 @@ import time
 def markdown_to_html(title, date, tags, body):
     body_html = mistune.markdown(body)
     return f'''
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset=\"utf-8\">
-    <title>{title}</title>
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css\">
-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css\">
-    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js\"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-    </head>
-    <body>
-    <article class=\"markdown-body\">
-    <h1>{title}</h1>
-    <p>{date}</p>
-    <p>{tags}</p>
-    {body_html}
+    html_template = f"""
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>{title}</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {{
+      background-color: #f5f5f5;
+      color: #333;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+    }}
+
+    main {{
+      margin: 0 auto;
+      max-width: 800px;
+      padding: 0 20px;
+    }}
+
+    article {{
+      margin-bottom: 20px;
+    }}
+
+    article header {{
+      margin-bottom: 10px;
+    }}
+
+    article h1 {{
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }}
+
+    article p {{
+      margin-bottom: 10px;
+    }}
+
+    article footer {{
+      border-top: 1px solid #eee;
+      margin-top: 10px;
+      padding-top: 10px;
+    }}
+
+    article footer ul {{
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }}
+
+    article footer li {{
+      display: inline-block;
+      margin-right: 20px;
+    }}
+
+    article footer li:last-child {{
+      margin-right: 0;
+    }}
+
+    article footer li a {{
+      color: #999;
+      text-decoration: none;
+    }}
+
+    article footer li a:hover {{
+      color: #333;
+      text-decoration: underline;
+    }}
+
+    .tag {{
+      background-color: #eee;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 12px;
+      margin-right: 5px;
+      padding: 2px 5px;
+    }}
+
+    .tag:last-child {{
+      margin-right: 0;
+    }}
+
+    /* responsive */
+    @media (max-width: 768px) {{
+    }}
+  </style>
+</head>
+
+<body>
+  <header>
+    <p>@abap34</p>
+    <a href="https://www.abap34.com/index.html">←記事一覧</a>
+  </header>
+  <main>
+    <article>
+      <p>
+        <h1>{title}</h1>
+        {body_html}
+      </p>
     </article>
-    </body>
-    </html>
+  </main>
+</body>
+
+</html>
+"""
+
   '''
 
 
