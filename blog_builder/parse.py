@@ -1,5 +1,6 @@
 import json
 import sys
+import time
 
 def parse_issue(issue, raw_file, settings_file):
     title = issue['title']
@@ -23,7 +24,11 @@ def parse_issue(issue, raw_file, settings_file):
     # export raw markdown
     with open(raw_file, 'w') as f:
         f.write(body)
-        
+
+    # encode dat['body'] by base64
+    import base64
+    data['body'] = base64.b64encode(body.encode('utf-8')).decode('utf-8')
+    
     # export data as json
     with open(settings_file, 'w') as f:
         json.dump(data, f)
@@ -32,7 +37,11 @@ def parse_issue(issue, raw_file, settings_file):
 if __name__ == '__main__':
     raw_file = sys.argv[2]
     settings_file = sys.argv[3]
-    print('read from', raw_file)
+
+    print('-------- parse --------')
+
+    print('read issue json from', sys.argv[1])
+    print('export body to ', raw_file)
     print('export settings to ', settings_file)
 
     with open(sys.argv[1], 'r') as f:
