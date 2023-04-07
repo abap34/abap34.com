@@ -5,7 +5,9 @@ on:
     types: [labeled]
     labels:
       - submit
-
+    created:
+    - ${{ github.actor == 'abap34' }}
+    
 jobs:
   update-blog:
     runs-on: ubuntu-latest
