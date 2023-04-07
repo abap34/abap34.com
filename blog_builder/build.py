@@ -65,7 +65,7 @@ def build_article(raw_file, settings_file):
     with open('posts.json', 'w') as f:
         json.dump(posts, f)
 
-    posts = sorted(posts.values(), key=lambda x: time.strptime(x['post_date'], '%Y-%m-%d'), reverse=True)
+    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y-%m-%d'), reverse=True)
 
     recent_posts = posts[:5]
     with open('recent_posts.json', 'w') as f:
