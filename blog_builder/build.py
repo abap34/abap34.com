@@ -142,7 +142,7 @@ def build_article(raw_file, settings_file):
         f.write(html)
     
 
-    with open('posts.json', 'r') as f:
+    with open('public/posts.json', 'r') as f:
         posts = json.load(f)
         posts.append({
             'title': title,
