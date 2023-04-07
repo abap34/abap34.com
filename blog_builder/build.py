@@ -8,7 +8,8 @@ import time
 
 
 def markdown_to_html(title, date, tags, body):
-    body = body.split('\n')[1:].join('\n')
+    body = body.split('\n')[1:]
+    body = ''.join(body)
     
     tags_html = "<div class=\"tags\">"
     for tag in tags:
