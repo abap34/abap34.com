@@ -64,7 +64,7 @@
             <h2>Recent Post</h2>
             <div id="recent-posts"></div>
             <script>
-                fetch('public/recent_posts.json')
+                fetch('/recent_posts.json')
                     .then(response => response.json())
                     .then(posts => {
                         let html = '';
