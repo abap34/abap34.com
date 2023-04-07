@@ -9,7 +9,7 @@ import time
 
 def markdown_to_html(title, date, tags, body):
     body = body.split('\n')[1:]
-    body = ''.join(body)
+    body = '\n'.join(body)
     
     tags_html = "<div class=\"tags\">"
     for tag in tags:
@@ -156,14 +156,27 @@ def build_article(raw_file, settings_file):
     with open('public/posts.json', 'r') as f:
         posts = json.load(f)
         output_file = output_file[7:]
-        posts.append({
-            'title': title,
-            'date': date,
-            'tags': tags,
-            'is_pickup': is_pickup,
-            'url': output_file,
-            'post_date': time.strftime('%Y-%m-%d', time.strptime(date, '%Y-%m-%dT%H:%M:%SZ'))
-        })
+        for post in posts:
+            if post['title'] == title:
+                updated_post = {
+                    'title': title,
+                    'post_date': date,
+                    'tags': tags,
+                    'is_pickup': is_pickup,
+                    'url': output_file
+                }
+                posts.remove(post)
+                posts.append(updated_post)
+                break
+        else:
+            posts.append({
+                'title': title,
+                'post_date': date,
+                'tags': tags,
+                'is_pickup': is_pickup,
+                'url': output_file
+            })
+
         
     with open('public/posts.json', 'w') as f:
         json.dump(posts, f)
