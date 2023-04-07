@@ -9,8 +9,7 @@ import time
 
 def markdown_to_html(title, date, tags, body):
     body_html = mistune.markdown(body)
-    return f'''
-    html_template = f"""
+    return f"""
 <!DOCTYPE html>
 <html>
 
@@ -118,8 +117,6 @@ def markdown_to_html(title, date, tags, body):
 
 </html>
 """
-
-  '''
 
 
 def build_article(raw_file, settings_file):
