@@ -141,6 +141,7 @@ def build_article(raw_file, settings_file):
 
     with open('public/posts.json', 'r') as f:
         posts = json.load(f)
+        output_file = output_file[7:]
         posts.append({
             'title': title,
             'date': date,
