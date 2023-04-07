@@ -19,7 +19,7 @@ jobs:
       - name: Python Setup
         run: |
           pip install mistune
-      - name: Parse json
+      - name: Parse 
         run: |
           python3 blog_builder/parse.py tmp.json raw.md settings.json
       - name: Build page
