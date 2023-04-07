@@ -34,6 +34,7 @@ def markdown_to_html(title, date, tags, body):
 
 
 def build_article(raw_file, settings_file):
+    
     with open(raw_file, 'r') as f:
         markdown = f.read()
     
@@ -46,7 +47,8 @@ def build_article(raw_file, settings_file):
     date = data['date']
     tags = data['tags']
     is_pickup = data['is_pickup']
-    html = markdown_to_html(title, date, tags, mistune.markdown(markdown))
+
+    html = markdown_to_html(title, date, tags, markdown)
     with open(output_file, 'w') as f:
         f.write(html)
     
@@ -62,18 +64,16 @@ def build_article(raw_file, settings_file):
             'post_date': time.strftime('%Y-%m-%d', time.strptime(date, '%Y-%m-%dT%H:%M:%SZ'))
         })
         
-    with open('posts.json', 'w') as f:
+    with open('public/posts.json', 'w') as f:
         json.dump(posts, f)
 
     posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y-%m-%d'), reverse=True)
 
     recent_posts = posts[:5]
-    with open('recent_posts.json', 'w') as f:
+    with open('public/recent_posts.json', 'w') as f:
         json.dump(recent_posts, f)
 
-    os.remove('tmp.json')
-    os.remove(raw_file)
-    os.remove(settings_file)
+    
 
     
       
@@ -83,5 +83,12 @@ def build_article(raw_file, settings_file):
 if __name__ == '__main__':
     raw_file = sys.argv[1]
     settings_file = sys.argv[2]
+    print('-------- build --------')
+    print('read raw markdown from', raw_file)
+    print('read settings from', settings_file)
 
     build_article(raw_file, settings_file)
+
+    os.remove('tmp.json')
+    os.remove(raw_file)
+    os.remove(settings_file)
