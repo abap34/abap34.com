@@ -17,14 +17,33 @@
         <button class="plusButton button"> + </button>
     </div>
 
+
+
     <div class="sidebar">
         <a href="#about">About Me</a>
         <a href="#Skills & Works">Skills & Works</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact Me</a>
-        <a href="https://s7tya.com">My Best Friend's Site</a>
+        <a href="#posts">Posts</a>
+        <h3>Recent Posts</h3>
+        <div id="recent-posts"></div>
+        <script>
+            fetch('/recent_posts.json')
+                .then(response => response.json())
+                .then(posts => {
+                    let html = '';
+                    for (const post of posts) {
+                        const { title, post_date, tags, url } = post;
+                        const postHtml = `
+            <div class="post">
+              <h4>${post_date} | <a href="${url}">${title}</a></h4>
+            </div>`;
+                        html += postHtml;
+                    }
+                    document.getElementById('recent-posts').innerHTML = html;
+                });
+        </script>
     </div>
-
     <header>
         <img src="myicon.png" alt="myicon" width="100" height="100">
         <h1>abap34's Website</h1>
@@ -57,28 +76,6 @@
         <section id="contact">
             <h2>Contact</h2>
             <p><a href="mailto:abap0002@gmail.com">email</a></p>
-        </section>
-
-        <!-- posts list of url -->
-        <section id="posts">
-            <h3>Recent Posts</h3>
-            <div id="recent-posts"></div>
-            <script>
-                fetch('/recent_posts.json')
-                    .then(response => response.json())
-                    .then(posts => {
-                        let html = '';
-                        for (const post of posts) {
-                            const { title, post_date, tags, url } = post;
-                            const postHtml = `
-            <div class="post">
-              <h4>${post_date} | <a href="${url}">${title}</a></h4>
-            </div>`;
-                            html += postHtml;
-                        }
-                        document.getElementById('recent-posts').innerHTML = html;
-                    });
-            </script>
         </section>
 
 
