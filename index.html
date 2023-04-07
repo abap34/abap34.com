@@ -61,7 +61,7 @@
 
         <!-- posts list of url -->
         <section id="posts">
-            <h2>Recent Post</h2>
+            <h3>Recent Posts</h3>
             <div id="recent-posts"></div>
             <script>
                 fetch('/recent_posts.json')
@@ -72,7 +72,7 @@
                             const { title, post_date, tags, url } = post;
                             const postHtml = `
             <div class="post">
-              <h2><a href="${url}">${title}</a></h2>
+              <h4><a href="${url}">${title}</a></h4>
               <div class="post-meta">${post_date} | ${tags}</div>
             </div>`;
                             html += postHtml;
