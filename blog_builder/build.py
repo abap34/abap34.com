@@ -59,6 +59,7 @@ def markdown_to_html(title, date, tags, body):
     }}
 
     article p {{
+     font-size: large;
       margin-bottom: 10px;
     }}
 
