@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>traP 機械学習講習会</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f3eb;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content {
+            flex: 2;
+            padding-right: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .lecture-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .lecture-list li {
+            margin-bottom: 10px;
+        }
+        
+        .lecture-list li a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .lecture-list li a:hover {
+            color: #007bff;
+        }
+        
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        form {
+            margin-top: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        
+        .sidebar h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar li a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .sidebar li a:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>traP 機械学習講習会</h1>
+            <ul class="lecture-list">
+                <li>第一回: 学習</li>
+                <li>第二回: 勾配降下法</li>
+                <li>第三回: 自動微分とPyTorch</li>
+                <li>第四回: ニューラルネットワークの構造</li>
+                <li>第五回: ニューラルネットワークの学習と評価</li>
+                <li>第六回: Kerasを用いたニューラルネットワークの学習と評価</li>
+                <li>第七回: ニューラルネットワーク発展</li>
+            </ul>
+        </div>
+        <div class="sidebar">
+            <h3>講義一覧</h3>
+            <ul>
+                <li><a href="lecture1.pdf">第一回: 講義資料</a></li>
+                <li><a href="code1.py">第一回: サンプルコード</a></li>
+                <li><a href="lecture2.pdf">第二回: 講義資料</a></li>
+                <li><a href="code2.py">第二回: サンプルコード</a></li>
+                <li><a href="lecture3.pdf">第三回: 講義資料</a></li>
+                <li><a href="code3.py">第三回: サンプルコード</a></li>
+                <li><a href="lecture4.pdf">第四回: 講義資料</a></li>
+                <li><a href="code4.py">第四回: サンプルコード</a></li>
+                <li><a href="lecture5.pdf">第五回: 講義資料</a></li>
+                <li><a href="code5.py">第五回: サンプルコード</a></li>
+                <li><a href="lecture6.pdf">第六回: 講義資料</a></li>
+                <li><a href="code6.py">第六回: サンプルコード</a></li>
+                <li><a href="lecture7.pdf">第七回: 講義資料</a></li>
+                <li><a href="code7.py">第七回: サンプルコード</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
