@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-
-
 <head>
     <!-- load CSS -->
     <link rel="stylesheet" href="style.css">
@@ -16,8 +14,6 @@
         <button class="menuButton button"> 三 </button>
         <button class="plusButton button"> + </button>
     </div>
-
-
 
     <div class="sidebar">
         <a href="#about">About Me</a>
@@ -45,87 +41,94 @@
     </div>
     <header>
         <img src="myicon.png" alt="myicon" width="100" height="100">
-        <h1>abap34's Website</h1>
+        <h1>__abap34's website__</h1>
     </header>
 
     <main>
         <!-- a little pad -->
         <div style="height: 10px;"></div>
 
-        <section id="about">
+        <section id="about" class="fade-in">
             <h2>About Me</h2>
-            <p>B2 at Tokyo Institute of Technology, majoring in comoputer science.<br>
+            <p>B2 at Tokyo Institute of Technology, majoring in computer science.<br>
                 I have a strong interest in both the engineering and mathematical aspects of machine learning. </p>
         </section>
-        <section id="Works">
+        <section id="Works" class="fade-in">
             <h3>Work Experience</h3>
-            <p>2022 Research Internship at <a href="https://www.d-itlab.co.jp/">Denso IT Lab </a></p> 
+            <p>2022 Research Internship at <a href="https://www.d-itlab.co.jp/">Denso IT Lab</a></p> 
             Research on Deep Learning.<br><br>
-
-            <p>2023 SWE Internship at <a href="https://xica.net/">XICA</a> </p>
-            Develop High-performance analytical infrastructure by Julia.
-
+            <p>2023 SWE Internship at <a href="https://xica.net/">XICA</a></p>
+            Develop High-performance analytical infrastructure using Julia.
         </section>
-        <section id="projects">
+        <section id="projects" class="fade-in">
             <h2>Projects</h2>
-            <li><a href="https://github.com/abap34/JITrench.jl">JITrench.jl</a>: Lightweight Automatic Differentiation &
-                DeepLearning Framework implemented in pure Julia.</li>
+            <ul>
+                <li><a href="https://github.com/abap34/JITrench.jl">JITrench.jl</a>: Lightweight Automatic Differentiation & Deep Learning Framework implemented in pure Julia.</li>
+                <li><a href="">traP</a>: President of "Kaggle club" in college. Details: <a href="https://trap.jp/author/abap34/">https://trap.jp/author/abap34/</a></li>
+            </ul>
         </section>
-        <section id="contact">
+        <section id="contact" class="fade-in">
             <h2>Contact</h2>
-            <p><a href="https://twitter.com/abap34"> Twitter: @abap34 </a></p>
-            <p><a href="https://github.com/abap34"> GitHub: @abap34 </a></p>
-            <p><a href="mailto:abap0002@gmail.com"> Mail: abap0002@gmail.com </a></p>
+            <p><a href="https://twitter.com/abap34">Twitter: @abap34</a></p>
+            <p><a href="https://github.com/abap34">GitHub: @abap34</a></p>
+            <p><a href="mailto:abap0002@gmail.com">Mail: abap0002@gmail.com</a></p>
         </section>
-
-
-
-
-
     </main>
 
     <footer>
         <p>&copy; 2023 abap34</p>
     </footer>
-    <script>
-        const menuButton = document.querySelector(".menuButton")
-        const plusButton = document.querySelector(".plusButton")
 
-        let isMenuOpen = false
+    <script>
+        const menuButton = document.querySelector(".menuButton");
+        const plusButton = document.querySelector(".plusButton");
+        const sidebar = document.querySelector(".sidebar");
+
+        let isMenuOpen = false;
 
         const onClick = () => {
             if (isMenuOpen) {
-                gsap.to(".sidebar", {
+                gsap.to(sidebar, {
                     x: "-100%",
+                    opacity: 1,
                     duration: 1
-                })
+                });
 
                 gsap.to("img", {
                     rotate: "-=360",
-                    duration: 1,
-                })
-            } else {
-
-                gsap.to(".sidebar", {
-                    x: "0",
                     duration: 1
-                })
+                });
+            } else {
+                gsap.to(sidebar, {
+                    x: "0",
+                    opacity: 1,
+                    duration: 1
+                });
 
                 gsap.to("img", {
                     rotate: "+=360",
-                    duration: 1,
-                })
+                    duration: 1
+                });
             }
 
-            isMenuOpen = !isMenuOpen
-        }
+            isMenuOpen = !isMenuOpen;
+        };
 
-
-        menuButton.addEventListener("click", onClick)
+        menuButton.addEventListener("click", onClick);
         plusButton.addEventListener("click", () => {
-            menuButton.textContent = "四"
-        })
+            menuButton.textContent = "四";
+        });
+
+        // Add fade-in effect to sections
+        gsap.from(".fade-in", {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            stagger: 0.3
+        });
+        gsap.set(sidebar, {
+            zIndex: 9999
+        });
     </script>
 </body>
-
 </html>
