@@ -70,8 +70,27 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
         }
 
         .runbutton:hover {
-            background-color: #0056b3;
+            background-color: #0057b384;
         }
+
+
+        .submitbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #22ff0070; 
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .submitbutton:hover {
+            background-color: #294928;
+        }
+        
 
         .problem_title {
             font-size: 20px;
@@ -85,23 +104,23 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
             font-family: monospace;
             background-color: #514f4f;
             color: #fff;
-
-
         }
 
 
         .output {
             width: 100%;
-            height: 100px;
+            padding: 5px 5px;
+            overflow-x: auto;
             font-size: 16px;
             font-family: monospace;
             background-color: #514f4f;
             color: #fff;
         }
 
-        .expect_out {
+        .expect_out, .sample_in, .sample_out {
             width: 100%;
-            height: 100px;
+            padding: 5px 5px;
+            overflow-x: auto;
             font-size: 16px;
             font-family: monospace;
             background-color: #514f4f;
@@ -114,13 +133,13 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <body>
 
     <script>
+        all_sample_input = {}
+        all_sample_output = {}
 
-        input = "";
-        out = "";
-        target_objectid = "";
 
         all_input = {}
         all_output = {}
+
 
         const pyodidePromise = loadPyodide({
             stdin: stdin_func,
@@ -128,62 +147,104 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
         });
 
         function stdin_func() {
-            document.getElementById(target_objectid + "_out").style.color = "white";
-            return all_input[target_objectid];
+            if (!(require_judge_now)) {
+                console.log(all_sample_input[target_objectid]);
+                return all_sample_input[target_objectid];
+            } else {
+                return all_input[target_objectid][judge_idx];
+            }
         }
 
         function stdout_func(answer) {
-            let out_id = target_objectid + "_out";
+            let out_id = target_objectid + "_sample_out";
             let expect_out_id = target_objectid + "_expect_out";
-            let expect_out = all_output[target_objectid];
-            document.getElementById(out_id).innerText = answer;
-            document.getElementById(expect_out_id).innerText = expect_out;
-            judge(answer, expect_out);
+            if (require_judge_now) {
+                let expect_out = all_output[target_objectid][judge_idx];
+                judge(answer, expect_out);
+            } else {
+                document.getElementById(out_id).innerText = answer;
+            }
         }
 
         function error_handle(error) {
-            document.getElementById(target_objectid + "_out").innerText = error;
-            document.getElementById(target_objectid + "_out").style.color = "orange";
+            document.getElementById(target_objectid + "_sample_out").innerText = error;
+            document.getElementById(target_objectid + "_sample_out").style.color = "orange";
         }
 
-        const runCode = async (objectid, inputfile, outputfile) => {
+        const runCode = async (objectid, require_judge) => {
+            // update global variable
+            target_objectid = objectid;
+            require_judge_now = require_judge;
+
             let pyodide = await pyodidePromise;
             
-            // global variable
-            target_objectid = objectid;
-
             let editor = ace.edit(objectid);
-            let code = editor.getValue();            
-            try {
-                await pyodide.runPythonAsync(code);
-            } catch (error) {
-                error_handle(error);
+            let code = editor.getValue();  
+            let result_bar_id = target_objectid + "_status";
+            let result_bar = document.getElementById(result_bar_id)
+            document.getElementById(target_objectid + "_sample_out").style.color = "white";
+            result_bar.style.backgroundColor = "white";
+            result_bar.innerText = "Running...";      
+            
+            if (require_judge) {
+                let n_input = all_input[target_objectid].length;
+                for (let i = 0; i < n_input; i++) {
+                    if (status == "TLE" || status == "MLE" || status == "RE") {
+                        result_bar.style.backgroundColor = "#ffe500";
+                        result_bar.innerText = status;
+                    }
+                    judge_idx = i;
+                    try {
+                        await pyodide.runPythonAsync(code);
+                    } catch (error) {
+                        error_handle(error);
+                    }
+                }
+
+                if (status == "AC"){
+                    result_bar.style.backgroundColor = "lightgreen";
+                    result_bar.innerText = "AC";
+                    confetti();
+                } else {
+                    result_bar.style.backgroundColor =  "#ffe500";
+                    result_bar.innerText = status;
+                } 
+            } else {
+                try {
+                    await pyodide.runPythonAsync(code);
+                    result_bar.innerText = "WJ"
+                } catch (error) {
+                    error_handle(error);
+                }
             }
         };
 
         function judge(answer, expect_out) {
             let result_bar_id = target_objectid + "_status";
             if (answer == expect_out) {
-                document.getElementById(result_bar_id).style.backgroundColor = "lightgreen";
-                document.getElementById(result_bar_id).innerText = "AC";
-                confetti();
+                status = "AC";
             } else {
-                document.getElementById(result_bar_id).style.backgroundColor = "yellow";
-                document.getElementById(result_bar_id).innerText = "WA";
+                status = "WA";
             }
         }
     </script>
 
+---<br>
+title: Python入門<br>
+---<br>
+<br>
+<br>
+<br>
 <h1>  \ すごい / Python入門 \すごい/ </h1>
 <br>
 Pythonでは、input関数を使って、print関数を使うことで入出力が行えます。<br>
 入力を受け取って末尾に"！"をつけて出力するプログラムを作ってみましょう。<br>
 <br>
-<h2 class="problem_title"> <div class='badge' id='5290957472598954753_status'>WJ</div>  Hello ALMO </h2> 
-<div class="editor" id="5290957472598954753" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='13333684861667976394_status'>WJ</div>  Hello ALMO </h2> 
+<div class="editor" id="13333684861667976394" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("5290957472598954753"); 
+editor = ace.edit("13333684861667976394"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -197,18 +258,24 @@ editor.setValue("");
 </script>
 
 
-出力: <textarea class="output" id="5290957472598954753_out" rows="3" cols="80"></textarea> 
-答え: <textarea class="expect_out" id="5290957472598954753_expect_out" rows="3" cols="80"></textarea> 
-<button class="runbutton" onclick="runCode('5290957472598954753', 'in/001.txt', 'out/001.txt')"> Run </button> 
-
+サンプルの入力: <pre class="sample_in" id="13333684861667976394_sample_in"><code>abap34</code></pre> 
+出力: <pre class="sample_out" id="13333684861667976394_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="13333684861667976394_expect_out"><code>abap34!</code></pre> 
 <script>
-all_input["5290957472598954753"] = "abap34"
-all_output["5290957472598954753"] = "abap34!"
-</script>
+all_input["13333684861667976394"] = []
+all_output["13333684861667976394"] = []
+all_sample_input["13333684861667976394"] = "abap34"
+all_sample_output["13333684861667976394"] = "abap34!"
+all_input["13333684861667976394"].push("world")
+all_input["13333684861667976394"].push("ALMO")
+all_input["13333684861667976394"].push("abap34")
+all_output["13333684861667976394"].push("world!")
+all_output["13333684861667976394"].push("ALMO!")
+all_output["13333684861667976394"].push("abap34!")
+</script> 
+<button class="runbutton" onclick="runCode('13333684861667976394', false)"> Run in Testcase </button> 
+<button class="submitbutton" onclick="runCode('13333684861667976394', true)"> Submit </button> 
 
-
-<br>
-<br>
 <br>
 <br>
 続いて、<br>
@@ -223,12 +290,11 @@ Pythonでは、sum関数を使うことで総和を計算できます！<br>
 <br>
 それでは実際にやってみましょう！<br>
 <br>
-<br>
-<h2 class="problem_title"> <div class='badge' id='7989805235841329643_status'>WJ</div>  Sum Function </h2> 
-<div class="editor" id="7989805235841329643" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='11143067186955608788_status'>WJ</div>  Sum Function </h2> 
+<div class="editor" id="11143067186955608788" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("7989805235841329643"); 
+editor = ace.edit("11143067186955608788"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -242,15 +308,23 @@ editor.setValue("");
 </script>
 
 
-出力: <textarea class="output" id="7989805235841329643_out" rows="3" cols="80"></textarea> 
-答え: <textarea class="expect_out" id="7989805235841329643_expect_out" rows="3" cols="80"></textarea> 
-<button class="runbutton" onclick="runCode('7989805235841329643', 'in/002.txt', 'out/002.txt')"> Run </button> 
-
+サンプルの入力: <pre class="sample_in" id="11143067186955608788_sample_in"><code>1 2 3</code></pre> 
+出力: <pre class="sample_out" id="11143067186955608788_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="11143067186955608788_expect_out"><code>6</code></pre> 
 <script>
-all_input["7989805235841329643"] = "1 2 3"
-all_output["7989805235841329643"] = "6"
-</script>
-
+all_input["11143067186955608788"] = []
+all_output["11143067186955608788"] = []
+all_sample_input["11143067186955608788"] = "1 2 3"
+all_sample_output["11143067186955608788"] = "6"
+all_input["11143067186955608788"].push("1000 1000 1000")
+all_input["11143067186955608788"].push("2 3 4")
+all_input["11143067186955608788"].push("1 2 3")
+all_output["11143067186955608788"].push("3000")
+all_output["11143067186955608788"].push("9")
+all_output["11143067186955608788"].push("6")
+</script> 
+<button class="runbutton" onclick="runCode('11143067186955608788', false)"> Run in Testcase </button> 
+<button class="submitbutton" onclick="runCode('11143067186955608788', true)"> Submit </button> 
 
 <br>
 
