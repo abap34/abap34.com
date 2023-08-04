@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <title>ALMO</title>
+
+    <!-- Pythonのランタイム -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    
+    <!-- ACした時にブワーって出るアニメーション -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    
+    <!-- エディタ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    
+    <!-- Math Jax -->
+    <script type="text/javascript" id="MathJax-script" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #292929; 
+            
+            color: #EAEAEA; 
+        }
+
+        h1 {
+            color: #DAB4FF; 
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3); /* タイトルにテキスト影を追加 */
+        }
+
+        p {
+            color: #BFBFBF;
+            margin-bottom: 10px;
+        }
+
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #514f4f;
+            border: 1px solid #fff; 
+        }
+
+
+
+        .runbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bffa3; 
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .runbutton:hover {
+            background-color: #0056b3;
+        }
+
+        .problem_title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .editor {
+            width: 100%;
+            height: 300px;
+            font-size: 16px;
+            font-family: monospace;
+            background-color: #514f4f;
+            color: #fff;
+
+
+        }
+
+
+        .output {
+            width: 100%;
+            height: 100px;
+            font-size: 16px;
+            font-family: monospace;
+            background-color: #514f4f;
+            color: #fff;
+        }
+
+        .expect_out {
+            width: 100%;
+            height: 100px;
+            font-size: 16px;
+            font-family: monospace;
+            background-color: #514f4f;
+            color: #fff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        input = "";
+        out = "";
+        target_objectid = "";
+
+        all_input = {}
+        all_output = {}
+
+        const pyodidePromise = loadPyodide({
+            stdin: stdin_func,
+            stdout: stdout_func,
+        });
+
+        function stdin_func() {
+            document.getElementById(target_objectid + "_out").style.color = "white";
+            return all_input[target_objectid];
+        }
+
+        function stdout_func(answer) {
+            let out_id = target_objectid + "_out";
+            let expect_out_id = target_objectid + "_expect_out";
+            let expect_out = all_output[target_objectid];
+            document.getElementById(out_id).innerText = answer;
+            document.getElementById(expect_out_id).innerText = expect_out;
+            judge(answer, expect_out);
+        }
+
+        function error_handle(error) {
+            document.getElementById(target_objectid + "_out").innerText = error;
+            document.getElementById(target_objectid + "_out").style.color = "orange";
+        }
+
+        const runCode = async (objectid, inputfile, outputfile) => {
+            let pyodide = await pyodidePromise;
+            
+            // global variable
+            target_objectid = objectid;
+
+            let editor = ace.edit(objectid);
+            let code = editor.getValue();            
+            try {
+                await pyodide.runPythonAsync(code);
+            } catch (error) {
+                error_handle(error);
+            }
+        };
+
+        function judge(answer, expect_out) {
+            let result_bar_id = target_objectid + "_status";
+            if (answer == expect_out) {
+                document.getElementById(result_bar_id).style.backgroundColor = "lightgreen";
+                document.getElementById(result_bar_id).innerText = "AC";
+                confetti();
+            } else {
+                document.getElementById(result_bar_id).style.backgroundColor = "yellow";
+                document.getElementById(result_bar_id).innerText = "WA";
+            }
+        }
+    </script>
+
+<h1>  \ すごい / Python入門 \すごい/ </h1>
+<br>
+Pythonでは、input関数を使って、print関数を使うことで入出力が行えます。<br>
+入力を受け取って末尾に"！"をつけて出力するプログラムを作ってみましょう。<br>
+<br>
+<h2 class="problem_title"> <div class='badge' id='5290957472598954753_status'>WJ</div>  Hello ALMO </h2> 
+<div class="editor" id="5290957472598954753" rows="3" cols="80"></div> 
+<script> 
+
+editor = ace.edit("5290957472598954753"); 
+editor.setTheme("ace/theme/monokai");
+editor.session.setMode("ace/mode/python");
+editor.setShowPrintMargin(false);
+editor.setOptions({
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  enableLiveAutocompletion: true
+});
+editor.setValue("");
+
+</script>
+
+
+出力: <textarea class="output" id="5290957472598954753_out" rows="3" cols="80"></textarea> 
+答え: <textarea class="expect_out" id="5290957472598954753_expect_out" rows="3" cols="80"></textarea> 
+<button class="runbutton" onclick="runCode('5290957472598954753', 'in/001.txt', 'out/001.txt')"> Run </button> 
+
+<script>
+all_input["5290957472598954753"] = "abap34"
+all_output["5290957472598954753"] = "abap34!"
+</script>
+
+
+<br>
+<br>
+<br>
+<br>
+続いて、<br>
+入力として整数が空白区切りで与えるので、<br>
+総和を出力してみましょう。<br>
+<br>
+Pythonでは、sum関数を使うことで総和を計算できます！<br>
+<br>
+\[
+\sum_{i=1}^{n} a_i<br>
+\]
+<br>
+それでは実際にやってみましょう！<br>
+<br>
+<br>
+<h2 class="problem_title"> <div class='badge' id='7989805235841329643_status'>WJ</div>  Sum Function </h2> 
+<div class="editor" id="7989805235841329643" rows="3" cols="80"></div> 
+<script> 
+
+editor = ace.edit("7989805235841329643"); 
+editor.setTheme("ace/theme/monokai");
+editor.session.setMode("ace/mode/python");
+editor.setShowPrintMargin(false);
+editor.setOptions({
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  enableLiveAutocompletion: true
+});
+editor.setValue("");
+
+</script>
+
+
+出力: <textarea class="output" id="7989805235841329643_out" rows="3" cols="80"></textarea> 
+答え: <textarea class="expect_out" id="7989805235841329643_expect_out" rows="3" cols="80"></textarea> 
+<button class="runbutton" onclick="runCode('7989805235841329643', 'in/002.txt', 'out/002.txt')"> Run </button> 
+
+<script>
+all_input["7989805235841329643"] = "1 2 3"
+all_output["7989805235841329643"] = "6"
+</script>
+
+
+<br>
+
+</body>
+
+</html>
