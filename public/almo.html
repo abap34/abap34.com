@@ -38,6 +38,15 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
             text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3); /* タイトルにテキスト影を追加 */
         }
 
+        h2 {
+            color: #DAB4FF; 
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3); /* タイトルにテキスト影を追加 */
+            /* under line */
+            border-bottom: solid 1px #DAB4FF;
+        }
+
         p {
             color: #BFBFBF;
             margin-bottom: 10px;
@@ -238,11 +247,11 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 Pythonでは、input関数を使って、print関数を使うことで入出力が行えます。
 入力を受け取って末尾に"！"をつけて出力するプログラムを作ってみましょう。
 <br>
-<h2 class="problem_title"> <div class='badge' id='16098882387927992887_status'>WJ</div>  Hello ALMO </h2> 
-<div class="editor" id="16098882387927992887" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='7772957615296357252_status'>WJ</div>  Hello ALMO </h2> 
+<div class="editor" id="7772957615296357252" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("16098882387927992887"); 
+editor = ace.edit("7772957615296357252"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -256,23 +265,23 @@ editor.setValue("");
 </script>
 
 
-サンプルの入力: <pre class="sample_in" id="16098882387927992887_sample_in"><code>abap34</code></pre> 
-出力: <pre class="sample_out" id="16098882387927992887_sample_out"><code></code></pre> 
-サンプルの答え: <pre class="expect_out" id="16098882387927992887_expect_out"><code>abap34!</code></pre> 
+サンプルの入力: <pre class="sample_in" id="7772957615296357252_sample_in"><code>abap34</code></pre> 
+出力: <pre class="sample_out" id="7772957615296357252_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="7772957615296357252_expect_out"><code>abap34!</code></pre> 
 <script>
-all_input["16098882387927992887"] = []
-all_output["16098882387927992887"] = []
-all_sample_input["16098882387927992887"] = `abap34`
-all_sample_output["16098882387927992887"] = `abap34!`
-all_input["16098882387927992887"].push("world")
-all_input["16098882387927992887"].push("ALMO")
-all_input["16098882387927992887"].push("abap34")
-all_output["16098882387927992887"].push("world!")
-all_output["16098882387927992887"].push("ALMO!")
-all_output["16098882387927992887"].push("abap34!")
+all_input["7772957615296357252"] = []
+all_output["7772957615296357252"] = []
+all_sample_input["7772957615296357252"] = `abap34`
+all_sample_output["7772957615296357252"] = `abap34!`
+all_input["7772957615296357252"].push("world")
+all_input["7772957615296357252"].push("ALMO")
+all_input["7772957615296357252"].push("abap34")
+all_output["7772957615296357252"].push("world!")
+all_output["7772957615296357252"].push("ALMO!")
+all_output["7772957615296357252"].push("abap34!")
 </script> 
-<button class="runbutton" onclick="runCode('16098882387927992887', false)"> Run Sample </button> 
-<button class="submitbutton" onclick="runCode('16098882387927992887', true)"> Submit </button> 
+<button class="runbutton" onclick="runCode('7772957615296357252', false)"> Run Sample </button> 
+<button class="submitbutton" onclick="runCode('7772957615296357252', true)"> Submit </button> 
 
 <br>
 <br>
@@ -288,11 +297,11 @@ Pythonでは、sum関数を使うことで総和を計算できます！
 <br>
 それでは実際にやってみましょう！
 <br>
-<h2 class="problem_title"> <div class='badge' id='10908662867491959077_status'>WJ</div>  Sum Function </h2> 
-<div class="editor" id="10908662867491959077" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='8060011546088066234_status'>WJ</div>  Sum Function </h2> 
+<div class="editor" id="8060011546088066234" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("10908662867491959077"); 
+editor = ace.edit("8060011546088066234"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -306,23 +315,23 @@ editor.setValue("");
 </script>
 
 
-サンプルの入力: <pre class="sample_in" id="10908662867491959077_sample_in"><code>1 2 3</code></pre> 
-出力: <pre class="sample_out" id="10908662867491959077_sample_out"><code></code></pre> 
-サンプルの答え: <pre class="expect_out" id="10908662867491959077_expect_out"><code>6</code></pre> 
+サンプルの入力: <pre class="sample_in" id="8060011546088066234_sample_in"><code>1 2 3</code></pre> 
+出力: <pre class="sample_out" id="8060011546088066234_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="8060011546088066234_expect_out"><code>6</code></pre> 
 <script>
-all_input["10908662867491959077"] = []
-all_output["10908662867491959077"] = []
-all_sample_input["10908662867491959077"] = `1 2 3`
-all_sample_output["10908662867491959077"] = `6`
-all_input["10908662867491959077"].push("1000 1000 1000")
-all_input["10908662867491959077"].push("2 3 4")
-all_input["10908662867491959077"].push("1 2 3")
-all_output["10908662867491959077"].push("3000")
-all_output["10908662867491959077"].push("9")
-all_output["10908662867491959077"].push("6")
+all_input["8060011546088066234"] = []
+all_output["8060011546088066234"] = []
+all_sample_input["8060011546088066234"] = `1 2 3`
+all_sample_output["8060011546088066234"] = `6`
+all_input["8060011546088066234"].push("1000 1000 1000")
+all_input["8060011546088066234"].push("2 3 4")
+all_input["8060011546088066234"].push("1 2 3")
+all_output["8060011546088066234"].push("3000")
+all_output["8060011546088066234"].push("9")
+all_output["8060011546088066234"].push("6")
 </script> 
-<button class="runbutton" onclick="runCode('10908662867491959077', false)"> Run Sample </button> 
-<button class="submitbutton" onclick="runCode('10908662867491959077', true)"> Submit </button> 
+<button class="runbutton" onclick="runCode('8060011546088066234', false)"> Run Sample </button> 
+<button class="submitbutton" onclick="runCode('8060011546088066234', true)"> Submit </button> 
 
 <br>
 <br>
@@ -394,13 +403,19 @@ T_{k,2}
 \begin{align}&S \\&N \\&T_{0,1} \quad T_{0,2} \\&T_{1,1} \quad T_{1,2} \\&\vdots \\&T_{N-1,1} \quad T_{N-1,2} \\&T_{N,1} \quad T_{N,2} \\\end{align}
 \]
 <br>
+制約...
+<br>
+\[
+\begin{align}&1 \leq |S| \leq 1000 \\&1 \leq N \leq 1000 \\&1 \leq |T_{i,1}| \leq 1000 \\&1 \leq |T_{i,2}| \leq 1000 \\
+\]
 <br>
 <br>
-<h2 class="problem_title"> <div class='badge' id='6645309065838187335_status'>WJ</div>  String Replace </h2> 
-<div class="editor" id="6645309065838187335" rows="3" cols="80"></div> 
+<br>
+<h2 class="problem_title"> <div class='badge' id='7077556831262367809_status'>WJ</div>  String Replace </h2> 
+<div class="editor" id="7077556831262367809" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("6645309065838187335"); 
+editor = ace.edit("7077556831262367809"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -414,29 +429,29 @@ editor.setValue("");
 </script>
 
 
-サンプルの入力: <pre class="sample_in" id="6645309065838187335_sample_in"><code>abapthirtyfour
+サンプルの入力: <pre class="sample_in" id="7077556831262367809_sample_in"><code>abapthirtyfour
 thirtyfour 34
 34 0
 abap aba
 abap abao
 abao a</code></pre> 
-出力: <pre class="sample_out" id="6645309065838187335_sample_out"><code></code></pre> 
-サンプルの答え: <pre class="expect_out" id="6645309065838187335_expect_out"><code>2</code></pre> 
+出力: <pre class="sample_out" id="7077556831262367809_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="7077556831262367809_expect_out"><code>2</code></pre> 
 <script>
-all_input["6645309065838187335"] = []
-all_output["6645309065838187335"] = []
-all_sample_input["6645309065838187335"] = `abapthirtyfour
+all_input["7077556831262367809"] = []
+all_output["7077556831262367809"] = []
+all_sample_input["7077556831262367809"] = `abapthirtyfour
 thirtyfour 34
 34 0
 abap aba
 abap abao
 abao a`
-all_sample_output["6645309065838187335"] = `2`
-all_input["6645309065838187335"].push("abapthirtyfour\nthirtyfour 34\n34 0\nabap aba\nabap abao\nabao a")
-all_output["6645309065838187335"].push("2")
+all_sample_output["7077556831262367809"] = `2`
+all_input["7077556831262367809"].push("abapthirtyfour\nthirtyfour 34\n34 0\nabap aba\nabap abao\nabao a")
+all_output["7077556831262367809"].push("2")
 </script> 
-<button class="runbutton" onclick="runCode('6645309065838187335', false)"> Run Sample </button> 
-<button class="submitbutton" onclick="runCode('6645309065838187335', true)"> Submit </button> 
+<button class="runbutton" onclick="runCode('7077556831262367809', false)"> Run Sample </button> 
+<button class="submitbutton" onclick="runCode('7077556831262367809', true)"> Submit </button> 
 
 <br>
 
