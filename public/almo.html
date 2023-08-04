@@ -147,11 +147,10 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
         });
 
         function stdin_func() {
-            if (!(require_judge_now)) {
-                console.log(all_sample_input[target_objectid]);
-                return all_sample_input[target_objectid];
-            } else {
+            if (require_judge_now) {
                 return all_input[target_objectid][judge_idx];
+            } else {
+                return all_sample_input[target_objectid];
             }
         }
 
@@ -182,22 +181,27 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
             let code = editor.getValue();  
             let result_bar_id = target_objectid + "_status";
             let result_bar = document.getElementById(result_bar_id)
+            let out_id = target_objectid + "_sample_out";
+
+            document.getElementById(target_objectid + "_sample_out").innerText = "";
             document.getElementById(target_objectid + "_sample_out").style.color = "white";
-            result_bar.style.backgroundColor = "white";
             result_bar.innerText = "Running...";      
             
             if (require_judge) {
                 let n_input = all_input[target_objectid].length;
                 for (let i = 0; i < n_input; i++) {
-                    if (status == "TLE" || status == "MLE" || status == "RE") {
-                        result_bar.style.backgroundColor = "#ffe500";
-                        result_bar.innerText = status;
-                    }
                     judge_idx = i;
                     try {
                         await pyodide.runPythonAsync(code);
                     } catch (error) {
                         error_handle(error);
+                        result_bar.innerText = "WJ";     
+                    }
+
+                    if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
+                        result_bar.style.backgroundColor = "#ffe500";
+                        result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
+                        break;
                     }
                 }
 
@@ -207,21 +211,21 @@ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
                     confetti();
                 } else {
                     result_bar.style.backgroundColor =  "#ffe500";
-                    result_bar.innerText = status;
                 } 
             } else {
                 try {
                     await pyodide.runPythonAsync(code);
-                    result_bar.innerText = "WJ"
+                    result_bar.innerText = "WJ";
                 } catch (error) {
                     error_handle(error);
+                    result_bar.innerText = "WJ";    
                 }
             }
         };
 
         function judge(answer, expect_out) {
             let result_bar_id = target_objectid + "_status";
-            if (answer == expect_out) {
+            if (answer === expect_out) {
                 status = "AC";
             } else {
                 status = "WA";
@@ -240,11 +244,11 @@ title: Python入門<br>
 Pythonでは、input関数を使って、print関数を使うことで入出力が行えます。<br>
 入力を受け取って末尾に"！"をつけて出力するプログラムを作ってみましょう。<br>
 <br>
-<h2 class="problem_title"> <div class='badge' id='13333684861667976394_status'>WJ</div>  Hello ALMO </h2> 
-<div class="editor" id="13333684861667976394" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='4721126418274049641_status'>WJ</div>  Hello ALMO </h2> 
+<div class="editor" id="4721126418274049641" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("13333684861667976394"); 
+editor = ace.edit("4721126418274049641"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -258,23 +262,23 @@ editor.setValue("");
 </script>
 
 
-サンプルの入力: <pre class="sample_in" id="13333684861667976394_sample_in"><code>abap34</code></pre> 
-出力: <pre class="sample_out" id="13333684861667976394_sample_out"><code></code></pre> 
-サンプルの答え: <pre class="expect_out" id="13333684861667976394_expect_out"><code>abap34!</code></pre> 
+サンプルの入力: <pre class="sample_in" id="4721126418274049641_sample_in"><code>abap34</code></pre> 
+出力: <pre class="sample_out" id="4721126418274049641_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="4721126418274049641_expect_out"><code>abap34!</code></pre> 
 <script>
-all_input["13333684861667976394"] = []
-all_output["13333684861667976394"] = []
-all_sample_input["13333684861667976394"] = "abap34"
-all_sample_output["13333684861667976394"] = "abap34!"
-all_input["13333684861667976394"].push("world")
-all_input["13333684861667976394"].push("ALMO")
-all_input["13333684861667976394"].push("abap34")
-all_output["13333684861667976394"].push("world!")
-all_output["13333684861667976394"].push("ALMO!")
-all_output["13333684861667976394"].push("abap34!")
+all_input["4721126418274049641"] = []
+all_output["4721126418274049641"] = []
+all_sample_input["4721126418274049641"] = "abap34"
+all_sample_output["4721126418274049641"] = "abap34!"
+all_input["4721126418274049641"].push("world")
+all_input["4721126418274049641"].push("ALMO")
+all_input["4721126418274049641"].push("abap34")
+all_output["4721126418274049641"].push("world!")
+all_output["4721126418274049641"].push("ALMO!")
+all_output["4721126418274049641"].push("abap34!")
 </script> 
-<button class="runbutton" onclick="runCode('13333684861667976394', false)"> Run in Testcase </button> 
-<button class="submitbutton" onclick="runCode('13333684861667976394', true)"> Submit </button> 
+<button class="runbutton" onclick="runCode('4721126418274049641', false)"> Run in Testcase </button> 
+<button class="submitbutton" onclick="runCode('4721126418274049641', true)"> Submit </button> 
 
 <br>
 <br>
@@ -290,11 +294,11 @@ Pythonでは、sum関数を使うことで総和を計算できます！<br>
 <br>
 それでは実際にやってみましょう！<br>
 <br>
-<h2 class="problem_title"> <div class='badge' id='11143067186955608788_status'>WJ</div>  Sum Function </h2> 
-<div class="editor" id="11143067186955608788" rows="3" cols="80"></div> 
+<h2 class="problem_title"> <div class='badge' id='8789139604581103858_status'>WJ</div>  Sum Function </h2> 
+<div class="editor" id="8789139604581103858" rows="3" cols="80"></div> 
 <script> 
 
-editor = ace.edit("11143067186955608788"); 
+editor = ace.edit("8789139604581103858"); 
 editor.setTheme("ace/theme/monokai");
 editor.session.setMode("ace/mode/python");
 editor.setShowPrintMargin(false);
@@ -308,23 +312,23 @@ editor.setValue("");
 </script>
 
 
-サンプルの入力: <pre class="sample_in" id="11143067186955608788_sample_in"><code>1 2 3</code></pre> 
-出力: <pre class="sample_out" id="11143067186955608788_sample_out"><code></code></pre> 
-サンプルの答え: <pre class="expect_out" id="11143067186955608788_expect_out"><code>6</code></pre> 
+サンプルの入力: <pre class="sample_in" id="8789139604581103858_sample_in"><code>1 2 3</code></pre> 
+出力: <pre class="sample_out" id="8789139604581103858_sample_out"><code></code></pre> 
+サンプルの答え: <pre class="expect_out" id="8789139604581103858_expect_out"><code>6</code></pre> 
 <script>
-all_input["11143067186955608788"] = []
-all_output["11143067186955608788"] = []
-all_sample_input["11143067186955608788"] = "1 2 3"
-all_sample_output["11143067186955608788"] = "6"
-all_input["11143067186955608788"].push("1000 1000 1000")
-all_input["11143067186955608788"].push("2 3 4")
-all_input["11143067186955608788"].push("1 2 3")
-all_output["11143067186955608788"].push("3000")
-all_output["11143067186955608788"].push("9")
-all_output["11143067186955608788"].push("6")
+all_input["8789139604581103858"] = []
+all_output["8789139604581103858"] = []
+all_sample_input["8789139604581103858"] = "1 2 3"
+all_sample_output["8789139604581103858"] = "6"
+all_input["8789139604581103858"].push("1000 1000 1000")
+all_input["8789139604581103858"].push("2 3 4")
+all_input["8789139604581103858"].push("1 2 3")
+all_output["8789139604581103858"].push("3000")
+all_output["8789139604581103858"].push("9")
+all_output["8789139604581103858"].push("6")
 </script> 
-<button class="runbutton" onclick="runCode('11143067186955608788', false)"> Run in Testcase </button> 
-<button class="submitbutton" onclick="runCode('11143067186955608788', true)"> Submit </button> 
+<button class="runbutton" onclick="runCode('8789139604581103858', false)"> Run in Testcase </button> 
+<button class="submitbutton" onclick="runCode('8789139604581103858', true)"> Submit </button> 
 
 <br>
 
