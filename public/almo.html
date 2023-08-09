@@ -7,7 +7,13 @@
     <title>  ALMO デモページ </title>
 
     <meta property="og:title" content=" ALMO デモページ">
-    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.png">
+    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.jpg">
+    <meta property="og:description" content="ALMOは実行 & ジャッジ同梱のHTMLファイルを出力できるMarkdownパーサです。">
+    <meta property="og:url" content="https://www.abap34.com/almo.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="ALMO デモページ">
+    <meta property="og:locale" content="ja_JP">
+    
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
@@ -418,37 +424,37 @@ ALMOの拡張構文の最大の特徴、そして売りは、<strong>実行・�
 入力を受け取って、 <code>Hello {入力された文字列}!</code> という文字列を出力するプログラムを書いてみましょう。
 <br>
 <br>
-<h3 class="problem_title"> <div class='badge' id='30_status'>WJ</div>   Sum Function </h2>
+<h3 class="problem_title"> <div class='badge' id='30_status'>WJ</div>   Hello ALMO! </h2>
 <div class="editor" id="30" rows="3" cols="80"></div> 
-<script>editor = ace.edit("30"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setOptions({  enableBasicAutocompletion: true,  enableSnippets: true,  enableLiveAutocompletion: true});editor.setValue("");</script><br><div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="30_sample_in">1 2 3
+<script>editor = ace.edit("30"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setOptions({  enableBasicAutocompletion: true,  enableSnippets: true,  enableLiveAutocompletion: true});editor.setValue("");</script><br><div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="30_sample_in">ALMO
 </pre>
 <div class="box-title"> 出力 </div><pre class="sample_out" id="30_sample_out"></pre>
-<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="30_expect_out">1 2 3
+<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="30_expect_out">Hello, ALMO!
 </pre>
 <script>all_input["30"] = [];
 all_output["30"] = [];
-all_sample_input["30"] = `1 2 3
+all_sample_input["30"] = `ALMO
 `;
-all_sample_output["30"] = `1 2 3
+all_sample_output["30"] = `Hello, ALMO!
 `;
 problem_status["30"] = "WJ";
 page_contents.push({
     "type":"Problem",
     "id":"30",
-    "title":"Sum Function"
+    "title":"Hello ALMO!"
 });
 
- all_input["30"].push(`1000 500 500
+ all_input["30"].push(`world
 `)
- all_input["30"].push(`2 3 4
+ all_input["30"].push(`wasm
 `)
- all_input["30"].push(`1 2 3
+ all_input["30"].push(`ALMO
 `)
- all_output["30"].push(`2000
+ all_output["30"].push(`Hello, world!
 `)
- all_output["30"].push(`9
+ all_output["30"].push(`Hello, wasm!
 `)
- all_output["30"].push(`6
+ all_output["30"].push(`Hello, ALMO!
 `)</script> 
 <button class="runbutton" onclick="runCode('30', false)"> Run Sample </button>
 <button class="submitbutton" onclick="runCode('30', true)"> Submit </button>
