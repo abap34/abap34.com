@@ -6,6 +6,12 @@
 <head>
     <title>  ALMO デモページ </title>
 
+    <meta property="og:title" content=" ALMO デモページ">
+    <meta property="og:type" content="article">
+    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.jpg">
+
+    <link rel=”icon” href=“https://www.abap34.com/almo_logo.jpg”>
+
     <!-- syntax hightlihgt -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
@@ -205,31 +211,9 @@
             margin-bottom: 10px;
         }
 
-        
-
-        .center {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 50%;
+        .image {
+            width: auto;
         }
-
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
 
         .date {
             padding: 8px 20px;
@@ -383,7 +367,7 @@
                 expect_out = expect_out.slice(0, -1);
             }
 
-            
+
             let result_bar_id = target_objectid + "_status";
             let judge_type = judge_types[target_objectid];
             if (judge_type == 'equal') {
@@ -413,7 +397,6 @@
             }
         }
     </script>
-
 
     <div class="date"> Date:  2023-08-10 </div>
     <div class="author"> Author:  abap34 </div>
@@ -599,7 +582,7 @@ brew install almo
                 const onCursorMove = (event) => {
                     const cursorX = event.clientX;
 
-                    if (!isMenuOpen && (cursorX <= 30)) { 
+                    if (!isMenuOpen && (cursorX <= 30)) {
                         gsap.to(sidebar, {
                             x: "0",
                             opacity: 1,
