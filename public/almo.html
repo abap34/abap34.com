@@ -13,7 +13,6 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="ALMO デモページ">
     <meta property="og:locale" content="ja_JP">
-    
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
@@ -420,46 +419,51 @@ ALMOは拡張Markdownパーサです。
 ALMOの拡張構文の最大の特徴、そして売りは、<strong>実行・ジャッジ可能なコードブロック</strong>です。
 <br>
 下にいかにも入力可能そうなエディタと、ボタンがあります。
-そこに、
-入力を受け取って、 <code>Hello {入力された文字列}!</code> という文字列を出力するプログラムを書いてみましょう。
+<br>
+そこに、入力を受け取って、 <code>Hello {入力された文字列}!</code> という文字列を出力するPythonのプログラムを書いてみましょう。
+<br>
+ちなみに、
+<br>
+<ul><li>入力は<code>input()</code></li><li>文字列結合は<code>+</code></li><li>出力は<code>print()</code></li></ul>
+でできます。
 <br>
 <br>
-<h3 class="problem_title"> <div class='badge' id='30_status'>WJ</div>   Hello ALMO! </h2>
-<div class="editor" id="30" rows="3" cols="80"></div> 
-<script>editor = ace.edit("30"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setOptions({  enableBasicAutocompletion: true,  enableSnippets: true,  enableLiveAutocompletion: true});editor.setValue("");</script><br><div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="30_sample_in">ALMO
+<h3 class="problem_title"> <div class='badge' id='54_status'>WJ</div>   Hello ALMO! </h2>
+<div class="editor" id="54" rows="3" cols="80"></div> 
+<script>editor = ace.edit("54"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setOptions({  enableBasicAutocompletion: true,  enableSnippets: true,  enableLiveAutocompletion: true});editor.setValue("");</script><br><div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="54_sample_in">ALMO
 </pre>
-<div class="box-title"> 出力 </div><pre class="sample_out" id="30_sample_out"></pre>
-<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="30_expect_out">Hello, ALMO!
+<div class="box-title"> 出力 </div><pre class="sample_out" id="54_sample_out"></pre>
+<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="54_expect_out">Hello, ALMO!
 </pre>
-<script>all_input["30"] = [];
-all_output["30"] = [];
-all_sample_input["30"] = `ALMO
+<script>all_input["54"] = [];
+all_output["54"] = [];
+all_sample_input["54"] = `ALMO
 `;
-all_sample_output["30"] = `Hello, ALMO!
+all_sample_output["54"] = `Hello, ALMO!
 `;
-problem_status["30"] = "WJ";
+problem_status["54"] = "WJ";
 page_contents.push({
     "type":"Problem",
-    "id":"30",
+    "id":"54",
     "title":"Hello ALMO!"
 });
 
- all_input["30"].push(`world
+ all_input["54"].push(`world
 `)
- all_input["30"].push(`wasm
+ all_input["54"].push(`wasm
 `)
- all_input["30"].push(`ALMO
+ all_input["54"].push(`ALMO
 `)
- all_output["30"].push(`Hello, world!
+ all_output["54"].push(`Hello, world!
 `)
- all_output["30"].push(`Hello, wasm!
+ all_output["54"].push(`Hello, wasm!
 `)
- all_output["30"].push(`Hello, ALMO!
+ all_output["54"].push(`Hello, ALMO!
 `)</script> 
-<button class="runbutton" onclick="runCode('30', false)"> Run Sample </button>
-<button class="submitbutton" onclick="runCode('30', true)"> Submit </button>
+<button class="runbutton" onclick="runCode('54', false)"> Run Sample </button>
+<button class="submitbutton" onclick="runCode('54', true)"> Submit </button>
 <script>
-judge_types["30"] = `equal`
+judge_types["54"] = `equal`
 </script>
 <br>
 <br>
@@ -480,7 +484,7 @@ judge_types["30"] = `equal`
 (つまり一度読み込みさえ終わればオフライン環境でも動作します。)
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"72",     "content":"全部入りHTML" })</script> 
+<script>page_contents.push({     "type":"H2",     "id":"96",     "content":"全部入りHTML" })</script> 
 <h2>全部入りHTML</h2>
 <br>
 ALMOは<strong>全部入り</strong>のHTMLファイルを出力するパーサです。
@@ -507,7 +511,8 @@ out=example/helloalmo/out/*.txt
 <div style="text-align: center;">マンドリル</div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"107",     "content":"インストール方法・使い方" })</script> 
+<br>
+<script>page_contents.push({     "type":"H2",     "id":"132",     "content":"インストール方法・使い方" })</script> 
 <h2>インストール方法・使い方</h2>
 <br>
 ALMOは、Homebrewを使ってインストールすることができます。
