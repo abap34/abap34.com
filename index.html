@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>abap34</title>
@@ -7,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+
 </head>
 
 <body>
@@ -62,7 +65,7 @@
         </section>
         <section id="Works" class="fade-in">
             <h3>Work Experience</h3>
-            <p>2022 (B1) Reserch Internship at <a href="https://www.d-itlab.co.jp/">Denso IT Lab</a></p> 
+            <p>2022 (B1) Reserch Internship at <a href="https://www.d-itlab.co.jp/">Denso IT Lab</a></p>
             深層学習を使った研究の実装面メインでのサポートをしました。
             <br><br>
             <p>2023 (B2) SWE Internship at <a href="https://xica.net/">XICA</a></p>
@@ -73,27 +76,31 @@
             <h2>Works</h2>
             <ul>
                 <li><a href="https://github.com/abap34/JITrench.jl">JITrench.jl</a></li>
-                    Julia言語製の深層学習フレームワークです。既存の自動微分ライブラリなどは用いず、フルスクラッチで開発しました。
-                    <br>
-                    GPUのサポートやdefine-by-runによる動作、jaxのような関数型言語風の記法とパラメータ管理、などなど、現代的な深層学習フレームワークの基本的な機能を揃えています。(それでいて高速です！)
-                    <br>
-                <li><a href="https://twitter.com/traPtitech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">traP</a></li>
-                    東京工業大学デジタル創作同好会traPというところに入っていて、
-                    <br>
-                    そこでは「Kaggle部」という機械学習を勉強する部を立ち上げて部長として活動しています。
-                    <br>
-                    たとえば、<a href="https://trap.jp/post/1697/">部内コンペの開催</a>や<a href="https://trap.jp/post/1918/">新入部員向けの割と本格派の勉強会</a>を開催しています。
+                Julia言語製の深層学習フレームワークです。既存の自動微分ライブラリなどは用いず、フルスクラッチで開発しました。
+                <br>
+                GPUのサポートやdefine-by-runによる動作、jaxのような関数型言語風の記法とパラメータ管理、などなど、現代的な深層学習フレームワークの基本的な機能を揃えています。(それでいて高速です！)
+                <br>
+                <li><a
+                        href="https://twitter.com/traPtitech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">traP</a>
+                </li>
+                東京工業大学デジタル創作同好会traPというところに入っていて、
+                <br>
+                そこでは「Kaggle部」という機械学習を勉強する部を立ち上げて部長として活動しています。
+                <br>
+                たとえば、<a href="https://trap.jp/post/1697/">部内コンペの開催</a>や<a
+                    href="https://trap.jp/post/1918/">新入部員向けの割と本格派の勉強会</a>を開催しています。
                 <li>データ分析コンペ</li>
-                    Kaggleなどのデータ分析コンペも趣味としてやっています。
-                    あまり頻繁に出ている感じではないですが、例えば全国医療AIコンテスト2021という学会のコンペで優勝したことがあります。
-                    <br>
-                    <a href="https://qiita.com/chizuchizu/items/3a834de6e2bb8fac7559#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">⇨ チームメイトによるかなりふざけた参加記</a>
+                Kaggleなどのデータ分析コンペも趣味としてやっています。
+                あまり頻繁に出ている感じではないですが、例えば全国医療AIコンテスト2021という学会のコンペで優勝したことがあります。
+                <br>
+                <a href="https://qiita.com/chizuchizu/items/3a834de6e2bb8fac7559#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB">⇨
+                    チームメイトによるかなりふざけた参加記</a>
             </ul>
         </section>
         <section id="contact" class="fade-in">
             <h2>Contact</h2>
-            <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">  @abap34</a></p>
-            <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">  @abap34</a></p>
+            <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34"> @abap34</a></p>
+            <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34"> @abap34</a></p>
             <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
         </section>
     </main>
@@ -142,15 +149,13 @@
             menuButton.textContent = "四";
         });
 
-        gsap.from(".fade-in", {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            stagger: 0.3
-        });
         gsap.set(sidebar, {
             zIndex: 9999
         });
+
+    </script>
+
     </script>
 </body>
+
 </html>
