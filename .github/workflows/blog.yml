@@ -43,7 +43,7 @@ jobs:
           cd ${{ github.workspace }}
           git config --global user.email "actions@example.com"
           git config --global user.name "GitHub Actions"
-          git add public/posts/*.html
+          git add .
           git commit -m "Add generated HTML files"
       
       - name: Push changes
