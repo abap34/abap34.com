@@ -7,15 +7,17 @@
     <title>  ALMO デモページ </title>
 
     <meta property="og:title" content=" ALMO デモページ">
-    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.png">
+    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.jpg">
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
 
     <!-- syntax hightlihgt -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    
+                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+                <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+            
 
     <!-- Pythonのランタイム -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
@@ -35,217 +37,183 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #292929;
-            color: #EAEAEA;
-            flex-direction: column;
-        }
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #F7F7F7;
+    color: #333;
+    flex-direction: column;
+}
 
-        h1 {
-            color: #DAB4FF;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3);
-        }
+h1, h2 {
+    color: #006699;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        h2 {
-            color: #DAB4FF;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3);
-            text-align: left;
-            padding-left: 10px;
-            border-bottom: solid 1px #DAB4FF;
-        }
+h2 {
+    text-align: left;
+    padding-left: 10px;
+    border-bottom: solid 1px #006699;
+}
 
-        p {
-            color: #BFBFBF;
-            margin-bottom: 10px;
-        }
+p {
+    color: #666;
+    margin-bottom: 10px;
+}
 
-        a {
-            color: #DAB4FF;
-        }
+a {
+    color: #006699;
+}
 
-        .sidebar {
-            border-right: 1px solid #eee;
-            height: 100%;
-            width: auto;
-            padding: 10px 10px;
-            left: 0;
-            overflow: auto;
-            position: fixed;
-            top: 0;
-            width: 200px;
-            z-index: 1000;
-            background-color: #3a3a3a;
-        }
+.sidebar {
+    border-right: 1px solid #eee;
+    height: 100%;
+    width: auto;
+    padding: 10px 10px;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    width: 200px;
+    z-index: 1000;
+    background-color: #F2F2F2;
+}
 
+.each_problem_div {
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
+}
 
-        .each_problem_div {
-            margin-bottom: 10px;
-            float: left;
-            width: 100%;
-        }
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #006699;
+    color: #006699;
+}
 
-        .content_list_h1 {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-bottom: solid 1px #DAB4FF;
-            color: #eddbff;
-        }
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
 
-        .content_list_h2 {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #DAB4FF;
-        }
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
 
-        .content_list_problem {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #ecdaff;
-        }
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    border: 1px solid #333;
+    margin: 0 8px;
+    float: left;
+}
 
-        .badge {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #514f4f;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            float: left;
-        }
+.runbutton, .submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
 
+.runbutton {
+    background-color: #006699;
+}
 
-        .runbutton {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bffa3;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
+.runbutton:hover {
+    background-color: #005580;
+}
 
-        .runbutton:hover {
-            background-color: #0057b384;
-        }
+.submitbutton {
+    background-color: #008000;
+}
 
+.submitbutton:hover {
+    background-color: #006400;
+}
 
-        .submitbutton {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #22ff0070;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
 
-        .submitbutton:hover {
-            background-color: #294928;
-        }
+.editor {
+    width: 100%;
+    height: 300px; /* エディタの高さを調整 */
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #F2F2F2;
+    color: #333;
+    padding: 10px; /* パディングを調整 */
+}
 
+.output, .expect_out, .sample_in, .sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #F2F2F2;
+    color: #333;
+    border: solid 1px #a8a8a8;
+}
 
-        .problem_title {
-            font-size: 20px;
-            font-weight: bold;
-        }
+.box-title, .problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #666;
+}
 
-        .editor {
-            width: 100%;
-            height: 300px;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.image {
+    width: auto;
+}
 
+.date, .author {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
+    border: 1px solid #333;
+    margin: 0 8px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
 
-        .output {
-            width: 100%;
-            padding: 5px 5px;
-            overflow-x: auto;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.date {
+    top: 10px;
+}
 
-        .expect_out,
-        .sample_in,
-        .sample_out {
-            width: 100%;
-            padding: 5px 5px;
-            overflow-x: auto;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.author {
+    top: 60px;
+}
 
-        .box-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .problem_list {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .image {
-            width: auto;
-        }
-
-        .date {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #e0e0e0;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            text-align: center;
-            display: inline-block;
-            /* set more left */
-            position: absolute;
-            right: 0;
-            top: 10px;
-        }
-
-        .author {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #e0e0e0;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            text-align: center;
-            display: inline-block;
-            position: absolute;
-            right: 0;
-            top: 60px;
-        }
+    
     </style>
+
 </head>
 
 <body>
@@ -304,7 +272,7 @@
             let out_id = target_objectid + "_sample_out";
 
             document.getElementById(target_objectid + "_sample_out").innerText = "";
-            document.getElementById(target_objectid + "_sample_out").style.color = "white";
+            document.getElementById(target_objectid + "_sample_out").style.color = "";
             result_bar.innerText = "Running...";
 
 
@@ -414,46 +382,52 @@ ALMOは拡張Markdownパーサです。
 ALMOの拡張構文の最大の特徴、そして売りは、<strong>実行・ジャッジ可能なコードブロック</strong>です。
 <br>
 下にいかにも入力可能そうなエディタと、ボタンがあります。
-そこに、
-入力を受け取って、 <code>Hello {入力された文字列}!</code> という文字列を出力するプログラムを書いてみましょう。
+<br>
+そこに、入力を受け取って、 <code>Hello {入力された文字列}!</code> という文字列を出力するPythonのプログラムを書いてみましょう。
+<br>
+ちなみに、
+<br>
+<ul><li>入力は<code>input()</code></li><li>文字列結合は<code>+</code></li><li>出力は<code>print()</code></li></ul>
+でできます。
 <br>
 <br>
-<h3 class="problem_title"> <div class='badge' id='30_status'>WJ</div>   Sum Function </h2>
-<div class="editor" id="30" rows="3" cols="80"></div> 
-<script>editor = ace.edit("30"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setOptions({  enableBasicAutocompletion: true,  enableSnippets: true,  enableLiveAutocompletion: true});editor.setValue("");</script><br><div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="30_sample_in">1 2 3
+<h3 class="problem_title"> <div class='badge' id='54_status'>WJ</div>   Hello ALMO! </h2>
+<div class="editor" id="54" rows="3" cols="80"></div> 
+<script>editor = ace.edit("54"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});</script>
+<div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="54_sample_in">ALMO
 </pre>
-<div class="box-title"> 出力 </div><pre class="sample_out" id="30_sample_out"></pre>
-<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="30_expect_out">1 2 3
+<div class="box-title"> 出力 </div><pre class="sample_out" id="54_sample_out"></pre>
+<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="54_expect_out">Hello, ALMO!
 </pre>
-<script>all_input["30"] = [];
-all_output["30"] = [];
-all_sample_input["30"] = `1 2 3
+<script>all_input["54"] = [];
+all_output["54"] = [];
+all_sample_input["54"] = `ALMO
 `;
-all_sample_output["30"] = `1 2 3
+all_sample_output["54"] = `Hello, ALMO!
 `;
-problem_status["30"] = "WJ";
+problem_status["54"] = "WJ";
 page_contents.push({
     "type":"Problem",
-    "id":"30",
-    "title":"Sum Function"
+    "id":"54",
+    "title":"Hello ALMO!"
 });
 
- all_input["30"].push(`1000 500 500
+ all_input["54"].push(`world
 `)
- all_input["30"].push(`2 3 4
+ all_input["54"].push(`wasm
 `)
- all_input["30"].push(`1 2 3
+ all_input["54"].push(`ALMO
 `)
- all_output["30"].push(`2000
+ all_output["54"].push(`Hello, world!
 `)
- all_output["30"].push(`9
+ all_output["54"].push(`Hello, wasm!
 `)
- all_output["30"].push(`6
+ all_output["54"].push(`Hello, ALMO!
 `)</script> 
-<button class="runbutton" onclick="runCode('30', false)"> Run Sample </button>
-<button class="submitbutton" onclick="runCode('30', true)"> Submit </button>
+<button class="runbutton" onclick="runCode('54', false)"> Run Sample </button>
+<button class="submitbutton" onclick="runCode('54', true)"> Submit </button>
 <script>
-judge_types["30"] = `equal`
+judge_types["54"] = `equal`
 </script>
 <br>
 <br>
@@ -474,7 +448,7 @@ judge_types["30"] = `equal`
 (つまり一度読み込みさえ終わればオフライン環境でも動作します。)
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"72",     "content":"全部入りHTML" })</script> 
+<script>page_contents.push({     "type":"H2",     "id":"96",     "content":"全部入りHTML" })</script> 
 <h2>全部入りHTML</h2>
 <br>
 ALMOは<strong>全部入り</strong>のHTMLファイルを出力するパーサです。
@@ -492,6 +466,12 @@ out=example/helloalmo/out/*.txt
 <br>
 と書くだけで作られ、そして全ての出入力ファイルがHTMLファイルに埋め込まれて、自動でジャッジが構築されます。
 <br>
+普通のコードブロックも作れます、もちろん
+<br>
+<pre><code>def hello():
+    print("Hello ALMO!")
+</code></pre>
+<br>
 <br>
 (他にも、たとえインターネット上のファイルでも、画像は自動でBase64に変換され、HTMLファイルに埋め込まれます。)
 <br>
@@ -501,7 +481,8 @@ out=example/helloalmo/out/*.txt
 <div style="text-align: center;">マンドリル</div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"107",     "content":"インストール方法・使い方" })</script> 
+<br>
+<script>page_contents.push({     "type":"H2",     "id":"138",     "content":"インストール方法・使い方" })</script> 
 <h2>インストール方法・使い方</h2>
 <br>
 ALMOは、Homebrewを使ってインストールすることができます。
