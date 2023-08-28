@@ -33,10 +33,10 @@
                     for (const post of posts) {
                         const {title, date, url} = post;
                         // split url and get after public
-                        const abs_url = "abap34.com/" + url.split('/').slice(1).join('/');
+                        const fixed_url = url.split('/').slice(1).join('/');
                         const postHtml = `
             <div class="post">
-              <h4>${date} | <a href="${abs_url}">${title}</a></h4>
+              <h4>${date} | <a href="${fixed_url}">${title}</a></h4>
             </div>`;
                         html += postHtml;
                     }
