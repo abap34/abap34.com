@@ -32,7 +32,7 @@ jobs:
           cd ${{ github.workspace }}
           for file in $(ls posts/*.md); do
             filename_without_extension=$(basename $file .md)
-            ./ALMO/src/almo "$file" > public/posts/${filename_without_extension}.html  
+            ./ALMO/src/almo "$file" --theme light > public/posts/${filename_without_extension}.html  
             python3 ./blog_builder/build.py public/posts/${filename_without_extension}.html  
           done
 
