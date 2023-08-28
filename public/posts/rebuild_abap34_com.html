@@ -14,7 +14,7 @@
 
     <!-- syntax hightlihgt -->
     
-                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
+                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
                 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
                 <script>hljs.initHighlightingOnLoad();</script>
             
@@ -39,215 +39,178 @@
     <style>
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #292929;
-            color: #EAEAEA;
-            flex-direction: column;
-        }
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #F7F7F7;
+    color: #333;
+    flex-direction: column;
+}
 
-        h1 {
-            color: #DAB4FF;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3);
-        }
+h1, h2 {
+    color: #006699;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        h2 {
-            color: #DAB4FF;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(218, 180, 255, 0.3);
-            text-align: left;
-            padding-left: 10px;
-            border-bottom: solid 1px #DAB4FF;
-        }
+h2 {
+    text-align: left;
+    padding-left: 10px;
+    border-bottom: solid 1px #006699;
+}
 
-        p {
-            color: #BFBFBF;
-            margin-bottom: 10px;
-        }
+p {
+    color: #666;
+    margin-bottom: 10px;
+}
 
-        a {
-            color: #DAB4FF;
-        }
+a {
+    color: #006699;
+}
 
-        .sidebar {
-            border-right: 1px solid #eee;
-            height: 100%;
-            width: auto;
-            padding: 10px 10px;
-            left: 0;
-            overflow: auto;
-            position: fixed;
-            top: 0;
-            width: 200px;
-            z-index: 1000;
-            background-color: #3a3a3a;
-        }
+.sidebar {
+    border-right: 1px solid #eee;
+    height: 100%;
+    width: auto;
+    padding: 10px 10px;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    width: 200px;
+    z-index: 1000;
+    background-color: #F2F2F2;
+}
 
+.each_problem_div {
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
+}
 
-        .each_problem_div {
-            margin-bottom: 10px;
-            float: left;
-            width: 100%;
-        }
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #006699;
+    color: #006699;
+}
 
-        .content_list_h1 {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-bottom: solid 1px #DAB4FF;
-            color: #eddbff;
-        }
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
 
-        .content_list_h2 {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #DAB4FF;
-        }
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
 
-        .content_list_problem {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #ecdaff;
-        }
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    border: 1px solid #333;
+    margin: 0 8px;
+    float: left;
+}
 
-        .badge {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #514f4f;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            float: left;
-        }
+.runbutton, .submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
 
+.runbutton {
+    background-color: #006699;
+}
 
-        .runbutton {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bffa3;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
+.runbutton:hover {
+    background-color: #005580;
+}
 
-        .runbutton:hover {
-            background-color: #0057b384;
-        }
+.submitbutton {
+    background-color: #008000;
+}
 
+.submitbutton:hover {
+    background-color: #006400;
+}
 
-        .submitbutton {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #22ff0070;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
 
-        .submitbutton:hover {
-            background-color: #294928;
-        }
+.editor {
+    width: 100%;
+    height: 300px; /* エディタの高さを調整 */
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #F2F2F2;
+    color: #333;
+    padding: 10px; /* パディングを調整 */
+}
 
+.output, .expect_out, .sample_in, .sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #F2F2F2;
+    color: #333;
+    border: solid 1px #a8a8a8;
+}
 
-        .problem_title {
-            font-size: 20px;
-            font-weight: bold;
-        }
+.box-title, .problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #666;
+}
 
-        .editor {
-            width: 100%;
-            height: 300px;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.image {
+    width: auto;
+}
 
+.date, .author {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
+    border: 1px solid #333;
+    margin: 0 8px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
 
-        .output {
-            width: 100%;
-            padding: 5px 5px;
-            overflow-x: auto;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.date {
+    top: 10px;
+}
 
-        .expect_out,
-        .sample_in,
-        .sample_out {
-            width: 100%;
-            padding: 5px 5px;
-            overflow-x: auto;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #514f4f;
-            color: #fff;
-        }
+.author {
+    top: 60px;
+}
 
-        .box-title {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .problem_list {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .image {
-            width: auto;
-        }
-
-        .date {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #e0e0e0;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            text-align: center;
-            display: inline-block;
-            /* set more left */
-            position: absolute;
-            right: 0;
-            top: 10px;
-        }
-
-        .author {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #e0e0e0;
-            border: 1px solid #fff;
-            margin: 0 8px;
-            text-align: center;
-            display: inline-block;
-            position: absolute;
-            right: 0;
-            top: 60px;
-        }
     
     </style>
 
@@ -450,8 +413,7 @@ Zennにも記事を書いたんですが、(<a href="https://zenn.dev/abap34/art
 履修するのが難しいということが判明したので、
 とりあえず自分でやってみることにしました。
 <br>
-今は、
-[測度・確率・ルベーグ積分 応用への最短コース (原 啓介)]（https://amzn.asia/d/719TjTr）
+今は、<a href="https://amzn.asia/d/719TjTr">測度・確率・ルベーグ積分 応用への最短コース (原 啓介)</a>
 を進めています。
 <br>
 <h3>その他</h3>
