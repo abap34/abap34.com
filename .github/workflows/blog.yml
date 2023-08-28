@@ -1,0 +1,53 @@
+name: Page Build by ALMO
+
+on:
+    push:
+      branches:
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Clone ALMO Repository
+        run: git clone https://github.com/abap34/ALMO
+
+
+      - name: Install g++ and libcurl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ libcurl4-openssl-dev
+
+      - name: Compile almo.cpp
+        run: |
+          cd ALMO/src
+          g++ -std=c++20 -o almo almo.cpp -lcurl
+
+      - name: Generate HTML Files
+        run: |
+          cd ${{ github.workspace }}
+          for file in $(ls posts/*.md); do
+            filename_without_extension=$(basename $file .md)
+            ./ALMO/src/almo "$file" > public/posts/${filename_without_extension}.html  
+            python3 ./blog_builder/build.py public/posts/${filename_without_extension}.html  
+          done
+
+
+
+      - name: Commit and Push HTML Files
+        run: |
+          cd ${{ github.workspace }}
+          git config --global user.email "actions@example.com"
+          git config --global user.name "GitHub Actions"
+          git add public/posts/*.html
+          git commit -m "Add generated HTML files"
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
