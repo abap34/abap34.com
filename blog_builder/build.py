@@ -32,6 +32,7 @@ def build_article(out_file):
     date = get_date(out_file)
     title = get_title(out_file)
     add_tweet_button(out_file)
+    output_file = out_file.replace('../public/', '')
     with open('../public/posts.json', 'r') as f:
         posts = json.load(f)
         for post in posts:
