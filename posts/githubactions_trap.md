@@ -4,9 +4,9 @@ author: abap34
 date: 2023/08/29
 ---
 
-# GitHub Actionsで過去コミットとかを参照したいときは fetch-depth: 0 にしないとダメだった
+# GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 
-## GitHub Actionsで過去コミットとかを参照したいときは fetch-depth: 0 にしないとダメだった
+## GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 
 このページをビルドしてくれるGitHub Actionのワークフローファイルでは、
 マークダウンファイルで差分があったときだけビルドするために
