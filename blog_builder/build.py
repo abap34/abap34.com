@@ -10,10 +10,18 @@ def get_title(output_file):
         title = re.search(r'<title>(.*)</title>', html).group(1)
         return title
 
+def get_date(output_file):
+    with open(output_file, 'r') as f:
+        html = f.read()
+        date = re.search(r"<div class=\"date\"> Date:  (.*) </div>", html).group(1)
+        date = datetime.datetime.strptime(date, '%Y/%m/%d')
+        return date
+
+
 def build_article(out_file):
     with open('public/posts.json', 'r') as f:
         posts = json.load(f)
-        date = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M')
+        date = get_date(out_file)
         title = get_title(out_file)
         for post in posts:
             if post['title'] == title:
@@ -36,7 +44,7 @@ def build_article(out_file):
     with open('public/posts.json', 'w') as f:
         json.dump(posts, f)
 
-    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y-%m-%d-%H-%M'), reverse=True)
+    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
 
     recent_posts = posts[:5]
     with open('public/recent_posts.json', 'w') as f:
