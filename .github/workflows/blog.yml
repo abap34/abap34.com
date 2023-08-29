@@ -1,9 +1,9 @@
 name: Page Build by ALMO
 
 on:
-    push:
-      branches:
-        - main
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -16,7 +16,6 @@ jobs:
       - name: Clone ALMO Repository
         run: git clone https://github.com/abap34/ALMO
 
-
       - name: Install g++ and libcurl
         run: |
           sudo apt-get update
@@ -27,16 +26,21 @@ jobs:
           cd ALMO/src
           g++ -std=c++20 -o almo almo.cpp -lcurl
 
+      - name: Check for Changes in MD Files
+        id: check_changes
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
+          echo "::set-output name=changed_files::${changed_files}"
+
       - name: Generate HTML Files
+        if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ${{ github.workspace }}
-          for file in $(ls posts/*.md); do
+          for file in ${{ steps.check_changes.outputs.changed_files }}; do
             filename_without_extension=$(basename $file .md)
             ./ALMO/src/almo "$file" --theme light > public/posts/${filename_without_extension}.html  
             python3 ./blog_builder/build.py public/posts/${filename_without_extension}.html  
           done
-
-
 
       - name: Commit and Push HTML Files
         run: |
@@ -45,7 +49,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add .
           git commit -m "Add generated HTML files"
-      
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
