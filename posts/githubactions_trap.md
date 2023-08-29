@@ -26,7 +26,8 @@ date: 2023/08/29
 ```
 
 みたいなことをしていますが、これを普通に書くだけでは
-`fetal: bad obejct xxx...`と言われます。
+`fetal: bad obejct xxx...`となります。
+
 
 全然原因がわからず、
 `actions/checkout@v2`を見にいくと、
