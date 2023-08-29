@@ -1,5 +1,5 @@
 ---
-title: GitHub Actionsで過去コミットとかを参照したいときは fetch-depthを指定しないとダメだった
+title: GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 author: abap34
 date: 2023/08/29
 ---
