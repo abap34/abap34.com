@@ -14,7 +14,6 @@ def get_date(output_file):
     with open(output_file, 'r') as f:
         html = f.read()
         date = re.search(r"<div class=\"date\"> Date:  (.*) </div>", html).group(1)
-        date = datetime.datetime.strptime(date, '%Y/%m/%d')
         return date
 
 
