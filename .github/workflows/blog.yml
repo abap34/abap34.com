@@ -52,6 +52,7 @@ jobs:
           cd posts
           for file in ${{ steps.check_changes.outputs.changed_files }}; do
             filename_without_extension=$(basename $file .md)
+            file=${file#posts/}
             echo "Generating HTML for $file"
             ../ALMO/src/almo "$file" --theme light > ../public/posts/${filename_without_extension}.html  
             python3 ../blog_builder/build.py ../public/posts/${filename_without_extension}.html  
