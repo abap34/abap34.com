@@ -9,7 +9,7 @@ date: 2023/08/29
 ## GitHub Actionsで過去コミットとかを参照したいときは fetch-depth: 0 にしないとダメだった
 
 このページをビルドしてくれるGitHub Actionのワークフローファイルでは、
-マークダウンファイルで差分があったときだけビルドするように
+マークダウンファイルで差分があったときだけビルドするために
 
 ```
 - name: Check for Changes in MD Files
