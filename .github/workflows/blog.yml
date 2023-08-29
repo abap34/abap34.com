@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
 
       - name: Clone ALMO Repository
         run: git clone https://github.com/abap34/ALMO
