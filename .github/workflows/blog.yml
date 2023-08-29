@@ -15,6 +15,17 @@ jobs:
         with:
             fetch-depth: 0
 
+      - name: Check for Changes in MD Files
+        id: check_changes
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
+          if [[ -z "$changed_files" ]]; then
+            echo "No changes in MD files. Skipping build."
+            exit
+          else
+            echo "change_file=$changed_files" >> $GITHUB_OUTPUT
+          fi
+
       - name: Clone ALMO Repository
         run: git clone https://github.com/abap34/ALMO
 
@@ -28,11 +39,6 @@ jobs:
           cd ALMO/src
           g++ -std=c++20 -o almo almo.cpp -lcurl
 
-      - name: Check for Changes in MD Files
-        id: check_changes
-        run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
-          echo "::set-output name=changed_files::${changed_files}"
 
       - name: Generate HTML Files
         if: steps.check_changes.outputs.changed_files != ''
