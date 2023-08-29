@@ -18,8 +18,6 @@ jobs:
       - name: Check for Changes in MD Files
         id: check_changes
         run: |
-          cd ${{ github.workspace }}
-          cd posts
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
