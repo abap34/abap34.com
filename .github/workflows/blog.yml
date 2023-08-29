@@ -23,6 +23,7 @@ jobs:
             echo "No changes in MD files. Skipping build."
             exit
           else
+            echo "Change: $changed_files"
             echo "change_file=$changed_files" >> $GITHUB_OUTPUT
           fi
 
