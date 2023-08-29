@@ -18,6 +18,8 @@ jobs:
       - name: Check for Changes in MD Files
         id: check_changes
         run: |
+          cd ${{ github.workspace }}
+          cd posts
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
@@ -50,6 +52,7 @@ jobs:
           cd posts
           for file in ${{ steps.check_changes.outputs.changed_files }}; do
             filename_without_extension=$(basename $file .md)
+            echo "Generating HTML for $file"
             ../ALMO/src/almo "$file" --theme light > ../public/posts/${filename_without_extension}.html  
             python3 ../blog_builder/build.py ../public/posts/${filename_without_extension}.html  
           done
