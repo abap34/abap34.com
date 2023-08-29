@@ -9,7 +9,7 @@ date: 2023/08/29
 ## `git diff` が通らない
 
 
-このページをビルドしてくれるGitHub Actionのワークフローファイルでは、
+[このページをビルドしてくれるGitHub Actionのワークフローファイル](https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml)では、
 マークダウンファイルで差分があったときだけビルドするために
 
 ```
@@ -17,11 +17,11 @@ date: 2023/08/29
         id: check_changes
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
           else
             echo "Change: $changed_files"
-            echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
           fi
 ```
 
@@ -30,7 +30,7 @@ date: 2023/08/29
 
 
 全然原因がわからず、
-`actions/checkout@v2`を見にいくと、
+`actions/checkout`を見にいくと、
 
 
 ![Alt text](checkout.png)
