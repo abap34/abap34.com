@@ -26,13 +26,13 @@ def add_tweet_button(output_file):
         html = html.replace('</body>', BUTTON + '</body>')
     with open(output_file, 'w') as f:
         f.write(html)
-        
+
 
 def build_article(out_file):
     date = get_date(out_file)
     title = get_title(out_file)
     add_tweet_button(out_file)
-    with open('public/posts.json', 'r') as f:
+    with open('../public/posts.json', 'r') as f:
         posts = json.load(f)
         for post in posts:
             if post['title'] == title:
@@ -52,13 +52,13 @@ def build_article(out_file):
             })
 
         
-    with open('public/posts.json', 'w') as f:
+    with open('../public/posts.json', 'w') as f:
         json.dump(posts, f)
 
     posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
 
     recent_posts = posts[:5]
-    with open('public/recent_posts.json', 'w') as f:
+    with open('../public/recent_posts.json', 'w') as f:
         json.dump(recent_posts, f)
 
     
