@@ -32,8 +32,6 @@
                     let html = '';
                     for (const post of posts) {
                         const {title, post_date, url} = post;
-                        // split url and get after public
-                        const fixed_url = url.split('/').slice(1).join('/');
                         const postHtml = `
             <div class="post">
               <h4>${post_date} | <a href="${fixed_url}">${title}</a></h4>
