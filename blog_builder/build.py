@@ -16,17 +16,17 @@ def get_date(output_file):
         date = re.search(r"<div class=\"date\"> Date:  (.*) </div>", html).group(1)
         return date
 
-def add_tweet_button(html):
+def add_tweet_button(output_file):
     BUTTON = """
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 """
-    with open(html, 'r') as f:
+    with open(output_file, 'r') as f:
         html = f.read()
         html = html.replace('</body>', BUTTON + '</body>')
-    with open(html, 'w') as f:
+    with open(output_file, 'w') as f:
         f.write(html)
-
+        
 
 def build_article(out_file):
     date = get_date(out_file)
