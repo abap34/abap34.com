@@ -21,21 +21,23 @@ jobs:
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
-            exit 1
           else
             echo "Change: $changed_files"
-            echo "change_file=$changed_files" >> $GITHUB_OUTPUT
+            echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
           fi
 
       - name: Clone ALMO Repository
+        if: steps.check_changes.outputs.changed_files != ''
         run: git clone https://github.com/abap34/ALMO
 
       - name: Install g++ and libcurl
+        if: steps.check_changes.outputs.changed_files != ''
         run: |
           sudo apt-get update
           sudo apt-get install -y g++ libcurl4-openssl-dev
 
       - name: Compile almo.cpp
+        if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ALMO/src
           g++ -std=c++20 -o almo almo.cpp -lcurl
@@ -52,6 +54,7 @@ jobs:
           done
 
       - name: Commit and Push HTML Files
+        if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ${{ github.workspace }}
           git config --global user.email "actions@example.com"
@@ -60,6 +63,7 @@ jobs:
           git commit -m "Add generated HTML files"
 
       - name: Push changes
+        if: steps.check_changes.outputs.changed_files != ''
         uses: ad-m/github-push-action@master
         with:
           branch: main
