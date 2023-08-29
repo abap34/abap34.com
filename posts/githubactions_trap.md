@@ -6,7 +6,8 @@ date: 2023/08/29
 
 # GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 
-## GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
+## `git diff` が通らない
+
 
 このページをビルドしてくれるGitHub Actionのワークフローファイルでは、
 マークダウンファイルで差分があったときだけビルドするために
@@ -30,6 +31,7 @@ date: 2023/08/29
 
 全然原因がわからず、
 `actions/checkout@v2`を見にいくと、
+
 
 ![Alt text](checkout.png)
 
