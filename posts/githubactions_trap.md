@@ -12,16 +12,15 @@ date: 2023/08/29
 マークダウンファイルで差分があったときだけビルドするために
 
 ```
-- name: Check for Changes in MD Files
+      - name: Check for Changes in MD Files
         id: check_changes
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
-            exit 1
           else
             echo "Change: $changed_files"
-            echo "change_file=$changed_files" >> $GITHUB_OUTPUT
+            echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
           fi
 ```
 
