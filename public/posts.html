@@ -7,51 +7,65 @@
     <title>ブログ投稿一覧</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f9f9f9;
         }
 
         header {
-            background-color: #f5f5f5;
             color: #006699;
             text-align: center;
-            padding: 1rem 0;
+            padding: 2rem 0;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
         }
 
         .post-list {
             list-style: none;
             padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            grid-gap: 1.5rem;
         }
 
         .post-list-item {
             display: flex;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border: 1px solid #ddd;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
             background-color: #fff;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
         }
 
         .post-list-item:hover {
             background-color: #f5f5f5;
+            transform: translateY(-3px);
         }
 
         .thumbnail {
-            width: 100px;
-            height: auto;
-            margin-right: 1rem;
+            width: auto;
+            height: 100px;
+            margin-right: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .post-list-item:hover {
-            background-color: #f5f5f5;
+        .post-content {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .post-content a {
+            color: #006699;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -59,9 +73,10 @@
 <body>
     <header>
         <h1>abap34's blog</h1>
+        <a href="https://abap34.com">| ⇨  トップに戻る  </a>
     </header>
     <div class="container">
-        <h2>最新の投稿</h2>
+        <h2>最近の投稿</h2>
         <ul class="post-list" id="recent-posts"></ul>
         <h2>過去の投稿一覧</h2>
         <ul class="post-list" id="past-posts"></ul>
@@ -72,7 +87,6 @@
             const postList = document.getElementById(elementId);
 
             posts.forEach(post => {
-                console.log(post);
                 const listItem = document.createElement("li");
                 listItem.classList.add("post-list-item");
                 listItem.innerHTML = `
