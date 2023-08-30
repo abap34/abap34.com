@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブログ投稿一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #f5f5f5;
+            color: #006699;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .post-list-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .post-list-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: auto;
+            margin-right: 1rem;
+        }
+
+        .post-list-item:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>abap34's website</h1>
+    </header>
+    <div class="container">
+        <h2>最新の投稿</h2>
+        <ul class="post-list" id="recent-posts"></ul>
+        <h2>過去の投稿一覧</h2>
+        <ul class="post-list" id="past-posts"></ul>
+    </div>
+    <script>
+
+        function showPosts(posts, elementId) {
+            const postList = document.getElementById(elementId);
+
+            posts.forEach(post => {
+                console.log(post);
+                const listItem = document.createElement("li");
+                listItem.classList.add("post-list-item");
+                listItem.innerHTML = `
+            <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
+            <div class="post-content">
+              ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
+            </div>`;
+                postList.appendChild(listItem);
+            });
+        }
+
+        fetch('./recent_posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                showPosts(posts, 'recent-posts');
+            })
+            .catch(error => console.error('投稿情報の取得に失敗しました', error));
+
+        fetch('./posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                showPosts(posts, 'past-posts');
+            })
+            .catch(error => console.error('投稿情報の取得に失敗しました', error));
+    </script>
+</body>
+
+</html>
