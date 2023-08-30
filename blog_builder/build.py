@@ -37,6 +37,9 @@ def add_tweet_button(output_file):
 <a href="https://www.abap34.com/posts.html" class="back">記事一覧にもどる</a>
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<footer>
+    <p>&copy; 2023 abap34</p>
+</footer>
 """
     with open(output_file, 'r') as f:
         html = f.read()
