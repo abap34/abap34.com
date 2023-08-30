@@ -19,7 +19,10 @@ jobs:
         id: check_changes
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
-          echo "{changed_files}={$changed_files}" >> $GITHUB_OUTPUT
+          changed_files="${changed_files//'%'/'%25'}"
+          changed_files="${changed_files//$'\n'/'%0A'}"
+          changed_files="${changed_files//$'\r'/'%0D'}"
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
           if [[ -z "$changed_files" ]]; then
             echo "No changes in MD files. Skipping build."
           else
@@ -48,7 +51,10 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           cd posts
-          for file in ${{ steps.check_changes.outputs.changed_files }}; do
+          changed_files="${changed_files//'%25'/'%'}"
+          changed_files="${changed_files//'%0A'/$'\n'}"
+          changed_files="${changed_files//'%0D'/$'\r'}"
+          for file in $changed_files; do
             filename_without_extension=$(basename $file .md)
             file=${file#posts/}
             echo "Generating HTML for $file"
