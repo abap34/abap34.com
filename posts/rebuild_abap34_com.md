@@ -66,7 +66,3 @@ PyOdideを使って実行環境・ジャッジ同梱のHTMLが吐けるという
 弱い。
 
 <br>
-
-<footer>
-    <p>&copy; 2023 abap34</p>
-</footer>
