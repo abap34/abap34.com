@@ -51,7 +51,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           cd posts
-          changes_files = ${{ steps.check_changes.outputs.changed_files }}
+          changed_files=${{ steps.check_changes.outputs.changed_files }}
           changed_files="${changed_files//'%25'/'%'}"
           changed_files="${changed_files//'%0A'/$'\n'}"
           changed_files="${changed_files//'%0D'/$'\r'}"
