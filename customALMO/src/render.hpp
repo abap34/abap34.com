@@ -911,7 +911,7 @@ namespace almo {
 
         std::string base64_image = base64_encode(image_data);
 
-        std::string output = "<img src=\"data:image/png;base64," + base64_image + ">\n";
+        std::string output = "<img src=\"data:image/png;base64," + base64_image + "\">\n";
         std::string figcaption = "<figcaption>" + content + "</figcaption>";
         return "<figure>" + output + figcaption + "</figure>";
     }
