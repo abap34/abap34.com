@@ -884,7 +884,7 @@ $$
 これを使うと、
 
 $$
-\frac{\partial f}{\partial a} = 
+\frac{\partial f}{\partial a} = \frac{\partial f}{\partial z} \frac{\partial z}{\partial a} = 2a
 $$
 
 となります。

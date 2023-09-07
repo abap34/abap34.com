@@ -56,7 +56,7 @@ jobs:
             filename_without_extension=$(basename $file .md)
             file=${file#posts/}
             echo "Generating HTML for $file"
-            ../ALMO/src/almo "$file" --theme light > ../public/posts/${filename_without_extension}.html  
+            ../customALMO/src/almo "$file" --theme light -o ../public/posts/${filename_without_extension}.html  
             python3 ../blog_builder/build.py ../public/posts/${filename_without_extension}.html  
           done
 
