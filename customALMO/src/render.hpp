@@ -88,6 +88,10 @@ namespace almo {
             color: #006699;
         }
 
+        figcaption {
+            text-align: center;
+        }
+
         pre {
             padding: 10px;
             color: #333;
