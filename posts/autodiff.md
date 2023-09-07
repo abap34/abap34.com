@@ -709,7 +709,7 @@ print(f)
 f.plot().write_png('fig/expr.png')
 ```
 
-![](autodiff/fig/expr.png)
+![((x + 1) * sin(x))](autodiff/fig/expr.png)
 
 というふうな木構造として保持されていました。
 
@@ -791,7 +791,7 @@ df.simplify()
 df.simplify().plot().write_png('fig/expr_diff_simple.png')
 ```
 
-![](autodiff/fig/expr_diff_simple.png)
+![(sin(x) + ((x + 1) * cos(x)))](autodiff/fig/expr_diff_simple.png)
 
 このように、簡約された式を得ることができました。
 
