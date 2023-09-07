@@ -29,10 +29,6 @@ jobs:
             echo "Change: $changed_files"
           fi
 
-      - name: Clone ALMO Repository
-        if: steps.check_changes.outputs.changed_files != ''
-        run: git clone https://github.com/abap34/ALMO
-
       - name: Install g++ and libcurl
         if: steps.check_changes.outputs.changed_files != ''
         run: |
@@ -42,7 +38,7 @@ jobs:
       - name: Compile almo.cpp
         if: steps.check_changes.outputs.changed_files != ''
         run: |
-          cd ALMO/src
+          cd customALMO/src
           g++ -std=c++20 -o almo almo.cpp -lcurl
 
 
