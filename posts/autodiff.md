@@ -1,23 +1,23 @@
 ---
 title: コンピュータで自動で微分を計算しよう
-date: 2023/08/30
+date: 2023/09/08
 tags: [機械学習, 深層学習, 数学, 最適化, 自動微分]
 ---
 
 $$
 \newcommand{\argmin}{\mathop{\rm arg~min}\limits}
 $$
-
 ## はじめに　
 
 ブログのリニューアル記念に、せっかくなので何か記事を書くことにしました。
 何を書いてもよかったのですが、最近人に機械学習の話をすることが結構あり、その中でしていた自動微分の話が割とウケがよかったのでそれについて記事を書くことにしました。
 
-この記事では、特に機械学習・深層学習への応用を意識しながら、具体的なアルゴリズムについて紹介していきたいと思います。
-
 
 想定としては、大学一年生レベルの数学がわかっていれば読めるようになっているかと思いますが、
 機械学習や最適化について知っているとイメージがつきやすいかもしれません。
+
+(最終更新: 2023/09/08)
+
 
 ### 目次
 - 微分を求める技術
@@ -34,34 +34,44 @@ $$
 - 数式微分
   - 数式微分のアルゴリズム
   - 数式微分の実装
-  - 簡略化
-  - 
+  - 簡約化
 - 自動微分
   - 自動微分のアルゴリズム forward / reverse モード
   - forward モードの自動微分
   - reverse モードの自動微分
+    - Wangert リスト
+      - Wangert リストへの変換
+      - Wangert リストから勾配を計算する
+    - define-by-run
+      - define-and-run と define-by-run
+      - define-by-run による実装
   - 深層学習における自動微分
-  - 自動微分フレームワークの発展
+  - 深層学習フレームワークと自動微分
+  - ミニマルな深層学習フレームワークを作ってみる
 - まとめ
 
 
 ## 微分を求める技術
 
-今や微分はありとあらゆるところに登場します。
+昨今は機械学習、特に深層学習が大流行りし、世界中の性能の良い計算機がせっせと損失を小さくするパラメータを探しています。
 
 
-特に機械学習、とりわけ深層学習においては確率的勾配降下法(SGD)によって誤差を小さくするパラメータが、
+問題になるのは、損失を小さくするパラメータをどう探索するかということですが、
 
-世界中のコンピュータでせっせと計算されています。
+もっぱら確率的勾配降下法(stochastic gradient descent, SGD)が使われています。
 
 
-そして当然のことですが、勾配降下法を使うには最適化したい関数に対する勾配を求める必要があります。
+そして、勾配法を使っているからには当然損失の勾配を計算する必要がありますが、
 
-しかし、深層学習に代表されるような、目的関数が非常に複雑なときは導関数を陽に求めることは非常に困難です。
+深層学習のような非常に複雑なモデルの勾配を解析的に求めることは非常に困難です。
 
-すると当然、これをコンピュータに計算させようという需要が生まれてきます。
+すると当然、これをコンピュータに計算させようという需要が生まれてくるわけですが、
 
-本記事は、そのようなコンピュータを使った微分の計算についてまとめたものです。
+特に深層学習モデルの訓練では、
+「自動微分」と呼ばれる方法によって勾配を計算し、パラメータを最適化します。
+
+
+本記事は、そんな自動微分をはじめとした、コンピュータで自動で微分を求める方法についてまとめたものです。
 
 
 ### どういう問題を解きたいか
@@ -71,31 +81,14 @@ $$
 
 という二つの意味があります。
 
-もちろんそれぞれに必要とされるときがありますが、
+当然 $\nabla f$ が手に入れば $\nabla f(\boldsymbol{x})$ も計算できますが、
+特に最適化の文脈では、$\nabla f$ を陽に求める必要はなく、
+$\nabla f(\boldsymbol{x})$ の値があれば十分なことが多いです。
 
-特に最適化の文脈では、欲しい情報は $\nabla f$ を陽に求める必要はなく、
-$\nabla f(\boldsymbol{x})$ さえあれば十分なことが多いです。
 
 (例えば $f: \mathbb{R} \to \mathbb{R}$ を勾配降下法で最小化したいとき、
 $x_{n+1} = x_n - \eta f'(x_n)$という更新式にしたがって更新されるわけですが、
 実際に必要なのは $f'(x_n)$ であって、 $f'$ ではありません。)
-
-
-さらに、これは自動微分の章でも詳しく説明しますが、
-特に機械学習では入力の次元が非常に大きく、出力の次元が非常に小さいことが多いです。
-
-例えば[パラメータ数10兆のモデル](https://twitter.com/imai_eruel/status/1671331036830269440?s=46)
-が普通に訓練される場合、勾配降下法によって最適化する関数 $f$ は
-$\mathbb{R}^{10000000000000} \to \mathbb{R}$ ということになります.
-
-
-まとめると、
-
-- 「微分の計算」といっても「導関数を求める場合」と「ある点における微分係数を求める場合」がある
-- 特に機械学習では、入力の次元が非常に大きく、出力の次元が非常に小さいようなときに自動で微分をしたくなる場合がある
-
-ということになります。
-
 
 ### 3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~
 さて、本記事で紹介する代表的な手法は三つあり、それぞれ
@@ -114,7 +107,6 @@ $\mathbb{R}^{10000000000000} \to \mathbb{R}$ ということになります.
 それでは、それぞれの手法について詳しく見ていきましょう。
 
 ## 数値微分
-
 ### 数値微分のアイデア
 まずは、最も単純な方法である数値微分について説明します。
 
@@ -125,13 +117,37 @@ $$
 f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
 $$
 
-
 と定義されます。 
-実際に小さい $h$ をとってこれを近似しようというのが数値微分のアイデアです。
+問題はこれをどう計算するかということですが、極限を取る操作を直接コンピュータ上で表現するのは簡単でありません。
 
-例えば、 $f(x) = \sin(x)$ の $x = \dfrac{\pi}{3}$ における微分係数を数値微分で求めてみましょう。
+そこで、実際に小さい値 $h$ をとってこれを近似しようというのが数値微分のアイデアです。
 
-計算してみると、
+例えば、 $f(x) = \sin(x)$ の $x = \dfrac{\pi}{3}$ における微分係数を数値微分で求めてみます。
+
+真の値は $f'(x) = \cos(x)$ なので $\cos\left(\dfrac{\pi}{3}\right) = \dfrac{1}{2}$ です。
+
+$h = 0.001$ とします。
+
+手元の電卓で計算すると、
+
+$$
+\begin{align}
+\sin\left(\dfrac{\pi}{3} + 0.001\right) &= 0.8665249706884394 \\
+\sin\left(\dfrac{\pi}{3}\right) &= 0.8660254037844386
+\end{align}
+$$
+
+でした。
+
+よって、数値微分で計算した微分係数は
+
+$$
+\frac{0.8665249706884394 - 0.8660254037844386}{0.01} = 0.49956690400077
+$$
+
+となり、 $0.5$ に近い値が得られました。
+
+ではこれを計算するpythonのコードを書いてみます。
 
 ```python
 import numpy as np
@@ -155,8 +171,7 @@ print(numerical_diff(f, np.pi/3, 1e-3))
 0.49956690400077
 ```
 
-実際の微分係数は $\cos\left(\dfrac{\pi}{3}\right) = \dfrac{1}{2}$
-なので、そこそこいい感じに計算できています。
+そこそこいい感じに計算できていますね。
 また、$h$ を小さくするほど徐々に真の値に近づいていることがわかります。
 
 とはいえ真の値とは差があります。　
@@ -175,7 +190,7 @@ $f(x+h)$ のテイラー級数展開は、
 $$
 \begin{align}
 f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \cdots \\
-&= f(x) + f'(x)h + o(h^2)
+&= f(x) + f'(x)h + O(h^2)
 \end{align}
 $$
 
@@ -183,14 +198,14 @@ $$
 
 $$
 \begin{align}
-\dfrac{f(x+h) - f(x)}{h} &= \dfrac{f(x) + f'(x)h + o(h^2) - f(x)}{h} \\
-&= f'(x) + o(h)
+\dfrac{f(x+h) - f(x)}{h} &= \dfrac{f(x) + f'(x)h + O(h^2) - f(x)}{h} \\
+&= f'(x) + O(h)
 \end{align}
 $$
 
-となります。　したがって誤差は $o(h)$ と評価できます。
+となります。　したがって印字式を使ったことによる誤差は $O(h)$ と評価できます。
 
-では $h$ を小さくすればするほど全体の誤差は小さくなるのでしょうか。
+では $h$ を小さくすればするほど全体の誤差は常に小さくなるのでしょうか。
 
 実はこれはとてもよく知られている事実ですが、 $h$ を小さくしすぎるとかえって全体の誤差が大きくなります。
 
@@ -220,64 +235,13 @@ plt.show()
 
 これは浮動小数点数の丸め誤差によるものです。
 
-まずは浮動小数点数について少し説明したいと思います。
-(ご存知の方は飛ばしてOKです。)
-#### 浮動小数点について
-前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
-
-
-そこで、コンピュータ上で実数(のような見た目をしているもの)は、有限桁の二進数で表現されます。
-
-
-しかし、すべての実数が有限桁の二進数で表現できるわけではありません。
-例えば、$0.1$ は有限桁の二進数で表現することはできません。
-($0.1 = 0.00011001100110011\cdots$)
-
-
-したがって、コンピュータ上で $0.1$ という実数を直接扱うのはむずかしく、近い有限桁の二進数で表現された数値を実際には使うことになります。
-
-
-この桁数はいくつかのよく使われる規格によって決まりますが、最近の言語ではデフォルトでは倍精度浮動小数点数が使われることが多いです。
-
-
-**ふつうの**$^{2}$倍精度浮動小数点数は、IEEE 754 という規格によって定められていて、符号部1ビット、指数部11ビット、仮数部52ビットという構成になっており、
-符号のビット列が表す整数を $sign$、指数部のビット列が表す整数を $exp$ 、仮数部のビット列が表す整数を $frac$ とすると、
-
-
-$$
-v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
-$$
-
-という形式で $v$ を表します。
-実数から $v$ への変換(丸め)の方法はいくつかあり、IEEE 754では5つの丸めモードが定義されています。$^3$
-
-デフォルトでは、roundTiesToEvenという丸めモードを使うように求められており、実際広く使われているようです。
-
-<details>
-<summary>roundTiesToEvenの定義</summary>
-倍精度浮動小数点数で表される数全体の集合を $F$、 $F$ の最大値と最小値をそれぞれ $F_{max}$ と $F_{min}$ とすると、
-
-$x \in [F_{min}, F_{max}]$ となるような $x \in \mathbb{R}$ について、
-$v_1 \leq x \leq v_2$ となるような $v_1, v_2 \in F$ が存在します。
-
-ここで、 
-$|x - v_1| < |x - v_2|$　であれば $x$ は $v_1$ に丸められ、
-$|x - v_1| > |x - v_2|$　であれば $x$ は $v_2$ に丸められます。
-
-そして、$|x - v_1| = |x - v_2|$ であれば、$v_1$ と $v_2$ のうち、最下位ビットが $0$ である方に丸められます。
-
-
-$x > F_{max}$ であれば、$x$ は $\infty$ に丸められ、
-$x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
-</details>
+(浮動小数点について知らない人は、 末尾の付録: 浮動小数点数 をみてください)
 
 #### 桁落ち
-さて、長々と浮動小数点数について説明しましたが、話を数値微分に戻します。
-数値微分では、 $h$ を小さくすることで誤差を小さくすることができるということを述べましたが、
 $h$ を小さくしていけばしていくほど、$f(x+h)$ と $f(x)$ の差が小さくなっていきます。
 
 
-すると、実数を浮動小数点数で表したことが原因の、「桁落ち」と呼ばれる現象が起き、誤差が大きくなります。
+すると、「桁落ち」と呼ばれる現象が起き、誤差が大きくなります。
 
 
 具体的に説明します。
@@ -302,7 +266,7 @@ $$
 このように、同じくらいの数を引き算するときに、演算結果の有効桁が非常に小さくなってしまう現象を桁落ちと呼びます。
 
 
-したがって、$h$ を小さくしていくと、はじめは極限の近似が正確になっていくことで誤差が小さくなりますが、
+したがって、$h$ を小さくしていくと、はじめは極限の近似が正確になっていくことで全体の誤差が小さくなりますが、
 
 
 ある程度以上小さくなると、桁落ちによる効果が上回り、全体の誤差が大きくなっていきます。
@@ -310,7 +274,7 @@ $$
 このようにして上のグラフのような結果になることが説明できました。
 
 ### 数値微分の誤差の改善
-さて、ではこのような誤差を改善する方法を考えます。
+ここからは全体の誤差を改善する方法を考えます。
 まず簡単な方法は、浮動小数点をより正確な表現が可能なものに変えることでしょう。
 
 もう一つの簡単で有効な方法は、中心差分を使うことです。
@@ -325,16 +289,16 @@ $$
 \dfrac{f(x+h) - f(x-h)}{2h}
 $$
 
-に改めます。　実はこうするだけで、誤差は $o(h^2)$ になります。
+に改めます。　実はこうするだけで、近似式の誤差は $O(h^2)$ になります。
 
 
 同じようにテイラー展開すると、
 $$
 \begin{align}
 f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \frac{1}{6}f'''(x)h^3 + \cdots \\
-      &= f(x) + f'(x)h + f''(x)\frac{h^2}{2} + o(h^3) \\ 
+      &= f(x) + f'(x)h + f''(x)\frac{h^2}{2} + O(h^3) \\ 
 f(x-h) &= f(x) - f'(x)h + f''(x)\frac{h^2}{2} - \frac{1}{6}f'''(x)h^3 + \cdots \\
-      &= f(x) - f'(x)h + f''(x)\frac{h^2}{2} + o(h^3) \\
+      &= f(x) - f'(x)h + f''(x)\frac{h^2}{2} + O(h^3) \\
 \end{align}
 $$
 
@@ -342,15 +306,15 @@ $$
 
 $$
 \begin{align}
-\dfrac{f(x+h) - f(x-h)}{2h} &= \dfrac{f(x) + f'(x)h + f''(x)\frac{h^2}{2} + o(h^3) - f(x) + f'(x)h - f''(x)\frac{h^2}{2} + o(h^3)}{2h} \\
-&= f'(x) + o(h^2)
+\dfrac{f(x+h) - f(x-h)}{2h} &= \dfrac{f(x) + f'(x)h + f''(x)\frac{h^2}{2} + O(h^3) - f(x) + f'(x)h - f''(x)\frac{h^2}{2} + O(h^3)}{2h} \\
+&= f'(x) + O(h^2)
 \end{align}
 $$
 
-となります。 したがって誤差は $o(h^2)$ と評価できます。
+となります。 したがって誤差は $O(h^2)$ と評価できます。
 
 
-実際にコードを書いてみると、
+実際に中心差分についても調べてグラフを書いてみます。
 
 ```python
 import matplotlib.pyplot as plt
@@ -386,20 +350,93 @@ plt.show()
 
 ![](autodiff/fig/grad_fig2.png)
 
-このように、中心差分を取ることでより正確に微分を計算することができました。
+
+中心差分を取ることでより正確に計算できたようです。
+
+今回は中心差分で2点の情報を使いましたが、 より多くの点の情報を使うことで
+より正確な計算を行うことができます.
+
+
+例えば
+
+$$
+\dfrac{f(x-2h) - 8f(x-h) + 8f(x+h) - f(x+2h)}{12h}
+$$
+
+という5点差分を使うことで、誤差は $O(h^4)$ となります。
+
 
 さらに、極限の近似がより正確になったため、桁落ちによる効果が $h$ がより大きい段階から発生するようになり、
 最も正確な値となる $h$ が変化しました。このように 最適な $h$ は状況によって変化していきます。
 
-また、今回は中心差分で2点の情報を使いましたが、 $f(x + 2h), f(x - 2h)$ などもあわせて使うことで、
-より正確な計算を行うことができます.
 
-同様にテイラー展開を頑張ることで導出できるので気合いのある方は頑張ってみてください。
+となると気になるのは最適な $h$ はどう見積もるのかということですが、
+一つ計算の方法を紹介します。
+
+### 最適な h の見積もり
+$f'(x)$ を求めたいとします。
+
+まず、$f(x)$ をコンピュータ上で計算した結果を $\hat{f}(x)$ とします。
+
+$\hat{f}(x)$ には浮動小数点などで計算したことによる誤差が発生しています。　
+
+これが $\varepsilon$ だったとします。
+
+さて、中心差分を使って微分係数を計算したとします。
+
+すると、このとき発生する全体の誤差は
+
+$$
+\begin{align}
+f'(x) - \frac{\hat{f}(x+h) - \hat{f}(x-h)}{2h} &\approx f'(x) - \frac{f(x+h) - f(x-h) +  2\varepsilon}{2h} \\
+&= \left\{ f'(x) - \frac{f(x + h) - f(x - h)}{2h} \right\} - \frac{\varepsilon}{h}  \\
+\end{align}
+$$
+
+ここで、 $f(x + h), \ f(x - h)$ の計算の誤差は $\varepsilon$ と近似できることを使っています。
+
+一つ目の項は中心差分の誤差で、テイラーの定理からある $c \in (x - h, x + h)$ が存在して、
+$$
+f'(x) - \frac{f(x + h) - f(x - h)}{2h} = -\frac{f'''(c)}{6}h^2
+$$
+
+を満たします。
+
+したがって、誤差が最小になる $h$ は
+
+$$
+E(h) = \frac{\varepsilon}{h} + \frac{f'''(c)}{6}h^2
+$$
+
+を最小にする $h$ です。
+
+$$
+\frac{dE}{dh} = -\frac{\varepsilon}{h^2} + \frac{f'''(c)}{3}h = 0
+$$
+
+を解けば、
+
+$$
+h = \left(\frac{3\varepsilon}{f'''(c)}\right)^{\frac{1}{3}}
+$$
+
+が最適な $h$ となります。
+
+問題は残った $\varepsilon$ と $f'''(c)$ です。
+
+$\varepsilon$ は、通常の計算であれば使っている浮動小数点のマシンイプシロンくらいのオーダーになるでしょう。
+
+例えば今回使っている倍精度の浮動小数点数では、$2^{-52} \approx 2.2 \times 10^{-16}$ くらいです。
+
+よって、大抵の場合は $f'''(c)$ のオーダーを推定して、また $\varepsilon$ としてマシンイプシロンをとり、
+
+上の式で $h$ を計算します。　ここで $c \in (x - h, x + h)$ で、かつ $h$ はある程度小さいと予想できるので
+$f'''(c) \approx f'''(x)$ としてして $f'''(c)$ のオーダーを予想します。
+
 
 ### 多変数関数への拡張
-
-$f : \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f$ は
-各$x_i$ についてそれ以外の変数を固定して計算すればOKです。
+$f : \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f(\boldsymbol{x})$ は
+各 $x_i$ についてそれ以外の変数を固定して計算すればOKです。
 
 ```python
 def numerical_nabla(f, x, h):
@@ -472,57 +509,79 @@ array([[2., 4.],
 となり、正しく計算できています。
 
 ### 数値微分の計算量
-数値微分は一変数関数であれば2回の関数評価で微分を計算することができます。
+数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
+
 $\mathbb{R}^n \to \mathbb{R}^m$ の関数のヤコビアン行列を求める場合は、 $\Theta(nm)$ 回の評価が必要です。
 
 ### 数値微分の長所
 なんと言っても実装が非常に簡単です。
 
 数値微分では $f$ が何であろうと $f(x + h)$ と $f(x)$ さえ計算できれば
-結果がもとまります。(もちろんそれが正しいという保証はありませんが)　
+結果がもとまります。
+
+(もちろんそれが正しいという保証はありませんが)　
+
 したがってたとえ特殊な関数でもほとんど準備なく微分を計算することができます。
+
 
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 
 
 ### 数値微分の短所
-後述の自動微分などと比較すると誤差が出やすいです。
+後述の自動微分などと比較すると誤差が大きくなります。
+
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 
 ## 数式微分
-
 ### 数式微分のアイデア
+数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 
-数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求める手法です。
+つまり、数値微分のアルゴリズムは、
 
-つまり、数式微分のアルゴリズムは、
 
-(関数, 微分係数を求めたい点) → 微分係数の値
+(関数, 微分係数を求めたい点) → (微分係数の値)
 
 
 でしたが、数式微分は
 
-関数 → 導関数を求めます。
+(関数) → (導関数)
 
-数式微分では、微分したい式を木構造あるいはDAG(有向非巡回グラフ)として表現し、
-その木構造を根から順番に見ていき、微分の定義に従って微分を計算していきます。
+です。
+
+数式微分では、微分したい式を木あるいはDAGとして表現し、
+この木構造への操作を行い、導関数となる木を得ます。
+
+例えば、 
+
+$$
+(x + y) \times \sin(x)
+$$
+
+という式は、
+
+![(x + y) * sin(x) を表す木](autodiff/fig/expr_example.png)
+
+のように表現できます。
+
 
 ### 数式微分の実装
-
 実際にやってみようと思います。
-ここでは、簡単のために三角関数と四則演算からなる式について微分することを目指してみます。
 
-えいやと実装します。
+ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
+
 ソースコードは長いですがほとんどが同じような定義が続くだけなので、そこまで大変ではないと思います。
 
 少しだけ解説を加えておきます。
 
-- `Expression` は式全体を保持します。 `root` に式の最も外側の演算子が入っています。
-- `AbstractNode` は式のノードを表します。
-- あとは木構造のノードになりうる、演算子と変数と定数を表すクラスを定義しています。
-- `__call__` は関数として振る舞うためのメソッドです。 再帰的に子ノードを呼び出して計算を行います。
-- `diff` も同じように再帰的に子ノードの微分を計算していきます。
+- `Expression` は式全体を保持します。 `root` に最後に評価されるノードが入ります。
+- `AbstractNode` はノードの抽象クラスです。 これを継承して、各ノードのクラスを定義します。
+- あとは木構造のノードになりうる、演算子、変数、定数を表すクラスを定義しています。
+- `__call__` は特殊メソッドです。 クラス `A` のインスタンス `a` に対して `a()` と書くと `a.__call__()` が呼ばれます。
+  - `__call__` が呼ばれるとルートから葉ノードまで順番に `__call__` が呼ばれていき、葉ノード (必ず `Constant` か `Variable` です) からルートに向けて順番に値が返されていきます。
+- `diff` も同じです。
+- `pydot` というライブラリを使って木を式をプロットします。
+
 
 ```python
 import pydot
@@ -690,12 +749,13 @@ $$
 $$
 
 という式です。
-実行すると
 
 
 ```
 print(f)
 ```
+
+すると、
 
 ```
 ((x + 1) * sin(x))
@@ -703,15 +763,15 @@ print(f)
 
 となります。
 
-これを `plot` で可視化すると、
+ `plot` で可視化すると、
 
 ```python
 f.plot().write_png('fig/expr.png')
 ```
 
-![((x + 1) * sin(x))](autodiff/fig/expr.png)
+![((x + 1) * sin(x)) を表す木](autodiff/fig/expr.png)
 
-というふうな木構造として保持されていました。
+というふうな木として保持されていました。
 
 では、この式を微分してみましょう。
 
@@ -729,8 +789,7 @@ print(df)
 (((1 + 0) * sin(x)) + ((x + 1) * (cos(x) * 1)))
 ```
 
-果たしてこれは正しいのでしょうか。
-
+という導関数が得られました。
 実際に数値微分の結果と比較して確かめてみます。
 
 ```python
@@ -744,15 +803,20 @@ print(numerical_diff(f, x, 1e-5))
 1.830005971548143
 ```
 
-どうやら正しそうです！
+どうやら正しそうです。****
 
 ですが、得られた式は明らかに非常に冗長です。
 
 例えば `1 + 0` という部分は `1` になるべきですし、 `cos(x) * 1` という部分も `cos(x)` になるべきです。
 
-そこで、この式を簡約するメソッドを追加します。
 
-例えば`Mul` については
+そこでこの式を簡単にすることを試みます。
+
+### 簡約化
+メソッド `simplify` を追加します。
+
+
+例えば `Mul` については
 
 ```python
 class Mul(AbstractNode):
@@ -775,12 +839,13 @@ class Mul(AbstractNode):
             return Mul(self.children[0].simplify(), self.children[1].simplify())
 ```
 
+
 やや冗長ですが、このようにして 定数の `0` とかけあわせたり `1` とかけあわせたりしたときのノードを置き換えます。
 
 これを `diff` のあとに呼び出すことで、簡約された式を得ることができます。
 
 ```python
-df.simplify()
+print(df.simplify())
 ```
 
 ```
@@ -795,23 +860,271 @@ df.simplify().plot().write_png('fig/expr_diff_simple.png')
 
 このように、簡約された式を得ることができました。
 
-ではこれをどんどん行なっていくことでどんな式でも上手く微分をしていけるでしょうか。
+### 多変数への拡張
+$f: \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f(\boldsymbol{x})$ を数式微分で求めます。
 
-結論から言うと、かなり厳しいと言うのが現実です。
+実装は先ほどとほぼ同様で、
 
-いわゆる積の微分と呼ばれる公式は
+- `Variable` に変数名を追加
+- `__call__` の引数を値ではなく、 `{'x': 1, 'y': 2}` のような辞書に変更
+- `diff` の引数に偏微分する変数を追加
+- `Expression` に 全ての変数を列挙する `all_variables` メソッドを追加
+- 全ての変数をループして `diff` を計算する `grad` を追加
 
-$$
-(f(x)g(x))' = f'(x)g(x) + f(x)g'(x)
-$$
+という変更を加えました。
+
+```pythonimport pydot
+import numpy as np
 
 
-でした。つまり、積の微分を行うと項が二つに「分裂」してしまいます。
+class Expression:
+    def __init__(self, root):
+        self.root = root
+    
+    def __call__(self, args: dict[str, any]):
+        return self.root(args)
+    
+    def __repr__(self):
+        return str(self.root)
+    
+    def plot(self):
+        G = pydot.Dot(graph_type='digraph')
+        self.root._plot(G)
+        return G
+    
+    def diff(self, d_var):
+        new_expr = Expression(self.root.diff(d_var))
+        return new_expr
+    
+    def all_variable(self):
+        return self.root.all_symbols(set())
+    
+    def grad(self, symplify=False):
+        symbols = self.all_variable()
+        result = {}
+        for symbol in symbols:
+            df = self.diff(symbol)
+            if symplify:
+                df = df.simplify()
+            result[symbol] = df
+        return result
+    
+            
+    
+    def simplify(self):
+        new_expr = Expression(self.root.simplify())
+        return new_expr
+        
+class AbstractNode:
+    def __init__(self):
+        self.children = []
 
-したがって、 $f, \  g$ にも積が含まれていると、指数オーダーで項の数が増えていっていき、
-現実的に扱うことが難しくなります。
+    def __call__(self, args: dict[str, any]):
+        raise NotImplementedError
 
-このように、最適化などの文脈で数式微分を使うのは難しいです。
+    def __repr__(self):
+        raise NotImplementedError
+
+    def _plot(self, G):
+        node = pydot.Node(id(self), label=self._label())
+        G.add_node(node)
+        for child in self.children:
+            G.add_edge(pydot.Edge(node, pydot.Node(id(child), label=child._label())))
+            child._plot(G)
+
+    def diff(self, d_var):
+        raise NotImplementedError
+    
+    def all_symbols(self, symbols: set[str]):
+        for child in self.children:
+            child.all_symbols(symbols)
+        return symbols
+
+
+class Variable(AbstractNode):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+    
+    def __call__(self, args: dict[str, any]):
+        return args[self.name]
+    
+    def _label(self):
+        return self.name
+    
+    def __repr__(self):
+        return self.name
+    
+    def diff(self, d_var):
+        if self.name == d_var:
+            return Constant(1)
+        else:
+            return Constant(0)
+
+    def simplify(self):
+        return self
+    
+    def all_symbols(self, symbols: set[str]):
+        symbols.add(self.name)
+        return symbols
+
+    
+    
+class Constant(AbstractNode):
+    def __init__(self, value):
+        super().__init__()
+        self.value = value
+
+    def __call__(self, args: dict[str, any]):
+        return self.value
+    
+    def _label(self):
+        return str(self.value)
+    
+    def __repr__(self):
+        return str(self.value)
+    
+    def diff(self, d_var):
+        return Constant(0)
+    
+    def simplify(self):
+        return self
+    
+    def all_symbols(self, symbols: set[str]):
+        return symbols
+    
+class Add(AbstractNode):
+    def __init__(self, x, y):
+        super().__init__()
+        self.children = [x, y]
+
+    def __repr__(self):
+        return '(' + str(self.children[0]) + ' + ' + str(self.children[1]) + ')'
+    
+    def _label(self):
+        return '+'
+    
+    def __call__(self, args: dict[str, any]):
+        return self.children[0](args) + self.children[1](args)
+    
+    def diff(self, d_var):
+        return Add(self.children[0].diff(d_var), self.children[1].diff(d_var))
+    
+    def simplify(self):
+        if isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 0:
+            return self.children[1].simplify()
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 0:
+            return self.children[0].simplify()
+        else:
+            return Add(self.children[0].simplify(), self.children[1].simplify())
+        
+    
+    
+class Mul(AbstractNode):
+    def __init__(self, x, y):
+        super().__init__()
+        self.children = [x, y]
+
+    def __repr__(self):
+        return '(' + str(self.children[0]) + ' * ' + str(self.children[1]) + ')'
+    
+    def _label(self):
+        return '*'
+    
+    def __call__(self, args: dict[str, any]):
+        return self.children[0](args) * self.children[1](args)
+    
+    def diff(self, d_var):
+        return Add(Mul(self.children[0].diff(d_var), self.children[1]), Mul(self.children[0], self.children[1].diff(d_var)))
+    
+    def simplify(self):
+        if isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 0:
+            return Constant(0)
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 0:
+            return Constant(0)
+        elif isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 1:
+            return self.children[1].simplify()
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 1:
+            return self.children[0].simplify()
+        else:
+            return Mul(self.children[0].simplify(), self.children[1].simplify())
+    
+class Sin(AbstractNode):
+    def __init__(self, x):
+        super().__init__()
+        self.children = [x]
+
+    def __repr__(self):
+        return 'sin(' + str(self.children[0]) + ')'
+    
+    def _label(self):
+        return 'sin'
+    
+    def __call__(self, args: dict[str, any]):
+        return np.sin(self.children[0](args))
+    
+    def diff(self, d_var):
+        return Mul(Cos(self.children[0]), self.children[0].diff(d_var))
+    
+    def simplify(self):
+        return Sin(self.children[0].simplify())
+    
+    
+class Cos(AbstractNode):
+    def __init__(self, x):
+        super().__init__()
+        self.children = [x]
+
+    def __repr__(self):
+        return 'cos(' + str(self.children[0]) + ')'
+    
+    def _label(self):
+        return 'cos'
+    
+    def __call__(self, args: dict[str, any]):
+        return np.cos(self.children[0](args))
+    
+    def diff(self, d_var):
+        return Mul(Constant(-1), Mul(Sin(self.children[0]), self.children[0].diff(d_var)))
+    
+    def simplify(self):
+        return Cos(self.children[0].simplify())
+```
+
+```python
+f = Expression(
+        Mul(
+            Add(
+                Variable('x'),
+                Variable('y')
+            ),
+            Sin(
+                Variable('x')
+
+            )
+        )
+    )
+
+print('f             :', f)
+print('f(x=1, y=2)   :', f({'x': 1, 'y': 2}))
+print('∇f            :', f.grad())
+print('∇f (simple)   :', f.grad(symplify=True))
+```
+
+実行すると、
+
+```python
+f             : ((x + y) * sin(x))
+f(x=1, y=2)   : 2.5244129544236893
+∇f            : {'y': (((0 + 1) * sin(x)) + ((x + y) * (cos(x) * 0))), 'x': (((1 + 0) * sin(x)) + ((x + y) * (cos(x) * 1)))}
+∇f (simple)   : {'y': sin(x), 'x': (sin(x) + ((x + y) * cos(x)))}
+```
+
+となり、正しく計算できました。
+
+
+
+
 
 
 ## 自動微分
@@ -820,81 +1133,163 @@ $$
 
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 
-### 自動微分のアルゴリズム forward / reverse モード
-
+### 自動微分のアイデア
 自動微分は数値微分と同じく、導関数を陽に求めるのではなく、ある点における勾配を計算する手法です。
 
 自動微分の核心的なアイデアは
 
 - 全ての式を基本的な関数の合成に分解する
-- 基本的な関数の合成として表した式を、連鎖律(chain rule)を使って微分する
+- 基本的な関数の合成として表した式を、連鎖律(chain rule)を使って勾配の**値**を伝播させながら計算する
 
 というものです。
 
 具体的にみていきましょう。
 
 $$
-z = (x + y)^2
+z = (x^2 + y)^2
 $$
 
-について考えます。
+という式の $x = 1, \ y = 2$ における $(\frac{\partial z}{\partial x}, \ \frac{\partial z}{\partial y}) = (12, \ 8)$ を計算したいとします。
 
-この $f$ は、
-
-$$
-a = x + y\\
-$$
-
-とすれば、とうぜん
+まず、この式を基本的な関数の合成に分解します。
 
 $$
-a = add(x, y)\\
-z = square(a)
+\begin{align}
+a &= x^2 \\
+b &= a + y \\
+z &= a^2
+\end{align}
 $$
 
+とすれば、この式は
 
+- 二乗
+- 加算
 
-として書くことができます。
+という基本的な関数とその合成に分解することができました。
 
-では、このようにあらわした式に対して
+次にここから連鎖律を使って $\frac{\partial z}{\partial x}, \ \frac{\partial z}{\partial y}$ を計算します。
 
+一応おさらいしておくと、連鎖律は
 $$
-\frac{\partial f}{\partial a}, \frac{\partial f}{\partial b}
-$$
-
-を求めることを考えてみます。
-
-ここで使うのが連鎖律(chain rule)です。
-
-連鎖律とは、
-
-$$
-\frac{\partial f}{\partial x} = \frac{\partial f}{\partial g} \frac{\partial g}{\partial x}
+f = g \circ h
 $$
 
-という公式のことです。
-
-
-これを使うと、
+という合成関数について成り立つ
 
 $$
-\frac{\partial f}{\partial a} = \frac{\partial f}{\partial z} \frac{\partial z}{\partial a} = 2a
+\frac{\partial f}{\partial x} = \frac{\partial g}{\partial h} \frac{\partial h}{\partial x}
 $$
 
-となります。
+という公式です。
 
-### 二重数とのその性質
+さて、これを使うと、
 
+$$
+\frac{\partial z}{\partial x} = \frac{\partial z}{\partial b}{\frac{\partial b}{\partial a}}{\frac{\partial a}{\partial x}}
+$$
+
+となるので、右辺の $\frac{\partial z}{\partial b}, \ \frac{\partial b}{\partial a}, \ \frac{\partial a}{\partial x}$ を求めることができれば、
+$\frac{\partial z}{\partial x}$ を計算することができます。
+
+ここで、 $z(b), b(a, y), a(x)$  は、それぞれ「基本的な関数」である二乗と加算でした。
+したがって、あらかじめこの「基本的な関数」の導関数を手元で求めておくことで、
+$\frac{\partial z}{\partial a}$ と $\frac{\partial a}{\partial x}$ を計算することができます。
+
+つまり、この場合 
+
+- 加算 ($a(x, y) = x + y$) は $\frac{\partial a}{\partial x} = 1, \ \frac{\partial a}{\partial y} = 1$)
+- 二乗 ($z(x) = x^2$) は $\frac{\partial z}{\partial x} = 2x$
+
+ということを、あらかじめ自分たちで求めておきます。
+
+そして、たとえば$\frac{\partial z}{\partial a}$は
+
+$$
+\begin{align*}
+x &= 1 & \Rightarrow \quad \frac{\partial a}{\partial x} &= 2 \\
+a &= 1 & \Rightarrow \quad \frac{\partial b}{\partial a} &= 1 \\
+b &= 3 & \Rightarrow \quad \frac{\partial z}{\partial b} &= 6 \\
+\therefore \quad \frac{\partial z}{\partial a} &= 12
+\end{align*}
+$$
+
+と計算できました。
+
+
+ここで注意が必要なのは、あくまで行ったのは「値」の伝播であるということです。
+
+数式微分も同じように基本的な関数を用意し、それぞれの導関数を求めておき、
+全体の導関数を求めましたが、先ほどは伝播していたのは値ではなく、
+導関数を構成するシンボルでした。
+
+さて、このように勾配がもとまりました。
+ここからは具体的な実装について考えていきます。
+
+実装では積を取った右辺
+$\frac{\partial z}{\partial b}{\frac{\partial b}{\partial a}}{\frac{\partial a}{\partial x}}$ という計算の順番という実はとても重要な点について着目しながら進めていきます。
+~~(掛け算順序問題の話ではないです)~~~
+
+### forward モードと reverse モード
 
 ### forward モードの自動微分の実装
 
-### backward モードの自動微分の実装
+### reverse モードの自動微分の実装
 
 ### 計算量の評価
 
 ### 応用
 
 ### 自動微分のツール
+
+
+## 付録
+### 浮動小数点
+前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
+
+
+そこで、コンピュータ上で実数(のような見た目をしているもの)は、有限桁の二進数で表現されます。
+
+
+しかし、すべての実数が有限桁の二進数で表現できるわけではありません。
+例えば、$0.1$ は有限桁の二進数で表現することはできません。
+($0.1 = 0.00011001100110011\cdots$)
+
+
+したがって、コンピュータ上で $0.1$ という実数を直接扱うのはむずかしく、近い有限桁の二進数で表現された数値を実際には使うことになります。
+
+この桁数はいくつかのよく使われる規格によって決まりますが、最近の言語ではデフォルトでは倍精度浮動小数点数が使われることが多いです。(Python, Juliaなど)
+
+**ふつうの**$^{2}$倍精度浮動小数点数は、IEEE 754 という規格によって定められていて、符号部1ビット、指数部11ビット、仮数部52ビットという構成になっており、
+符号のビット列が表す整数を $sign$、指数部のビット列が表す整数を $exp$ 、仮数部のビット列が表す整数を $frac$ とすると、
+
+
+$$
+v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
+$$
+
+という形式で $v$ を表します。
+実数から $v$ への変換(丸め)の方法はいくつかあり、IEEE 754では5つの丸めモードが定義されています。$^3$
+
+デフォルトでは、roundTiesToEvenという丸めモードを使うように求められており、実際広く使われているようです。
+
+<details>
+<summary>roundTiesToEvenの定義</summary>
+倍精度浮動小数点数で表される数全体の集合を $F$、 $F$ の最大値と最小値をそれぞれ $F_{max}$ と $F_{min}$ とすると、
+
+$x \in [F_{min}, F_{max}]$ となるような $x \in \mathbb{R}$ について、
+$v_1 \leq x \leq v_2$ となるような $v_1, v_2 \in F$ が存在します。
+
+ここで、 
+$|x - v_1| < |x - v_2|$　であれば $x$ は $v_1$ に丸められ、
+$|x - v_1| > |x - v_2|$　であれば $x$ は $v_2$ に丸められます。
+
+そして、$|x - v_1| = |x - v_2|$ であれば、$v_1$ と $v_2$ のうち、最下位ビットが $0$ である方に丸められます。
+
+
+$x > F_{max}$ であれば、$x$ は $\infty$ に丸められ、
+$x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
+</details>
 
 
 
