@@ -7,15 +7,15 @@
     <title> ALMO デモページ </title>
 
     <meta property="og:title" content="ALMO デモページ">
-    <meta preperty="og:image" content="{{ogp_url}}">
+    <meta preperty="og:image" content="https://www.abap34.com/almo_logo.jpg">
     <meta property="og:description" content="{{description}}">
-    <meta property="og:url" content="{{url}}">
+    <meta property="og:url" content="abap34.com">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{site_name}}">
+    <meta property="og:site_name" content="abap34.com">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{twitter_site}}" />
+    <meta name="twitter:site" content="abap34" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -495,7 +495,7 @@
     <div class="content">
 
         <div style="text-align: center">
-            <img src="{{ogp_url}}">
+            <img src="https://www.abap34.com/almo_logo.jpg">
         </div>
 
 
@@ -597,10 +597,13 @@ out=example/helloalmo/out/*.txt
 <br>
 と書くだけで作られ、そして全ての出入力ファイルがHTMLファイルに埋め込まれて、自動でジャッジが構築されます。
 <br>
-普通のコードブロックも作れます、もちろん
+普通のコードブロックも作れます、
 <br>
 <pre><code>def hello():
     print("Hello ALMO!")
+
+if __name__ == "__main__":
+    hello()
 </code></pre>
 <br>
 <br>
