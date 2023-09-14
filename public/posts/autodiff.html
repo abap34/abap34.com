@@ -7,7 +7,7 @@
     <title>  コンピュータで自動で微分を計算しよう </title>
 
     <meta property="og:title" content=" コンピュータで自動で微分を計算しよう">
-    <meta preperty="og:image" content="https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_4268.jpg">
+    <meta preperty="og:image" content="https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5600.jpg">
     <meta property="og:description" content="@abap34 のブログです。">
     <meta property="og:url" content="https://abap34.com/posts/autodiff.html">
     <meta property="og:type" content="article">
@@ -486,7 +486,7 @@
 
 
         <div style="text-align: center">
-            <img src="https://images.dog.ceo/breeds/elkhound-norwegian/n02091467_4268.jpg">
+            <img src="https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5600.jpg">
         </div>
 
 
@@ -515,19 +515,32 @@
 ブログのリニューアル記念に、せっかくなので何か記事を書くことにしました。
 何を書いてもよかったのですが、最近人に機械学習の話をすることが結構あり、その中でしていた自動微分の話が割とウケがよかったのでそれについて記事を書くことにしました。
 <br>
-<br>
-想定としては、大学一年生レベルの数学がわかっていれば読めるようになっているかと思いますが、
-機械学習や最適化について知っているとイメージがつきやすいかもしれません。
-<br>
 (最終更新: 2023/09/08)
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"24",     "content":"目次" })</script> 
-<h3 id="24">目次</h3>
-<ul><li>微分を求める技術<ul><li>どういう問題を解きたいか</li><li>3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~</li><li>数値微分と数式微分と自動微分</li></ul></li><li>数値微分<ul><li>数値微分のアルゴリズム</li><li>誤差の評価</li><li>誤差の改善 \(n\)次差分</li><li>多変数への拡張</li><li>数値微分の長所</li><li>数値微分の短所</li></ul></li><li>数式微分<ul><li>数式微分のアルゴリズム</li><li>数式微分の実装</li><li>簡約化</li></ul></li><li>自動微分<ul><li>自動微分のアルゴリズム forward / reverse モード</li><li>forward モードの自動微分</li><li>reverse モードの自動微分<ul><li>Wangert リスト<ul><li>Wangert リストへの変換</li><li>Wangert リストから勾配を計算する</li></ul></li><li>define-by-run<ul><li>define-and-run と define-by-run</li><li>define-by-run による実装</li></ul></li></ul></li><li>深層学習における自動微分</li><li>深層学習フレームワークと自動微分</li><li>ミニマルな深層学習フレームワークを作ってみる</li></ul></li><li>まとめ</li></ul>
+<script>page_contents.push({     "type":"H3",     "id":"18",     "content":"目次" })</script> 
+<h3 id="18">目次</h3>
+<ul><li>微分を求める技術<ul><li>どういう問題を解きたいか</li><li>3つの手法 ~自動微分は自動で微分をするという意味ではないよ~</li></ul></li><li>数値微分<ul><li>数値微分のアイデア</li><li>数値微分の2つの誤差</li><li>数値微分の誤差の改善</li><li>最適な h の見積もり</li><li>多変数関数への拡張</li><li>数値微分の計算量</li><li>数値微分の長所</li><li>数値微分の短所</li></ul></li><li>数式微分<ul><li>数式微分のアイデア</li><li>数式微分の実装</li><li>簡約化</li><li>多変数への拡張</li><li>数式微分の長所</li><li>数式微分の短所</li></ul></li><li>自動微分<ul><li>自動微分のアイデア</li><li>↓ ここから未完成</li><li>なるべくいろんなことを<ul><li>二重数</li><li>Wengert リスト  とかも</li></ul></li><li>DLがらみの自動微分の話<ul><li>DLフレームワークの話とか</li><li>ミニマルなDLフレームワークを作るとかも</li></ul></li><li>自動微分の応用の話とか</li></ul></li></ul>
+  
+<ul><li>まとめ (未)</li></ul>
+<!-- 
+計算グラフ再考
+  - forward モードの自動微分 (未)
+  - reverse モードの自動微分 (未)
+    - define-by-run 
+      - define-and-run と define-by-run
+    - Wengert リスト 
+      - Wengert リストへの変換 
+      - Wengert リストから勾配を計算する
+  - 深層学習と自動微分 (未)
+  - 深層学習フレームワークと自動微分 (未)
+  - ミニマルな深層学習フレームワークを作ってみる (未)
+  - 自動微分の拡張
+  - 
+ -->
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"126",     "content":"微分を求める技術" })</script> 
-<h2 id="126">微分を求める技術</h2>
+<script>page_contents.push({     "type":"H2",     "id":"152",     "content":"微分を求める技術" })</script> 
+<h2 id="152">微分を求める技術</h2>
 <br>
 昨今は機械学習、特に深層学習が大流行りし、世界中の性能の良い計算機がせっせと損失を小さくするパラメータを探しています。
 <br>
@@ -550,8 +563,8 @@
 本記事は、そんな自動微分をはじめとした、コンピュータで自動で微分を求める方法についてまとめたものです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"160",     "content":"どういう問題を解きたいか" })</script> 
-<h3 id="160">どういう問題を解きたいか</h3>
+<script>page_contents.push({     "type":"H3",     "id":"186",     "content":"どういう問題を解きたいか" })</script> 
+<h3 id="186">どういう問題を解きたいか</h3>
 ひとくちに「微分の計算」といっても実は
 <ul><li>ある関数 \(f\) の勾配 \(\nabla f\) を求める</li><li>ある点 \(\boldsymbol{x}\) における関数 \(f\) の勾配の<strong>値</strong> \(\nabla f(\boldsymbol{x})\) を求める</li></ul>
 という二つの意味があります。
@@ -565,8 +578,8 @@
 \(x_{n+1} = x_n - \eta f'(x_n)\)という更新式にしたがって更新されるわけですが、
 実際に必要なのは \(f'(x_n)\) であって、 \(f'\) ではありません。)
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"232",     "content":"3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~" })</script> 
-<h3 id="232">3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~</h3>
+<script>page_contents.push({     "type":"H3",     "id":"258",     "content":"3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~" })</script> 
+<h3 id="258">3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~</h3>
 さて、本記事で紹介する代表的な手法は三つあり、それぞれ
 <br>
 <ul><li>数値微分(numerical differentiation)</li><li>数式微分(symbolic differentiation)</li><li>自動微分(automatic differentiation)</li></ul>
@@ -579,10 +592,10 @@
 <br>
 それでは、それぞれの手法について詳しく見ていきましょう。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"264",     "content":"数値微分" })</script> 
-<h2 id="264">数値微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"267",     "content":"数値微分のアイデア" })</script> 
-<h3 id="267">数値微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"290",     "content":"数値微分" })</script> 
+<h2 id="290">数値微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"293",     "content":"数値微分のアイデア" })</script> 
+<h3 id="293">数値微分のアイデア</h3>
 まずは、最も単純な方法である数値微分について説明します。
 <br>
 みなさんご存知のように、
@@ -654,8 +667,8 @@ print(numerical_diff(f, np.pi/3, 1e-3))
 <br>
 ここからは、この誤差について評価を与えることを考えてみます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"372",     "content":"数値微分の2つの誤差" })</script> 
-<h3 id="372">数値微分の2つの誤差</h3>
+<script>page_contents.push({     "type":"H3",     "id":"398",     "content":"数値微分の2つの誤差" })</script> 
+<h3 id="398">数値微分の2つの誤差</h3>
 先ほどの微分の定義で出てきた、
 <br>
 \[ 
@@ -683,7 +696,7 @@ f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \cdots \\
 
  \]
 <br>
-となります。　したがって印字式を使ったことによる誤差は \(O(h)\) と評価できます。
+となります。　したがって近似を使ったことによる誤差は \(O(h)\) と評価できます。
 <br>
 では \(h\) を小さくすればするほど全体の誤差は常に小さくなるのでしょうか。
 <br>
@@ -717,8 +730,8 @@ plt.show()
 <br>
 (浮動小数点について知らない人は、 末尾の付録: 浮動小数点数 をみてください)
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"441",     "content":"桁落ち" })</script> 
-<h4 id="441">桁落ち</h4>
+<script>page_contents.push({     "type":"H4",     "id":"467",     "content":"桁落ち" })</script> 
+<h4 id="467">桁落ち</h4>
 \(h\) を小さくしていけばしていくほど、\(f(x+h)\) と \(f(x)\) の差が小さくなっていきます。
 <br>
 <br>
@@ -755,8 +768,8 @@ f(x+h) - f(x) &= 3.16069612 \times 10^1 - 3.16227766 \times 10^1 \\
 <br>
 このようにして上のグラフのような結果になることが説明できました。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"512",     "content":"数値微分の誤差の改善" })</script> 
-<h3 id="512">数値微分の誤差の改善</h3>
+<script>page_contents.push({     "type":"H3",     "id":"538",     "content":"数値微分の誤差の改善" })</script> 
+<h3 id="538">数値微分の誤差の改善</h3>
 ここからは全体の誤差を改善する方法を考えます。
 まず簡単な方法は、浮動小数点をより正確な表現が可能なものに変えることでしょう。
 <br>
@@ -861,8 +874,8 @@ plt.show()
 となると気になるのは最適な \(h\) はどう見積もるのかということですが、
 一つ計算の方法を紹介します。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"617",     "content":"最適な h の見積もり" })</script> 
-<h3 id="617">最適な h の見積もり</h3>
+<script>page_contents.push({     "type":"H3",     "id":"643",     "content":"最適な h の見積もり" })</script> 
+<h3 id="643">最適な h の見積もり</h3>
 \(f'(x)\) を求めたいとします。
 <br>
 まず、\(f(x)\) をコンピュータ上で計算した結果を \(\hat{f}(x)\) とします。
@@ -918,7 +931,7 @@ h = \left(\frac{3\varepsilon}{f'''(c)}\right)^{\frac{1}{3}}
 <br>
 問題は残った \(\varepsilon\) と \(f'''(c)\) です。
 <br>
-\(\varepsilon\) は、通常の計算であれば使っている浮動小数点のマシンイプシロンくらいのオーダーになるでしょう。
+\(\varepsilon\) は、ふつうの計算であれば使っている浮動小数点のマシンイプシロンくらいのオーダーになるでしょう。
 <br>
 例えば今回使っている倍精度の浮動小数点数では、\(2^{-52} \approx 2.2 \times 10^{-16}\) くらいです。
 <br>
@@ -928,8 +941,8 @@ h = \left(\frac{3\varepsilon}{f'''(c)}\right)^{\frac{1}{3}}
 \(f'''(c) \approx f'''(x)\) としてして \(f'''(c)\) のオーダーを予想します。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"757",     "content":"多変数関数への拡張" })</script> 
-<h3 id="757">多変数関数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"783",     "content":"多変数関数への拡張" })</script> 
+<h3 id="783">多変数関数への拡張</h3>
 \(f : \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) は
 各 \(x_i\) についてそれ以外の変数を固定して計算すればOKです。
 <br>
@@ -999,14 +1012,14 @@ numerical_jacobian(f, np.array([x, y]))
 <br>
 となり、正しく計算できています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"809",     "content":"数値微分の計算量" })</script> 
-<h3 id="809">数値微分の計算量</h3>
+<script>page_contents.push({     "type":"H3",     "id":"835",     "content":"数値微分の計算量" })</script> 
+<h3 id="835">数値微分の計算量</h3>
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 <br>
 \(\mathbb{R}^n \to \mathbb{R}^m\) の関数のヤコビアン行列を求める場合は、 \(\Theta(nm)\) 回の評価が必要です。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"824",     "content":"数値微分の長所" })</script> 
-<h3 id="824">数値微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"850",     "content":"数値微分の長所" })</script> 
+<h3 id="850">数値微分の長所</h3>
 なんと言っても実装が非常に簡単です。
 <br>
 数値微分では \(f\) が何であろうと \(f(x + h)\) と \(f(x)\) さえ計算できれば
@@ -1020,33 +1033,31 @@ numerical_jacobian(f, np.array([x, y]))
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"855",     "content":"数値微分の短所" })</script> 
-<h3 id="855">数値微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"881",     "content":"数値微分の短所" })</script> 
+<h3 id="881">数値微分の短所</h3>
 後述の自動微分などと比較すると誤差が大きくなります。
 <br>
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"866",     "content":"数式微分" })</script> 
-<h2 id="866">数式微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"869",     "content":"数式微分のアイデア" })</script> 
-<h3 id="869">数式微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"892",     "content":"数式微分" })</script> 
+<h2 id="892">数式微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"895",     "content":"数式微分のアイデア" })</script> 
+<h3 id="895">数式微分のアイデア</h3>
 数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 <br>
 つまり、数値微分のアルゴリズムは、
 <br>
-<br>
 (関数, 微分係数を求めたい点) → (微分係数の値)
-<br>
 <br>
 でしたが、数式微分は
 <br>
 (関数) → (導関数)
 <br>
-です。
+というような手法を指します。
 <br>
 数式微分では、微分したい式を木あるいはDAGとして表現し、
-この木構造への操作を行い、導関数となる木を得ます。
+この木構造への操作を行い、導関数となる木を得るような実装が一般的です。
 <br>
 例えば、 
 <br>
@@ -1063,9 +1074,9 @@ numerical_jacobian(f, np.array([x, y]))
 のように表現できます。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"917",     "content":"数式微分の実装" })</script> 
-<h3 id="917">数式微分の実装</h3>
-実際にやってみようと思います。
+<script>page_contents.push({     "type":"H3",     "id":"941",     "content":"数式微分の実装" })</script> 
+<h3 id="941">数式微分の実装</h3>
+実装の一例を示そうと思います。
 <br>
 ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
 <br>
@@ -1296,8 +1307,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 そこでこの式を簡単にすることを試みます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1112",     "content":"簡約化" })</script> 
-<h3 id="1112">簡約化</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1136",     "content":"簡約化" })</script> 
+<h3 id="1136">簡約化</h3>
 メソッド <code>simplify</code> を追加します。
 <br>
 <br>
@@ -1342,13 +1353,13 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 このように、簡約された式を得ることができました。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1166",     "content":"多変数への拡張" })</script> 
-<h3 id="1166">多変数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1190",     "content":"多変数への拡張" })</script> 
+<h3 id="1190">多変数への拡張</h3>
 \(f: \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) を数式微分で求めます。
 <br>
 実装は先ほどとほぼ同様で、
 <br>
-<ul><li><code>Variable</code> に変数名を追加</li><li><code>__call__</code> の引数を値ではなく、 <code>{'x': 1, 'y': 2}</code> のような辞書に変更</li><li><code>diff</code> の引数に偏微分する変数を追加</li><li><code>Expression</code> に 全ての変数を列挙する <code>all_variables</code> メソッドを追加</li><li>全ての変数をループして <code>diff</code> を計算する <code>grad</code> を追加</li></ul>
+<ul><li><code>Variable</code> は <code>x</code> だけでなく、変数名を持てるようにする</li><li><code>__call__</code> の引数を値ではなく、 <code>{'x': 1, 'y': 2}</code> のような辞書に変更</li><li><code>diff</code> の引数に偏微分する変数を追加</li><li><code>Expression</code> に 全ての変数を列挙する <code>all_variables</code> メソッドを追加</li><li>全ての変数をループして <code>diff</code> を計算する <code>grad</code> を追加</li></ul>
 という変更を加えました。
 <br>
 <pre><code>import numpy as np
@@ -1597,20 +1608,36 @@ f(x=1, y=2)   : 2.5244129544236893
 <br>
 となり、正しく計算できました。
 <br>
+<script>page_contents.push({     "type":"H3",     "id":"1266",     "content":"数式微分の長所" })</script> 
+<h3 id="1266">数式微分の長所</h3>
+当たり前の話ですが、導関数自体が求めたいときには数式微分を使わなければいけないので優位性があります。
+<br>
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"1273",     "content":"数式微分の短所" })</script> 
+<h3 id="1273">数式微分の短所</h3>
+いくつか述べます。
+<br>
+まず第一には木をはじめとした、式の表現への変換の難しさです。
+<br>
+今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換したいです。
+<br>
+例えば
+<br>
+<pre><code>
+</code></pre>
 <br>
 <br>
 <br>
 <br>
-<br>
-<script>page_contents.push({     "type":"H2",     "id":"1244",     "content":"自動微分" })</script> 
-<h2 id="1244">自動微分</h2>
+<script>page_contents.push({     "type":"H2",     "id":"1294",     "content":"自動微分" })</script> 
+<h2 id="1294">自動微分</h2>
 <br>
 最後に紹介するのが、自動微分(automatic differentiation)です。
 <br>
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1254",     "content":"自動微分のアイデア" })</script> 
-<h3 id="1254">自動微分のアイデア</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1304",     "content":"自動微分のアイデア" })</script> 
+<h3 id="1304">自動微分のアイデア</h3>
 自動微分は数値微分と同じく、導関数を陽に求めるのではなく、ある点における勾配を計算する手法です。
 <br>
 自動微分の核心的なアイデアは
@@ -1707,29 +1734,11 @@ b &= 3 & \Rightarrow \quad \frac{\partial z}{\partial b} &= 6 \\
 \(\frac{\partial z}{\partial b}{\frac{\partial b}{\partial a}}{\frac{\partial a}{\partial x}}\) という計算の順番という実はとても重要な点について着目しながら進めていきます。
 <s>(掛け算順序問題の話ではないです)~</s>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1429",     "content":"forward モードと reverse モード" })</script> 
-<h3 id="1429">forward モードと reverse モード</h3>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1433",     "content":"forward モードの自動微分の実装" })</script> 
-<h3 id="1433">forward モードの自動微分の実装</h3>
-<br>
-<script>page_contents.push({     "type":"H3",     "id":"1437",     "content":"reverse モードの自動微分の実装" })</script> 
-<h3 id="1437">reverse モードの自動微分の実装</h3>
-<br>
-<script>page_contents.push({     "type":"H3",     "id":"1441",     "content":"計算量の評価" })</script> 
-<h3 id="1441">計算量の評価</h3>
-<br>
-<script>page_contents.push({     "type":"H3",     "id":"1445",     "content":"応用" })</script> 
-<h3 id="1445">応用</h3>
-<br>
-<script>page_contents.push({     "type":"H3",     "id":"1449",     "content":"自動微分のツール" })</script> 
-<h3 id="1449">自動微分のツール</h3>
-<br>
-<br>
-<script>page_contents.push({     "type":"H2",     "id":"1454",     "content":"付録" })</script> 
-<h2 id="1454">付録</h2>
-<script>page_contents.push({     "type":"H3",     "id":"1457",     "content":"浮動小数点" })</script> 
-<h3 id="1457">浮動小数点</h3>
+<script>page_contents.push({     "type":"H2",     "id":"1480",     "content":"付録" })</script> 
+<h2 id="1480">付録</h2>
+<script>page_contents.push({     "type":"H3",     "id":"1483",     "content":"浮動小数点数" })</script> 
+<h3 id="1483">浮動小数点数</h3>
 前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
 <br>
 <br>
