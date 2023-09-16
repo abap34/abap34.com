@@ -367,20 +367,14 @@ plt.show()
 
 中心差分を取ることでより正確に計算できたようです。
 
-今回は中心差分で2点の情報を使いましたが、 より多くの点の情報を使うことで
-より正確な計算を行うことができます.
+$O(h)$ から $O(h^2)$ に改善されたわけですが、では任意の $n \in \mathbb{N}$ に対して $O(h^n)$ で計算する方法が存在するでしょうか。
+
+実際これは存在します。
+
+ここで書くと少し長くなってしまうので、詳しくは末尾の付録: $n$ 次精度 $k$ 階中心差分の導出　を見てください。
 
 
-例えば
-
-$$
-\dfrac{f(x-2h) - 8f(x-h) + 8f(x+h) - f(x+2h)}{12h}
-$$
-
-という5点差分を使うことで、誤差は $O(h^4)$ となります。
-
-
-さらに、極限の近似がより正確になったため、桁落ちによる効果が $h$ がより大きい段階から発生するようになり、
+さて、極限の近似がより正確になったため、桁落ちによる効果が $h$ がより大きい段階から発生するようになり、
 最も正確な値となる $h$ が変化しました。このように 最適な $h$ は状況によって変化していきます。
 
 
@@ -521,6 +515,11 @@ array([[2., 4.],
 ```
 
 となり、正しく計算できています。
+
+
+### 高階微分の計算
+
+付録: $n$ 次精度 $k$ 階中心差分の導出 を参照してください。
 
 ### 数値微分の計算量
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
@@ -1305,6 +1304,183 @@ $|x - v_1| > |x - v_2|$　であれば $x$ は $v_2$ に丸められます。
 $x > F_{max}$ であれば、$x$ は $\infty$ に丸められ、
 $x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
 </details>
+
+
+
+### n 次精度 k 階中心差分の導出
+
+$n$ 次精度の中心差分の式が存在することを示します。
+
+(簡単のために、以下では $n$ を偶数であると仮定します。)
+
+
+結論から言うと、 $p = \dfrac{n}{2}$ として、
+
+$$
+\boldsymbol{f}(h) = \left(
+    \begin{array}{c}
+    f(x - ph) \\
+    f(x + (-p + 1)h) \\
+    \vdots \\
+    f(x - h) \\
+    f(x) \\
+    f(x + h) \\
+    \vdots \\
+    f(x + (p-1)h) \\
+    f(x + ph) \\
+    \end{array}
+    \right) \in \mathbb{R}^{n+1}
+$$
+
+
+
+
+と、適切に定めた $\boldsymbol{w}$ は 
+
+$$
+\boldsymbol{w}\boldsymbol{f}(h) = f'(x) + O(h^n)
+$$
+
+を満たします。 (ただし $h > 0$)　
+
+### 証明
+
+まず、$f(x + kh)$ をテイラー展開すると
+
+$$
+f(x + kh) = f(x) + khf'(x) + \frac{(kh)^2}{2!}f''(x) + \cdots + \frac{(kh)^n}{n!}f^{(n)}(x) + O(h^{n+1})
+$$
+
+となります。
+
+これを通常の(?) 中心差分 のときのように、
+
+$k = -p, -p + 1, \cdots, - 1, 1, \cdots, p - 1, p$ まで重み付きで足し合わせて $f'(x)$ 以外の項を消せば良いです。
+
+したがって、
+
+$$
+\begin{pmatrix}
+1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+-p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
+(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
+\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
+$$
+
+を $A$  としたとき、
+
+$$
+A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
+$$
+
+なる $\boldsymbol{w} \in \mathbb{R}^{(n+1)}$ が存在すれば良いです。  
+
+($e_2$ は $2$ 番目の要素が $1$ でそれ以外が $0$ のベクトルです。)
+
+実は、 $A$ のような各列が等比数列のような形になっている正方行列は、ヴァンデルモンド行列と呼ばれており、
+全く同じ列が存在しないとき正則であることが知られています。$^5$
+
+今回の場合、 $h \neq 0$ なので、 各列は異なり、 $A$ は正則です。
+
+したがって、$A$ は正則で、
+
+$$
+\boldsymbol{w} = A^{-1}\boldsymbol{e}_2
+$$
+
+として定まる $w$ が存在して、条件を満たすことがわかりました。
+
+さらに、 今回は一階微分を求めたかったため $\boldsymbol{e}_2$ との積を考えましたが、 $k$ 階微分を求めたい場合は $\boldsymbol{e}_{k+1}$ との積を考えれば良いです。
+
+#### 実装
+
+結果を確かめるために sympy を使って有理数型で計算してみます。
+
+```python
+from sympy.matrices import Matrix
+from sympy import Rational
+
+def central_weight(n, k):
+    p = n >> 1
+    A = Matrix.zeros(n+1, n+1)
+    r = [Rational(i) for i in range(-p, p+1)] 
+    for i in range(n+1):
+        for j in range(n+1):
+            A[i, j] = r[j]**i
+
+    e_k = [0] * (n+1)
+    e_k[k] = 1
+
+    w  = A.inv() * Matrix(e_k)
+    return w
+```
+
+```python
+print('O(n^2):', central_weight(2, 1))
+print('O(n^4):', central_weight(4, 1))
+print('O(n^6):', central_weight(6, 1))
+```
+
+```
+O(n^2): Matrix([[-1/2], [0], [1/2]])
+O(n^4): Matrix([[1/12], [-2/3], [0], [2/3], [-1/12]])
+O(n^6): Matrix([[-1/60], [3/20], [-3/4], [0], [3/4], [-3/20], [1/60]])
+```
+
+となり、 $n$ 次精度の中心差分の係数が得られました。
+
+これを使って、 $n$ 次精度 $k$ 階中心差分を実装します。
+
+```python
+def central_diff(f, x, n, k, h=1e-3):
+    w = central_weight(n, k)
+    p = n >> 1
+    _x = x + (np.arange(-p, p + 1) * h)
+    return sum([w[i] * f(_x[i]) for i in range(n+1)]) / h ** k
+```
+
+```python
+f = lambda x: sin(x)
+x = pi / 3
+print('f\'(x) O(n^2):', central_diff(f, x, 2, 1))
+print('f\'(x) O(n^4):', central_diff(f, x, 4, 1))
+print('f\'(x) O(n^6):', central_diff(f, x, 6, 1))
+```
+
+```
+f'(x) O(n^2): 0.499999916666605
+f'(x) O(n^4): 0.499999999999889
+f'(x) O(n^6): 0.499999999999839
+```
+
+どうやら正しそうな式が得られています。
+
+最後に最適な $h$ の変化についても確かめておきます。
+
+
+```python
+n_points = range(2, 12, 2)
+h = np.logspace(0, -20, 100)
+label = [f'n={n}' for n in n_points]
+
+err = np.zeros((len(n_points), len(h)))
+for i, n in enumerate(n_points):
+    for j, hh in enumerate(h):
+        err[i, j] = abs(central_diff(f, x, n, 1, hh) - cos(x))
+
+plt.figure()
+for i in range(len(n_points)):
+    print(i)
+    plt.loglog(h, err[i], label=label[i])
+plt.legend()
+plt.xlabel('h')
+plt.ylabel('error')
+```
+
+
+![評価する点と最適なhの変化](autodiff/fig/central_diff_comp.png)
 
 
 
