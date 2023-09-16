@@ -7,7 +7,7 @@
     <title>  コンピュータで自動で微分を計算しよう </title>
 
     <meta property="og:title" content=" コンピュータで自動で微分を計算しよう">
-    <meta preperty="og:image" content="https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5600.jpg">
+    <meta preperty="og:image" content="https://images.dog.ceo/breeds/lhasa/n02098413_8001.jpg">
     <meta property="og:description" content="@abap34 のブログです。">
     <meta property="og:url" content="https://abap34.com/posts/autodiff.html">
     <meta property="og:type" content="article">
@@ -486,7 +486,7 @@
 
 
         <div style="text-align: center">
-            <img src="https://images.dog.ceo/breeds/bullterrier-staffordshire/n02093256_5600.jpg">
+            <img src="https://images.dog.ceo/breeds/lhasa/n02098413_8001.jpg">
         </div>
 
 
@@ -853,29 +853,22 @@ plt.show()
 <br>
 中心差分を取ることでより正確に計算できたようです。
 <br>
-今回は中心差分で2点の情報を使いましたが、 より多くの点の情報を使うことで
-より正確な計算を行うことができます.
+\(O(h)\) から \(O(h^2)\) に改善されたわけですが、では任意の \(n \in \mathbb{N}\) に対して \(O(h^n)\) で計算する方法が存在するでしょうか。
+<br>
+実際これは存在します。
+<br>
+ここで書くと少し長くなってしまうので、詳しくは末尾の付録: \(n\) 次精度 \(k\) 階中心差分の導出　を見てください。
 <br>
 <br>
-例えば
-<br>
-\[ 
-\dfrac{f(x-2h) - 8f(x-h) + 8f(x+h) - f(x+2h)}{12h}
-
- \]
-<br>
-という5点差分を使うことで、誤差は \(O(h^4)\) となります。
-<br>
-<br>
-さらに、極限の近似がより正確になったため、桁落ちによる効果が \(h\) がより大きい段階から発生するようになり、
+さて、極限の近似がより正確になったため、桁落ちによる効果が \(h\) がより大きい段階から発生するようになり、
 最も正確な値となる \(h\) が変化しました。このように 最適な \(h\) は状況によって変化していきます。
 <br>
 <br>
 となると気になるのは最適な \(h\) はどう見積もるのかということですが、
 一つ計算の方法を紹介します。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"643",     "content":"最適な h の見積もり" })</script> 
-<h3 id="643">最適な h の見積もり</h3>
+<script>page_contents.push({     "type":"H3",     "id":"652",     "content":"最適な h の見積もり" })</script> 
+<h3 id="652">最適な h の見積もり</h3>
 \(f'(x)\) を求めたいとします。
 <br>
 まず、\(f(x)\) をコンピュータ上で計算した結果を \(\hat{f}(x)\) とします。
@@ -941,8 +934,8 @@ h = \left(\frac{3\varepsilon}{f'''(c)}\right)^{\frac{1}{3}}
 \(f'''(c) \approx f'''(x)\) としてして \(f'''(c)\) のオーダーを予想します。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"783",     "content":"多変数関数への拡張" })</script> 
-<h3 id="783">多変数関数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"792",     "content":"多変数関数への拡張" })</script> 
+<h3 id="792">多変数関数への拡張</h3>
 \(f : \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) は
 各 \(x_i\) についてそれ以外の変数を固定して計算すればOKです。
 <br>
@@ -1012,14 +1005,20 @@ numerical_jacobian(f, np.array([x, y]))
 <br>
 となり、正しく計算できています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"835",     "content":"数値微分の計算量" })</script> 
-<h3 id="835">数値微分の計算量</h3>
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"845",     "content":"高階微分の計算" })</script> 
+<h3 id="845">高階微分の計算</h3>
+<br>
+付録: \(n\) 次精度 \(k\) 階中心差分の導出 を参照してください。
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"858",     "content":"数値微分の計算量" })</script> 
+<h3 id="858">数値微分の計算量</h3>
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 <br>
 \(\mathbb{R}^n \to \mathbb{R}^m\) の関数のヤコビアン行列を求める場合は、 \(\Theta(nm)\) 回の評価が必要です。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"850",     "content":"数値微分の長所" })</script> 
-<h3 id="850">数値微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"873",     "content":"数値微分の長所" })</script> 
+<h3 id="873">数値微分の長所</h3>
 なんと言っても実装が非常に簡単です。
 <br>
 数値微分では \(f\) が何であろうと \(f(x + h)\) と \(f(x)\) さえ計算できれば
@@ -1033,17 +1032,17 @@ numerical_jacobian(f, np.array([x, y]))
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"881",     "content":"数値微分の短所" })</script> 
-<h3 id="881">数値微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"904",     "content":"数値微分の短所" })</script> 
+<h3 id="904">数値微分の短所</h3>
 後述の自動微分などと比較すると誤差が大きくなります。
 <br>
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"892",     "content":"数式微分" })</script> 
-<h2 id="892">数式微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"895",     "content":"数式微分のアイデア" })</script> 
-<h3 id="895">数式微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"915",     "content":"数式微分" })</script> 
+<h2 id="915">数式微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"918",     "content":"数式微分のアイデア" })</script> 
+<h3 id="918">数式微分のアイデア</h3>
 数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 <br>
 つまり、数値微分のアルゴリズムは、
@@ -1074,8 +1073,8 @@ numerical_jacobian(f, np.array([x, y]))
 のように表現できます。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"941",     "content":"数式微分の実装" })</script> 
-<h3 id="941">数式微分の実装</h3>
+<script>page_contents.push({     "type":"H3",     "id":"964",     "content":"数式微分の実装" })</script> 
+<h3 id="964">数式微分の実装</h3>
 実装の一例を示そうと思います。
 <br>
 ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
@@ -1307,8 +1306,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 そこでこの式を簡単にすることを試みます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1136",     "content":"簡約化" })</script> 
-<h3 id="1136">簡約化</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1159",     "content":"簡約化" })</script> 
+<h3 id="1159">簡約化</h3>
 メソッド <code>simplify</code> を追加します。
 <br>
 <br>
@@ -1353,8 +1352,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 このように、簡約された式を得ることができました。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1190",     "content":"多変数への拡張" })</script> 
-<h3 id="1190">多変数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1213",     "content":"多変数への拡張" })</script> 
+<h3 id="1213">多変数への拡張</h3>
 \(f: \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) を数式微分で求めます。
 <br>
 実装は先ほどとほぼ同様で、
@@ -1608,13 +1607,13 @@ f(x=1, y=2)   : 2.5244129544236893
 <br>
 となり、正しく計算できました。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1266",     "content":"数式微分の長所" })</script> 
-<h3 id="1266">数式微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1289",     "content":"数式微分の長所" })</script> 
+<h3 id="1289">数式微分の長所</h3>
 当たり前の話ですが、導関数自体が求めたいときには数式微分を使わなければいけないので優位性があります。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1273",     "content":"数式微分の短所" })</script> 
-<h3 id="1273">数式微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1296",     "content":"数式微分の短所" })</script> 
+<h3 id="1296">数式微分の短所</h3>
 いくつか述べます。
 <br>
 まず第一には木をはじめとした、式の表現への変換の難しさです。
@@ -1629,15 +1628,15 @@ f(x=1, y=2)   : 2.5244129544236893
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1294",     "content":"自動微分" })</script> 
-<h2 id="1294">自動微分</h2>
+<script>page_contents.push({     "type":"H2",     "id":"1317",     "content":"自動微分" })</script> 
+<h2 id="1317">自動微分</h2>
 <br>
 最後に紹介するのが、自動微分(automatic differentiation)です。
 <br>
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1304",     "content":"自動微分のアイデア" })</script> 
-<h3 id="1304">自動微分のアイデア</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1327",     "content":"自動微分のアイデア" })</script> 
+<h3 id="1327">自動微分のアイデア</h3>
 自動微分は数値微分と同じく、導関数を陽に求めるのではなく、ある点における勾配を計算する手法です。
 <br>
 自動微分の核心的なアイデアは
@@ -1735,10 +1734,10 @@ b &= 3 & \Rightarrow \quad \frac{\partial z}{\partial b} &= 6 \\
 <s>(掛け算順序問題の話ではないです)~</s>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1480",     "content":"付録" })</script> 
-<h2 id="1480">付録</h2>
-<script>page_contents.push({     "type":"H3",     "id":"1483",     "content":"浮動小数点数" })</script> 
-<h3 id="1483">浮動小数点数</h3>
+<script>page_contents.push({     "type":"H2",     "id":"1503",     "content":"付録" })</script> 
+<h2 id="1503">付録</h2>
+<script>page_contents.push({     "type":"H3",     "id":"1506",     "content":"浮動小数点数" })</script> 
+<h3 id="1506">浮動小数点数</h3>
 前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
 <br>
 <br>
@@ -1785,6 +1784,185 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 \(x > F_{max}\) であれば、\(x\) は \(\infty\) に丸められ、
 \(x < F_{min}\) であれば、\(x\) は \(-\infty\) に丸められます。\(^4\)
 </details>
+<br>
+<br>
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"1688",     "content":"n 次精度 k 階中心差分の導出" })</script> 
+<h3 id="1688">n 次精度 k 階中心差分の導出</h3>
+<br>
+\(n\) 次精度の中心差分の式が存在することを示します。
+<br>
+(簡単のために、以下では \(n\) を偶数であると仮定します。)
+<br>
+<br>
+結論から言うと、 \(p = \dfrac{n}{2}\) として、
+<br>
+\[ 
+\boldsymbol{f}(h) = \left(
+    \begin{array}{c}
+    f(x - ph) \\
+    f(x + (-p + 1)h) \\
+    \vdots \\
+    f(x - h) \\
+    f(x) \\
+    f(x + h) \\
+    \vdots \\
+    f(x + (p-1)h) \\
+    f(x + ph) \\
+    \end{array}
+    \right) \in \mathbb{R}^{n+1}
+
+ \]
+<br>
+<br>
+<br>
+<br>
+と、適切に定めた \(\boldsymbol{w}\) は 
+<br>
+\[ 
+\boldsymbol{w}\boldsymbol{f}(h) = f'(x) + O(h^n)
+
+ \]
+<br>
+を満たします。 (ただし \(h > 0\))　
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"1732",     "content":"証明" })</script> 
+<h3 id="1732">証明</h3>
+<br>
+まず、\(f(x + kh)\) をテイラー展開すると
+<br>
+\[ 
+f(x + kh) = f(x) + khf'(x) + \frac{(kh)^2}{2!}f''(x) + \cdots + \frac{(kh)^n}{n!}f^{(n)}(x) + O(h^{n+1})
+
+ \]
+<br>
+となります。
+<br>
+これを通常の(?) 中心差分 のときのように、
+<br>
+\(k = -p, -p + 1, \cdots, - 1, 1, \cdots, p - 1, p\) まで重み付きで足し合わせて \(f'(x)\) 以外の項を消せば良いです。
+<br>
+したがって、
+<br>
+\[ 
+\begin{pmatrix}
+1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+-p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
+(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
+\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
+
+ \]
+<br>
+を \(A\)  としたとき、
+<br>
+\[ 
+A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
+
+ \]
+<br>
+なる \(\boldsymbol{w} \in \mathbb{R}^{(n+1)}\) が存在すれば良いです。  
+<br>
+(\(e_2\) は \(2\) 番目の要素が \(1\) でそれ以外が \(0\) のベクトルです。)
+<br>
+実は、 \(A\) のような各列が等比数列のような形になっている正方行列は、ヴァンデルモンド行列と呼ばれており、
+全く同じ列が存在しないとき正則であることが知られています。\(^5\)
+<br>
+今回の場合、 \(h \neq 0\) なので、 各列は異なり、 \(A\) は正則です。
+<br>
+したがって、\(A\) は正則で、
+<br>
+\[ 
+\boldsymbol{w} = A^{-1}\boldsymbol{e}_2
+
+ \]
+<br>
+として定まる \(w\) が存在して、条件を満たすことがわかりました。
+<br>
+さらに、 今回は一階微分を求めたかったため \(\boldsymbol{e}_2\) との積を考えましたが、 \(k\) 階微分を求めたい場合は \(\boldsymbol{e}_{k+1}\) との積を考えれば良いです。
+<br>
+<script>page_contents.push({     "type":"H4",     "id":"1843",     "content":"実装" })</script> 
+<h4 id="1843">実装</h4>
+<br>
+結果を確かめるために sympy を使って有理数型で計算してみます。
+<br>
+<pre><code>from sympy.matrices import Matrix
+from sympy import Rational
+
+def central_weight(n, k):
+    p = n >> 1
+    A = Matrix.zeros(n+1, n+1)
+    r = [Rational(i) for i in range(-p, p+1)] 
+    for i in range(n+1):
+        for j in range(n+1):
+            A[i, j] = r[j]**i
+
+    e_k = [0] * (n+1)
+    e_k[k] = 1
+
+    w  = A.inv() * Matrix(e_k)
+    return w
+</code></pre>
+<br>
+<pre><code>print('O(n^2):', central_weight(2, 1))
+print('O(n^4):', central_weight(4, 1))
+print('O(n^6):', central_weight(6, 1))
+</code></pre>
+<br>
+<pre><code>O(n^2): Matrix([[-1/2], [0], [1/2]])
+O(n^4): Matrix([[1/12], [-2/3], [0], [2/3], [-1/12]])
+O(n^6): Matrix([[-1/60], [3/20], [-3/4], [0], [3/4], [-3/20], [1/60]])
+</code></pre>
+<br>
+となり、 \(n\) 次精度の中心差分の係数が得られました。
+<br>
+これを使って、 \(n\) 次精度 \(k\) 階中心差分を実装します。
+<br>
+<pre><code>def central_diff(f, x, n, k, h=1e-3):
+    w = central_weight(n, k)
+    p = n >> 1
+    _x = x + (np.arange(-p, p + 1) * h)
+    return sum([w[i] * f(_x[i]) for i in range(n+1)]) / h ** k
+</code></pre>
+<br>
+<pre><code>f = lambda x: sin(x)
+x = pi / 3
+print('f\'(x) O(n^2):', central_diff(f, x, 2, 1))
+print('f\'(x) O(n^4):', central_diff(f, x, 4, 1))
+print('f\'(x) O(n^6):', central_diff(f, x, 6, 1))
+</code></pre>
+<br>
+<pre><code>f'(x) O(n^2): 0.499999916666605
+f'(x) O(n^4): 0.499999999999889
+f'(x) O(n^6): 0.499999999999839
+</code></pre>
+<br>
+どうやら正しそうな式が得られています。
+<br>
+最後に最適な \(h\) の変化についても確かめておきます。
+<br>
+<br>
+<pre><code>n_points = range(2, 12, 2)
+h = np.logspace(0, -20, 100)
+label = [f'n={n}' for n in n_points]
+
+err = np.zeros((len(n_points), len(h)))
+for i, n in enumerate(n_points):
+    for j, hh in enumerate(h):
+        err[i, j] = abs(central_diff(f, x, n, 1, hh) - cos(x))
+
+plt.figure()
+for i in range(len(n_points)):
+    print(i)
+    plt.loglog(h, err[i], label=label[i])
+plt.legend()
+plt.xlabel('h')
+plt.ylabel('error')
+</code></pre>
+<br>
+<br>
+!
 <br>
 <br>
 <br>
