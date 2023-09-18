@@ -1,72 +1,22 @@
 ---
 title: コンピュータで自動で微分を計算しよう
+author: abap34
 date: 2023/09/08
-tags: [機械学習, 深層学習, 数学, 最適化, 自動微分]
+tag: [機械学習, 深層学習, 数学, 最適化, 自動微分]
+twitter_id: abap34
+github_id: abap34
+mail: abap0002@gmail.com
+ogp_url: https://images.dog.ceo/breeds/entlebucher/n02108000_306.jpg
 ---
 
 $$
 \newcommand{\argmin}{\mathop{\rm arg~min}\limits}
 $$
 ## はじめに　
-
 ブログのリニューアル記念に、せっかくなので何か記事を書くことにしました。
 何を書いてもよかったのですが、最近人に機械学習の話をすることが結構あり、その中でしていた自動微分の話が割とウケがよかったのでそれについて記事を書くことにしました。
 
-(最終更新: 2023/09/08)
-
-
-### 目次
-- 微分を求める技術
-  - どういう問題を解きたいか
-  - 3つの手法 ~自動微分は自動で微分をするという意味ではないよ~
-- 数値微分
-  - 数値微分のアイデア
-  - 数値微分の2つの誤差
-  - 数値微分の誤差の改善
-  - 最適な h の見積もり
-  - 多変数関数への拡張
-  - 数値微分の計算量
-  - 数値微分の長所
-  - 数値微分の短所
-- 数式微分
-  - 数式微分のアイデア
-  - 数式微分の実装
-  - 簡約化
-  - 多変数への拡張
-  - 数式微分の長所
-  - 数式微分の短所
-- 自動微分
-  - 自動微分のアイデア
-  - ↓ ここから未完成
-  - なるべくいろんなことを
-    - 二重数
-    - Wengert リスト  とかも
-  - DLがらみの自動微分の話
-    - DLフレームワークの話とか
-    - ミニマルなDLフレームワークを作るとかも
-  - 自動微分の応用の話とか
-
-  
-- まとめ (未)
-
-<!-- 
-計算グラフ再考
-  - forward モードの自動微分 (未)
-  - reverse モードの自動微分 (未)
-    - define-by-run 
-      - define-and-run と define-by-run
-    - Wengert リスト 
-      - Wengert リストへの変換 
-      - Wengert リストから勾配を計算する
-  - 深層学習と自動微分 (未)
-  - 深層学習フレームワークと自動微分 (未)
-  - ミニマルな深層学習フレームワークを作ってみる (未)
-  - 自動微分の拡張
-  - 
- -->
-
 ## 微分を求める技術
-
 昨今は機械学習、特に深層学習が大流行りし、世界中の性能の良い計算機がせっせと損失を小さくするパラメータを探しています。
 
 
@@ -75,9 +25,9 @@ $$
 もっぱら確率的勾配降下法(stochastic gradient descent, SGD)が使われています。
 
 
-そして、勾配法を使っているからには当然損失の勾配を計算する必要がありますが、
+そして、勾配法を使っているからには当然パラメータの損失に対する勾配を計算する必要がありますが、
 
-深層学習のような非常に複雑なモデルの勾配を解析的に求めることは非常に困難です。
+深層学習のような非常に複雑なモデルの勾配を人間の手で求めることは非常に困難です。
 
 すると当然、これをコンピュータに計算させようという需要が生まれてくるわけですが、
 
@@ -104,7 +54,6 @@ $\nabla f(\boldsymbol{x})$ の値があれば十分なことが多いです。
 $x_{n+1} = x_n - \eta f'(x_n)$という更新式にしたがって更新されるわけですが、
 実際に必要なのは $f'(x_n)$ であって、 $f'$ ではありません。) -->
 
-### 3つの主要な手法 ~自動微分は自動で微分をするという意味ではないよ~
 本記事で紹介する代表的な手法は三つあり、それぞれ
 
 - 数値微分(numerical differentiation)
@@ -115,10 +64,10 @@ $x_{n+1} = x_n - \eta f'(x_n)$という更新式にしたがって更新され�
 
 このように区別していることからわかるように、自動微分(automatic differentiation)は
 
-**「自動で微分を行う技術の総称」** ではなく、自動で微分を行う技術のうち一手法であることに注意してください。
+**「自動で微分を行う技術の総称」** ではなく、自動で微分を行う技術のうち一手法であることに注意してください。 $^1$
 
 
-それでは、それぞれの手法について詳しく見ていきましょう。
+それでは、それぞれの手法について詳しく見ていきます。
 
 ## 数値微分
 ### 数値微分のアイデア
@@ -367,13 +316,6 @@ plt.show()
 
 中心差分を取ることでより正確に計算できたようです。
 
-$O(h)$ から $O(h^2)$ に改善されたわけですが、では任意の $n \in \mathbb{N}$ に対して $O(h^n)$ で計算する方法が存在するでしょうか。
-
-実際これは存在します。
-
-ここで書くと少し長くなってしまうので、詳しくは末尾の「付録: $n$ 次精度 $k$ 階中心差分の導出」を見てください。
-
-
 さて、極限の近似がより正確になったため、桁落ちによる効果が $h$ がより大きい段階から発生するようになり、
 最も正確な値となる $h$ が $10^{-5}$ くらいに変化しました。このように 最適な $h$ は状況によって変化していきます。
 
@@ -442,6 +384,198 @@ $$
 
 となり、先ほどのグラフとほぼ同じ値になりました。
 
+
+### n 次精度 k 階中心差分の導出
+$O(h)$ から $O(h^2)$ に改善されたわけですが、では任意の $n \in \mathbb{N}$ に対して $O(h^n)$ で計算する方法が存在するでしょうか。
+
+これは、これまで同様に $f$ の色々な点での評価の重み付き和を考えることで実現できます。
+
+ここではそのような重みの計算と、ついでに $k$ 階微分への拡張を考えます。
+
+
+結論から言うと、
+
+
+
+$p = \dfrac{n}{2}$ として、
+
+$$
+A = \begin{pmatrix}
+1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+-p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
+(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
+\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
+$$
+
+$$
+\boldsymbol{f}(h) = \left(
+    \begin{array}{c}
+    f(x - ph) \\
+    f(x + (-p + 1)h) \\
+    \vdots \\
+    f(x - h) \\
+    f(x) \\
+    f(x + h) \\
+    \vdots \\
+    f(x + (p-1)h) \\
+    f(x + ph) \\
+    \end{array}
+    \right) \in \mathbb{R}^{n+1}
+$$
+
+としたとき
+
+$$
+A \boldsymbol{w} = \boldsymbol{e}_{2}
+$$
+
+なる $w$ がただひとつ存在して
+
+$$
+\boldsymbol{w}\boldsymbol{f}(h) = f'(x) + O(h^n)
+$$
+
+を満たします。 (ただし $h > 0$)　
+
+
+#### 証明
+
+まず、$f(x + kh)$ をテイラー展開すると
+
+$$
+f(x + kh) = f(x) + khf'(x) + \frac{(kh)^2}{2!}f''(x) + \cdots + \frac{(kh)^n}{n!}f^{(n)}(x) + O(h^{n+1})
+$$
+
+となります。
+
+これを通常の(?) 中心差分 のときのように、
+
+$k = -p, -p + 1, \cdots, - 1, 1, \cdots, p - 1, p$ まで重み付きで足し合わせて $f'(x)$ 以外の項を消せば良いです。
+
+したがって、
+
+$$
+\begin{pmatrix}
+1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+-p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
+(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
+\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
+$$
+
+を $A$  としたとき、
+
+$$
+A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
+$$
+
+なる $\boldsymbol{w} \in \mathbb{R}^{(n+1)}$ が存在すれば良いです。  
+
+($e_2$ は $2$ 番目の要素が $1$ でそれ以外が $0$ のベクトルです。)
+
+実は、 $A$ のような各列が等比数列のような形になっている正方行列は、*ヴァンデルモンド行列*と呼ばれており、
+全く同じ列が存在しないとき正則であることが知られています。$^5$
+
+今回の場合、 $h \neq 0$ なので、 各列は異なり、 $A$ は正則です。
+
+したがって、$A$ は正則で、
+
+$$
+\boldsymbol{w} = A^{-1}\boldsymbol{e}_2
+$$
+
+として定まる $w$ が存在してただひとつに定まります。
+
+さらに、 今回は一階微分を求めたかったため $\boldsymbol{e}_2$ との積を考えましたが、 $k$ 階微分を求めたい場合は $\boldsymbol{e}_{k+1}$ との積を考えれば良いです。
+#### 実装
+結果を確かめるために sympy を使って有理数型で計算してみます。
+
+```python
+from sympy.matrices import Matrix
+from sympy import Rational
+
+def central_weight(n, k):
+    p = n >> 1
+    A = Matrix.zeros(n+1, n+1)
+    r = [Rational(i) for i in range(-p, p+1)] 
+    for i in range(n+1):
+        for j in range(n+1):
+            A[i, j] = r[j]**i
+
+    e_k = [0] * (n+1)
+    e_k[k] = 1
+
+    w  = A.inv() * Matrix(e_k)
+    return w
+```
+
+```python
+print('O(n^2):', central_weight(2, 1))
+print('O(n^4):', central_weight(4, 1))
+print('O(n^6):', central_weight(6, 1))
+```
+
+```
+O(n^2): Matrix([[-1/2], [0], [1/2]])
+O(n^4): Matrix([[1/12], [-2/3], [0], [2/3], [-1/12]])
+O(n^6): Matrix([[-1/60], [3/20], [-3/4], [0], [3/4], [-3/20], [1/60]])
+```
+
+となり、 $n$ 次精度の中心差分の係数が得られました。
+
+これを使って、 $n$ 次精度 $k$ 階中心差分を実装します。
+
+```python
+def central_diff(f, x, n, k, h=1e-3):
+    w = central_weight(n, k)
+    p = n >> 1
+    _x = x + (np.arange(-p, p + 1) * h)
+    return sum([w[i] * f(_x[i]) for i in range(n+1)]) / h ** k
+```
+
+```python
+f = lambda x: sin(x)
+x = pi / 3
+print('f\'(x) O(n^2):', central_diff(f, x, 2, 1))
+print('f\'(x) O(n^4):', central_diff(f, x, 4, 1))
+print('f\'(x) O(n^6):', central_diff(f, x, 6, 1))
+```
+
+```
+f'(x) O(n^2): 0.499999916666605
+f'(x) O(n^4): 0.499999999999889
+f'(x) O(n^6): 0.499999999999839
+```
+
+どうやら正しそうな式が得られています。
+
+最後に最適な $h$ の変化についても確かめておきます。
+
+
+```python
+n_points = range(2, 12, 2)
+h = np.logspace(0, -20, 100)
+label = [f'n={n}' for n in n_points]
+
+err = np.zeros((len(n_points), len(h)))
+for i, n in enumerate(n_points):
+    for j, hh in enumerate(h):
+        err[i, j] = abs(central_diff(f, x, n, 1, hh) - cos(x))
+
+plt.figure()
+for i in range(len(n_points)):
+    print(i)
+    plt.loglog(h, err[i], label=label[i])
+plt.legend()
+plt.xlabel('h')
+plt.ylabel('error')
+```
+
+
+![評価する点と最適なhの変化](autodiff/fig/central_diff_comp.png)
 
 
 ### 多変数関数への拡張
@@ -518,11 +652,6 @@ array([[2., 4.],
 
 となり、正しく計算できています。
 
-
-### 高階微分の計算
-
-付録: $n$ 次精度 $k$ 階中心差分の導出 を参照してください。
-
 ### 数値微分の計算量
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 
@@ -560,7 +689,7 @@ $\mathbb{R}^n \to \mathbb{R}^m$ の関数のヤコビアン行列を求める場
 
 (関数) → (導関数)
 
-というような手法を指します。
+というアルゴリズムになります。
 
 数式微分では、微分したい式を木あるいはDAGとして表現し、
 この木構造への操作を行い、導関数となる木を得るような実装が一般的です。
@@ -873,6 +1002,21 @@ df.simplify().plot().write_png('fig/expr_diff_simple.png')
 
 このように、簡約された式を得ることができました。
 
+このように得られた式を適切な同様の式に変換するのは非常に重要です。
+
+数式微分では、実装が悪い場合には微分した結果の式が非常に冗長になる危険性が高いです。
+
+というのも、いわゆる積の微分の公式
+
+$$
+(fg)' = f'g + fg'
+$$
+
+からわかるように、積が含まれる式を微分すると、微分した結果の式は元の式よりも長くなります。
+
+これが入れ子になれば項の数は指数的に増えていき、文字通り爆発する場合があります。
+
+
 ### 多変数への拡張
 $f: \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f(\boldsymbol{x})$ を数式微分で求めます。
 
@@ -1136,23 +1280,39 @@ f(x=1, y=2)   : 2.5244129544236893
 
 となり、正しく計算できました。
 
-### 数式微分の長所
-当たり前の話ですが、導関数自体が求めたいときには数式微分を使わなければいけないので優位性があります。
 
+### 「ソースコード」からの微分
 
-### 数式微分の短所
-いくつか述べます。
-
-まず第一には木をはじめとした、式の表現への変換の難しさです。
-
-今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換したいです。
+今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換できると嬉しいです、
 
 例えば
 
 ```python
-
+def f(x):
+    return 2 * x + 1
 ```
 
+という関数を受け取り、
+
+```python
+def f′(x):
+    return 2
+```
+
+に相当するようなオブジェクトを手に入れたいです。
+
+このような変換を実装するのは容易ではないです、
+
+例えば
+
+```python
+def f(x):
+    if x < 0:
+        raise ValueError('x must be positive')
+    else:
+        for i in range(x):
+            print(i)
+```
 
 
 
@@ -1309,193 +1469,15 @@ $x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
 </details>
 
 
-
-### n 次精度 k 階中心差分の導出
-
-$n$ 次精度の中心差分の式が存在することを示します。
-
-(簡単のために、以下では $n$ を偶数であると仮定します。)
-
-
-結論から言うと、 $p = \dfrac{n}{2}$ として、
-
-$$
-\boldsymbol{f}(h) = \left(
-    \begin{array}{c}
-    f(x - ph) \\
-    f(x + (-p + 1)h) \\
-    \vdots \\
-    f(x - h) \\
-    f(x) \\
-    f(x + h) \\
-    \vdots \\
-    f(x + (p-1)h) \\
-    f(x + ph) \\
-    \end{array}
-    \right) \in \mathbb{R}^{n+1}
-$$
-
-
-
-
-と、適切に定めた $\boldsymbol{w}$ は 
-
-$$
-\boldsymbol{w}\boldsymbol{f}(h) = f'(x) + O(h^n)
-$$
-
-を満たします。 (ただし $h > 0$)　
-
-### 証明
-
-まず、$f(x + kh)$ をテイラー展開すると
-
-$$
-f(x + kh) = f(x) + khf'(x) + \frac{(kh)^2}{2!}f''(x) + \cdots + \frac{(kh)^n}{n!}f^{(n)}(x) + O(h^{n+1})
-$$
-
-となります。
-
-これを通常の(?) 中心差分 のときのように、
-
-$k = -p, -p + 1, \cdots, - 1, 1, \cdots, p - 1, p$ まで重み付きで足し合わせて $f'(x)$ 以外の項を消せば良いです。
-
-したがって、
-
-$$
-\begin{pmatrix}
-1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
--p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
-(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
-\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
-(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
-\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
-$$
-
-を $A$  としたとき、
-
-$$
-A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
-$$
-
-なる $\boldsymbol{w} \in \mathbb{R}^{(n+1)}$ が存在すれば良いです。  
-
-($e_2$ は $2$ 番目の要素が $1$ でそれ以外が $0$ のベクトルです。)
-
-実は、 $A$ のような各列が等比数列のような形になっている正方行列は、ヴァンデルモンド行列と呼ばれており、
-全く同じ列が存在しないとき正則であることが知られています。$^5$
-
-今回の場合、 $h \neq 0$ なので、 各列は異なり、 $A$ は正則です。
-
-したがって、$A$ は正則で、
-
-$$
-\boldsymbol{w} = A^{-1}\boldsymbol{e}_2
-$$
-
-として定まる $w$ が存在して、条件を満たすことがわかりました。
-
-さらに、 今回は一階微分を求めたかったため $\boldsymbol{e}_2$ との積を考えましたが、 $k$ 階微分を求めたい場合は $\boldsymbol{e}_{k+1}$ との積を考えれば良いです。
-
-#### 実装
-
-結果を確かめるために sympy を使って有理数型で計算してみます。
-
-```python
-from sympy.matrices import Matrix
-from sympy import Rational
-
-def central_weight(n, k):
-    p = n >> 1
-    A = Matrix.zeros(n+1, n+1)
-    r = [Rational(i) for i in range(-p, p+1)] 
-    for i in range(n+1):
-        for j in range(n+1):
-            A[i, j] = r[j]**i
-
-    e_k = [0] * (n+1)
-    e_k[k] = 1
-
-    w  = A.inv() * Matrix(e_k)
-    return w
-```
-
-```python
-print('O(n^2):', central_weight(2, 1))
-print('O(n^4):', central_weight(4, 1))
-print('O(n^6):', central_weight(6, 1))
-```
-
-```
-O(n^2): Matrix([[-1/2], [0], [1/2]])
-O(n^4): Matrix([[1/12], [-2/3], [0], [2/3], [-1/12]])
-O(n^6): Matrix([[-1/60], [3/20], [-3/4], [0], [3/4], [-3/20], [1/60]])
-```
-
-となり、 $n$ 次精度の中心差分の係数が得られました。
-
-これを使って、 $n$ 次精度 $k$ 階中心差分を実装します。
-
-```python
-def central_diff(f, x, n, k, h=1e-3):
-    w = central_weight(n, k)
-    p = n >> 1
-    _x = x + (np.arange(-p, p + 1) * h)
-    return sum([w[i] * f(_x[i]) for i in range(n+1)]) / h ** k
-```
-
-```python
-f = lambda x: sin(x)
-x = pi / 3
-print('f\'(x) O(n^2):', central_diff(f, x, 2, 1))
-print('f\'(x) O(n^4):', central_diff(f, x, 4, 1))
-print('f\'(x) O(n^6):', central_diff(f, x, 6, 1))
-```
-
-```
-f'(x) O(n^2): 0.499999916666605
-f'(x) O(n^4): 0.499999999999889
-f'(x) O(n^6): 0.499999999999839
-```
-
-どうやら正しそうな式が得られています。
-
-最後に最適な $h$ の変化についても確かめておきます。
-
-
-```python
-n_points = range(2, 12, 2)
-h = np.logspace(0, -20, 100)
-label = [f'n={n}' for n in n_points]
-
-err = np.zeros((len(n_points), len(h)))
-for i, n in enumerate(n_points):
-    for j, hh in enumerate(h):
-        err[i, j] = abs(central_diff(f, x, n, 1, hh) - cos(x))
-
-plt.figure()
-for i in range(len(n_points)):
-    print(i)
-    plt.loglog(h, err[i], label=label[i])
-plt.legend()
-plt.xlabel('h')
-plt.ylabel('error')
-```
-
-
-![評価する点と最適なhの変化](autodiff/fig/central_diff_comp.png)
-
-
-
-
 <hr>
 
 <footer>
 
-参考文献
+脚注・参考文献
 
+[1] 記事内でも言及がありますが、数式微分と自動微分はやや境界があいまい(数式微分とも自動微分ともいえそうな感じの例が考えられるし、実際にある)と考えています。
+とはいえ自動で微分が求まっているならば全て自動微分だ！というのは誤りと思います。
 
-[1] [数値計算における誤差について ─数値微分を例に─](https://na-inet.jp/na/na_error_diff.pdf)
 
 [2] [倍精度浮動小数点数 | Wikipedia](https://ja.wikipedia.org/wiki/%E5%80%8D%E7%B2%BE%E5%BA%A6%E6%B5%AE%E5%8B%95%E5%B0%8F%E6%95%B0%E7%82%B9%E6%95%B0) によれば、 <br>
 > 昔[いつ?]のFORTRANでは、単精度（REAL型）よりも精度が高ければ倍精度（DOUBLE PRECISION型）を名乗ることができた
@@ -1504,5 +1486,7 @@ plt.ylabel('error')
 [3] IEEE 754 2008, §4.3.3
 
 [4] IEEE 754 2008, §7.4
+
+[5] https://mathlandscape.com/vandermonde/
 
 </footer>
