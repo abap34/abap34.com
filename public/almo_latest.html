@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -18,14 +19,14 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
 
@@ -44,17 +45,19 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #F7F7F7;
-            color: #333;
+            background-color: #333;
+            /* ダークテーマの背景色 */
+            color: #F7F7F7;
+            /* ダークテーマのテキスト色 */
             flex-direction: column;
             display: flex;
             width: 95%;
-
         }
 
         h1,
         h2 {
-            color: #323232;
+            color: #F7F7F7;
+            /* ダークテーマの見出し色 */
             text-align: center;
             margin-bottom: 20px;
         }
@@ -66,12 +69,13 @@
         }
 
         p {
-            color: #666;
+            color: #ccc;
+            /* ダークテーマのテキスト色 */
             margin-bottom: 10px;
         }
 
         a {
-            color: #006699;
+            color: #dcddfe;
         }
 
         figure {
@@ -84,26 +88,29 @@
 
         pre {
             padding: 10px;
-            color: #333;
+            color: #F7F7F7;
+            /* ダークテーマのテキスト色 */
             border: solid 1px #a8a8a8;
             overflow-x: auto;
         }
+
 
         img {
             max-width: 100%;
             height: auto;
         }
 
-
         .date {
-            color: #666;
+            color: #ccc;
+            /* ダークテーマのテキスト色 */
             font-size: 14px;
             margin: 0 auto;
             text-align: center;
         }
 
         .tag {
-            color: #666;
+            color: #ccc;
+            /* ダークテーマのテキスト色 */
             font-size: 14px;
             margin: 0 auto;
             text-align: center;
@@ -111,17 +118,17 @@
 
         .content {
             flex: 1;
-            padding: 0px 40px;
+            padding: 40px 40px;
             margin-left: 0px;
             margin-right: 10px;
             margin-top: 0px;
             margin-bottom: 0px;
-            background-color: #ffffff;
+            background-color: #444;
+            /* ダークテーマのコンテンツ背景色 */
             border-radius: 5px;
             overflow: auto;
             width: 100%;
         }
-
 
         @media (max-width: 768px) {
             .content {
@@ -142,7 +149,8 @@
             top: 0;
             width: 220px;
             z-index: 1000;
-            background-color: #F2F2F2;
+            background-color: #333;
+            /* ダークテーマのサイドバー背景色 */
         }
 
         @media (max-width: 1260px) {
@@ -159,7 +167,8 @@
             height: 100%;
             padding: 10px 10px;
             overflow: auto;
-            background-color: #F2F2F2;
+            background-color: #333;
+            /* ダークテーマのリンクバー背景色 */
         }
 
         @media (max-width: 1260px) {
@@ -169,7 +178,8 @@
         }
 
         #toc {
-            background-color: #f4f4f4;
+            background-color: #444;
+            /* ダークテーマの目次背景色 */
             border-radius: 5px;
             padding: 15px;
             list-style: none;
@@ -179,13 +189,15 @@
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #2a2a2a;
+            color: #F7F7F7;
+            /* ダークテーマの見出し色 */
             border-bottom: solid 1px #161616;
         }
 
         #toc a {
             text-decoration: none;
-            color: #333;
+            color: #ccc;
+            /* ダークテーマのリンク色 */
             display: block;
             margin: 5px 0;
             transition: color 0.2s;
@@ -223,7 +235,6 @@
             color: #006699;
         }
 
-
         .content_list_h2 {
             font-size: 16px;
             font-weight: bold;
@@ -243,7 +254,8 @@
             border-radius: 25px;
             font-size: 14px;
             font-weight: bold;
-            color: #666;
+            color: #ccc;
+            /* ダークテーマのテキスト色 */
             border: 1px solid #333;
             margin: 0 8px;
             float: left;
@@ -281,7 +293,8 @@
         .problem_title {
             font-size: 20px;
             font-weight: bold;
-            color: #333;
+            color: #F7F7F7;
+            /* ダークテーマのテキスト色 */
         }
 
         .editor {
@@ -289,10 +302,11 @@
             height: 300px;
             font-size: 16px;
             font-family: monospace;
-            background-color: #F2F2F2;
-            color: #333;
+            background-color: #444;
+            /* ダークテーマのテキスト色 */
+            color: #F7F7F7;
+            /* ダークテーマのテキスト色 */
             padding: 10px;
-            border: solid 1px #a8a8a8;
         }
 
         .output,
@@ -304,8 +318,10 @@
             overflow-x: auto;
             font-size: 16px;
             font-family: monospace;
-            background-color: #F2F2F2;
-            color: #333;
+            background-color: #444;
+            /* ダークテーマのテキスト色 */
+            color: #F7F7F7;
+            /* ダークテーマのテキスト色 */
             border: solid 1px #a8a8a8;
         }
 
@@ -314,7 +330,8 @@
             font-size: 14px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #666;
+            color: #ccc;
+            /* ダークテーマのテキスト色 */
         }
     </style>
 
@@ -462,6 +479,7 @@ const runBlock = async (objectid) => {
     let editor = ace.edit(objectid);
     let code = editor.getValue();
     let out_area = document.getElementById(objectid + "_out");
+    document.pyodideMplTarget  = document.getElementById(objectid + "_plot");
     out_area.innerText = "Running...";
     for (let i = 0; i < use_libs.length; i++) {
         let lib = use_libs[i];
@@ -486,6 +504,8 @@ const runBlock = async (objectid) => {
     <div class="sidebar">
         <ul id="toc"></ul>
     </div>
+
+
 
     <div class="content">
 
@@ -529,7 +549,7 @@ ALMOの拡張構文の最大の特徴、そして売りは、<strong>実行・�
 <br>
 <h3 class="problem_title"> <div class='badge' id='50_status'>WJ</div>   Hello ALMO! </h2>
 <div class="editor" id="50" rows="3" cols="80"></div> 
-<script>editor = ace.edit("50"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(``, -1);</script>
+<script>editor = ace.edit("50"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(``, -1);</script>
 <div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="50_sample_in">ALMO</pre>
 <div class="box-title"> 出力 </div><pre class="sample_out" id="50_sample_out"></pre>
 <div class="box-title"> サンプルの答え </div><pre class="expect_out" id="50_expect_out">Hello, ALMO!</pre>
@@ -574,14 +594,9 @@ judge_types["50"] = `equal`
 (つまり一度読み込みさえ終わればオフライン環境でも動作します。)
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"92",     "content":"全部入りHTML" })</script> 
-<h2 id="92">全部入りHTML</h2>
-<br>
-ALMOは<strong>全部入り</strong>のHTMLファイルを出力するパーサです。
-<br>
 上のブロックは
 <br>
-<pre><code class="">:::judge
+<pre><code class="text">:::judge
 title=Hello ALMO!
 sample_in=example/helloalmo/in/sample.txt
 sample_out=example/helloalmo/out/sample.txt
@@ -594,7 +609,7 @@ out=example/helloalmo/out/*.txt
 <br>
 普通のコードブロックも作れます、
 <br>
-<pre><code class="">def hello():
+<pre><code class="python">def hello():
     print("Hello ALMO!")
 
 if __name__ == "__main__":
@@ -605,11 +620,14 @@ if __name__ == "__main__":
 <br>
 <br>
 <br>
-<div class="editor" id="120" rows="3" cols="80"></div> 
-<script>editor = ace.edit("120"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`_='_=%r;print(_%%_)';print(_%_)
+<br> 
+ <div class="editor" id="110" rows="3" cols="80"></div> 
+<script>editor = ace.edit("110"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`# このコードは自分自身を出力します！実行して確かめよう
+_='_=%r;print(_%%_)';print(_%_)
 `, -1);</script>
-<pre class="sample_out" id="120_out"></pre>
-<button class="runbutton" onclick="runBlock('120')"> Run </button>
+<button class="runbutton" onclick="runBlock('110')"> Run </button>
+<pre class="sample_out" id="110_out"></pre>
+<div class="plot" id="110_plot"></div>
 <br>
 <br>
 さらに、主要なPythonのライブラリも読み込めます。
@@ -617,23 +635,65 @@ if __name__ == "__main__":
 <pre><code class="">:::loadlib
 numpy
 scipy
+matplotlib
 :::
 </code></pre>
 <br>
-と書くと、
+と書くと、 <code>numpy</code>, <code>scipy</code>, <code>matplotlib</code> を読み込むことができます。
+(実行可能コードブロックの初回実行時に読み込まれます。)
 <br>
 <script> use_libs.push("numpy"); </script><script> use_libs.push("scipy"); </script><script> use_libs.push("matplotlib"); </script>
 <br>
+これを使ってバネの運動を調べてみましょう。(generated by ChatGPT)
 <br>
-<div class="editor" id="135" rows="3" cols="80"></div> 
-<script>editor = ace.edit("135"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`import matplotlib.pyplot as plt
+<br> 
+ <div class="editor" id="138" rows="3" cols="80"></div> 
+<script>editor = ace.edit("138"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`import matplotlib.pyplot as plt
 
-plt.plot([1, 2, 3, 4])
-plt.ylabel('some numbers')
+import matplotlib
+matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
+
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+
+# 振動子の運動方程式
+def harmonic_oscillator(t, y, k, m):
+    x, v = y
+    dxdt = v
+    dvdt = -k * x / m
+    return [dxdt, dvdt]
+
+# パラメータ設定
+k = 1.0  # 弾性定数
+m = 1.0  # 質量
+initial_conditions = [1.0, 0.0]  # 初期位置と初速度
+
+# 時間の範囲
+t_span = (0.0, 10.0)
+
+# 数値的に運動方程式を解く
+solution = solve_ivp(harmonic_oscillator, t_span, initial_conditions, args=(k, m), dense_output=True)
+
+# 時間の範囲を指定して解を評価
+t_eval = np.linspace(0, 10, 1000)
+y_eval = solution.sol(t_eval)
+
+# 結果を可視化
+plt.figure(figsize=(8, 4))
+plt.plot(t_eval, y_eval[0], label='位置')
+plt.plot(t_eval, y_eval[1], label='速度')
+plt.xlabel('時間')
+plt.ylabel('位置と速度')
+plt.legend()
+plt.title('弾性振動子の振動')
+plt.grid(True)
 plt.show()
+
 `, -1);</script>
-<pre class="sample_out" id="135_out"></pre>
-<button class="runbutton" onclick="runBlock('135')"> Run </button>
+<button class="runbutton" onclick="runBlock('138')"> Run </button>
+<pre class="sample_out" id="138_out"></pre>
+<div class="plot" id="138_plot"></div>
 <br>
 <br>
 <br>
@@ -644,18 +704,18 @@ plt.show()
 <figcaption>マンドリル</figcaption></figure>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"153",     "content":"インストール方法・使い方" })</script> 
-<h2 id="153">インストール方法・使い方</h2>
+<script>page_contents.push({     "type":"H2",     "id":"156",     "content":"インストール方法・使い方" })</script> 
+<h2 id="156">インストール方法・使い方</h2>
 <br>
 ALMOは、Homebrewを使ってインストールすることができます。
 <br>
-<pre><code class="">brew tap abap34/homebrew-almo
+<pre><code class="bash">brew tap abap34/homebrew-almo
 brew install almo
 </code></pre>
 <br>
 インストールが完了したら、MarkdownファイルをALMOに渡してみましょう。
 <br>
-<pre><code class="">almo example/example.md -o example.html
+<pre><code class="bash">almo example/example.md -o example.html
 </code></pre>
 <br>
 全部入りのHTMLファイルなので、そのまま置くだけで動作します。
@@ -673,7 +733,7 @@ brew install almo
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
         <br>
-        
+
         <br>
 
         <br>
@@ -688,6 +748,7 @@ brew install almo
     </div>
     </script>
 </body>
+
 
 
     <script>
