@@ -549,7 +549,7 @@ ALMOの拡張構文の最大の特徴、そして売りは、<strong>実行・�
 <br>
 <h3 class="problem_title"> <div class='badge' id='50_status'>WJ</div>   Hello ALMO! </h2>
 <div class="editor" id="50" rows="3" cols="80"></div> 
-<script>editor = ace.edit("50"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(``, -1);</script>
+<script>editor = ace.edit("50"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(``, -1);</script>
 <div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="50_sample_in">ALMO</pre>
 <div class="box-title"> 出力 </div><pre class="sample_out" id="50_sample_out"></pre>
 <div class="box-title"> サンプルの答え </div><pre class="expect_out" id="50_expect_out">Hello, ALMO!</pre>
@@ -622,7 +622,7 @@ if __name__ == "__main__":
 <br>
 <br> 
  <div class="editor" id="110" rows="3" cols="80"></div> 
-<script>editor = ace.edit("110"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`# このコードは自分自身を出力します！　
+<script>editor = ace.edit("110"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 6,     maxLines: 6,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`# このコードは自分自身を出力します！　
 
 # 実行して確かめよう
 
@@ -651,7 +651,7 @@ matplotlib
 <br>
 <br> 
  <div class="editor" id="138" rows="3" cols="80"></div> 
-<script>editor = ace.edit("138"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,});editor.setValue(`import matplotlib.pyplot as plt
+<script>editor = ace.edit("138"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 43,     maxLines: 43,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 
 import matplotlib
 matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
