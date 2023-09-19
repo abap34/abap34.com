@@ -46,9 +46,7 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #333;
-            /* ダークテーマの背景色 */
             color: #F7F7F7;
-            /* ダークテーマのテキスト色 */
             flex-direction: column;
             display: flex;
             width: 95%;
@@ -57,7 +55,6 @@
         h1,
         h2 {
             color: #F7F7F7;
-            /* ダークテーマの見出し色 */
             text-align: center;
             margin-bottom: 20px;
         }
@@ -70,7 +67,6 @@
 
         p {
             color: #ccc;
-            /* ダークテーマのテキスト色 */
             margin-bottom: 10px;
         }
 
@@ -89,7 +85,6 @@
         pre {
             padding: 10px;
             color: #F7F7F7;
-            /* ダークテーマのテキスト色 */
             border: solid 1px #a8a8a8;
             overflow-x: auto;
         }
@@ -102,7 +97,6 @@
 
         .date {
             color: #ccc;
-            /* ダークテーマのテキスト色 */
             font-size: 14px;
             margin: 0 auto;
             text-align: center;
@@ -110,7 +104,6 @@
 
         .tag {
             color: #ccc;
-            /* ダークテーマのテキスト色 */
             font-size: 14px;
             margin: 0 auto;
             text-align: center;
@@ -124,7 +117,6 @@
             margin-top: 0px;
             margin-bottom: 0px;
             background-color: #444;
-            /* ダークテーマのコンテンツ背景色 */
             border-radius: 5px;
             overflow: auto;
             width: 100%;
@@ -150,7 +142,6 @@
             width: 220px;
             z-index: 1000;
             background-color: #333;
-            /* ダークテーマのサイドバー背景色 */
         }
 
         @media (max-width: 1260px) {
@@ -168,7 +159,6 @@
             padding: 10px 10px;
             overflow: auto;
             background-color: #333;
-            /* ダークテーマのリンクバー背景色 */
         }
 
         @media (max-width: 1260px) {
@@ -179,7 +169,6 @@
 
         #toc {
             background-color: #444;
-            /* ダークテーマの目次背景色 */
             border-radius: 5px;
             padding: 15px;
             list-style: none;
@@ -190,14 +179,12 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: #F7F7F7;
-            /* ダークテーマの見出し色 */
             border-bottom: solid 1px #161616;
         }
 
         #toc a {
             text-decoration: none;
             color: #ccc;
-            /* ダークテーマのリンク色 */
             display: block;
             margin: 5px 0;
             transition: color 0.2s;
@@ -294,20 +281,18 @@
             font-size: 20px;
             font-weight: bold;
             color: #F7F7F7;
-            /* ダークテーマのテキスト色 */
         }
 
+        
         .editor {
             width: 100%;
-            height: 300px;
             font-size: 16px;
             font-family: monospace;
             background-color: #444;
-            /* ダークテーマのテキスト色 */
             color: #F7F7F7;
-            /* ダークテーマのテキスト色 */
-            padding: 10px;
+            border: solid 1px #a8a8a8;
         }
+
 
         .output,
         .expect_out,
@@ -319,9 +304,7 @@
             font-size: 16px;
             font-family: monospace;
             background-color: #444;
-            /* ダークテーマのテキスト色 */
             color: #F7F7F7;
-            /* ダークテーマのテキスト色 */
             border: solid 1px #a8a8a8;
         }
 
@@ -331,7 +314,6 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: #ccc;
-            /* ダークテーマのテキスト色 */
         }
     </style>
 
@@ -475,17 +457,19 @@ function judge(answer, expect_out) {
 
 // ExecutableCodeblockのコードを実行する
 const runBlock = async (objectid) => {
+    let out_area = document.getElementById(objectid + "_out");
+    out_area.style.color = "";
+
     let pyodide = await pyodidePromise;
     let editor = ace.edit(objectid);
     let code = editor.getValue();
-    let out_area = document.getElementById(objectid + "_out");
     document.pyodideMplTarget  = document.getElementById(objectid + "_plot");
-    out_area.innerText = "Running...";
+    out_area.innerText = "Loading libraries...";
     for (let i = 0; i < use_libs.length; i++) {
         let lib = use_libs[i];
         await pyodide.loadPackage(lib);
     }
-    out_area.style.color = "";
+    out_area.innerText = "Running...";
     outputs = "";
     try {
         await pyodide.runPythonAsync(code);
