@@ -527,8 +527,11 @@ const runBlock = async (objectid) => {
 ブログのリニューアル記念に、せっかくなので何か記事を書くことにしました。
 何を書いてもよかったのですが、最近人に機械学習の話をすることが結構あり、その中でしていた自動微分の話が割とウケがよかったのでそれについて記事を書くことにしました。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"17",     "content":"微分を求める技術" })</script> 
-<h2 id="17">微分を求める技術</h2>
+<strong>この記事は書きかけです。</strong>
+<br>
+<br>
+<script>page_contents.push({     "type":"H2",     "id":"24",     "content":"微分を求める技術" })</script> 
+<h2 id="24">微分を求める技術</h2>
 昨今は機械学習、特に深層学習が大流行りし、世界中の性能の良い計算機がせっせと損失を小さくするパラメータを探しています。
 <br>
 <br>
@@ -563,10 +566,10 @@ const runBlock = async (objectid) => {
 <br>
 それでは、それぞれの手法について詳しく見ていきます。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"83",     "content":"数値微分" })</script> 
-<h2 id="83">数値微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"86",     "content":"数値微分のアイデア" })</script> 
-<h3 id="86">数値微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"90",     "content":"数値微分" })</script> 
+<h2 id="90">数値微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"93",     "content":"数値微分のアイデア" })</script> 
+<h3 id="93">数値微分のアイデア</h3>
 まずは、最も単純な方法である数値微分について説明します。
 <br>
 みなさんご存知のように、
@@ -612,8 +615,8 @@ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
 ではこれを計算するpythonのコードを書いてみます。
 <br>
 <br> 
- <div class="editor" id="166" rows="3" cols="80"></div> 
-<script>editor = ace.edit("166"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 12,     maxLines: 12,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="173" rows="3" cols="80"></div> 
+<script>editor = ace.edit("173"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 12,     maxLines: 12,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def numerical_diff(f, x, h):
     return (f(x+h) - f(x)) / h
@@ -625,9 +628,9 @@ print(numerical_diff(f, np.pi/3, 1e-1))
 print(numerical_diff(f, np.pi/3, 1e-2))
 print(numerical_diff(f, np.pi/3, 1e-3))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('166')"> Run </button>
-<pre class="sample_out" id="166_out"></pre>
-<div class="plot" id="166_plot"></div>
+<button class="runbutton" onclick="runBlock('173')"> Run </button>
+<pre class="sample_out" id="173_out"></pre>
+<div class="plot" id="173_plot"></div>
 <br>
 <br>
 そこそこいい感じに計算できていますね。
@@ -637,8 +640,8 @@ print(numerical_diff(f, np.pi/3, 1e-3))
 <br>
 ここからは、この誤差について評価を与えることを考えてみます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"185",     "content":"数値微分の2つの誤差" })</script> 
-<h3 id="185">数値微分の2つの誤差</h3>
+<script>page_contents.push({     "type":"H3",     "id":"192",     "content":"数値微分の2つの誤差" })</script> 
+<h3 id="192">数値微分の2つの誤差</h3>
 先ほどの微分の定義で出てきた、
 <br>
 \[ 
@@ -673,8 +676,8 @@ f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \cdots \\
 実はこれはとてもよく知られている事実ですが、 \(h\) を小さくしすぎるとかえって全体の誤差が大きくなります。
 <br>
 <br> 
- <div class="editor" id="226" rows="3" cols="80"></div> 
-<script>editor = ace.edit("226"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 23,     maxLines: 23,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+ <div class="editor" id="233" rows="3" cols="80"></div> 
+<script>editor = ace.edit("233"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 23,     maxLines: 23,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 
 import matplotlib
 matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
@@ -697,9 +700,9 @@ plt.legend()
 plt.show()
 plt.close()
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('226')"> Run </button>
-<pre class="sample_out" id="226_out"></pre>
-<div class="plot" id="226_plot"></div>
+<button class="runbutton" onclick="runBlock('233')"> Run </button>
+<pre class="sample_out" id="233_out"></pre>
+<div class="plot" id="233_plot"></div>
 <br>
 <br>
 <br>
@@ -710,8 +713,8 @@ plt.close()
 <br>
 (浮動小数点について知らない人は、 末尾の付録: 浮動小数点数 をみてください)
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"248",     "content":"桁落ち" })</script> 
-<h4 id="248">桁落ち</h4>
+<script>page_contents.push({     "type":"H4",     "id":"255",     "content":"桁落ち" })</script> 
+<h4 id="255">桁落ち</h4>
 \(h\) を小さくしていけばしていくほど、\(f(x+h)\) と \(f(x)\) の差が小さくなっていきます。
 <br>
 <br>
@@ -748,8 +751,8 @@ f(x+h) - f(x) &= 3.16069612 \times 10^1 - 3.16227766 \times 10^1 \\
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"318",     "content":"数値微分の誤差の改善" })</script> 
-<h3 id="318">数値微分の誤差の改善</h3>
+<script>page_contents.push({     "type":"H3",     "id":"325",     "content":"数値微分の誤差の改善" })</script> 
+<h3 id="325">数値微分の誤差の改善</h3>
 ここからは全体の誤差を改善する方法を考えます。
 まず簡単な方法は、浮動小数点をより正確な表現が可能なものに変えることでしょう。
 <br>
@@ -797,8 +800,8 @@ f(x-h) &= f(x) - f'(x)h + f''(x)\frac{h^2}{2} - \frac{1}{6}f'''(x)h^3 + \cdots \
 実際に中心差分についても調べてグラフを書いてみます。
 <br>
 <br> 
- <div class="editor" id="365" rows="3" cols="80"></div> 
-<script>editor = ace.edit("365"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 33,     maxLines: 33,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+ <div class="editor" id="372" rows="3" cols="80"></div> 
+<script>editor = ace.edit("372"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 33,     maxLines: 33,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 import numpy as np
 
 import matplotlib
@@ -831,9 +834,9 @@ plt.legend()
 plt.show()
 plt.close()
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('365')"> Run </button>
-<pre class="sample_out" id="365_out"></pre>
-<div class="plot" id="365_plot"></div>
+<button class="runbutton" onclick="runBlock('372')"> Run </button>
+<pre class="sample_out" id="372_out"></pre>
+<div class="plot" id="372_plot"></div>
 <br>
 <br>
 中心差分を取ることでより正確に計算できたようです。
@@ -913,8 +916,8 @@ h = \left(\frac{3 \times 2.2 \times 10^{-16}}{0.8660\cdots}\right)^{\frac{1}{3}}
 となり、先ほどのグラフとほぼ同じ値になりました。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"526",     "content":"n 次精度 k 階中心差分の導出" })</script> 
-<h3 id="526">n 次精度 k 階中心差分の導出</h3>
+<script>page_contents.push({     "type":"H3",     "id":"533",     "content":"n 次精度 k 階中心差分の導出" })</script> 
+<h3 id="533">n 次精度 k 階中心差分の導出</h3>
 \(O(h)\) から \(O(h^2)\) に改善されたわけですが、では任意の \(n \in \mathbb{N}\) に対して \(O(h^n)\) で計算する方法が存在するでしょうか。
 <br>
 これは、これまで同様に \(f\) の色々な点での評価の重み付き和を考えることで実現できます。
@@ -973,8 +976,8 @@ A \boldsymbol{w} = \boldsymbol{e}_{2}
 を満たします。 (ただし \(h > 0\))　
 <br>
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"596",     "content":"証明" })</script> 
-<h4 id="596">証明</h4>
+<script>page_contents.push({     "type":"H4",     "id":"603",     "content":"証明" })</script> 
+<h4 id="603">証明</h4>
 <br>
 まず、\(f(x + kh)\) をテイラー展開すると
 <br>
@@ -1028,12 +1031,12 @@ A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
 として定まる \(w\) が存在してただひとつに定まります。
 <br>
 さらに、 今回は一階微分を求めたかったため \(\boldsymbol{e}_2\) との積を考えましたが、 \(k\) 階微分を求めたい場合は \(\boldsymbol{e}_{k+1}\) との積を考えれば良いです。
-<script>page_contents.push({     "type":"H4",     "id":"709",     "content":"実装" })</script> 
-<h4 id="709">実装</h4>
+<script>page_contents.push({     "type":"H4",     "id":"716",     "content":"実装" })</script> 
+<h4 id="716">実装</h4>
 <br>
 <br> 
- <div class="editor" id="711" rows="3" cols="80"></div> 
-<script>editor = ace.edit("711"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="718" rows="3" cols="80"></div> 
+<script>editor = ace.edit("718"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def central_weight(n, k):
     p = n // 2
@@ -1054,9 +1057,9 @@ print('O(n^2):', central_weight(2, 1))
 print('O(n^4):', central_weight(4, 1))
 print('O(n^6):', central_weight(6, 1))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('711')"> Run </button>
-<pre class="sample_out" id="711_out"></pre>
-<div class="plot" id="711_plot"></div>
+<button class="runbutton" onclick="runBlock('718')"> Run </button>
+<pre class="sample_out" id="718_out"></pre>
+<div class="plot" id="718_plot"></div>
 <br>
 <br>
 <br>
@@ -1065,8 +1068,8 @@ print('O(n^6):', central_weight(6, 1))
 これを使って、 \(n\) 次精度 \(k\) 階中心差分を実装します。
 <br>
 <br> 
- <div class="editor" id="730" rows="3" cols="80"></div> 
-<script>editor = ace.edit("730"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 14,     maxLines: 14,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`from math import *
+ <div class="editor" id="737" rows="3" cols="80"></div> 
+<script>editor = ace.edit("737"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 14,     maxLines: 14,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`from math import *
 
 def central_diff(f, x, n, k, h=1e-3):
     w = central_weight(n, k)
@@ -1080,9 +1083,9 @@ print('O(n^2):', central_diff(f, x, 2, 1))
 print('O(n^4):', central_diff(f, x, 4, 1))
 print('O(n^6):', central_diff(f, x, 6, 1))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('730')"> Run </button>
-<pre class="sample_out" id="730_out"></pre>
-<div class="plot" id="730_plot"></div>
+<button class="runbutton" onclick="runBlock('737')"> Run </button>
+<pre class="sample_out" id="737_out"></pre>
+<div class="plot" id="737_plot"></div>
 <br>
 <br>
 どうやら正しそうな式が得られています。
@@ -1091,8 +1094,8 @@ print('O(n^6):', central_diff(f, x, 6, 1))
 <br>
 <br>
 <br> 
- <div class="editor" id="743" rows="3" cols="80"></div> 
-<script>editor = ace.edit("743"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+ <div class="editor" id="750" rows="3" cols="80"></div> 
+<script>editor = ace.edit("750"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 import numpy as np
 
 import matplotlib
@@ -1117,19 +1120,19 @@ plt.ylabel('error')
 plt.show()
 plt.close()
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('743')"> Run </button>
-<pre class="sample_out" id="743_out"></pre>
-<div class="plot" id="743_plot"></div>
+<button class="runbutton" onclick="runBlock('750')"> Run </button>
+<pre class="sample_out" id="750_out"></pre>
+<div class="plot" id="750_plot"></div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"748",     "content":"多変数関数への拡張" })</script> 
-<h3 id="748">多変数関数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"755",     "content":"多変数関数への拡張" })</script> 
+<h3 id="755">多変数関数への拡張</h3>
 \(f : \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) は
 各 \(x_i\) についてそれ以外の変数を固定して計算すればOKです。
 <br>
 <br> 
- <div class="editor" id="763" rows="3" cols="80"></div> 
-<script>editor = ace.edit("763"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
+ <div class="editor" id="770" rows="3" cols="80"></div> 
+<script>editor = ace.edit("770"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
     n = len(x)
     nabla = np.zeros(n)
     for i in range(n):
@@ -1150,9 +1153,9 @@ x, y = 1.0, 2.0
 
 print(numerical_nabla(f, np.array([x, y]), 1e-3))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('763')"> Run </button>
-<pre class="sample_out" id="763_out"></pre>
-<div class="plot" id="763_plot"></div>
+<button class="runbutton" onclick="runBlock('770')"> Run </button>
+<pre class="sample_out" id="770_out"></pre>
+<div class="plot" id="770_plot"></div>
 <br>
 <br>
 <br>
@@ -1160,8 +1163,8 @@ print(numerical_nabla(f, np.array([x, y]), 1e-3))
 \(f: \mathbb{R}^n \to \mathbb{R}^m\) のヤコビアン行列 \(J_f\) は
 <br>
 <br> 
- <div class="editor" id="778" rows="3" cols="80"></div> 
-<script>editor = ace.edit("778"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="785" rows="3" cols="80"></div> 
+<script>editor = ace.edit("785"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def numerical_jacobian(f, x, h=1e-5):
     n = len(x)
@@ -1186,20 +1189,20 @@ x, y = 1.0, 2.0
 
 print(numerical_jacobian(f, np.array([x, y])))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('778')"> Run </button>
-<pre class="sample_out" id="778_out"></pre>
-<div class="plot" id="778_plot"></div>
+<button class="runbutton" onclick="runBlock('785')"> Run </button>
+<pre class="sample_out" id="785_out"></pre>
+<div class="plot" id="785_plot"></div>
 <br>
 となり、正しく計算できています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"785",     "content":"数値微分の計算量" })</script> 
-<h3 id="785">数値微分の計算量</h3>
+<script>page_contents.push({     "type":"H3",     "id":"792",     "content":"数値微分の計算量" })</script> 
+<h3 id="792">数値微分の計算量</h3>
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 <br>
 \(\mathbb{R}^n \to \mathbb{R}^m\) の関数のヤコビアン行列を求める場合は、 \(\Theta(nm)\) 回の評価が必要です。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"800",     "content":"数値微分の長所" })</script> 
-<h3 id="800">数値微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"807",     "content":"数値微分の長所" })</script> 
+<h3 id="807">数値微分の長所</h3>
 なんと言っても実装が非常に簡単です。
 <br>
 数値微分では \(f\) が何であろうと \(f(x + h)\) と \(f(x)\) さえ計算できれば
@@ -1213,17 +1216,17 @@ print(numerical_jacobian(f, np.array([x, y])))
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"831",     "content":"数値微分の短所" })</script> 
-<h3 id="831">数値微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"838",     "content":"数値微分の短所" })</script> 
+<h3 id="838">数値微分の短所</h3>
 後述の自動微分などと比較すると誤差が大きくなります。
 <br>
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"842",     "content":"数式微分" })</script> 
-<h2 id="842">数式微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"845",     "content":"数式微分のアイデア" })</script> 
-<h3 id="845">数式微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"849",     "content":"数式微分" })</script> 
+<h2 id="849">数式微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"852",     "content":"数式微分のアイデア" })</script> 
+<h3 id="852">数式微分のアイデア</h3>
 数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 <br>
 つまり、数値微分のアルゴリズムは、
@@ -1254,8 +1257,8 @@ print(numerical_jacobian(f, np.array([x, y])))
 のように表現できます。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"891",     "content":"数式微分の実装" })</script> 
-<h3 id="891">数式微分の実装</h3>
+<script>page_contents.push({     "type":"H3",     "id":"898",     "content":"数式微分の実装" })</script> 
+<h3 id="898">数式微分の実装</h3>
 実装の一例を示そうと思います。
 <br>
 ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
@@ -1487,8 +1490,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 そこでこの式を簡単にすることを試みます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1086",     "content":"簡約化" })</script> 
-<h3 id="1086">簡約化</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1093",     "content":"簡約化" })</script> 
+<h3 id="1093">簡約化</h3>
 メソッド <code>simplify</code> を追加します。
 <br>
 <br>
@@ -1549,8 +1552,8 @@ print(numerical_diff(f, x, 1e-5))
 これが入れ子になれば項の数は指数的に増えていき、文字通り爆発する場合があります。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1159",     "content":"多変数への拡張" })</script> 
-<h3 id="1159">多変数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1166",     "content":"多変数への拡張" })</script> 
+<h3 id="1166">多変数への拡張</h3>
 \(f: \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) を数式微分で求めます。
 <br>
 実装は先ほどとほぼ同様で、
@@ -1808,8 +1811,8 @@ f(x=1, y=2)   : 2.5244129544236893
 実行できるものはこちらです。
 <br>
 <br> 
- <div class="editor" id="1236" rows="3" cols="80"></div> 
-<script>editor = ace.edit("1236"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="1243" rows="3" cols="80"></div> 
+<script>editor = ace.edit("1243"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 
 class Expression:
@@ -2031,13 +2034,13 @@ print('∇f            :', f.grad())
 print('∇f (simple)   :', f.grad(symplify=True))
 
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('1236')"> Run </button>
-<pre class="sample_out" id="1236_out"></pre>
-<div class="plot" id="1236_plot"></div>
+<button class="runbutton" onclick="runBlock('1243')"> Run </button>
+<pre class="sample_out" id="1243_out"></pre>
+<div class="plot" id="1243_plot"></div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1241",     "content":"「ソースコード」からの微分" })</script> 
-<h3 id="1241">「ソースコード」からの微分</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1248",     "content":"「ソースコード」からの微分" })</script> 
+<h3 id="1248">「ソースコード」からの微分</h3>
 <br>
 今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換できると嬉しいです、
 <br>
@@ -2069,18 +2072,18 @@ print('∇f (simple)   :', f.grad(symplify=True))
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1274",     "content":"自動微分" })</script> 
-<h2 id="1274">自動微分</h2>
+<script>page_contents.push({     "type":"H2",     "id":"1281",     "content":"自動微分" })</script> 
+<h2 id="1281">自動微分</h2>
 <br>
 最後に紹介するのが、自動微分(automatic differentiation)です。
 <br>
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1285",     "content":"付録" })</script> 
-<h2 id="1285">付録</h2>
-<script>page_contents.push({     "type":"H3",     "id":"1288",     "content":"浮動小数点数" })</script> 
-<h3 id="1288">浮動小数点数</h3>
+<script>page_contents.push({     "type":"H2",     "id":"1292",     "content":"付録" })</script> 
+<h2 id="1292">付録</h2>
+<script>page_contents.push({     "type":"H3",     "id":"1295",     "content":"浮動小数点数" })</script> 
+<h3 id="1295">浮動小数点数</h3>
 前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
 <br>
 <br>
@@ -2133,8 +2136,8 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 <br>
 <footer>
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"1475",     "content":"脚注・参考文献" })</script> 
-<h4 id="1475">脚注・参考文献</h4>
+<script>page_contents.push({     "type":"H4",     "id":"1482",     "content":"脚注・参考文献" })</script> 
+<h4 id="1482">脚注・参考文献</h4>
 <br>
 [1] 記事内でも言及がありますが、数式微分と自動微分はやや境界があいまい(数式微分とも自動微分ともいえそうな感じの例が考えられるし、実際にある)と考えています。
 とはいえ自動で微分が求まっているならば全て自動微分だ！というのは誤りと思います。
