@@ -63,6 +63,7 @@ jobs:
             ../ALMO/src/almo "$file" -t light -o ../public/posts/${filename_without_extension}.html -d > tmp.json 
             python3 ../blog_builder/build.py 
           done
+          rm tmp.json
 
       - name: Commit and Push HTML Files
         if: steps.check_changes.outputs.changed_files != ''
