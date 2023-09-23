@@ -16,12 +16,10 @@ twitter_site: @abap34
 # GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 
 ## `git diff` が通らない
-
-
 [このページをビルドしてくれるGitHub Actionのワークフローファイル](https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml)では、
 マークダウンファイルで差分があったときだけビルドするために
 
-```
+```bash
       - name: Check for Changes in MD Files
         id: check_changes
         run: |
@@ -48,7 +46,7 @@ twitter_site: @abap34
 
 ## 対応策
 
-```
+```bash
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
