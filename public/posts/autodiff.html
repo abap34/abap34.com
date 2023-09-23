@@ -19,7 +19,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -39,23 +39,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
-body {
+    body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #F7F7F7;
-    color: #333;
+    background-color: #333;
+    color: #F7F7F7;
     flex-direction: column;
     display: flex;
     width: 95%;
-
 }
 
 h1,
 h2 {
-    color: #323232;
+    color: #F7F7F7;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -67,12 +66,12 @@ h2 {
 }
 
 p {
-    color: #666;
+    color: #ccc;
     margin-bottom: 10px;
 }
 
 a {
-    color: #006699;
+    color: #dcddfe;
 }
 
 figure {
@@ -85,26 +84,26 @@ figcaption {
 
 pre {
     padding: 10px;
-    color: #333;
+    color: #F7F7F7;
     border: solid 1px #a8a8a8;
     overflow-x: auto;
 }
+
 
 img {
     max-width: 100%;
     height: auto;
 }
 
-
 .date {
-    color: #666;
+    color: #ccc;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #666;
+    color: #ccc;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -117,12 +116,11 @@ img {
     margin-right: 10px;
     margin-top: 0px;
     margin-bottom: 0px;
-    background-color: #ffffff;
+    background-color: #444;
     border-radius: 5px;
     overflow: auto;
     width: 100%;
 }
-
 
 @media (max-width: 768px) {
     .content {
@@ -143,7 +141,7 @@ img {
     top: 0;
     width: 220px;
     z-index: 1000;
-    background-color: #F2F2F2;
+    background-color: #333;
 }
 
 @media (max-width: 1260px) {
@@ -160,7 +158,7 @@ img {
     height: 100%;
     padding: 10px 10px;
     overflow: auto;
-    background-color: #F2F2F2;
+    background-color: #333;
 }
 
 @media (max-width: 1260px) {
@@ -170,7 +168,7 @@ img {
 }
 
 #toc {
-    background-color: #f4f4f4;
+    background-color: #444;
     border-radius: 5px;
     padding: 15px;
     list-style: none;
@@ -180,13 +178,13 @@ img {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #2a2a2a;
+    color: #F7F7F7;
     border-bottom: solid 1px #161616;
 }
 
 #toc a {
     text-decoration: none;
-    color: #333;
+    color: #ccc;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
@@ -224,7 +222,6 @@ img {
     color: #006699;
 }
 
-
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
@@ -244,7 +241,8 @@ img {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #666;
+    color: #ccc;
+    /* ダークテーマのテキスト色 */
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -282,19 +280,19 @@ img {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #333;
+    color: #F7F7F7;
 }
+
 
 .editor {
     width: 100%;
-    height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
-    color: #333;
-    padding: 10px;
+    background-color: #444;
+    color: #F7F7F7;
     border: solid 1px #a8a8a8;
 }
+
 
 .output,
 .expect_out,
@@ -305,8 +303,8 @@ img {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
-    color: #333;
+    background-color: #444;
+    color: #F7F7F7;
     border: solid 1px #a8a8a8;
 }
 
@@ -315,7 +313,7 @@ img {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #666;
+    color: #ccc;
 }
 
 </style>
@@ -620,7 +618,7 @@ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}
 <br>
 <br> 
  <div class="editor" id="172" rows="3" cols="80"></div> 
-<script>editor = ace.edit("172"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 12,     maxLines: 12,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+<script>editor = ace.edit("172"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 12,     maxLines: 12,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def numerical_diff(f, x, h):
     return (f(x+h) - f(x)) / h
@@ -681,7 +679,7 @@ f(x+h) &= f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \cdots \\
 <br>
 <br> 
  <div class="editor" id="232" rows="3" cols="80"></div> 
-<script>editor = ace.edit("232"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 23,     maxLines: 23,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+<script>editor = ace.edit("232"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 23,     maxLines: 23,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 
 import matplotlib
 matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
@@ -805,7 +803,7 @@ f(x-h) &= f(x) - f'(x)h + f''(x)\frac{h^2}{2} - \frac{1}{6}f'''(x)h^3 + \cdots \
 <br>
 <br> 
  <div class="editor" id="371" rows="3" cols="80"></div> 
-<script>editor = ace.edit("371"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 33,     maxLines: 33,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+<script>editor = ace.edit("371"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 33,     maxLines: 33,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 import numpy as np
 
 import matplotlib
@@ -1040,7 +1038,7 @@ A\boldsymbol{w} = \boldsymbol{e}_2 \in \mathbb{R}^{n+1}
 <br>
 <br> 
  <div class="editor" id="717" rows="3" cols="80"></div> 
-<script>editor = ace.edit("717"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+<script>editor = ace.edit("717"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def central_weight(n, k):
     p = n // 2
@@ -1073,7 +1071,7 @@ print('O(n^6):', central_weight(6, 1))
 <br>
 <br> 
  <div class="editor" id="736" rows="3" cols="80"></div> 
-<script>editor = ace.edit("736"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 14,     maxLines: 14,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`from math import *
+<script>editor = ace.edit("736"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 14,     maxLines: 14,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`from math import *
 
 def central_diff(f, x, n, k, h=1e-3):
     w = central_weight(n, k)
@@ -1099,7 +1097,7 @@ print('O(n^6):', central_diff(f, x, 6, 1))
 <br>
 <br> 
  <div class="editor" id="749" rows="3" cols="80"></div> 
-<script>editor = ace.edit("749"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+<script>editor = ace.edit("749"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 import numpy as np
 
 import matplotlib
@@ -1129,14 +1127,15 @@ plt.close()
 <div class="plot" id="749_plot"></div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"754",     "content":"多変数関数への拡張" })</script> 
-<h3 id="754">多変数関数への拡張</h3>
+<br>
+<script>page_contents.push({     "type":"H3",     "id":"755",     "content":"多変数関数への拡張" })</script> 
+<h3 id="755">多変数関数への拡張</h3>
 \(f : \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) は
 各 \(x_i\) についてそれ以外の変数を固定して計算すればOKです。
 <br>
 <br> 
- <div class="editor" id="769" rows="3" cols="80"></div> 
-<script>editor = ace.edit("769"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
+ <div class="editor" id="770" rows="3" cols="80"></div> 
+<script>editor = ace.edit("770"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
     n = len(x)
     nabla = np.zeros(n)
     for i in range(n):
@@ -1157,9 +1156,9 @@ x, y = 1.0, 2.0
 
 print(numerical_nabla(f, np.array([x, y]), 1e-3))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('769')"> Run </button>
-<pre class="sample_out" id="769_out"></pre>
-<div class="plot" id="769_plot"></div>
+<button class="runbutton" onclick="runBlock('770')"> Run </button>
+<pre class="sample_out" id="770_out"></pre>
+<div class="plot" id="770_plot"></div>
 <br>
 <br>
 <br>
@@ -1167,8 +1166,8 @@ print(numerical_nabla(f, np.array([x, y]), 1e-3))
 \(f: \mathbb{R}^n \to \mathbb{R}^m\) のヤコビアン行列 \(J_f\) は
 <br>
 <br> 
- <div class="editor" id="784" rows="3" cols="80"></div> 
-<script>editor = ace.edit("784"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="785" rows="3" cols="80"></div> 
+<script>editor = ace.edit("785"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def numerical_jacobian(f, x, h=1e-5):
     n = len(x)
@@ -1193,20 +1192,20 @@ x, y = 1.0, 2.0
 
 print(numerical_jacobian(f, np.array([x, y])))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('784')"> Run </button>
-<pre class="sample_out" id="784_out"></pre>
-<div class="plot" id="784_plot"></div>
+<button class="runbutton" onclick="runBlock('785')"> Run </button>
+<pre class="sample_out" id="785_out"></pre>
+<div class="plot" id="785_plot"></div>
 <br>
 となり、正しく計算できています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"791",     "content":"数値微分の計算量" })</script> 
-<h3 id="791">数値微分の計算量</h3>
+<script>page_contents.push({     "type":"H3",     "id":"792",     "content":"数値微分の計算量" })</script> 
+<h3 id="792">数値微分の計算量</h3>
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 <br>
 \(\mathbb{R}^n \to \mathbb{R}^m\) の関数のヤコビアン行列を求める場合は、 \(\Theta(nm)\) 回の評価が必要です。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"806",     "content":"数値微分の長所" })</script> 
-<h3 id="806">数値微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"807",     "content":"数値微分の長所" })</script> 
+<h3 id="807">数値微分の長所</h3>
 なんと言っても実装が非常に簡単です。
 <br>
 数値微分では \(f\) が何であろうと \(f(x + h)\) と \(f(x)\) さえ計算できれば
@@ -1220,17 +1219,17 @@ print(numerical_jacobian(f, np.array([x, y])))
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"837",     "content":"数値微分の短所" })</script> 
-<h3 id="837">数値微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"838",     "content":"数値微分の短所" })</script> 
+<h3 id="838">数値微分の短所</h3>
 後述の自動微分などと比較すると誤差が大きくなります。
 <br>
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"848",     "content":"数式微分" })</script> 
-<h2 id="848">数式微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"851",     "content":"数式微分のアイデア" })</script> 
-<h3 id="851">数式微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"849",     "content":"数式微分" })</script> 
+<h2 id="849">数式微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"852",     "content":"数式微分のアイデア" })</script> 
+<h3 id="852">数式微分のアイデア</h3>
 数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 <br>
 つまり、数値微分のアルゴリズムは、
@@ -1261,8 +1260,8 @@ print(numerical_jacobian(f, np.array([x, y])))
 のように表現できます。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"897",     "content":"数式微分の実装" })</script> 
-<h3 id="897">数式微分の実装</h3>
+<script>page_contents.push({     "type":"H3",     "id":"898",     "content":"数式微分の実装" })</script> 
+<h3 id="898">数式微分の実装</h3>
 実装の一例を示そうと思います。
 <br>
 ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
@@ -1494,8 +1493,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 そこでこの式を簡単にすることを試みます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1092",     "content":"簡約化" })</script> 
-<h3 id="1092">簡約化</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1093",     "content":"簡約化" })</script> 
+<h3 id="1093">簡約化</h3>
 メソッド <code>simplify</code> を追加します。
 <br>
 <br>
@@ -1556,8 +1555,8 @@ print(numerical_diff(f, x, 1e-5))
 これが入れ子になれば項の数は指数的に増えていき、文字通り爆発する場合があります。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1165",     "content":"多変数への拡張" })</script> 
-<h3 id="1165">多変数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1166",     "content":"多変数への拡張" })</script> 
+<h3 id="1166">多変数への拡張</h3>
 \(f: \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) を数式微分で求めます。
 <br>
 実装は先ほどとほぼ同様で、
@@ -1815,8 +1814,8 @@ f(x=1, y=2)   : 2.5244129544236893
 実行できるものはこちらです。
 <br>
 <br> 
- <div class="editor" id="1242" rows="3" cols="80"></div> 
-<script>editor = ace.edit("1242"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="1243" rows="3" cols="80"></div> 
+<script>editor = ace.edit("1243"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 
 class Expression:
@@ -2038,13 +2037,13 @@ print('∇f            :', f.grad())
 print('∇f (simple)   :', f.grad(symplify=True))
 
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('1242')"> Run </button>
-<pre class="sample_out" id="1242_out"></pre>
-<div class="plot" id="1242_plot"></div>
+<button class="runbutton" onclick="runBlock('1243')"> Run </button>
+<pre class="sample_out" id="1243_out"></pre>
+<div class="plot" id="1243_plot"></div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1247",     "content":"「ソースコード」からの微分" })</script> 
-<h3 id="1247">「ソースコード」からの微分</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1248",     "content":"「ソースコード」からの微分" })</script> 
+<h3 id="1248">「ソースコード」からの微分</h3>
 <br>
 今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換できると嬉しいです、
 <br>
@@ -2076,18 +2075,18 @@ print('∇f (simple)   :', f.grad(symplify=True))
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1280",     "content":"自動微分" })</script> 
-<h2 id="1280">自動微分</h2>
+<script>page_contents.push({     "type":"H2",     "id":"1281",     "content":"自動微分" })</script> 
+<h2 id="1281">自動微分</h2>
 <br>
 最後に紹介するのが、自動微分(automatic differentiation)です。
 <br>
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1291",     "content":"付録" })</script> 
-<h2 id="1291">付録</h2>
-<script>page_contents.push({     "type":"H3",     "id":"1294",     "content":"浮動小数点数" })</script> 
-<h3 id="1294">浮動小数点数</h3>
+<script>page_contents.push({     "type":"H2",     "id":"1292",     "content":"付録" })</script> 
+<h2 id="1292">付録</h2>
+<script>page_contents.push({     "type":"H3",     "id":"1295",     "content":"浮動小数点数" })</script> 
+<h3 id="1295">浮動小数点数</h3>
 前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
 <br>
 <br>
@@ -2143,8 +2142,8 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 <br>
 <footer>
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"1485",     "content":"脚注・参考文献" })</script> 
-<h4 id="1485">脚注・参考文献</h4>
+<script>page_contents.push({     "type":"H4",     "id":"1486",     "content":"脚注・参考文献" })</script> 
+<h4 id="1486">脚注・参考文献</h4>
 <br>
 [1] 記事内でも言及がありますが、数式微分と自動微分はやや境界があいまい(数式微分とも自動微分ともいえそうな感じの例が考えられるし、実際にある)と考えています。
 とはいえ自動で微分が求まっているならば全て自動微分だ！というのは誤りと思います。
@@ -2165,8 +2164,8 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 
     </div>
 
-    <div class="links"><a href="/https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
-
+    <div class="links"><a href="posts.html">  ⇨ 投稿一覧へ </a> 
+ <br>
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
             data-show-count="false">Tweet</a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
