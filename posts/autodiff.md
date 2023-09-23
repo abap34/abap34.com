@@ -17,6 +17,7 @@ $$
 \newcommand{\argmin}{\mathop{\rm arg~min}\limits}
 $$
 
+
 :::loadlib
 numpy
 matplotlib
