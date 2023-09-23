@@ -16,7 +16,19 @@ def build_article():
         html_path = tmp['meta']['out_path']
         ogp_url = tmp['meta']['ogp_url']
 
+    back_to_home = '<a href="/https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> \n'
+    
+
+    with open(html_path, 'r') as f:
+        # insert back_to_home in <div class='links'>
+        html = f.read()
+        html = html.replace('<div class="links">', '<div class="links">' + back_to_home)
+    
+    with open(html_path, 'w') as f:
+        f.write(html)
+
     url = 'https://abap34.com/posts/' + html_path.replace('../public/posts/', '')
+
 
     with open('../public/posts.json', 'r') as f:
         posts = json.load(f)
