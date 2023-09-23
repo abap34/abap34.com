@@ -1595,7 +1595,10 @@ $x > F_{max}$ であれば、$x$ は $\infty$ に丸められ、
 $x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
 </details>
 
+
 <hr>
+ 
+
 
 
 <footer>
