@@ -51,5 +51,4 @@ def build_article():
     
 
 if __name__ == '__main__':
-    output_file = sys.argv[1]
-    build_article(output_file)
+    build_article()
