@@ -588,6 +588,7 @@ plt.close()
 :::
 
 
+
 ### 多変数関数への拡張
 $f : \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f(\boldsymbol{x})$ は
 各 $x_i$ についてそれ以外の変数を固定して計算すればOKです。

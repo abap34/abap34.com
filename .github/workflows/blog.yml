@@ -60,7 +60,7 @@ jobs:
             filename_without_extension=$(basename $file .md)
             file=${file#posts/}
             echo "Generating HTML for $file"
-            ../ALMO/src/almo "$file" -t light -o ../public/posts/${filename_without_extension}.html -d > tmp.json 
+            ../ALMO/src/almo "$file" -t dark -o ../public/posts/${filename_without_extension}.html -d > tmp.json 
             python3 ../blog_builder/build.py 
           done
           rm tmp.json
