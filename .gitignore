@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 run.sh
 archive
+posts/autodiff/note/diff-zoo/
+posts/autodiff/note/FiniteDifferences.jl/
