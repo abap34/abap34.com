@@ -5,47 +5,17 @@ import re
 import sys
 import requests
 
-def get_title(output_file):
-    with open(output_file, 'r') as f:
-        html = f.read()
-        title = re.search(r'<title>(.*)</title>', html).group(1)
-        return title
 
-def get_date(output_file):
-    with open(output_file, 'r') as f:
-        html = f.read()
-        date = re.search(r"date = \"(\s\S.*)\"", html).group(1)
-        # 余分な空白を削除
-        date = date.strip()
-        return date
+def build_article():
+    # read tmp.json
+    with open('tmp.json', 'r') as f:
+        tmp = json.load(f)
+        title = tmp['meta']['title']
+        date = tmp['meta']['date']
+        html_path = tmp['out_path']
+        ogp_url = tmp['meta']['ogp_url']
 
-
-def fetch_random_dog_image():
-    url = "https://dog.ceo/api/breeds/image/random"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        data = response.json()
-        image_url = data["message"]
-        return image_url
-    else:
-        raise Exception("Failed to fetch dog image")
-
-
-def build_article(html_path):
-    date = get_date(html_path)
-    title = get_title(html_path)
-    url = html_path.replace('../public/', '')
-    thumbnail_url = fetch_random_dog_image()
-    with open(html_path, 'r') as f:
-        html = f.read()
-        html = html.replace('{____THIS____IS___OGPURL___PLACE___}', thumbnail_url)
-        html = html.replace('{____THIS____IS___URL___PLACE___}', url)
-        with open(html_path, 'w') as f:
-            f.write(html)
-
-    
-
+    url = 'https://abap34.com/posts/' + html_path.replace('../public/posts/', '')
 
     with open('../public/posts.json', 'r') as f:
         posts = json.load(f)
@@ -55,7 +25,7 @@ def build_article(html_path):
                     'title': title,
                     'post_date': date,
                     'url': url,
-                    'thumbnail_url': thumbnail_url,
+                    'thumbnail_url': ogp_url,
                 }
                 posts.remove(post)
                 posts.append(updated_post)
@@ -65,9 +35,9 @@ def build_article(html_path):
                 'title': title,
                 'post_date': date,
                 'url': url,
-                'thumbnail_url': thumbnail_url,
-            })
+                'thumbnail_url': ogp_url,
 
+            })
         
     with open('../public/posts.json', 'w') as f:
         json.dump(posts, f)

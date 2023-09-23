@@ -28,6 +28,10 @@ jobs:
           else
             echo "Change: $changed_files"
           fi
+      
+      - name: Clone ALMO
+        if: steps.check_changes.outputs.changed_files != ''
+        run: git clone https://github.com/abap34/ALMO
 
       - name: Install g++ and libcurl
         if: steps.check_changes.outputs.changed_files != ''
@@ -38,7 +42,7 @@ jobs:
       - name: Compile almo.cpp
         if: steps.check_changes.outputs.changed_files != ''
         run: |
-          cd customALMO/src
+          cd ALMO/src
           g++ -std=c++20 -o almo almo.cpp -lcurl
 
 
@@ -56,8 +60,8 @@ jobs:
             filename_without_extension=$(basename $file .md)
             file=${file#posts/}
             echo "Generating HTML for $file"
-            ../customALMO/src/almo "$file" --theme light -o ../public/posts/${filename_without_extension}.html  
-            python3 ../blog_builder/build.py ../public/posts/${filename_without_extension}.html  
+            ../ALMO/src/almo "$file" -t light -o ../public/posts/${filename_without_extension}.html -d > tmp.json 
+            python3 ../blog_builder/build.py 
           done
 
       - name: Commit and Push HTML Files
