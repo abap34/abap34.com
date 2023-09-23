@@ -18,7 +18,7 @@ def build_article():
 
     url = 'https://abap34.com/posts/' + html_path.replace('../public/posts/', '')
 
-    with open('./public/posts.json', 'r') as f:
+    with open('../public/posts.json', 'r') as f:
         posts = json.load(f)
         for post in posts:
             if post['title'] == title:
@@ -40,13 +40,13 @@ def build_article():
 
             })
         
-    with open('./public/posts.json', 'w') as f:
+    with open('../public/posts.json', 'w') as f:
         json.dump(posts, f)
 
     posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
 
     recent_posts = posts[:5]
-    with open('./public/recent_posts.json', 'w') as f:
+    with open('../public/recent_posts.json', 'w') as f:
         json.dump(recent_posts, f)
 
     
