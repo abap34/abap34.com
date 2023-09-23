@@ -519,19 +519,15 @@ const runBlock = async (objectid) => {
         </script>
 
         <br>
-<br>
-<script>page_contents.push({     "type":"H1",     "id":"4",     "content":"GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった" })</script> 
-<h1 id="4">GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</h1>
-<br>
-<script>page_contents.push({     "type":"H2",     "id":"11",     "content":"<code>git diff</code> が通らない" })</script> 
-<h2 id="11"><code>git diff</code> が通らない</h2>
+<script>page_contents.push({     "type":"H2",     "id":"6",     "content":"<code>git diff</code> が通らない" })</script> 
+<h2 id="6"><code>git diff</code> が通らない</h2>
 <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a>では、
 マークダウンファイルで差分があったときだけビルドするために
 <br>
-<pre><code class="bash">      - name: Check for Changes in MD Files
-        id: check_changes
-        run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md
+<pre><code class="bash">- name: Check for Changes in MD Files
+  id: check_changes
+  run: |
+    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md
 
     </div>
 
@@ -618,12 +614,12 @@ function onIntersection(entries) {
 
 </html>
  || true)
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
-          if [[ -z "$changed_files" ]]; then
-            echo "No changes in MD files. Skipping build."
-          else
-            echo "Change: $changed_files"
-          fi
+    echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
+    if [[ -z "$changed_files" ]]; then
+      echo "No changes in MD files. Skipping build."
+    else
+      echo "Change: $changed_files"
+    fi
 </code></pre>
 <br>
 みたいなことをしていますが、これを普通に書くだけでは
@@ -639,14 +635,14 @@ function onIntersection(entries) {
 <br>
 すいません。 READMEの一番上に書いてありました。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"54",     "content":"対応策" })</script> 
-<h2 id="54">対応策</h2>
+<script>page_contents.push({     "type":"H2",     "id":"49",     "content":"対応策" })</script> 
+<h2 id="49">対応策</h2>
 <br>
-<pre><code class="bash">    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-        with:
-            fetch-depth: 0
+<pre><code class="bash">steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v2
+    with:
+        fetch-depth: 0
 </code></pre>
 <br>
 として全てのコミットを参照できるようにすると
