@@ -2,6 +2,15 @@
 title: GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
 author: abap34
 date: 2023/08/29
+tag: [GitHub Actions, GitHub, git]
+twitter_id: abap34
+github_id: abap34
+mail: abap0002@gmail.com
+ogp_url: https://images.dog.ceo/breeds/clumber/n02101556_5007.jpg
+description: [衝撃] GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しなかった結果がヤバい...
+url: https://abap34.com
+site_name: abap34.com
+twitter_site: @abap34
 ---
 
 # GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった

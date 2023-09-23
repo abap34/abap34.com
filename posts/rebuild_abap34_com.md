@@ -2,8 +2,16 @@
 title: ブログを自作Markdownパーサで作り直しました
 author: abap34
 date: 2023/08/29
+tag: [Web, Markdown, WebAssembly]
+twitter_id: abap34
+github_id: abap34
+mail: abap0002@gmail.com
+ogp_url: https://images.dog.ceo/breeds/clumber/n02101556_5007.jpg
+description: 自作Markdownパーサを開発してブログを作り直しました。
+url: https://abap34.com
+site_name: abap34.com
+twitter_site: @abap34
 ---
-
 # ブログを自作Markdownパーサで作り直しました
 
 ## うおー
@@ -20,7 +28,6 @@ Zennにも[記事](https://zenn.dev/abap34/articles/105023ca9fc5c6)を書いた�
 PyOdideを使って実行環境・ジャッジ同梱のHTMLが吐けるというパーサです。
 
 これをGitHub Actionsで動かしてこのページを作っています。
-
 
 もちろん普通のMarkdownも書けるので、基本的にはそういう運用になっていくと思いますが、
 せっかく作ったので今後はブログにもうちょっと記事を書いていこうと思います。

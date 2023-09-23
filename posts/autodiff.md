@@ -7,14 +7,28 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/entlebucher/n02108000_306.jpg
+description: 自動で微分を行う手法について実装も含めてまとめたものです。
+url: https://abap34.com
+site_name: abap34.com
+twitter_site: @abap34
 ---
 
 $$
 \newcommand{\argmin}{\mathop{\rm arg~min}\limits}
 $$
+
+:::loadlib
+numpy
+matplotlib
+:::
+
+
 ## はじめに　
 ブログのリニューアル記念に、せっかくなので何か記事を書くことにしました。
 何を書いてもよかったのですが、最近人に機械学習の話をすることが結構あり、その中でしていた自動微分の話が割とウケがよかったのでそれについて記事を書くことにしました。
+
+**この記事は書きかけです。**
+
 
 ## 微分を求める技術
 昨今は機械学習、特に深層学習が大流行りし、世界中の性能の良い計算機がせっせと損失を小さくするパラメータを探しています。
@@ -112,7 +126,7 @@ $$
 
 ではこれを計算するpythonのコードを書いてみます。
 
-```python
+:::code
 import numpy as np
 
 def numerical_diff(f, x, h):
@@ -124,15 +138,8 @@ def f(x):
 print(numerical_diff(f, np.pi/3, 1e-1))
 print(numerical_diff(f, np.pi/3, 1e-2))
 print(numerical_diff(f, np.pi/3, 1e-3))
-```
+:::
 
-結果は以下のようになります。
-
-```
-0.45590188541076104
-0.4956615757736871
-0.49956690400077
-```
 
 そこそこいい感じに計算できていますね。
 また、$h$ を小さくするほど徐々に真の値に近づいていることがわかります。
@@ -172,8 +179,13 @@ $$
 
 実はこれはとてもよく知られている事実ですが、 $h$ を小さくしすぎるとかえって全体の誤差が大きくなります。
 
-```python
+:::code
 import matplotlib.pyplot as plt
+
+import matplotlib
+matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
+
+
 import numpy as np
 
 h = np.logspace(0, -20, num=100)
@@ -189,9 +201,10 @@ plt.xlabel('h')
 plt.ylabel('grad')
 plt.legend()
 plt.show()
-```
+plt.close()
+:::
 
-![](autodiff/fig/grad_fig.png)
+<!-- ![](autodiff/fig/grad_fig.png) -->
 
 
 上のグラフのように、誤差は $h = 10^{-8}$ あたりまでは減少していきますが、それ以降は $h$ を小さくしても誤差は大きくなっていきます。
@@ -279,10 +292,12 @@ $$
 
 実際に中心差分についても調べてグラフを書いてみます。
 
-```python
+:::code
 import matplotlib.pyplot as plt
 import numpy as np
 
+import matplotlib
+matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
 
 def numerical_diff(f, x, h):
     return (f(x+h) - f(x)) / h
@@ -309,9 +324,8 @@ plt.xlabel('h')
 plt.ylabel('grad')
 plt.legend()
 plt.show()
-```
-
-![](autodiff/fig/grad_fig2.png)
+plt.close()
+:::
 
 
 中心差分を取ることでより正確に計算できたようです。
@@ -460,9 +474,9 @@ $$
 \begin{pmatrix}
 1 & 1  & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
 -p & (-p + 1) & \cdots & 1  & 0 &  1 & \cdots & (p-1) & p \\
-(-p)^2 & ((-p + 1))^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & ((p-1))^2 & (p)^2 \\
+(-p)^2 & (-p + 1)^2 & \cdots & (-1)^2  & 0 & 1^2 & \cdots & (p-1)^2 & (p)^2 \\
 \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
-(-p)^{n} & ((-p + 1))^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & ((p-1))^{n} & (p)^{n} \\
+(-p)^{n} & (-p + 1)^{n} & \cdots & (-1)^{n}  &0 &  (1)^{n} & \cdots & (p-1)^{n} & (p)^{n} \\
 \end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
 $$
 
@@ -491,71 +505,69 @@ $$
 
 さらに、 今回は一階微分を求めたかったため $\boldsymbol{e}_2$ との積を考えましたが、 $k$ 階微分を求めたい場合は $\boldsymbol{e}_{k+1}$ との積を考えれば良いです。
 #### 実装
-結果を確かめるために sympy を使って有理数型で計算してみます。
 
-```python
-from sympy.matrices import Matrix
-from sympy import Rational
+:::code
+import numpy as np
 
 def central_weight(n, k):
-    p = n >> 1
-    A = Matrix.zeros(n+1, n+1)
-    r = [Rational(i) for i in range(-p, p+1)] 
+    p = n // 2
+    A = np.zeros((n+1, n+1), dtype=float)
+    r = np.array([i for i in range(-p, p+1)], dtype=float)
+    
     for i in range(n+1):
         for j in range(n+1):
             A[i, j] = r[j]**i
 
-    e_k = [0] * (n+1)
+    e_k = np.zeros(n+1, dtype=float)
     e_k[k] = 1
 
-    w  = A.inv() * Matrix(e_k)
+    w = np.linalg.solve(A, e_k)
     return w
-```
 
-```python
 print('O(n^2):', central_weight(2, 1))
 print('O(n^4):', central_weight(4, 1))
 print('O(n^6):', central_weight(6, 1))
-```
+:::
 
-```
+<!-- ```
 O(n^2): Matrix([[-1/2], [0], [1/2]])
 O(n^4): Matrix([[1/12], [-2/3], [0], [2/3], [-1/12]])
 O(n^6): Matrix([[-1/60], [3/20], [-3/4], [0], [3/4], [-3/20], [1/60]])
-```
+``` -->
 
 となり、 $n$ 次精度の中心差分の係数が得られました。
 
 これを使って、 $n$ 次精度 $k$ 階中心差分を実装します。
 
-```python
+:::code
+from math import *
+
 def central_diff(f, x, n, k, h=1e-3):
     w = central_weight(n, k)
     p = n >> 1
     _x = x + (np.arange(-p, p + 1) * h)
     return sum([w[i] * f(_x[i]) for i in range(n+1)]) / h ** k
-```
 
-```python
 f = lambda x: sin(x)
 x = pi / 3
-print('f\'(x) O(n^2):', central_diff(f, x, 2, 1))
-print('f\'(x) O(n^4):', central_diff(f, x, 4, 1))
-print('f\'(x) O(n^6):', central_diff(f, x, 6, 1))
-```
+print('O(n^2):', central_diff(f, x, 2, 1))
+print('O(n^4):', central_diff(f, x, 4, 1))
+print('O(n^6):', central_diff(f, x, 6, 1))
+:::
 
-```
-f'(x) O(n^2): 0.499999916666605
-f'(x) O(n^4): 0.499999999999889
-f'(x) O(n^6): 0.499999999999839
-```
 
 どうやら正しそうな式が得られています。
 
 最後に最適な $h$ の変化についても確かめておきます。
 
 
-```python
+:::code
+import matplotlib.pyplot as plt
+import numpy as np
+
+import matplotlib
+matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
+
 n_points = range(2, 12, 2)
 h = np.logspace(0, -20, 100)
 label = [f'n={n}' for n in n_points]
@@ -572,17 +584,16 @@ for i in range(len(n_points)):
 plt.legend()
 plt.xlabel('h')
 plt.ylabel('error')
-```
-
-
-![評価する点と最適なhの変化](autodiff/fig/central_diff_comp.png)
+plt.show()
+plt.close()
+:::
 
 
 ### 多変数関数への拡張
 $f : \mathbb{R}^n \to \mathbb{R}$ の勾配 $\nabla f(\boldsymbol{x})$ は
 各 $x_i$ についてそれ以外の変数を固定して計算すればOKです。
 
-```python
+:::code
 def numerical_nabla(f, x, h):
     n = len(x)
     nabla = np.zeros(n)
@@ -602,21 +613,15 @@ def f(x, y):
 
 x, y = 1.0, 2.0
 
-numerical_nabla(f, np.array([x, y]), 1e-3)
-```
+print(numerical_nabla(f, np.array([x, y]), 1e-3))
+:::
 
-結果は、
 
-```
-array([2., 4.])
-```
-
-となり、正しそうです。
 
 出力が複数のときも容易です。
 $f: \mathbb{R}^n \to \mathbb{R}^m$ のヤコビアン行列 $J_f$ は
 
-```python
+:::code
 import numpy as np
 
 def numerical_jacobian(f, x, h=1e-5):
@@ -640,15 +645,8 @@ def f(x, y):
 
 x, y = 1.0, 2.0
 
-numerical_jacobian(f, np.array([x, y]))
-```
-
-結果は、
-
-```
-array([[2., 4.],
-       [2., 1.]])
-```
+print(numerical_jacobian(f, np.array([x, y])))
+:::
 
 となり、正しく計算できています。
 
@@ -717,7 +715,7 @@ $$
 少しだけ解説を加えておきます。
 
 - `Expression` は式全体を保持します。 `root` に最後に評価されるノードが入ります。
-- `AbstractNode` はノードの抽象クラスです。 これを継承して、各ノードのクラスを定義します。
+- `Node` はノードの抽象クラスです。 これを継承して、各ノードのクラスを定義します。
 - あとは木構造のノードになりうる、演算子、変数、定数を表すクラスを定義しています。
 - `__call__` は特殊メソッドです。 クラス `A` のインスタンス `a` に対して `a()` と書くと `a.__call__()` が呼ばれます。
   - `__call__` が呼ばれるとルートから葉ノードまで順番に `__call__` が呼ばれていき、葉ノード (必ず `Constant` か `Variable` です) からルートに向けて順番に値が返されていきます。
@@ -749,7 +747,7 @@ class Expression:
         new_expr = Expression(self.root.diff())
         return new_expr
         
-class AbstractNode:
+class Node:
     def __init__(self):
         self.children = []
 
@@ -770,7 +768,7 @@ class AbstractNode:
         raise NotImplementedError
 
 
-class Variable(AbstractNode):
+class Variable(Node):
     def __init__(self):
         super().__init__()
     
@@ -787,7 +785,7 @@ class Variable(AbstractNode):
         return Constant(1)
     
     
-class Constant(AbstractNode):
+class Constant(Node):
     def __init__(self, value):
         super().__init__()
         self.value = value
@@ -804,7 +802,7 @@ class Constant(AbstractNode):
     def diff(self):
         return Constant(0)
     
-class Add(AbstractNode):
+class Add(Node):
     def __init__(self, x, y):
         super().__init__()
         self.children = [x, y]
@@ -821,7 +819,7 @@ class Add(AbstractNode):
     def diff(self):
         return Add(self.children[0].diff(), self.children[1].diff())
     
-class Mul(AbstractNode):
+class Mul(Node):
     def __init__(self, x, y):
         super().__init__()
         self.children = [x, y]
@@ -838,7 +836,7 @@ class Mul(AbstractNode):
     def diff(self):
         return Add(Mul(self.children[0].diff(), self.children[1]), Mul(self.children[0], self.children[1].diff()))
     
-class Sin(AbstractNode):
+class Sin(Node):
     def __init__(self, x):
         super().__init__()
         self.children = [x]
@@ -855,7 +853,7 @@ class Sin(AbstractNode):
     def diff(self):
         return Mul(Cos(self.children[0]), self.children[0].diff())
     
-class Cos(AbstractNode):
+class Cos(Node):
     def __init__(self, x):
         super().__init__()
         self.children = [x]
@@ -907,7 +905,7 @@ print(f)
 
  `plot` で可視化すると、
 
-```python
+```
 f.plot().write_png('fig/expr.png')
 ```
 
@@ -934,7 +932,7 @@ print(df)
 という導関数が得られました。
 実際に数値微分の結果と比較して確かめてみます。
 
-```python
+```
 x = np.random.random()
 print(df(x))
 print(numerical_diff(f, x, 1e-5))
@@ -960,8 +958,8 @@ print(numerical_diff(f, x, 1e-5))
 
 例えば `Mul` については
 
-```python
-class Mul(AbstractNode):
+```
+class Mul(Node):
     def __init__(self, x, y):
         super().__init__()
         self.children = [x, y]
@@ -986,7 +984,7 @@ class Mul(AbstractNode):
 
 これを `diff` のあとに呼び出すことで、簡約された式を得ることができます。
 
-```python
+```
 print(df.simplify())
 ```
 
@@ -1073,7 +1071,7 @@ class Expression:
         new_expr = Expression(self.root.simplify())
         return new_expr
         
-class AbstractNode:
+class Node:
     def __init__(self):
         self.children = []
 
@@ -1099,7 +1097,7 @@ class AbstractNode:
         return symbols
 
 
-class Variable(AbstractNode):
+class Variable(Node):
     def __init__(self, name):
         super().__init__()
         self.name = name
@@ -1128,7 +1126,7 @@ class Variable(AbstractNode):
 
     
     
-class Constant(AbstractNode):
+class Constant(Node):
     def __init__(self, value):
         super().__init__()
         self.value = value
@@ -1151,7 +1149,7 @@ class Constant(AbstractNode):
     def all_symbols(self, symbols: set[str]):
         return symbols
     
-class Add(AbstractNode):
+class Add(Node):
     def __init__(self, x, y):
         super().__init__()
         self.children = [x, y]
@@ -1178,7 +1176,7 @@ class Add(AbstractNode):
         
     
     
-class Mul(AbstractNode):
+class Mul(Node):
     def __init__(self, x, y):
         super().__init__()
         self.children = [x, y]
@@ -1207,7 +1205,7 @@ class Mul(AbstractNode):
         else:
             return Mul(self.children[0].simplify(), self.children[1].simplify())
     
-class Sin(AbstractNode):
+class Sin(Node):
     def __init__(self, x):
         super().__init__()
         self.children = [x]
@@ -1228,7 +1226,7 @@ class Sin(AbstractNode):
         return Sin(self.children[0].simplify())
     
     
-class Cos(AbstractNode):
+class Cos(Node):
     def __init__(self, x):
         super().__init__()
         self.children = [x]
@@ -1249,7 +1247,7 @@ class Cos(AbstractNode):
         return Cos(self.children[0].simplify())
 ```
 
-```python
+```
 f = Expression(
         Mul(
             Add(
@@ -1271,7 +1269,7 @@ print('∇f (simple)   :', f.grad(symplify=True))
 
 実行すると、
 
-```python
+```
 f             : ((x + y) * sin(x))
 f(x=1, y=2)   : 2.5244129544236893
 ∇f            : {'y': (((0 + 1) * sin(x)) + ((x + y) * (cos(x) * 0))), 'x': (((1 + 0) * sin(x)) + ((x + y) * (cos(x) * 1)))}
@@ -1280,6 +1278,232 @@ f(x=1, y=2)   : 2.5244129544236893
 
 となり、正しく計算できました。
 
+実行できるものはこちらです。
+
+:::code
+import numpy as np
+
+
+class Expression:
+    def __init__(self, root):
+        self.root = root
+    
+    def __call__(self, args: dict[str, any]):
+        return self.root(args)
+    
+    def __repr__(self):
+        return str(self.root)
+    
+    def diff(self, d_var):
+        new_expr = Expression(self.root.diff(d_var))
+        return new_expr
+    
+    def all_variable(self):
+        return self.root.all_symbols(set())
+    
+    def grad(self, symplify=False):
+        symbols = self.all_variable()
+        result = {}
+        for symbol in symbols:
+            df = self.diff(symbol)
+            if symplify:
+                df = df.simplify()
+            result[symbol] = df
+        return result
+            
+    
+    def simplify(self):
+        new_expr = Expression(self.root.simplify())
+        return new_expr
+        
+class Node:
+    def __init__(self):
+        self.children = []
+
+    def __call__(self, args: dict[str, any]):
+        raise NotImplementedError
+
+    def __repr__(self):
+        raise NotImplementedError
+
+    def diff(self, d_var):
+        raise NotImplementedError
+    
+    def all_symbols(self, symbols: set[str]):
+        for child in self.children:
+            child.all_symbols(symbols)
+        return symbols
+
+
+class Variable(Node):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+    
+    def __call__(self, args: dict[str, any]):
+        return args[self.name]
+    
+    def _label(self):
+        return self.name
+    
+    def __repr__(self):
+        return self.name
+    
+    def diff(self, d_var):
+        if self.name == d_var:
+            return Constant(1)
+        else:
+            return Constant(0)
+
+    def simplify(self):
+        return self
+    
+    def all_symbols(self, symbols: set[str]):
+        symbols.add(self.name)
+        return symbols
+
+    
+    
+class Constant(Node):
+    def __init__(self, value):
+        super().__init__()
+        self.value = value
+
+    def __call__(self, args: dict[str, any]):
+        return self.value
+    
+    def _label(self):
+        return str(self.value)
+    
+    def __repr__(self):
+        return str(self.value)
+    
+    def diff(self, d_var):
+        return Constant(0)
+    
+    def simplify(self):
+        return self
+    
+    def all_symbols(self, symbols: set[str]):
+        return symbols
+    
+class Add(Node):
+    def __init__(self, x, y):
+        super().__init__()
+        self.children = [x, y]
+
+    def __repr__(self):
+        return '(' + str(self.children[0]) + ' + ' + str(self.children[1]) + ')'
+    
+    def _label(self):
+        return '+'
+    
+    def __call__(self, args: dict[str, any]):
+        return self.children[0](args) + self.children[1](args)
+    
+    def diff(self, d_var):
+        return Add(self.children[0].diff(d_var), self.children[1].diff(d_var))
+    
+    def simplify(self):
+        if isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 0:
+            return self.children[1].simplify()
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 0:
+            return self.children[0].simplify()
+        else:
+            return Add(self.children[0].simplify(), self.children[1].simplify())
+        
+    
+    
+class Mul(Node):
+    def __init__(self, x, y):
+        super().__init__()
+        self.children = [x, y]
+
+    def __repr__(self):
+        return '(' + str(self.children[0]) + ' * ' + str(self.children[1]) + ')'
+    
+    def _label(self):
+        return '*'
+    
+    def __call__(self, args: dict[str, any]):
+        return self.children[0](args) * self.children[1](args)
+    
+    def diff(self, d_var):
+        return Add(Mul(self.children[0].diff(d_var), self.children[1]), Mul(self.children[0], self.children[1].diff(d_var)))
+    
+    def simplify(self):
+        if isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 0:
+            return Constant(0)
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 0:
+            return Constant(0)
+        elif isinstance(self.children[0].simplify(), Constant) and self.children[0].simplify().value == 1:
+            return self.children[1].simplify()
+        elif isinstance(self.children[1].simplify(), Constant) and self.children[1].simplify().value == 1:
+            return self.children[0].simplify()
+        else:
+            return Mul(self.children[0].simplify(), self.children[1].simplify())
+    
+class Sin(Node):
+    def __init__(self, x):
+        super().__init__()
+        self.children = [x]
+
+    def __repr__(self):
+        return 'sin(' + str(self.children[0]) + ')'
+    
+    def _label(self):
+        return 'sin'
+    
+    def __call__(self, args: dict[str, any]):
+        return np.sin(self.children[0](args))
+    
+    def diff(self, d_var):
+        return Mul(Cos(self.children[0]), self.children[0].diff(d_var))
+    
+    def simplify(self):
+        return Sin(self.children[0].simplify())
+    
+    
+class Cos(Node):
+    def __init__(self, x):
+        super().__init__()
+        self.children = [x]
+
+    def __repr__(self):
+        return 'cos(' + str(self.children[0]) + ')'
+    
+    def _label(self):
+        return 'cos'
+    
+    def __call__(self, args: dict[str, any]):
+        return np.cos(self.children[0](args))
+    
+    def diff(self, d_var):
+        return Mul(Constant(-1), Mul(Sin(self.children[0]), self.children[0].diff(d_var)))
+    
+    def simplify(self):
+        return Cos(self.children[0].simplify())
+
+
+f = Expression(
+        Mul(
+            Add(
+                Variable('x'),
+                Variable('y')
+            ),
+            Sin(
+                Variable('x')
+
+            )
+        )
+    )
+
+print('f             :', f)
+print('∇f            :', f.grad())
+print('∇f (simple)   :', f.grad(symplify=True))
+
+:::
+
 
 ### 「ソースコード」からの微分
 
@@ -1287,14 +1511,14 @@ f(x=1, y=2)   : 2.5244129544236893
 
 例えば
 
-```python
+```
 def f(x):
     return 2 * x + 1
 ```
 
 という関数を受け取り、
 
-```python
+```
 def f′(x):
     return 2
 ```
@@ -1305,7 +1529,7 @@ def f′(x):
 
 例えば
 
-```python
+```
 def f(x):
     if x < 0:
         raise ValueError('x must be positive')
@@ -1321,103 +1545,6 @@ def f(x):
 最後に紹介するのが、自動微分(automatic differentiation)です。
 
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
-
-### 自動微分のアイデア
-自動微分は数値微分と同じく、導関数を陽に求めるのではなく、ある点における勾配を計算する手法です。
-
-自動微分の核心的なアイデアは
-
-- 全ての式を基本的な関数の合成に分解する
-- 基本的な関数の合成として表した式を、連鎖律(chain rule)を使って勾配の**値**を伝播させながら計算する
-
-というものです。
-
-具体的にみていきましょう。
-
-$$
-z = (x^2 + y)^2
-$$
-
-という式の $x = 1, \ y = 2$ における $(\frac{\partial z}{\partial x}, \ \frac{\partial z}{\partial y}) = (12, \ 8)$ を計算したいとします。
-
-まず、この式を基本的な関数の合成に分解します。
-
-$$
-\begin{align}
-a &= x^2 \\
-b &= a + y \\
-z &= a^2
-\end{align}
-$$
-
-とすれば、この式は
-
-- 二乗
-- 加算
-
-という基本的な関数とその合成に分解することができました。
-
-次にここから連鎖律を使って $\frac{\partial z}{\partial x}, \ \frac{\partial z}{\partial y}$ を計算します。
-
-一応おさらいしておくと、連鎖律は
-$$
-f = g \circ h
-$$
-
-という合成関数について成り立つ
-
-$$
-\frac{\partial f}{\partial x} = \frac{\partial g}{\partial h} \frac{\partial h}{\partial x}
-$$
-
-という公式です。
-
-さて、これを使うと、
-
-$$
-\frac{\partial z}{\partial x} = \frac{\partial z}{\partial b}{\frac{\partial b}{\partial a}}{\frac{\partial a}{\partial x}}
-$$
-
-となるので、右辺の $\frac{\partial z}{\partial b}, \ \frac{\partial b}{\partial a}, \ \frac{\partial a}{\partial x}$ を求めることができれば、
-$\frac{\partial z}{\partial x}$ を計算することができます。
-
-ここで、 $z(b), b(a, y), a(x)$  は、それぞれ「基本的な関数」である二乗と加算でした。
-したがって、あらかじめこの「基本的な関数」の導関数を手元で求めておくことで、
-$\frac{\partial z}{\partial a}$ と $\frac{\partial a}{\partial x}$ を計算することができます。
-
-つまり、この場合 
-
-- 加算 ($a(x, y) = x + y$) は $\frac{\partial a}{\partial x} = 1, \ \frac{\partial a}{\partial y} = 1$)
-- 二乗 ($z(x) = x^2$) は $\frac{\partial z}{\partial x} = 2x$
-
-ということを、あらかじめ自分たちで求めておきます。
-
-そして、たとえば$\frac{\partial z}{\partial a}$は
-
-$$
-\begin{align*}
-x &= 1 & \Rightarrow \quad \frac{\partial a}{\partial x} &= 2 \\
-a &= 1 & \Rightarrow \quad \frac{\partial b}{\partial a} &= 1 \\
-b &= 3 & \Rightarrow \quad \frac{\partial z}{\partial b} &= 6 \\
-\therefore \quad \frac{\partial z}{\partial a} &= 12
-\end{align*}
-$$
-
-と計算できました。
-
-
-ここで注意が必要なのは、あくまで行ったのは「値」の伝播であるということです。
-
-数式微分も同じように基本的な関数を用意し、それぞれの導関数を求めておき、
-全体の導関数を求めましたが、先ほどは伝播していたのは値ではなく、
-導関数を構成するシンボルでした。
-
-さて、このように勾配がもとまりました。
-ここからは具体的な実装について考えていきます。
-
-実装では積を取った右辺
-$\frac{\partial z}{\partial b}{\frac{\partial b}{\partial a}}{\frac{\partial a}{\partial x}}$ という計算の順番という実はとても重要な点について着目しながら進めていきます。
-~~(掛け算順序問題の話ではないです)~~~
 
 
 ## 付録
@@ -1473,7 +1600,7 @@ $x < F_{min}$ であれば、$x$ は $-\infty$ に丸められます。$^4$
 
 <footer>
 
-脚注・参考文献
+#### 脚注・参考文献
 
 [1] 記事内でも言及がありますが、数式微分と自動微分はやや境界があいまい(数式微分とも自動微分ともいえそうな感じの例が考えられるし、実際にある)と考えています。
 とはいえ自動で微分が求まっているならば全て自動微分だ！というのは誤りと思います。
