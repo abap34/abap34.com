@@ -1127,15 +1127,14 @@ plt.close()
 <div class="plot" id="749_plot"></div>
 <br>
 <br>
-<br>
-<script>page_contents.push({     "type":"H3",     "id":"755",     "content":"多変数関数への拡張" })</script> 
-<h3 id="755">多変数関数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"754",     "content":"多変数関数への拡張" })</script> 
+<h3 id="754">多変数関数への拡張</h3>
 \(f : \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) は
 各 \(x_i\) についてそれ以外の変数を固定して計算すればOKです。
 <br>
 <br> 
- <div class="editor" id="770" rows="3" cols="80"></div> 
-<script>editor = ace.edit("770"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
+ <div class="editor" id="769" rows="3" cols="80"></div> 
+<script>editor = ace.edit("769"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 21,     maxLines: 21,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def numerical_nabla(f, x, h):
     n = len(x)
     nabla = np.zeros(n)
     for i in range(n):
@@ -1156,9 +1155,9 @@ x, y = 1.0, 2.0
 
 print(numerical_nabla(f, np.array([x, y]), 1e-3))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('770')"> Run </button>
-<pre class="sample_out" id="770_out"></pre>
-<div class="plot" id="770_plot"></div>
+<button class="runbutton" onclick="runBlock('769')"> Run </button>
+<pre class="sample_out" id="769_out"></pre>
+<div class="plot" id="769_plot"></div>
 <br>
 <br>
 <br>
@@ -1166,8 +1165,8 @@ print(numerical_nabla(f, np.array([x, y]), 1e-3))
 \(f: \mathbb{R}^n \to \mathbb{R}^m\) のヤコビアン行列 \(J_f\) は
 <br>
 <br> 
- <div class="editor" id="785" rows="3" cols="80"></div> 
-<script>editor = ace.edit("785"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="784" rows="3" cols="80"></div> 
+<script>editor = ace.edit("784"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 def numerical_jacobian(f, x, h=1e-5):
     n = len(x)
@@ -1192,20 +1191,20 @@ x, y = 1.0, 2.0
 
 print(numerical_jacobian(f, np.array([x, y])))
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('785')"> Run </button>
-<pre class="sample_out" id="785_out"></pre>
-<div class="plot" id="785_plot"></div>
+<button class="runbutton" onclick="runBlock('784')"> Run </button>
+<pre class="sample_out" id="784_out"></pre>
+<div class="plot" id="784_plot"></div>
 <br>
 となり、正しく計算できています。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"792",     "content":"数値微分の計算量" })</script> 
-<h3 id="792">数値微分の計算量</h3>
+<script>page_contents.push({     "type":"H3",     "id":"791",     "content":"数値微分の計算量" })</script> 
+<h3 id="791">数値微分の計算量</h3>
 数値微分は中心差分の一変数関数であれば2回の関数評価で微分を計算することができます。
 <br>
 \(\mathbb{R}^n \to \mathbb{R}^m\) の関数のヤコビアン行列を求める場合は、 \(\Theta(nm)\) 回の評価が必要です。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"807",     "content":"数値微分の長所" })</script> 
-<h3 id="807">数値微分の長所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"806",     "content":"数値微分の長所" })</script> 
+<h3 id="806">数値微分の長所</h3>
 なんと言っても実装が非常に簡単です。
 <br>
 数値微分では \(f\) が何であろうと \(f(x + h)\) と \(f(x)\) さえ計算できれば
@@ -1219,17 +1218,17 @@ print(numerical_jacobian(f, np.array([x, y])))
 そのため、後述の自動微分などを実装する際には数値微分を用いてテストを行うことが多いです。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"838",     "content":"数値微分の短所" })</script> 
-<h3 id="838">数値微分の短所</h3>
+<script>page_contents.push({     "type":"H3",     "id":"837",     "content":"数値微分の短所" })</script> 
+<h3 id="837">数値微分の短所</h3>
 後述の自動微分などと比較すると誤差が大きくなります。
 <br>
 また、入力と出力の両方の次元に比例した計算量がかかるため、
 入力または出力の次元が大きい場合は計算量が大きくなります。
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"849",     "content":"数式微分" })</script> 
-<h2 id="849">数式微分</h2>
-<script>page_contents.push({     "type":"H3",     "id":"852",     "content":"数式微分のアイデア" })</script> 
-<h3 id="852">数式微分のアイデア</h3>
+<script>page_contents.push({     "type":"H2",     "id":"848",     "content":"数式微分" })</script> 
+<h2 id="848">数式微分</h2>
+<script>page_contents.push({     "type":"H3",     "id":"851",     "content":"数式微分のアイデア" })</script> 
+<h3 id="851">数式微分のアイデア</h3>
 数式微分は、我々が普段微分を行うときと同じように、陽に導関数を求めます。
 <br>
 つまり、数値微分のアルゴリズムは、
@@ -1260,8 +1259,8 @@ print(numerical_jacobian(f, np.array([x, y])))
 のように表現できます。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"898",     "content":"数式微分の実装" })</script> 
-<h3 id="898">数式微分の実装</h3>
+<script>page_contents.push({     "type":"H3",     "id":"897",     "content":"数式微分の実装" })</script> 
+<h3 id="897">数式微分の実装</h3>
 実装の一例を示そうと思います。
 <br>
 ここでは、簡単のために三角関数と足し算、掛け算からなる式を数式微分する実装を書きました。
@@ -1493,8 +1492,8 @@ print(numerical_diff(f, x, 1e-5))
 <br>
 そこでこの式を簡単にすることを試みます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1093",     "content":"簡約化" })</script> 
-<h3 id="1093">簡約化</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1092",     "content":"簡約化" })</script> 
+<h3 id="1092">簡約化</h3>
 メソッド <code>simplify</code> を追加します。
 <br>
 <br>
@@ -1555,8 +1554,8 @@ print(numerical_diff(f, x, 1e-5))
 これが入れ子になれば項の数は指数的に増えていき、文字通り爆発する場合があります。
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1166",     "content":"多変数への拡張" })</script> 
-<h3 id="1166">多変数への拡張</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1165",     "content":"多変数への拡張" })</script> 
+<h3 id="1165">多変数への拡張</h3>
 \(f: \mathbb{R}^n \to \mathbb{R}\) の勾配 \(\nabla f(\boldsymbol{x})\) を数式微分で求めます。
 <br>
 実装は先ほどとほぼ同様で、
@@ -1814,8 +1813,8 @@ f(x=1, y=2)   : 2.5244129544236893
 実行できるものはこちらです。
 <br>
 <br> 
- <div class="editor" id="1243" rows="3" cols="80"></div> 
-<script>editor = ace.edit("1243"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="1242" rows="3" cols="80"></div> 
+<script>editor = ace.edit("1242"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 222,     maxLines: 222,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 
 class Expression:
@@ -2037,13 +2036,13 @@ print('∇f            :', f.grad())
 print('∇f (simple)   :', f.grad(symplify=True))
 
 `, -1);</script>
-<button class="runbutton" onclick="runBlock('1243')"> Run </button>
-<pre class="sample_out" id="1243_out"></pre>
-<div class="plot" id="1243_plot"></div>
+<button class="runbutton" onclick="runBlock('1242')"> Run </button>
+<pre class="sample_out" id="1242_out"></pre>
+<div class="plot" id="1242_plot"></div>
 <br>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"1248",     "content":"「ソースコード」からの微分" })</script> 
-<h3 id="1248">「ソースコード」からの微分</h3>
+<script>page_contents.push({     "type":"H3",     "id":"1247",     "content":"「ソースコード」からの微分" })</script> 
+<h3 id="1247">「ソースコード」からの微分</h3>
 <br>
 今回の実装例では直接木を書くことでこのパートを回避しましたが実際はプログラムで普通に(?)書かれた式を変換できると嬉しいです、
 <br>
@@ -2075,18 +2074,18 @@ print('∇f (simple)   :', f.grad(symplify=True))
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1281",     "content":"自動微分" })</script> 
-<h2 id="1281">自動微分</h2>
+<script>page_contents.push({     "type":"H2",     "id":"1280",     "content":"自動微分" })</script> 
+<h2 id="1280">自動微分</h2>
 <br>
 最後に紹介するのが、自動微分(automatic differentiation)です。
 <br>
 自動微分は精度、計算量ともに非常に優れており、最適化などの文脈では非常によく使われています。
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"1292",     "content":"付録" })</script> 
-<h2 id="1292">付録</h2>
-<script>page_contents.push({     "type":"H3",     "id":"1295",     "content":"浮動小数点数" })</script> 
-<h3 id="1295">浮動小数点数</h3>
+<script>page_contents.push({     "type":"H2",     "id":"1291",     "content":"付録" })</script> 
+<h2 id="1291">付録</h2>
+<script>page_contents.push({     "type":"H3",     "id":"1294",     "content":"浮動小数点数" })</script> 
+<h3 id="1294">浮動小数点数</h3>
 前提として、ふつうのコンピュータは有限桁の二進数しか扱えません。
 <br>
 <br>
@@ -2142,8 +2141,8 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 <br>
 <footer>
 <br>
-<script>page_contents.push({     "type":"H4",     "id":"1486",     "content":"脚注・参考文献" })</script> 
-<h4 id="1486">脚注・参考文献</h4>
+<script>page_contents.push({     "type":"H4",     "id":"1485",     "content":"脚注・参考文献" })</script> 
+<h4 id="1485">脚注・参考文献</h4>
 <br>
 [1] 記事内でも言及がありますが、数式微分と自動微分はやや境界があいまい(数式微分とも自動微分ともいえそうな感じの例が考えられるし、実際にある)と考えています。
 とはいえ自動で微分が求まっているならば全て自動微分だ！というのは誤りと思います。
@@ -2164,7 +2163,7 @@ v = (-1)^{sign} \times 2^{exp - 1023} \times (1 + frac)
 
     </div>
 
-    <div class="links"><a href="posts.html">  ⇨ 投稿一覧へ </a> 
+    <div class="links"><a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
  <br>
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
             data-show-count="false">Tweet</a>
