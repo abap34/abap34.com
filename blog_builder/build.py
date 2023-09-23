@@ -16,7 +16,7 @@ def build_article():
         html_path = tmp['meta']['out_path']
         ogp_url = tmp['meta']['ogp_url']
 
-    back_to_home = '<a href="posts.html">  ⇨ 投稿一覧へ </a> \n <br>'
+    back_to_home = '<a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> \n <br>'
     
 
     with open(html_path, 'r') as f:
