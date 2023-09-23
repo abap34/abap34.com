@@ -1,126 +1,126 @@
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.42857143;
-    }
+body {
+  background-color: #444;
+  color: #ccc;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
 
-    header {
-      background-color: #f5f5f5;
-      padding: 20px;
-      text-align: center;
-    }
+header {
+  background-color: #444;
+  padding: 20px;
+  text-align: center;
+}
 
-    header img {
-      border-radius: 50%;
-    }
+header img {
+  border-radius: 50%;
+}
 
-    main {
-      margin: 0 auto;
-      max-width: 800px;
-      padding: 0 20px;
-    }
+main {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
 
-    .buttonGroup {
-      position: fixed;
-      z-index: 9999999;
-      top: 20px;
-      left: 20px;
-    }
 
-    .button {
-      display: inline-block;
-      aspect-ratio: 1 / 1;
-      width: 30px;
-      height: 30px;
-    }
+.buttonGroup {
+  position: fixed;
+  z-index: 9999999;
+  top: 20px;
+  left: 20px;
+}
 
-    section {
-      margin-bottom: 20px;
-    }
+.button {
+  display: inline-block;
+  aspect-ratio: 1 / 1;
+  width: 30px;
+  height: 30px;
+}
 
-    section h2 {
-      border-bottom: 1px solid #eee;
-      margin: 0 0 20px;
-      padding-bottom: 10px;
-    }
+section {
+  margin-bottom: 20px;
+}
 
-    section p {
-      margin: 0 0 10px;
-    }
+section h2 {
+  border-bottom: 1px solid #555;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+}
 
-    footer {
-      background-color: #f5f5f5;
-      border-top: 1px solid #eee;
-      padding: 20px;
-      text-align: center;
-    }
+section p {
+  margin: 0 0 10px;
+}
 
-    .sidebar {
-      transform: translateX(-100%);
-      background-color: #f5f5f5;
-      border-right: 1px solid #eee;
-      height: 100%;
-      left: 0;
-      overflow: auto;
-      position: fixed;
-      top: 0;
-      width: 200px;
-    }
+footer {
+  background-color: #444;
+  border-top: 1px solid #555;
+  padding: 20px;
+  text-align: center;
+}
 
-    .sidebar a {
-      display: block;
-      margin-bottom: 10px;
-    }
+.sidebar {
+  transform: translateX(-100%);
+  background-color: #444;
+  border-right: 1px solid #555;
+  height: 100%;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  width: 200px;
+}
 
-    #overlay {
-      background-color: rgba(0, 0, 0, 0);
-      height: 100%;
-      left: 0;
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1;
-    }
+.sidebar a {
+  display: block;
+  margin-bottom: 10px;
+  color: #ccc; /* リンクの色を灰色に設定 */
+  text-decoration: underline; /* 下線を追加 */
+}
 
-    .sidebar {
-      background-color: white;
-      border-right: 1px solid #eee;
-      height: 100%;
-      padding: 60px 20px;
-      width: 200px;
-    }
+#overlay {
+  background-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
 
-    .sidebar a {
-      display: block;
-      margin-bottom: 10px;
-    }
+.sidebar {
+  background-color: #555;
+  border-right: 1px solid #666;
+  height: 100%;
+  padding: 60px 20px;
+  width: 200px;
+}
 
-    .sidebar a:hover {
-      background-color: #eee;
-    }
+a {
+  color: #bed0ff; /* リンクの色を灰色に設定 */
+}
 
-    .sidebar a.active {
-      background-color: #eee;
-    }
+a:hover {
+  background-color: #666;
+  color: #fff; /* ホバー時のリンクの色を白に変更 */
+}
 
-    .sidebar a.active:hover {
-      background-color: #eee;
-    }
+a.active {
+  background-color: #666;
+  color: #fff; /* アクティブなリンクの色を白に変更 */
+}
 
-    header {
-      background-color: #f5f5f5;
-      padding: 20px;
-      text-align: center;
-    }
+header {
+  background-color: #444;
+  padding: 20px;
+  text-align: center;
+}
 
-    header img {
-      border-radius: 50%;
-    }
+header img {
+  border-radius: 50%;
+}
 
-    section h2 {
-      border-bottom: 1px solid #4b4a4a;
-      margin: 0 0 20px;
-      padding-bottom: 10px;
-    }
+section h2 {
+  border-bottom: 1px solid #666;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
+}
