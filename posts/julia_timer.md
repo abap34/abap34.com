@@ -7,7 +7,7 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/spaniel-sussex/n02102480_4923.jpg
-description: Juliaで実行時間を計測してタイムアウトしたら中断する簡単な例
+description: Juliaで実行時間を計測してタイムアウトしたら中断する簡単な例を書きました。
 url: https://abap34.com
 site_name: abap34.com
 twitter_site: @abap34
