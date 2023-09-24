@@ -19,5 +19,6 @@ echo "$template" > "$1"
 
 ogp_url=$(curl -s https://dog.ceo/api/breeds/image/random | jq -r '.message')
 sed -i -e "s|ogp_url: |ogp_url: $ogp_url|g" "$1"
+rm "$1-e"
 
 echo "記事テンプレートが作成されました: $1"
