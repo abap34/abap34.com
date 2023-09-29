@@ -24,7 +24,7 @@
         <a href="#projects">Workds</a>
         <a href="#contact">Contact</a>
         <h3>Blog</h3>
-        <h3>Recent Posts</h3>
+        <h4>最近の投稿</h4>
         <div id="recent-posts"></div>
         <script>
             fetch('/recent_posts.json')
@@ -42,7 +42,7 @@
                     document.getElementById('recent-posts').innerHTML = html;
                 });
         </script>
-        <a href="/posts.html">⇨ All Posts</a>
+        <a href="/posts.html">⇨ 全ての投稿へ</a>
 
     </div>
     <header>
@@ -122,7 +122,7 @@
         <section id="Blog" class="fade-in">
             <h2>Blog</h2>
             <p>最近の投稿</p>
-            <div id="recent-posts"></div>
+            <div id="recent-posts-page"></div>
             <script>
                 fetch('/recent_posts.json')
                     .then(response => response.json())
@@ -132,11 +132,11 @@
                             const { title, post_date, url } = post;
                             const postHtml = `
             <div class="post">
-              <h4>${post_date} | <a href="${url}">${title}</a></h4>
+              ${post_date} | <a href="${url}">${title}</a> 
             </div>`;
                             html += postHtml;
                         }
-                        document.getElementById('recent-posts').innerHTML = html;
+                        document.getElementById('recent-posts-page').innerHTML = html;
                     });
             </script>
             <a href="/posts.html">⇨ 投稿一覧へ </a>
