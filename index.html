@@ -79,19 +79,16 @@
             <h2>Works</h2>
             <ul>
                 <li><a href="https://github.com/abap34/JITrench.jl">JITrench.jl</a></li>
-                Julia言語製の深層学習フレームワークです。既存の自動微分ライブラリなどは用いず、フルスクラッチで開発しました。
+                フルスクラッチで開発しているJulia言語製の深層学習フレームワークです。
                 <br>
                 GPUのサポートやdefine-by-runによる動作、jaxのような関数型言語風の記法とパラメータ管理、などなど、現代的な深層学習フレームワークの基本的な機能を揃えています。(それでいて高速です！)
                 <br>
                 <li><a
-                        href="https://twitter.com/traPtitech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">traP</a>
+                        href="https://twitter.com/traPtitech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">サークル活動 (traP) </a>
                 </li>
-                東京工業大学デジタル創作同好会traPというところに入っていて、
+                東京工業大学デジタル創作同好会traPに所属しています。
                 <br>
-                そこでは「Kaggle部」という機械学習を勉強する部を立ち上げて部長として活動しています。
-                <br>
-                たとえば、<a href="https://trap.jp/post/1697/">部内コンペの開催</a>や<a
-                    href="https://trap.jp/post/1918/">新入部員向けの割と本格派の勉強会</a>を開催しています。
+                詳しい内容は <a href="https://abap34.com/trap.html">traPでの活動まとめ</a> をみてください。
                 <li>データ分析コンペ</li>
                 Kaggleなどのデータ分析コンペも趣味としてやっています。
                 あまり頻繁に出ている感じではないですが、例えば全国医療AIコンテスト2021という学会のコンペで優勝したことがあります。
@@ -101,17 +98,48 @@
                 <li> その他
                     <ul>
                         <li> このサイトのブログ <br>
-                            このサイトのブログは自作のMarkdownパーサによって作られています。
-                            詳しくは <a href="https://www.abap34.com/almo.html"> デモページ </a> をご覧ください。
+                            このサイトのブログは<a href="https://github.com/abap34/ALMO">自作のMarkdownパーサ</a>で作っていて、
+                            WebAssemblyを使ったサーバ不要のサンプルプログラムの実行環境を提供しています。
+                        </li>
+                        <li> 機械学習講習会 <br>
+                            サークルの新入生向け教育の一環として行なっている勉強会です。
+                            具体的な内容(かなり頑張っています！) は <a href="https://trap.jp/post/1918/">traPブログでの投稿</a> を確認してください。
+                        </li>
+                        <li> コンペ運営 <br>
+                            サークルの部員向けに毎年コンペを開催しています。
+                            2023年のコンペの開催記録はこちらです。
+                            <a href="https://trap.jp/post/1975"> traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記 </a>
                         </li>
                     </ul>
 
                 </li>
             </ul>
 
-            他にもいろいろ作っています。
+            そのほか、アイデアを実現する具体的な実装や基盤に興味があり、Julia・Python・C++をメインに色々と実装しています。
             <br>
-            TwitterやGitHubにいろいろ載せているので、もし良かったら覗いてみてください。
+            Twitter, GitHub, ブログにいろいろと投稿しているので、興味があれば覗いてみてください。
+        </section>
+        <section id="Blog" class="fade-in">
+            <h2>Blog</h2>
+            <p>最近の投稿</p>
+            <div id="recent-posts"></div>
+            <script>
+                fetch('/recent_posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
+                        let html = '';
+                        for (const post of posts) {
+                            const { title, post_date, url } = post;
+                            const postHtml = `
+            <div class="post">
+              <h4>${post_date} | <a href="${url}">${title}</a></h4>
+            </div>`;
+                            html += postHtml;
+                        }
+                        document.getElementById('recent-posts').innerHTML = html;
+                    });
+            </script>
+            <a href="/posts.html">⇨ 投稿一覧へ </a>
         </section>
         <section id="contact" class="fade-in">
             <h2>Contact</h2>
