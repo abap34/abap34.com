@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <title> オセロ探索の並列化の戦略 (pdf) </title>
+
+    <meta property="og:title" content="オセロ探索の並列化の戦略 (pdf)">
+    <meta preperty="og:image" content="https://images.dog.ceo/breeds/malinois/n02105162_2896.jpg">
+    <meta property="og:description" content="オセロのゲーム木探索を並列化する方法">
+    <meta property="og:url" content="https://abap34.com">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34.com">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+
+    
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+
+    <style>
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    color: #F7F7F7;
+    flex-direction: column;
+    display: flex;
+    width: 95%;
+}
+
+h1,
+h2 {
+    color: #F7F7F7;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: left;
+    padding-left: 10px;
+    border-bottom: solid 1px #5b5b5b;
+}
+
+p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #dcddfe;
+}
+
+figure {
+    text-align: center;
+}
+
+figcaption {
+    text-align: center;
+}
+
+pre {
+    padding: 10px;
+    color: #F7F7F7;
+    border: solid 1px #a8a8a8;
+    overflow-x: auto;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.date {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tag {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.content {
+    flex: 1;
+    padding: 40px 40px;
+    margin-left: 0px;
+    margin-right: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: #444;
+    border-radius: 5px;
+    overflow: auto;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.sidebar {
+    flex: 3;
+    border-right: 1px solid #eee;
+    height: 100%;
+    width: 10%;
+    padding: 10px 10px;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    width: 220px;
+    z-index: 1000;
+    background-color: #333;
+}
+
+@media (max-width: 1260px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+.links {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    padding: 10px 10px;
+    overflow: auto;
+    background-color: #333;
+}
+
+@media (max-width: 1260px) {
+    .links {
+        display: none;
+    }
+}
+
+#toc {
+    background-color: #444;
+    border-radius: 5px;
+    padding: 15px;
+    list-style: none;
+}
+
+.toc_title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #F7F7F7;
+    border-bottom: solid 1px #161616;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #ccc;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 16px;
+}
+
+.toc_H2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+    font-weight: bold;
+}
+
+.toc_H3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #006699;
+}
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #006699;
+    color: #006699;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #006699;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc;
+    /* ダークテーマのテキスト色 */
+    border: 1px solid #333;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #006699;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #F7F7F7;
+}
+
+
+.editor {
+    width: 100%;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #444;
+    color: #F7F7F7;
+    border: solid 1px #a8a8a8;
+}
+
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #444;
+    color: #F7F7F7;
+    border: solid 1px #a8a8a8;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+</style>
+
+    
+
+<script>
+
+
+all_sample_input = {}
+all_sample_output = {}
+
+all_input = {}
+all_output = {}
+
+use_libs = []
+
+judge_types = {}
+problem_status = {}
+page_contents = []
+
+const pyodidePromise = loadPyodide({
+    stdin: stdin_func,
+    stdout: stdout_func,
+});
+
+function stdin_func() {
+    if (submit_run) {
+        return all_input[target_objectid][judge_idx];
+    } else {
+        return all_sample_input[target_objectid];
+    }
+}
+
+function stdout_func(answer) {
+    outputs += answer + "\n";
+}
+
+function error_handle(error) {
+    document.getElementById(target_objectid + "_sample_out").innerText = error;
+    document.getElementById(target_objectid + "_sample_out").style.color = "orange";
+    status = "RE";
+}
+
+const runCode = async (objectid, require_judge) => {
+    target_objectid = objectid;
+    submit_run = require_judge;
+
+    let pyodide = await pyodidePromise;
+
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    let result_bar_id = target_objectid + "_status";
+    let result_bar = document.getElementById(result_bar_id)
+
+    document.getElementById(target_objectid + "_sample_out").innerText = "";
+    document.getElementById(target_objectid + "_sample_out").style.color = "";
+    result_bar.innerText = "Running...";
+
+
+    if (require_judge) {
+        let n_input = all_input[target_objectid].length;
+        for (let i = 0; i < n_input; i++) {
+            judge_idx = i;
+            result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
+            try {
+                outputs = "";
+                await pyodide.runPythonAsync(code);
+                let expect_out = all_output[target_objectid][judge_idx];
+                if (outputs.slice(-1) == "\n") {
+                    outputs = outputs.slice(0, -1);
+                }
+                judge(outputs, expect_out);
+            } catch (error) {
+                error_handle(error);
+                result_bar.innerText = "WJ";
+            }
+
+            if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
+                result_bar.style.backgroundColor = "#ffe500";
+                result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
+                break;
+            }
+        }
+
+        if (status == "AC") {
+            result_bar.style.backgroundColor = "lightgreen";
+            result_bar.innerText = "AC";
+            confetti();
+        } else {
+            result_bar.style.backgroundColor = "#ffe500";
+        }
+    } else {
+        try {
+            outputs = "";
+            await pyodide.runPythonAsync(code);
+            document.getElementById(target_objectid + "_sample_out").innerText = outputs;
+            result_bar.innerText = "WJ";
+        } catch (error) {
+            error_handle(error);
+            result_bar.innerText = "RE";
+        }
+    }
+};
+
+function judge(answer, expect_out) {
+    // trim \n from both
+    if (answer.slice(-1) == "\n") {
+        answer = answer.slice(0, -1);
+    }
+
+    if (expect_out.slice(-1) == "\n") {
+        expect_out = expect_out.slice(0, -1);
+    }
+
+    let judge_type = judge_types[target_objectid];
+    if (judge_type == 'equal') {
+        if (answer === expect_out) {
+            status = "AC";
+        } else {
+            status = "WA";
+        }
+    } else if (judge_type.includes('err')) {
+        status = "AC";
+        let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
+        let answer_list = answer.split('\n');
+        let expect_out_list = expect_out.split('\n');
+        for (let i = 0; i < answer_list.length; i++) {
+            let answer_line = answer_list[i].split(' ');
+            let expect_out_line = expect_out_list[i].split(' ');
+            for (let j = 0; j < answer_line.length; j++) {
+                let answer_out = parseFloat(answer_line[j]);
+                let expect_out_out = parseFloat(expect_out_line[j]);
+                if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
+                    status = "WA";
+                    return;
+                }
+            }
+        }
+
+    }
+}
+
+// ExecutableCodeblockのコードを実行する
+const runBlock = async (objectid) => {
+    let out_area = document.getElementById(objectid + "_out");
+    out_area.style.color = "";
+
+    let pyodide = await pyodidePromise;
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    document.pyodideMplTarget  = document.getElementById(objectid + "_plot");
+    out_area.innerText = "Loading libraries...";
+    for (let i = 0; i < use_libs.length; i++) {
+        let lib = use_libs[i];
+        await pyodide.loadPackage(lib);
+    }
+    out_area.innerText = "Running...";
+
+    outputs = "";
+    try {
+        await pyodide.runPythonAsync(code);
+        out_area.innerText = outputs;
+    } catch (error) {
+        out_area.innerText = error;
+        out_area.style.color = "orange";
+    }
+}
+
+</script>
+
+</head> 
+
+
+<body>
+    <div class="sidebar">
+        <ul id="toc"></ul>
+    </div>
+
+
+
+    <div class="content">
+
+        <div style="text-align: center">
+            <img height="300px" width="300px" src="https://images.dog.ceo/breeds/malinois/n02105162_2896.jpg">
+        </div>
+
+
+        <h1>オセロ探索の並列化の戦略 (pdf)</h1>
+
+        <br>
+        <div class="date"></div>
+        <br>
+        <div class="tag"></div>
+
+        <script>
+            const tags = "[機械学習, ゲームAI, Julia]"
+            const date = "2023/09/25"
+            document.getElementsByClassName("tag")[0].innerText = tags;
+            document.getElementsByClassName("date")[0].innerText = date;
+        </script>
+
+        <br>
+<br>
+ちょっと前に人工知能の講義で発表したスライドです。
+<br>
+レポートを書いて優秀だったら発表できて加点されるみたいな講義で、
+発表した + 最優秀だったらしい...
+<br>
+Twitterに上げたら実装で参考にした<a href="https://twitter.com/issei_y/status/1686367844123209729">山本さんから反応があって嬉しかった</a>です。
+<br>
+肝心の内容は  
+<a href="https://github.com/abap34/ParallelOthello.jl/main/slide.pdf) を貼ります。(は？">GitHubに上がっているスライド</a>
+<br>
+<br>
+(知見をブログに集約したいと思っていて、まとめています)
+<br>
+<br>
+最初の方に並列化についてやや微妙な説明が続きますが、発表時間との兼ね合いとかあんまり詳しく説明しても空気がやばくなりそうだったので
+心の目で読んでもらえればと思います。
+<br>
+<br>
+<iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe>
+
+
+    </div>
+
+    <div class="links"><a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+ <br> <br> <br> <br>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+            data-show-count="false">Tweet</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        <br>
+
+        <br>
+
+        <br>
+
+        <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a></p>
+        <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
+        <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+
+        <footer>
+            <p>&copy; abap34 </p>
+        </footer>
+    </div>
+    </script>
+</body>
+
+
+
+    <script>
+    
+
+const tocContainer = document.querySelector("#toc");
+const tocTitle = document.createElement("div");
+tocTitle.innerHTML = "目次";
+tocTitle.classList.add("toc_title");
+tocContainer.appendChild(tocTitle);
+
+
+
+page_contents.forEach(item => {
+    if (item.type === "H2" || item.type === "H3") {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<a href="#${item.id}">${item.content}</a>`;
+        listItem.classList.add("toc_" + item.type);
+        tocContainer.appendChild(listItem);
+    }
+});
+
+const options = {
+    root: null,
+    rootMargin: "-50% 0px",
+    threshold: 0
+};
+
+const observer = new IntersectionObserver(onIntersection, options);
+
+
+page_contents.forEach(item => {
+    const element = document.getElementById(item.id);
+    if (element) {
+        observer.observe(element);
+    }
+});
+
+prev_item = null;
+
+function onIntersection(entries) {
+    entries.forEach(entry => {
+        const id = entry.target.id;
+        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+        if (tocItem) {
+            if (entry.isIntersecting) {
+                tocItem.classList.add("active");
+                if (prev_item) {
+                    prev_item.classList.remove("active");
+                }
+                prev_item = tocItem;
+            }
+        }
+    });
+}
+
+
+</script>
+
+</html>
