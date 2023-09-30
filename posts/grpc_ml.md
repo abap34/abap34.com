@@ -38,7 +38,6 @@ twitter_site: @abap34
 
 
 ## 実装
-
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
 
 こういうファイル構造にします。
@@ -83,6 +82,8 @@ message Response {
 
 え、これだけで諸々作ってくれるらしいです。天才？
 
+セットアップして、
+
 ```bash
 cd src 
 go init mypred
@@ -91,15 +92,19 @@ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 ```
 
+Go用のコードを生成します。
 
 ```bash
 cd api
 protoc --go_out=. --go-grpc_out=. pred.proto
-``` 
+```
+
+Python用のコードを生成します。
+
 
 ```bash
 python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
-``` 
+```
 
 こんな感じになります。
 
@@ -115,7 +120,7 @@ python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../
     └── grpc
         ├── pred.pb.go
         └── pred_grpc.pb.go
-``` 
+```
 
 あとはサーバ側をPython, クライアント側をGoで書きます。
 
@@ -222,7 +227,6 @@ func main() {
 
 
 ## まとめ
-
 - gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう
 - 機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう
 - 個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)
