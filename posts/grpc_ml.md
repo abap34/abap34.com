@@ -8,7 +8,7 @@ github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/finnish-lapphund/mochilamvan.jpg
 description: gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論する話です
-url: https://abap34.com
+url: https://abap34.com/posts/grpc_ml.html
 site_name: abap34.com
 twitter_site: @abap34
 ---
