@@ -37,7 +37,7 @@ jobs:
         if: steps.check_changes.outputs.changed_files != ''
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++ libcurl4-openssl-dev
+          sudo apt-get install -y g++ 
 
       - name: Compile almo.cpp
         if: steps.check_changes.outputs.changed_files != ''
@@ -60,10 +60,17 @@ jobs:
             filename_without_extension=$(basename $file .md)
             file=${file#posts/}
             echo "Generating HTML for $file"
-            ../ALMO/src/almo "$file" -t dark -o ../public/posts/${filename_without_extension}.html -d > tmp.json 
+            ../ALMO/src/almo "$file" -t dark -o ${filename_without_extension}.html -d > tmp.json 
             python3 ../blog_builder/build.py 
           done
           rm tmp.json
+
+      - name: Move file for public/
+        if: steps.check_changes.outputs.changed_files != ''
+        run: |
+          cd ${{ github.workspace }}
+          cd posts
+          mv * ../public/
 
       - name: Commit and Push HTML Files
         if: steps.check_changes.outputs.changed_files != ''
