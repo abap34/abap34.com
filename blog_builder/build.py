@@ -52,10 +52,11 @@ def build_article():
 
             })
         
+    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
+
     with open('../public/posts.json', 'w') as f:
         json.dump(posts, f)
 
-    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
 
     recent_posts = posts[:5]
     with open('../public/recent_posts.json', 'w') as f:
