@@ -69,7 +69,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           cd posts
-          cp * ../public/posts/
+          cp -r . ../public/posts/
 
       - name: Commit and Push HTML Files
         if: steps.check_changes.outputs.changed_files != ''
