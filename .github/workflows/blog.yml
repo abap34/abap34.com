@@ -43,7 +43,7 @@ jobs:
         if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ALMO/src
-          g++ -std=c++20 -o almo almo.cpp -lcurl
+          g++ -std=c++20 -o almo almo.cpp
 
 
       - name: Generate HTML Files
