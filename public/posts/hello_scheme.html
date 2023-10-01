@@ -7,7 +7,7 @@
     <title> Scheme入門した m1macでのScheme環境構築 </title>
 
     <meta property="og:title" content="Scheme入門した m1macでのScheme環境構築">
-    <meta preperty="og:image" content="https://images.dog.ceo/breeds/redbone/n02090379_5393.jpg">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/redbone/n02090379_5393.jpg">
     <meta property="og:description" content="Scheme入門した m1macでのScheme環境構築">
     <meta property="og:url" content="https://abap34.com">
     <meta property="og:type" content="article">
@@ -24,6 +24,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+
+    
     <script>hljs.highlightAll();</script>
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
@@ -93,6 +97,20 @@ pre {
 img {
     max-width: 100%;
     height: auto;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #fff;
+    margin: 0 auto;
+}
+
+th,
+td {
+    border: 1px solid #fff;
+    padding: 5px 10px;
 }
 
 .date {
@@ -523,7 +541,6 @@ const runBlock = async (objectid) => {
 <br>
 m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)
 どうしようかと思っていたら <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> を見かけたのでこれを入れてみた、　
-<br>
 <br>
 <br>
 <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a>
