@@ -13,13 +13,13 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
-
 ちょっと前に人工知能の講義で発表したスライドです。
 
 レポートを書いて優秀だったら発表できて加点されるみたいな講義で、
 発表した + 最優秀だったらしい...
 
 Twitterに上げたら実装で参考にした[山本さんから反応があって嬉しかった](https://twitter.com/issei_y/status/1686367844123209729)です。
+
 
 肝心の内容は  
 [GitHubに上がっているスライド](https://github.com/abap34/ParallelOthello.jl/main/slide.pdf) を貼ります。(は？)
@@ -33,3 +33,4 @@ Twitterに上げたら実装で参考にした[山本さんから反応があっ
 
 
 <iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe>
+
