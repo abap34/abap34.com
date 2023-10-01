@@ -8,7 +8,7 @@ github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/kuvasz/n02104029_951.jpg
 description: 2023年度前期の振り返りです。
-url: https://abap34.com
+url: https://abap34.com/posts/hurikaeri_2023_0.html
 site_name: abap34.com
 twitter_site: @abap34
 ---
