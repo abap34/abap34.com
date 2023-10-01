@@ -19,7 +19,6 @@ twitter_site: @abap34
 
 <a href="https://github.com/abap34/ALMO"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/abap34/ALMO.png" width="460px"></a>
 
-
 です。
 
 Zennにも[記事](https://zenn.dev/abap34/articles/105023ca9fc5c6)を書いたんですが、 
