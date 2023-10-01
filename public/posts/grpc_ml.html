@@ -7,7 +7,7 @@
     <title> gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論 </title>
 
     <meta property="og:title" content="gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論">
-    <meta preperty="og:image" content="https://images.dog.ceo/breeds/finnish-lapphund/mochilamvan.jpg">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/finnish-lapphund/mochilamvan.jpg">
     <meta property="og:description" content="gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論する話です">
     <meta property="og:url" content="https://abap34.com/posts/grpc_ml.html">
     <meta property="og:type" content="article">
@@ -543,6 +543,7 @@ const runBlock = async (objectid) => {
 <br>
 ところで、traPではGoを使っている人が割と多く、一緒に何かやろうと思うとGoを使う必要が割とあります。
 <br>
+<br>
 となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。
 <br>
 <br>
@@ -560,8 +561,8 @@ const runBlock = async (objectid) => {
 <br>
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"47",     "content":"実装" })</script> 
-<h2 id="47">実装</h2>
+<script>page_contents.push({     "type":"H2",     "id":"48",     "content":"実装" })</script> 
+<h2 id="48">実装</h2>
 <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> をとても参考にさせていただきました。ありがとうございます。
 <br>
 こういうファイル構造にします。
@@ -642,8 +643,8 @@ Python用のコードを生成します。
 <br>
 あとはサーバ側をPython, クライアント側をGoで書きます。
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"103",     "content":"サーバ側" })</script> 
-<h3 id="103">サーバ側</h3>
+<script>page_contents.push({     "type":"H3",     "id":"104",     "content":"サーバ側" })</script> 
+<h3 id="104">サーバ側</h3>
 <br>
 <pre><code class="python">from concurrent import futures
 import logging
@@ -679,8 +680,8 @@ if __name__ == '__main__':
     serve()
 </code></pre>
 <br>
-<script>page_contents.push({     "type":"H3",     "id":"110",     "content":"クライアント側" })</script> 
-<h3 id="110">クライアント側</h3>
+<script>page_contents.push({     "type":"H3",     "id":"111",     "content":"クライアント側" })</script> 
+<h3 id="111">クライアント側</h3>
 <br>
 <pre><code class="go">package main
 
@@ -745,11 +746,11 @@ func main() {
 推論結果が返ってきました。笑顔に。
 <br>
 <br>
-<script>page_contents.push({     "type":"H2",     "id":"134",     "content":"まとめ" })</script> 
-<h2 id="134">まとめ</h2>
+<script>page_contents.push({     "type":"H2",     "id":"135",     "content":"まとめ" })</script> 
+<h2 id="135">まとめ</h2>
 <ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)<ul><li>ので暇になったら調べてみます。</li></ul></li></ul>
-<script>page_contents.push({     "type":"H2",     "id":"151",     "content":"今日の一曲" })</script> 
-<h2 id="151">今日の一曲</h2>
+<script>page_contents.push({     "type":"H2",     "id":"152",     "content":"今日の一曲" })</script> 
+<h2 id="152">今日の一曲</h2>
 <br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 

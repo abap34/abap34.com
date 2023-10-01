@@ -7,7 +7,7 @@
     <title> Juliaで実行時間を制限する用のタイマー </title>
 
     <meta property="og:title" content="Juliaで実行時間を制限する用のタイマー">
-    <meta preperty="og:image" content="https://images.dog.ceo/breeds/spaniel-sussex/n02102480_4923.jpg">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/spaniel-sussex/n02102480_4923.jpg">
     <meta property="og:description" content="Juliaで実行時間を計測してタイムアウトしたら中断する簡単な例を書きました。">
     <meta property="og:url" content="https://abap34.com">
     <meta property="og:type" content="article">
@@ -97,6 +97,20 @@ pre {
 img {
     max-width: 100%;
     height: auto;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #fff;
+    margin: 0 auto;
+}
+
+th,
+td {
+    border: 1px solid #fff;
+    padding: 5px 10px;
 }
 
 .date {
@@ -522,6 +536,7 @@ const runBlock = async (objectid) => {
 
         <br>
 ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。
+<br>
 <br>
 競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。
 <br>
