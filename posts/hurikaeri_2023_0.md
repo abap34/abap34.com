@@ -21,6 +21,14 @@ twitter_site: @abap34
 ### 作ったもの・書いたもの
 大体時系列順です。
 
+- (Q_Q) ?
+  - 「いかしかめか」と読みます。部内ハッカソンで作りました。
+  - 部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。
+  - 諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。
+  - 発表スライド : [https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink](https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+
+![サジェストしてくれる便利なやつ](hurikaeri_2023_0/sh.png)
+
 - Wuff
   - コメントをするとリアルタイムにニコニコみたいな感じで画面に流れるやつです。
   - Cloud Run を初めて使ってみて、めちゃくちゃ簡単で、感動...
@@ -80,7 +88,7 @@ twitter_site: @abap34
 
 ![ピクシブ社さんにお邪魔したとき推しの直筆イラストが見られました。ありがとうございました。](hurikaeri_2023_0/mito.png)
 
-### その他
+## その他
 - プロ野球
   - 贔屓球団が10/1の最終戦を終えた時点で最下位です。今年の中日より弱いのは、やばい！
 - ドイツ語
