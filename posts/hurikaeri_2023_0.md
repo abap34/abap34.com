@@ -95,7 +95,6 @@ twitter_site: @abap34
 ## 後期の目標
 とにかく頑張ります。
 
-
 ## 今日の一曲
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/A2k6ZO6B0A8?si=llQhLWX-WATgUhGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
