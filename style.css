@@ -1,13 +1,13 @@
 body {
-  background-color: #444;
-  color: #ccc;
+  background-color: #f5f5f5;
+  color: #333;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
 }
 
 header {
-  background-color: #444;
+  background-color: #f5f5f5;
   padding: 20px;
   text-align: center;
 }
@@ -21,7 +21,6 @@ main {
   max-width: 800px;
   padding: 0 20px;
 }
-
 
 .buttonGroup {
   position: fixed;
@@ -42,7 +41,7 @@ section {
 }
 
 section h2 {
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #eee;
   margin: 0 0 20px;
   padding-bottom: 10px;
 }
@@ -52,16 +51,16 @@ section p {
 }
 
 footer {
-  background-color: #444;
-  border-top: 1px solid #555;
+  background-color: #f5f5f5;
+  border-top: 1px solid #eee;
   padding: 20px;
   text-align: center;
 }
 
 .sidebar {
   transform: translateX(-100%);
-  background-color: #444;
-  border-right: 1px solid #555;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
   height: 100%;
   left: 0;
   overflow: auto;
@@ -73,8 +72,6 @@ footer {
 .sidebar a {
   display: block;
   margin-bottom: 10px;
-  color: #ccc; /* リンクの色を灰色に設定 */
-  text-decoration: underline; /* 下線を追加 */
 }
 
 #overlay {
@@ -88,29 +85,32 @@ footer {
 }
 
 .sidebar {
-  background-color: #555;
-  border-right: 1px solid #666;
+  background-color: white;
+  border-right: 1px solid #eee;
   height: 100%;
   padding: 60px 20px;
   width: 200px;
 }
 
-a {
-  color: #bed0ff; /* リンクの色を灰色に設定 */
+.sidebar a {
+  display: block;
+  margin-bottom: 10px;
 }
 
-a:hover {
-  background-color: #666;
-  color: #fff; /* ホバー時のリンクの色を白に変更 */
+.sidebar a:hover {
+  background-color: #eee;
 }
 
-a.active {
-  background-color: #666;
-  color: #fff; /* アクティブなリンクの色を白に変更 */
+.sidebar a.active {
+  background-color: #eee;
+}
+
+.sidebar a.active:hover {
+  background-color: #eee;
 }
 
 header {
-  background-color: #444;
+  background-color: #f5f5f5;
   padding: 20px;
   text-align: center;
 }
@@ -120,7 +120,7 @@ header img {
 }
 
 section h2 {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #4b4a4a;
   margin: 0 0 20px;
   padding-bottom: 10px;
 }
