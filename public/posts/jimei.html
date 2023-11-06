@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -44,17 +46,14 @@
 
     <style>
         body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     line-height: 1.6;
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     background-color: #F7F7F7;
     color: #333;
-    flex-direction: column;
     display: flex;
-    width: 95%;
-
+    gap: 10px;
 }
 
 h1,
@@ -126,18 +125,13 @@ td {
 }
 
 .content {
-    flex: 1;
-    padding: 40px 40px;
-    margin-left: 0px;
-    margin-right: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    padding: 40px;
+    margin: 0 auto;
     background-color: #ffffff;
     border-radius: 5px;
-    overflow: auto;
+    max-width: 800px;
     width: 100%;
 }
-
 
 @media (max-width: 768px) {
     .content {
@@ -147,18 +141,14 @@ td {
 }
 
 .sidebar {
-    flex: 3;
-    border-right: 1px solid #eee;
     height: 100%;
-    width: 10%;
-    padding: 10px 10px;
-    left: 0;
+    padding: 20px;
+    border-radius: 4px;
     overflow: auto;
-    position: fixed;
-    top: 0;
     width: 220px;
-    z-index: 1000;
     background-color: #F2F2F2;
+    position: sticky;
+    top: 20px;
 }
 
 @media (max-width: 1260px) {
@@ -168,14 +158,13 @@ td {
 }
 
 .links {
-    position: fixed;
-    right: 0;
-    top: 0;
     width: 200px;
     height: 100%;
-    padding: 10px 10px;
-    overflow: auto;
+    padding: 20px;
+    border-radius: 4px;
     background-color: #F2F2F2;
+    position: sticky;
+    top: 20px;
 }
 
 @media (max-width: 1260px) {
@@ -186,7 +175,7 @@ td {
 
 #toc {
     background-color: #f4f4f4;
-    border-radius: 5px;
+    border-radius: 4px;
     padding: 15px;
     list-style: none;
 }
@@ -222,7 +211,6 @@ td {
     font-weight: bold;
     margin-bottom: 10px;
     color: #006699;
-    font-weight: bold;
 }
 
 .toc_H3 {
@@ -238,7 +226,6 @@ td {
     border-bottom: solid 1px #006699;
     color: #006699;
 }
-
 
 .content_list_h2 {
     font-size: 16px;
@@ -304,7 +291,7 @@ td {
     width: 100%;
     height: 300px;
     font-size: 16px;
-    font-family: monospace;
+    font-family: 'Fira Code', monospace;
     background-color: #F2F2F2;
     color: #333;
     padding: 10px;
@@ -319,7 +306,7 @@ td {
     padding: 5px 5px;
     overflow-x: auto;
     font-size: 16px;
-    font-family: monospace;
+    font-family: 'Fira Code', monospace;
     background-color: #F2F2F2;
     color: #333;
     border: solid 1px #a8a8a8;
@@ -331,6 +318,11 @@ td {
     font-weight: bold;
     margin-bottom: 10px;
     color: #666;
+}
+
+.inline-code,
+.code-block{
+    font-family: 'Fira Code', monospace;
 }
 
 .success, .info, .warning, .danger {
@@ -397,11 +389,12 @@ td {
     margin-left: auto;
     display: block;
 }
-
     </style>
 
 
 <script>
+
+
 
 
 all_sample_input = {}
@@ -434,8 +427,8 @@ function stdout_func(answer) {
 }
 
 function error_handle(error) {
-    document.getElementById(target_objectid + "_sample_out").innerText = error;
-    document.getElementById(target_objectid + "_sample_out").style.color = "orange";
+    document.getElementById(target_objectid + "_out").innerText = error;
+    document.getElementById(target_objectid + "_out").style.color = "orange";
     status = "RE";
 }
 
@@ -450,8 +443,8 @@ const runCode = async (objectid, require_judge) => {
     let result_bar_id = target_objectid + "_status";
     let result_bar = document.getElementById(result_bar_id)
 
-    document.getElementById(target_objectid + "_sample_out").innerText = "";
-    document.getElementById(target_objectid + "_sample_out").style.color = "";
+    document.getElementById(target_objectid + "_out").innerText = "";
+    document.getElementById(target_objectid + "_out").style.color = "";
     result_bar.innerText = "Running...";
 
 
@@ -491,7 +484,7 @@ const runCode = async (objectid, require_judge) => {
         try {
             outputs = "";
             await pyodide.runPythonAsync(code);
-            document.getElementById(target_objectid + "_sample_out").innerText = outputs;
+            document.getElementById(target_objectid + "_out").innerText = outputs;
             result_bar.innerText = "WJ";
         } catch (error) {
             error_handle(error);
@@ -549,6 +542,7 @@ const runBlock = async (objectid) => {
     document.pyodideMplTarget = document.getElementById(objectid + "_plot");
     out_area.innerText = "Loading libraries...";
     for (let i = 0; i < use_libs.length; i++) {
+        out_area.innerText = "Loading " + use_libs[i] + "...";
         let lib = use_libs[i];
         await pyodide.loadPackage(lib);
     }
@@ -563,8 +557,6 @@ const runBlock = async (objectid) => {
         out_area.style.color = "orange";
     }
 }
-
-
 
 </script></head>
 
@@ -658,7 +650,8 @@ const runBlock = async (objectid) => {
 
     </div>
 
-    <div class="links">
+    <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+ <br> <br> <br> <br>
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
             data-show-count="false">Tweet</a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -682,6 +675,8 @@ const runBlock = async (objectid) => {
 
 
 <script>
+
+
 
 
 const tocContainer = document.querySelector("#toc");
@@ -735,6 +730,6 @@ function onIntersection(entries) {
     });
 }
 
-
-
 </script></html>
+
+
