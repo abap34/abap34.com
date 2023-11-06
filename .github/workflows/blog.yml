@@ -1,9 +1,17 @@
-name: Page Build by ALMO
+name: Page Builder by ALMO
 
 on:
   push:
     branches:
       - main
+
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency: build
 
 jobs:
   build:
@@ -14,6 +22,7 @@ jobs:
         uses: actions/checkout@v2
         with:
             fetch-depth: 0
+
 
       - name: Check for Changes in MD Files
         id: check_changes
@@ -28,11 +37,19 @@ jobs:
           else
             echo "Change: $changed_files"
           fi
-      
-      - name: Clone ALMO
-        if: steps.check_changes.outputs.changed_files != ''
-        run: git clone https://github.com/abap34/ALMO
 
+      - name: Setup Git
+        if: steps.check_changes.outputs.changed_files != ''
+        run: |
+            cd ${{ github.workspace }}
+            git config --global user.email "actions@example.com"
+            git config --global user.name "GitHub Actions"
+
+      - name: Setup ALMO
+        if: steps.check_changes.outputs.changed_files != ''
+        run: |
+            git submodule update --init --recursive
+            
       - name: Install g++ 
         if: steps.check_changes.outputs.changed_files != ''
         run: |
@@ -42,47 +59,42 @@ jobs:
       - name: Compile almo.cpp
         if: steps.check_changes.outputs.changed_files != ''
         run: |
-          cd ALMO/src
-          g++ -std=c++20 -o almo almo.cpp
+          cd ALMO
+          bash build.sh
 
       - name: Generate HTML Files
         if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ${{ github.workspace }}
-          cd posts
           changed_files=${{ steps.check_changes.outputs.changed_files }}
           changed_files="${changed_files//'%25'/'%'}"
           changed_files="${changed_files//'%0A'/$'\n'}"
           changed_files="${changed_files//'%0D'/$'\r'}"
           echo "changed_files=$changed_files" 
           for file in $changed_files; do
+            if [ ! -e $file ]; then
+              continue
+            fi
             filename_without_extension=$(basename $file .md)
-            file=${file#posts/}
+            filename_without_extension=${filename_without_extension#posts-md/}
+            out_path="public/posts/${filename_without_extension}.html"
             echo "Generating HTML for $file"
-            ../ALMO/src/almo "$file" -t dark -o ${filename_without_extension}.html -d > tmp.json 
-            python3 ../blog_builder/build.py 
+            python3 blog_builder/build.py $file $out_path
           done
           rm tmp.json
 
-      - name: Copy file for public/posts
+    
+      - name: Commit HTML Files
         if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ${{ github.workspace }}
-          cd posts
-          cp -r . ../public/posts/
-
-      - name: Commit and Push HTML Files
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          cd ${{ github.workspace }}
-          git config --global user.email "actions@example.com"
-          git config --global user.name "GitHub Actions"
           git add .
+          git config pull.rebase false
           git commit -m "Add generated HTML files"
 
       - name: Push changes
         if: steps.check_changes.outputs.changed_files != ''
         uses: ad-m/github-push-action@master
         with:
-          branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
