@@ -53,6 +53,7 @@ twitter_site: @abap34
     └── grpc
 ```
 
+
 で、`pred.proto`はこんな感じです。
 
 ```proto
