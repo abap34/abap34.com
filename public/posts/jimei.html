@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -20,8 +18,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -46,527 +43,551 @@
 
     <style>
         body {
-    font-family: 'Inter', Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #F7F7F7;
-    color: #333;
-    display: flex;
-    gap: 10px;
-}
+            background: linear-gradient(100deg, #f5fcfc, #ffffff68);
+            /* 横並びにする */
+            display: flex;
+        }
 
-h1,
-h2 {
-    color: #323232;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        h1,
+        h2 {
+            /* 等幅フォント */
+            font-family: 'Fira Code', monospace;
+            font-weight: bold;
+            color: #006699;
+            /*　中央よせ */
+            text-align: center;
+        }
 
-h2 {
-    text-align: left;
-    padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
-}
+        h2 {
+            text-align: left;
+            padding-left: 10px;
+            border-bottom: solid 1px #5b5b5b;
+            margin-bottom: 5px;
+            /* 水色似合う色にする */
+        }
 
-p {
-    color: #666;
-    margin-bottom: 10px;
-}
+        p {
+            font-family: 'Fira Code', monospace;
+        }
 
-a {
-    color: #006699;
-}
+        a {
+            font-family: 'Fira Code', monospace;
+            color: #006699;
+        }
 
-figure {
-    text-align: center;
-}
+        figure {
+            text-align: center;
+        }
 
-figcaption {
-    text-align: center;
-}
+        figcaption {
+            text-align: center;
+            color: #666;
+        }
 
-pre {
-    padding: 10px;
-    color: #333;
-    border: solid 1px #a8a8a8;
-    overflow-x: auto;
-}
+        pre {
+            padding: 10px;
+            color: #333;
+            border: solid 1px #a8a8a8;
+            overflow-x: auto;
+        }
 
-img {
-    max-width: 100%;
-    height: auto;
-}
+        img {
+            max-width: 100%;
+            height: auto;
+        }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
-}
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
 
-.date {
-    color: #666;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
-}
+        .date {
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-.tag {
-    color: #666;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
-}
+        .tag {
+            color: #666;
+            font-size: 14px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-.content {
-    padding: 40px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 5px;
-    max-width: 800px;
-    width: 100%;
-}
+        .content {
+            padding: 40px;
+            margin: 0 auto;
+            /* background-color: #ffffff00; */
+            background-color: #fff;
+            border-radius: 10px;
+            /* 枠線を引く */
+            /* 枠線は少しぼかす */
+            box-shadow: 0 0 20px rgba(158, 158, 158, 0.2);
+            padding: 100px;
+            max-width: 800px;
+            width: auto;
+            /* 左に寄せる */
+            margin-left: 30px;
+            margin-right: 30px;
+        }
 
-@media (max-width: 768px) {
-    .content {
-        width: 100%;
-        padding: 20px;
-    }
-}
+        @media (max-width: 768px) {
+            .content {
+                width: 100%;
+                padding: 20px;
+            }
+        }
 
-.sidebar {
-    height: 100%;
-    padding: 20px;
-    border-radius: 4px;
-    overflow: auto;
-    width: 220px;
-    background-color: #F2F2F2;
-    position: sticky;
-    top: 20px;
-}
+        .sidebar {
+            height: 100%;
+            padding: 20px;
+            border-radius: 4px;
+            overflow: auto;
+            width: 220px;
+            /* background-color: #ffffff00; */
+            background-color: white;
+            box-shadow: 0 0 20px rgba(158, 158, 158, 0.2);
+            position: sticky;
+            top: 20px;
+            margin-left: auto;
+            margin-right: 0px;
+        }
 
-@media (max-width: 1260px) {
-    .sidebar {
-        display: none;
-    }
-}
+        @media (max-width: 1260px) {
+            .sidebar {
+                display: none;
+            }
+        }
 
-.links {
-    width: 200px;
-    height: 100%;
-    padding: 20px;
-    border-radius: 4px;
-    background-color: #F2F2F2;
-    position: sticky;
-    top: 20px;
-}
+        .links {
+            width: 200px;
+            height: 100%;
+            padding: 20px;
+            border-radius: 4px;
+            background-color: #f2f2f200;
+            position: sticky;
+            top: 20px;
+            margin-right: auto;
+            margin-left: 0px;
+            padding-left: 0px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(158, 158, 158, 0.2);
+            padding: 30px;
+        }
 
-@media (max-width: 1260px) {
-    .links {
-        display: none;
-    }
-}
+        @media (max-width: 1260px) {
+            .links {
+                display: none;
+            }
+        }
 
-#toc {
-    background-color: #f4f4f4;
-    border-radius: 4px;
-    padding: 15px;
-    list-style: none;
-}
+        #toc {
+            background-color: #f4f4f400;
+            border-radius: 4px;
+            padding: 15px;
+            list-style: none;
+        }
 
-.toc_title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #2a2a2a;
-    border-bottom: solid 1px #161616;
-}
+        .toc_title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2a2a2a;
+            border-bottom: solid 1px #161616;
+        }
 
-#toc a {
-    text-decoration: none;
-    color: #333;
-    display: block;
-    margin: 5px 0;
-    transition: color 0.2s;
-}
+        #toc a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            margin: 5px 0;
+            transition: color 0.2s;
+        }
 
-#toc a:hover {
-    color: #007bff;
-}
+        #toc a:hover {
+            color: #007bff;
+        }
 
-#toc .active {
-    font-weight: bold;
-    color: #007bff;
-    font-size: 16px;
-}
+        #toc .active {
+            font-weight: bold;
+            color: #007bff;
+            font-size: 16px;
+        }
 
-.toc_H2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #006699;
-}
+        .toc_H2 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #006699;
+        }
 
-.toc_H3 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #006699;
-}
+        .toc_H3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #006699;
+        }
 
-.content_list_h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
-}
+        .content_list_h1 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: solid 1px #006699;
+            color: #006699;
+        }
 
-.content_list_h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #006699;
-}
+        .content_list_h2 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #006699;
+        }
 
-.content_list_problem {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #006699;
-}
+        .content_list_problem {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #006699;
+        }
 
-.badge {
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #666;
-    border: 1px solid #333;
-    margin: 0 8px;
-    float: left;
-}
+        .badge {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            border: 1px solid #333;
+            margin: 0 8px;
+            float: left;
+        }
 
-.runbutton,
-.submitbutton {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-}
+        .runbutton,
+        .submitbutton {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
 
-.runbutton {
-    background-color: #006699;
-}
+        .runbutton {
+            background-color: #006699;
+        }
 
-.runbutton:hover {
-    background-color: #005580;
-}
+        .runbutton:hover {
+            background-color: #005580;
+        }
 
-.submitbutton {
-    background-color: #008000;
-}
+        .submitbutton {
+            background-color: #008000;
+        }
 
-.submitbutton:hover {
-    background-color: #006400;
-}
+        .submitbutton:hover {
+            background-color: #006400;
+        }
 
-.problem_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
+        .problem_title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
 
-.editor {
-    width: 100%;
-    height: 300px;
-    font-size: 16px;
-    font-family: 'Fira Code', monospace;
-    background-color: #F2F2F2;
-    color: #333;
-    padding: 10px;
-    border: solid 1px #a8a8a8;
-}
+        .editor {
+            width: 100%;
+            height: 300px;
+            font-size: 16px;
+            font-family: 'Fira Code', monospace;
+            background-color: #F2F2F2;
+            color: #333;
+            padding: 10px;
+            border: solid 1px #a8a8a8;
+        }
 
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
-    width: 100%;
-    padding: 5px 5px;
-    overflow-x: auto;
-    font-size: 16px;
-    font-family: 'Fira Code', monospace;
-    background-color: #F2F2F2;
-    color: #333;
-    border: solid 1px #a8a8a8;
-}
+        .output,
+        .expect_out,
+        .sample_in,
+        .sample_out {
+            width: 100%;
+            padding: 5px 5px;
+            overflow-x: auto;
+            font-size: 16px;
+            font-family: 'Fira Code', monospace;
+            background-color: #F2F2F2;
+            color: #333;
+            border: solid 1px #a8a8a8;
+        }
 
-.box-title,
-.problem_list {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #666;
-}
+        .box-title,
+        .problem_list {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #666;
+        }
 
-.inline-code,
-.code-block{
-    font-family: 'Fira Code', monospace;
-}
+        .inline-code,
+        .code-block {
+            font-family: 'Fira Code', monospace;
+        }
 
-.success, .info, .warning, .danger {
-    padding: 12px;
-    border: 1px solid;
-    border-radius: 4px;
-}
+        .success,
+        .info,
+        .warning,
+        .danger {
+            padding: 12px;
+            border: 1px solid;
+            border-radius: 4px;
+        }
 
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
+        .success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
 
-.info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
+        .info {
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
 
-.warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
+        .warning {
+            color: #8a6d3b;
+            background-color: #fcf8e3;
+            border-color: #faebcc;
+        }
 
-.danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
+        .danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
+        .definition::before,
+        .theorem::before,
+        .proof::before,
+        .lemma::before {
+            font-family: serif;
+            font-size: large;
+            font-weight: 600;
+            font-style: italic;
+            display: block;
+        }
 
-.definition::before {
-    content: "Definition.";
-}
+        .definition::before {
+            content: "Definition.";
+        }
 
-.theorem::before {
-    content: "Theorem.";
-}
+        .theorem::before {
+            content: "Theorem.";
+        }
 
-.proof::before {
-    content: "Proof.";
-}
+        .proof::before {
+            content: "Proof.";
+        }
 
-.lemma::before {
-    content: "Lemma.";
-}
+        .lemma::before {
+            content: "Lemma.";
+        }
 
-.definition, .theorem, .proof, .lemma {
-    padding: 12px;
-    border-left: 1px solid;
-}
+        .definition,
+        .theorem,
+        .proof,
+        .lemma {
+            padding: 12px;
+            border-left: 1px solid;
+        }
 
-.proof::after {
-    content: "∎";
-    margin-left: auto;
-    display: block;
-}
+        .proof::after {
+            content: "∎";
+            margin-left: auto;
+            display: block;
+        }
     </style>
 
 
-<script>
+    <script>
 
 
 
 
-all_sample_input = {}
-all_sample_output = {}
+        all_sample_input = {}
+        all_sample_output = {}
 
-all_input = {}
-all_output = {}
+        all_input = {}
+        all_output = {}
 
-use_libs = []
+        use_libs = []
 
-judge_types = {}
-problem_status = {}
-page_contents = []
+        judge_types = {}
+        problem_status = {}
+        page_contents = []
 
-const pyodidePromise = loadPyodide({
-    stdin: stdin_func,
-    stdout: stdout_func,
-});
+        const pyodidePromise = loadPyodide({
+            stdin: stdin_func,
+            stdout: stdout_func,
+        });
 
-function stdin_func() {
-    if (submit_run) {
-        return all_input[target_objectid][judge_idx];
-    } else {
-        return all_sample_input[target_objectid];
-    }
-}
+        function stdin_func() {
+            if (submit_run) {
+                return all_input[target_objectid][judge_idx];
+            } else {
+                return all_sample_input[target_objectid];
+            }
+        }
 
-function stdout_func(answer) {
-    outputs += answer + "\n";
-}
+        function stdout_func(answer) {
+            outputs += answer + "\n";
+        }
 
-function error_handle(error) {
-    document.getElementById(target_objectid + "_out").innerText = error;
-    document.getElementById(target_objectid + "_out").style.color = "orange";
-    status = "RE";
-}
+        function error_handle(error) {
+            document.getElementById(target_objectid + "_out").innerText = error;
+            document.getElementById(target_objectid + "_out").style.color = "orange";
+            status = "RE";
+        }
 
-const runCode = async (objectid, require_judge) => {
-    target_objectid = objectid;
-    submit_run = require_judge;
+        const runCode = async (objectid, require_judge) => {
+            target_objectid = objectid;
+            submit_run = require_judge;
 
-    let pyodide = await pyodidePromise;
+            let pyodide = await pyodidePromise;
 
-    let editor = ace.edit(objectid);
-    let code = editor.getValue();
-    let result_bar_id = target_objectid + "_status";
-    let result_bar = document.getElementById(result_bar_id)
+            let editor = ace.edit(objectid);
+            let code = editor.getValue();
+            let result_bar_id = target_objectid + "_status";
+            let result_bar = document.getElementById(result_bar_id)
 
-    document.getElementById(target_objectid + "_out").innerText = "";
-    document.getElementById(target_objectid + "_out").style.color = "";
-    result_bar.innerText = "Running...";
+            document.getElementById(target_objectid + "_out").innerText = "";
+            document.getElementById(target_objectid + "_out").style.color = "";
+            result_bar.innerText = "Running...";
 
 
-    if (require_judge) {
-        let n_input = all_input[target_objectid].length;
-        for (let i = 0; i < n_input; i++) {
-            judge_idx = i;
-            result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
-            try {
-                outputs = "";
-                await pyodide.runPythonAsync(code);
-                let expect_out = all_output[target_objectid][judge_idx];
-                if (outputs.slice(-1) == "\n") {
-                    outputs = outputs.slice(0, -1);
+            if (require_judge) {
+                let n_input = all_input[target_objectid].length;
+                for (let i = 0; i < n_input; i++) {
+                    judge_idx = i;
+                    result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
+                    try {
+                        outputs = "";
+                        await pyodide.runPythonAsync(code);
+                        let expect_out = all_output[target_objectid][judge_idx];
+                        if (outputs.slice(-1) == "\n") {
+                            outputs = outputs.slice(0, -1);
+                        }
+                        judge(outputs, expect_out);
+                    } catch (error) {
+                        error_handle(error);
+                        result_bar.innerText = "WJ";
+                    }
+
+                    if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
+                        result_bar.style.backgroundColor = "#ffe500";
+                        result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
+                        break;
+                    }
                 }
-                judge(outputs, expect_out);
-            } catch (error) {
-                error_handle(error);
-                result_bar.innerText = "WJ";
+
+                if (status == "AC") {
+                    result_bar.style.backgroundColor = "lightgreen";
+                    result_bar.innerText = "AC";
+                    confetti();
+                } else {
+                    result_bar.style.backgroundColor = "#ffe500";
+                }
+            } else {
+                try {
+                    outputs = "";
+                    await pyodide.runPythonAsync(code);
+                    document.getElementById(target_objectid + "_out").innerText = outputs;
+                    result_bar.innerText = "WJ";
+                } catch (error) {
+                    error_handle(error);
+                    result_bar.innerText = "RE";
+                }
+            }
+        };
+
+        function judge(answer, expect_out) {
+            // trim \n from both
+            if (answer.slice(-1) == "\n") {
+                answer = answer.slice(0, -1);
             }
 
-            if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
-                result_bar.style.backgroundColor = "#ffe500";
-                result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
-                break;
+            if (expect_out.slice(-1) == "\n") {
+                expect_out = expect_out.slice(0, -1);
             }
-        }
 
-        if (status == "AC") {
-            result_bar.style.backgroundColor = "lightgreen";
-            result_bar.innerText = "AC";
-            confetti();
-        } else {
-            result_bar.style.backgroundColor = "#ffe500";
-        }
-    } else {
-        try {
-            outputs = "";
-            await pyodide.runPythonAsync(code);
-            document.getElementById(target_objectid + "_out").innerText = outputs;
-            result_bar.innerText = "WJ";
-        } catch (error) {
-            error_handle(error);
-            result_bar.innerText = "RE";
-        }
-    }
-};
-
-function judge(answer, expect_out) {
-    // trim \n from both
-    if (answer.slice(-1) == "\n") {
-        answer = answer.slice(0, -1);
-    }
-
-    if (expect_out.slice(-1) == "\n") {
-        expect_out = expect_out.slice(0, -1);
-    }
-
-    let judge_type = judge_types[target_objectid];
-    if (judge_type == 'equal') {
-        if (answer === expect_out) {
-            status = "AC";
-        } else {
-            status = "WA";
-        }
-    } else if (judge_type.includes('err')) {
-        status = "AC";
-        let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
-        let answer_list = answer.split('\n');
-        let expect_out_list = expect_out.split('\n');
-        for (let i = 0; i < answer_list.length; i++) {
-            let answer_line = answer_list[i].split(' ');
-            let expect_out_line = expect_out_list[i].split(' ');
-            for (let j = 0; j < answer_line.length; j++) {
-                let answer_out = parseFloat(answer_line[j]);
-                let expect_out_out = parseFloat(expect_out_line[j]);
-                if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
+            let judge_type = judge_types[target_objectid];
+            if (judge_type == 'equal') {
+                if (answer === expect_out) {
+                    status = "AC";
+                } else {
                     status = "WA";
-                    return;
                 }
+            } else if (judge_type.includes('err')) {
+                status = "AC";
+                let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
+                let answer_list = answer.split('\n');
+                let expect_out_list = expect_out.split('\n');
+                for (let i = 0; i < answer_list.length; i++) {
+                    let answer_line = answer_list[i].split(' ');
+                    let expect_out_line = expect_out_list[i].split(' ');
+                    for (let j = 0; j < answer_line.length; j++) {
+                        let answer_out = parseFloat(answer_line[j]);
+                        let expect_out_out = parseFloat(expect_out_line[j]);
+                        if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
+                            status = "WA";
+                            return;
+                        }
+                    }
+                }
+
             }
         }
 
-    }
-}
+        // ExecutableCodeblockのコードを実行する
+        const runBlock = async (objectid) => {
+            let out_area = document.getElementById(objectid + "_out");
+            out_area.style.color = "";
 
-// ExecutableCodeblockのコードを実行する
-const runBlock = async (objectid) => {
-    let out_area = document.getElementById(objectid + "_out");
-    out_area.style.color = "";
+            let pyodide = await pyodidePromise;
+            let editor = ace.edit(objectid);
+            let code = editor.getValue();
+            document.pyodideMplTarget = document.getElementById(objectid + "_plot");
+            out_area.innerText = "Loading libraries...";
+            for (let i = 0; i < use_libs.length; i++) {
+                out_area.innerText = "Loading " + use_libs[i] + "...";
+                let lib = use_libs[i];
+                await pyodide.loadPackage(lib);
+            }
+            out_area.innerText = "Running...";
 
-    let pyodide = await pyodidePromise;
-    let editor = ace.edit(objectid);
-    let code = editor.getValue();
-    document.pyodideMplTarget = document.getElementById(objectid + "_plot");
-    out_area.innerText = "Loading libraries...";
-    for (let i = 0; i < use_libs.length; i++) {
-        out_area.innerText = "Loading " + use_libs[i] + "...";
-        let lib = use_libs[i];
-        await pyodide.loadPackage(lib);
-    }
-    out_area.innerText = "Running...";
+            outputs = "";
+            try {
+                await pyodide.runPythonAsync(code);
+                out_area.innerText = outputs;
+            } catch (error) {
+                out_area.innerText = error;
+                out_area.style.color = "orange";
+            }
+        }
 
-    outputs = "";
-    try {
-        await pyodide.runPythonAsync(code);
-        out_area.innerText = outputs;
-    } catch (error) {
-        out_area.innerText = error;
-        out_area.style.color = "orange";
-    }
-}
-
-</script></head>
+    </script>
+</head>
 
 
 <body>
-    <div class="sidebar">
-        <ul id="toc"></ul>
-    </div>
-
-
 
     <div class="content">
 
@@ -589,69 +610,152 @@ const runBlock = async (objectid) => {
             document.getElementsByClassName("date")[0].innerText = date;
         </script>
 
-        <br><script>page_contents.push({
-    "type":"H1",
-    "id":"2",
-    "title":"Abstract"
-});
-</script>
-<h1>Abstract</h1>自明ギャグとは、一見正しそうな定義を自明に満たすものの、経験的には非自明である物質を面白がるギャグである。<br>本記事は、この自明ギャグの定義や基本的構造、面白さの分析、発展について述べ、乱立している自明ギャグについての整理を行うことを試みた。<br><br><script>page_contents.push({
-    "type":"H1",
-    "id":"21",
-    "title":"自明ギャグの定義"
-});
-</script>
-<h1>自明ギャグの定義</h1><script>page_contents.push({
-    "type":"H2",
-    "id":"25",
-    "title":"自明丼"
-});
-</script>
-<h2>自明丼</h2><br>具体例から始める。<br>自明ギャグの原点は、<br><br><span class="strong"> <strong>「自明丼」</strong> </span>  である。 <span class="math-inline"> \( ^1 \) </span><br><br>「丼」を以下のように定義しよう。<br><br><div class="definition"><br>丼は、米の上に、以下の条件を満たす集合 <span class="math-inline"> \( X \) </span> が乗っているものである。<br><div class="math-block"> \[ 
-\forall x \in X, x \ \text{は具である。}
+        <br>
+        <script>page_contents.push({
+                "type": "H1",
+                "id": "2",
+                "title": "Abstract"
+            });
+        </script>
+        <h1>Abstract</h1>
+        自明ギャグとは、一見正しそうな定義を自明に満たすものの、経験的には非自明である物質を面白がるギャグである。<br>本記事は、この自明ギャグの定義や基本的構造、面白さの分析、発展について述べ、乱立している自明ギャグについての整理を行うことを試みた。<br><br>
+        <script>page_contents.push({
+                "type": "H1",
+                "id": "21",
+                "title": "自明ギャグの定義"
+            });
+        </script>
+        <h1>自明ギャグの定義</h1>
+        <script>page_contents.push({
+                "type": "H2",
+                "id": "25",
+                "title": "自明丼"
+            });
+        </script>
+        <h2>自明丼</h2><br>具体例から始める。<br>自明ギャグの原点は、<br><br><span class="strong"> <strong>「自明丼」</strong> </span> である。 <span
+            class="math-inline"> \( ^1 \) </span><br><br>「丼」を以下のように定義しよう。<br><br>
+        <div class="definition"><br>丼は、米の上に、以下の条件を満たす集合 <span class="math-inline"> \( X \) </span> が乗っているものである。<br>
+            <div class="math-block"> \[
+                \forall x \in X, x \ \text{は具である。}
 
- \] </div></div><br>さて、この場合具体的にどのようなものが丼になるかを考えると、次のようなことがわかる。<br><br><div class="theorem"><br>米の上に空集合が乗っているものは丼である。</div><br>これは丼の定義から自明であるし、　<br>やや不思議な言い方だが、「最も自明である」丼であろう。<br>なので、この丼のことを <span class="strong"> <strong>自明丼</strong> </span> と呼ぶことにする。<br><br><figure><img src=" https://rensai.jp/wp-content/uploads/2022/02/yoshinoya-nikushita2.jpg " ><figcaption>自明丼</figcaption></figure><br><br>このように、<br><br><span class="strong"> <strong>自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</strong> </span><br><br><br>(ここでの「自明に満たす」という意味合いはかなり厳しくとることが共通見解である。どこまでを自明とするのが一般的かはこの後の「自明ギャグのように見えるが、自明ギャグではないもの」のセクションなどを参照してほしい。)<br><br><div class="definition">自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</div><br>以下は、自明丼と極めて構造が似通っている自明ギャグの例である。<br><br><div class="theorem">ハンバーガをバンズの間に具の集合が挟まっているものと定義したとき、バンズだけのハンバーガは自明ハンバーガである。</div><br><div class="theorem">小銭入れを財布の中に通貨の集合が入っているものと定義したとき、中身が空の小銭入れは自明小銭入れである。</div><br>これらは<br><ul><li>定義が単一の集合に対して与えられている</li><li>その集合が空集合ならば自明に条件を満たす</li></ul><br>というタイプの自明ギャグである。<br>このようなタイプの自明ギャグは、「自明丼型の自明ギャグ」と呼ばれる。<br><br><div class="info">自明丼のように、定数である「米」と変数である「具」の二つの要素が存在し、そのうち「具」のような片方の要素が変動しうる場合のみ「自明丼型の自明ギャグ」と呼ぶ狭義の定義を採用する人もいる。<br>本記事では、<br><br><ul><li>定義が単一の集合に対して与えられている</li><li>その集合が空集合ならば自明に条件を満たす</li></ul><br>を満たすものを「自明丼型の自明ギャグ」と呼ぶことにする。</div><br><figure><img src=" https://img06.shop-pro.jp/PA01313/765/product/101506659.jpg?cmsp_timestamp=20210617170652 " ><figcaption>自明ハンバーガ</figcaption></figure><br><script>page_contents.push({
-    "type":"H2",
-    "id":"225",
-    "title":"自明ギャグのように見えるが、自明ギャグではないもの"
-});
-</script>
-<h2>自明ギャグのように見えるが、自明ギャグではないもの</h2><br>さて、ここまでで登場した自明ギャグの例をもとに自明ギャグを考える場合、典型的に陥る誤謬をいくつか紹介しておく。<br><br>まずは「寿司型の自明ギャグ」である。<br>以下のようなギャグは、自明ギャグのように見えるが、自明ギャグではないものである。<br><br><div class="theorem">寿司を米の上にネタが乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>これは一見自明ギャグのように見えるが、自明ギャグにおいて最も重要である「自明にするために変化する部分」がなんであるかが不明瞭である。<br>正確に書き直すと以下のようになるであろう。<br><br><div class="theorem">寿司を米の上にネタ集合の元が乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>すると、この場合自明寿司のシャリの上に乗っているのは <span class="math-inline"> \( \emptyset \) </span> ではなく「空のオブジェクト」ということになるが、これはネタの集合の元ではない。<br><span class="strong"> <strong>したがって、このギャグは自明ギャグではない。</strong> </span><br>自明丼は最も典型的な自明ギャグのタイプだが、変化する部分が集合となっているかどうかに注意が必要である。<br><br>次が、「非自明自明ギャグ」である。<br>以下のようなギャグについて考えよう。<br><br><div class="theorem">丼を米の上に具の集合が乗っているものと定義したとき、エビの天ぷらが <span class="math-inline"> \( 100000 \) </span> 個乗っている丼は自明丼である。</div><br>これは、自明ギャグのように見えるが、非自明自明ギャグと言われるタイプのギャグで、自明ギャグではないと基本的には考えられている。<br><br>というのも、これが丼であるかどうかを判定するには、エビの天ぷらが具であるかどうかという議論が必要であり、空集合の場合の「自明度」と比較すれば自明であると言えばないと考えられているからである。<br><br>つまり、自明ギャグは、<br><ul><li>公理</li><li>(vacuous truthのような) 完全に認められていて、広く知られている事実から直ちに従う</li></ul><br>レベルの「自明度」が求められており、特に現在は<span class="strong"> <strong>自明丼に代表されるように空集合などを利用したもののみが認められる</strong> </span>風潮が強い。<br>とはいえこれでは極めて自明ギャグの幅が狭くなってしまうため、自明ギャグの「自明度」を保っての拡張が考えられている。<br><br><script>page_contents.push({
-    "type":"H1",
-    "id":"364",
-    "title":"自明ギャグの発展"
-});
-</script>
-<h1>自明ギャグの発展</h1><script>page_contents.push({
-    "type":"H2",
-    "id":"368",
-    "title":"自明丼からの一般化"
-});
-</script>
-<h2>自明丼からの一般化</h2><br>さて、ここまでは空集合を利用した極めて限定的なギャグのみが認められていたが、現在はこれらの拡張が盛んに研究されている。<br>代表例は、空列への応用である。<br>再び具体例から始める。<br><br><div class="theorem">コーデを、何も服を着ていない状態から、服を着る動作の列を適用して得られる状態と定義したとき、何も服を着ていない状態は自明コーデである。</div><br>これは、空集合を空列に変えたのみであり、自明ギャグの一種であると広く認められていて、<br>「コーデ型の自明ギャグ」と呼ばれている。<br><br>コーデ型の自明ギャグは、動作を繰り返す日常の行為をよく表現できるため、非常に活発に開拓されているタイプの自明ギャグである。<br><script>page_contents.push({
-    "type":"H2",
-    "id":"408",
-    "title":"対比型の自明ギャグ、最上川型の自明ギャグ"
-});
-</script>
-<h2>対比型の自明ギャグ、最上川型の自明ギャグ</h2><br>さらに、発展系として極めて自由なタイプの自明ギャグである対比型の自明ギャグと最上川型の自明ギャグがある。<br>注意点として、<br><br><div class="danger"><span class="strong"> <strong>対比型の自明ギャグ、最上川型の自明ギャグは、自明ギャグではない。</strong> </span></div><br>ことに注意が必要である。<br><br><br>まず、対比型の自明ギャグは、条件を満たすものが二つしか存在しない場合にそれぞれを自明/非自明に分類することでユーモアを生み出すギャグである。<br>例えば、<br><ul><li>普通の傘を自明傘と呼び、折りたたみ傘を非自明傘と呼ぶ</li><li>結婚式の挨拶で実の父親を自明親と呼び、義理の父親を非自明親と呼ぶ</li></ul><br>というようなものが対比型の自明ギャグと呼ばれる。<br>これは、もはや自明ギャグの定義からは外れているが、自明というワードが中核概念であるため、このような非自明な命名がなされている。<br>次に、最上川型の自明ギャグは<br><ul><li>非自明最上川</li><li>非自明大谷翔平</li></ul><br>のような固有名詞に「非自明」とつけることで理解不能な状況を作り出すギャグである。<br>これも、もはや自明ギャグの定義からは外れているが、同様に自明ギャグというワードが中核概念であるため、このような命名がなされている。<br><br><script>page_contents.push({
-    "type":"H1",
-    "id":"489",
-    "title":"Conclusion"
-});
-</script>
-<h1>Conclusion</h1><br>自明ギャグは、自明丼を起源として、現在では様々なタイプの自明ギャグが存在する。<br>さらに、構造や面白さの理論的分析も進んでおり今後の発展が期待される分野である。<br>一方で課題としては、このギャグが通じる相手があまりにも限定的であることが知られているため、自明に良いタイミングでの使用が求められている。 <span class="math-inline"> \( ^2 \) </span><br><br><br><hr><br><script>page_contents.push({
-    "type":"H3",
-    "id":"517",
-    "title":"脚注"
-});
-</script>
-<h3>脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。<br><br>
+                \] </div>
+        </div><br>さて、この場合具体的にどのようなものが丼になるかを考えると、次のようなことがわかる。<br><br>
+        <div class="theorem"><br>米の上に空集合が乗っているものは丼である。</div>
+        <br>これは丼の定義から自明であるし、　<br>やや不思議な言い方だが、「最も自明である」丼であろう。<br>なので、この丼のことを <span class="strong"> <strong>自明丼</strong>
+        </span> と呼ぶことにする。<br><br>
+        <figure><img src=" https://rensai.jp/wp-content/uploads/2022/02/yoshinoya-nikushita2.jpg ">
+            <figcaption>自明丼</figcaption>
+        </figure><br><br>このように、<br><br><span class="strong">
+            <strong>自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</strong>
+        </span><br><br><br>(ここでの「自明に満たす」という意味合いはかなり厳しくとることが共通見解である。どこまでを自明とするのが一般的かはこの後の「自明ギャグのように見えるが、自明ギャグではないもの」のセクションなどを参照してほしい。)<br><br>
+        <div class="definition">自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</div>
+        <br>以下は、自明丼と極めて構造が似通っている自明ギャグの例である。<br><br>
+        <div class="theorem">ハンバーガをバンズの間に具の集合が挟まっているものと定義したとき、バンズだけのハンバーガは自明ハンバーガである。</div><br>
+        <div class="theorem">小銭入れを財布の中に通貨の集合が入っているものと定義したとき、中身が空の小銭入れは自明小銭入れである。</div><br>これらは<br>
+        <ul>
+            <li>定義が単一の集合に対して与えられている</li>
+            <li>その集合が空集合ならば自明に条件を満たす</li>
+        </ul><br>というタイプの自明ギャグである。<br>このようなタイプの自明ギャグは、「自明丼型の自明ギャグ」と呼ばれる。<br><br>
+        <div class="info">
+            自明丼のように、定数である「米」と変数である「具」の二つの要素が存在し、そのうち「具」のような片方の要素が変動しうる場合のみ「自明丼型の自明ギャグ」と呼ぶ狭義の定義を採用する人もいる。<br>本記事では、<br><br>
+            <ul>
+                <li>定義が単一の集合に対して与えられている</li>
+                <li>その集合が空集合ならば自明に条件を満たす</li>
+            </ul><br>を満たすものを「自明丼型の自明ギャグ」と呼ぶことにする。
+        </div><br>
+        <figure><img src=" https://img06.shop-pro.jp/PA01313/765/product/101506659.jpg?cmsp_timestamp=20210617170652 ">
+            <figcaption>自明ハンバーガ</figcaption>
+        </figure><br>
+        <script>page_contents.push({
+                "type": "H2",
+                "id": "225",
+                "title": "自明ギャグのように見えるが、自明ギャグではないもの"
+            });
+        </script>
+        <h2>自明ギャグのように見えるが、自明ギャグではないもの</h2>
+        <br>さて、ここまでで登場した自明ギャグの例をもとに自明ギャグを考える場合、典型的に陥る誤謬をいくつか紹介しておく。<br><br>まずは「寿司型の自明ギャグ」である。<br>以下のようなギャグは、自明ギャグのように見えるが、自明ギャグではないものである。<br><br>
+        <div class="theorem">寿司を米の上にネタが乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div>
+        <br>これは一見自明ギャグのように見えるが、自明ギャグにおいて最も重要である「自明にするために変化する部分」がなんであるかが不明瞭である。<br>正確に書き直すと以下のようになるであろう。<br><br>
+        <div class="theorem">寿司を米の上にネタ集合の元が乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>すると、この場合自明寿司のシャリの上に乗っているのは <span
+            class="math-inline"> \( \emptyset \) </span> ではなく「空のオブジェクト」ということになるが、これはネタの集合の元ではない。<br><span
+            class="strong"> <strong>したがって、このギャグは自明ギャグではない。</strong>
+        </span><br>自明丼は最も典型的な自明ギャグのタイプだが、変化する部分が集合となっているかどうかに注意が必要である。<br><br>次が、「非自明自明ギャグ」である。<br>以下のようなギャグについて考えよう。<br><br>
+        <div class="theorem">丼を米の上に具の集合が乗っているものと定義したとき、エビの天ぷらが <span class="math-inline"> \( 100000 \) </span>
+            個乗っている丼は自明丼である。</div>
+        <br>これは、自明ギャグのように見えるが、非自明自明ギャグと言われるタイプのギャグで、自明ギャグではないと基本的には考えられている。<br><br>というのも、これが丼であるかどうかを判定するには、エビの天ぷらが具であるかどうかという議論が必要であり、空集合の場合の「自明度」と比較すれば自明であると言えばないと考えられているからである。<br><br>つまり、自明ギャグは、<br>
+        <ul>
+            <li>公理</li>
+            <li>(vacuous truthのような) 完全に認められていて、広く知られている事実から直ちに従う</li>
+        </ul><br>レベルの「自明度」が求められており、特に現在は<span class="strong"> <strong>自明丼に代表されるように空集合などを利用したもののみが認められる</strong>
+        </span>風潮が強い。<br>とはいえこれでは極めて自明ギャグの幅が狭くなってしまうため、自明ギャグの「自明度」を保っての拡張が考えられている。<br><br>
+        <script>page_contents.push({
+                "type": "H1",
+                "id": "364",
+                "title": "自明ギャグの発展"
+            });
+        </script>
+        <h1>自明ギャグの発展</h1>
+        <script>page_contents.push({
+                "type": "H2",
+                "id": "368",
+                "title": "自明丼からの一般化"
+            });
+        </script>
+        <h2>自明丼からの一般化</h2>
+        <br>さて、ここまでは空集合を利用した極めて限定的なギャグのみが認められていたが、現在はこれらの拡張が盛んに研究されている。<br>代表例は、空列への応用である。<br>再び具体例から始める。<br><br>
+        <div class="theorem">コーデを、何も服を着ていない状態から、服を着る動作の列を適用して得られる状態と定義したとき、何も服を着ていない状態は自明コーデである。</div>
+        <br>これは、空集合を空列に変えたのみであり、自明ギャグの一種であると広く認められていて、<br>「コーデ型の自明ギャグ」と呼ばれている。<br><br>コーデ型の自明ギャグは、動作を繰り返す日常の行為をよく表現できるため、非常に活発に開拓されているタイプの自明ギャグである。<br>
+        <script>page_contents.push({
+                "type": "H2",
+                "id": "408",
+                "title": "対比型の自明ギャグ、最上川型の自明ギャグ"
+            });
+        </script>
+        <h2>対比型の自明ギャグ、最上川型の自明ギャグ</h2><br>さらに、発展系として極めて自由なタイプの自明ギャグである対比型の自明ギャグと最上川型の自明ギャグがある。<br>注意点として、<br><br>
+        <div class="danger"><span class="strong"> <strong>対比型の自明ギャグ、最上川型の自明ギャグは、自明ギャグではない。</strong> </span></div>
+        <br>ことに注意が必要である。<br><br><br>まず、対比型の自明ギャグは、条件を満たすものが二つしか存在しない場合にそれぞれを自明/非自明に分類することでユーモアを生み出すギャグである。<br>例えば、<br>
+        <ul>
+            <li>普通の傘を自明傘と呼び、折りたたみ傘を非自明傘と呼ぶ</li>
+            <li>結婚式の挨拶で実の父親を自明親と呼び、義理の父親を非自明親と呼ぶ</li>
+        </ul>
+        <br>というようなものが対比型の自明ギャグと呼ばれる。<br>これは、もはや自明ギャグの定義からは外れているが、自明というワードが中核概念であるため、このような非自明な命名がなされている。<br>次に、最上川型の自明ギャグは<br>
+        <ul>
+            <li>非自明最上川</li>
+            <li>非自明大谷翔平</li>
+        </ul>
+        <br>のような固有名詞に「非自明」とつけることで理解不能な状況を作り出すギャグである。<br>これも、もはや自明ギャグの定義からは外れているが、同様に自明ギャグというワードが中核概念であるため、このような命名がなされている。<br><br>
+        <script>page_contents.push({
+                "type": "H1",
+                "id": "489",
+                "title": "Conclusion"
+            });
+        </script>
+        <h1>Conclusion</h1>
+        <br>自明ギャグは、自明丼を起源として、現在では様々なタイプの自明ギャグが存在する。<br>さらに、構造や面白さの理論的分析も進んでおり今後の発展が期待される分野である。<br>一方で課題としては、このギャグが通じる相手があまりにも限定的であることが知られているため、自明に良いタイミングでの使用が求められている。
+        <span class="math-inline"> \( ^2 \) </span><br><br><br>
+        <hr><br>
+        <script>page_contents.push({
+                "type": "H3",
+                "id": "517",
+                "title": "脚注"
+            });
+        </script>
+        <h3>脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a
+                href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url>
+        がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。<br><br>
 
     </div>
 
-    <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
- <br> <br> <br> <br>
+
+    <div class="sidebar">
+        <ul id="toc"></ul>
+    </div>
+
+
+
+
+    <div class="links"><a href="https://abap34.com/posts.html"> ⇨ 投稿一覧へ </a>
+        <br> <br> <br> <br>
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
             data-show-count="false">Tweet</a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -679,57 +783,57 @@ const runBlock = async (objectid) => {
 
 
 
-const tocContainer = document.querySelector("#toc");
-const tocTitle = document.createElement("div");
-tocTitle.innerHTML = "目次";
-tocTitle.classList.add("toc_title");
-tocContainer.appendChild(tocTitle);
+    const tocContainer = document.querySelector("#toc");
+    const tocTitle = document.createElement("div");
+    tocTitle.innerHTML = "目次";
+    tocTitle.classList.add("toc_title");
+    tocContainer.appendChild(tocTitle);
 
 
 
-page_contents.forEach(item => {
-    if (item.type === "H2" || item.type === "H3") {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
-        listItem.classList.add("toc_" + item.type);
-        tocContainer.appendChild(listItem);
-    }
-});
-
-const options = {
-    root: null,
-    rootMargin: "-50% 0px",
-    threshold: 0
-};
-
-const observer = new IntersectionObserver(onIntersection, options);
-
-
-page_contents.forEach(item => {
-    const element = document.getElementById(item.id);
-    if (element) {
-        observer.observe(element);
-    }
-});
-
-prev_item = null;
-
-function onIntersection(entries) {
-    entries.forEach(entry => {
-        const id = entry.target.id;
-        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
-        if (tocItem) {
-            if (entry.isIntersecting) {
-                tocItem.classList.add("active");
-                if (prev_item) {
-                    prev_item.classList.remove("active");
-                }
-                prev_item = tocItem;
-            }
+    page_contents.forEach(item => {
+        if (item.type === "H2" || item.type === "H3") {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+            listItem.classList.add("toc_" + item.type);
+            tocContainer.appendChild(listItem);
         }
     });
-}
 
-</script></html>
+    const options = {
+        root: null,
+        rootMargin: "-50% 0px",
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver(onIntersection, options);
 
 
+    page_contents.forEach(item => {
+        const element = document.getElementById(item.id);
+        if (element) {
+            observer.observe(element);
+        }
+    });
+
+    prev_item = null;
+
+    function onIntersection(entries) {
+        entries.forEach(entry => {
+            const id = entry.target.id;
+            const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+            if (tocItem) {
+                if (entry.isIntersecting) {
+                    tocItem.classList.add("active");
+                    if (prev_item) {
+                        prev_item.classList.remove("active");
+                    }
+                    prev_item = tocItem;
+                }
+            }
+        });
+    }
+
+</script>
+
+</html>

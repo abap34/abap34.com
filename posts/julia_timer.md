@@ -45,6 +45,7 @@ function rate(x::Timer)
 end
 ```
 
+
 使い方は、
 
 ```julia

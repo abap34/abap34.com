@@ -36,7 +36,7 @@ twitter_site: @abap34
 
 この記事は当初気合いでGoのみで学習済みモデルを呼び出す記事にしようと思っていたのですが、思ってるよりもとってもしんどいことが判明したので急遽ネタを変更しました。
 
-
+ 
 
 ## 実装
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
