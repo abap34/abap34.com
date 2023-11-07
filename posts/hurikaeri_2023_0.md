@@ -33,6 +33,7 @@ twitter_site: @abap34
 
 ![](https://trap.jp/content/images/2023/07/wc-1.png?original=1)
 
+
 - DacQ
   - 部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやとかなり簡素なものですが作りました。
   - 部内 PaaS の Neoshowcase を使うとめちゃくちゃ簡単に traP部員だけが使えるように認証できて、感動...

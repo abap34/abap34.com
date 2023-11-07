@@ -34,7 +34,7 @@ twitter_site: @abap34
 
 
 というかなり簡素な仕組みの解読法ですが、これがどれくらいうまく行くのか気になるところです。
-
+ 
 チャチャっと調べてみます。
 
 [英語Wikipediaのデータ](https://www.kaggle.com/datasets/mikeortman/wikipedia-sentence) を適当に持ってきて、
