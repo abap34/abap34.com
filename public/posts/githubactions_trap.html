@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -43,715 +45,741 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #333;
-            color: #F7F7F7;
-            flex-direction: column;
-            display: flex;
-            width: 95%;
-        }
 
-        h1,
-        h2 {
-            color: #F7F7F7;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
+    display: flex;
+    gap: 10px;
+    flex-direction: row-reverse;
+    overflow: auto;
+}
 
-        h2 {
-            text-align: left;
-            padding-left: 10px;
-            border-bottom: solid 1px #5b5b5b;
-        }
+.side {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    border: solid 1px #444;
+    margin-left: auto;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
+    top: 20px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
 
-        p {
-            color: #ccc;
-            margin-bottom: 10px;
-        }
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
 
-        a {
-            color: #dcddfe;
-        }
+.content {
+    padding: 40px 20px;
+    margin-left: 0px;
+    margin-right: auto;
+    border-radius: 5px;
+    max-width: 800px;
+    width: 100%;
+    background-color: #444;
+}
 
-        figure {
-            text-align: center;
-        }
+.article-header {
+    margin-bottom: 30px;
+}
 
-        figcaption {
-            text-align: center;
-        }
+.article-body {
+    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
+    border-radius: 10px;
+    border: solid 1px #666;
+    padding: 40px;
+    background-color: rgb(47, 47, 47);
+    padding: 40px;
 
-        pre {
-            padding: 10px;
-            color: #F7F7F7;
-            border: solid 1px #a8a8a8;
-            overflow-x: auto;
-        }
+}
 
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}
 
-        img {
-            max-width: 100%;
-            height: auto;
-        }
+.sidebar {
+    top: 20px;
+    left: 0px;
+}
 
+@media (max-width: 1260px) {
+    .sidebar {
+        display: none;
+    }
+}
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #fff;
-            margin: 0 auto;
-        }
+.links {
+    bottom: 0px;
+    left: 0px;
+}
 
-        th,
-        td {
-            border: 1px solid #fff;
-            padding: 5px 10px;
-        }
+@media (max-width: 1260px) {
+    .links {
+        display: none;
+    }
+}
 
-        .date {
-            color: #ccc;
-            font-size: 14px;
-            margin: 0 auto;
-            text-align: center;
-        }
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    /* ダークなテキスト色 */
+    text-align: center;
+}
 
-        .tag {
-            color: #ccc;
-            font-size: 14px;
-            margin: 0 auto;
-            text-align: center;
-        }
+h1,
+h2 {
+    color: #fff;
+    /* ダークなテキスト色 */
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .content {
-            flex: 1;
-            padding: 40px 40px;
-            margin-left: 0px;
-            margin-right: 10px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-            background-color: #444;
-            border-radius: 5px;
-            overflow: auto;
-            width: 100%;
-        }
+h2 {
+    text-align: left;
+    padding-left: 10px;
+    border-bottom: solid 1px #dddddd;
+}
 
-        @media (max-width: 768px) {
-            .content {
-                width: 100%;
-                padding: 20px;
-            }
-        }
+p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
 
-        .sidebar {
-            flex: 3;
-            border-right: 1px solid #eee;
-            height: 100%;
-            width: 10%;
-            padding: 10px 10px;
-            left: 0;
-            overflow: auto;
-            position: fixed;
-            top: 0;
-            width: 220px;
-            z-index: 1000;
-            background-color: #333;
-        }
+a {
+    color: #007bff;
+}
 
-        @media (max-width: 1260px) {
-            .sidebar {
-                display: none;
-            }
-        }
+figure {
+    text-align: center;
+}
 
-        .links {
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 200px;
-            height: 100%;
-            padding: 10px 10px;
-            overflow: auto;
-            background-color: #333;
-        }
+figcaption {
+    text-align: center;
+}
 
-        @media (max-width: 1260px) {
-            .links {
-                display: none;
-            }
-        }
+pre {
+    padding: 10px;
+    color: #fff;
+    border: solid 1px #a8a8a8;
+    background-color: #222;
+    overflow-x: auto;
+}
 
-        #toc {
-            background-color: #444;
-            border-radius: 5px;
-            padding: 15px;
-            list-style: none;
-        }
+img {
+    max-width: 100%;
+    height: auto;
+}
 
-        .toc_title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #F7F7F7;
-            border-bottom: solid 1px #161616;
-        }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
 
-        #toc a {
-            text-decoration: none;
-            color: #ccc;
-            display: block;
-            margin: 5px 0;
-            transition: color 0.2s;
-        }
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
 
-        #toc a:hover {
-            color: #007bff;
-        }
+.date {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0 auto;
+    text-align: center;
+}
 
-        #toc .active {
-            font-weight: bold;
-            color: #007bff;
-            font-size: 16px;
-        }
+.tag {
+    color: #ccc;
+    font-size: 14px;
+    margin: 0 auto;
+    text-align: center;
+}
 
-        .toc_H2 {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #006699;
-            font-weight: bold;
-        }
+#toc {
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 15px;
+    list-style: none;
+    border-left: solid 1px #161616;
+}
 
-        .toc_H3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #006699;
-        }
+.toc_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e8e8e8;
+}
 
-        .content_list_h1 {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-bottom: solid 1px #006699;
-            color: #006699;
-        }
+#toc a {
+    text-decoration: none;
+    color: #5f5f5f;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
 
-        .content_list_h2 {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #006699;
-        }
+#toc a::before {
+    content: "▶";
+    margin-right: 5px;
+}
 
-        .content_list_problem {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #006699;
-        }
+#toc a:hover {
+    color: #007bff;
+}
 
-        .badge {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #ccc;
-            /* ダークテーマのテキスト色 */
-            border: 1px solid #333;
-            margin: 0 8px;
-            float: left;
-        }
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 16px;
+}
 
-        .runbutton,
-        .submitbutton {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
+.toc_H1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
 
-        .runbutton {
-            background-color: #006699;
-        }
+.toc_H2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
 
-        .runbutton:hover {
-            background-color: #005580;
-        }
+.toc_H3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #007bff;
+}
 
-        .submitbutton {
-            background-color: #008000;
-        }
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
 
-        .submitbutton:hover {
-            background-color: #006400;
-        }
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
 
-        .problem_title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #F7F7F7;
-        }
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
 
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccc;
+    border: 1px solid #333;
+    margin: 0 8px;
+    float: left;
+}
 
-        .editor {
-            width: 100%;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #444;
-            color: #F7F7F7;
-            border: solid 1px #a8a8a8;
-        }
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
 
+.runbutton {
+    background-color: #007bff;
+}
 
-        .output,
-        .expect_out,
-        .sample_in,
-        .sample_out {
-            width: 100%;
-            padding: 5px 5px;
-            overflow-x: auto;
-            font-size: 16px;
-            font-family: monospace;
-            background-color: #444;
-            color: #F7F7F7;
-            border: solid 1px #a8a8a8;
-        }
+.runbutton:hover {
+    background-color: #005580;
+}
 
-        .box-title,
-        .problem_list {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #ccc;
-        }
-    </style>
+.submitbutton {
+    background-color: #008000;
+}
 
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
+    border: solid 1px #a8a8a8;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #222;
+    color: #fff;
+    border: solid 1px #a8a8a8;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.inline-code,
+.code-block {
+    font-family: monospace;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+.definition::before {
+    content: "Definition.";
+}
+
+.theorem::before {
+    content: "Theorem.";
+}
+
+.proof::before {
+    content: "Proof.";
+}
+
+.lemma::before {
+    content: "Lemma.";
+}
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    border-left: 1px solid #444;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+</style>
 
 
     <script>
 
 
-        all_sample_input = {}
-        all_sample_output = {}
-
-        all_input = {}
-        all_output = {}
-
-        use_libs = []
-
-        judge_types = {}
-        problem_status = {}
-        page_contents = []
-
-        const pyodidePromise = loadPyodide({
-            stdin: stdin_func,
-            stdout: stdout_func,
-        });
-
-        function stdin_func() {
-            if (submit_run) {
-                return all_input[target_objectid][judge_idx];
-            } else {
-                return all_sample_input[target_objectid];
-            }
-        }
-
-        function stdout_func(answer) {
-            outputs += answer + "\n";
-        }
-
-        function error_handle(error) {
-            document.getElementById(target_objectid + "_sample_out").innerText = error;
-            document.getElementById(target_objectid + "_sample_out").style.color = "orange";
-            status = "RE";
-        }
-
-        const runCode = async (objectid, require_judge) => {
-            target_objectid = objectid;
-            submit_run = require_judge;
-
-            let pyodide = await pyodidePromise;
-
-            let editor = ace.edit(objectid);
-            let code = editor.getValue();
-            let result_bar_id = target_objectid + "_status";
-            let result_bar = document.getElementById(result_bar_id)
-
-            document.getElementById(target_objectid + "_sample_out").innerText = "";
-            document.getElementById(target_objectid + "_sample_out").style.color = "";
-            result_bar.innerText = "Running...";
 
 
-            if (require_judge) {
-                let n_input = all_input[target_objectid].length;
-                for (let i = 0; i < n_input; i++) {
-                    judge_idx = i;
-                    result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
-                    try {
-                        outputs = "";
-                        await pyodide.runPythonAsync(code);
-                        let expect_out = all_output[target_objectid][judge_idx];
-                        if (outputs.slice(-1) == "\n") {
-                            outputs = outputs.slice(0, -1);
-                        }
-                        judge(outputs, expect_out);
-                    } catch (error) {
-                        error_handle(error);
-                        result_bar.innerText = "WJ";
-                    }
+all_sample_input = {}
+all_sample_output = {}
 
-                    if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
-                        result_bar.style.backgroundColor = "#ffe500";
-                        result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
-                        break;
-                    }
-                }
+all_input = {}
+all_output = {}
 
-                if (status == "AC") {
-                    result_bar.style.backgroundColor = "lightgreen";
-                    result_bar.innerText = "AC";
-                    confetti();
-                } else {
-                    result_bar.style.backgroundColor = "#ffe500";
-                }
-            } else {
-                try {
-                    outputs = "";
-                    await pyodide.runPythonAsync(code);
-                    document.getElementById(target_objectid + "_sample_out").innerText = outputs;
-                    result_bar.innerText = "WJ";
-                } catch (error) {
-                    error_handle(error);
-                    result_bar.innerText = "RE";
-                }
-            }
-        };
+use_libs = []
 
-        function judge(answer, expect_out) {
-            // trim \n from both
-            if (answer.slice(-1) == "\n") {
-                answer = answer.slice(0, -1);
-            }
+judge_types = {}
+problem_status = {}
+page_contents = []
 
-            if (expect_out.slice(-1) == "\n") {
-                expect_out = expect_out.slice(0, -1);
-            }
+const pyodidePromise = loadPyodide({
+    stdin: stdin_func,
+    stdout: stdout_func,
+});
 
-            let judge_type = judge_types[target_objectid];
-            if (judge_type == 'equal') {
-                if (answer === expect_out) {
-                    status = "AC";
-                } else {
-                    status = "WA";
-                }
-            } else if (judge_type.includes('err')) {
-                status = "AC";
-                let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
-                let answer_list = answer.split('\n');
-                let expect_out_list = expect_out.split('\n');
-                for (let i = 0; i < answer_list.length; i++) {
-                    let answer_line = answer_list[i].split(' ');
-                    let expect_out_line = expect_out_list[i].split(' ');
-                    for (let j = 0; j < answer_line.length; j++) {
-                        let answer_out = parseFloat(answer_line[j]);
-                        let expect_out_out = parseFloat(expect_out_line[j]);
-                        if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
-                            status = "WA";
-                            return;
-                        }
-                    }
-                }
+function stdin_func() {
+    if (submit_run) {
+        return all_input[target_objectid][judge_idx];
+    } else {
+        return all_sample_input[target_objectid];
+    }
+}
 
-            }
-        }
+function stdout_func(answer) {
+    outputs += answer + "\n";
+}
 
-        // ExecutableCodeblockのコードを実行する
-        const runBlock = async (objectid) => {
-            let out_area = document.getElementById(objectid + "_out");
-            out_area.style.color = "";
+function error_handle(error) {
+    document.getElementById(target_objectid + "_out").innerText = error;
+    document.getElementById(target_objectid + "_out").style.color = "orange";
+    status = "RE";
+}
 
-            let pyodide = await pyodidePromise;
-            let editor = ace.edit(objectid);
-            let code = editor.getValue();
-            document.pyodideMplTarget = document.getElementById(objectid + "_plot");
-            out_area.innerText = "Loading libraries...";
-            for (let i = 0; i < use_libs.length; i++) {
-                let lib = use_libs[i];
-                await pyodide.loadPackage(lib);
-            }
-            out_area.innerText = "Running...";
+const runCode = async (objectid, require_judge) => {
+    target_objectid = objectid;
+    submit_run = require_judge;
 
-            outputs = "";
+    let pyodide = await pyodidePromise;
+
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    let result_bar_id = target_objectid + "_status";
+    let result_bar = document.getElementById(result_bar_id)
+
+    document.getElementById(target_objectid + "_out").innerText = "";
+    document.getElementById(target_objectid + "_out").style.color = "";
+    result_bar.innerText = "Running...";
+
+
+    if (require_judge) {
+        let n_input = all_input[target_objectid].length;
+        for (let i = 0; i < n_input; i++) {
+            judge_idx = i;
+            result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
             try {
+                outputs = "";
                 await pyodide.runPythonAsync(code);
-                out_area.innerText = outputs;
+                let expect_out = all_output[target_objectid][judge_idx];
+                if (outputs.slice(-1) == "\n") {
+                    outputs = outputs.slice(0, -1);
+                }
+                judge(outputs, expect_out);
             } catch (error) {
-                out_area.innerText = error;
-                out_area.style.color = "orange";
+                error_handle(error);
+                result_bar.innerText = "WJ";
+            }
+
+            if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
+                result_bar.style.backgroundColor = "#ffe500";
+                result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
+                break;
             }
         }
 
-    </script>
+        if (status == "AC") {
+            result_bar.style.backgroundColor = "lightgreen";
+            result_bar.innerText = "AC";
+            confetti();
+        } else {
+            result_bar.style.backgroundColor = "#ffe500";
+        }
+    } else {
+        try {
+            outputs = "";
+            await pyodide.runPythonAsync(code);
+            document.getElementById(target_objectid + "_out").innerText = outputs;
+            result_bar.innerText = "WJ";
+        } catch (error) {
+            error_handle(error);
+            result_bar.innerText = "RE";
+        }
+    }
+};
+
+function judge(answer, expect_out) {
+    // trim \n from both
+    if (answer.slice(-1) == "\n") {
+        answer = answer.slice(0, -1);
+    }
+
+    if (expect_out.slice(-1) == "\n") {
+        expect_out = expect_out.slice(0, -1);
+    }
+
+    let judge_type = judge_types[target_objectid];
+    if (judge_type == 'equal') {
+        if (answer === expect_out) {
+            status = "AC";
+        } else {
+            status = "WA";
+        }
+    } else if (judge_type.includes('err')) {
+        status = "AC";
+        let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
+        let answer_list = answer.split('\n');
+        let expect_out_list = expect_out.split('\n');
+        for (let i = 0; i < answer_list.length; i++) {
+            let answer_line = answer_list[i].split(' ');
+            let expect_out_line = expect_out_list[i].split(' ');
+            for (let j = 0; j < answer_line.length; j++) {
+                let answer_out = parseFloat(answer_line[j]);
+                let expect_out_out = parseFloat(expect_out_line[j]);
+                if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
+                    status = "WA";
+                    return;
+                }
+            }
+        }
+
+    }
+}
+
+// ExecutableCodeblockのコードを実行する
+const runBlock = async (objectid) => {
+    let out_area = document.getElementById(objectid + "_out");
+    out_area.style.color = "";
+
+    let pyodide = await pyodidePromise;
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    document.pyodideMplTarget = document.getElementById(objectid + "_plot");
+    out_area.innerText = "Loading libraries...";
+    for (let i = 0; i < use_libs.length; i++) {
+        out_area.innerText = "Loading " + use_libs[i] + "...";
+        let lib = use_libs[i];
+        await pyodide.loadPackage(lib);
+    }
+    out_area.innerText = "Running...";
+
+    outputs = "";
+    try {
+        await pyodide.runPythonAsync(code);
+        out_area.innerText = outputs;
+    } catch (error) {
+        out_area.innerText = error;
+        out_area.style.color = "orange";
+    }
+}
+
+</script>
+
 
 </head>
 
 
 <body>
-    <div class="sidebar">
-        <ul id="toc"></ul>
-    </div>
-
-
 
     <div class="content">
 
-        <div style="text-align: center">
-            <img height="300px" width="300px" src="https://images.dog.ceo/breeds/clumber/n02101556_5007.jpg">
+        <div class="article-header">
+            <div class="thumbnail" style="text-align: center">
+                <img height="300px" width="300px" src="https://images.dog.ceo/breeds/clumber/n02101556_5007.jpg">
+            </div>
+
+
+            <div class="title">
+                GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
+            </div>
+
+            <script>
+                title = document.querySelector(".title").innerHTML;
+            </script>
+
+            <br>
+            <div class="date">
+                2023/08/29
+            </div>
+            <br>
+            <div class="tag">
+                [GitHub Actions, GitHub, git]
+            </div>
+
         </div>
 
-
-        <h1>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</h1>
-
-        <br>
-        <div class="date"></div>
-        <br>
-        <div class="tag"></div>
-
-        <script>
-            const tags = "[GitHub Actions, GitHub, git]"
-            const date = "2023/08/29"
-            document.getElementsByClassName("tag")[0].innerText = tags;
-            document.getElementsByClassName("date")[0].innerText = date;
-        </script>
-
-        <br>
-        <script>page_contents.push({ "type": "H2", "id": "6", "content": "<code>git diff</code> が通らない" })</script>
-        <h2 id="6"><code>git diff</code> が通らない</h2>
-        <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub
-            Actionのワークフローファイル</a>では、
-        マークダウンファイルで差分があったときだけビルドするために
-        <br>
-        <br>
-        <pre><code class="bash">- name: Check for Changes in MD Files
+        <div class="article-body">
+            <br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"4",
+    "title":"<span class="inline-code"> <code>git diff</code> </span> が通らない"
+});
+</script>
+<h2 id="4"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
-    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md
-
-    </div>
-
-    <div class="links"><a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
- <br> <br> <br> <br>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-            data-show-count="false">Tweet</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-        <br>
-
-        <br>
-
-        <br>
-
-        <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a></p>
-        <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-        <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
-
-        <footer>
-            <p>&copy; abap34 </p>
-        </footer>
-    </div>
-    </script>
-</body>
-
-
-
-    <script>
-
-
-        const tocContainer = document.querySelector("#toc");
-        const tocTitle = document.createElement("div");
-        tocTitle.innerHTML = "目次";
-        tocTitle.classList.add("toc_title");
-        tocContainer.appendChild(tocTitle);
-
-
-
-        page_contents.forEach(item => {
-            if (item.type === "H2" || item.type === "H3") {
-                const listItem = document.createElement("li");
-                listItem.innerHTML = `<a href="#${item.id}">${item.content}</a>`;
-                listItem.classList.add("toc_" + item.type);
-                tocContainer.appendChild(listItem);
-            }
-        });
-
-        const options = {
-            root: null,
-            rootMargin: "-50% 0px",
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver(onIntersection, options);
-
-
-        page_contents.forEach(item => {
-            const element = document.getElementById(item.id);
-            if (element) {
-                observer.observe(element);
-            }
-        });
-
-        prev_item = null;
-
-        function onIntersection(entries) {
-            entries.forEach(entry => {
-                const id = entry.target.id;
-                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
-                if (tocItem) {
-                    if (entry.isIntersecting) {
-                        tocItem.classList.add("active");
-                        if (prev_item) {
-                            prev_item.classList.remove("active");
-                        }
-                        prev_item = tocItem;
-                    }
-                }
-            });
-        }
-
-
-    </script>
-
-</html>
- || true)
+    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md' || true)
     echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
     if [[ -z "$changed_files" ]]; then
       echo "No changes in MD files. Skipping build."
     else
       echo "Change: $changed_files"
     fi
-</code></pre>
-        <br>
-        みたいなことをしていますが、これを普通に書くだけでは
-        <code>fetal: bad obejct xxx...</code>となります。
-        <br>
-        <br>
-        全然原因がわからず、
-        <code>actions/checkout</code>を見にいくと、
-        <br>
-        <br>
-        <figure><img src=" checkout.png " alt=" Alt text ">
-            <figcaption>Alt text</figcaption>
-        </figure>
-        <br>
-        すいません。 READMEの一番上に書いてありました。
-        <br>
-        <script>page_contents.push({ "type": "H2", "id": "50", "content": "対応策" })</script>
-        <h2 id="50">対応策</h2>
-        <br>
-        <pre><code class="bash">steps:
+</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは<span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。 <br>全然原因がわからず、<span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br> <figure><img src=" checkout.png " ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"66",
+    "title":"対応策"
+});
+</script>
+<h2 id="66">対応策</h2><br><div class="code-block"> <pre><code class="bash">steps:
   - name: Checkout Repository
     uses: actions/checkout@v2
     with:
         fetch-depth: 0
-</code></pre>
-        <br>
-        として全てのコミットを参照できるようにすると
-        <code>git diff</code>が動いて差分だけビルドできるようになりました。
-        <br>
-        <br>
+</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。<br><br><br>
+        </div>
 
 
     </div>
 
-    <div class="links"><a href="https://www.abap34.com/posts.html"> ⇨ 投稿一覧へ </a>
-        <br> <br> <br> <br>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-            data-show-count="false">Tweet</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div class="side">
+        <div class="side-sticky">
+            <div class="sidebar">
+                <ul id="toc"></ul>
+            </div>
 
-        <br>
+            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+ <br> <br> <br> <br>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-        <br>
+                <br>
+                <br>
+                <br>
 
-        <br>
+                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
+                </p>
+                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
+                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
 
-        <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a></p>
-        <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-        <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+                <footer>
+                    <p>&copy; abap34 </p>
+                </footer>
 
-        <footer>
-            <p>&copy; abap34 </p>
-        </footer>
-    </div>
-    </script>
-</body>
+            </div>
+        </div>
 
+        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+        <script>
 
-
-<script>
-
-
-    const tocContainer = document.querySelector("#toc");
-    const tocTitle = document.createElement("div");
-    tocTitle.innerHTML = "目次";
-    tocTitle.classList.add("toc_title");
-    tocContainer.appendChild(tocTitle);
-
-
-
-    page_contents.forEach(item => {
-        if (item.type === "H2" || item.type === "H3") {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `<a href="#${item.id}">${item.content}</a>`;
-            listItem.classList.add("toc_" + item.type);
-            tocContainer.appendChild(listItem);
-        }
-    });
-
-    const options = {
-        root: null,
-        rootMargin: "-50% 0px",
-        threshold: 0
-    };
-
-    const observer = new IntersectionObserver(onIntersection, options);
+const tocContainer = document.querySelector("#toc");
+const tocTitle = document.createElement("div");
+tocTitle.innerHTML = title;
+tocTitle.classList.add("toc_title");
+tocContainer.appendChild(tocTitle);
 
 
-    page_contents.forEach(item => {
-        const element = document.getElementById(item.id);
-        if (element) {
-            observer.observe(element);
-        }
-    });
 
-    prev_item = null;
-
-    function onIntersection(entries) {
-        entries.forEach(entry => {
-            const id = entry.target.id;
-            const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
-            if (tocItem) {
-                if (entry.isIntersecting) {
-                    tocItem.classList.add("active");
-                    if (prev_item) {
-                        prev_item.classList.remove("active");
-                    }
-                    prev_item = tocItem;
-                }
-            }
-        });
+page_contents.forEach(item => {
+    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+        listItem.classList.add("toc_" + item.type);
+        tocContainer.appendChild(listItem);
     }
+});
 
+const options = {
+    root: null,
+    rootMargin: "-50% 0px",
+    threshold: 0
+};
+
+const observer = new IntersectionObserver(onIntersection, options);
+
+page_contents.forEach(item => {
+    const element = document.getElementById(item.id);
+    if (element) {
+        observer.observe(element);
+    }
+});
+
+// page_contensts の先頭を active にしておく
+const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+first_item.classList.add("active");
+
+prev_item = first_item;
+
+function onIntersection(entries) {
+    entries.forEach(entry => {
+        const id = entry.target.id;
+        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+        if (tocItem) {
+            if (entry.isIntersecting) {
+                tocItem.classList.add("active");
+                prev_item.classList.remove("active");
+                prev_item = tocItem;
+            }
+        }
+    });
+}
 
 </script>
 
+    </div>
+
+</body>
+
+
 </html>
+
+
