@@ -38,6 +38,7 @@ function reset!(x::Timer)
     x.created = Dates.now()
 end
 
+
 function rate(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
