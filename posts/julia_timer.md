@@ -34,6 +34,7 @@ function is_timeout(x::Timer)
     return elapsed_time >= x.timeout
 end
 
+
 function reset!(x::Timer)
     x.created = Dates.now()
 end
