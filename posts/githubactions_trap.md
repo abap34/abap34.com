@@ -14,6 +14,7 @@ twitter_site: @abap34
 ---
 
 
+
 ## `git diff` が通らない
 [このページをビルドしてくれるGitHub Actionのワークフローファイル](https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml)では、
 マークダウンファイルで差分があったときだけビルドするために
