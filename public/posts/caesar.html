@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -19,7 +20,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -27,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
 
-    
+
     <script>hljs.highlightAll();</script>
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
@@ -43,22 +45,108 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
-    body {
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #333;
-    color: #F7F7F7;
-    flex-direction: column;
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
     display: flex;
-    width: 95%;
+    gap: 10px;
+    flex-direction: row-reverse;
+    overflow: auto;
+}
+
+.side {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    border: solid 1px #444;
+    margin-left: auto;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
+    top: 20px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.content {
+    padding: 40px 20px;
+    margin-left: 0px;
+    margin-right: auto;
+    border-radius: 5px;
+    max-width: 800px;
+    width: 100%;
+    background-color: #444;
+}
+
+.article-header {
+    margin-bottom: 30px;
+}
+
+.article-body {
+    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
+    border-radius: 10px;
+    border: solid 1px #666;
+    padding: 40px;
+    background-color: rgb(47, 47, 47);
+    padding: 40px;
+
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.sidebar {
+    top: 20px;
+    left: 0px;
+}
+
+@media (max-width: 1260px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+.links {
+    bottom: 0px;
+    left: 0px;
+}
+
+@media (max-width: 1260px) {
+    .links {
+        display: none;
+    }
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    /* ダークなテキスト色 */
+    text-align: center;
 }
 
 h1,
 h2 {
-    color: #F7F7F7;
+    color: #fff;
+    /* ダークなテキスト色 */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -66,7 +154,7 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
+    border-bottom: solid 1px #dddddd;
 }
 
 p {
@@ -75,7 +163,7 @@ p {
 }
 
 a {
-    color: #dcddfe;
+    color: #007bff;
 }
 
 figure {
@@ -88,29 +176,27 @@ figcaption {
 
 pre {
     padding: 10px;
-    color: #F7F7F7;
+    color: #fff;
     border: solid 1px #a8a8a8;
+    background-color: #222;
     overflow-x: auto;
 }
-
 
 img {
     max-width: 100%;
     height: auto;
 }
 
-
 table {
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid #fff;
-    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 th,
 td {
-    border: 1px solid #fff;
-    padding: 5px 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .date {
@@ -127,85 +213,31 @@ td {
     text-align: center;
 }
 
-.content {
-    flex: 1;
-    padding: 40px 40px;
-    margin-left: 0px;
-    margin-right: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    background-color: #444;
-    border-radius: 5px;
-    overflow: auto;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .content {
-        width: 100%;
-        padding: 20px;
-    }
-}
-
-.sidebar {
-    flex: 3;
-    border-right: 1px solid #eee;
-    height: 100%;
-    width: 10%;
-    padding: 10px 10px;
-    left: 0;
-    overflow: auto;
-    position: fixed;
-    top: 0;
-    width: 220px;
-    z-index: 1000;
-    background-color: #333;
-}
-
-@media (max-width: 1260px) {
-    .sidebar {
-        display: none;
-    }
-}
-
-.links {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    padding: 10px 10px;
-    overflow: auto;
-    background-color: #333;
-}
-
-@media (max-width: 1260px) {
-    .links {
-        display: none;
-    }
-}
-
 #toc {
-    background-color: #444;
-    border-radius: 5px;
+    background-color: transparent;
+    border-radius: 4px;
     padding: 15px;
     list-style: none;
+    border-left: solid 1px #161616;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: #F7F7F7;
-    border-bottom: solid 1px #161616;
+    color: #e8e8e8;
 }
 
 #toc a {
     text-decoration: none;
-    color: #ccc;
+    color: #5f5f5f;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
+}
+
+#toc a::before {
+    content: "▶";
+    margin-right: 5px;
 }
 
 #toc a:hover {
@@ -218,40 +250,48 @@ td {
     font-size: 16px;
 }
 
+.toc_H1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
 }
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .badge {
@@ -260,7 +300,6 @@ td {
     font-size: 14px;
     font-weight: bold;
     color: #ccc;
-    /* ダークテーマのテキスト色 */
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -280,7 +319,7 @@ td {
 }
 
 .runbutton {
-    background-color: #006699;
+    background-color: #007bff;
 }
 
 .runbutton:hover {
@@ -298,19 +337,19 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #F7F7F7;
+    color: #fff;
 }
-
 
 .editor {
     width: 100%;
+    height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #444;
-    color: #F7F7F7;
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
     border: solid 1px #a8a8a8;
 }
-
 
 .output,
 .expect_out,
@@ -321,8 +360,8 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #444;
-    color: #F7F7F7;
+    background-color: #222;
+    color: #fff;
     border: solid 1px #a8a8a8;
 }
 
@@ -334,11 +373,91 @@ td {
     color: #ccc;
 }
 
+.inline-code,
+.code-block {
+    font-family: monospace;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+.definition::before {
+    content: "Definition.";
+}
+
+.theorem::before {
+    content: "Theorem.";
+}
+
+.proof::before {
+    content: "Proof.";
+}
+
+.lemma::before {
+    content: "Lemma.";
+}
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    border-left: 1px solid #444;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
 </style>
 
-    
 
-<script>
+    <script>
+
+
 
 
 all_sample_input = {}
@@ -371,8 +490,8 @@ function stdout_func(answer) {
 }
 
 function error_handle(error) {
-    document.getElementById(target_objectid + "_sample_out").innerText = error;
-    document.getElementById(target_objectid + "_sample_out").style.color = "orange";
+    document.getElementById(target_objectid + "_out").innerText = error;
+    document.getElementById(target_objectid + "_out").style.color = "orange";
     status = "RE";
 }
 
@@ -387,8 +506,8 @@ const runCode = async (objectid, require_judge) => {
     let result_bar_id = target_objectid + "_status";
     let result_bar = document.getElementById(result_bar_id)
 
-    document.getElementById(target_objectid + "_sample_out").innerText = "";
-    document.getElementById(target_objectid + "_sample_out").style.color = "";
+    document.getElementById(target_objectid + "_out").innerText = "";
+    document.getElementById(target_objectid + "_out").style.color = "";
     result_bar.innerText = "Running...";
 
 
@@ -428,7 +547,7 @@ const runCode = async (objectid, require_judge) => {
         try {
             outputs = "";
             await pyodide.runPythonAsync(code);
-            document.getElementById(target_objectid + "_sample_out").innerText = outputs;
+            document.getElementById(target_objectid + "_out").innerText = outputs;
             result_bar.innerText = "WJ";
         } catch (error) {
             error_handle(error);
@@ -483,9 +602,10 @@ const runBlock = async (objectid) => {
     let pyodide = await pyodidePromise;
     let editor = ace.edit(objectid);
     let code = editor.getValue();
-    document.pyodideMplTarget  = document.getElementById(objectid + "_plot");
+    document.pyodideMplTarget = document.getElementById(objectid + "_plot");
     out_area.innerText = "Loading libraries...";
     for (let i = 0; i < use_libs.length; i++) {
+        out_area.innerText = "Loading " + use_libs[i] + "...";
         let lib = use_libs[i];
         await pyodide.loadPackage(lib);
     }
@@ -503,125 +623,95 @@ const runBlock = async (objectid) => {
 
 </script>
 
-</head> 
+
+</head>
 
 
 <body>
-    <div class="sidebar">
-        <ul id="toc"></ul>
-    </div>
-
-
 
     <div class="content">
 
-        <div style="text-align: center">
-            <img height="300px" width="300px" src="https://images.dog.ceo/breeds/hound-blood/n02088466_9046.jpg">
+        <div class="article-header">
+            <div class="thumbnail" style="text-align: center">
+                <img height="300px" width="300px" src="https://images.dog.ceo/breeds/hound-blood/n02088466_9046.jpg">
+            </div>
+
+
+            <div class="title">
+                頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話
+            </div>
+
+            <script>
+                title = document.querySelector(".title").innerHTML;
+            </script>
+
+            <br>
+            <div class="date">
+                2023/09/29
+            </div>
+            <br>
+            <div class="tag">
+                [ネタ]
+            </div>
+
+        </div>
+
+        <div class="article-body">
+            <br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"4",
+    "title":"シーザー暗号と頻度分析"
+});
+</script>
+<h2 id="4">シーザー暗号と頻度分析</h2>シーザー暗号は最も有名な暗号のですよね。<br>仕組みは単純で、適当に定めた <span class="math-inline"> \( n \) </span> 個分、アルファベットをずらすだけです。<br>例えば <span class="math-inline"> \( n=3 \) </span> のとき、 <span class="inline-code"> <code>Hello</code> </span> は <span class="inline-code"> <code>Khoor</code> </span> になります。<br><br>そして当然ですが、暗号化された分は、逆の方向に <span class="math-inline"> \( n \) </span> 個分ずらすことで復号できます。<br><br>したがって、シーザ暗号によって暗号化された文章に対してうまくずらした文字数を推定できれば暗号を突破できます。<br><br>その一番有名な方法が頻度分析です。これは、英語の文章では特定の(Characterの意味で)文字が出現する頻度が高いことを利用します。例えば、英語の文章では <span class="inline-code"> <code>e</code> </span> が一番出現頻度が高いです。　したがって、暗号化された文で最も出現頻度が高い文字が<span class="inline-code"> <code>e</code> </span> から変換されたものであると考えてずらした幅を推定できます。<br><br>というかなり簡素な仕組みの解読法ですが、これがどれくらいうまく行くのか気になるところです。 チャチャっと調べてみます。<br><url> <a href="https://www.kaggle.com/datasets/mikeortman/wikipedia-sentence">英語Wikipediaのデータ</a> </url> を適当に持ってきて、10000分くらいを抽出して暗号化　→ 解読というのをやってみます。<br>横軸にそれぞれの分の単語数、解読の成功率を書いてみます。<br><figure><img src=" caesar/plot.png " ><figcaption>解読率</figcaption></figure><br>という結果が得られました。<br>こんな感じで、60語くらいの文であればなんと70%くらいはうまく行くようです。<br>他にも、特定の部分文字列が出現しやすかったり、二番目、三番目に出現しやすい文字を使うことでもっと正確に推定することができるでしょうから、意外とうまく行くもんだなぁという感想です。<br><br>というレポートを1年生の時に書いたのでブログネタとして消費しました。去年の自分、ありがとうございました。<br><br>
         </div>
 
 
-        <h1>頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</h1>
-
-        <br>
-        <div class="date"></div>
-        <br>
-        <div class="tag"></div>
-
-        <script>
-            const tags = "[ネタ]"
-            const date = "2023/09/29"
-            document.getElementsByClassName("tag")[0].innerText = tags;
-            document.getElementsByClassName("date")[0].innerText = date;
-        </script>
-
-        <br>
-<script>page_contents.push({     "type":"H2",     "id":"3",     "content":"シーザー暗号と頻度分析" })</script> 
-<h2 id="3">シーザー暗号と頻度分析</h2>
-シーザー暗号は最も有名な暗号のですよね。
-<br>
-仕組みは単純で、適当に定めた \(n\) 個分、アルファベットをずらすだけです。
-<br>
-例えば \(n=3\) のとき、 <code>Hello</code> は <code>Khoor</code> になります。
-<br>
-<br>
-そして当然ですが、暗号化された分は、逆の方向に \(n\) 個分ずらすことで復号できます。
-<br>
-<br>
-したがって、シーザ暗号によって暗号化された文章に対してうまくずらした文字数を推定できれば暗号を突破できます。
-<br>
-<br>
-その一番有名な方法が頻度分析です。
-これは、英語の文章では特定の(Characterの意味で)文字が出現する頻度が高いことを利用します。
-例えば、英語の文章では <code>e</code> が一番出現頻度が高いです。　したがって、暗号化された文で最も出現頻度が高い文字が
-<code>e</code> から変換されたものであると考えてずらした幅を推定できます。
-<br>
-<br>
-というかなり簡素な仕組みの解読法ですが、これがどれくらいうまく行くのか気になるところです。
-<br>
-チャチャっと調べてみます。
-<br>
-<a href="https://www.kaggle.com/datasets/mikeortman/wikipedia-sentence">英語Wikipediaのデータ</a> を適当に持ってきて、
-10000分くらいを抽出して暗号化　→ 解読というのをやってみます。
-<br>
-横軸にそれぞれの分の単語数、解読の成功率を書いてみます。
-<br>
-<figure><img src=" caesar/plot.png " alt=" 解読率 " ><figcaption>解読率</figcaption></figure>
-<br>
-という結果が得られました。
-<br>
-こんな感じで、60語くらいの文であればなんと70%くらいはうまく行くようです。
-<br>
-他にも、特定の部分文字列が出現しやすかったり、二番目、三番目に出現しやすい文字を使うことでもっと正確に推定することができるでしょうから、
-意外とうまく行くもんだなぁという感想です。
-<br>
-<br>
-というレポートを1年生の時に書いたのでブログネタとして消費しました。
-去年の自分、ありがとうございました。
-<br>
-
-
     </div>
 
-    <div class="links"><a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+    <div class="side">
+        <div class="side-sticky">
+            <div class="sidebar">
+                <ul id="toc"></ul>
+            </div>
+
+            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
  <br> <br> <br> <br>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-            data-show-count="false">Tweet</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-        <br>
+                <br>
+                <br>
+                <br>
 
-        <br>
+                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
+                </p>
+                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
+                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
 
-        <br>
+                <footer>
+                    <p>&copy; abap34 </p>
+                </footer>
 
-        <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a></p>
-        <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-        <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+            </div>
+        </div>
 
-        <footer>
-            <p>&copy; abap34 </p>
-        </footer>
-    </div>
-    </script>
-</body>
-
-
-
-    <script>
-    
+        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+        <script>
 
 const tocContainer = document.querySelector("#toc");
 const tocTitle = document.createElement("div");
-tocTitle.innerHTML = "目次";
+tocTitle.innerHTML = title;
 tocTitle.classList.add("toc_title");
 tocContainer.appendChild(tocTitle);
 
 
 
 page_contents.forEach(item => {
-    if (item.type === "H2" || item.type === "H3") {
+    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
         const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="#${item.id}">${item.content}</a>`;
+        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
         listItem.classList.add("toc_" + item.type);
         tocContainer.appendChild(listItem);
     }
@@ -635,7 +725,6 @@ const options = {
 
 const observer = new IntersectionObserver(onIntersection, options);
 
-
 page_contents.forEach(item => {
     const element = document.getElementById(item.id);
     if (element) {
@@ -643,7 +732,11 @@ page_contents.forEach(item => {
     }
 });
 
-prev_item = null;
+// page_contensts の先頭を active にしておく
+const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+first_item.classList.add("active");
+
+prev_item = first_item;
 
 function onIntersection(entries) {
     entries.forEach(entry => {
@@ -652,16 +745,20 @@ function onIntersection(entries) {
         if (tocItem) {
             if (entry.isIntersecting) {
                 tocItem.classList.add("active");
-                if (prev_item) {
-                    prev_item.classList.remove("active");
-                }
+                prev_item.classList.remove("active");
                 prev_item = tocItem;
             }
         }
     });
 }
 
-
 </script>
 
+    </div>
+
+</body>
+
+
 </html>
+
+
