@@ -22,7 +22,7 @@ twitter_site: @abap34
 - name: Check for Changes in MD Files
   id: check_changes
   run: |
-    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
+    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md' || true)
     echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
     if [[ -z "$changed_files" ]]; then
       echo "No changes in MD files. Skipping build."

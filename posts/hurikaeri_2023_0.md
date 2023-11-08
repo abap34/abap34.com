@@ -32,7 +32,7 @@ twitter_site: @abap34
   - Cloud Run を初めて使ってみて、めちゃくちゃ簡単で、感動...
 
 ![](https://trap.jp/content/images/2023/07/wc-1.png?original=1)
-
+ 
 
 - DacQ
   - 部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやとかなり簡素なものですが作りました。
