@@ -48,7 +48,7 @@ jobs:
       - name: Setup ALMO
         if: steps.check_changes.outputs.changed_files != ''
         run: |
-            git submodule update --init --recursive
+            git submodule update --recursive --remote
             
       - name: Install g++ 
         if: steps.check_changes.outputs.changed_files != ''
