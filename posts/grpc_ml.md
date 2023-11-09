@@ -13,7 +13,6 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
-
  　
 ## 推論を goでやりたい 人がいる
 自分は[東工大デジタル創作同好会traP](https://trap.jp/)というところに入っていて、日々機械学習の普及に努めていますが、

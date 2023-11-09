@@ -13,7 +13,7 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
-　
+
 ## Mosh
 後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。
 

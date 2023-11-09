@@ -18,7 +18,6 @@ twitter_site: @abap34
 
 中身は 
 
-
 <a href="https://github.com/abap34/ALMO"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/abap34/ALMO.png" width="460px"></a>
 
 です。
