@@ -13,6 +13,7 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
  　
+ 
 一番嫌いな...冬に...突入！！
 
 ## 2023年度前期の振り返り
