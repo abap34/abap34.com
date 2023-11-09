@@ -36,6 +36,7 @@ twitter_site: @abap34
 `fetal: bad obejct xxx...`となります。
  
 
+
 全然原因がわからず、
 `actions/checkout`を見にいくと、
 
