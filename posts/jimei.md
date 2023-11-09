@@ -13,6 +13,7 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
+ 
 # Abstract
 自明ギャグとは、一見正しそうな定義を自明に満たすものの、
 経験的には非自明である物質を面白がるギャグである。
