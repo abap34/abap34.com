@@ -59,6 +59,12 @@ body {
     overflow: auto;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding: 0px;
+    }
+}
+
 .side {
     width: 240px;
     display: flex;
@@ -74,6 +80,12 @@ body {
     top: 20px;
     padding-left: 30px;
     padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .side {
+        display: none;
+    }
 }
 
 .side-sticky {
@@ -669,7 +681,7 @@ const runBlock = async (objectid) => {
     "title":"一応ソースコードの中身を見てみる"
 });
 </script>
-<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br><br>ファイルの先頭を見ると、<br><div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
+<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br> ファイルの先頭を見ると、<br><div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
 #|
    This file uses the GRacket editor format.
    Open this file in DrRacket version 8.10 or later to read it.
@@ -696,11 +708,11 @@ IHDR   �   �   �>a�    IDATx�����,�u��9'"3k���_�
 IEND�B`�
 </code></pre> </div><br>みたいなのがあり画像のバイナリがそのまま入っていました。パワーを感じる。<br><script>page_contents.push({
     "type":"H2",
-    "id":"101",
+    "id":"103",
     "title":"今日のラーメン"
 });
 </script>
-<h2 id="101">今日のラーメン</h2>後期になって学食がオープンしたので行ってきました。<br>机が広くて友達と喋りやすくて良さげです。<br>あとごま団子が謎に入荷していて良かったです。<br><figure><img src=" racket/ramen.jpeg " ><figcaption>学食のラーメン</figcaption></figure><br>
+<h2 id="103">今日のラーメン</h2>後期になって学食がオープンしたので行ってきました。<br>机が広くて友達と喋りやすくて良さげです。<br>あとごま団子が謎に入荷していて良かったです。<br><figure><img src=" racket/ramen.jpeg " ><figcaption>学食のラーメン</figcaption></figure><br>
         </div>
 
 

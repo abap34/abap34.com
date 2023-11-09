@@ -59,6 +59,12 @@ body {
     overflow: auto;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding: 0px;
+    }
+}
+
 .side {
     width: 240px;
     display: flex;
@@ -74,6 +80,12 @@ body {
     top: 20px;
     padding-left: 30px;
     padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .side {
+        display: none;
+    }
 }
 
 .side-sticky {
@@ -657,19 +669,19 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><br><br><script>page_contents.push({
+            <br><br> <script>page_contents.push({
     "type":"H2",
-    "id":"4",
+    "id":"6",
     "title":"推論を goでやりたい 人がいる"
 });
 </script>
-<h2 id="4">推論を goでやりたい 人がいる</h2>自分は<url> <a href="https://trap.jp/">東工大デジタル創作同好会traP</a> </url>というところに入っていて、日々機械学習の普及に努めていますが、部内ではWeb開発が盛んで ml x web みたいなのに興味がある人がたくさんいます。<br><br>ところで、traPではGoを使っている人が割と多く、一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。(しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br>この記事は当初気合いでGoのみで学習済みモデルを呼び出す記事にしようと思っていたのですが、思ってるよりもとってもしんどいことが判明したので急遽ネタを変更しました。<br> <br><script>page_contents.push({
+<h2 id="6">推論を goでやりたい 人がいる</h2>自分は<url> <a href="https://trap.jp/">東工大デジタル創作同好会traP</a> </url>というところに入っていて、日々機械学習の普及に努めていますが、部内ではWeb開発が盛んで ml x web みたいなのに興味がある人がたくさんいます。<br><br>ところで、traPではGoを使っている人が割と多く、一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。(しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br>この記事は当初気合いでGoのみで学習済みモデルを呼び出す記事にしようと思っていたのですが、思ってるよりもとってもしんどいことが判明したので急遽ネタを変更しました。<br> <br><script>page_contents.push({
     "type":"H2",
-    "id":"63",
+    "id":"65",
     "title":"実装"
 });
 </script>
-<h2 id="63">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="text">├── api
+<h2 id="65">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
@@ -720,11 +732,11 @@ protoc --go_out=. --go-grpc_out=. pred.proto
         └── pred_grpc.pb.go
 </code></pre> </div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"124",
+    "id":"126",
     "title":"サーバ側"
 });
 </script>
-<h3 id="124">サーバ側</h3><br><div class="code-block"> <pre><code class="python">from concurrent import futures
+<h3 id="126">サーバ側</h3><br><div class="code-block"> <pre><code class="python">from concurrent import futures
 import logging
 
 import grpc
@@ -758,11 +770,11 @@ if __name__ == '__main__':
     serve()
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"131",
+    "id":"133",
     "title":"クライアント側"
 });
 </script>
-<h3 id="131">クライアント側</h3><br><div class="code-block"> <pre><code class="go">package main
+<h3 id="133">クライアント側</h3><br><div class="code-block"> <pre><code class="go">package main
 
 import (
 	"context"
@@ -817,17 +829,17 @@ func main() {
 }
 </code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src=" go_ml/req.png " ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"159",
+    "id":"161",
     "title":"まとめ"
 });
 </script>
-<h2 id="159">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
+<h2 id="161">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
     "type":"H2",
-    "id":"182",
+    "id":"184",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="182">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>
+<h2 id="184">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>
         </div>
 
 

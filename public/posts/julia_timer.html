@@ -59,6 +59,12 @@ body {
     overflow: auto;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding: 0px;
+    }
+}
+
 .side {
     width: 240px;
     display: flex;
@@ -74,6 +80,12 @@ body {
     top: 20px;
     padding-left: 30px;
     padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+    .side {
+        display: none;
+    }
 }
 
 .side-sticky {
@@ -673,7 +685,7 @@ function is_timeout(x::Timer)
     return elapsed_time >= x.timeout
 end
 
-
+ 
 function reset!(x::Timer)
     x.created = Dates.now()
 end
