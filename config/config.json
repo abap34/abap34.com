@@ -6,6 +6,7 @@
     "twitter_id": "abap34",
     "github_id": "abap34",
     "overall_theme": "dark",
+    "custom_css": "themes/dark.css",
     "editor_theme": "ace/theme/xcode",
     "syntax_theme": "github.min"
   }

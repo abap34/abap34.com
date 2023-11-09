@@ -13,6 +13,7 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
+
 ちょっと前に人工知能の講義で発表したスライドです。
 
 
