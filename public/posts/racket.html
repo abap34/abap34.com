@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
@@ -19,7 +20,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai-sublime.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -27,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
 
-    
+
     <script>hljs.highlightAll();</script>
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
@@ -43,22 +45,108 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
-    body {
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #333;
-    color: #F7F7F7;
-    flex-direction: column;
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
     display: flex;
-    width: 95%;
+    gap: 10px;
+    flex-direction: row-reverse;
+    overflow: auto;
+}
+
+.side {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    border: solid 1px #444;
+    margin-left: auto;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: auto;
+    top: 20px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.content {
+    padding: 40px 20px;
+    margin-left: 0px;
+    margin-right: auto;
+    border-radius: 5px;
+    max-width: 800px;
+    width: 100%;
+    background-color: #444;
+}
+
+.article-header {
+    margin-bottom: 30px;
+}
+
+.article-body {
+    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
+    border-radius: 10px;
+    border: solid 1px #666;
+    padding: 40px;
+    background-color: rgb(47, 47, 47);
+    padding: 40px;
+
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.sidebar {
+    top: 20px;
+    left: 0px;
+}
+
+@media (max-width: 1260px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+.links {
+    bottom: 0px;
+    left: 0px;
+}
+
+@media (max-width: 1260px) {
+    .links {
+        display: none;
+    }
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    /* ダークなテキスト色 */
+    text-align: center;
 }
 
 h1,
 h2 {
-    color: #F7F7F7;
+    color: #fff;
+    /* ダークなテキスト色 */
     text-align: center;
     margin-bottom: 20px;
 }
@@ -66,7 +154,7 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
+    border-bottom: solid 1px #dddddd;
 }
 
 p {
@@ -75,7 +163,7 @@ p {
 }
 
 a {
-    color: #dcddfe;
+    color: #007bff;
 }
 
 figure {
@@ -88,29 +176,27 @@ figcaption {
 
 pre {
     padding: 10px;
-    color: #F7F7F7;
+    color: #fff;
     border: solid 1px #a8a8a8;
+    background-color: #222;
     overflow-x: auto;
 }
-
 
 img {
     max-width: 100%;
     height: auto;
 }
 
-
 table {
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid #fff;
-    margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 th,
 td {
-    border: 1px solid #fff;
-    padding: 5px 10px;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .date {
@@ -127,85 +213,31 @@ td {
     text-align: center;
 }
 
-.content {
-    flex: 1;
-    padding: 40px 40px;
-    margin-left: 0px;
-    margin-right: 10px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    background-color: #444;
-    border-radius: 5px;
-    overflow: auto;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .content {
-        width: 100%;
-        padding: 20px;
-    }
-}
-
-.sidebar {
-    flex: 3;
-    border-right: 1px solid #eee;
-    height: 100%;
-    width: 10%;
-    padding: 10px 10px;
-    left: 0;
-    overflow: auto;
-    position: fixed;
-    top: 0;
-    width: 220px;
-    z-index: 1000;
-    background-color: #333;
-}
-
-@media (max-width: 1260px) {
-    .sidebar {
-        display: none;
-    }
-}
-
-.links {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 200px;
-    height: 100%;
-    padding: 10px 10px;
-    overflow: auto;
-    background-color: #333;
-}
-
-@media (max-width: 1260px) {
-    .links {
-        display: none;
-    }
-}
-
 #toc {
-    background-color: #444;
-    border-radius: 5px;
+    background-color: transparent;
+    border-radius: 4px;
     padding: 15px;
     list-style: none;
+    border-left: solid 1px #161616;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: #F7F7F7;
-    border-bottom: solid 1px #161616;
+    color: #e8e8e8;
 }
 
 #toc a {
     text-decoration: none;
-    color: #ccc;
+    color: #5f5f5f;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
+}
+
+#toc a::before {
+    content: "▶";
+    margin-right: 5px;
 }
 
 #toc a:hover {
@@ -218,40 +250,48 @@ td {
     font-size: 16px;
 }
 
+.toc_H1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
 }
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .badge {
@@ -260,7 +300,6 @@ td {
     font-size: 14px;
     font-weight: bold;
     color: #ccc;
-    /* ダークテーマのテキスト色 */
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -280,7 +319,7 @@ td {
 }
 
 .runbutton {
-    background-color: #006699;
+    background-color: #007bff;
 }
 
 .runbutton:hover {
@@ -298,19 +337,19 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #F7F7F7;
+    color: #fff;
 }
-
 
 .editor {
     width: 100%;
+    height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #444;
-    color: #F7F7F7;
+    background-color: #222;
+    color: #fff;
+    padding: 10px;
     border: solid 1px #a8a8a8;
 }
-
 
 .output,
 .expect_out,
@@ -321,8 +360,8 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #444;
-    color: #F7F7F7;
+    background-color: #222;
+    color: #fff;
     border: solid 1px #a8a8a8;
 }
 
@@ -334,11 +373,91 @@ td {
     color: #ccc;
 }
 
+.inline-code,
+.code-block {
+    font-family: monospace;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+.definition::before {
+    content: "Definition.";
+}
+
+.theorem::before {
+    content: "Theorem.";
+}
+
+.proof::before {
+    content: "Proof.";
+}
+
+.lemma::before {
+    content: "Lemma.";
+}
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    border-left: 1px solid #444;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
 </style>
 
-    
 
-<script>
+    <script>
+
+
 
 
 all_sample_input = {}
@@ -371,8 +490,8 @@ function stdout_func(answer) {
 }
 
 function error_handle(error) {
-    document.getElementById(target_objectid + "_sample_out").innerText = error;
-    document.getElementById(target_objectid + "_sample_out").style.color = "orange";
+    document.getElementById(target_objectid + "_out").innerText = error;
+    document.getElementById(target_objectid + "_out").style.color = "orange";
     status = "RE";
 }
 
@@ -387,8 +506,8 @@ const runCode = async (objectid, require_judge) => {
     let result_bar_id = target_objectid + "_status";
     let result_bar = document.getElementById(result_bar_id)
 
-    document.getElementById(target_objectid + "_sample_out").innerText = "";
-    document.getElementById(target_objectid + "_sample_out").style.color = "";
+    document.getElementById(target_objectid + "_out").innerText = "";
+    document.getElementById(target_objectid + "_out").style.color = "";
     result_bar.innerText = "Running...";
 
 
@@ -428,7 +547,7 @@ const runCode = async (objectid, require_judge) => {
         try {
             outputs = "";
             await pyodide.runPythonAsync(code);
-            document.getElementById(target_objectid + "_sample_out").innerText = outputs;
+            document.getElementById(target_objectid + "_out").innerText = outputs;
             result_bar.innerText = "WJ";
         } catch (error) {
             error_handle(error);
@@ -483,9 +602,10 @@ const runBlock = async (objectid) => {
     let pyodide = await pyodidePromise;
     let editor = ace.edit(objectid);
     let code = editor.getValue();
-    document.pyodideMplTarget  = document.getElementById(objectid + "_plot");
+    document.pyodideMplTarget = document.getElementById(objectid + "_plot");
     out_area.innerText = "Loading libraries...";
     for (let i = 0; i < use_libs.length; i++) {
+        out_area.innerText = "Loading " + use_libs[i] + "...";
         let lib = use_libs[i];
         await pyodide.loadPackage(lib);
     }
@@ -503,70 +623,53 @@ const runBlock = async (objectid) => {
 
 </script>
 
-</head> 
+
+</head>
 
 
 <body>
-    <div class="sidebar">
-        <ul id="toc"></ul>
-    </div>
-
-
 
     <div class="content">
 
-        <div style="text-align: center">
-            <img height="300px" width="300px" src="https://images.dog.ceo/breeds/setter-english/n02100735_8071.jpg">
+        <div class="article-header">
+            <div class="thumbnail" style="text-align: center">
+                <img height="300px" width="300px" src="https://images.dog.ceo/breeds/setter-english/n02100735_8071.jpg">
+            </div>
+
+
+            <div class="title">
+                DrRacketがかなりおもしろIDEだった
+            </div>
+
+            <script>
+                title = document.querySelector(".title").innerHTML;
+            </script>
+
+            <br>
+            <div class="date">
+                2023/10/02
+            </div>
+            <br>
+            <div class="tag">
+                [日記, Racket, Lisp, Scheme]
+            </div>
+
         </div>
 
-
-        <h1>DrRacketがかなりおもしろIDEだった</h1>
-
-        <br>
-        <div class="date"></div>
-        <br>
-        <div class="tag"></div>
-
-        <script>
-            const tags = "[日記, Racket, Lisp, Scheme]"
-            const date = "2023/10/02"
-            document.getElementsByClassName("tag")[0].innerText = tags;
-            document.getElementsByClassName("date")[0].innerText = date;
-        </script>
-
-        <br>
-<script>page_contents.push({     "type":"H2",     "id":"3",     "content":"DrRacket 衝撃の機能" })</script> 
-<h2 id="3">DrRacket 衝撃の機能</h2>
-今日で夏休みが終わって後期の授業が始まりました！早起きが辛い！！！
-<br>
-<br>
-講義は、「関数型プログラミング基礎」というのが始まりました。
-<br>
-Schemeを使うと言われていたので、 <a href="https://www.abap34.com/posts/hello_scheme.html">Schemeの環境構築とかもしておいておいたのですが</a>、
-RacketというSchemeの方言を使うらしく、DrRacketというIDEを使えと言われました。
-<br>
-初回は「慣れるためにとりあえず使ってみて」というなんとも投げやりな感じだったのですが、指定されたサンプルコードを見ていると、
-<br>
-<br>
-<figure><img src=" racket/main.png " alt=" !? " ><figcaption>!?</figcaption></figure>
-<br>
-<strong>！？</strong> なんかソースコードに急にロケットの画像が入っています。えぇ...
-<br>
-つまり、
-<br>
-<figure><img src=" racket/shohei.png " alt=" 終わった " ><figcaption>終わった</figcaption></figure>
-<br>
-(全然関係ないですが大谷選手ホームラン王おめでとうございます！！！！)
-<br>
-<br>
-<script>page_contents.push({     "type":"H2",     "id":"53",     "content":"一応ソースコードの中身を見てみる" })</script> 
-<h2 id="53">一応ソースコードの中身を見てみる</h2>
-流石に衝撃的すぎます。一応 <code>main.rkt</code> の中身を見てみます。
-<br>
-<br>
-ファイルの先頭を見ると、
-<br>
-<pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
+        <div class="article-body">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"DrRacket 衝撃の機能"
+});
+</script>
+<h2 id="2">DrRacket 衝撃の機能</h2>今日で夏休みが終わって後期の授業が始まりました！早起きが辛い！！！<br><br>講義は、「関数型プログラミング基礎」というのが始まりました。<br>Schemeを使うと言われていたので、 <url> <a href="https://www.abap34.com/posts/hello_scheme.html">Schemeの環境構築とかもしておいておいたのですが</a> </url>、RacketというSchemeの方言を使うらしく、DrRacketというIDEを使えと言われました。<br>初回は「慣れるためにとりあえず使ってみて」というなんとも投げやりな感じだったのですが、指定されたサンプルコードを見ていると、<br><br><figure><img src=" racket/main.png " ><figcaption>!?</figcaption></figure><br><span class="strong"> <strong>！？</strong> </span> なんかソースコードに急にロケットの画像が入っています。えぇ...<br>つまり、<br><figure><img src=" racket/shohei.png " ><figcaption>終わった</figcaption></figure><br><br>(全然関係ないですが大谷選手ホームラン王おめでとうございます！！！！)<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"67",
+    "title":"一応ソースコードの中身を見てみる"
+});
+</script>
+<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br><br>ファイルの先頭を見ると、<br><div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
 #|
    This file uses the GRacket editor format.
    Open this file in DrRacket version 8.10 or later to read it.
@@ -583,14 +686,7 @@ RacketというSchemeの方言を使うらしく、DrRacketというIDEを使え
 2 0 8 #"wxmedia\0"
 4 1 34 #"(lib \"syntax-browser.ss\" \"mrlib\")\0"
 1 0 36 #"(lib \"cache-image-snip.ss\" \"mrlib\")\0"
-</code></pre>
-<br>
-みたいなことが書いてあり、そもそも素(?)のracketのソースコードではなく、DrRacket前提のソースコードになっているみたいです。
-<br>
-<br>
-続いて、
-<br>
-<pre><code class="racket">�PNG
+</code></pre> </div><br>みたいなことが書いてあり、そもそも素(?)のracketのソースコードではなく、DrRacket前提のソースコードになっているみたいです。<br><br>続いて、<br><div class="code-block"> <pre><code class="racket">�PNG
 
    
 IHDR   �   �   �>a�    IDATx�����,�u��9'"3k���_����pI��H��E-���y �Ȁm�?��������1����آ��F#Y�D��������w�U��q�CDV�{��"�@ݥnݪ�8��|ω�����ޓ\E�s�����^� 
@@ -598,63 +694,61 @@ IHDR   �   �   �>a�    IDATx�����,�u��9'"3k���_�
 ...
 
 IEND�B`�
-</code></pre>
-<br>
-みたいなのがあり画像のバイナリがそのまま入っていました。パワーを感じる。
-<br>
-<script>page_contents.push({     "type":"H2",     "id":"82",     "content":"今日のラーメン" })</script> 
-<h2 id="82">今日のラーメン</h2>
-後期になって学食がオープンしたので行ってきました。
-<br>
-机が広くて友達と喋りやすくて良さげです。
-<br>
-あとごま団子が謎に入荷していて良かったです。
-<br>
-<figure><img src=" racket/ramen.jpeg " alt=" 学食のラーメン " ><figcaption>学食のラーメン</figcaption></figure>
+</code></pre> </div><br>みたいなのがあり画像のバイナリがそのまま入っていました。パワーを感じる。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"101",
+    "title":"今日のラーメン"
+});
+</script>
+<h2 id="101">今日のラーメン</h2>後期になって学食がオープンしたので行ってきました。<br>机が広くて友達と喋りやすくて良さげです。<br>あとごま団子が謎に入荷していて良かったです。<br><figure><img src=" racket/ramen.jpeg " ><figcaption>学食のラーメン</figcaption></figure><br>
+        </div>
 
 
     </div>
 
-    <div class="links"><a href="https://www.abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+    <div class="side">
+        <div class="side-sticky">
+            <div class="sidebar">
+                <ul id="toc"></ul>
+            </div>
+
+            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
  <br> <br> <br> <br>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-            data-show-count="false">Tweet</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-        <br>
+                <br>
+                <br>
+                <br>
 
-        <br>
+                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
+                </p>
+                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
+                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
 
-        <br>
+                <footer>
+                    <p>&copy; abap34 </p>
+                </footer>
 
-        <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a></p>
-        <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-        <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+            </div>
+        </div>
 
-        <footer>
-            <p>&copy; abap34 </p>
-        </footer>
-    </div>
-    </script>
-</body>
-
-
-
-    <script>
-    
+        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+        <script>
 
 const tocContainer = document.querySelector("#toc");
 const tocTitle = document.createElement("div");
-tocTitle.innerHTML = "目次";
+tocTitle.innerHTML = title;
 tocTitle.classList.add("toc_title");
 tocContainer.appendChild(tocTitle);
 
 
 
 page_contents.forEach(item => {
-    if (item.type === "H2" || item.type === "H3") {
+    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
         const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="#${item.id}">${item.content}</a>`;
+        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
         listItem.classList.add("toc_" + item.type);
         tocContainer.appendChild(listItem);
     }
@@ -668,7 +762,6 @@ const options = {
 
 const observer = new IntersectionObserver(onIntersection, options);
 
-
 page_contents.forEach(item => {
     const element = document.getElementById(item.id);
     if (element) {
@@ -676,7 +769,11 @@ page_contents.forEach(item => {
     }
 });
 
-prev_item = null;
+// page_contensts の先頭を active にしておく
+const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+first_item.classList.add("active");
+
+prev_item = first_item;
 
 function onIntersection(entries) {
     entries.forEach(entry => {
@@ -685,16 +782,20 @@ function onIntersection(entries) {
         if (tocItem) {
             if (entry.isIntersecting) {
                 tocItem.classList.add("active");
-                if (prev_item) {
-                    prev_item.classList.remove("active");
-                }
+                prev_item.classList.remove("active");
                 prev_item = tocItem;
             }
         }
     });
 }
 
-
 </script>
 
+    </div>
+
+</body>
+
+
 </html>
+
+
