@@ -166,10 +166,39 @@ $$
 
 と $A$ を定めたときに $A \boldsymbol{w} = \boldsymbol{e}_{k+1}$ を満たす $\boldsymbol{w} \in \mathbb{R}^{n+1}$ がただひとつ存在すればよい。
 
-ここで、 $A$ は **ヴァンデルモンド行列** なので、正則。
+ここで、 $A$ は **ヴァンデルモンド行列** で、 $p \neq 0$ のとき正則。 
 
 したがって、 $\boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1}$ なる $\boldsymbol{w}$ が存在して条件を満たす。
 :::
+
+<details>
+<summary>正則性について</summary>
+ヴァンデルモンド行列は、
+$$
+A = \begin{pmatrix}
+1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+x_1 & x_2 & \cdots & x_{n-1} & x_n & x_1 & \cdots & x_{n-1} & x_n \\
+x_1^2 & x_2^2 & \cdots & x_{n-1}^2 & x_n^2 & x_1^2 & \cdots & x_{n-1}^2 & x_n^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+x_1^{n-1} & x_2^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} & x_1^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} \\
+x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^{n} & x_n^{n} \\
+\end{pmatrix} \in \mathbb{R}^{n \times n}
+$$
+
+という各列が等比数列のようになっている行列のことを言います。 
+(各行の派閥もいるらしいです。)
+
+ヴァンデルモンド行列は、その行列式が
+
+$$
+\det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
+$$
+
+となることが知られていて、 $x_i$ がすべて異なるときには $0$ でないことがわかります。
+
+したがって今回の場合は $x_i = -p + i$ であり、 $p \neq 0$ のときはすべて異なるので正則であることがわかります。
+
+</details>
 
 
 というわけで確かに存在したうえに具体的にもとまりました。
