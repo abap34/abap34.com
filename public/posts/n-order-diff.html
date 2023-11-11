@@ -296,6 +296,7 @@ td {
 @media (max-width: 768px) {
     .exec_plot {
         width: 100%;
+        overflow-x: auto;
     }
 }
 
@@ -879,9 +880,9 @@ print(numerical_diff(f, x, 4, k=2))
 <pre class="exec_out" id="308_out"></pre>
 <div class="exec_plot" id="308_plot"></div>
 <button class="runbutton" onclick="runBlock('308')"> Run </button>
-<br><br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="320" rows="3" cols="80"></div> 
-<script>editor = ace.edit("320"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+<br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
+ <div class="editor" id="319" rows="3" cols="80"></div> 
+<script>editor = ace.edit("319"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
@@ -903,22 +904,22 @@ plt.xlabel('h')
 plt.ylabel('Error')
 plt.show()
 `, -1);</script>
-<pre class="exec_out" id="320_out"></pre>
-<div class="exec_plot" id="320_plot"></div>
-<button class="runbutton" onclick="runBlock('320')"> Run </button>
+<pre class="exec_out" id="319_out"></pre>
+<div class="exec_plot" id="319_plot"></div>
+<button class="runbutton" onclick="runBlock('319')"> Run </button>
 <br><br><ul><li><span class="math-inline"> \( n \) </span> が奇数のとき</li></ul><br>あとで書きます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"337",
+    "id":"336",
     "title":"感想"
 });
 </script>
-<h2 id="337">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
+<h2 id="336">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"346",
+    "id":"345",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="346">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="345">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
