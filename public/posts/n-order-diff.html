@@ -429,22 +429,6 @@ td {
     display: block;
 }
 
-.definition::before {
-    content: "Definition.";
-}
-
-.theorem::before {
-    content: "Theorem.";
-}
-
-.proof::before {
-    content: "Proof.";
-}
-
-.lemma::before {
-    content: "Lemma.";
-}
-
 .definition,
 .theorem,
 .proof,
@@ -452,6 +436,42 @@ td {
     padding: 12px;
     border-left: 1px solid #444;
 }
+
+
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+
 
 .proof::after {
     content: "∎";
@@ -835,13 +855,13 @@ plt.show()
     "title":"感想"
 });
 </script>
-<h2 id="336">感想</h2>線形代数が役に立って、びっくり<br><script>page_contents.push({
+<h2 id="336">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"344",
+    "id":"345",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="344">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="345">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
