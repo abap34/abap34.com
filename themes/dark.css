@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    line-height: 1.8;
     margin: 0 auto;
     padding: 20px;
     background-color: hsl(0, 0%, 20%);
@@ -8,11 +8,16 @@ body {
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
+    justify-content: center;
+
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     body {
         padding: 0px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -33,7 +38,7 @@ body {
     padding-right: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .side {
         display: none;
     }
@@ -67,10 +72,10 @@ body {
     padding: 40px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .content {
         width: 100%;
-        padding: 20px;
+        padding: 0px;
     }
 }
 
@@ -79,7 +84,7 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .sidebar {
         display: none;
     }
@@ -90,11 +95,16 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .links {
         display: none;
     }
 }
+
+.article-header {
+    padding: 30px;
+}
+
 
 .title {
     font-size: 40px;
@@ -102,6 +112,7 @@ body {
     margin-bottom: 10px;
     color: #fff;
     text-align: center;
+    margin: 0 30px;
 }
 
 h1,
@@ -134,6 +145,29 @@ figure {
 figcaption {
     text-align: center;
 }
+
+
+.math-block {
+    /* 親の要素からはみ出さないようにする */
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
 
 pre {
     padding: 10px;
@@ -182,6 +216,8 @@ td {
     border-left: solid 1px #161616;
 }
 
+
+
 .toc_title {
     font-size: 20px;
     font-weight: bold;
@@ -209,6 +245,12 @@ td {
     font-weight: bold;
     color: #007bff;
     font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+    }
 }
 
 .toc_H1 {
@@ -372,25 +414,6 @@ td {
     border-color: #ebccd1;
 }
 
-.definition::before,
-.theorem::before,
-.proof::before,
-.lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
-
-.definition,
-.theorem,
-.proof,
-.lemma {
-    padding: 12px;
-    border-left: 1px solid #444;
-}
-
 
 .definition {
     counter-increment: definition;
@@ -426,6 +449,40 @@ td {
 }
 
 
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+.definition::before {
+    content: "Definition.";
+}
+
+.theorem::before {
+    content: "Theorem.";
+}
+
+.proof::before {
+    content: "Proof.";
+}
+
+.lemma::before {
+    content: "Lemma.";
+}
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    border-left: 1px solid #444;
+}
 
 .proof::after {
     content: "∎";
@@ -435,4 +492,4 @@ td {
 
 iframe {
     width: 100%;
-}   
+}
