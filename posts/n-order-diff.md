@@ -258,6 +258,7 @@ plt.show()
 ## 感想
 線形代数が役に立って、びっくり
 
+
 ## 今日の一曲
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
