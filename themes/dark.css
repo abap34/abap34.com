@@ -383,22 +383,6 @@ td {
     display: block;
 }
 
-.definition::before {
-    content: "Definition.";
-}
-
-.theorem::before {
-    content: "Theorem.";
-}
-
-.proof::before {
-    content: "Proof.";
-}
-
-.lemma::before {
-    content: "Lemma.";
-}
-
 .definition,
 .theorem,
 .proof,
@@ -406,6 +390,42 @@ td {
     padding: 12px;
     border-left: 1px solid #444;
 }
+
+
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+
 
 .proof::after {
     content: "∎";
