@@ -18,7 +18,7 @@ twitter_site: @abap34
 みなさん微分していますか？私はしています。
 数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。
 なので精度よくやりたくなってきます。
-ところで前進差分の丸め誤差が有限の幅 $h$ に対して $O(h)$ な一方、
+ところで前進差分の打ち切り誤差が有限の幅 $h$ に対して $O(h)$ な一方、
 中心差分は $O(h^2)$ であるというのは割と有名ですが、
 各 $n$ に対して $O(h^n)$ で計算する式が常に存在します。(たぶん)
 
@@ -33,7 +33,7 @@ twitter_site: @abap34
 前進差分は以下のような計算で得られます。
 
 :::definition
-$f$ の $x$ における前進差分による微分係数 $f_{forward}'(x; h)$ は、
+$f$ の $x$ における前進差分による近似 $f_{forward}' (x; h)$ は、
 
 $$
 f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
@@ -42,7 +42,7 @@ $$
 :::
 
 
-これが一次精度、つまり 丸め誤差が  $O(h)$ であることを確かめます。
+これが一次精度、つまり誤差が  $O(h)$ であることを確かめます。
 
 上の式の右辺をテイラー展開すると、
 
@@ -55,7 +55,7 @@ f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
 \end{align}
 $$
 
-となり、 丸め誤差が $O(h)$ であることがわかりました。
+となり、誤差が $O(h)$ であることがわかりました。
 
 中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。
 
@@ -104,7 +104,7 @@ plt.close()
 
 
 
-よく言われる、丸め誤差と桁落ちのトレードオフが確認できます
+よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます
 
 
 ## 任意の k 階 n 次精度数値微分
@@ -166,7 +166,7 @@ $$
 
 と $A$ を定めたときに $A \boldsymbol{w} = \boldsymbol{e}_{k+1}$ を満たす $\boldsymbol{w} \in \mathbb{R}^{n+1}$ がただひとつ存在すればよい。
 
-ここで、 $A$ は **ヴァンデルモンド行列** で、正則で、正則。
+ここで、 $A$ は **ヴァンデルモンド行列** なので、正則。
 
 したがって、 $\boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1}$ なる $\boldsymbol{w}$ が存在して条件を満たす。
 :::
@@ -254,3 +254,14 @@ plt.show()
 - $n$ が奇数のとき
 
 あとで書きます。
+
+## 感想
+線形代数が役に立って、びっくり
+
+## 今日の一曲
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+ 
+ 
+MV良すぎてめちゃくちゃ好きです。
+
