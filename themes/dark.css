@@ -250,6 +250,7 @@ td {
 @media (max-width: 768px) {
     .exec_plot {
         width: 100%;
+        overflow-x: auto;
     }
 }
 
