@@ -833,9 +833,22 @@ A = \begin{pmatrix}
 (-p)^{n} & (-p + 1)^{n} & \cdots & (-1)^{n} &0 & 1^{n} & \cdots & (p-1)^{n} & p^{n} \\
 \end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
 
- \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> がただひとつ存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> なので、正則。<br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> が存在して条件を満たす。</div><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br><br><br> 
- <div class="editor" id="308" rows="3" cols="80"></div> 
-<script>editor = ace.edit("308"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> がただひとつ存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> で、 <span class="math-inline"> \( p \neq 0 \) </span> のとき正則。 <br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> が存在して条件を満たす。</div><br><details><summary>正則性について</summary>ヴァンデルモンド行列は、<div class="math-block"> \[ 
+A = \begin{pmatrix}
+1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+x_1 & x_2 & \cdots & x_{n-1} & x_n & x_1 & \cdots & x_{n-1} & x_n \\
+x_1^2 & x_2^2 & \cdots & x_{n-1}^2 & x_n^2 & x_1^2 & \cdots & x_{n-1}^2 & x_n^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+x_1^{n-1} & x_2^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} & x_1^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} \\
+x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^{n} & x_n^{n} \\
+\end{pmatrix} \in \mathbb{R}^{n \times n}
+
+ \] </div><br>という各列が等比数列のようになっている行列のことを言います。 (各行の派閥もいるらしいです。)<br>ヴァンデルモンド行列は、その行列式が<br><div class="math-block"> \[ 
+\det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
+
+ \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br><br><br> 
+ <div class="editor" id="364" rows="3" cols="80"></div> 
+<script>editor = ace.edit("364"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 import matplotlib.pyplot as plt
 
 def central_weight(n, k):
@@ -877,12 +890,12 @@ print(numerical_diff(f, x, 2))
 print(numerical_diff(f, x, 4))    
 print(numerical_diff(f, x, 4, k=2))
 `, -1);</script>
-<pre class="exec_out" id="308_out"></pre>
-<div class="exec_plot" id="308_plot"></div>
-<button class="runbutton" onclick="runBlock('308')"> Run </button>
+<pre class="exec_out" id="364_out"></pre>
+<div class="exec_plot" id="364_plot"></div>
+<button class="runbutton" onclick="runBlock('364')"> Run </button>
 <br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="319" rows="3" cols="80"></div> 
-<script>editor = ace.edit("319"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+ <div class="editor" id="375" rows="3" cols="80"></div> 
+<script>editor = ace.edit("375"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
@@ -904,22 +917,22 @@ plt.xlabel('h')
 plt.ylabel('Error')
 plt.show()
 `, -1);</script>
-<pre class="exec_out" id="319_out"></pre>
-<div class="exec_plot" id="319_plot"></div>
-<button class="runbutton" onclick="runBlock('319')"> Run </button>
+<pre class="exec_out" id="375_out"></pre>
+<div class="exec_plot" id="375_plot"></div>
+<button class="runbutton" onclick="runBlock('375')"> Run </button>
 <br><br><ul><li><span class="math-inline"> \( n \) </span> が奇数のとき</li></ul><br>あとで書きます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"336",
+    "id":"392",
     "title":"感想"
 });
 </script>
-<h2 id="336">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
+<h2 id="392">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"345",
+    "id":"401",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="345">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="401">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
