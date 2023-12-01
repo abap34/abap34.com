@@ -44,26 +44,24 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
-    <style>body {
+    <style>
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.8;
+    line-height: 1.6;
     margin: 0 auto;
     padding: 20px;
-    background-color: hsl(0, 0%, 20%);
-    color: #fff;
+    background-color: rgb(248, 248, 248);
+    color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
-    justify-content: center;
-
+    overflow: auto;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
     body {
         padding: 0px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
     }
 }
 
@@ -71,9 +69,9 @@
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: #2a2a2a;
+    background-color: rgba(246, 246, 246, 0.177);
     border-radius: 10px;
-    border: solid 1px #444;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -84,7 +82,7 @@
     padding-right: 20px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
     .side {
         display: none;
     }
@@ -96,32 +94,34 @@
 }
 
 .content {
-    padding: 40px 20px;
+    padding: 40px 40px;
     margin-left: 0px;
     margin-right: auto;
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #444;
 }
 
 .article-header {
     margin-bottom: 30px;
+
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     padding: 40px;
-    background-color: rgb(47, 47, 47);
+    background-color: #ffffff64;
+    border-radius: 5px;
     padding: 40px;
 }
 
-@media (max-width: 1200px) {
+
+@media (max-width: 768px) {
     .content {
         width: 100%;
-        padding: 0px;
+        padding: 20px;
     }
 }
 
@@ -130,7 +130,7 @@
     left: 0px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1260px) {
     .sidebar {
         display: none;
     }
@@ -141,29 +141,25 @@
     left: 0px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1260px) {
     .links {
         display: none;
     }
 }
 
-.article-header {
-    padding: 30px;
-}
 
 
 .title {
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: #333;
     text-align: center;
-    margin: 0 30px;
 }
 
 h1,
 h2 {
-    color: #fff;
+    color: #323232;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -171,17 +167,16 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #dddddd;
+    border-bottom: solid 1px #5b5b5b;
 }
 
 p {
-    color: #ccc;
+    color: #666;
     margin-bottom: 10px;
 }
 
 a {
-    color: #007bff;
-    word-break: break-all;
+    color: #006699;
 }
 
 figure {
@@ -192,34 +187,10 @@ figcaption {
     text-align: center;
 }
 
-
-.math-block {
-    /* 親の要素からはみ出さないようにする */
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.math-inline {
-    display: inline-grid;
-}
-
-mjx-container {
-    display: inline-block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-}
-
-.tex-equations {
-    overflow-x: auto;
-}
-
-
 pre {
     padding: 10px;
-    color: #fff;
+    color: #333;
     border: solid 1px #a8a8a8;
-    background-color: #222;
     overflow-x: auto;
 }
 
@@ -241,14 +212,14 @@ td {
 }
 
 .date {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -259,15 +230,14 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
+    /* 左側に棒 */
     border-left: solid 1px #161616;
 }
-
-
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #e8e8e8;
+    color: #2a2a2a;
 }
 
 #toc a {
@@ -293,55 +263,50 @@ td {
     font-size: 16px;
 }
 
-@media (max-width: 768px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
-
 .toc_H1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
+
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
+    border-bottom: solid 1px #006699;
+    color: #006699;
 }
+
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .badge {
@@ -349,7 +314,7 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #ccc;
+    color: #666;
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -369,7 +334,7 @@ td {
 }
 
 .runbutton {
-    background-color: #007bff;
+    background-color: #006699;
 }
 
 .runbutton:hover {
@@ -387,7 +352,7 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: #333;
 }
 
 .editor {
@@ -395,8 +360,8 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     padding: 10px;
     border: solid 1px #a8a8a8;
 }
@@ -410,8 +375,8 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     border: solid 1px #a8a8a8;
 }
 
@@ -420,13 +385,14 @@ td {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ccc;
+    color: #666;
 }
 
 .inline-code,
 .code-block {
     font-family: monospace;
 }
+
 
 .success,
 .info,
@@ -461,41 +427,6 @@ td {
     border-color: #ebccd1;
 }
 
-
-.definition {
-    counter-increment: definition;
-}
-
-.definition::before {
-    content: "Definition " counter(definition) ".";
-}
-
-.theorem {
-    counter-increment: theorem;
-}
-
-.theorem::before {
-    content: "Theorem " counter(theorem) ".";
-}
-
-.lemma {
-    counter-increment: lemma;
-}
-
-.lemma::before {
-    content: "Lemma " counter(lemma) ".";
-}
-
-
-.proof {
-    counter-increment: proof;
-}
-
-.proof::before {
-    content: "Proof " counter(proof) ".";
-}
-
-
 .definition::before,
 .theorem::before,
 .proof::before,
@@ -528,7 +459,7 @@ td {
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid #444;
+    border-left: 1px solid;
 }
 
 .proof::after {
@@ -537,9 +468,7 @@ td {
     display: block;
 }
 
-iframe {
-    width: 100%;
-}</style>
+</style>
 
 
     <script>
@@ -750,13 +679,13 @@ const runBlock = async (objectid) => {
     "title":"Abstract"
 });
 </script>
-<h1 id="2">Abstract</h1><br>みなさん微分していますか？私はしています。数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。なので精度よくやりたくなってきます。ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
+<h1 id="2">Abstract</h1><br><br>みなさん微分していますか？私はしています。数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。なので精度よくやりたくなってきます。ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"51",
+    "id":"52",
     "title":"前進差分・中心差分の精度の確認"
 });
 </script>
-<h2 id="51">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
+<h2 id="52">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
 f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
 
  \] </div><br></div><br><br>これが一次精度、つまり誤差が  <span class="math-inline"> \( O(h) \) </span> であることを確かめます。<br>上の式の右辺をテイラー展開すると、<br><div class="math-block"> \[ 
@@ -768,8 +697,8 @@ f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
 \end{align}
 
  \] </div><br>となり、誤差が <span class="math-inline"> \( O(h) \) </span> であることがわかりました。<br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
- <div class="editor" id="119" rows="3" cols="80"></div> 
-<script>editor = ace.edit("119"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="120" rows="3" cols="80"></div> 
+<script>editor = ace.edit("120"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -803,16 +732,16 @@ plt.legend()
 plt.show()
 plt.close()
 `, -1);</script>
-<pre class="exec_out" id="119_out"></pre>
-<div class="exec_plot" id="119_plot"></div>
-<button class="runbutton" onclick="runBlock('119')"> Run </button>
+<pre class="exec_out" id="120_out"></pre>
+<div class="exec_plot" id="120_plot"></div>
+<button class="runbutton" onclick="runBlock('120')"> Run </button>
 <br><br><br>よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"128",
+    "id":"129",
     "title":"任意の k 階 n 次精度数値微分"
 });
 </script>
-<h2 id="128">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
+<h2 id="129">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
 f_{n}^{(k)}(x; h) = \boldsymbol{w_{n,k}} \cdot 
 \begin{pmatrix}
 f(x - ph) \\
@@ -847,8 +776,8 @@ x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^
 \det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
 
  \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br><br><br> 
- <div class="editor" id="364" rows="3" cols="80"></div> 
-<script>editor = ace.edit("364"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="365" rows="3" cols="80"></div> 
+<script>editor = ace.edit("365"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 import matplotlib.pyplot as plt
 
 def central_weight(n, k):
@@ -890,12 +819,12 @@ print(numerical_diff(f, x, 2))
 print(numerical_diff(f, x, 4))    
 print(numerical_diff(f, x, 4, k=2))
 `, -1);</script>
-<pre class="exec_out" id="364_out"></pre>
-<div class="exec_plot" id="364_plot"></div>
-<button class="runbutton" onclick="runBlock('364')"> Run </button>
+<pre class="exec_out" id="365_out"></pre>
+<div class="exec_plot" id="365_plot"></div>
+<button class="runbutton" onclick="runBlock('365')"> Run </button>
 <br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="375" rows="3" cols="80"></div> 
-<script>editor = ace.edit("375"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+ <div class="editor" id="376" rows="3" cols="80"></div> 
+<script>editor = ace.edit("376"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
@@ -917,22 +846,22 @@ plt.xlabel('h')
 plt.ylabel('Error')
 plt.show()
 `, -1);</script>
-<pre class="exec_out" id="375_out"></pre>
-<div class="exec_plot" id="375_plot"></div>
-<button class="runbutton" onclick="runBlock('375')"> Run </button>
+<pre class="exec_out" id="376_out"></pre>
+<div class="exec_plot" id="376_plot"></div>
+<button class="runbutton" onclick="runBlock('376')"> Run </button>
 <br><br><ul><li><span class="math-inline"> \( n \) </span> が奇数のとき</li></ul><br>あとで書きます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"392",
+    "id":"393",
     "title":"感想"
 });
 </script>
-<h2 id="392">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
+<h2 id="393">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"401",
+    "id":"402",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="401">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="402">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
