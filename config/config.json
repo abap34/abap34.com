@@ -5,8 +5,7 @@
     "mail": "abap0002@gmail.com",
     "twitter_id": "abap34",
     "github_id": "abap34",
-    "overall_theme": "dark",
-    "custom_css": "themes/dark.css",
+    "overall_theme": "light",
     "editor_theme": "ace/theme/xcode",
     "syntax_theme": "github.min"
   }
