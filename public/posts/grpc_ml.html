@@ -44,16 +44,19 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
-    <style>body {
+    <style>
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0 auto;
     padding: 20px;
-    background-color: hsl(0, 0%, 20%);
-    color: #fff;
+    background-color: rgb(248, 248, 248);
+    color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
+    overflow: auto;
 }
 
 @media (max-width: 768px) {
@@ -66,9 +69,9 @@
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: #2a2a2a;
+    background-color: rgba(246, 246, 246, 0.177);
     border-radius: 10px;
-    border: solid 1px #444;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -91,27 +94,29 @@
 }
 
 .content {
-    padding: 40px 20px;
+    padding: 40px 40px;
     margin-left: 0px;
     margin-right: auto;
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #444;
 }
 
 .article-header {
     margin-bottom: 30px;
+
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     padding: 40px;
-    background-color: rgb(47, 47, 47);
+    background-color: #ffffff64;
+    border-radius: 5px;
     padding: 40px;
 }
+
 
 @media (max-width: 768px) {
     .content {
@@ -142,17 +147,19 @@
     }
 }
 
+
+
 .title {
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: #333;
     text-align: center;
 }
 
 h1,
 h2 {
-    color: #fff;
+    color: #323232;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -160,17 +167,16 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #dddddd;
+    border-bottom: solid 1px #5b5b5b;
 }
 
 p {
-    color: #ccc;
+    color: #666;
     margin-bottom: 10px;
 }
 
 a {
-    color: #007bff;
-    word-break: break-all;
+    color: #006699;
 }
 
 figure {
@@ -183,9 +189,8 @@ figcaption {
 
 pre {
     padding: 10px;
-    color: #fff;
+    color: #333;
     border: solid 1px #a8a8a8;
-    background-color: #222;
     overflow-x: auto;
 }
 
@@ -207,14 +212,14 @@ td {
 }
 
 .date {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -225,13 +230,14 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
+    /* 左側に棒 */
     border-left: solid 1px #161616;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #e8e8e8;
+    color: #2a2a2a;
 }
 
 #toc a {
@@ -261,44 +267,46 @@ td {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
+
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
+    border-bottom: solid 1px #006699;
+    color: #006699;
 }
+
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .badge {
@@ -306,7 +314,7 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #ccc;
+    color: #666;
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -326,7 +334,7 @@ td {
 }
 
 .runbutton {
-    background-color: #007bff;
+    background-color: #006699;
 }
 
 .runbutton:hover {
@@ -344,7 +352,7 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: #333;
 }
 
 .editor {
@@ -352,8 +360,8 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     padding: 10px;
     border: solid 1px #a8a8a8;
 }
@@ -367,8 +375,8 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     border: solid 1px #a8a8a8;
 }
 
@@ -377,13 +385,14 @@ td {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ccc;
+    color: #666;
 }
 
 .inline-code,
 .code-block {
     font-family: monospace;
 }
+
 
 .success,
 .info,
@@ -450,7 +459,7 @@ td {
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid #444;
+    border-left: 1px solid;
 }
 
 .proof::after {
@@ -459,9 +468,7 @@ td {
     display: block;
 }
 
-iframe {
-    width: 100%;
-}   </style>
+</style>
 
 
     <script>
@@ -666,19 +673,19 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br> 　<script>page_contents.push({
+            <br> 　<br><script>page_contents.push({
     "type":"H2",
-    "id":"5",
+    "id":"6",
     "title":"推論を goでやりたい 人がいる"
 });
 </script>
-<h2 id="5">推論を goでやりたい 人がいる</h2>自分は<url> <a href="https://trap.jp/">東工大デジタル創作同好会traP</a> </url>というところに入っていて、日々機械学習の普及に努めていますが、部内ではWeb開発が盛んで ml x web みたいなのに興味がある人がたくさんいます。<br><br>ところで、traPではGoを使っている人が割と多く、一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。(しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br>この記事は当初気合いでGoのみで学習済みモデルを呼び出す記事にしようと思っていたのですが、思ってるよりもとってもしんどいことが判明したので急遽ネタを変更しました。<br> <br><script>page_contents.push({
+<h2 id="6">推論を goでやりたい 人がいる</h2><br>世の中ではGoを使っている人が割と多く、機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。(しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"64",
+    "id":"50",
     "title":"実装"
 });
 </script>
-<h2 id="64">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="text">├── api
+<h2 id="50">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
@@ -729,11 +736,11 @@ protoc --go_out=. --go-grpc_out=. pred.proto
         └── pred_grpc.pb.go
 </code></pre> </div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"125",
+    "id":"111",
     "title":"サーバ側"
 });
 </script>
-<h3 id="125">サーバ側</h3><br><div class="code-block"> <pre><code class="python">from concurrent import futures
+<h3 id="111">サーバ側</h3><br><div class="code-block"> <pre><code class="python">from concurrent import futures
 import logging
 
 import grpc
@@ -767,11 +774,11 @@ if __name__ == '__main__':
     serve()
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"132",
+    "id":"118",
     "title":"クライアント側"
 });
 </script>
-<h3 id="132">クライアント側</h3><br><div class="code-block"> <pre><code class="go">package main
+<h3 id="118">クライアント側</h3><br><div class="code-block"> <pre><code class="go">package main
 
 import (
 	"context"
@@ -826,17 +833,17 @@ func main() {
 }
 </code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src=" go_ml/req.png " ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"160",
+    "id":"146",
     "title":"まとめ"
 });
 </script>
-<h2 id="160">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
+<h2 id="146">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
     "type":"H2",
-    "id":"183",
+    "id":"169",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="183">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br>  <br>
+<h2 id="169">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br>  <br>
         </div>
 
 
