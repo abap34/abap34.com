@@ -44,16 +44,19 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
-    <style>body {
+    <style>
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     margin: 0 auto;
     padding: 20px;
-    background-color: hsl(0, 0%, 20%);
-    color: #fff;
+    background-color: rgb(248, 248, 248);
+    color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
+    overflow: auto;
 }
 
 @media (max-width: 768px) {
@@ -66,9 +69,9 @@
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: #2a2a2a;
+    background-color: rgba(246, 246, 246, 0.177);
     border-radius: 10px;
-    border: solid 1px #444;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -91,27 +94,29 @@
 }
 
 .content {
-    padding: 40px 20px;
+    padding: 40px 40px;
     margin-left: 0px;
     margin-right: auto;
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #444;
 }
 
 .article-header {
     margin-bottom: 30px;
+
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    border: solid 1px rgba(236, 236, 236, 0.472);
     padding: 40px;
-    background-color: rgb(47, 47, 47);
+    background-color: #ffffff64;
+    border-radius: 5px;
     padding: 40px;
 }
+
 
 @media (max-width: 768px) {
     .content {
@@ -142,17 +147,19 @@
     }
 }
 
+
+
 .title {
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: #333;
     text-align: center;
 }
 
 h1,
 h2 {
-    color: #fff;
+    color: #323232;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -160,17 +167,16 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #dddddd;
+    border-bottom: solid 1px #5b5b5b;
 }
 
 p {
-    color: #ccc;
+    color: #666;
     margin-bottom: 10px;
 }
 
 a {
-    color: #007bff;
-    word-break: break-all;
+    color: #006699;
 }
 
 figure {
@@ -183,9 +189,8 @@ figcaption {
 
 pre {
     padding: 10px;
-    color: #fff;
+    color: #333;
     border: solid 1px #a8a8a8;
-    background-color: #222;
     overflow-x: auto;
 }
 
@@ -207,14 +212,14 @@ td {
 }
 
 .date {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #ccc;
+    color: #666;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -225,13 +230,14 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
+    /* 左側に棒 */
     border-left: solid 1px #161616;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #e8e8e8;
+    color: #2a2a2a;
 }
 
 #toc a {
@@ -261,44 +267,46 @@ td {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
+
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
+    border-bottom: solid 1px #006699;
+    color: #006699;
 }
+
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007bff;
+    color: #006699;
 }
 
 .badge {
@@ -306,7 +314,7 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #ccc;
+    color: #666;
     border: 1px solid #333;
     margin: 0 8px;
     float: left;
@@ -326,7 +334,7 @@ td {
 }
 
 .runbutton {
-    background-color: #007bff;
+    background-color: #006699;
 }
 
 .runbutton:hover {
@@ -344,7 +352,7 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: #333;
 }
 
 .editor {
@@ -352,8 +360,8 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     padding: 10px;
     border: solid 1px #a8a8a8;
 }
@@ -367,8 +375,8 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #F2F2F2;
+    color: #333;
     border: solid 1px #a8a8a8;
 }
 
@@ -377,13 +385,14 @@ td {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ccc;
+    color: #666;
 }
 
 .inline-code,
 .code-block {
     font-family: monospace;
 }
+
 
 .success,
 .info,
@@ -450,7 +459,7 @@ td {
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid #444;
+    border-left: 1px solid;
 }
 
 .proof::after {
@@ -459,9 +468,7 @@ td {
     display: block;
 }
 
-iframe {
-    width: 100%;
-}   </style>
+</style>
 
 
     <script>
@@ -666,64 +673,64 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br> 　<script>page_contents.push({
+            <br> 　 <script>page_contents.push({
     "type":"H1",
-    "id":"5",
+    "id":"8",
     "title":"Abstract"
 });
 </script>
-<h1 id="5">Abstract</h1>自明ギャグとは、一見正しそうな定義を自明に満たすものの、経験的には非自明である物質を面白がるギャグである。<br>本記事は、この自明ギャグの定義や基本的構造、面白さの分析、発展について述べ、乱立している自明ギャグについての整理を行うことを試みた。<br><br><br><script>page_contents.push({
+<h1 id="8">Abstract</h1>自明ギャグとは、一見正しそうな定義を自明に満たすものの、経験的には非自明である物質を面白がるギャグである。<br>本記事は、この自明ギャグの定義や基本的構造、面白さの分析、発展について述べ、乱立している自明ギャグについての整理を行うことを試みた。<br><br><script>page_contents.push({
     "type":"H1",
-    "id":"25",
+    "id":"27",
     "title":"自明ギャグの定義"
 });
 </script>
-<h1 id="25">自明ギャグの定義</h1><script>page_contents.push({
+<h1 id="27">自明ギャグの定義</h1><script>page_contents.push({
     "type":"H2",
-    "id":"29",
+    "id":"31",
     "title":"自明丼"
 });
 </script>
-<h2 id="29">自明丼</h2><br>具体例から始める。<br>自明ギャグの原点は、<br><br><span class="strong"> <strong>「自明丼」</strong> </span>  である。 <span class="math-inline"> \( ^1 \) </span><br><br><br>「丼」を以下のように定義しよう。<br> <div class="definition"><br>丼は、米の上に、以下の条件を満たす集合 <span class="math-inline"> \( X \) </span> が乗っているものである。<br><div class="math-block"> \[ 
+<h2 id="31">自明丼</h2><br>具体例から始める。<br>自明ギャグの原点は、<br><br><span class="strong"> <strong>「自明丼」</strong> </span>  である。 <span class="math-inline"> \( ^1 \) </span><br><br><br>「丼」を以下のように定義しよう。<br> <div class="definition"><br>丼は、米の上に、以下の条件を満たす集合 <span class="math-inline"> \( X \) </span> が乗っているものである。<br><div class="math-block"> \[ 
 \forall x \in X, x \ \text{は具である。}
 
  \] </div></div><br>さて、この場合具体的にどのようなものが丼になるかを考えると、次のようなことがわかる。<br><br><div class="theorem"><br>米の上に空集合が乗っているものは丼である。</div><br>これは丼の定義から自明であるし、　<br>やや不思議な言い方だが、「最も自明である」丼であろう。<br>なので、この丼のことを <span class="strong"> <strong>自明丼</strong> </span> と呼ぶことにする。<br><br><figure><img src=" https://rensai.jp/wp-content/uploads/2022/02/yoshinoya-nikushita2.jpg " ><figcaption>自明丼</figcaption></figure><br><br>このように、<br><br><span class="strong"> <strong>自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</strong> </span><br><br><br>(ここでの「自明に満たす」という意味合いはかなり厳しくとることが共通見解である。どこまでを自明とするのが一般的かはこの後の「自明ギャグのように見えるが、自明ギャグではないもの」のセクションなどを参照してほしい。)<br><br><div class="definition">自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</div><br>以下は、自明丼と極めて構造が似通っている自明ギャグの例である。<br><br><div class="theorem">ハンバーガをバンズの間に具の集合が挟まっているものと定義したとき、バンズだけのハンバーガは自明ハンバーガである。</div><br><div class="theorem">小銭入れを財布の中に通貨の集合が入っているものと定義したとき、中身が空の小銭入れは自明小銭入れである。</div><br><br>これらは<br><ul><li>定義が単一の集合に対して与えられている</li><li>その集合が空集合ならば自明に条件を満たす</li></ul><br>というタイプの自明ギャグである。<br>このようなタイプの自明ギャグは、「自明丼型の自明ギャグ」と呼ばれる。<br><br><figure><img src=" https://img06.shop-pro.jp/PA01313/765/product/101506659.jpg?cmsp_timestamp=20210617170652 " ><figcaption>自明ハンバーガ</figcaption></figure><br><script>page_contents.push({
     "type":"H2",
-    "id":"202",
+    "id":"204",
     "title":"自明ギャグのように見えるが、自明ギャグではないもの"
 });
 </script>
-<h2 id="202">自明ギャグのように見えるが、自明ギャグではないもの</h2><br>さて、ここまでで登場した自明ギャグの例をもとに自明ギャグを考える場合、典型的に陥る誤謬をいくつか紹介しておく。<br><br>まずは「寿司型の自明ギャグ」である。<br>以下のようなギャグは、自明ギャグのように見えるが、自明ギャグではないものである。<br><br><div class="theorem">寿司を米の上にネタが乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>これは一見自明ギャグのように見えるが、自明ギャグにおいて最も重要である「自明にするために変化する部分」がなんであるかが不明瞭である。<br>正確に書き直すと以下のようになるであろう。<br><br><div class="theorem">寿司を米の上にネタ集合の元が乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>すると、この場合自明寿司のシャリの上に乗っているのは <span class="math-inline"> \( \emptyset \) </span> ではなく「空のオブジェクト」ということになるが、これはネタの集合の元ではない。<br><span class="strong"> <strong>したがって、このギャグは自明ギャグではない。</strong> </span><br>自明丼は最も典型的な自明ギャグのタイプだが、変化する部分が集合となっているかどうかに注意が必要である。<br><br>次が、「非自明自明ギャグ」である。<br>以下のようなギャグについて考えよう。<br><br><div class="theorem">丼を米の上に具の集合が乗っているものと定義したとき、エビの天ぷらが <span class="math-inline"> \( 100000 \) </span> 個乗っている丼は自明丼である。</div><br>これは、自明ギャグのように見えるが、非自明自明ギャグと言われるタイプのギャグで、自明ギャグではないと基本的には考えられている。<br><br>というのも、これが丼であるかどうかを判定するには、エビの天ぷらが具であるかどうかという議論が必要であり、空集合の場合の「自明度」と比較すれば自明であると言えばないと考えられているからである。<br><br>つまり、自明ギャグは、<br><ul><li>公理</li><li>(vacuous truthのような) 完全に認められていて、広く知られている事実から直ちに従う</li></ul><br>レベルの「自明度」が求められており、特に現在は<span class="strong"> <strong>自明丼に代表されるように空集合などを利用したもののみが認められる</strong> </span>風潮が強い。<br>とはいえこれでは極めて自明ギャグの幅が狭くなってしまうため、自明ギャグの「自明度」を保っての拡張が考えられている。<br><br><script>page_contents.push({
+<h2 id="204">自明ギャグのように見えるが、自明ギャグではないもの</h2><br>さて、ここまでで登場した自明ギャグの例をもとに自明ギャグを考える場合、典型的に陥る誤謬をいくつか紹介しておく。<br><br>まずは「寿司型の自明ギャグ」である。<br>以下のようなギャグは、自明ギャグのように見えるが、自明ギャグではないものである。<br><br><div class="theorem">寿司を米の上にネタが乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>これは一見自明ギャグのように見えるが、自明ギャグにおいて最も重要である「自明にするために変化する部分」がなんであるかが不明瞭である。<br>正確に書き直すと以下のようになるであろう。<br><br><div class="theorem">寿司を米の上にネタ集合の元が乗っているものと定義したとき、シャリだけの寿司は自明寿司である。</div><br>すると、この場合自明寿司のシャリの上に乗っているのは <span class="math-inline"> \( \emptyset \) </span> ではなく「空のオブジェクト」ということになるが、これはネタの集合の元ではない。<br><span class="strong"> <strong>したがって、このギャグは自明ギャグではない。</strong> </span><br>自明丼は最も典型的な自明ギャグのタイプだが、変化する部分が集合となっているかどうかに注意が必要である。<br><br>次が、「非自明自明ギャグ」である。<br>以下のようなギャグについて考えよう。<br><br><div class="theorem">丼を米の上に具の集合が乗っているものと定義したとき、エビの天ぷらが <span class="math-inline"> \( 100000 \) </span> 個乗っている丼は自明丼である。</div><br>これは、自明ギャグのように見えるが、非自明自明ギャグと言われるタイプのギャグで、自明ギャグではないと基本的には考えられている。<br><br>というのも、これが丼であるかどうかを判定するには、エビの天ぷらが具であるかどうかという議論が必要であり、空集合の場合の「自明度」と比較すれば自明であると言えばないと考えられているからである。<br><br>つまり、自明ギャグは、<br><ul><li>公理</li><li>(vacuous truthのような) 完全に認められていて、広く知られている事実から直ちに従う</li></ul><br>レベルの「自明度」が求められており、特に現在は<span class="strong"> <strong>自明丼に代表されるように空集合などを利用したもののみが認められる</strong> </span>風潮が強い。<br>とはいえこれでは極めて自明ギャグの幅が狭くなってしまうため、自明ギャグの「自明度」を保っての拡張が考えられている。<br><br><script>page_contents.push({
     "type":"H1",
-    "id":"341",
+    "id":"343",
     "title":"自明ギャグの発展"
 });
 </script>
-<h1 id="341">自明ギャグの発展</h1><script>page_contents.push({
+<h1 id="343">自明ギャグの発展</h1><script>page_contents.push({
     "type":"H2",
-    "id":"345",
+    "id":"347",
     "title":"自明丼からの一般化"
 });
 </script>
-<h2 id="345">自明丼からの一般化</h2><br>さて、ここまでは空集合を利用した極めて限定的なギャグのみが認められていたが、現在はこれらの拡張が盛んに研究されている。<br>代表例は、空列への応用である。<br>再び具体例から始める。<br><br><div class="theorem">コーデを、何も服を着ていない状態から、服を着る動作の列を適用して得られる状態と定義したとき、何も服を着ていない状態は自明コーデである。</div><br>これは、空集合を空列に変えたのみであり、自明ギャグの一種であると広く認められていて、<br>「コーデ型の自明ギャグ」と呼ばれている。<br><br>コーデ型の自明ギャグは、動作を繰り返す日常の行為をよく表現できるため、非常に活発に開拓されているタイプの自明ギャグである。<br><script>page_contents.push({
+<h2 id="347">自明丼からの一般化</h2><br>さて、ここまでは空集合を利用した極めて限定的なギャグのみが認められていたが、現在はこれらの拡張が盛んに研究されている。<br>代表例は、空列への応用である。<br>再び具体例から始める。<br><br><div class="theorem">コーデを、何も服を着ていない状態から、服を着る動作の列を適用して得られる状態と定義したとき、何も服を着ていない状態は自明コーデである。</div><br>これは、空集合を空列に変えたのみであり、自明ギャグの一種であると広く認められていて、<br>「コーデ型の自明ギャグ」と呼ばれている。<br><br>コーデ型の自明ギャグは、動作を繰り返す日常の行為をよく表現できるため、非常に活発に開拓されているタイプの自明ギャグである。<br><script>page_contents.push({
     "type":"H2",
-    "id":"385",
+    "id":"387",
     "title":"対比型の自明ギャグ、最上川型の自明ギャグ"
 });
 </script>
-<h2 id="385">対比型の自明ギャグ、最上川型の自明ギャグ</h2><br>さらに、発展系として極めて自由なタイプの自明ギャグである対比型の自明ギャグと最上川型の自明ギャグがある。<br>注意点として、<br><br><div class="danger"><span class="strong"> <strong>対比型の自明ギャグ、最上川型の自明ギャグは、自明ギャグではない。</strong> </span></div><br>ことに注意が必要である。<br><br><br>まず、対比型の自明ギャグは、条件を満たすものが二つしか存在しない場合にそれぞれを自明/非自明に分類することでユーモアを生み出すギャグである。<br>例えば、<br><ul><li>普通の傘を自明傘と呼び、折りたたみ傘を非自明傘と呼ぶ</li><li>結婚式の挨拶で実の父親を自明親と呼び、義理の父親を非自明親と呼ぶ</li></ul><br>というようなものが対比型の自明ギャグと呼ばれる。<br>これは、もはや自明ギャグの定義からは外れているが、自明というワードが中核概念であるため、このような非自明な命名がなされている。<br>次に、最上川型の自明ギャグは<br><ul><li>非自明最上川</li><li>非自明大谷翔平</li></ul><br>のような固有名詞に「非自明」とつけることで理解不能な状況を作り出すギャグである。<br>これも、もはや自明ギャグの定義からは外れているが、同様に自明というワードが中核概念であるため、このような命名がなされている。<br><br><script>page_contents.push({
+<h2 id="387">対比型の自明ギャグ、最上川型の自明ギャグ</h2><br>さらに、発展系として極めて自由なタイプの自明ギャグである対比型の自明ギャグと最上川型の自明ギャグがある。<br>注意点として、<br><br><div class="danger"><span class="strong"> <strong>対比型の自明ギャグ、最上川型の自明ギャグは、自明ギャグではない。</strong> </span></div><br>ことに注意が必要である。<br><br><br>まず、対比型の自明ギャグは、条件を満たすものが二つしか存在しない場合にそれぞれを自明/非自明に分類することでユーモアを生み出すギャグである。<br>例えば、<br><ul><li>普通の傘を自明傘と呼び、折りたたみ傘を非自明傘と呼ぶ</li><li>結婚式の挨拶で実の父親を自明親と呼び、義理の父親を非自明親と呼ぶ</li></ul><br>というようなものが対比型の自明ギャグと呼ばれる。<br>これは、もはや自明ギャグの定義からは外れているが、自明というワードが中核概念であるため、このような非自明な命名がなされている。<br>次に、最上川型の自明ギャグは<br><ul><li>非自明最上川</li><li>非自明大谷翔平</li></ul><br>のような固有名詞に「非自明」とつけることで理解不能な状況を作り出すギャグである。<br>これも、もはや自明ギャグの定義からは外れているが、同様に自明というワードが中核概念であるため、このような命名がなされている。<br><br><script>page_contents.push({
     "type":"H1",
-    "id":"466",
+    "id":"468",
     "title":"Conclusion"
 });
 </script>
-<h1 id="466">Conclusion</h1><br>自明ギャグは、自明丼を起源として、現在では様々なタイプの自明ギャグが存在する。<br>さらに、構造や面白さの理論的分析も進んでおり今後の発展が期待される分野である。<br>一方で課題としては、このギャグが通じる相手があまりにも限定的であることが知られているため、自明に良いタイミングでの使用が求められている。 <span class="math-inline"> \( ^2 \) </span><br><br><br><hr><br><script>page_contents.push({
+<h1 id="468">Conclusion</h1><br>自明ギャグは、自明丼を起源として、現在では様々なタイプの自明ギャグが存在する。<br>さらに、構造や面白さの理論的分析も進んでおり今後の発展が期待される分野である。<br>一方で課題としては、このギャグが通じる相手があまりにも限定的であることが知られているため、自明に良いタイミングでの使用が求められている。 <span class="math-inline"> \( ^2 \) </span><br><br><br><hr><br><script>page_contents.push({
     "type":"H3",
-    "id":"494",
+    "id":"496",
     "title":"脚注"
 });
 </script>
-<h3 id="494">脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。 <br>
+<h3 id="496">脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。 <br>
         </div>
 
 
