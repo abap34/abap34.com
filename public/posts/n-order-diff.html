@@ -44,24 +44,27 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
-    <style>
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    <style>body {
+    font-family: "HiraKakuProN-W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    line-height: 1.8;
     margin: 0 auto;
     padding: 20px;
-    background-color: rgb(248, 248, 248);
+    background-color: #f0f0f0;
     color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
-    overflow: auto;
+    justify-content: center;
+    font-size: 14px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     body {
         padding: 0px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
     }
 }
 
@@ -69,9 +72,9 @@ body {
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(246, 246, 246, 0.177);
+    background-color: #f5f5f5;
     border-radius: 10px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
+    border: solid 1px #ddd;
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -82,7 +85,7 @@ body {
     padding-right: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .side {
         display: none;
     }
@@ -94,34 +97,32 @@ body {
 }
 
 .content {
-    padding: 40px 40px;
+    padding: 40px 20px;
     margin-left: 0px;
     margin-right: auto;
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
+    background-color: #f5f5f5;
 }
 
 .article-header {
     margin-bottom: 30px;
-
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
+    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
+    border-radius: 10px;
+    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #ffffff64;
-    border-radius: 5px;
+    background-color: #f0f0f0;
     padding: 40px;
 }
 
-
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .content {
         width: 100%;
-        padding: 20px;
+        padding: 0px;
     }
 }
 
@@ -130,7 +131,7 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .sidebar {
         display: none;
     }
@@ -141,13 +142,15 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .links {
         display: none;
     }
 }
 
-
+.article-header {
+    padding: 30px;
+}
 
 .title {
     font-size: 40px;
@@ -155,11 +158,11 @@ body {
     margin-bottom: 10px;
     color: #333;
     text-align: center;
+    margin: 0 30px;
 }
 
-h1,
-h2 {
-    color: #323232;
+h1, h2 {
+    color: #333;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -167,16 +170,17 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
+    border-bottom: solid 1px #ddd;
 }
 
 p {
-    color: #666;
+    color: #777;
     margin-bottom: 10px;
 }
 
 a {
-    color: #006699;
+    color: #007bff;
+    word-break: break-all;
 }
 
 figure {
@@ -187,10 +191,32 @@ figcaption {
     text-align: center;
 }
 
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
 pre {
     padding: 10px;
     color: #333;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
+    background-color: #f0f0f0;
     overflow-x: auto;
 }
 
@@ -205,21 +231,20 @@ table {
     margin-bottom: 20px;
 }
 
-th,
-td {
+th, td {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
 .date {
-    color: #666;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #666;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -230,19 +255,18 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
-    /* 左側に棒 */
-    border-left: solid 1px #161616;
+    border-left: solid 1px #ddd;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #2a2a2a;
+    color: #444;
 }
 
 #toc a {
     text-decoration: none;
-    color: #5f5f5f;
+    color: #777;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
@@ -263,50 +287,55 @@ td {
     font-size: 16px;
 }
 
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
 .toc_H1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
-
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
 }
-
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .badge {
@@ -314,14 +343,13 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #666;
-    border: 1px solid #333;
+    color: #777;
+    border: 1px solid #444;
     margin: 0 8px;
     float: left;
 }
 
-.runbutton,
-.submitbutton {
+.runbutton, .submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -334,7 +362,7 @@ td {
 }
 
 .runbutton {
-    background-color: #006699;
+    background-color: #007bff;
 }
 
 .runbutton:hover {
@@ -360,44 +388,35 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
     padding: 10px;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
+.output, .expect_out, .sample_in, .sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
-.box-title,
-.problem_list {
+.box-title, .problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #666;
+    color: #777;
 }
 
-.inline-code,
-.code-block {
+.inline-code, .code-block {
     font-family: monospace;
 }
 
-
-.success,
-.info,
-.warning,
-.danger {
+.success, .info, .warning, .danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -427,10 +446,39 @@ td {
     border-color: #ebccd1;
 }
 
-.definition::before,
-.theorem::before,
-.proof::before,
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+}
+
 .lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before, .theorem::before, .proof::before, .lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -454,12 +502,9 @@ td {
     content: "Lemma.";
 }
 
-.definition,
-.theorem,
-.proof,
-.lemma {
+.definition, .theorem, .proof, .lemma {
     padding: 12px;
-    border-left: 1px solid;
+    border-left: 1px solid #ddd;
 }
 
 .proof::after {
@@ -468,7 +513,9 @@ td {
     display: block;
 }
 
-</style>
+iframe {
+    width: 100%;
+}</style>
 
 
     <script>
@@ -685,7 +732,7 @@ const runBlock = async (objectid) => {
     "title":"前進差分・中心差分の精度の確認"
 });
 </script>
-<h2 id="51">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
+<h2 id="51">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
 f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
 
  \] </div><br></div><br><br>これが一次精度、つまり誤差が  <span class="math-inline"> \( O(h) \) </span> であることを確かめます。<br>上の式の右辺をテイラー展開すると、<br><div class="math-block"> \[ 
@@ -697,8 +744,8 @@ f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
 \end{align}
 
  \] </div><br>となり、誤差が <span class="math-inline"> \( O(h) \) </span> であることがわかりました。<br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
- <div class="editor" id="119" rows="3" cols="80"></div> 
-<script>editor = ace.edit("119"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="120" rows="3" cols="80"></div> 
+<script>editor = ace.edit("120"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -732,16 +779,16 @@ plt.legend()
 plt.show()
 plt.close()
 `, -1);</script>
-<pre class="exec_out" id="119_out"></pre>
-<div class="exec_plot" id="119_plot"></div>
-<button class="runbutton" onclick="runBlock('119')"> Run </button>
+<pre class="exec_out" id="120_out"></pre>
+<div class="exec_plot" id="120_plot"></div>
+<button class="runbutton" onclick="runBlock('120')"> Run </button>
 <br><br><br>よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"128",
+    "id":"129",
     "title":"任意の k 階 n 次精度数値微分"
 });
 </script>
-<h2 id="128">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
+<h2 id="129">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
 f_{n}^{(k)}(x; h) = \boldsymbol{w_{n,k}} \cdot 
 \begin{pmatrix}
 f(x - ph) \\
@@ -762,7 +809,7 @@ A = \begin{pmatrix}
 (-p)^{n} & (-p + 1)^{n} & \cdots & (-1)^{n} &0 & 1^{n} & \cdots & (p-1)^{n} & p^{n} \\
 \end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
 
- \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> がただひとつ存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> で、 <span class="math-inline"> \( p \neq 0 \) </span> のとき正則。 <br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> が存在して条件を満たす。</div><br><details><summary>正則性について</summary>ヴァンデルモンド行列は、<div class="math-block"> \[ 
+ \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> が存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> で、 <span class="math-inline"> \( p \neq 0 \) </span> のとき正則。 <br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> がただひとつ存在して条件を満たす。</div><br><details><summary>正則性について</summary>ヴァンデルモンド行列は、<div class="math-block"> \[ 
 A = \begin{pmatrix}
 1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
 x_1 & x_2 & \cdots & x_{n-1} & x_n & x_1 & \cdots & x_{n-1} & x_n \\
@@ -775,9 +822,9 @@ x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^
  \] </div><br>という各列が等比数列のようになっている行列のことを言います。 (各行の派閥もいるらしいです。)<br>ヴァンデルモンド行列は、その行列式が<br><div class="math-block"> \[ 
 \det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
 
- \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br><br><br> 
- <div class="editor" id="364" rows="3" cols="80"></div> 
-<script>editor = ace.edit("364"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br>右から <span class="math-inline"> \( e_k \) </span> をかけるのはちょうど <span class="math-inline"> \( k \) </span> 列目のベクトルを取り出すことなのでそう実装します。<br><br><br> 
+ <div class="editor" id="377" rows="3" cols="80"></div> 
+<script>editor = ace.edit("377"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 import matplotlib.pyplot as plt
 
 def central_weight(n, k):
@@ -819,12 +866,12 @@ print(numerical_diff(f, x, 2))
 print(numerical_diff(f, x, 4))    
 print(numerical_diff(f, x, 4, k=2))
 `, -1);</script>
-<pre class="exec_out" id="364_out"></pre>
-<div class="exec_plot" id="364_plot"></div>
-<button class="runbutton" onclick="runBlock('364')"> Run </button>
+<pre class="exec_out" id="377_out"></pre>
+<div class="exec_plot" id="377_plot"></div>
+<button class="runbutton" onclick="runBlock('377')"> Run </button>
 <br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="375" rows="3" cols="80"></div> 
-<script>editor = ace.edit("375"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+ <div class="editor" id="388" rows="3" cols="80"></div> 
+<script>editor = ace.edit("388"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
@@ -846,22 +893,22 @@ plt.xlabel('h')
 plt.ylabel('Error')
 plt.show()
 `, -1);</script>
-<pre class="exec_out" id="375_out"></pre>
-<div class="exec_plot" id="375_plot"></div>
-<button class="runbutton" onclick="runBlock('375')"> Run </button>
+<pre class="exec_out" id="388_out"></pre>
+<div class="exec_plot" id="388_plot"></div>
+<button class="runbutton" onclick="runBlock('388')"> Run </button>
 <br><br><ul><li><span class="math-inline"> \( n \) </span> が奇数のとき</li></ul><br>あとで書きます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"392",
+    "id":"405",
     "title":"感想"
 });
 </script>
-<h2 id="392">感想</h2>線形代数が役に立って、びっくり<br><br><script>page_contents.push({
+<h2 id="405">感想</h2>線形代数が役に立って、びっくり。<br>また、上のアルゴリズムは逆行列を求めるところがボトルネックで　時間計算量は <span class="math-inline"> \( O(N^3) \) </span>　ですが、調べたところによるとヴァンデルモンド行列の逆行列は <span class="math-inline"> \( O(N^2) \) </span> で求められるようなのでそうすればもう少し早くなりそうです。(とはいえ、中心差分よりも正確にやろうとする場面すらなかなかみないので、ほとんど実用的ではないですが)<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"401",
+    "id":"433",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="401">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="433">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
