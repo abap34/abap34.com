@@ -45,20 +45,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    font-family: "HiraKakuProN-W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    line-height: 1.8;
     margin: 0 auto;
     padding: 20px;
-    background-color: hsl(0, 0%, 20%);
-    color: #fff;
+    background-color: #f0f0f0;
+    color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
+    justify-content: center;
+    font-size: 14px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     body {
         padding: 0px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
     }
 }
 
@@ -66,9 +72,9 @@
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: #2a2a2a;
+    background-color: #f5f5f5;
     border-radius: 10px;
-    border: solid 1px #444;
+    border: solid 1px #ddd;
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -79,7 +85,7 @@
     padding-right: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .side {
         display: none;
     }
@@ -97,7 +103,7 @@
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #444;
+    background-color: #f5f5f5;
 }
 
 .article-header {
@@ -107,16 +113,16 @@
 .article-body {
     box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
     border-radius: 10px;
-    border: solid 1px #666;
+    border: solid 1px #ddd;
     padding: 40px;
-    background-color: rgb(47, 47, 47);
+    background-color: #f0f0f0;
     padding: 40px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .content {
         width: 100%;
-        padding: 20px;
+        padding: 0px;
     }
 }
 
@@ -125,7 +131,7 @@
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .sidebar {
         display: none;
     }
@@ -136,23 +142,27 @@
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .links {
         display: none;
     }
+}
+
+.article-header {
+    padding: 30px;
 }
 
 .title {
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: #333;
     text-align: center;
+    margin: 0 30px;
 }
 
-h1,
-h2 {
-    color: #fff;
+h1, h2 {
+    color: #333;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -160,11 +170,11 @@ h2 {
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #dddddd;
+    border-bottom: solid 1px #ddd;
 }
 
 p {
-    color: #ccc;
+    color: #777;
     margin-bottom: 10px;
 }
 
@@ -181,11 +191,32 @@ figcaption {
     text-align: center;
 }
 
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
 pre {
     padding: 10px;
-    color: #fff;
-    border: solid 1px #a8a8a8;
-    background-color: #222;
+    color: #333;
+    border: solid 1px #ddd;
+    background-color: #f0f0f0;
     overflow-x: auto;
 }
 
@@ -200,21 +231,20 @@ table {
     margin-bottom: 20px;
 }
 
-th,
-td {
+th, td {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
 .date {
-    color: #ccc;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #ccc;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -225,18 +255,18 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
-    border-left: solid 1px #161616;
+    border-left: solid 1px #ddd;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #e8e8e8;
+    color: #444;
 }
 
 #toc a {
     text-decoration: none;
-    color: #5f5f5f;
+    color: #777;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
@@ -255,6 +285,13 @@ td {
     font-weight: bold;
     color: #007bff;
     font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
 }
 
 .toc_H1 {
@@ -306,14 +343,13 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #ccc;
-    border: 1px solid #333;
+    color: #777;
+    border: 1px solid #444;
     margin: 0 8px;
     float: left;
 }
 
-.runbutton,
-.submitbutton {
+.runbutton, .submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -344,7 +380,7 @@ td {
 .problem_title {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: #333;
 }
 
 .editor {
@@ -352,43 +388,35 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
+    background-color: #f0f0f0;
+    color: #333;
     padding: 10px;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
+.output, .expect_out, .sample_in, .sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #222;
-    color: #fff;
-    border: solid 1px #a8a8a8;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
 }
 
-.box-title,
-.problem_list {
+.box-title, .problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #ccc;
+    color: #777;
 }
 
-.inline-code,
-.code-block {
+.inline-code, .code-block {
     font-family: monospace;
 }
 
-.success,
-.info,
-.warning,
-.danger {
+.success, .info, .warning, .danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -418,10 +446,39 @@ td {
     border-color: #ebccd1;
 }
 
-.definition::before,
-.theorem::before,
-.proof::before,
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+}
+
 .lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before, .theorem::before, .proof::before, .lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -445,12 +502,9 @@ td {
     content: "Lemma.";
 }
 
-.definition,
-.theorem,
-.proof,
-.lemma {
+.definition, .theorem, .proof, .lemma {
     padding: 12px;
-    border-left: 1px solid #444;
+    border-left: 1px solid #ddd;
 }
 
 .proof::after {
@@ -461,7 +515,7 @@ td {
 
 iframe {
     width: 100%;
-}   </style>
+}</style>
 
 
     <script>
@@ -672,7 +726,7 @@ const runBlock = async (objectid) => {
     "title":"Mosh"
 });
 </script>
-<h2 id="4">Mosh</h2>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br>  <br>
+<h2 id="4">Mosh</h2>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br><br>  <br>
         </div>
 
 
