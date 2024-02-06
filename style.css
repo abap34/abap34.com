@@ -210,3 +210,19 @@ section#works {
 a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 600px) {
+  .post-list {
+      grid-template-columns: 1fr;
+  }
+
+  .post-list-item {
+      padding: 1rem;
+  }
+
+  .thumbnail {
+      width: 80px;
+      height: 80px;
+      margin-right: 1rem;
+  }
+}
