@@ -1,206 +1,217 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
-    <meta charset="utf-8">
-    <title>abap34</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>abap34.com</title>
 </head>
 
 <body>
-    <div class="buttonGroup">
-        <button class="menuButton button"> 三 </button>
-        <button class="plusButton button"> + </button>
-    </div>
-
-    <div class="sidebar">
-        <h3> Index </h3>
-        <a href="#about">About Me</a>
-        <a href="#projects">Workds</a>
-        <a href="#contact">Contact</a>
-        <h3>Blog</h3>
-        <h4>最近の投稿</h4>
-        <div id="recent-posts"></div>
-        <script>
-            fetch('/recent_posts.json')
-                .then(response => response.json())
-                .then(posts => {
-                    let html = '';
-                    for (const post of posts) {
-                        const { title, post_date, url } = post;
-                        const postHtml = `
-            <div class="post">
-              <h4>${post_date} | <a href="${url}">${title}</a></h4>
-            </div>`;
-                        html += postHtml;
-                    }
-                    document.getElementById('recent-posts').innerHTML = html;
-                });
-        </script>
-        <a href="/posts.html">⇨ 全ての投稿へ</a>
-
-    </div>
     <header>
-        <img src="myicon.png" alt="myicon" width="100" height="100">
-        <h1>__abap34's website__</h1>
+        <h1>abap34's Website</h1>
     </header>
+    <section id="about">
+        <div class="section-title">
+            About Me
+        </div>
+        <img src="img/icon.png" alt="icon" class="my-icon">
+        <h1> @abap34 </h1>
+        <ul>
+            <li>2004年生まれ 愛知県出身</li>
+            <li>東京工業大学 情報理工学院情報工学系 B2 </li>
+            <li>機械学習の理論っぽい話と、実装っぽい話の両方に興味があります。</li>
+            <li>理論も実装もできる人になるのが目標です。</li>
 
-    <main>
-        <!-- a little pad -->
-        <div style="height: 10px;"></div>
+        </ul>
+    </section>
 
-        <section id="about" class="fade-in">
-            <h2>About Me</h2>
-            <p>
-                東京工業大学 情報理工学院情報工学系 B2
-                <br>
-                機械学習の理論的な側面と工学的な側面の両方に興味があります。
-                <br>
-                理論も実装もできるエンジニア・研究者が目標です。
-                <br>
-            </p>
-        </section>
-        <section id="Works" class="fade-in">
-            <h3>Work Experience</h3>
-            <p>2022 (B1) Reserch Internship at <a href="https://www.d-itlab.co.jp/">Denso IT Lab</a></p>
-            深層学習を使った研究の実装面メインでのサポートをしました。
-            <br><br>
-            <p>2023 (B2) SWE Internship at <a href="https://xica.net/">XICA</a></p>
-            Pythonで書かれた分析基盤を、Julia言語に置き換えて高速な分析を可能にするというプロジェクトをしていました。
-            <br>
-        </section>
-        <section id="projects" class="fade-in">
-            <h2>Works</h2>
+
+    <section id="experience">
+        <div class="section-title">
+            Work Experience
+        </div>
+        <ul>
+            <li>2022 (B1) Reserch Internship at <a href="https://www.d-itlab.co.jp/">DENSO IT Lab</a></li>
             <ul>
-                <li>
-                    <h4></h4><a href="https://github.com/abap34/JITrench.jl">JITrench.jl</a>
-                </li>
-                フルスクラッチで開発しているJulia言語製の自動微分・深層学習フレームワークです。
-                <br>
-                GPUのサポートやdefine-by-runによる動作、jaxのような関数型言語風の記法とパラメータ管理、などなど、現代的な深層学習フレームワークの基本的な機能を揃えています。(それでいて高速です！)
-                <br>
-                <li>サークル活動
-                    (traP)
-                </li>
-                東京工業大学デジタル創作同好会traPに所属して、機械学習を勉強する部である「Kaggle部」を立ち上げて運営を行なっています。
-                <br>
-                <a href="https://trap.jp/author/abap34/">→ traPブログでの投稿一覧</a>
-                <li>データ分析コンペ</li>
-                Kaggleなどのデータ分析コンペも趣味としてやっています。
-                <br>
-                <a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">→
-                    全国医療AIコンテスト
-                    2021 1st</a>
-                <br>
-                <li> その他
-                    <ul>
-                        <li> このサイトのブログ <br>
-                            このサイトのブログは<a href="https://github.com/abap34/ALMO">自作のMarkdownパーサ・静的サイトジェネレータ</a>で作っていて、
-                            WebAssemblyを使ったサーバ不要のサンプルプログラムの実行環境とGitHub Actionsでの自動デプロイを提供しています。
-                        </li>
-                        <li> コンペ運営 <br>
-                            サークルの部員向けに毎年コンペを開催しています。
-                            2023年のコンペの開催記録はこちらです。 <br>
-                            <a href="https://trap.jp/post/1975"> traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記 </a>
-                        </li>
-                    </ul>
-
-                </li>
+                <li>深層学習を使った研究の実装・評価をしていました.</li>
             </ul>
+            <li>2023 (B2) SWE Internship at <a href="https://xica.net/">XICA</a></li>
+            <ul>
+                <li>Python製の既存の分析基盤をJuliaで書き直して高速化していました。</li>
+            </ul>
+        </ul>
+    </section>
 
-            そのほか、アイデアを実現する具体的な実装や基盤に興味があり、Julia・Python・C++をメインに色々と実装しています。
-            <br>
-            Twitter, GitHub, ブログにいろいろと投稿しているので、興味があれば覗いてみてください。
-        </section>
-        <section id="Blog" class="fade-in">
-            <h2>Blog</h2>
-            <p>最近の投稿</p>
-            <div id="recent-posts-page"></div>
-            <script>
-                fetch('/recent_posts.json')
-                    .then(response => response.json())
-                    .then(posts => {
-                        let html = '';
-                        for (const post of posts) {
-                            const { title, post_date, url } = post;
-                            const postHtml = `
-            <div class="post">
-              ${post_date} | <a href="${url}">${title}</a> 
-            </div>`;
-                            html += postHtml;
-                        }
-                        document.getElementById('recent-posts-page').innerHTML = html;
-                    });
-            </script>
-            <br>
 
-            <a href="/posts.html">⇨ 投稿一覧へ </a>
-        </section>
-        <section id="contact" class="fade-in">
-            <h2>Contact</h2>
-            <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34"> @abap34</a></p>
-            <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34"> @abap34</a></p>
-            <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
-        </section>
+    <div class="section-title" id="works">
+        Works
+    </div>
 
-    </main>
+    <section id="works">
+        <div class="work-item">
+            <a href="https://github.com/abap34/JITrench.jl">
+                <img src="img/jitrench.png" alt="JITrench.jl">
+                <p>JITrench.jl</p>
+                <div class="description">
+                    <h3> JITrench.jl </h3>
+                    フルスクラッチで開発している、Julia言語製の軽量・高速な自動微分ライブラリ・深層学習フレームワークです。 <br>
+                    GPUのサポート, define-by-run, jax-like なパラメータ管理などなど、現代的なフレームワークの基本的な機能を備えています。 <br>
+                </div>
+            </a>
+        </div>
 
-    <footer>
-        <p>&copy; 2023 abap34</p>
-    </footer>
+        <div class="work-item">
+            <a href="https://github.com/abap34/ALMO">
+                <img src="img/almo.png">
+                <div class="description">
+                    <h3>ALMO</h3>
+                    C++製の拡張マークダウンパーサ・静的サイトジェネレータです。
+                    サークルの新入生向けに実行可能なサンプルコード・ジャッジ環境を提供したいけど、サーバを用意するお金がない、という問題を解決するために、
+                    WebAssemblyを使ってブラウザ上で完結する動作環境を簡単に埋めんだ記事を執筆できるように設計されました。 <br>
+                    このサイトのブログも ALMO + GitHub Actionsで自動ビルド・デプロイされています。
+                </div>
+                <p>ALMO</p>
+            </a>
+        </div>
 
-    <script>
-        const menuButton = document.querySelector(".menuButton");
-        const plusButton = document.querySelector(".plusButton");
-        const sidebar = document.querySelector(".sidebar");
 
-        let isMenuOpen = false;
 
-        const onClick = () => {
-            if (isMenuOpen) {
-                gsap.to(sidebar, {
-                    x: "-100%",
-                    opacity: 1,
-                    duration: 1
-                });
+        <div class="work-item">
+            <a href="https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen">
+                <img src="img/juliatokyo11.png" alt="JuliaTokyo #11">
+                <div class="description">
+                    <h3>JuliaTokyo #11 トーク: <br> Juliaと歩く自動微分</h3>
+                    2024年2月に開催された JuliaTokyo #11 での発表資料です。 <br>
+                    深層学習を始めとした機械学習・連続最適化のソフトウェア的な基盤となる
+                    自動微分について、Julia言語を用いて詳しく解説したものです。 <br>
 
-                gsap.to("img", {
-                    rotate: "-=360",
-                    duration: 1
-                });
-            } else {
-                gsap.to(sidebar, {
-                    x: "0",
-                    opacity: 1,
-                    duration: 1
-                });
+                </div>
+                <p>JuliaTokyo #11 トーク: Juliaと歩く自動微分</p>
+            </a>
+        </div>
+        <div class="work-item">
+            <a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">
+                <img src="img/medcon3.png" alt="MedCon3">
+                <div class="description">
+                    <h3>第3回 全国医療AIコンテスト 1st place solution</h3>
+                    2021年3月に開催された 第3回 全国医療AIコンテストで優勝した際に発表した Solution です。心電図や患者の情報から心筋梗塞を発見するコンペでした。
+                </div>
+                <p>第3回 全国医療AIコンテスト 1st Place Solution</p>
+            </a>
+        </div>
 
-                gsap.to("img", {
-                    rotate: "+=360",
-                    duration: 1
-                });
-            }
 
-            isMenuOpen = !isMenuOpen;
-        };
+        <div class="work-item">
+            <a href="https://trap.jp/post/1918/">
+                <img src="img/mllec.png">
+                <div class="description">
+                    <h3>traP Kaggle班の運営</h3>
+                    所属しているサークルで、機械学習を勉強するコミュニティを立ち上げて運営しています。 <br>
+                    この記事では、Kaggle班の新入生教育の一環で行った講習会の取り組みについて紹介しています。 <br>
+                    講習会のために400ページ以上の資料・演習問題の作成と10時間以上の講義・演習を行い、部内 mini Kaggle、講義中に質問・コメントをするアプリも開発しました。<br>
+                </div>
+                <p> traP Kaggle班運営</p>
+            </a>
+        </div>
 
-        menuButton.addEventListener("click", onClick);
-        plusButton.addEventListener("click", () => {
-            menuButton.textContent = "四";
-        });
 
-        gsap.set(sidebar, {
-            zIndex: 9999
-        });
+        <div class="work-item">
+            <a href="https://trap.jp/post/1975/">
+                <img src="img/pixiv.png">
+                <div class="description">
+                    <h3>traPコンペ 2023 夏 運営後記</h3>
+                    Kaggle班で毎年運営しているコンペの2023年度の運営後記です。 <br>
+                    2023年度は、ピクシブ株式会社様からスポンサードをいただいてコンペを運営し、37人のメンバーが参加し、32個のディスカッションの投稿、772件のサブミッションがありました。 <br>
+                </div>
+                <p>traPコンペ 運営後記</p>
+            </a>
+        </div>
 
-    </script>
 
-    </script>
+        <div class="work-item">
+            <a href="https://mushikui.trasta.dev/">
+                <img src="img/mushikui.png">
+                <div class="description">
+                    <h3>Mushikui</h3>
+                    サークルメンバーと最初のハッカソンで開発した、ヒントを得ながら数式を穴埋めするゲームです。 <br>
+                    フロントエンドを担当し、Vue.js を使って実装しました。
+                </div>
+                <p>Mushikui</p>
+            </a>
+        </div>
+
+        <div class="work-item">
+            <a
+                href="https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">
+                <img src="img/q_q.png">
+                <div class="description">
+                    <h3>(Q_Q)</h3>
+                    サークルメンバーとハッカソンで開発した、質問収集・回答システムです。 <br>
+                    サークル内のSNSで発生した質問を自動収集し、ページを構築・独自の検索エンジンで類似質問の検索と回答のサジェストを行います。 <br>
+                    質問を収集する Bot、検索エンジンの実装を担当しました。
+                </div>
+                <p>(Q_Q)</p>
+            </a>
+        </div>
+    </section>
+
+
+    <section id="Blog">
+        <div class="section-title">
+            Blog
+        </div>
+
+        <h2>最近の投稿</h2>
+        <ul class="post-list" id="recent-posts"></ul>
+
+        <a href="https://www.abap34.com/posts.html">⇨ 過去の投稿一覧</a>
+
+
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p><i class="icon fab fa-twitter"></i> <a href="https://twitter.com/abap34"> @abap34</a></p>
+        <p><i class="icon fab fa-github"></i> <a href="https://github.com/abap34"> @abap34</a></p>
+        <p><i class="icon fas fa-envelope"></i> <a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+    </section>
+
 </body>
+
+
+<script>
+
+    function showPosts(posts, elementId) {
+        const postList = document.getElementById(elementId);
+
+        posts.forEach(post => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("post-list-item");
+            listItem.innerHTML = `
+        <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
+        <div class="post-content">
+          ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
+        </div>`;
+            postList.appendChild(listItem);
+        });
+    }
+
+    fetch('/recent_posts.json')
+        .then(response => response.json())
+        .then(posts => {
+            showPosts(posts, 'recent-posts');
+        })
+        .catch(error => console.error('投稿情報の取得に失敗しました', error));
+</script>
+
+<footer>
+    <p>© 2024 abap34</p>
+</footer>
 
 </html>
