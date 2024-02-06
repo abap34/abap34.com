@@ -212,6 +212,10 @@ a:hover {
 }
 
 @media (max-width: 600px) {
+  section#works {
+    grid-template-columns: 1fr;
+  }
+
   .post-list {
       grid-template-columns: 1fr;
   }
