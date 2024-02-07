@@ -87,7 +87,7 @@ twitter_site: @abap34
   - 開催記録が例によって traP のブログにまとまっているので読んでみてください。
   - ブログ: [traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記](https://trap.jp/post/1975/)
 
-![ピクシブ社さんにお邪魔したとき推しの直筆イラストが見られました。ありがとうございました。](hurikaeri_2023_0/mito.png)
+![👍](hurikaeri_2023_0/mito.png)
 
 ## その他
 - プロ野球
