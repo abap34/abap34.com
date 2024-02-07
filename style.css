@@ -169,11 +169,6 @@ section#works {
 }
 
 @media (max-width: 768px) {
-  .work-item .description {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    font-size: 9px !important;
-  }
 
   .work-item .description h3 {
     font-size: 14px !important;
