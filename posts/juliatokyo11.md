@@ -46,3 +46,8 @@ twitter_site: @abap34
 マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。
 
 これからも Juliaを使って面白いことができたらなと思います。 運営の皆様、ありがとうございました  🙇‍♂️  
+
+
+##  今日の一曲
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/1RnBDQJyQdI?si=Cm1J6VjCufCCiNrz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
