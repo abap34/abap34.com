@@ -58,7 +58,7 @@ section {
 .section-title {
   margin-bottom: 20px;
   font-weight: 400;
-  font-size: 25px;
+  font-size: 40px;
   color: #0073b7;
 }
 
@@ -126,6 +126,15 @@ section#works {
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
 }
+
+#about {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
 
 
 .work-item .description {
