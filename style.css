@@ -99,7 +99,7 @@ section#works {
 
 .section-title#works {
   padding: 20px;
-
+  margin-bottom: 0px;
 }
 
 .work-item {
