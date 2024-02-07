@@ -12,12 +12,18 @@ body {
 
 @media (max-width: 768px) {
   body {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
   }
   #about {
     flex-direction: column;
   }
+  
+  .section-title {
+    font-size: 25px !important;
+  }
+
+
 }
 
 
