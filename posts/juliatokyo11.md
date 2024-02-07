@@ -41,7 +41,7 @@ twitter_site: @abap34
 
 なので、適当に Makefile を組んで分割してビルドできるようにしたのですが、めちゃくちゃ体験が良かったのでおすすめです。
 
-([Repo](https://github.com/abap34/juliatokyo11) )
+([Repo](https://github.com/abap34/juliatokyo11) 
 
 マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。
 
