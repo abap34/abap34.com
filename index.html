@@ -55,14 +55,14 @@
             <li>2022 (B1) Reserch Internship at <a href="https://www.d-itlab.co.jp/">DENSO IT Lab</a></li>
             
             <ul>
-                <li>深層学習を使った研究の実装・評価をしていました.</li>
+                <li>深層学習を使った研究の実装・評価をしていました。</li>
             </ul>
             
             <li>2023~ 同 情報工学系</li>
             
             <li>2023 (B2) SWE Internship at <a href="https://xica.net/">XICA</a></li>
             <ul>
-                <li>Python製の既存の分析基盤をJuliaで書き直して高速化していました。</li>
+                <li>Python製の既存の分析基盤をJuliaで書き直して高速化するプロジェクトをしていました。</li>
             </ul>
 
         </ul>
@@ -220,7 +220,7 @@
         });
     }
 
-    fetch('recent_posts.json')
+    fetch('public/recent_posts.json')
         .then(response => response.json())
         .then(posts => {
             showPosts(posts, 'recent-posts');
