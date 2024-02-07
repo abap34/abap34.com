@@ -111,6 +111,11 @@ section#works {
   margin-bottom: 0px;
 }
 
+.section-title#aboutme {
+  padding: 20px;
+  margin-bottom: 0px;
+}
+
 .work-item {
   background-color: #fff;
   padding: 20px;
