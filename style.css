@@ -127,14 +127,9 @@ section#works {
   color: #fff;
 }
 
-/* ホバーされたらゆっくり影がつくようにする */
-.work-item:hover img {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  transition: box-shadow 1s;
-}
 
 .work-item .description {
-  display: none;
+  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -145,6 +140,7 @@ section#works {
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(0, 0, 0, 0.6);
   font-size: 12px;
+  transition: opacity 0.3s;
 }
 
 .work-item .description h3 {
@@ -154,8 +150,10 @@ section#works {
   color: #fff;
 }
 
+
 .work-item:hover .description {
-  display: block;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
 
@@ -217,16 +215,16 @@ a:hover {
   }
 
   .post-list {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   .post-list-item {
-      padding: 1rem;
+    padding: 1rem;
   }
 
   .thumbnail {
-      width: 80px;
-      height: 80px;
-      margin-right: 1rem;
+    width: 80px;
+    height: 80px;
+    margin-right: 1rem;
   }
 }
