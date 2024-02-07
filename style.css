@@ -168,6 +168,13 @@ section#works {
   transition: opacity 0.3s;
 }
 
+@media (max-width: 768px) {
+  .work-item .description {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.6) !important
+  }
+}
+
 .work-item .description h3 {
   margin: 0;
   font-size: 20px;
@@ -234,7 +241,7 @@ a:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   section#works {
     grid-template-columns: 1fr;
   }
