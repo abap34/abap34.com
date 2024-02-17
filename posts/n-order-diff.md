@@ -13,6 +13,7 @@ site_name: abap34's blog
 twitter_site: @abap34
 ---
 
+
 # Abstract
 
 みなさん微分していますか？私はしています。
