@@ -45,9 +45,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.8;
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
     background-color: #f0f0f0;
     color: #333;
@@ -56,6 +56,7 @@
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
+    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -104,6 +105,8 @@
     max-width: 800px;
     width: 100%;
     background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
@@ -111,11 +114,7 @@
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #f7f7f7;
     padding: 40px;
 }
 
@@ -149,22 +148,24 @@
 }
 
 .article-header {
-    padding: 30px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
-    margin: 0 30px;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1, h2 {
-    color: #333;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -198,7 +199,8 @@ figcaption {
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;;
+    overflow-x: hidden;
+    ;
 }
 
 mjx-container {
@@ -231,7 +233,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -349,7 +352,8 @@ th, td {
     float: left;
 }
 
-.runbutton, .submitbutton {
+.runbutton,
+.submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -394,7 +398,10 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.output, .expect_out, .sample_in, .sample_out {
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
@@ -405,18 +412,23 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.box-title, .problem_list {
+.box-title,
+.problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #777;
 }
 
-.inline-code, .code-block {
+.inline-code,
+.code-block {
     font-family: monospace;
 }
 
-.success, .info, .warning, .danger {
+.success,
+.info,
+.warning,
+.danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -478,7 +490,10 @@ th, td {
     content: "Proof " counter(proof) ".";
 }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -502,7 +517,10 @@ th, td {
     content: "Lemma.";
 }
 
-.definition, .theorem, .proof, .lemma {
+.definition,
+.theorem,
+.proof,
+.lemma {
     padding: 12px;
     border-left: 1px solid #ddd;
 }
@@ -720,19 +738,19 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><br><script>page_contents.push({
+            <br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"3",
+    "id":"4",
     "title":"DrRacket 衝撃の機能"
 });
 </script>
-<h2 id="3">DrRacket 衝撃の機能</h2>今日で夏休みが終わって後期の授業が始まりました！早起きが辛い！！！<br>講義は、「関数型プログラミング基礎」というのが始まりました。<br>Schemeを使うと言われていたので、 <url> <a href="https://www.abap34.com/posts/hello_scheme.html">Schemeの環境構築とかもしておいておいたのですが</a> </url>、RacketというSchemeの方言を使うらしく、DrRacketというIDEを使えと言われました。<br>初回は「慣れるためにとりあえず使ってみて」というなんとも投げやりな感じだったのですが、指定されたサンプルコードを見ていると、<br><figure><img src="racket/main.png" ><figcaption>!?</figcaption></figure><br><span class="strong"> <strong>！？</strong> </span> なんかソースコードに急にロケットの画像が入っています。えぇ...<br>つまり、<br><figure><img src="racket/shohei.png" ><figcaption>終わった</figcaption></figure><br><br>(全然関係ないですが大谷選手ホームラン王おめでとうございます！！！！)<br><br><script>page_contents.push({
+<h2 id="4">DrRacket 衝撃の機能</h2>今日で夏休みが終わって後期の授業が始まりました！早起きが辛い！！！<br>講義は、「関数型プログラミング基礎」というのが始まりました。<br>Schemeを使うと言われていたので、 <url> <a href="https://www.abap34.com/posts/hello_scheme.html">Schemeの環境構築とかもしておいておいたのですが</a> </url>、RacketというSchemeの方言を使うらしく、DrRacketというIDEを使えと言われました。<br>初回は「慣れるためにとりあえず使ってみて」というなんとも投げやりな感じだったのですが、指定されたサンプルコードを見ていると、<br><figure><img src="racket/main.png" ><figcaption>!?</figcaption></figure><br><span class="strong"> <strong>！？</strong> </span> なんかソースコードに急にロケットの画像が入っています。えぇ...<br>つまり、<br><figure><img src="racket/shohei.png" ><figcaption>終わった</figcaption></figure><br><br>(全然関係ないですが大谷選手ホームラン王おめでとうございます！！！！)<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"66",
+    "id":"67",
     "title":"一応ソースコードの中身を見てみる"
 });
 </script>
-<h2 id="66">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br> ファイルの先頭を見ると、<br><div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
+<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br> ファイルの先頭を見ると、<br><div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
 #|
    This file uses the GRacket editor format.
    Open this file in DrRacket version 8.10 or later to read it.
@@ -759,11 +777,11 @@ IHDR   �   �   �>a�    IDATx�����,�u��9'"3k���_�
 IEND�B`�
 </code></pre> </div><br>みたいなのがあり画像のバイナリがそのまま入っていました。パワーを感じる。<br><script>page_contents.push({
     "type":"H2",
-    "id":"102",
+    "id":"103",
     "title":"今日のラーメン"
 });
 </script>
-<h2 id="102">今日のラーメン</h2>後期になって学食がオープンしたので行ってきました。<br>机が広くて友達と喋りやすくて良さげです。<br>あとごま団子が謎に入荷していて良かったです。<br><figure><img src="racket/ramen.jpeg" ><figcaption>学食のラーメン</figcaption></figure> <br>
+<h2 id="103">今日のラーメン</h2>後期になって学食がオープンしたので行ってきました。<br>机が広くて友達と喋りやすくて良さげです。<br>あとごま団子が謎に入荷していて良かったです。<br><figure><img src="racket/ramen.jpeg" ><figcaption>学食のラーメン</figcaption></figure> <br>
         </div>
 
 

@@ -45,9 +45,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.8;
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
     background-color: #f0f0f0;
     color: #333;
@@ -56,6 +56,7 @@
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
+    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -104,6 +105,8 @@
     max-width: 800px;
     width: 100%;
     background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
@@ -111,11 +114,7 @@
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #f7f7f7;
     padding: 40px;
 }
 
@@ -149,22 +148,24 @@
 }
 
 .article-header {
-    padding: 30px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
-    margin: 0 30px;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1, h2 {
-    color: #333;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -198,7 +199,8 @@ figcaption {
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;;
+    overflow-x: hidden;
+    ;
 }
 
 mjx-container {
@@ -231,7 +233,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -349,7 +352,8 @@ th, td {
     float: left;
 }
 
-.runbutton, .submitbutton {
+.runbutton,
+.submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -394,7 +398,10 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.output, .expect_out, .sample_in, .sample_out {
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
@@ -405,18 +412,23 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.box-title, .problem_list {
+.box-title,
+.problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #777;
 }
 
-.inline-code, .code-block {
+.inline-code,
+.code-block {
     font-family: monospace;
 }
 
-.success, .info, .warning, .danger {
+.success,
+.info,
+.warning,
+.danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -478,7 +490,10 @@ th, td {
     content: "Proof " counter(proof) ".";
 }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -502,7 +517,10 @@ th, td {
     content: "Lemma.";
 }
 
-.definition, .theorem, .proof, .lemma {
+.definition,
+.theorem,
+.proof,
+.lemma {
     padding: 12px;
     border-left: 1px solid #ddd;
 }
@@ -720,19 +738,19 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><br><script>page_contents.push({
+            <br><script>page_contents.push({
     "type":"H1",
-    "id":"3",
+    "id":"2",
     "title":"JuliaTokyo #11 でトークをしてきました"
 });
 </script>
-<h1 id="3">JuliaTokyo #11 でトークをしてきました</h1><br>2/3 に開催された JuliaTokyo #11 で発表をしてきました。<br><url> <a href="https://juliatokyo.connpass.com/event/306300/ ">https://juliatokyo.connpass.com/event/306300/</a> </url><br>当日は現地50人くらい + オンラインでも30人くらいの方が見ていたらしく、結構盛り上がっていました。<br>自分は「Juliaと歩く自動微分の世界」というタイトルで30分トークをさせていただきました。<br>資料は　SpeakerDeck ・このサイトにもアップされているのでもしよかったら見てください。<br>(この資料自体の内容はともかくとして、最後の一枚はかなり嬉しい人が多いと思います)<br><br><iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/95948ff2f7a14389992dc1c79d92f5cf" title="Julia Tokyo #11 トーク: 「Juliaで歩く自動微分」" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe><br><br>自動微分は最近かなり色々勉強しているところですが、Julia周辺で活発に研究されていて面白いです。<br>当分の目標は <url> <a href="https://github.com/JuliaDiff/Diffractor.jl">Difffractor.jl</a> </url> を理解することですが、どうにも難解すぎて道は遠そうです。<br><br>また、資料は <url> <a href="https://marp.app/">marp</a> </url> で書いてるのですが、このくらい長大になってくると単一の markdown ファイルで書くのが辛くなってきます。<br>なので、適当に Makefile を組んで分割してビルドできるようにしたのですが、めちゃくちゃ体験が良かったのでおすすめです。<br>(<url> <a href="https://github.com/abap34/juliatokyo11">Repo</a> </url> <br>マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。<br>これからも Juliaを使って面白いことができたらなと思います。 運営の皆様、ありがとうございました  🙇‍♂️  <br><br><script>page_contents.push({
+<h1 id="2">JuliaTokyo #11 でトークをしてきました</h1><br>2/3 に開催された JuliaTokyo #11 で発表をしてきました。<br><url> <a href="https://juliatokyo.connpass.com/event/306300/ ">https://juliatokyo.connpass.com/event/306300/</a> </url><br>当日は現地50人くらい + オンラインでも30人くらいの方が見ていたらしく、結構盛り上がっていました。<br>自分は「Juliaと歩く自動微分の世界」というタイトルで30分トークをさせていただきました。<br>資料は　SpeakerDeck ・このサイトにもアップされているのでもしよかったら見てください。<br>(この資料自体の内容はともかくとして、最後の一枚はかなり嬉しい人が多いと思います)<br><br><iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/95948ff2f7a14389992dc1c79d92f5cf" title="Julia Tokyo #11 トーク: 「Juliaで歩く自動微分」" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe><br><br>自動微分は最近かなり色々勉強しているところですが、Julia周辺で活発に研究されていて面白いです。<br>当分の目標は <url> <a href="https://github.com/JuliaDiff/Diffractor.jl">Difffractor.jl</a> </url> を理解することですが、どうにも難解すぎて道は遠そうです。<br><br>また、資料は <url> <a href="https://marp.app/">marp</a> </url> で書いてるのですが、このくらい長大になってくると単一の markdown ファイルで書くのが辛くなってきます。<br>なので、適当に Makefile を組んで分割してビルドできるようにしたのですが、めちゃくちゃ体験が良かったのでおすすめです。<br>(<url> <a href="https://github.com/abap34/juliatokyo11">Repo</a> </url> <br>マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。<br>これからも Juliaを使って面白いことができたらなと思います。 運営の皆様、ありがとうございました  🙇‍♂️  <br><br><script>page_contents.push({
     "type":"H2",
-    "id":"84",
+    "id":"83",
     "title":" 今日の一曲"
 });
 </script>
-<h2 id="84"> 今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/1RnBDQJyQdI?si=Cm1J6VjCufCCiNrz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br>
+<h2 id="83"> 今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/1RnBDQJyQdI?si=Cm1J6VjCufCCiNrz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br>
         </div>
 
 

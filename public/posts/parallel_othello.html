@@ -44,24 +44,28 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
-    <style>
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    <style>body {
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
-    background-color: rgb(248, 248, 248);
+    background-color: #f0f0f0;
     color: #333;
     display: flex;
     gap: 10px;
     flex-direction: row-reverse;
-    overflow: auto;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     body {
         padding: 0px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        font-size: 12px;
     }
 }
 
@@ -69,9 +73,9 @@ body {
     width: 240px;
     display: flex;
     flex-direction: column;
-    background-color: rgba(246, 246, 246, 0.177);
+    background-color: #f5f5f5;
     border-radius: 10px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
+    border: solid 1px #ddd;
     margin-left: auto;
     margin-right: 0px;
     padding-left: 10px;
@@ -82,7 +86,7 @@ body {
     padding-right: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .side {
         display: none;
     }
@@ -94,34 +98,30 @@ body {
 }
 
 .content {
-    padding: 40px 40px;
+    padding: 40px 20px;
     margin-left: 0px;
     margin-right: auto;
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
     margin-bottom: 30px;
-
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
     padding: 40px;
-    background-color: #ffffff64;
-    border-radius: 5px;
     padding: 40px;
 }
 
-
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .content {
         width: 100%;
-        padding: 20px;
+        padding: 0px;
     }
 }
 
@@ -130,7 +130,7 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .sidebar {
         display: none;
     }
@@ -141,42 +141,47 @@ body {
     left: 0px;
 }
 
-@media (max-width: 1260px) {
+@media (max-width: 1200px) {
     .links {
         display: none;
     }
 }
 
-
+.article-header {
+    padding: 0px;
+    margin: 0px;
+}
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1,
-h2 {
-    color: #323232;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
     text-align: left;
     padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
+    border-bottom: solid 1px #ddd;
 }
 
 p {
-    color: #666;
+    color: #777;
     margin-bottom: 10px;
 }
 
 a {
-    color: #006699;
+    color: #007bff;
+    word-break: break-all;
 }
 
 figure {
@@ -187,10 +192,33 @@ figcaption {
     text-align: center;
 }
 
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
 pre {
     padding: 10px;
     color: #333;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
+    background-color: #f0f0f0;
     overflow-x: auto;
 }
 
@@ -212,14 +240,14 @@ td {
 }
 
 .date {
-    color: #666;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
 }
 
 .tag {
-    color: #666;
+    color: #777;
     font-size: 14px;
     margin: 0 auto;
     text-align: center;
@@ -230,19 +258,18 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
-    /* 左側に棒 */
-    border-left: solid 1px #161616;
+    border-left: solid 1px #ddd;
 }
 
 .toc_title {
     font-size: 20px;
     font-weight: bold;
-    color: #2a2a2a;
+    color: #444;
 }
 
 #toc a {
     text-decoration: none;
-    color: #5f5f5f;
+    color: #777;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
@@ -263,50 +290,55 @@ td {
     font-size: 16px;
 }
 
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
 .toc_H1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
-
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
 }
-
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .badge {
@@ -314,8 +346,8 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #666;
-    border: 1px solid #333;
+    color: #777;
+    border: 1px solid #444;
     margin: 0 8px;
     float: left;
 }
@@ -334,7 +366,7 @@ td {
 }
 
 .runbutton {
-    background-color: #006699;
+    background-color: #007bff;
 }
 
 .runbutton:hover {
@@ -360,10 +392,10 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
     padding: 10px;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
 .output,
@@ -375,9 +407,9 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
 .box-title,
@@ -385,14 +417,13 @@ td {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #666;
+    color: #777;
 }
 
 .inline-code,
 .code-block {
     font-family: monospace;
 }
-
 
 .success,
 .info,
@@ -427,6 +458,38 @@ td {
     border-color: #ebccd1;
 }
 
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
 .definition::before,
 .theorem::before,
 .proof::before,
@@ -459,7 +522,7 @@ td {
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid;
+    border-left: 1px solid #ddd;
 }
 
 .proof::after {
@@ -468,7 +531,9 @@ td {
     display: block;
 }
 
-</style>
+iframe {
+    width: 100%;
+}</style>
 
 
     <script>
@@ -673,7 +738,7 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><br>ちょっと前に人工知能の講義で発表したスライドです。<br>レポートを書いて優秀だったら発表できて加点されるみたいな講義で、発表した + 最優秀だったらしい...<br>Twitterに上げたら実装で参考にした<url> <a href="https://twitter.com/issei_y/status/1686367844123209729">山本さんから反応があって嬉しかった</a> </url>です。<br><br>肝心の内容は  <url> <a href="https://github.com/abap34/ParallelOthello.jl/main/slide.pdf) を貼ります。(は？">GitHubに上がっているスライド</a> </url><br><br>(知見をブログに集約したいと思っていて、まとめています)<br><br><br>最初の方に並列化についてやや微妙な説明が続きますが、発表時間との兼ね合いとかあんまり詳しく説明しても空気がやばくなりそうだったので心の目で読んでもらえればと思います。<br><br><iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe><br><br><br><br><br>    <br>
+            <br>ちょっと前に人工知能の講義で発表したスライドです。<br>レポートを書いて優秀だったら発表できて加点されるみたいな講義で、発表した + 最優秀だったらしい...<br>Twitterに上げたら実装で参考にした<url> <a href="https://twitter.com/issei_y/status/1686367844123209729">山本さんから反応があって嬉しかった</a> </url>です。<br><br>肝心の内容は  <url> <a href="https://github.com/abap34/ParallelOthello.jl/main/slide.pdf) を貼ります。(は？">GitHubに上がっているスライド</a> </url><br><br>(知見をブログに集約したいと思っていて、まとめています)<br><br><br>最初の方に並列化についてやや微妙な説明が続きますが、発表時間との兼ね合いとかあんまり詳しく説明しても空気がやばくなりそうだったので心の目で読んでもらえればと思います。<br><br><iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe><br><br><br><br><br>    <br>
         </div>
 
 
