@@ -83,6 +83,25 @@ jobs:
           done
           rm tmp.json
 
+      - name: Copy Image Files
+        if: steps.check_changes.outputs.changed_files != ''
+        run: |
+          cd ${{ github.workspace }}
+          changed_files=${{ steps.check_changes.outputs.changed_files }}
+          changed_files="${changed_files//'%25'/'%'}"
+          changed_files="${changed_files//'%0A'/$'\n'}"
+          changed_files="${changed_files//'%0D'/$'\r'}"
+          echo "changed_files=$changed_files" 
+          for file in $changed_files; do
+            if [ ! -e $file ]; then
+              continue
+            fi
+            filename_without_extension=$(basename $file .md)
+            filename_without_extension=${filename_without_extension#posts-md/}
+            out_path="public/posts/${filename_without_extension}.html"
+            echo "Copying images for $file"
+            cp -r posts/${filename_without_extension} public/posts/
+          done  
     
       - name: Commit HTML Files
         if: steps.check_changes.outputs.changed_files != ''
