@@ -13,7 +13,6 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
-
 # marp で counter が使えない
 
 普段は marp でスライドを作っています。
