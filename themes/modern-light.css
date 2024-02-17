@@ -1,7 +1,7 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.8;
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
     background-color: #f0f0f0;
     color: #333;
@@ -10,6 +10,7 @@ body {
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
+    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -58,6 +59,8 @@ body {
     max-width: 800px;
     width: 100%;
     background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
@@ -65,11 +68,7 @@ body {
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #f7f7f7;
     padding: 40px;
 }
 
@@ -103,22 +102,24 @@ body {
 }
 
 .article-header {
-    padding: 30px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
-    margin: 0 30px;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1, h2 {
-    color: #333;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -152,7 +153,8 @@ figcaption {
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;;
+    overflow-x: hidden;
+    ;
 }
 
 mjx-container {
@@ -185,7 +187,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -303,7 +306,8 @@ th, td {
     float: left;
 }
 
-.runbutton, .submitbutton {
+.runbutton,
+.submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -348,7 +352,10 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.output, .expect_out, .sample_in, .sample_out {
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
@@ -359,18 +366,23 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.box-title, .problem_list {
+.box-title,
+.problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #777;
 }
 
-.inline-code, .code-block {
+.inline-code,
+.code-block {
     font-family: monospace;
 }
 
-.success, .info, .warning, .danger {
+.success,
+.info,
+.warning,
+.danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -432,7 +444,10 @@ th, td {
     content: "Proof " counter(proof) ".";
 }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -456,7 +471,10 @@ th, td {
     content: "Lemma.";
 }
 
-.definition, .theorem, .proof, .lemma {
+.definition,
+.theorem,
+.proof,
+.lemma {
     padding: 12px;
     border-left: 1px solid #ddd;
 }
