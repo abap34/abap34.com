@@ -45,9 +45,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: "HiraKakuProN-W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-    line-height: 1.8;
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
     background-color: #f0f0f0;
     color: #333;
@@ -56,6 +56,7 @@
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
+    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -103,7 +104,9 @@
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #f5f5f5;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
@@ -111,11 +114,7 @@
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #f0f0f0;
     padding: 40px;
 }
 
@@ -149,22 +148,24 @@
 }
 
 .article-header {
-    padding: 30px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
-    margin: 0 30px;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1, h2 {
-    color: #333;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -198,7 +199,8 @@ figcaption {
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;;
+    overflow-x: hidden;
+    ;
 }
 
 mjx-container {
@@ -231,7 +233,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -349,7 +352,8 @@ th, td {
     float: left;
 }
 
-.runbutton, .submitbutton {
+.runbutton,
+.submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -394,7 +398,10 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.output, .expect_out, .sample_in, .sample_out {
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
@@ -405,18 +412,23 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.box-title, .problem_list {
+.box-title,
+.problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #777;
 }
 
-.inline-code, .code-block {
+.inline-code,
+.code-block {
     font-family: monospace;
 }
 
-.success, .info, .warning, .danger {
+.success,
+.info,
+.warning,
+.danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -478,7 +490,10 @@ th, td {
     content: "Proof " counter(proof) ".";
 }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -502,7 +517,10 @@ th, td {
     content: "Lemma.";
 }
 
-.definition, .theorem, .proof, .lemma {
+.definition,
+.theorem,
+.proof,
+.lemma {
     padding: 12px;
     border-left: 1px solid #ddd;
 }
@@ -726,7 +744,7 @@ const runBlock = async (objectid) => {
     "title":"Mosh"
 });
 </script>
-<h2 id="4">Mosh</h2>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br><br>  <br>
+<h2 id="4">Mosh</h2><br>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br><br>  <br>
         </div>
 
 

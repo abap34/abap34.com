@@ -45,9 +45,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: "HiraKakuProN-W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
-    line-height: 1.8;
+    font-family: 'Segoe UI';
     margin: 0 auto;
+    line-height: 1.5;
     padding: 20px;
     background-color: #f0f0f0;
     color: #333;
@@ -56,6 +56,7 @@
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
+    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -103,7 +104,9 @@
     border-radius: 5px;
     max-width: 800px;
     width: 100%;
-    background-color: #f5f5f5;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    border: solid 1px #ddd;
 }
 
 .article-header {
@@ -111,11 +114,7 @@
 }
 
 .article-body {
-    box-shadow: 0 0 10px rgba(101, 101, 101, 0.05);
-    border-radius: 10px;
-    border: solid 1px #ddd;
     padding: 40px;
-    background-color: #f0f0f0;
     padding: 40px;
 }
 
@@ -149,22 +148,24 @@
 }
 
 .article-header {
-    padding: 30px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .title {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #333;
     text-align: center;
-    margin: 0 30px;
+    margin: 30px 30px 0px 50px;
+    padding: 0px;
 }
 
-h1, h2 {
-    color: #333;
+
+
+h1 {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h2 {
@@ -198,7 +199,8 @@ figcaption {
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;;
+    overflow-x: hidden;
+    ;
 }
 
 mjx-container {
@@ -231,7 +233,8 @@ table {
     margin-bottom: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
@@ -349,7 +352,8 @@ th, td {
     float: left;
 }
 
-.runbutton, .submitbutton {
+.runbutton,
+.submitbutton {
     display: inline-block;
     padding: 10px 20px;
     border: none;
@@ -394,7 +398,10 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.output, .expect_out, .sample_in, .sample_out {
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
     width: 100%;
     padding: 5px 5px;
     overflow-x: auto;
@@ -405,18 +412,23 @@ th, td {
     border: solid 1px #ddd;
 }
 
-.box-title, .problem_list {
+.box-title,
+.problem_list {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #777;
 }
 
-.inline-code, .code-block {
+.inline-code,
+.code-block {
     font-family: monospace;
 }
 
-.success, .info, .warning, .danger {
+.success,
+.info,
+.warning,
+.danger {
     padding: 12px;
     border: 1px solid;
     border-radius: 4px;
@@ -478,7 +490,10 @@ th, td {
     content: "Proof " counter(proof) ".";
 }
 
-.definition::before, .theorem::before, .proof::before, .lemma::before {
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
     font-family: serif;
     font-size: large;
     font-weight: 600;
@@ -502,7 +517,10 @@ th, td {
     content: "Lemma.";
 }
 
-.definition, .theorem, .proof, .lemma {
+.definition,
+.theorem,
+.proof,
+.lemma {
     padding: 12px;
     border-left: 1px solid #ddd;
 }
@@ -720,19 +738,19 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><script>page_contents.push({
+            <br><br><script>page_contents.push({
     "type":"H1",
-    "id":"2",
+    "id":"3",
     "title":"Abstract"
 });
 </script>
-<h1 id="2">Abstract</h1><br>みなさん微分していますか？私はしています。数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。なので精度よくやりたくなってきます。ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
+<h1 id="3">Abstract</h1><br>みなさん微分していますか？私はしています。数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。なので精度よくやりたくなってきます。ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"51",
+    "id":"52",
     "title":"前進差分・中心差分の精度の確認"
 });
 </script>
-<h2 id="51">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
+<h2 id="52">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
 f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
 
  \] </div><br></div><br><br>これが一次精度、つまり誤差が  <span class="math-inline"> \( O(h) \) </span> であることを確かめます。<br>上の式の右辺をテイラー展開すると、<br><div class="math-block"> \[ 
@@ -744,8 +762,8 @@ f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
 \end{align}
 
  \] </div><br>となり、誤差が <span class="math-inline"> \( O(h) \) </span> であることがわかりました。<br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
- <div class="editor" id="120" rows="3" cols="80"></div> 
-<script>editor = ace.edit("120"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="121" rows="3" cols="80"></div> 
+<script>editor = ace.edit("121"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -779,16 +797,16 @@ plt.legend()
 plt.show()
 plt.close()
 `, -1);</script>
-<pre class="exec_out" id="120_out"></pre>
-<div class="exec_plot" id="120_plot"></div>
-<button class="runbutton" onclick="runBlock('120')"> Run </button>
+<pre class="exec_out" id="121_out"></pre>
+<div class="exec_plot" id="121_plot"></div>
+<button class="runbutton" onclick="runBlock('121')"> Run </button>
 <br><br><br>よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"129",
+    "id":"130",
     "title":"任意の k 階 n 次精度数値微分"
 });
 </script>
-<h2 id="129">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
+<h2 id="130">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
 f_{n}^{(k)}(x; h) = \boldsymbol{w_{n,k}} \cdot 
 \begin{pmatrix}
 f(x - ph) \\
@@ -823,8 +841,8 @@ x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^
 \det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
 
  \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに具体的にもとまりました。<br>実際に計算してみようと思います。<br>右から <span class="math-inline"> \( e_k \) </span> をかけるのはちょうど <span class="math-inline"> \( k \) </span> 列目のベクトルを取り出すことなのでそう実装します。<br><br><br> 
- <div class="editor" id="377" rows="3" cols="80"></div> 
-<script>editor = ace.edit("377"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+ <div class="editor" id="378" rows="3" cols="80"></div> 
+<script>editor = ace.edit("378"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 import matplotlib.pyplot as plt
 
 def central_weight(n, k):
@@ -866,12 +884,12 @@ print(numerical_diff(f, x, 2))
 print(numerical_diff(f, x, 4))    
 print(numerical_diff(f, x, 4, k=2))
 `, -1);</script>
-<pre class="exec_out" id="377_out"></pre>
-<div class="exec_plot" id="377_plot"></div>
-<button class="runbutton" onclick="runBlock('377')"> Run </button>
+<pre class="exec_out" id="378_out"></pre>
+<div class="exec_plot" id="378_plot"></div>
+<button class="runbutton" onclick="runBlock('378')"> Run </button>
 <br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="388" rows="3" cols="80"></div> 
-<script>editor = ace.edit("388"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+ <div class="editor" id="389" rows="3" cols="80"></div> 
+<script>editor = ace.edit("389"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
@@ -893,22 +911,22 @@ plt.xlabel('h')
 plt.ylabel('Error')
 plt.show()
 `, -1);</script>
-<pre class="exec_out" id="388_out"></pre>
-<div class="exec_plot" id="388_plot"></div>
-<button class="runbutton" onclick="runBlock('388')"> Run </button>
+<pre class="exec_out" id="389_out"></pre>
+<div class="exec_plot" id="389_plot"></div>
+<button class="runbutton" onclick="runBlock('389')"> Run </button>
 <br><br><ul><li><span class="math-inline"> \( n \) </span> が奇数のとき</li></ul><br>あとで書きます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"405",
+    "id":"406",
     "title":"感想"
 });
 </script>
-<h2 id="405">感想</h2>線形代数が役に立って、びっくり。<br>また、上のアルゴリズムは逆行列を求めるところがボトルネックで　時間計算量は <span class="math-inline"> \( O(N^3) \) </span>　ですが、調べたところによるとヴァンデルモンド行列の逆行列は <span class="math-inline"> \( O(N^2) \) </span> で求められるようなのでそうすればもう少し早くなりそうです。(とはいえ、中心差分よりも正確にやろうとする場面すらなかなかみないので、ほとんど実用的ではないですが)<br><br><br><script>page_contents.push({
+<h2 id="406">感想</h2>線形代数が役に立って、びっくり。<br>また、上のアルゴリズムは逆行列を求めるところがボトルネックで　時間計算量は <span class="math-inline"> \( O(N^3) \) </span>　ですが、調べたところによるとヴァンデルモンド行列の逆行列は <span class="math-inline"> \( O(N^2) \) </span> で求められるようなのでそうすればもう少し早くなりそうです。(とはいえ、中心差分よりも正確にやろうとする場面すらなかなかみないので、ほとんど実用的ではないですが)<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"433",
+    "id":"434",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="433">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
+<h2 id="434">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br>
         </div>
 
 
