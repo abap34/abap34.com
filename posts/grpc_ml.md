@@ -34,7 +34,7 @@ twitter_site: @abap34
 なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。
 
 
-
+ 
 ## 実装
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
 
