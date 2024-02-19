@@ -242,4 +242,3 @@ $$
 $^1$ 丼に定義を入れて、また空集合を認めるというユーモアは [http://mugenji.web.fc2.com/kare.pdf](http://mugenji.web.fc2.com/kare.pdf) がおそらく発祥と思われる。
 
 $^2$ 理系単科大学での使用など。 
-

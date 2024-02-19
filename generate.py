@@ -39,6 +39,9 @@ twitter_site: @{twitter_id}
     
     
     os.makedirs('posts/' + basename, exist_ok=True)
+    with open('posts/' + basename + '/.gitkeep', 'w') as f: 
+        f.write('')
+
 
     with open('posts/' + filename, 'w') as f:
         f.write(head)

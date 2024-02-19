@@ -34,7 +34,7 @@ twitter_site: @abap34
 なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。
 
 
- 
+
 ## 実装
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
 
@@ -219,7 +219,7 @@ func main() {
 
 これで `main.go` を実行させて、 csvファイルを投げ込むと.....
 
-![](go_ml/req.png)
+![](grpc_ml/req.png)
 
 推論結果が返ってきました。笑顔に。
 
