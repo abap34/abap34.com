@@ -45,7 +45,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: 'Segoe UI';
+    font-family: 'Segoe UI', Geneva, Verdana, sans-serif;
     margin: 0 auto;
     line-height: 1.5;
     padding: 20px;
@@ -56,7 +56,6 @@
     flex-direction: row-reverse;
     justify-content: center;
     font-size: 14px;
-    font-weight: 
 }
 
 @media (max-width: 1200px) {
@@ -65,7 +64,6 @@
         margin: 0 auto;
         display: flex;
         justify-content: center;
-        font-size: 12px;
     }
 }
 
@@ -896,7 +894,7 @@ func main() {
 	r.HandleFunc("/predict", PredictHandler)
 	http.ListenAndServe(":8080", r)
 }
-</code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="go_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
+</code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"145",
     "title":"まとめ"
