@@ -34,7 +34,7 @@ twitter_site: @abap34
 みたいなことをしていますが、これを普通に書くだけでは
 `fetal: bad obejct xxx...`となります。
  
- 
+
 
 全然原因がわからず、
 `actions/checkout`を見にいくと、

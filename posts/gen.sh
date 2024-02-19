@@ -23,4 +23,5 @@ rm "$1-e"
 
 mkdir -p $(basename "$1" .md)
 
+
 echo "記事テンプレートが作成されました: $1"
