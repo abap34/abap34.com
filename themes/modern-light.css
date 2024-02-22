@@ -434,3 +434,9 @@ td {
 iframe {
     width: 100%;
 }
+
+
+a {
+    color: #007bff;
+    word-break: break-all;
+}
