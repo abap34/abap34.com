@@ -3,6 +3,7 @@ body {
     grid-template-columns: 1fr 5fr;
     padding-left: 20px;
     padding-right: 50px;
+    font-family: "Noto Sans", sans-serif;
 }
 
 @media (max-width: 768px) {
