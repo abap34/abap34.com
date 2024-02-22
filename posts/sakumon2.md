@@ -54,3 +54,4 @@ $P(T) = \max_{i \in I} p_i$ として出題しました。(調査の結果、元
  
 また、準備でいろいろと　[@noya2](https://twitter.com/noya2ruler) と [@ponjuice](https://twitter.com/PonponJuice0) くんにめちゃくちゃ助けてもらいました、
 大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ 
+
