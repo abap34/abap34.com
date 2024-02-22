@@ -52,8 +52,9 @@
     font-family: "Noto Sans", sans-serif;
 }
 
+
 @media (max-width: 768px) {
-    .side {
+    .side #toc {
         display: none;
     }
 
@@ -704,7 +705,7 @@ const runBlock = async (objectid) => {
 .def {
   counter-increment: def-counter;
 }
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br>  <br><br><br><br><br><br><br><br><br><br>
+</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br>  <br>
         </div>
 
 
