@@ -49,6 +49,7 @@
     grid-template-columns: 1fr 5fr;
     padding-left: 20px;
     padding-right: 50px;
+    font-family: "Noto Sans", sans-serif;
 }
 
 @media (max-width: 768px) {
@@ -682,37 +683,37 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br>一番嫌いな...冬に...突入！！<br><script>page_contents.push({
+            <br><br>一番嫌いな...冬に...突入！！<br><script>page_contents.push({
     "type":"H2",
-    "id":"6",
+    "id":"7",
     "title":"2023年度前期の振り返り"
 });
 </script>
-<h2 id="6">2023年度前期の振り返り</h2><script>page_contents.push({
+<h2 id="7">2023年度前期の振り返り</h2><script>page_contents.push({
     "type":"H3",
-    "id":"10",
+    "id":"11",
     "title":"作ったもの・書いたもの"
 });
 </script>
-<h3 id="10">作ったもの・書いたもの</h3>大体時系列順です。<br><ul><li>(Q_Q) ?</li><ul><li>「いかしかめか」と読みます。部内ハッカソンで作りました。</li><li>部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。</li><li>諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。</li><li>発表スライド : <url> <a href="https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink</a> </url></li></ul></ul><br><figure><img src="hurikaeri_2023_0/sh.png" ><figcaption>サジェストしてくれる便利なやつ</figcaption></figure><br><ul><li>Wuff</li><ul><li>コメントをするとリアルタイムにニコニコみたいな感じで画面に流れるやつです。</li><li>Cloud Run を初めて使ってみて、めちゃくちゃ簡単で、感動...</li></ul></ul><br><figure><img src="https://trap.jp/content/images/2023/07/wc-1.png?original=1" ><figcaption></figcaption></figure><br><ul><li>DacQ</li><ul><li>部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやとかなり簡素なものですが作りました。</li><li>部内 PaaS の Neoshowcase を使うとめちゃくちゃ簡単に traP部員だけが使えるように認証できて、感動...</li></ul><li><figure><img src="hurikaeri_2023_0/dq.png" ><figcaption>緑の画面</figcaption></figure></li></ul><br><ul><li>機械学習の入門資料</li><ul><li><url> <a href="https://www.abap34.com/ml-lecture/slide.html">https://www.abap34.com/ml-lecture/slide.html</a> </url></li><li>400ページ近くの資料を作った。 めちゃくちゃ大変だったけど割と楽しかったです。</li><li>内容をきちんとめに直してどこかに出したいな〜　(色々と微妙なところがある上に書き込み前提の資料なので)</li></ul></ul><br><figure><img src="hurikaeri_2023_0/cg.png" ><figcaption>こういう書きたいこと書けて楽しかった。</figcaption></figure> <ul><li>機械学習講習会</li><ul><li>ここまで 3つの内容は全部これです！</li><li>新入部員向けの教育でやりました。</li><li>全7回、合計10時間講義 + 演習やりました。</li><li>内容は traP のブログにまとまっているので読んでみてください。 個人的には結構頑張りました。</li><li>サークルを卒業した先輩とか弊学の先生とかに結構褒められていて嬉しかったです。</li><li>ブログ: <url> <a href="https://trap.jp/post/1918/">Kaggle部で機械学習講習会を開催しました！</a> </url></li></ul></ul><br><figure><img src="hurikaeri_2023_0/pz.png" ><figcaption>ノリでピザを出したりしていました。大学生っぽくて楽しいですね</figcaption></figure><br><ul><li>JITrench.jl の計算グラフの最適化機能</li><ul><li>JITrench.jl で、静的な計算グラフの構築とかそれのLayerFusionとか定数ノードの伝播とかができるようになりました。</li><li>好きに開発するだけで100点がもらえる謎の講義の発表に間に合わせるべくかなりバグを仕込んで完成させてしまったので直すのがかなり面倒でなかなかリリースされません。どうして...</li><li>色々論文読んだり実装するのがちょっとは上手くなってきたかなという気がします。Readableは神です。</li></ul></ul><br><figure><img src="hurikaeri_2023_0/ot.png" ><figcaption>速くなる図。かなり上手くいく例(Activationがそのままの小さめMLP)ですが思ったより上手くいくんだなぁ...(小並感)</figcaption></figure><br><ul><li>Juliaで並列AlphaBeta法</li><ul><li>大学の人工知能の講義でなんかレポートを書けと言われたので書いて授業で発表しました。</li><li>pdfを貼っているだけですが記事にしているので読んでみてください。 </li><li>記事: <url> <a href="https://www.abap34.com/posts/parallel_othello.html">https://www.abap34.com/posts/parallel_othello.html</a> </url></li><li>並列化もしんどかったけどビットボードで脳が破壊されました</li></ul></ul><br><figure><img src="hurikaeri_2023_0/bb.png" ><figcaption>デバッグが、つらい！</figcaption></figure><br><ul><li>ALMO</li><ul><li>レポジトリ: <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url></li><li>このページを作っているMarkdownパーサです。WebAssemblyで実行可能なコードブロックとかプロットとかジャッジが作れます。</li><li>かなりかなりブラッシュアップされて v1.0 リリース間近です。<span class="overline"> <s>ドキュメントを書くのが面倒でなかなかリリースされない</s> </span></li></ul></ul><br><figure><img src="hurikaeri_2023_0/cb.png" ><figcaption>ひっそりコミットし続けている</figcaption></figure><br><ul><li>部内コンペ (sponsored by ピクシブ社) の運営</li><ul><li>去年から運営しているコンペをやりました。</li><li>今年はスポンサーがついたので、それも含めて色々やることが多くて大変でしたがめちゃくちゃ楽しかったです。</li><li>開催記録が例によって traP のブログにまとまっているので読んでみてください。</li><li>ブログ: <url> <a href="https://trap.jp/post/1975/">traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記</a> </url></li></ul></ul><br><figure><img src="hurikaeri_2023_0/mito.png" ><figcaption>ピクシブ社さんにお邪魔したとき推しの直筆イラストが見られました。ありがとうございました。</figcaption></figure><br><script>page_contents.push({
+<h3 id="11">作ったもの・書いたもの</h3>大体時系列順です。 <ul><li>(Q_Q) ?</li><ul><li>「いかしかめか」と読みます。部内ハッカソンで作りました。</li><li>部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。</li><li>諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。</li><li>発表スライド : <url> <a href="https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink</a> </url></li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/sh.png" ><figcaption>サジェストしてくれる便利なやつ</figcaption></figure><br><ul><li>Wuff</li><ul><li>コメントをするとリアルタイムにニコニコみたいな感じで画面に流れるやつです。</li><li>Cloud Run を初めて使ってみて、めちゃくちゃ簡単で、感動...</li></ul></ul><br><br><figure><img src="https://trap.jp/content/images/2023/07/wc-1.png?original=1" ><figcaption></figcaption></figure> <br><ul><li>DacQ</li><ul><li>部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやとかなり簡素なものですが作りました。</li><li>部内 PaaS の Neoshowcase を使うとめちゃくちゃ簡単に traP部員だけが使えるように認証できて、感動...</li></ul></ul><br><figure><img src="hurikaeri_2023_0/dq.png" ><figcaption>緑の画面</figcaption></figure><br><ul><li>機械学習の入門資料</li><ul><li><url> <a href="https://www.abap34.com/ml-lecture/slide.html">https://www.abap34.com/ml-lecture/slide.html</a> </url></li><li>400ページ近くの資料を作った。 めちゃくちゃ大変だったけど割と楽しかったです。</li><li>内容をきちんとめに直してどこかに出したいな〜　(色々と微妙なところがある上に書き込み前提の資料なので)</li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/cg.png" ><figcaption>こういう書きたいこと書けて楽しかった。</figcaption></figure><br><ul><li>機械学習講習会</li><ul><li>ここまで 3つの内容は全部これです！</li><li>新入部員向けの教育でやりました。</li><li>全7回、合計10時間講義 + 演習やりました。</li><li>内容は traP のブログにまとまっているので読んでみてください。 個人的には結構頑張りました。</li><li>サークルを卒業した先輩とか弊学の先生とかに結構褒められていて嬉しかったです。</li><li>ブログ: <url> <a href="https://trap.jp/post/1918/">Kaggle部で機械学習講習会を開催しました！</a> </url></li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/pz.png" ><figcaption>ノリでピザを出したりしていました。大学生っぽくて楽しいですね</figcaption></figure><br><ul><li>JITrench.jl の計算グラフの最適化機能</li><ul><li>JITrench.jl で、静的な計算グラフの構築とかそれのLayerFusionとか定数ノードの伝播とかができるようになりました。</li><li>好きに開発するだけで100点がもらえる謎の講義の発表に間に合わせるべくかなりバグを仕込んで完成させてしまったので直すのがかなり面倒でなかなかリリースされません。どうして...</li><li>色々論文読んだり実装するのがちょっとは上手くなってきたかなという気がします。Readableは神です。</li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/ot.png" ><figcaption>速くなる図。かなり上手くいく例(Activationがそのままの小さめMLP)ですが思ったより上手くいくんだなぁ...(小並感)</figcaption></figure><br><ul><li>Juliaで並列AlphaBeta法</li><ul><li>大学の人工知能の講義でなんかレポートを書けと言われたので書いて授業で発表しました。</li><li>pdfを貼っているだけですが記事にしているので読んでみてください。 </li><li>記事: <url> <a href="https://www.abap34.com/posts/parallel_othello.html">https://www.abap34.com/posts/parallel_othello.html</a> </url></li><li>並列化もしんどかったけどビットボードで脳が破壊されました</li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/bb.png" ><figcaption>デバッグが、つらい！</figcaption></figure><br><ul><li>ALMO</li><ul><li>レポジトリ: <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url></li><li>このページを作っているMarkdownパーサです。WebAssemblyで実行可能なコードブロックとかプロットとかジャッジが作れます。</li><li>かなりかなりブラッシュアップされて v1.0 リリース間近です。<span class="overline"> <s>ドキュメントを書くのが面倒でなかなかリリースされない</s> </span></li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/cb.png" ><figcaption>ひっそりコミットし続けている</figcaption></figure><br><ul><li>部内コンペ (sponsored by ピクシブ社) の運営</li><ul><li>去年から運営しているコンペをやりました。</li><li>今年はスポンサーがついたので、それも含めて色々やることが多くて大変でしたがめちゃくちゃ楽しかったです。</li><li>開催記録が例によって traP のブログにまとまっているので読んでみてください。</li><li>ブログ: <url> <a href="https://trap.jp/post/1975/">traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記</a> </url></li></ul></ul><br><br><figure><img src="hurikaeri_2023_0/mito.png" ><figcaption>👍</figcaption></figure><br><script>page_contents.push({
     "type":"H2",
-    "id":"309",
+    "id":"321",
     "title":"その他"
 });
 </script>
-<h2 id="309">その他</h2><ul><li>プロ野球</li><ul><li>贔屓球団が10/1の最終戦を終えた時点で最下位です。今年の中日より弱いのは、やばい！</li></ul><li>ドイツ語</li><ul><li>朝起きれなさすぎて単位を落としました...</li></ul></ul><br><script>page_contents.push({
+<h2 id="321">その他</h2><ul><li>プロ野球</li><ul><li>贔屓球団が10/1の最終戦を終えた時点で最下位です。今年の中日より弱いのは、やばい！</li></ul><li>ドイツ語</li><ul><li>朝起きれなさすぎて単位を落としました...</li></ul></ul><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"333",
+    "id":"346",
     "title":"後期の目標"
 });
 </script>
-<h2 id="333">後期の目標</h2>とにかく頑張ります。<br><script>page_contents.push({
+<h2 id="346">後期の目標</h2>とにかく頑張ります。<br><script>page_contents.push({
     "type":"H2",
-    "id":"341",
+    "id":"354",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="341">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/A2k6ZO6B0A8?si=llQhLWX-WATgUhGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br>
+<h2 id="354">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/A2k6ZO6B0A8?si=llQhLWX-WATgUhGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>  <br><br><br>
         </div>
 
 
