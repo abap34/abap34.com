@@ -45,49 +45,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>body {
-    font-family: 'Segoe UI', Geneva, Verdana, sans-serif;
-    margin: 0 auto;
-    line-height: 1.5;
-    padding: 20px;
-    background-color: #f0f0f0;
-    color: #333;
-    display: flex;
-    gap: 10px;
-    flex-direction: row-reverse;
-    justify-content: center;
-    font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    padding-left: 20px;
+    padding-right: 50px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 768px) {
+    .side {
+        display: none;
+    }
+
     body {
-        padding: 0px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
+        display: block;
     }
 }
 
 .side {
-    width: 240px;
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    border: solid 1px #ddd;
-    margin-left: auto;
-    margin-right: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: auto;
-    top: 20px;
-    padding-left: 30px;
+    order: 1;
+    border-right: solid 1px #ddd;
     padding-right: 20px;
-}
-
-@media (max-width: 1200px) {
-    .side {
-        display: none;
-    }
 }
 
 .side-sticky {
@@ -95,99 +72,60 @@
     top: 20px;
 }
 
-.content {
-    padding: 40px 20px;
-    margin-left: 0px;
-    margin-right: auto;
-    border-radius: 5px;
-    max-width: 800px;
+.article-header {
+    position: relative;
     width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 10px;
-    border: solid 1px #ddd;
+    height: 200px;
+    margin-bottom: 50px;
 }
 
-.article-header {
-    margin-bottom: 30px;
+.article-header .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: blur(3px);
 }
 
-.article-body {
-    padding: 40px;
-    padding: 40px;
+.article-header .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-@media (max-width: 1200px) {
-    .content {
-        width: 100%;
-        padding: 0px;
-    }
-}
-
-.sidebar {
-    top: 20px;
-    left: 0px;
-}
-
-@media (max-width: 1200px) {
-    .sidebar {
-        display: none;
-    }
-}
-
-.links {
-    bottom: 0px;
-    left: 0px;
-}
-
-@media (max-width: 1200px) {
-    .links {
-        display: none;
-    }
-}
-
-.article-header {
-    padding: 0px;
-    margin: 0px;
-}
-
-.title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-    text-align: center;
-    margin: 30px 30px 0px 50px;
-    padding: 0px;
-}
-
-
-
-h1 {
-    text-align: center;
-}
-
-h2 {
-    text-align: left;
-    padding-left: 10px;
+.article-header .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
     border-bottom: solid 1px #ddd;
+    font-weight: bold;
+    background-color: #44444477;
 }
 
-p {
-    color: #777;
-    margin-bottom: 10px;
-}
-
-a {
-    color: #007bff;
-    word-break: break-all;
-}
-
-figure {
+.date {
+    font-size: 14px;
     text-align: center;
 }
 
-figcaption {
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag {
+    font-size: 14px;
     text-align: center;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
+.toc_title {
+    display: none;
 }
 
 .math-block {
@@ -208,15 +146,22 @@ mjx-container {
     max-width: 100%;
 }
 
-.tex-equations {
-    overflow-x: auto;
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+}
+
+h3 {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 pre {
     padding: 10px;
-    color: #333;
-    border: solid 1px #ddd;
-    background-color: #f0f0f0;
+    background-color: #f8f8f8
+}
+
+.tex-equations {
     overflow-x: auto;
 }
 
@@ -237,18 +182,11 @@ td {
     padding: 8px;
 }
 
-.date {
-    color: #777;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.tag {
-    color: #777;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
 }
 
 #toc {
@@ -257,12 +195,6 @@ td {
     padding: 15px;
     list-style: none;
     border-left: solid 1px #ddd;
-}
-
-.toc_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #444;
 }
 
 #toc a {
@@ -288,12 +220,7 @@ td {
     font-size: 16px;
 }
 
-@media (max-width: 768px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
+
 
 .toc_H1 {
     font-size: 20px;
@@ -315,7 +242,11 @@ td {
     font-size: 14px;
     margin-bottom: 10px;
     color: #007bff;
+    padding-left: 10px;
 }
+
+
+
 
 .content_list_h1 {
     font-size: 20px;
@@ -421,6 +352,8 @@ td {
 .inline-code,
 .code-block {
     font-family: monospace;
+    line-height: 1.5;
+    background-color: #f0f0f0;
 }
 
 .success,
@@ -757,7 +690,7 @@ function reset!(x::Timer)
     x.created = Dates.now()
 end
 
-
+ 
 function rate(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
@@ -770,7 +703,7 @@ end
         do_something()
     end
 end
-</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br>  <br>
+</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br>   <br>
         </div>
 
 
