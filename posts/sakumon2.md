@@ -24,7 +24,7 @@ twitter_site: @abap34
 
 **[Don't cut line!](https://yukicoder.me/problems/10681)**  
 
-![alt text](sakumon2/image.png)
+![](sakumon2/image.png)
 
 
 題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、この辺使いたいなぁと思って作ってみました。
