@@ -58,8 +58,21 @@
 
     body {
         display: block;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
     }
 }
+
+
+
+
+@media (max-width: 768px) {
+    .article-header .title {
+        font-size: 18px;
+    }
+}
+
+
 
 .side {
     order: 1;
@@ -669,7 +682,7 @@ const runBlock = async (objectid) => {
         </div>
 
         <div class="article-body">
-            <br><br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><br><div class="code-block"> <pre><code class="julia">mutable struct Timer
+            <br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br><br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><div class="code-block"> <pre><code class="julia">mutable struct Timer
     timeout::Millisecond
     created::DateTime
 end
@@ -678,32 +691,29 @@ function Timer(timeout_ms::Int)
     return Timer(Millisecond(timeout_ms), Dates.now())
 end
 
-
 function is_timeout(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
     return elapsed_time >= x.timeout
 end
 
- 
 function reset!(x::Timer)
     x.created = Dates.now()
 end
 
- 
 function rate(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
     return x.timeout / elapsed_time
 end
-</code></pre> </div><br><br>使い方は、<br><div class="code-block"> <pre><code class="julia">function solve()
+</code></pre> </div><br>使い方は、<br><div class="code-block"> <pre><code class="julia">function solve()
     # 1000 [ms] (1 [s]) でタイムアウトするタイマーを作成
     timer = Timer(1000)
     while !(is_timeout(timer))
         do_something()
     end
 end
-</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br>   <br>
+</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br>  <br>
         </div>
 
 
