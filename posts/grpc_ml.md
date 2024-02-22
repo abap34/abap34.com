@@ -37,7 +37,7 @@ twitter_site: @abap34
 
 ## 実装
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
-
+ 
 こういうファイル構造にします。
 
 ```text
