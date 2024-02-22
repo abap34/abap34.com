@@ -58,8 +58,21 @@
 
     body {
         display: block;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
     }
 }
+
+
+
+
+@media (max-width: 768px) {
+    .article-header .title {
+        font-size: 18px;
+    }
+}
+
+
 
 .side {
     order: 1;
@@ -678,25 +691,123 @@ const runBlock = async (objectid) => {
 <h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
-    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md' || true)
+    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md
+        </div>
+
+
+    </div>
+
+    <div class="side">
+        <div class="side-sticky">
+            <div class="sidebar">
+                <ul id="toc"></ul>
+            </div>
+
+            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
+ <br> <br> <br> <br>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                <br>
+                <br>
+                <br>
+
+                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
+                </p>
+                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
+                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+
+                <footer>
+                    <p>&copy; abap34 </p>
+                </footer>
+
+            </div>
+        </div>
+
+        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+        <script>
+
+const tocContainer = document.querySelector("#toc");
+const tocTitle = document.createElement("div");
+tocTitle.innerHTML = title;
+tocTitle.classList.add("toc_title");
+tocContainer.appendChild(tocTitle);
+
+
+
+page_contents.forEach(item => {
+    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+        listItem.classList.add("toc_" + item.type);
+        tocContainer.appendChild(listItem);
+    }
+});
+
+const options = {
+    root: null,
+    rootMargin: "-50% 0px",
+    threshold: 0
+};
+
+const observer = new IntersectionObserver(onIntersection, options);
+
+page_contents.forEach(item => {
+    const element = document.getElementById(item.id);
+    if (element) {
+        observer.observe(element);
+    }
+});
+
+// page_contensts の先頭を active にしておく
+const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+first_item.classList.add("active");
+
+prev_item = first_item;
+
+function onIntersection(entries) {
+    entries.forEach(entry => {
+        const id = entry.target.id;
+        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+        if (tocItem) {
+            if (entry.isIntersecting) {
+                tocItem.classList.add("active");
+                prev_item.classList.remove("active");
+                prev_item = tocItem;
+            }
+        }
+    });
+}
+
+</script>
+
+    </div>
+
+</body>
+
+
+</html>
+
+ || true)
     echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
     if [[ -z "$changed_files" ]]; then
       echo "No changes in MD files. Skipping build."
     else
       echo "Change: $changed_files"
     fi
-</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは<span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。 <br><br>全然原因がわからず、<span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br> <figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
+</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは<span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。<br><br>全然原因がわからず、<span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br><br><figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
     "type":"H2",
-    "id":"65",
+    "id":"60",
     "title":"対応策"
 });
 </script>
-<h2 id="65">対応策</h2><br><div class="code-block"> <pre><code class="bash">steps:
+<h2 id="60">対応策</h2><br><div class="code-block"> <pre><code class="bash">steps:
   - name: Checkout Repository
     uses: actions/checkout@v2
     with:
         fetch-depth: 0
-</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。 <br>  <br>
+</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。<br><br><br><br>
         </div>
 
 
