@@ -124,6 +124,12 @@ h2 {
     }
 }
 
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+
 
 h3 {
     margin-bottom: 0;
