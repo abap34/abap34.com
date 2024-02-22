@@ -102,7 +102,7 @@ twitter_site: @abap34
   - 贔屓球団が10/1の最終戦を終えた時点で最下位です。今年の中日より弱いのは、やばい！
 - ドイツ語
   - 朝起きれなさすぎて単位を落としました...
- 
+
 
 ## 後期の目標
 とにかく頑張ります。
@@ -112,4 +112,5 @@ twitter_site: @abap34
 <iframe width="560" height="315" src="https://www.youtube.com/embed/A2k6ZO6B0A8?si=llQhLWX-WATgUhGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 
+ 
  
