@@ -6,8 +6,9 @@ body {
     font-family: "Noto Sans", sans-serif;
 }
 
+
 @media (max-width: 768px) {
-    .side {
+    .side #toc {
         display: none;
     }
 
