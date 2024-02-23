@@ -878,7 +878,7 @@ Stacktrace:
    @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:401
  [3] top-level scope
    @ REPL[25]:1
-</code></pre> </div><br>いい感じですね。リテラルはJuliaのASTでもそのまま表現は変わりませんから、普通に <span class="inline-code"> <code>parse</code> </span> で <span class="inline-code"> <code>Int</code> </span> に変換してしまいます。 <br>こんな感じの再帰的に <span class="inline-code"> <code>Vector</code> </span> を flatten して結合してくれるやつを容易しておくと便利です。<br><div class="code-block"> <pre><code class="julia">julia> recjoin(arr::AbstractArray) = join(recjoin.(arr))
+</code></pre> </div><br>いい感じですね。リテラルはJuliaのASTでもそのまま表現は変わりませんから、普通に <span class="inline-code"> <code>parse</code> </span> で <span class="inline-code"> <code>Int</code> </span> に変換してしまいます。 <br>こんな感じの再帰的に <span class="inline-code"> <code>Vector</code> </span> を flatten して結合してくれるやつを用意しておくと便利です。<br><div class="code-block"> <pre><code class="julia">julia> recjoin(arr::AbstractArray) = join(recjoin.(arr))
 recjoin (generic function with 2 methods)
 
 julia> recjoin(s::AbstractString) =  s
