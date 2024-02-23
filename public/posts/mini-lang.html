@@ -732,7 +732,7 @@ julia> parse_whole(add, "1+2")
  "1"
  "+"
  "2"
-</code></pre> </div><br>このように、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> マクロでルールを定義</li><li><span class="inline-code"> <code>parse_whole(rule, src)</code> </span> でパース</li></ul><br>という 2ステップで簡単に構文を定義・解析できます。<br>さらに、 <span class="inline-code"> <code>@rule</code> </span> ではパース結果を渡す関数も同時に定義できます。<br>例えば、<br><div class="code-block"> <pre><code class="julia">julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> (parse(Int, w[1]) + parse(Int, w[3])))
+</code></pre> </div><br>このように、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> マクロでルールを定義</li><li><span class="inline-code"> <code>parse_whole(rule, src)</code> </span> でパース</li></ul><br>という 2ステップで簡単に構文を定義・解析できます。<br>さらに、 <span class="inline-code"> <code>@rule</code> </span> ではパース結果を渡す関数も同時に定義できます。<br>例えば、 文字列 <span class="inline-code"> <code>x</code> </span> を <span class="inline-code"> <code>parse(Int, x)</code> </span>  で整数に変換して、計算式をその場で評価してみます。<br><div class="code-block"> <pre><code class="julia">julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> (parse(Int, w[1]) + parse(Int, w[3])))
 add (generic function with 2 methods)
 
 julia> parse_whole(add, "1+2")
@@ -740,15 +740,15 @@ julia> parse_whole(add, "1+2")
 
 julia> parse_whole(add, "1+4")
 5
-</code></pre> </div><br>のようにすれば足し算のパース・解釈ができるようになりました。<br><br><br>ここまでだとあまりBNFと変わらないように見えますが、違うポイントを見てみます。<br>といっても違うポイントは一つだけで、選言(<span class="inline-code"> <code>|</code> </span>) と順序付き選言(<span class="inline-code"> <code>/</code> </span>) です。<br>例えば BNF記法で<br><div class="code-block"> <pre><code class="plaintext">A ::= B | C
-</code></pre> </div><br>と書いた場合、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> または <span class="inline-code"> <code>C</code> </span> どちらにマッチしてもかまいません。<br><br>これにたいして PEG では順序付きの選択を使います。<br><div class="code-block"> <pre><code class="plaintext">A = B / C
-</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチします。<br>したがって結果は必ず一意に定まります。<br>さらに、これはプログラムとの対応に思いを馳せると割と自然で、選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると、<span class="inline-code"> <code>(f() > 0) || (g() > 0)</code> </span> という式は短絡評価で <span class="inline-code"> <code>f()</code> </span> が失敗したその時に限り評価されるということになります。<br><script>page_contents.push({
+</code></pre> </div><br>足し算のパース・解釈ができるようになりました。<br><br><br>ここまでだとあまりBNFと変わらないように見えますが、違うポイントを見てみます。<br>といっても違うポイントは一つだけで、選言(<span class="inline-code"> <code>|</code> </span>) と順序付き選言(<span class="inline-code"> <code>/</code> </span>) です。<br>例えば BNF記法で<br><div class="code-block"> <pre><code class="plaintext">A ::= B | C
+</code></pre> </div><br>と書いた場合、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> または <span class="inline-code"> <code>C</code> </span> どちらにマッチしてもかまいません。<br><br>これにたいして PEG では順序付きの選言を使います。<br><div class="code-block"> <pre><code class="plaintext">A = B / C
+</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチします。<br>したがって結果は必ず一意に定まります。<br><br>さらに、これは選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると割と自然です。ふつうの処理系では <span class="inline-code"> <code>(f() > 0) || (g() > 0)</code> </span> という式の <span class="inline-code"> <code>g</code> </span> は短絡評価で <span class="inline-code"> <code>f()</code> </span> が失敗したその時に限り評価されるわけですから、どちらかというと順序付きの選言の方が <span class="inline-code"> <code>||</code> </span> に近い感じがします。<br><script>page_contents.push({
     "type":"H3",
-    "id":"339",
+    "id":"356",
     "title":"Julia の ASTへの変換"
 });
 </script>
-<h3 id="339">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="julia">julia> ex = quote
+<h3 id="356">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。<br>Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="julia">julia> ex = quote
                   x = 10
                   y = x * 2
                   if y > 15
@@ -787,7 +787,7 @@ Expr
               args: Array{Any}((2,))
                 1: Symbol println
                 2: String "!?"
-</code></pre> </div><br><span class="inline-code"> <code>quote ... end</code> </span> で囲むと中の式を評価せずに、そのASTを得ることができます。これは <span class="inline-code"> <code>typeof</code> </span> でわかるように <span class="inline-code"> <code>Expr</code> </span> 型で保持されていて、 <span class="inline-code"> <code>dump</code> </span> で中身を見ると、確かに元の式の構造っぽいものが保存されているようです。<br>あるいは、 S式の形で出力することもできます。<br><div class="code-block"> <pre><code class="julia">julia> Meta.show_sexpr(ex)
+</code></pre> </div><br><span class="inline-code"> <code>quote ... end</code> </span> で囲むと中の式を評価せずに、その式自体の構造、つまりはASTを得ることができます。これは <span class="inline-code"> <code>typeof</code> </span> でわかるように <span class="inline-code"> <code>Expr</code> </span> 型で保持されていて、 <span class="inline-code"> <code>dump</code> </span> で中身を見ると、確かに元の式の構造っぽいものが保存されているようです。<br>あるいは、 S式の形で出力することもできます。<br><div class="code-block"> <pre><code class="julia">julia> Meta.show_sexpr(ex)
 (:block,
   :(#= REPL[50]:2 =#),
   (:(=), :x, 10),
@@ -810,7 +810,7 @@ println(1 + 2)
 
 julia> eval(ex)
 3
-</code></pre> </div><br>こんな感じで、 ASTを直接作って、 "println(1+2)" に相当するコードを表現・実行することができました。<br>(<span class="inline-code"> <code>println(ex)</code> </span> によって、式の結果ではなく式そのものが保持されていることがわかることに注目してください！)<br>これで、最初の例の足し算のパーサを書き換えて、ASTを作るようにすれば、自動的にJuliaのコードに変換できるようになります。<br><div class="code-block"> <pre><code class="">julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> Expr(:call, :+, parse(Int, w[1]), parse(Int, w[3])))
+</code></pre> </div><br>こんな感じで、 ASTを直接作って、 <span class="inline-code"> <code>println(1+2)</code> </span> に相当するコードを表現・実行することができました。<br>(<span class="inline-code"> <code>println(ex)</code> </span> によって、式の結果ではなく式そのものが保持されていることがわかることに注目してください！)<br>これで、最初の例の足し算のパーサを書き換えて、ASTを作るようにすれば、自動的にJuliaのコードに変換できるようになります。<br><div class="code-block"> <pre><code class="">julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> Expr(:call, :+, parse(Int, w[1]), parse(Int, w[3])))
 add (generic function with 2 methods)
 
 julia> parse_whole(add, "1+2")
@@ -820,17 +820,17 @@ julia> eval(ans)
 3
 </code></pre> </div><br><span class="inline-code"> <code>1 + 2</code> </span> という式を得ることができました、<br>🎉 <span class="strong"> <strong>つまり、まさに今、自作言語をJuliaにトランスパイルするコードが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"483",
+    "id":"505",
     "title":"言語の設計"
 });
 </script>
-<h2 id="483">言語の設計</h2><script>page_contents.push({
+<h2 id="505">言語の設計</h2><script>page_contents.push({
     "type":"H3",
-    "id":"487",
+    "id":"509",
     "title":"イメージ"
 });
 </script>
-<h3 id="487">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数</li><li>while / if の制御構文</li><li>整数 / 浮動小数点数 / 文字列のリテラル</li></ul><br>これだけかければ十分実用的な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすることにします。<br>なのでイメージとしては、次のようなコードで FizzBuzz を書けるような言語を目標にします。<br><br><div class="code-block"> <pre><code class="cpp">function fizzbuzz(n) {
+<h3 id="509">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数</li><li>while / if の制御構文</li><li>整数 / 浮動小数点数 / 文字列のリテラル</li></ul><br>これだけかければ十分実用的な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすることにします。<br>なのでイメージとしては、次のようなコードで FizzBuzz を書けるような言語を目標にします。<br><br><div class="code-block"> <pre><code class="cpp">function fizzbuzz(n) {
     i = 0
     while (i < n) {
         if (i % 15 == 0) {
@@ -853,11 +853,11 @@ julia> eval(ans)
 fizzbuzz(100)
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"536",
+    "id":"558",
     "title":"PEG.jl による記述"
 });
 </script>
-<h3 id="536">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = "0",  r"[1-9][0-9]*"
+<h3 id="558">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = "0",  r"[1-9][0-9]*"
 </code></pre> </div><br>定義したら REPL に送って試してみます。<br><div class="code-block"> <pre><code class="julia">julia> parse_whole(int, "0")
 "0"
 
@@ -906,19 +906,19 @@ end
         check(src, rule, expected)
     end
 end
-</code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br><br>完成したものがこちらです。　実装に詰まったら見てみてください。<br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
+</code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br><br>完成したものがこちらです。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"647",
+    "id":"670",
     "title":"感想"
 });
 </script>
-<h2 id="647">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
+<h2 id="670">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"657",
+    "id":"680",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="657">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
+<h2 id="680">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
         </div>
 
 
