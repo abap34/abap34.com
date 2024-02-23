@@ -77,8 +77,11 @@ PEGは、技術としては思ったよりだいぶ最近のもので、なん�
 大学の講義でも多分扱っていなかったと思うのですが(先生へ: 扱ってたらすいません)、たまたま大学図書館で
 [Pythonで学ぶ解析表現文法と構文解析](https://www.morikita.co.jp/books/mid/085651)  という本を見つけて読んでへ〜となったので使ってみることにしました。
 
+しかも、Python 3.9からはPythonのパーサがPEGベースになり、しかもJuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、
+世はまさに大パーサ改善時代と言えそうです。
 
-構文解析がそこまで最近に色々と進化しているのは正直イメージと違ったのでびっくりしました。　もっと早く知ってたらもう少しオートマトンにやる気が出たかもしれない...
+
+構文解析がそこまで最近に進化しているのは正直イメージと違ったのでびっくりしました。　もっと早く知ってたらもう少しオートマトンにやる気が出たかもしれない...
 
 ### PEG.jl の使い方
 
@@ -334,11 +337,13 @@ fizzbuzz(100)
 
 あとは対応を考えてえいやえいやと文法を定義します、
 
-例えば自然数リテラル
-はこんな感じになります。
+例えば自然数リテラルはこんな感じになります。
 
 ```julia
-@rule int = "0",  r"[1-9][0-9]*"
+@rule int = (
+                r"0"p, 
+                r"[1-9]" & r"[0-9]"[*]
+            )
 ```
 
 定義したら REPL に送って試してみます。
@@ -347,32 +352,104 @@ fizzbuzz(100)
 julia> parse_whole(int, "0")
 "0"
 
-julia> parse_whole(int, "10")
-"10"
+julia> parse_whole(int, "123")
+2-element Vector{Any}:
+ "1"
+ Any["2", "3"]
 
-julia> parse_whole(int, "05")
-ERROR: ParseError("On line 1, at column 1 (byte 1):\n05\n^ here\nexpected one of the following: int\n")
+julia> parse_whole(int, "01")
+ERROR: ParseError("On line 1, at column 1 (byte 1):\n01\n^ here\nexpected one of the following: r\"^(0)\\s*\", int\n")
 Stacktrace:
  [1] parse_next(rule::typeof(int), input::String; whole::Bool)
    @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:394
  [2] parse_whole(rule::Function, input::String)
    @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:401
  [3] top-level scope
-   @ REPL[47]:1
-
-julia> parse_whole(int, "1000")
-"1000"
+   @ REPL[25]:1
 ```
 
-いい感じですね。リテラルはJuliaのASTでもそのまま表現は変わりませんから、普通に `parse` で変換しておきます。
+いい感じですね。リテラルはJuliaのASTでもそのまま表現は変わりませんから、普通に `parse` で `Int` に変換してしまいます。 
+
+こんな感じの再帰的に `Vector` を flatten して結合してくれるやつを容易しておくと便利です。
 
 ```julia
-@rule int = "0",  r"[1-9][0-9]*" |> (w -> parse(Int, w))
+julia> recjoin(arr::AbstractArray) = join(recjoin.(arr))
+recjoin (generic function with 2 methods)
+
+julia> recjoin(s::AbstractString) =  s
+recjoin (generic function with 2 methods)
+
+julia> build_int(w::AbstractArray) = parse(Int, recjoin(w))
+build_int (generic function with 3 methods)
+
+julia> @rule int = (
+                       r"0"p, 
+                       r"[1-9]" & r"[0-9]"[*]
+                   ) |> build_int
+int (generic function with 2 methods)
+
+julia> parse_whole(int, "123")
+123
 ```
 
-これを動かす前に必ずテストケースを用意しておきましょう。
+浮動小数点数リテラルも同様に定義します。
+
+```julia
+julia> @rule float = (
+                       r"[0-9]"[+] & r"." & r"[0-9]"[+]
+                   ) |> build_float
+float (generic function with 2 methods)
+
+julia> parse_whole(float, "12.3")
+12.3
+
+julia> parse_whole(float, "0.1")
+0.1
+
+julia> parse_whole(float, "3")
+ERROR: ParseError("On line 1, at column 2 (byte 2):\n3\n ^ here\nexpected one of the following: r\"^([0-9])\", r\"^(.)\"\n")
+Stacktrace:
+ [1] parse_next(rule::typeof(float), input::String; whole::Bool)
+   @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:394
+ [2] parse_whole(rule::Function, input::String)
+   @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:401
+ [3] top-level scope
+   @ REPL[64]:1
+
+julia> parse_whole(float, ".3")
+ERROR: ParseError("On line 1, at column 1 (byte 1):\n.3\n^ here\nexpected one of the following: r\"^([0-9])\", float\n")
+Stacktrace:
+ [1] parse_next(rule::typeof(float), input::String; whole::Bool)
+   @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:394
+ [2] parse_whole(rule::Function, input::String)
+   @ PEG ~/.julia/packages/PEG/ruwsb/src/PEG.jl:401
+ [3] top-level scope
+   @ REPL[65]:1
+```
+
+これで数字リテラルが使えるようになりました。 表記に応じて適切なパースができています。
+
+```
+julia> @rule num = float, int
+num (generic function with 2 methods)
+
+julia> parse_whole(num, "123.45")
+123.45
+
+julia> parse_whole(int, "123")
+123
+```
+
+
+さて、今回は浮動小数点数の左右(?)の省略は許さないことにしたので `".3"` がエラーになるのは意図した挙動ですが、
+どうしてもこういう場合意図した挙動にできてるかを見逃してしまいがちです。
+
+
+なので、構文を定義して動かす前に必ずテストケースを十分用意しておきましょう。
 
 テストケース作る $\to$ 構文一個作る $\to$ テストケース通る $\to$ 次の構文一個作る $\cdots$ のループを踏まなかった人には等しく死が訪れます。
+
+例えばこんな感じの実装の仕方がありそうです。
 
 ```julia
 using PEG
@@ -417,8 +494,7 @@ end
 
 というのを繰り返していけば良いです。
 
-
-完成したものがこちらです。　実装に詰まったら見てみてください。
+完成したものがこちらになります。　実装に詰まったら見てみてください。
 
 
 <a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a>
