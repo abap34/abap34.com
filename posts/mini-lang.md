@@ -370,7 +370,7 @@ Stacktrace:
 
 いい感じですね。リテラルはJuliaのASTでもそのまま表現は変わりませんから、普通に `parse` で `Int` に変換してしまいます。 
 
-こんな感じの再帰的に `Vector` を flatten して結合してくれるやつを容易しておくと便利です。
+こんな感じの再帰的に `Vector` を flatten して結合してくれるやつを用意しておくと便利です。
 
 ```julia
 julia> recjoin(arr::AbstractArray) = join(recjoin.(arr))
