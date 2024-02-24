@@ -719,10 +719,10 @@ const runBlock = async (objectid) => {
 <h3 id="103">PEG とは</h3><br>さて、プログラミング言語を作るからにはパーサを作らなくてはいけないですが、今回は<br><br><a href="https://github.com/wdebeaum/PEG.jl"><img src="https://gh-card.dev/repos/wdebeaum/PEG.jl.svg?fullname="></a><br><br>を使います。<br>そもそも PEGという耳馴染みのない(僕はありませんでした)という単語について説明しておきます。<br>PEGは Parsing Expression Grammar の略で、日本語だと解析表現文法とか言われるものです。 <br><br>その名の通り文法なのですが、多くのプログラミング言語の構文の記述に使われる <span class="math-inline"> \( ^1 \) </span> 文脈自由文法とは違い、構文木が常に一意に定まるという特徴があります。<br><br>さらに、PEGは文脈自由文法ではできない <span class="math-inline"> \( \{a^n b^n c^n \mid n \ge 1\} \) </span> を受理する構文を定義することができ、また 「PEGで記述不可能だが文脈自由文法で記述可能な構文」 は今のところ見つかっていないので、PEGは文脈自由文法よりも表現力のある文法だと考えられているようです。<br><br>PEGは、技術としては思ったよりだいぶ最近のもので、なんと提案されたのは 2004年です。 大学の講義でも多分扱っていなかったと思うのですが(先生へ: 扱ってたらすいません)、たまたま大学図書館で<url> <a href="https://www.morikita.co.jp/books/mid/085651">Pythonで学ぶ解析表現文法と構文解析</a> </url>  という本を見つけて読んでへ〜となったので使ってみることにしました。(この本では構文解析自体の説明から平易に書かれていて実装もPythonで読みやすく、おすすめです)<br>しかも、Python 3.9からはPythonのパーサがPEGベースになり、しかもJuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、世はまさに大パーサ改善時代と言えそうです。<br><br>構文解析がそこまで最近に進化しているのは正直イメージと違ったのでびっくりしました。　もっと早く知ってたらもう少しオートマトンにやる気が出たかもしれない...<br><script>page_contents.push({
     "type":"H3",
     "id":"187",
-    "title":"PEG.jl の使い方"
+    "title":"PEG の特徴と PEG.jl を使った実践"
 });
 </script>
-<h3 id="187">PEG.jl の使い方</h3><br>PEG.jl はそんな PEGを使って構文を定義・解析してくれるライブラリです。最終更新はとても前ですが、READMEに書いてある通り機能がすでに十分に揃っているので特に困るポイントはありません。<br>さて、PEG.jl を使って構文を定義してみます。見た目は拡張BNF記法そっくりで、直感的に書けるのでとても使いやすいです。<br>例えば、一桁の数字同士の足し算を定義するとこんな感じになります。<br><div class="code-block"> <pre><code class="julia">julia> using PEG
+<h3 id="187">PEG の特徴と PEG.jl を使った実践</h3><br>PEG.jl はそんな PEGを使って構文を定義・解析してくれるライブラリです。最終更新はとても前ですが、READMEに書いてある通り機能がすでに十分に揃っているので特に困るポイントはありません。<br>さて、PEG.jl を使って構文を定義してみます。見た目は拡張BNF記法そっくりで、直感的に書けるのでとても使いやすいです。<br>例えば、一桁の数字同士の足し算を定義するとこんな感じになります。<br><div class="code-block"> <pre><code class="julia">julia> using PEG
 
 julia> @rule add = r"[0-9]" & "+" & r"[0-9]"  # 一桁の足し算
 add (generic function with 2 methods)
@@ -818,7 +818,7 @@ julia> parse_whole(add, "1+2")
 
 julia> eval(ans)
 3
-</code></pre> </div><br><span class="inline-code"> <code>1 + 2</code> </span> という式を得ることができました、<br>🎉 <span class="strong"> <strong>つまり、まさに今、自作言語をJuliaにトランスパイルするコードが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
+</code></pre> </div><br><span class="inline-code"> <code>1 + 2</code> </span> という式を得ることができ、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"515",
     "title":"言語の設計"
@@ -830,7 +830,7 @@ julia> eval(ans)
     "title":"イメージ"
 });
 </script>
-<h3 id="519">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数</li><li>while / if の制御構文</li><li>整数 / 浮動小数点数 / 文字列のリテラル</li></ul><br>これだけかければ十分実用的な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすることにします。<br>なのでイメージとしては、次のようなコードで FizzBuzz を書けるような言語を目標にします。<br><br><div class="code-block"> <pre><code class="cpp">function fizzbuzz(n) {
+<h3 id="519">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数</li><li>while, if 文</li><li>整数, 浮動小数点数, 文字列, 真理値 のリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、実際イメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構ちゃんとした見た目です。<br><br><div class="code-block"> <pre><code class="cpp">function fizzbuzz(n) {
     i = 0
     while (i < n) {
         if (i % 15 == 0) {
@@ -846,6 +846,7 @@ julia> eval(ans)
                 }
             }
         }
+        i = i + 1
     }
 }
 
@@ -853,11 +854,11 @@ julia> eval(ans)
 fizzbuzz(100)
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"568",
+    "id":"567",
     "title":"PEG.jl による記述"
 });
 </script>
-<h3 id="568">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
+<h3 id="567">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
                 r"0"p, 
                 r"[1-9]" & r"[0-9]"[*]
             )
@@ -964,17 +965,17 @@ end
 end
 </code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br>完成したものがこちらになります。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"717",
+    "id":"716",
     "title":"感想"
 });
 </script>
-<h2 id="717">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
+<h2 id="716">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"727",
+    "id":"726",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="727">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
+<h2 id="726">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
         </div>
 
 
