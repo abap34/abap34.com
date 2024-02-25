@@ -158,7 +158,7 @@ A = B / C
 
 
 さらに、これは選言がプログラムでの `||` に対応してほしいという気持ちになると割と自然です。
-ふつうの処理系では `(f() > 0) || (g() > 0)` という式の `g` は短絡評価で `f()` が失敗したその時に限り評価されるわけですから、
+ふつうの処理系では `(f() > 0) || (g() > 0)` という式の `g` は短絡評価で `f() > 0` が　`false` だったその時に限り評価されるわけですから、
 どちらかというと順序付きの選言の方が `||` に近い感じがします。
 
 ### Julia の ASTへの変換
@@ -300,36 +300,32 @@ julia> eval(ans)
 
 - 基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)
 - 変数
-- 関数
-- while, if 文
-- 整数, 浮動小数点数, 文字列, 真理値 のリテラル
+- 関数定義 / 呼び出し / `return`
+- ブロック
+- `while`, `if`
+- 整数, 浮動小数点数, 文字列　あたりのリテラル
 
 これだけあれば十分実用的な感じの言語な感じがします。
-構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、実際イメージとしては以下のように 
-FizzBuzz が書ける言語を作るのが目標になります。　結構ちゃんとした見た目です。
+構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように 
+FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。
 
 
-```cpp
+```julia
 function fizzbuzz(n) {
     i = 0
-    while (i < n) {
+    while (i < 100){
+        i = i + 1
         if (i % 15 == 0) {
             println("FizzBuzz")
+        } elseif (i % 3 == 0) {
+            println("Fizz")
+        } elseif (i % 5 == 0) {
+            println("Buzz")
         } else {
-            if (i % 3 == 0) {
-                println("Fizz")
-            } else {
-                if (i % 5 == 0) {
-                    println("Buzz")
-                } else {
-                    println(i)
-                }
-            }
+            println(i)
         }
-        i = i + 1
     }
 }
-
 
 fizzbuzz(100)
 ```
@@ -469,7 +465,7 @@ function check(src, rule, expected)
     ast = parse(src, rule=rule)
     result = eval(ast)
     success = expected(result)
-    return onfail(@test success) do
+    onfail(@test success) do
         @info "Failed. Expected: $expected, got: $result"   
         @info "AST: $ast"
     end
