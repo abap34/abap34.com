@@ -742,13 +742,13 @@ julia> parse_whole(add, "1+4")
 5
 </code></pre> </div><br>足し算のパース・解釈ができるようになりました。<br><br><br>ここまでだとあまりBNFと変わらないように見えますが、違うポイントを見てみます。<br>といっても違うポイントは一つだけで、選言(<span class="inline-code"> <code>|</code> </span>) と順序付き選言(<span class="inline-code"> <code>/</code> </span>) です。<br>例えば BNF記法で<br><div class="code-block"> <pre><code class="plaintext">A ::= B | C
 </code></pre> </div><br>と書いた場合、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> または <span class="inline-code"> <code>C</code> </span> どちらにマッチしてもかまいません。<br><br>これにたいして PEG では順序付きの選言を使います。<br><div class="code-block"> <pre><code class="plaintext">A = B / C
-</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチを試みます。<br>したがって結果は必ず一意に定まります。<br><br>さらに、これは選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると割と自然です。ふつうの処理系では <span class="inline-code"> <code>(f() > 0) || (g() > 0)</code> </span> という式の <span class="inline-code"> <code>g</code> </span> は短絡評価で <span class="inline-code"> <code>f()</code> </span> が失敗したその時に限り評価されるわけですから、どちらかというと順序付きの選言の方が <span class="inline-code"> <code>||</code> </span> に近い感じがします。<br><script>page_contents.push({
+</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチを試みます。<br>したがって結果は必ず一意に定まります。<br><br>さらに、これは選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると割と自然です。ふつうの処理系では <span class="inline-code"> <code>(f() > 0) || (g() > 0)</code> </span> という式の <span class="inline-code"> <code>g</code> </span> は短絡評価で <span class="inline-code"> <code>f() > 0</code> </span> が　<span class="inline-code"> <code>false</code> </span> だったその時に限り評価されるわけですから、どちらかというと順序付きの選言の方が <span class="inline-code"> <code>||</code> </span> に近い感じがします。<br><script>page_contents.push({
     "type":"H3",
-    "id":"366",
+    "id":"370",
     "title":"Julia の ASTへの変換"
 });
 </script>
-<h3 id="366">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。<br>Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="julia">julia> ex = quote
+<h3 id="370">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。<br>Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="julia">julia> ex = quote
                   x = 10
                   y = x * 2
                   if y > 15
@@ -820,45 +820,40 @@ julia> eval(ans)
 3
 </code></pre> </div><br><span class="inline-code"> <code>1 + 2</code> </span> という式を得ることができ、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"515",
+    "id":"519",
     "title":"言語の設計"
 });
 </script>
-<h2 id="515">言語の設計</h2><script>page_contents.push({
+<h2 id="519">言語の設計</h2><script>page_contents.push({
     "type":"H3",
-    "id":"519",
+    "id":"523",
     "title":"イメージ"
 });
 </script>
-<h3 id="519">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数</li><li>while, if 文</li><li>整数, 浮動小数点数, 文字列, 真理値 のリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、実際イメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構ちゃんとした見た目です。<br><br><div class="code-block"> <pre><code class="cpp">function fizzbuzz(n) {
+<h3 id="523">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数定義 / 呼び出し / <span class="inline-code"> <code>return</code> </span></li><li>ブロック</li><li><span class="inline-code"> <code>while</code> </span>, <span class="inline-code"> <code>if</code> </span></li><li>整数, 浮動小数点数, 文字列　あたりのリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。<br><br><div class="code-block"> <pre><code class="julia">function fizzbuzz(n) {
     i = 0
-    while (i < n) {
+    while (i < 100){
+        i = i + 1
         if (i % 15 == 0) {
             println("FizzBuzz")
+        } elseif (i % 3 == 0) {
+            println("Fizz")
+        } elseif (i % 5 == 0) {
+            println("Buzz")
         } else {
-            if (i % 3 == 0) {
-                println("Fizz")
-            } else {
-                if (i % 5 == 0) {
-                    println("Buzz")
-                } else {
-                    println(i)
-                }
-            }
+            println(i)
         }
-        i = i + 1
     }
 }
-
 
 fizzbuzz(100)
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"567",
+    "id":"587",
     "title":"PEG.jl による記述"
 });
 </script>
-<h3 id="567">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
+<h3 id="587">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
                 r"0"p, 
                 r"[1-9]" & r"[0-9]"[*]
             )
@@ -950,7 +945,7 @@ function check(src, rule, expected)
     ast = parse(src, rule=rule)
     result = eval(ast)
     success = expected(result)
-    return onfail(@test success) do
+    onfail(@test success) do
         @info "Failed. Expected: $expected, got: $result"   
         @info "AST: $ast"
     end
@@ -965,17 +960,17 @@ end
 end
 </code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br>完成したものがこちらになります。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"716",
+    "id":"736",
     "title":"感想"
 });
 </script>
-<h2 id="716">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
+<h2 id="736">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"726",
+    "id":"746",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="726">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
+<h2 id="746">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
         </div>
 
 
