@@ -78,7 +78,7 @@ PEGは、技術としては思ったよりだいぶ最近のもので、なん�
 [Pythonで学ぶ解析表現文法と構文解析](https://www.morikita.co.jp/books/mid/085651)  という本を見つけて読んでへ〜となったので使ってみることにしました。
 (この本では構文解析自体の説明から平易に書かれていて実装もPythonで読みやすく、おすすめです)
 
-しかも、Python 3.9からはPythonのパーサがPEGベースになり、しかもJuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、
+しかも、Python 3.9からはPythonのパーサがPEGベースになり、JuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、
 世はまさに大パーサ改善時代と言えそうです。
 
 
