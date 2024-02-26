@@ -818,19 +818,19 @@ julia> parse_whole(add, "1+2")
 
 julia> eval(ans)
 3
-</code></pre> </div><br><span class="inline-code"> <code>1 + 2</code> </span> という式を得ることができ、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
+</code></pre> </div><br><span class="inline-code"> <code>"1+2"</code> </span> という単なる文字列から <span class="inline-code"> <code>1 + 2</code> </span> を表現する <span class="strong"> <strong>Juliaの</strong> </span> AST を得ることができました。つまり、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"519",
+    "id":"532",
     "title":"言語の設計"
 });
 </script>
-<h2 id="519">言語の設計</h2><script>page_contents.push({
+<h2 id="532">言語の設計</h2><script>page_contents.push({
     "type":"H3",
-    "id":"523",
+    "id":"536",
     "title":"イメージ"
 });
 </script>
-<h3 id="523">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数定義 / 呼び出し / <span class="inline-code"> <code>return</code> </span></li><li>ブロック</li><li><span class="inline-code"> <code>while</code> </span>, <span class="inline-code"> <code>if</code> </span></li><li>整数, 浮動小数点数, 文字列　あたりのリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。<br><br><div class="code-block"> <pre><code class="julia">function fizzbuzz(n) {
+<h3 id="536">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数定義 / 呼び出し / <span class="inline-code"> <code>return</code> </span></li><li>ブロック</li><li><span class="inline-code"> <code>while</code> </span>, <span class="inline-code"> <code>if</code> </span></li><li>整数, 浮動小数点数, 文字列　あたりのリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。<br><br><div class="code-block"> <pre><code class="julia">function fizzbuzz(n) {
     i = 0
     while (i < 100){
         i = i + 1
@@ -849,11 +849,11 @@ julia> eval(ans)
 fizzbuzz(100)
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"587",
+    "id":"600",
     "title":"PEG.jl による記述"
 });
 </script>
-<h3 id="587">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
+<h3 id="600">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="julia">@rule int = (
                 r"0"p, 
                 r"[1-9]" & r"[0-9]"[*]
             )
@@ -960,17 +960,17 @@ end
 end
 </code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br>完成したものがこちらになります。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"736",
+    "id":"749",
     "title":"感想"
 });
 </script>
-<h2 id="736">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
+<h2 id="749">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"746",
+    "id":"759",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="746">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
+<h2 id="759">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>
         </div>
 
 
