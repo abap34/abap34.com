@@ -35,3 +35,4 @@ Twitterに上げたら実装で参考にした[山本さんから反応があっ
 
 <iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe>
 
+
