@@ -32,8 +32,6 @@
 
     <script>hljs.highlightAll();</script>
 
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
@@ -42,50 +40,43 @@
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
 
     <style>
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: rgb(248, 248, 248);
-    color: #333;
-    display: flex;
-    gap: 10px;
-    flex-direction: row-reverse;
-    overflow: auto;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    padding-left: 20px;
+    padding-right: 50px;
+    font-family: "Noto Sans", sans-serif;
 }
+
 
 @media (max-width: 768px) {
-    body {
-        padding: 0px;
-    }
-}
-
-.side {
-    width: 240px;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(246, 246, 246, 0.177);
-    border-radius: 10px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
-    margin-left: auto;
-    margin-right: 0px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: auto;
-    top: 20px;
-    padding-left: 30px;
-    padding-right: 20px;
-}
-
-@media (max-width: 768px) {
-    .side {
+    .side #toc {
         display: none;
     }
+
+    body {
+        display: block;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .article-header .title {
+        font-size: 18px;
+    }
+}
+
+
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
 }
 
 .side-sticky {
@@ -93,110 +84,113 @@ body {
     top: 20px;
 }
 
-.content {
-    padding: 40px 40px;
-    margin-left: 0px;
-    margin-right: auto;
-    border-radius: 5px;
-    max-width: 800px;
-    width: 100%;
-}
-
 .article-header {
-    margin-bottom: 30px;
-
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 50px;
 }
 
-.article-body {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    border: solid 1px rgba(236, 236, 236, 0.472);
-    padding: 40px;
-    background-color: #ffffff64;
-    border-radius: 5px;
-    padding: 40px;
+.article-header .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: blur(3px);
 }
 
+.article-header .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-header .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    border-bottom: solid 1px #ddd;
+    font-weight: bold;
+    background-color: #44444477;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag {
+    font-size: 14px;
+    text-align: center;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
 
 @media (max-width: 768px) {
-    .content {
-        width: 100%;
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
         padding: 20px;
     }
 }
 
-.sidebar {
-    top: 20px;
-    left: 0px;
-}
 
-@media (max-width: 1260px) {
-    .sidebar {
-        display: none;
-    }
-}
-
-.links {
-    bottom: 0px;
-    left: 0px;
-}
-
-@media (max-width: 1260px) {
-    .links {
-        display: none;
-    }
-}
-
-
-
-.title {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-    text-align: center;
-}
-
-h1,
-h2 {
-    color: #323232;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h2 {
-    text-align: left;
-    padding-left: 10px;
-    border-bottom: solid 1px #5b5b5b;
-}
-
-p {
-    color: #666;
-    margin-bottom: 10px;
-}
-
-a {
-    color: #006699;
-}
-
-figure {
-    text-align: center;
-}
-
-figcaption {
-    text-align: center;
+h3 {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 pre {
     padding: 10px;
-    color: #333;
-    border: solid 1px #a8a8a8;
-    overflow-x: auto;
+    background-color: #f8f8f8
 }
 
-img {
-    max-width: 100%;
-    height: auto;
+.tex-equations {
+    overflow-x: auto;
 }
 
 table {
@@ -211,18 +205,11 @@ td {
     padding: 8px;
 }
 
-.date {
-    color: #666;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.tag {
-    color: #666;
-    font-size: 14px;
-    margin: 0 auto;
-    text-align: center;
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
 }
 
 #toc {
@@ -230,19 +217,12 @@ td {
     border-radius: 4px;
     padding: 15px;
     list-style: none;
-    /* 左側に棒 */
-    border-left: solid 1px #161616;
-}
-
-.toc_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #2a2a2a;
+    border-left: solid 1px #ddd;
 }
 
 #toc a {
     text-decoration: none;
-    color: #5f5f5f;
+    color: #777;
     display: block;
     margin: 5px 0;
     transition: color 0.2s;
@@ -263,50 +243,55 @@ td {
     font-size: 16px;
 }
 
+
+
 .toc_H1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
 }
-
 
 .toc_H2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
     font-weight: bold;
+    padding-left: 10px;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
+    padding-left: 20px;
 }
+
+
+
 
 .content_list_h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
-    border-bottom: solid 1px #006699;
-    color: #006699;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
 }
-
 
 .content_list_h2 {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .content_list_problem {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #006699;
+    color: #007bff;
 }
 
 .badge {
@@ -314,8 +299,8 @@ td {
     border-radius: 25px;
     font-size: 14px;
     font-weight: bold;
-    color: #666;
-    border: 1px solid #333;
+    color: #777;
+    border: 1px solid #444;
     margin: 0 8px;
     float: left;
 }
@@ -334,7 +319,7 @@ td {
 }
 
 .runbutton {
-    background-color: #006699;
+    background-color: #007bff;
 }
 
 .runbutton:hover {
@@ -360,10 +345,10 @@ td {
     height: 300px;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
     padding: 10px;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
 .output,
@@ -375,9 +360,9 @@ td {
     overflow-x: auto;
     font-size: 16px;
     font-family: monospace;
-    background-color: #F2F2F2;
+    background-color: #f0f0f0;
     color: #333;
-    border: solid 1px #a8a8a8;
+    border: solid 1px #ddd;
 }
 
 .box-title,
@@ -385,14 +370,15 @@ td {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #666;
+    color: #777;
 }
 
 .inline-code,
 .code-block {
     font-family: monospace;
+    line-height: 1.5;
+    background-color: #f0f0f0;
 }
-
 
 .success,
 .info,
@@ -427,6 +413,46 @@ td {
     border-color: #ebccd1;
 }
 
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
 .definition::before,
 .theorem::before,
 .proof::before,
@@ -438,28 +464,13 @@ td {
     display: block;
 }
 
-.definition::before {
-    content: "Definition.";
-}
-
-.theorem::before {
-    content: "Theorem.";
-}
-
-.proof::before {
-    content: "Proof.";
-}
-
-.lemma::before {
-    content: "Lemma.";
-}
 
 .definition,
 .theorem,
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid;
+    margin: 12px;
 }
 
 .proof::after {
@@ -468,13 +479,26 @@ td {
     display: block;
 }
 
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #007bff;
+    word-break: break-all;
+}
+
 </style>
 
 
     <script>
+    page_contents = []
+    </script>
 
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script><script>
 
-
+            
 
 all_sample_input = {}
 all_sample_output = {}
@@ -486,7 +510,6 @@ use_libs = []
 
 judge_types = {}
 problem_status = {}
-page_contents = []
 
 const pyodidePromise = loadPyodide({
     stdin: stdin_func,
@@ -667,72 +690,112 @@ const runBlock = async (objectid) => {
             </div>
             <br>
             <div class="tag">
-                ["ALMO", "Python", "Markdown", "Pyodide", "WebAssembly"]
+                [ALMO, Python, Markdown, Pyodide, WebAssembly]
             </div>
 
         </div>
 
         <div class="article-body">
-            <br><script>page_contents.push({
+            <br><br><script>page_contents.push({
     "type":"H2",
-    "id":"2",
-    "title":"ALMOとは"
+    "id":"3",
+    "title":"はじめに"
 });
 </script>
-<h2 id="2">ALMOとは</h2><br><br>ALMOは、競技プログラミング、データ分析、科学技術計算をなどに関する資料を作成するためのC++製の拡張Markdownパーサです。<br><br>ALMOの拡張構文の最大の特徴、そしてウリは、<br><br><span class="strong"> <strong>WebAssemblyを使った実行・ジャッジ可能なコードブロック</strong> </span>です。<br><br>下にいかにも入力可能そうなエディタと、ボタンがあります。<br>そこに、入力を受け取って、 <span class="inline-code"> <code>Hello {入力された文字列}!</code> </span> という文字列を出力するPythonのプログラムを書いてみましょう。<br>ちなみに、Pythonでは<br><ul><li>入力は<span class="inline-code"> <code>input()</code> </span></li><li>文字列結合は<span class="inline-code"> <code>+</code> </span></li><li>出力は<span class="inline-code"> <code>print()</code> </span></li></ul><br>でできます。<br><h3 class="problem_title"> <div class='badge' id='75_status'>WJ</div>   Hello ALMO! </h2>
-<div class="editor" id="75" rows="3" cols="80"></div> 
-<script>editor = ace.edit("75"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(``, -1);</script>
-<div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="75_sample_in">ALMO</pre>
-<div class="box-title"> 出力 </div><pre class="sample_out" id="75_out"></pre>
-<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="75_expect_out">Hello, ALMO!</pre>
-<script>all_input["75"] = [];
-all_output["75"] = [];
-all_sample_input["75"] = `ALMO`;
-all_sample_output["75"] = `Hello, ALMO!`;
-problem_status["75"] = "WJ";
+<h2 id="3">はじめに</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"8",
+    "title":"Meet ALMO!"
+});
+</script>
+<h3 id="8">Meet ALMO!</h3><br>ALMOは拡張Markdownパーサ / 静的サイトジェネレータ です。 入力として Markdownファイルを受け取り、単一の HTMLファイルを出力します。<br>ALMOの拡張構文の最大の特徴は、 <span class="strong"> <strong>実行環境を含むページを作成できる</strong> </span> ことです。<br>下にいかにも入力可能そうなエディタと、ボタンがあります。<br>そこに、入力を受け取って、 <span class="inline-code"> <code>Hello {入力された文字列}!</code> </span> という文字列を出力するPythonのプログラムを書いてみましょう。<br>(Pythonの文字列結合は <span class="inline-code"> <code>+</code> </span> でできます。)<br><h3 class="problem_title"> <div class='badge' id='47_status'>WJ</div>   Hello ALMO! </h2>
+<div class="editor" id="47" rows="3" cols="80"></div> 
+<script>editor = ace.edit("47"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`s = input()
+
+print(
+    # write your code here
+)`, -1);</script>
+<div class="box-title"> サンプルの入力 </div><pre class="sample_in" id="47_sample_in">ALMO</pre>
+<div class="box-title"> 出力 </div><pre class="sample_out" id="47_out"></pre>
+<div class="box-title"> サンプルの答え </div><pre class="expect_out" id="47_expect_out">Hello, ALMO!</pre>
+<script>all_input["47"] = [];
+all_output["47"] = [];
+all_sample_input["47"] = `ALMO`;
+all_sample_output["47"] = `Hello, ALMO!`;
+problem_status["47"] = "WJ";
 page_contents.push({
     "type":"Problem",
-    "id":"75",
+    "id":"47",
     "title":"Hello ALMO!"
 });
 
- all_input["75"].push(`world`)
- all_input["75"].push(`wasm`)
- all_input["75"].push(`ALMO`)
- all_output["75"].push(`Hello, world!`)
- all_output["75"].push(`Hello, wasm!`)
- all_output["75"].push(`Hello, ALMO!`)</script> 
-<button class="runbutton" onclick="runCode('75', false)"> Run Sample </button>
-<button class="submitbutton" onclick="runCode('75', true)"> Submit </button>
+ all_input["47"].push(`world`)
+ all_input["47"].push(`wasm`)
+ all_input["47"].push(`ALMO`)
+ all_output["47"].push(`Hello, world!`)
+ all_output["47"].push(`Hello, wasm!`)
+ all_output["47"].push(`Hello, ALMO!`)</script> 
+<button class="runbutton" onclick="runCode('47', false)"> Run Sample </button>
+<button class="submitbutton" onclick="runCode('47', true)"> Submit </button>
 <script>
-judge_types["75"] = `equal`
+judge_types["47"] = `equal`
 </script>
-<br><br>ボタンの<ul><li>"Run Sample" ボタンでサンプルに対して実行</li><li>"Submit" ボタンで複数のテストケースでジャッジ</li></ul><br>ができます。　正しそうなプログラムが書けた場合は、"Submit" ボタンを押してみましょう。<br>どうでしょう、左上のステータスがAcceptedを表すACという文字になりましたか？(もし"WA"になってしまった場合は、Wrong Answer ということで、プログラムが間違っています。もう一度プログラムを見直してください。)<br><br>このようなジャッジシステムが動作しているわけですが、まず、このPythonの実行は、サーバーで実行されているのではなく、<br><span class="strong"> <strong>WebAseemblyを使ってユーザのブラウザ上で完結しています。</strong> </span><br>具体的にはALMOは、 <url> <a href="https://pyodide.org/en/stable/">Pyodide</a> </url>  を使ってブラウザ上でPythonのコードを実行しています。<br><br>また、ジャッジコードもALMOに組み込まれていて、全ての処理がブラウザ上で完結しています。<br>(つまり一度読み込みさえ終わればオフライン環境でも動作します。)<br><br>さらに、上のブロックは<br><div class="code-block"> <pre><code class="text">:::judge
-title=Hello ALMO!
-sample_in=example/helloalmo/in/sample.txt
-sample_out=example/helloalmo/out/sample.txt
-in=example/helloalmo/in/*.txt
-out=example/helloalmo/out/*.txt
-:::
-</code></pre> </div><br>と書くだけで作ることができます。<br>上の記法全ての出入力ファイルがHTMLファイルに埋め込まれ、自動でジャッジが構築されます。<br>また、普通の実行可能なコードブロックも書けます。<br><br> 
- <div class="editor" id="159" rows="3" cols="80"></div> 
-<script>editor = ace.edit("159"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 6,     maxLines: 6,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`# このコードは自分自身を出力します！　
+<br><br><br>コードができたら、下のボタンでジャッジをしてみましょう！<br><br>ボタンの<ul><li>"Run Sample" ボタンでサンプルに対して実行</li><li>"Submit" ボタンで複数のテストケースでテスト</li></ul><br>ができます。 ACを目指してコードを変更してみましょう！<br><br>さて、このPythonの実行は、サーバーで実行されているのではなく、<br><span class="strong"> <strong>WebAseemblyを使ってユーザのブラウザ上で完結しています。</strong> </span><br><br>具体的にはALMOは、<url> <a href="https://pyodide.org/en/stable/">Pyodide</a> </url> を使ってブラウザ上でPythonのコードを実行しています。<br><br>また、ジャッジを行うコード・テストケースも、全て HTMLファイルに埋め込まれていて、全ての処理がクライアント側で完結しています。<br>(つまり一度読み込みさえ終わればオフライン環境でも動作します。)<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"110",
+    "title":"ALMOの機能"
+});
+</script>
+<h2 id="110">ALMOの機能</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"115",
+    "title":"キホンのキ"
+});
+</script>
+<h3 id="115">キホンのキ</h3><br>ALMO は、競技プログラミング・データ分析・科学技術計算などのプログラミングに関連する記事を簡単に執筆できるように設計されています。<br>通常の Markdown記法のようにコードブロックを作ることもで画像を表示することもできますし、<br><br><div class="code-block"> <pre><code class="python">def hello():
+    print("Hello ALMO!")
 
-# 実行して確かめよう
+if __name__ == "__main__":
+    hello()
+</code></pre> </div><br><figure><img src="https://imagingsolution.net/wordpress/wp-content/uploads/2011/03/Mandrill.png" ><figcaption>マンドリル</figcaption></figure><br>単に実行可能なコードブロックも書くことができます。<br><br> 
+ <div class="editor" id="146" rows="3" cols="80"></div> 
+<script>editor = ace.edit("146"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 11,     maxLines: 11,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def kuku():
+    print('+----' * 9 + '+')
+    for i in range(1, 10):
+        row = '|'
+        for j in range(1, 10):
+            row += '{:3d} |'.format(i * j) 
+        print(row)
+        print('+----' * 9 + '+')
 
-_='_=%r;print(_%%_)';print(_%_)
+kuku()
 `, -1);</script>
-<pre class="exec_out" id="159_out"></pre>
-<div class="exec_plot" id="159_plot"></div>
-<button class="runbutton" onclick="runBlock('159')"> Run </button>
-<br><br>さらに、主要なPythonのライブラリも利用できます。<br><div class="code-block"> <pre><code class="">:::loadlib
+<pre class="exec_out" id="146_out"></pre>
+<div class="exec_plot" id="146_plot"></div>
+<button class="runbutton" onclick="runBlock('146')"> Run </button>
+<br><br>また、デフォルトテーマでは証明などの環境や注意・警告などのブロックもサポートされており、もちろんカスタマイズ可能です。<br><div class="definition"><br>関数列 <span class="math-inline"> \( \{f_n\} \) </span> が各点収束するとは、任意の <span class="math-inline"> \( x \) </span> に対して <span class="math-inline"> \( \displaystyle \lim_{n \to \infty} f_n(x) \) </span> が存在することである。<br>つまり、<br><div class="math-block"> \[ 
+\forall \varepsilon > 0, \forall x \in X, \exists N \in \mathbb{N}, \forall n \geq N, |f_n(x) - f(x)| < \varepsilon
+
+ \] </div><br>が成り立つことである。<br><br><div class="warning">ここで、 <span class="math-inline"> \( N \) </span> は 各 <span class="math-inline"> \( \varepsilon, x \) </span> に対してとってこれることに注意しよう。<br>各 <span class="math-inline"> \( \varepsilon \) </span> に対してある <span class="math-inline"> \( N \) </span> が存在して、 各 <span class="math-inline"> \( x \) </span> に対して <span class="math-inline"> \( n \geq N \) </span> ならば <span class="math-inline"> \( |f_n(x) - f(x)| < \varepsilon \) </span> が成り立つときは、関数列 <span class="math-inline"> \( \{f_n\} \) </span> は <span class="strong"> <strong>一様収束する</strong> </span> という。<br></div><br></div><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"238",
+    "title":"ライブラリの読み込み"
+});
+</script>
+<h3 id="238">ライブラリの読み込み</h3><br>さらに、主要なPythonのライブラリも実行環境に読み込ませることが可能です。<br><div class="code-block"> <pre><code class="">:::loadlib
 numpy
 scipy
 matplotlib
 :::
-</code></pre> </div><br>と書くと、 <span class="inline-code"> <code>numpy</code> </span>, <span class="inline-code"> <code>scipy</code> </span>, <span class="inline-code"> <code>matplotlib</code> </span> を読み込むことができます。(実行可能コードブロックの初回実行時に読み込まれます。)<br><script> use_libs.push("numpy"); </script><script> use_libs.push("scipy"); </script><script> use_libs.push("matplotlib"); </script><br>これを使ってバネの運動を調べてみます。<br><br> 
- <div class="editor" id="193" rows="3" cols="80"></div> 
-<script>editor = ace.edit("193"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 43,     maxLines: 43,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+</code></pre> </div><br>と書くと、 <span class="inline-code"> <code>numpy</code> </span>, <span class="inline-code"> <code>scipy</code> </span>, <span class="inline-code"> <code>matplotlib</code> </span> が <span class="inline-code"> <code>import</code> </span> 可能になり、コードに含めることができます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("scipy"); </script><script> use_libs.push("matplotlib"); </script><br><script>page_contents.push({
+    "type":"H3",
+    "id":"271",
+    "title":"matplotlibのサポート"
+});
+</script>
+<h3 id="271">matplotlibのサポート</h3><br><span class="inline-code"> <code>matplotlib</code> </span> を使ったプロットをサポートしています。<br>事前に <span class="inline-code"> <code>matplotlib</code> </span> を読み込んでおいて、 <span class="inline-code"> <code>matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")</code> </span> を追加すると、通常のように <span class="inline-code"> <code>plt.show()</code> </span> とするだけで、ブラウザ上でプロットを表示することができます。<br><br> 
+ <div class="editor" id="303" rows="3" cols="80"></div> 
+<script>editor = ace.edit("303"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 
 import matplotlib
 matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
@@ -773,27 +836,38 @@ plt.legend()
 plt.title('弾性振動子の振動')
 plt.grid(True)
 plt.show()
-
 `, -1);</script>
-<pre class="exec_out" id="193_out"></pre>
-<div class="exec_plot" id="193_plot"></div>
-<button class="runbutton" onclick="runBlock('193')"> Run </button>
-<br><br>もちろん通常の画像をはじめとして基本的なマークダウン記法をサポートしています。<br><figure><img src=" https://imagingsolution.net/wordpress/wp-content/uploads/2011/03/Mandrill.png " ><figcaption>マンドリル</figcaption></figure><br><br><script>page_contents.push({
+<pre class="exec_out" id="303_out"></pre>
+<div class="exec_plot" id="303_plot"></div>
+<button class="runbutton" onclick="runBlock('303')"> Run </button>
+<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"209",
-    "title":"インストール方法・使い方"
+    "id":"306",
+    "title":"インストール"
 });
 </script>
-<h2 id="209">インストール方法・使い方</h2><br>ALMOは、Homebrewを使ってインストールすることができます。<br><div class="code-block"> <pre><code class="bash">brew tap abap34/homebrew-almo
+<h2 id="306">インストール</h2><br>ALMOは、Homebrewを使ってインストールすることができます。<br><div class="code-block"> <pre><code class="bash">brew tap abap34/homebrew-almo
 brew install almo
 </code></pre> </div><br>インストールが完了したら、MarkdownファイルをALMOに渡してみましょう。<br><div class="code-block"> <pre><code class="bash">almo example/example.md -o example.html
-</code></pre> </div><br>記法の詳細については <url> <a href="https://github.com/abap34/ALMO">レポジトリのREADME.md</a> </url>を参照してください。<br><br>全部入りのHTMLファイルなので、そのまま置くだけで動作します。<br><script>page_contents.push({
+</code></pre> </div><br>記法の詳細については <url> <a href="https://github.com/abap34/ALMO">レポジトリのREADME.md</a> </url>を参照してください。<br><script>page_contents.push({
     "type":"H2",
-    "id":"239",
-    "title":"ALMOで書かれた記事の例"
+    "id":"331",
+    "title":"ライブラリ"
 });
 </script>
-<h2 id="239">ALMOで書かれた記事の例</h2><br><ul><li><url> <a href="https://www.abap34.com/posts/n-order-diff.html">n 次精度 k 階数値微分の導出</a> </url></li><li><url> <a href="https://www.abap34.com/posts/parallel_othello.html">オセロ探索の並列化の戦略</a> </url></li></ul><br><br>
+<h2 id="331">ライブラリ</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"336",
+    "title":"1. Visual Studio Codeでのプレビュー <url> <a href="https://github.com/abap34/ALMO-extension">https://github.com/abap34/ALMO-extension</a> </url>"
+});
+</script>
+<h3 id="336">1. Visual Studio Codeでのプレビュー <url> <a href="https://github.com/abap34/ALMO-extension">https://github.com/abap34/ALMO-extension</a> </url></h3><br>Visual Studio Code上で、執筆中の記事のプレビューが可能です.<br><br><figure><img src="https://github.com/abap34/ALMO-extension/raw/main/assets/almo-ext-demo.gif" ><figcaption></figcaption></figure><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"359",
+    "title":"2. GitHub Pages へのデプロイ <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url>"
+});
+</script>
+<h3 id="359">2. GitHub Pages へのデプロイ <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url></h3><br><br>GitHub Pages を使って、簡単にブログを構築することができます。<br><figure><img src="https://github.com/abap34/ALMO-blog-template/raw/main/assets/index-example.png" ><figcaption></figcaption></figure><br>
         </div>
 
 
