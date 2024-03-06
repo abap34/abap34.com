@@ -413,6 +413,8 @@ td {
 
 .definition {
     counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
 }
 
 .definition::before {
@@ -421,6 +423,8 @@ td {
 
 .theorem {
     counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
 }
 
 .theorem::before {
@@ -429,6 +433,8 @@ td {
 
 .lemma {
     counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
 }
 
 .lemma::before {
@@ -437,6 +443,8 @@ td {
 
 .proof {
     counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
 }
 
 .proof::before {
@@ -460,7 +468,7 @@ td {
 .proof,
 .lemma {
     padding: 12px;
-    border-left: 1px solid #ddd;
+    margin: 12px;
 }
 
 .proof::after {
@@ -547,7 +555,7 @@ a {
     uses: actions/checkout@v2
     with:
         fetch-depth: 0
-</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。 <br><br>
+</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。 <br><br><br>
         </div>
 
 
