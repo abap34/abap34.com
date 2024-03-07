@@ -11,6 +11,7 @@ def build_article(config, args):
         "custom_css": "-c",
         "editor_theme": "-e",
         "syntax_theme": "-s",
+        "template": "-b"
     }
 
     cmd = 'ALMO/almo {} -o {} -d'.format(args[1], args[2])
@@ -35,16 +36,6 @@ def build_article(config, args):
         date = tmp['meta']['date']
         html_path = tmp['meta']['out_path']
         ogp_url = tmp['meta']['ogp_url']
-
-    back_to_home = '<a href=\"' + config["root_url"] + '/posts.html\">  ⇨ 投稿一覧へ </a> \n <br> <br> <br> <br>'
-    
-
-    with open(html_path, 'r') as f:
-        html = f.read()
-        html = html.replace('<div class="links">', '<div class="links">' + back_to_home)
-    
-    with open(html_path, 'w') as f:
-        f.write(html)
     
     url = config["root_url"]  + html_path[6:]
 
