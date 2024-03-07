@@ -328,11 +328,16 @@ td {
     color: #777;
 }
 
-.inline-code,
+
 .code-block {
     font-family: monospace;
     line-height: 1.5;
     background-color: #f0f0f0;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.5;
 }
 
 .success,
