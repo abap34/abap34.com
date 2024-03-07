@@ -1,10 +1,17 @@
-
-
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
     <title> 作問ハッカソン 002で作問しました  </title>
 
     <meta property="og:title" content="作問ハッカソン 002で作問しました ">
@@ -489,7 +496,7 @@ a {
 
 
     <script>
-    page_contents = []
+        page_contents = []
     </script>
 
     <!-- Runner is not required. Skip this. -->
@@ -534,7 +541,7 @@ a {
     "title":"Don't cut line!"
 });
 </script>
-<h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、この辺使いたいなぁと思って作ってみました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので<span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください〜〜！！！<br> また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><br><br>
+<h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、この辺使いたいなぁと思って作ってみました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので<span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください〜〜！！！<br> また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><br><br><br>
         </div>
 
 
@@ -546,8 +553,20 @@ a {
                 <ul id="toc"></ul>
             </div>
 
-            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
- <br> <br> <br> <br>
+            <div class="links">
+
+
+                <a href="https://abap34.com/posts.html"> ⇨ 投稿一覧へ </a>
+
+                <a href="https://abap34.com"> ⇨ ホームへ </a>
+
+                <!-- rss -->
+                <a href="https://s7tya.github.io/abap34-crawler/atom.xml"> ⇨ RSS </a>
+
+                <br>
+                <br>
+                <br>
+
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
                     data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -560,6 +579,8 @@ a {
                 </p>
                 <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
                 <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+
+
 
                 <footer>
                     <p>&copy; abap34 </p>
@@ -631,5 +652,3 @@ function onIntersection(entries) {
 
 
 </html>
-
-
