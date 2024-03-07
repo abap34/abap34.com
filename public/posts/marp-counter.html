@@ -378,11 +378,16 @@ td {
     color: #777;
 }
 
-.inline-code,
+
 .code-block {
     font-family: monospace;
     line-height: 1.5;
     background-color: #f0f0f0;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.5;
 }
 
 .success,
@@ -548,7 +553,7 @@ a {
 .def {
   counter-increment: def-counter;
 }
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br><br><br>
+</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br><br><br><br>
         </div>
 
 
