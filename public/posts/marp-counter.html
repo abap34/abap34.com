@@ -1,10 +1,17 @@
-
-
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
     <title> marp で counter が使えない </title>
 
     <meta property="og:title" content="marp で counter が使えない">
@@ -489,7 +496,7 @@ a {
 
 
     <script>
-    page_contents = []
+        page_contents = []
     </script>
 
     <!-- Runner is not required. Skip this. -->
@@ -541,7 +548,7 @@ a {
 .def {
   counter-increment: def-counter;
 }
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br>
+</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br><br>
         </div>
 
 
@@ -553,8 +560,20 @@ a {
                 <ul id="toc"></ul>
             </div>
 
-            <div class="links"><a href="https://abap34.com/posts.html">  ⇨ 投稿一覧へ </a> 
- <br> <br> <br> <br>
+            <div class="links">
+
+
+                <a href="https://abap34.com/posts.html"> ⇨ 投稿一覧へ </a>
+
+                <a href="https://abap34.com"> ⇨ ホームへ </a>
+
+                <!-- rss -->
+                <a href="https://s7tya.github.io/abap34-crawler/atom.xml"> ⇨ RSS </a>
+
+                <br>
+                <br>
+                <br>
+
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
                     data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -567,6 +586,8 @@ a {
                 </p>
                 <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
                 <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
+
+
 
                 <footer>
                     <p>&copy; abap34 </p>
@@ -638,5 +659,3 @@ function onIntersection(entries) {
 
 
 </html>
-
-
