@@ -42,6 +42,19 @@
 <body>
     <div class="header">
         <h1>abap34.com</h1>
+        <nav>
+            <ul>
+                <!-- twitter -->
+                <li><a href="https://twitter.com/abap34" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a></li>
+                <!-- github -->
+                <li><a href="https://github.com/abap34" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
+                <li><a href="#aboutme">About Me</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#works">Works</a></li>
+                <li><a href="#Blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
 
     </div>
 
@@ -259,19 +272,6 @@
             showPosts(posts, 'recent-posts');
         })
         .catch(error => console.error('投稿情報の取得に失敗しました', error));
-
-
-
-    gsap.from(".fade-in", {
-        opacity: 0,
-        duration: 1,
-        delay: 0.5,
-        y: 20
-    }
-    );
-    gsap.set(sidebar, {
-        zIndex: 9999
-    });
 </script>
 
 <footer>

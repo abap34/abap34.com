@@ -10,6 +10,7 @@ body {
   padding: 20px;
 }
 
+
 @media (max-width: 768px) {
   body {
     margin-left: 10px !important;
@@ -22,8 +23,6 @@ body {
   .section-title {
     font-size: 25px !important;
   }
-
-
 }
 
 
@@ -71,18 +70,13 @@ section {
   color: #0073b7;
 }
 
-
-
-header {
-  background-color: #0074b7b9;
-  color: #fff;
-  text-align: center;
-  /* position: fixed; */
-  top: 0;
-  left: 0;
-  right: 0;
+.header ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
   margin: 0;
-  z-index: 100;
+  justify-content: flex-end;
 }
 
 footer {
