@@ -29,9 +29,12 @@ def build_article(config, args):
     
     os.system(cmd)
 
+    content = ''
+    with open(args[2], 'r') as f:
+        content = f.read()
+
     with open('tmp.json', 'r') as f:
         tmp = json.load(f)
-        print(tmp)
         title = tmp['meta']['title']
         date = tmp['meta']['date']
         html_path = tmp['meta']['out_path']
@@ -48,6 +51,7 @@ def build_article(config, args):
                     'post_date': date,
                     'url': url,
                     'thumbnail_url': ogp_url,
+                    'content': content
                 }
                 posts.remove(post)
                 posts.append(updated_post)
@@ -58,7 +62,7 @@ def build_article(config, args):
                 'post_date': date,
                 'url': url,
                 'thumbnail_url': ogp_url,
-
+                'content': content
             })
 
         
