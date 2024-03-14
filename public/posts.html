@@ -5,12 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>投稿一覧</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
+            font-family: 'M PLUS 1p', sans-serif;
         }
 
         header {
@@ -20,11 +18,9 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
         }
 
@@ -68,6 +64,14 @@
             text-decoration: none;
         }
 
+
+        #home {
+            color: #006699;
+            text-decoration: none;
+            font-size: 1.3rem;
+        }
+
+        
         @media (max-width: 600px) {
             .container {
                 padding: 1rem;
@@ -93,14 +97,50 @@
 <body>
     <header>
         <h1> abap34's blog </h1>
+
+        <img src="https://abap34.com/myicon.png" alt="abap34" width="100" height="100">
+
+        <br>
+
+        <a id="home" href="index.html">⇨ ホームへ</a>
+
+        <br>
+
+        <br>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="🔍 タイトルで検索">
+            <button id="search-button" onclick="searchPosts()">Search</button>
+        </div>
+
+        <div class="search-result">
+            <ul class="post-list" id="search-result"></ul>
+        </div>
+
     </header>
+
+
+
+
     <div class="container">
-        <h2>最近の投稿</h2>
-        <ul class="post-list" id="recent-posts"></ul>
         <h2>過去の投稿一覧</h2>
         <ul class="post-list" id="past-posts"></ul>
     </div>
     <script>
+        function searchPosts(){
+            const searchWord = document.getElementById('search').value;
+            const searchResult = document.getElementById('search-result');
+            searchResult.innerHTML = '';
+
+            fetch('./posts.json')
+                .then(response => response.json())
+                .then(posts => {
+                    const searchResultPosts = posts.filter(post => {
+                        return post.title.includes(searchWord);
+                    });
+                    showPosts(searchResultPosts, 'search-result');
+                })
+                .catch(error => console.error('投稿情報の取得に失敗しました', error));
+        }
 
         function showPosts(posts, elementId) {
             const postList = document.getElementById(elementId);
@@ -117,12 +157,6 @@
             });
         }
 
-        fetch('./recent_posts.json')
-            .then(response => response.json())
-            .then(posts => {
-                showPosts(posts, 'recent-posts');
-            })
-            .catch(error => console.error('投稿情報の取得に失敗しました', error));
 
         fetch('./posts.json')
             .then(response => response.json())
