@@ -71,7 +71,7 @@
             font-size: 1.3rem;
         }
 
-        
+
         @media (max-width: 600px) {
             .container {
                 padding: 1rem;
@@ -108,12 +108,13 @@
 
         <br>
         <div class="search-box">
-            <input type="text" id="search" placeholder="🔍 タイトルで検索">
-            <button id="search-button" onclick="searchPosts()">Search</button>
+            <input type="text" id="search-title" placeholder="🔍 タイトルで検索">
+            <button id="search-button" onclick="searchPostsTitle()">Search</button>
         </div>
 
-        <div class="search-result">
-            <ul class="post-list" id="search-result"></ul>
+        <div class="search-box">
+            <input type="text" id="search-content" placeholder="🔍 本文で検索">
+            <button id="search-button" onclick="searchPostsContent()">Search</button>
         </div>
 
     </header>
@@ -122,13 +123,22 @@
 
 
     <div class="container">
+
+        <div class="search-result">
+            <h2 id="search-result-title"></h2>
+            <ul class="post-list" id="search-result"></ul>
+        </div>
+
+
         <h2>過去の投稿一覧</h2>
         <ul class="post-list" id="past-posts"></ul>
     </div>
     <script>
-        function searchPosts(){
-            const searchWord = document.getElementById('search').value;
+        function searchPostsTitle() {
+            const searchWord = document.getElementById('search-title').value;
             const searchResult = document.getElementById('search-result');
+
+
             searchResult.innerHTML = '';
 
             fetch('./posts.json')
@@ -137,6 +147,32 @@
                     const searchResultPosts = posts.filter(post => {
                         return post.title.includes(searchWord);
                     });
+
+                    const count = searchResultPosts.length;
+                    document.getElementById('search-result-title').innerText = `「${searchWord}」のタイトル検索結果（${count}件）`;
+
+                    showPosts(searchResultPosts, 'search-result');
+                })
+                .catch(error => console.error('投稿情報の取得に失敗しました', error));
+        }
+
+        function searchPostsContent() {
+            const searchWord = document.getElementById('search-content').value;
+            const searchResult = document.getElementById('search-result');
+            searchResult.innerHTML = '';
+
+
+
+            fetch('./posts.json')
+                .then(response => response.json())
+                .then(posts => {
+                    const searchResultPosts = posts.filter(post => {
+                        return post.content.includes(searchWord);
+                    });
+
+                    const count = searchResultPosts.length;
+                    document.getElementById('search-result-title').innerText = `「${searchWord}」の本文検索結果（${count}件）`;
+
                     showPosts(searchResultPosts, 'search-result');
                 })
                 .catch(error => console.error('投稿情報の取得に失敗しました', error));
