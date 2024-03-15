@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>投稿一覧</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <style>
         body {
             font-family: 'M PLUS 1p', sans-serif;
@@ -91,6 +92,29 @@
                 margin-right: 1rem;
             }
         }
+
+        .search-box {
+            /* 分割 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        #search {
+            padding: 0.5rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        #search-button {
+            padding: 0.5rem;
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-left: 0.5rem;
+
+        }
     </style>
 </head>
 
@@ -108,13 +132,8 @@
 
         <br>
         <div class="search-box">
-            <input type="text" id="search-title" placeholder="🔍 タイトルで検索">
-            <button id="search-button" onclick="searchPostsTitle()">Search</button>
-        </div>
-
-        <div class="search-box">
-            <input type="text" id="search-content" placeholder="🔍 本文で検索">
-            <button id="search-button" onclick="searchPostsContent()">Search</button>
+            <input type="text" id="search" placeholder="検索">
+            <button id="search-button" onclick="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
 
     </header>
@@ -125,8 +144,10 @@
     <div class="container">
 
         <div class="search-result">
-            <h2 id="search-result-title"></h2>
-            <ul class="post-list" id="search-result"></ul>
+            <h2 id="title-search-result-title"></h2>
+            <ul class="post-list" id="title-search-result"></ul>
+            <h2 id="content-search-result-title"></h2>
+            <ul class="post-list" id="content-search-result"></ul>
         </div>
 
 
@@ -134,9 +155,15 @@
         <ul class="post-list" id="past-posts"></ul>
     </div>
     <script>
+        function search() {
+            searchPostsContent();
+            searchPostsTitle();
+        }
+
+
         function searchPostsTitle() {
-            const searchWord = document.getElementById('search-title').value;
-            const searchResult = document.getElementById('search-result');
+            const searchWord = document.getElementById('search').value;
+            const searchResult = document.getElementById('title-search-result');
 
 
             searchResult.innerHTML = '';
@@ -149,16 +176,16 @@
                     });
 
                     const count = searchResultPosts.length;
-                    document.getElementById('search-result-title').innerText = `「${searchWord}」のタイトル検索結果（${count}件）`;
+                    document.getElementById('title-search-result-title').innerText = `「${searchWord}」のタイトル検索結果（${count}件）`;
 
-                    showPosts(searchResultPosts, 'search-result');
+                    showPosts(searchResultPosts, 'title-search-result');
                 })
                 .catch(error => console.error('投稿情報の取得に失敗しました', error));
         }
 
         function searchPostsContent() {
-            const searchWord = document.getElementById('search-content').value;
-            const searchResult = document.getElementById('search-result');
+            const searchWord = document.getElementById('search').value;
+            const searchResult = document.getElementById('content-search-result');
             searchResult.innerHTML = '';
 
 
@@ -171,9 +198,9 @@
                     });
 
                     const count = searchResultPosts.length;
-                    document.getElementById('search-result-title').innerText = `「${searchWord}」の本文検索結果（${count}件）`;
+                    document.getElementById('content-search-result-title').innerText = `「${searchWord}」の本文検索結果（${count}件）`;
 
-                    showPosts(searchResultPosts, 'search-result');
+                    showPosts(searchResultPosts, 'content-search-result');
                 })
                 .catch(error => console.error('投稿情報の取得に失敗しました', error));
         }
