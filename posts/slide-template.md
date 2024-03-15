@@ -31,15 +31,15 @@ twitter_site: @abap34
 
 このテンプレートを使うと、
 
-- Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイされます。
-- スライドのソースファイルが分割できる
+- Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイ
+- スライドのソースファイル分割
 
-ようになります。
+ができます。
 
-自動でスライドがデプロイされるので共有しやすくなりますし、 Git管理の設定の手間が省けます。
+スライドが共有しやすくなりますし、 Git管理の設定の手間が省けます。
 
 
-また、 ファイルが長大になるとdiffもわかりづらいし、VSCode extensionで表示がチラつくという現象がよく発生してましたが、
+また、 ファイルが長大になるとdiffがわかりづらくなる、VSCode extensionで表示がチラつくなどの現象がよく発生してましたが、
 ファイル分割することで、これらの問題も解消されます。
 
 ### しくみ
@@ -110,7 +110,7 @@ REST_FILES = $(filter-out $(HEADER_FILE), $(SRC_FILES))
 OUTPUT_FILE = $(BUILD_DIR)/slide.md
 THEME_NAME = honwaka-theme
 THEME_REPO = https://github.com/abap34/honwaka-theme
-MarpRC_FILE = .Marprc.yml
+MARPRC_FILE = .marprc.yml
 
 
 all: clean preprocess pdf html pptx
@@ -138,20 +138,20 @@ $(OUTPUT_FILE): $(SRC_FILES)
 
 pdf: preprocess
 	@echo "Creating PDF..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.pdf
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pdf
 
 html: preprocess
 	@echo "Creating HTML..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.html
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.html
 
 pptx: preprocess
 	@echo "Creating PPTX..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.pptx
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pptx
 
 
 preview: clean preprocess
 	@echo "Creating preview..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --preview
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --preview
 
 
 clean:
@@ -175,8 +175,9 @@ clean:
 done
 ```
 
-Marpでは YAML Front Matter で設定を行うことができますが、
-各ファイルにこれがないと VSCode でプレビューができないので書く必要がありますが、
+Marpでは YAML Front Matter で設定を行うことができます.
+
+これがないと VSCode でプレビューができないので、それぞれのファイルで先頭にこれを書く必要がありますが、
 結合するときに不都合です。
 
 
