@@ -14,6 +14,8 @@ twitter_site: @abap34
 ---
 
 
+## JuliaTokyo #11 でトークをしてきました
+
 2/3 に開催された JuliaTokyo #11 で発表をしてきました。
 
 [https://juliatokyo.connpass.com/event/306300/](https://juliatokyo.connpass.com/event/306300/ )
