@@ -598,31 +598,31 @@ B = b B? c
     "title":"Packrat Parsingは本当に効率的？"
 });
 </script>
-<h3 id="357">Packrat Parsingは本当に効率的？</h3><br>さて、かなり劇的な性能改善が起きていて採用待ったなしのように見える Packrat Parsing ですが、実際これがどれくらい実際のパフォーマンスに影響するでしょうか？<br><br>驚くべきことに<span class="strong"> <strong>、「ふつうの」解析の場面では Packrat Parsing はあまり効果を発揮しない</strong> </span>という意見がかなり多いようです。<br><br>まず、一般的に非終端記号の使われる頻度はかなり偏っています。<br>プログラミング言語なら <span class="inline-code"> <code>Expr</code> </span> などはしょっちゅう使われると思いますが、例えば <span class="inline-code"> <code>GOTOSTMT</code> </span> などはほとんど使われないと思います。<br>さらに、世の中で使われている多くの文法は LALR(1) などで解析できるもの、<br>あるいはそれに近いものになっているため、バックトラックが結果としてあまり発生しなくなります。<br>これらの理由から、何でもメモ化するとオーバーヘッドが大きくなって<br>かえって非効率になることが多いようです。<br><br>したがって、設計者が指定、あるいは実際の頻度に基づいて特定の数個の非終端記号に対してのみメモ化を行うというのがよく取られる戦略です。<br><br>(todo: この辺りを実測した結果を載せる)<br><br><br><script>page_contents.push({
+<h3 id="357">Packrat Parsingは本当に効率的？</h3><br>さて、かなり劇的な性能改善が起きていて採用待ったなしのように見える Packrat Parsing ですが、実際これがどれくらい実際のパフォーマンスに影響するでしょうか？<br><br>驚くべきことに<span class="strong"> <strong>、「ふつうの」解析の場面では Packrat Parsing はあまり効果を発揮しない</strong> </span>という意見がかなり多いようです。<br><br>まず、一般的に非終端記号の使われる頻度はかなり偏っています。<br>プログラミング言語なら <span class="inline-code"> <code>Expr</code> </span> などはしょっちゅう使われると思いますが、例えば <span class="inline-code"> <code>GOTOSTMT</code> </span> などはほとんど使われないと思います。<br><br>さらに、世の中で使われている多くの文法は LALR(1) などで解析できるものでした。<br>たとえ PEG を前提に文法を組み立てても、これらに近しいものになりますから、結果的にバックトラックが結果としてあまり発生しない文法になリます。<br><br>これらの理由から、何でもメモ化するとオーバーヘッドが大きくなってかえって非効率になることが多いようです。<br><br>したがって、設計者が指定、あるいは実際の頻度に基づいて特定の数個の非終端記号に対してのみメモ化を行うというのがよく取られる戦略です。<br><br>(todo: この辺りを実測した結果を載せる)<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"431",
+    "id":"429",
     "title":"(WIP) PEGパーサジェネレータを作る。 "
 });
 </script>
-<h2 id="431">(WIP) PEGパーサジェネレータを作る。 </h2><br>さて、 本題です。 まずは一旦計算量とかの話は忘れて、素直に意味論に従って PEGパーサジェネレータを作ってみたいと思います。<br><script>page_contents.push({
+<h2 id="429">(WIP) PEGパーサジェネレータを作る。 </h2><br>さて、 本題です。 まずは一旦計算量とかの話は忘れて、素直に意味論に従って PEGパーサジェネレータを作ってみたいと思います。<br><script>page_contents.push({
     "type":"H3",
-    "id":"440",
+    "id":"438",
     "title":"デザイン"
 });
 </script>
-<h3 id="440">デザイン</h3><script>page_contents.push({
+<h3 id="438">デザイン</h3><script>page_contents.push({
     "type":"H4",
-    "id":"444",
+    "id":"442",
     "title":"サポートする構文"
 });
 </script>
-<h4 id="444">サポートする構文</h4><br>次の構文をサポートすることにします。<br><ul><li>文字列(<span class="inline-code"> <code>PStr</code> </span>)</li><li>正規表現 (<span class="inline-code"> <code>PRegex</code> </span>)</li><li>連接(<span class="inline-code"> <code>PSeq</code> </span>)</li><li>選言(<span class="inline-code"> <code>PChoice</code> </span>)</li><li>否定先読み(<span class="inline-code"> <code>PNot</code> </span>)</li><li>任意文字(<span class="inline-code"> <code>PAny</code> </span>)</li><li>0回以上繰り返し(<span class="inline-code"> <code>PMany</code> </span>)</li></ul><br><span class="inline-code"> <code>PMany</code> </span> や <span class="inline-code"> <code>PRegex</code> </span> は PEG自体には本来ないですが、記法として便利なので追加します。<br><span class="strong"> <strong><span class="inline-code"> <code>PRegex</code> </span> を正規言語の範囲内で使えば</strong> </span>、これによって表現能力が変わることはありません。<br><script>page_contents.push({
+<h4 id="442">サポートする構文</h4><br>次の構文をサポートすることにします。<br><ul><li>文字列(<span class="inline-code"> <code>PStr</code> </span>)</li><li>正規表現 (<span class="inline-code"> <code>PRegex</code> </span>)</li><li>連接(<span class="inline-code"> <code>PSeq</code> </span>)</li><li>選言(<span class="inline-code"> <code>PChoice</code> </span>)</li><li>否定先読み(<span class="inline-code"> <code>PNot</code> </span>)</li><li>任意文字(<span class="inline-code"> <code>PAny</code> </span>)</li><li>0回以上繰り返し(<span class="inline-code"> <code>PMany</code> </span>)</li></ul><br><span class="inline-code"> <code>PMany</code> </span> や <span class="inline-code"> <code>PRegex</code> </span> は PEG自体には本来ないですが、記法として便利なので追加します。<br><span class="strong"> <strong><span class="inline-code"> <code>PRegex</code> </span> を正規言語の範囲内で使えば</strong> </span>、これによって表現能力が変わることはありません。<br><script>page_contents.push({
     "type":"H3",
-    "id":"540",
+    "id":"538",
     "title":"実装"
 });
 </script>
-<h3 id="540">実装</h3><br>実装していきます。　<br>まずはパースコンテクストを定義します。<br><div class="code-block"> <pre><code class="julia">@enum State UN FAIL FINISHED
+<h3 id="538">実装</h3><br>実装していきます。　<br>まずはパースコンテクストを定義します。<br><div class="code-block"> <pre><code class="julia">@enum State UN FAIL FINISHED
 
 mutable struct ParseContext
     input::String
@@ -687,17 +687,17 @@ function match(::PAny, context::ParseContext)
 end
 </code></pre> </div><br>完成したものがこちらになります。<br><br><a href="https://github.com/abap34/TinyPEG.jl"><img src="https://gh-card.dev/repos/abap34/TinyPEG.jl.svg"></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"616",
+    "id":"614",
     "title":"廃刊"
 });
 </script>
-<h2 id="616">廃刊</h2><br>おもしろいです！<br><br><url> <a href="https://gihyo.jp/book/2015/978-4-7741-7270-5">正規表現技術入門</a> </url> とか、 あるいはもっと実践的な(?) コンパイラとかで使われる話が乗ってる本を読んでみたいなと思いました。<br><br><script>page_contents.push({
+<h2 id="614">廃刊</h2><br>おもしろいです！<br><br><url> <a href="https://gihyo.jp/book/2015/978-4-7741-7270-5">正規表現技術入門</a> </url> とか、 あるいはもっと実践的な(?) コンパイラとかで使われる話が乗ってる本を読んでみたいなと思いました。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"638",
+    "id":"636",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="638">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yVWCezwyEsM?si=Tx-kE-6UpcvlPFYb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><br>
+<h2 id="636">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yVWCezwyEsM?si=Tx-kE-6UpcvlPFYb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><br>
         </div>
 
 
