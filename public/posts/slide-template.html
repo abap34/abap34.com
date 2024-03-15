@@ -559,7 +559,7 @@ a {
     "title":"内容"
 });
 </script>
-<h3 id="28">内容</h3><br>このテンプレートを使うと、<br><ul><li>Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイされます。</li><li>スライドのソースファイルが分割できる</li></ul><br>ようになります。<br>自動でスライドがデプロイされるので共有しやすくなりますし、 Git管理の設定の手間が省けます。<br><br>また、 ファイルが長大になるとdiffもわかりづらいし、VSCode extensionで表示がチラつくという現象がよく発生してましたが、ファイル分割することで、これらの問題も解消されます。<br><script>page_contents.push({
+<h3 id="28">内容</h3><br>このテンプレートを使うと、<br><ul><li>Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイ</li><li>スライドのソースファイル分割</li></ul><br>ができます。<br>スライドが共有しやすくなりますし、 Git管理の設定の手間が省けます。<br><br>また、 ファイルが長大になるとdiffがわかりづらくなる、VSCode extensionで表示がチラつくなどの現象がよく発生してましたが、ファイル分割することで、これらの問題も解消されます。<br><script>page_contents.push({
     "type":"H3",
     "id":"63",
     "title":"しくみ"
@@ -628,7 +628,7 @@ REST_FILES = $(filter-out $(HEADER_FILE), $(SRC_FILES))
 OUTPUT_FILE = $(BUILD_DIR)/slide.md
 THEME_NAME = honwaka-theme
 THEME_REPO = https://github.com/abap34/honwaka-theme
-MarpRC_FILE = .Marprc.yml
+MARPRC_FILE = .marprc.yml
 
 
 all: clean preprocess pdf html pptx
@@ -656,20 +656,20 @@ $(OUTPUT_FILE): $(SRC_FILES)
 
 pdf: preprocess
 	@echo "Creating PDF..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.pdf
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pdf
 
 html: preprocess
 	@echo "Creating HTML..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.html
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.html
 
 pptx: preprocess
 	@echo "Creating PPTX..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --output $(BUILD_DIR)/slide.pptx
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pptx
 
 
 preview: clean preprocess
 	@echo "Creating preview..."
-	@Marp $(OUTPUT_FILE) --config-file $(MarpRC_FILE) --preview
+	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --preview
 
 
 clean:
@@ -685,13 +685,13 @@ clean:
     echo "### section: $file"; \
     awk 'BEGIN { found = 0; } { if (found >= 2) print; if ($0 == "---") found++; }' $file >> $(OUTPUT_FILE); \
 done
-</code></pre> </div><br>Marpでは YAML Front Matter で設定を行うことができますが、各ファイルにこれがないと VSCode でプレビューができないので書く必要がありますが、結合するときに不都合です。<br><br>なのでちゃっと <span class="inline-code"> <code>awk</code> </span> で二つ目の <span class="inline-code"> <code>---</code> </span> までを削除することでいい感じに結合できます。<br><script>page_contents.push({
+</code></pre> </div><br>Marpでは YAML Front Matter で設定を行うことができます.<br>これがないと VSCode でプレビューができないので、それぞれのファイルで先頭にこれを書く必要がありますが、結合するときに不都合です。<br><br>なのでちゃっと <span class="inline-code"> <code>awk</code> </span> で二つ目の <span class="inline-code"> <code>---</code> </span> までを削除することでいい感じに結合できます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"123",
+    "id":"124",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="123">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/ayDVB4IAZWA?si=NrdiIKGNQkvdetr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>
+<h2 id="124">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/ayDVB4IAZWA?si=NrdiIKGNQkvdetr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>
         </div>
 
 
