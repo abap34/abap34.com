@@ -3,7 +3,8 @@ body {
     grid-template-columns: 1fr 5fr;
     padding-left: 20px;
     padding-right: 50px;
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Noto Sans Mono", sans-serif;
+
 }
 
 
@@ -32,6 +33,7 @@ body {
     order: 1;
     border-right: solid 1px #ddd;
     padding-right: 20px;
+    padding-left: 0px;
 }
 
 .side-sticky {
@@ -171,8 +173,8 @@ td {
     background-color: transparent;
     border-radius: 4px;
     padding: 15px;
+    padding-left: 0px;
     list-style: none;
-    border-left: solid 1px #ddd;
 }
 
 #toc a {
@@ -185,6 +187,7 @@ td {
 
 #toc a::before {
     content: "▶";
+    font-size: small;
     margin-right: 5px;
 }
 
@@ -214,17 +217,63 @@ td {
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
-    padding-left: 10px;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
     color: #007bff;
-    padding-left: 20px;
+    padding-left: 10px;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
 }
 
 
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
 
 
 .content_list_h1 {
