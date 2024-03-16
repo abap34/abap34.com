@@ -541,7 +541,13 @@ a {
         </div>
 
         <div class="article-body">
-            <br><br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><br><div class="code-block"> <pre><code class="julia">mutable struct Timer
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"Juliaで実行時間を制限する用のタイマー"
+});
+</script>
+<h2 id="2">Juliaで実行時間を制限する用のタイマー</h2><br><br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><br><div class="code-block"> <pre><code class="julia">mutable struct Timer
     timeout::Millisecond
     created::DateTime
 end
