@@ -1,14 +1,25 @@
+import sys
 import glob
 
 
-def main():
+def main(rm=False):
     for path in glob.glob('posts/*.md'):
         with open(path, 'r') as f:
-            # 末尾に改行を追加
-            text = f.read() + '\n'
+            if rm:
+                text = f.read().split('\n', 1)[0]
+            else:
+                text = f.read()
+
         with open(path, 'w') as f:
-            f.write(text)
+            if rm:
+                f.write(
+                    text.split('\n')[-1]
+                )
+
+            else:
+                f.write(text)
 
         
 if __name__ == '__main__':
-    main()
+    # コマンドライン引数で -d オプションが指定された場合は main(rm=True) を実行
+    main('-d' in sys.argv)
