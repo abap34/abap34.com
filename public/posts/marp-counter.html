@@ -554,7 +554,7 @@ a {
 .def {
   counter-increment: def-counter;
 }
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br><br><br><br><br><br>
+</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br><br><br><br><br><br><br>
         </div>
 
 
@@ -569,16 +569,16 @@ a {
             <div class="links">
 
 
-                <a href="https://abap34.com/posts.html"> ⇨ 投稿一覧へ </a>
+                <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open"></i> 記事一覧 </a>
 
                 <br>
 
 
-                <a href="https://abap34.com"> ⇨ ホームへ </a>
+                <a href="https://abap34.com"> <i class="fas fa-home"></i> ホーム </a>
 
                 <br>
 
-                <a href="https://s7tya.github.io/abap34-crawler/atom.xml"> ⇨ RSS </a>
+                <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss"></i> RSS </a>
 
                 <br>
                 <br>
