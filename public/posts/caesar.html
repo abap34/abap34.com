@@ -53,7 +53,8 @@
     grid-template-columns: 1fr 5fr;
     padding-left: 20px;
     padding-right: 50px;
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Noto Sans Mono", sans-serif;
+
 }
 
 
@@ -82,6 +83,7 @@
     order: 1;
     border-right: solid 1px #ddd;
     padding-right: 20px;
+    padding-left: 0px;
 }
 
 .side-sticky {
@@ -221,8 +223,8 @@ td {
     background-color: transparent;
     border-radius: 4px;
     padding: 15px;
+    padding-left: 0px;
     list-style: none;
-    border-left: solid 1px #ddd;
 }
 
 #toc a {
@@ -235,6 +237,7 @@ td {
 
 #toc a::before {
     content: "▶";
+    font-size: small;
     margin-right: 5px;
 }
 
@@ -264,17 +267,63 @@ td {
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
-    padding-left: 10px;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
     color: #007bff;
-    padding-left: 20px;
+    padding-left: 10px;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
 }
 
 
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
 
 
 .content_list_h1 {
@@ -547,7 +596,7 @@ a {
     "title":"シーザー暗号と頻度分析"
 });
 </script>
-<h2 id="5">シーザー暗号と頻度分析</h2>シーザー暗号は最も有名な暗号ですよね。<br>仕組みは単純で、適当に定めた <span class="math-inline"> \( n \) </span> 個分、アルファベットをずらすだけです。<br>例えば <span class="math-inline"> \( n=3 \) </span> のとき、 <span class="inline-code"> <code>Hello</code> </span> は <span class="inline-code"> <code>Khoor</code> </span> になります。 <br>そして当然ですが、暗号化された分は、逆の方向に <span class="math-inline"> \( n \) </span> 個分ずらすことで復号できます。<br><br>したがって、シーザ暗号によって暗号化された文章に対してうまくずらした文字数を推定できれば暗号を突破できます。<br><br>その一番有名な方法が頻度分析です。これは、英語の文章では特定の(Characterの意味で)文字が出現する頻度が高いことを利用します。例えば、英語の文章では <span class="inline-code"> <code>e</code> </span> が一番出現頻度が高いです。　したがって、暗号化された文で最も出現頻度が高い文字が<span class="inline-code"> <code>e</code> </span> から変換されたものであると考えてずらした幅を推定できます。<br><br>というかなり簡素な仕組みの解読法ですが、これがどれくらいうまく行くのか気になるところです。  チャチャっと調べてみます。<br><url> <a href="https://www.kaggle.com/datasets/mikeortman/wikipedia-sentence">英語Wikipediaのデータ</a> </url> を適当に持ってきて、10000分くらいを抽出して暗号化　→ 解読というのをやってみます。<br>横軸にそれぞれの分の単語数、解読の成功率を書いてみます。<br><figure><img src="caesar/plot.png" ><figcaption>解読率</figcaption></figure><br>という結果が得られました。<br>こんな感じで、60語くらいの文であればなんと70%くらいはうまく行くようです。<br>他にも、特定の部分文字列が出現しやすかったり、二番目、三番目に出現しやすい文字を使うことでもっと正確に推定することができるでしょうから、意外とうまく行くもんだなぁという感想です。<br><br>というレポートを1年生の時に書いたのでブログネタとして消費しました。去年の自分、ありがとうございました。<br><br><br><br><br><br><br><br><br>
+<h2 id="5">シーザー暗号と頻度分析</h2>シーザー暗号は最も有名な暗号ですよね。<br>仕組みは単純で、適当に定めた <span class="math-inline"> \( n \) </span> 個分、アルファベットをずらすだけです。<br>例えば <span class="math-inline"> \( n=3 \) </span> のとき、 <span class="inline-code"> <code>Hello</code> </span> は <span class="inline-code"> <code>Khoor</code> </span> になります。 <br>そして当然ですが、暗号化された分は、逆の方向に <span class="math-inline"> \( n \) </span> 個分ずらすことで復号できます。<br><br>したがって、シーザ暗号によって暗号化された文章に対してうまくずらした文字数を推定できれば暗号を突破できます。<br><br>その一番有名な方法が頻度分析です。これは、英語の文章では特定の(Characterの意味で)文字が出現する頻度が高いことを利用します。例えば、英語の文章では <span class="inline-code"> <code>e</code> </span> が一番出現頻度が高いです。　したがって、暗号化された文で最も出現頻度が高い文字が<span class="inline-code"> <code>e</code> </span> から変換されたものであると考えてずらした幅を推定できます。<br><br>というかなり簡素な仕組みの解読法ですが、これがどれくらいうまく行くのか気になるところです。  チャチャっと調べてみます。<br><url> <a href="https://www.kaggle.com/datasets/mikeortman/wikipedia-sentence">英語Wikipediaのデータ</a> </url> を適当に持ってきて、10000分くらいを抽出して暗号化　→ 解読というのをやってみます。<br>横軸にそれぞれの分の単語数、解読の成功率を書いてみます。<br><figure><img src="caesar/plot.png" ><figcaption>解読率</figcaption></figure><br>という結果が得られました。<br>こんな感じで、60語くらいの文であればなんと70%くらいはうまく行くようです。<br>他にも、特定の部分文字列が出現しやすかったり、二番目、三番目に出現しやすい文字を使うことでもっと正確に推定することができるでしょうから、意外とうまく行くもんだなぁという感想です。<br><br>というレポートを1年生の時に書いたのでブログネタとして消費しました。去年の自分、ありがとうございました。<br><br><br><br><br><br><br><br> <br>
         </div>
 
 
@@ -562,34 +611,36 @@ a {
             <div class="links">
 
 
-                <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open"></i> 記事一覧 </a>
+                <div class="to-links">
+                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
 
+                    <br>
+
+
+                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                </div>
+                <br>
                 <br>
 
+                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                        class="tolink"> @abap34</a>
+                </p>
+                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                        class="tolink"> @abap34</a></p>
+                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink"> abap0002@gmail.com</a>
+                </p>
 
-                <a href="https://abap34.com"> <i class="fas fa-home"></i> ホーム </a>
 
-                <br>
-
-                <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss"></i> RSS </a>
-
-                <br>
-                <br>
-                <br>
 
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
                     data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-                <br>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
-                </p>
-                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
-
 
 
                 <footer>

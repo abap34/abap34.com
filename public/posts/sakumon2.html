@@ -53,7 +53,8 @@
     grid-template-columns: 1fr 5fr;
     padding-left: 20px;
     padding-right: 50px;
-    font-family: "Noto Sans", sans-serif;
+    font-family: "Noto Sans Mono", sans-serif;
+
 }
 
 
@@ -82,6 +83,7 @@
     order: 1;
     border-right: solid 1px #ddd;
     padding-right: 20px;
+    padding-left: 0px;
 }
 
 .side-sticky {
@@ -221,8 +223,8 @@ td {
     background-color: transparent;
     border-radius: 4px;
     padding: 15px;
+    padding-left: 0px;
     list-style: none;
-    border-left: solid 1px #ddd;
 }
 
 #toc a {
@@ -235,6 +237,7 @@ td {
 
 #toc a::before {
     content: "▶";
+    font-size: small;
     margin-right: 5px;
 }
 
@@ -264,17 +267,63 @@ td {
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
-    padding-left: 10px;
 }
 
 .toc_H3 {
     font-size: 14px;
     margin-bottom: 10px;
     color: #007bff;
-    padding-left: 20px;
+    padding-left: 10px;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
 }
 
 
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
 
 
 .content_list_h1 {
@@ -547,7 +596,7 @@ a {
     "title":"Don't cut line!"
 });
 </script>
-<h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、この辺使いたいなぁと思って作ってみました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので<span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください〜〜！！！<br> また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><br><br><br><br><br><br><br><br>
+<h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、この辺使いたいなぁと思って作ってみました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので<span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください〜〜！！！<br> また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><br><br><br><br><br><br><br> <br>
         </div>
 
 
@@ -562,34 +611,36 @@ a {
             <div class="links">
 
 
-                <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open"></i> 記事一覧 </a>
+                <div class="to-links">
+                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
 
+                    <br>
+
+
+                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                </div>
+                <br>
                 <br>
 
+                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                        class="tolink"> @abap34</a>
+                </p>
+                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                        class="tolink"> @abap34</a></p>
+                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink"> abap0002@gmail.com</a>
+                </p>
 
-                <a href="https://abap34.com"> <i class="fas fa-home"></i> ホーム </a>
 
-                <br>
-
-                <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss"></i> RSS </a>
-
-                <br>
-                <br>
-                <br>
 
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
                     data-show-count="false">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-                <br>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
-                </p>
-                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
-
 
 
                 <footer>
