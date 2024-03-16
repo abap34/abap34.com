@@ -586,7 +586,7 @@ a {
 <h3 id="262">PEG vs CFG</h3><br>さて、となると気になるのは PEGです。<br>直感的には、文法の表現能力が高いほど解析も難しくなるのではないかという気になるので、PEGの表現能力について考えてみます。<br>まず、有名な話として <span class="math-inline"> \( L = \{ a^n b^n \mid n \geq 0 \} \) </span> は正規言語ではありません。<br>さらに、　<span class="math-inline"> \( L = \{ a^n b^n c^n \mid n \geq 0 \} \) </span> まで行くと文脈自由言語でもありません。<br>そこでこれを PEG で表現できるかを考えてみると、PEG では以下のようにすると <span class="math-inline"> \( L \) </span> が表現できます。<br><div class="code-block"> <pre><code class="">S = &(A !b) a + B
 A = a A? b
 B = b B? c
-</code></pre> </div><br>逆に文脈自由文法では表現できないが、PEGでは表現できる、という言語が存在するかは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br>したがって、直感的には PEGで書かれた言語の解析は難しそうな気がします。<br><script>page_contents.push({
+</code></pre> </div><br>逆に文脈自由文法では表現できるが、PEGでは表現できないという言語が存在するかは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br>したがって、直感的には PEGで書かれた言語の解析は難しそうな気がします。<br><script>page_contents.push({
     "type":"H3",
     "id":"314",
     "title":"(wip) PEG の計算量"
