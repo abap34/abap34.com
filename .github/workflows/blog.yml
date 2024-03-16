@@ -82,6 +82,12 @@ jobs:
             python3 blog_builder/build.py $file $out_path
           done
           rm tmp.json
+      
+      - name: Update RSS Feed
+        if: steps.check_changes.outputs.changed_files != ''
+        run: |
+          cd ${{ github.workspace }}
+          python3 blog_builder/rss.py
 
       - name: Copy Image Files
         if: steps.check_changes.outputs.changed_files != ''
