@@ -583,46 +583,46 @@ a {
     "title":"PEG vs CFG"
 });
 </script>
-<h3 id="262">PEG vs CFG</h3><br>さて、となると気になるのは PEGです。<br>直感的には、文法の表現能力が高いほど解析も難しくなるのではないかという気になります。<br>ここで、 PEGの表現能力について考えてみます。<br>まず、有名な話として <span class="math-inline"> \( L = \{ a^n b^n \mid n \geq 0 \} \) </span> は正規言語ではありません。<br>さらに、　<span class="math-inline"> \( L = \{ a^n b^n c^n \mid n \geq 0 \} \) </span> まで行くと文脈自由言語でもありません。<br>では PEG ではどうでしょうか？<br>実は、 以下の解析表現文法で <span class="math-inline"> \( L \) </span> が表現できます。<br><div class="code-block"> <pre><code class="">S = &(A !b) a + B
+<h3 id="262">PEG vs CFG</h3><br>さて、となると気になるのは PEGです。<br>直感的には、文法の表現能力が高いほど解析も難しくなるのではないかという気になります。<br>ここで、 PEGの表現能力について考えてみます。<br>まず、有名な話として <span class="math-inline"> \( L = \{ a^n b^n \mid n \geq 0 \} \) </span> は正規言語ではありません。<br>さらに、　<span class="math-inline"> \( L = \{ a^n b^n c^n \mid n \geq 0 \} \) </span> まで行くと文脈自由言語でもありません。<br>PEG で表現できるかを考えてみます。<br>実は、 以下の解析表現文法で <span class="math-inline"> \( L \) </span> が表現できます。<br><div class="code-block"> <pre><code class="">S = &(A !b) a + B
 A = a A? b
 B = b B? c
-</code></pre> </div><br>逆に文脈自由文法では表現できないが、PEGでは表現できる言語が存在するかというのは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br><script>page_contents.push({
+</code></pre> </div><br>逆に文脈自由文法では表現できないが、PEGでは表現できる言語が存在するかというのは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br>したがって、直感的には PEGで書かれた言語の解析は難しそうな気がします。<br><script>page_contents.push({
     "type":"H3",
-    "id":"318",
+    "id":"322",
     "title":"(wip) PEG の計算量"
 });
 </script>
-<h3 id="318">(wip) PEG の計算量</h3><br>さて、それでは PEG の解析の計算量はどうでしょうか？<br>まず、ナイーブにやると最悪計算量は普通に <span class="math-inline"> \( \Omega(2^n) \) </span> になります。<br>PEGは順序付き選択をサポートしているので、ここでバックトラックが発生してしまうためです。<br>しかし、 解析を進める際に、その時見ている非終端記号と位置をキーにして結果をメモ化しておくだけで 、なんと一挙に <span class="math-inline"> \( O(n) \) </span> が保証されます。<br>これが <span class="strong"> <strong>Packrat Parsing</strong> </span> と呼ばれる手法です。<br><script>page_contents.push({
+<h3 id="322">(wip) PEG の計算量</h3><br><br>まず、ナイーブにやると最悪計算量は普通に <span class="math-inline"> \( \Omega(2^n) \) </span> になります。<br>PEGは順序付き選択をサポートしているので、ここでバックトラックが発生してしまうためです。<br>しかし、 解析を進める際に、その時見ている非終端記号と位置をキーにして結果をメモ化しておくだけで 、なんと一挙に <span class="math-inline"> \( O(n) \) </span> が保証されます。<br>これが <span class="strong"> <strong>Packrat Parsing</strong> </span> と呼ばれる手法です。<br><script>page_contents.push({
     "type":"H3",
-    "id":"357",
+    "id":"358",
     "title":"Packrat Parsingは本当に効率的？"
 });
 </script>
-<h3 id="357">Packrat Parsingは本当に効率的？</h3><br>さて、かなり劇的な性能改善が起きていて採用待ったなしのように見える Packrat Parsing ですが、実際これがどれくらい実際のパフォーマンスに影響するでしょうか？<br><br>驚くべきことに<span class="strong"> <strong>、「ふつうの」解析の場面では Packrat Parsing はあまり効果を発揮しない</strong> </span>という意見がかなり多いようです。<br><br>まず、一般的に非終端記号の使われる頻度はかなり偏っています。<br>プログラミング言語なら <span class="inline-code"> <code>Expr</code> </span> などはしょっちゅう使われると思いますが、例えば <span class="inline-code"> <code>GOTOSTMT</code> </span> などはほとんど使われないと思います。<br><br>さらに、世の中で使われている多くの文法は LALR(1) などで解析できるものでした。<br>たとえ PEG を前提に文法を組み立てても、これらに近しいものになりますから、結果的にバックトラックが結果としてあまり発生しない文法になリます。<br><br>これらの理由から、何でもメモ化するとオーバーヘッドが大きくなってかえって非効率になることが多いようです。<br><br>したがって、設計者が指定、あるいは実際の頻度に基づいて特定の数個の非終端記号に対してのみメモ化を行うというのがよく取られる戦略です。<br><br>(todo: この辺りを実測した結果を載せる)<br><br><br><script>page_contents.push({
+<h3 id="358">Packrat Parsingは本当に効率的？</h3><br>さて、かなり劇的な性能改善が起きていて採用待ったなしのように見える Packrat Parsing ですが、実際これがどれくらい実際のパフォーマンスに影響するかを考えてみます。<br><br>驚くべきことに<span class="strong"> <strong>、「ふつうの」解析の場面では Packrat Parsing はあまり効果を発揮しない</strong> </span>という意見がかなり多いようです。<br><br>まず、一般的に非終端記号の使われる頻度はかなり偏っています。<br>プログラミング言語なら <span class="inline-code"> <code>EXPR</code> </span> などはしょっちゅう使われると思いますが、例えば <span class="inline-code"> <code>GOTOSTMT</code> </span> などはほとんど使われないと思います。<br><br>さらに、世の中で使われている多くの文法は LALR(1) などで解析できるものでした。<br>たとえ PEG を前提に文法を組み立てても、これらに近い見た目のものを自然と作ることで、結果的にバックトラックが結果としてあまり発生しない文法になリます。<br><br>これらの理由から、何でもメモ化するとオーバーヘッドが大きくなってかえって非効率になることが多いようです。<br><br>したがって、設計者が指定、あるいは実際の頻度に基づいて特定の数個の非終端記号に対してのみメモ化を行うというのがよく取られる戦略です。<br><br>(todo: この辺りを実測した結果を載せる)<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"429",
+    "id":"430",
     "title":"(WIP) PEGパーサジェネレータを作る。 "
 });
 </script>
-<h2 id="429">(WIP) PEGパーサジェネレータを作る。 </h2><br>さて、 本題です。 まずは一旦計算量とかの話は忘れて、素直に意味論に従って PEGパーサジェネレータを作ってみたいと思います。<br><script>page_contents.push({
+<h2 id="430">(WIP) PEGパーサジェネレータを作る。 </h2><br>さて、 本題です。 まずは一旦計算量とかの話は忘れて、素直に意味論に従って PEGパーサジェネレータを作ってみたいと思います。<br><script>page_contents.push({
     "type":"H3",
-    "id":"438",
+    "id":"439",
     "title":"デザイン"
 });
 </script>
-<h3 id="438">デザイン</h3><script>page_contents.push({
+<h3 id="439">デザイン</h3><script>page_contents.push({
     "type":"H4",
-    "id":"442",
+    "id":"443",
     "title":"サポートする構文"
 });
 </script>
-<h4 id="442">サポートする構文</h4><br>次の構文をサポートすることにします。<br><ul><li>文字列(<span class="inline-code"> <code>PStr</code> </span>)</li><li>正規表現 (<span class="inline-code"> <code>PRegex</code> </span>)</li><li>連接(<span class="inline-code"> <code>PSeq</code> </span>)</li><li>選言(<span class="inline-code"> <code>PChoice</code> </span>)</li><li>否定先読み(<span class="inline-code"> <code>PNot</code> </span>)</li><li>任意文字(<span class="inline-code"> <code>PAny</code> </span>)</li><li>0回以上繰り返し(<span class="inline-code"> <code>PMany</code> </span>)</li></ul><br><span class="inline-code"> <code>PMany</code> </span> や <span class="inline-code"> <code>PRegex</code> </span> は PEG自体には本来ないですが、記法として便利なので追加します。<br><span class="strong"> <strong><span class="inline-code"> <code>PRegex</code> </span> を正規言語の範囲内で使えば</strong> </span>、これによって表現能力が変わることはありません。<br><script>page_contents.push({
+<h4 id="443">サポートする構文</h4><br>次の構文をサポートすることにします。<br><ul><li>文字列(<span class="inline-code"> <code>PStr</code> </span>)</li><li>正規表現 (<span class="inline-code"> <code>PRegex</code> </span>)</li><li>連接(<span class="inline-code"> <code>PSeq</code> </span>)</li><li>選言(<span class="inline-code"> <code>PChoice</code> </span>)</li><li>否定先読み(<span class="inline-code"> <code>PNot</code> </span>)</li><li>任意文字(<span class="inline-code"> <code>PAny</code> </span>)</li><li>0回以上繰り返し(<span class="inline-code"> <code>PMany</code> </span>)</li></ul><br><span class="inline-code"> <code>PMany</code> </span> や <span class="inline-code"> <code>PRegex</code> </span> は PEG自体には本来ないですが、記法として便利なので追加します。<br><span class="strong"> <strong><span class="inline-code"> <code>PRegex</code> </span> を正規言語の範囲内で使えば</strong> </span>、これによって表現能力が変わることはありません。<br><script>page_contents.push({
     "type":"H3",
-    "id":"538",
+    "id":"539",
     "title":"実装"
 });
 </script>
-<h3 id="538">実装</h3><br>実装していきます。　<br>まずはパースコンテクストを定義します。<br><div class="code-block"> <pre><code class="julia">@enum State UN FAIL FINISHED
+<h3 id="539">実装</h3><br>実装していきます。　<br>まずはパースコンテクストを定義します。<br><div class="code-block"> <pre><code class="julia">@enum State UN FAIL FINISHED
 
 mutable struct ParseContext
     input::String
@@ -687,17 +687,17 @@ function match(::PAny, context::ParseContext)
 end
 </code></pre> </div><br>完成したものがこちらになります。<br><br><a href="https://github.com/abap34/TinyPEG.jl"><img src="https://gh-card.dev/repos/abap34/TinyPEG.jl.svg"></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"614",
+    "id":"615",
     "title":"廃刊"
 });
 </script>
-<h2 id="614">廃刊</h2><br>おもしろいです！<br><br><url> <a href="https://gihyo.jp/book/2015/978-4-7741-7270-5">正規表現技術入門</a> </url> とか、 あるいはもっと実践的な(?) コンパイラとかで使われる話が乗ってる本を読んでみたいなと思いました。<br><br><script>page_contents.push({
+<h2 id="615">廃刊</h2><br>おもしろいです！<br><br><url> <a href="https://gihyo.jp/book/2015/978-4-7741-7270-5">正規表現技術入門</a> </url> とか、 あるいはもっと実践的な(?) コンパイラとかで使われる話が乗ってる本を読んでみたいなと思いました。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"636",
+    "id":"637",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="636">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yVWCezwyEsM?si=Tx-kE-6UpcvlPFYb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><br>
+<h2 id="637">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yVWCezwyEsM?si=Tx-kE-6UpcvlPFYb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><br>
         </div>
 
 
