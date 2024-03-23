@@ -77,6 +77,7 @@
         .tag {
             display: inline-block;
             margin-right: 0.5rem;
+            margin-top: 0.5rem;
             padding: 0.2rem 0.5rem;
             background-color: #f5f5f5;
             color: #666;
@@ -253,7 +254,7 @@
             <div class="post-content">
               ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
                 <div class="intro">${intro}...</div>
-                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                ${post.tags.map(tag => `<span class="tag"><a href="posts.html?tags=${tag}">${tag}</a></span>`).join('')}
             </div>`;
                 postList.appendChild(listItem);
             });
