@@ -133,9 +133,23 @@
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
 }
 
 .content {
@@ -747,7 +761,7 @@ const runBlock = async (objectid) => {
                 2023/11/10
             </div>
             <br>
-            <div class="tag">
+            <div class="tag-placeholder">
                 [数学, Python, 微分, 日記]
             </div>
 
@@ -942,7 +956,7 @@ plt.show()
     "title":"今日の一曲"
 });
 </script>
-<h2 id="430">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br><br>    <br>
+<h2 id="430">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>  MV良すぎてめちゃくちゃ好きです。<br><br><br>     <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
@@ -1064,6 +1078,21 @@ function onIntersection(entries) {
 
     </div>
 
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
 
 </body>
 

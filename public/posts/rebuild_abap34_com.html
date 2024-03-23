@@ -133,9 +133,23 @@
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
 }
 
 .content {
@@ -583,7 +597,7 @@ a {
                 2023/08/29
             </div>
             <br>
-            <div class="tag">
+            <div class="tag-placeholder">
                 [Web, Markdown, WebAssembly]
             </div>
 
@@ -602,7 +616,7 @@ a {
     "title":"ここ一週間くらいの近況報告"
 });
 </script>
-<h2 id="45">ここ一週間くらいの近況報告</h2><br><ul><li>サークル</li></ul><br>部内のデータ分析コンペを今年も開催しました。 今年は、ピクシブ株式会社様にスポンサーしていただいて、題材も含めいろいろ面白いことができたと思ってます。<br>最終的に38チーム + 800近いサブミッションと、学生サークル内のコンペとしてはなかなかの盛り上がりだったんじゃないかと思います。<br>開催記をまさに今書いてる途中です(飽きてこのブログのリニューアル作業をしていました)<br>そのうちtraPのブログにアップロードします。<br><ul><li>おべんきょう</li></ul><br>測度論の勉強をひそかにやっています。<br><br>情報工学系(僕の所属している学科)は、確率統計の授業はあるんですが、測度論含め「確率論」の基礎のきちんとした(?)授業はなく、数理計算科学系という同じ学院のもう一つの系でその辺りをかなりきちんとやる授業が開講されています。<br><br>が、こちらの授業が情報工学系の授業とかなりコンフリクトしており、履修するのが難しいということが判明したので、とりあえず自分でやってみることにしました。<br><br>今は、<url> <a href="https://amzn.asia/d/719TjTr">測度・確率・ルベーグ積分 応用への最短コース (原 啓介)</a> </url>を進めています。<br><ul><li>中日ドラゴンズ</li></ul><br>12球団の中で一番面白い。<br><ul><li>東京ヤクルトスワローズ</li></ul><br>弱い。<br><br><br>    <br>
+<h2 id="45">ここ一週間くらいの近況報告</h2><br><ul><li>サークル</li></ul><br>部内のデータ分析コンペを今年も開催しました。 今年は、ピクシブ株式会社様にスポンサーしていただいて、題材も含めいろいろ面白いことができたと思ってます。<br>最終的に38チーム + 800近いサブミッションと、学生サークル内のコンペとしてはなかなかの盛り上がりだったんじゃないかと思います。<br>開催記をまさに今書いてる途中です(飽きてこのブログのリニューアル作業をしていました)<br>そのうちtraPのブログにアップロードします。<br><ul><li>おべんきょう</li></ul><br>測度論の勉強をひそかにやっています。<br><br>情報工学系(僕の所属している学科)は、確率統計の授業はあるんですが、測度論含め「確率論」の基礎のきちんとした(?)授業はなく、数理計算科学系という同じ学院のもう一つの系でその辺りをかなりきちんとやる授業が開講されています。<br><br>が、こちらの授業が情報工学系の授業とかなりコンフリクトしており、履修するのが難しいということが判明したので、とりあえず自分でやってみることにしました。<br><br>今は、<url> <a href="https://amzn.asia/d/719TjTr">測度・確率・ルベーグ積分 応用への最短コース (原 啓介)</a> </url>を進めています。<br><ul><li>中日ドラゴンズ</li></ul><br>12球団の中で一番面白い。<br><ul><li>東京ヤクルトスワローズ</li></ul><br>弱い。<br><br><br>     <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
@@ -724,6 +738,21 @@ function onIntersection(entries) {
 
     </div>
 
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
 
 </body>
 
