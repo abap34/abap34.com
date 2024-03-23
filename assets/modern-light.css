@@ -83,9 +83,23 @@ body {
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
 }
 
 .content {

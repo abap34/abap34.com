@@ -185,7 +185,7 @@
         </div>
 
 
-        <h2>過去の投稿一覧</h2>
+        <h2 id="posts-title">過去の投稿</h2>
         <ul class="post-list" id="past-posts"></ul>
     </div>
     <script>
@@ -259,13 +259,31 @@
             });
         }
 
+        function main() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tags = urlParams.get('tags');
+            console.log(tags);
+            if (tags) {
+                document.getElementById('posts-title').innerText = `「${tags}」の投稿一覧`;
+                fetch('./posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
+                        const filteredPosts = posts.filter(post => post.tags.includes(tags));
+                        showPosts(filteredPosts, 'past-posts');
+                    })
+                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
+            } else {
+                fetch('./posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
+                        showPosts(posts, 'past-posts');
+                    })
+                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
+            }
+            
+        }
 
-        fetch('./posts.json')
-            .then(response => response.json())
-            .then(posts => {
-                showPosts(posts, 'past-posts');
-            })
-            .catch(error => console.error('投稿情報の取得に失敗しました', error));
+        main();
     </script>
 </body>
 
