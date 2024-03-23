@@ -258,16 +258,21 @@
         posts.forEach(post => {
             const listItem = document.createElement("li");
             listItem.classList.add("post-list-item");
+            const intro = post.content.substring(0, 50);
+            const tags = post.tags;
+
             listItem.innerHTML = `
-        <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
-        <div class="post-content">
-          ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
-        </div>`;
+            <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
+            <div class="post-content">
+              ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
+                <div class="intro">${intro}...</div>
+                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>`;
             postList.appendChild(listItem);
         });
     }
 
-    fetch('recent_posts.json')
+    fetch('public/recent_posts.json')
         .then(response => response.json())
         .then(posts => {
             showPosts(posts, 'recent-posts');
