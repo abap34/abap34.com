@@ -133,9 +133,23 @@
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
 }
 
 .content {
@@ -583,7 +597,7 @@ a {
                 2023/09/24
             </div>
             <br>
-            <div class="tag">
+            <div class="tag-placeholder">
                 [日記, 関数型プログラミング, Scheme]
             </div>
 
@@ -596,7 +610,7 @@ a {
     "title":"Mosh"
 });
 </script>
-<h2 id="4">Mosh</h2><br>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br>    <br>
+<h2 id="4">Mosh</h2><br>後期から関数型プログラミングの授業でSchemeを使うらしいので少し触っていた。<br>m1macで環境構築しようと思ったけど、直接動かすのがめんどそうで、(Rosettaなり使えばいいんだけど)どうしようかと思っていたら <url> <a href="https://higepon.hatenablog.com/entry/2022/08/04/171319">こんな記事</a> </url> を見かけたのでこれを入れてみた、　<br><br><url> <a href="https://github.com/higepon/mosh">https://github.com/higepon/mosh</a> </url><br><br>Twitterでも有名な人が作ったSchemeの処理系で、サクッと入れられてちゃんと動いた。<br><br>とりあえず <url> <a href="http://www.nct9.ne.jp/m_hiroi/func/scheme.html">http://www.nct9.ne.jp/m_hiroi/func/scheme.html</a> </url> の基礎知識のパートを一通り読んで動かした。<br><br>(それはそれとして、このサイトの解説の充実具合がすごすぎる...)<br><br><br>     <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
@@ -718,6 +732,21 @@ function onIntersection(entries) {
 
     </div>
 
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
 
 </body>
 

@@ -133,9 +133,23 @@
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    color: #666;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
 }
 
 .content {
@@ -583,7 +597,7 @@ a {
                 2023/10/13
             </div>
             <br>
-            <div class="tag">
+            <div class="tag-placeholder">
                 [自明ギャグ]
             </div>
 
@@ -647,7 +661,7 @@ a {
     "title":"脚注"
 });
 </script>
-<h3 id="496">脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。   <br><br>    <br>
+<h3 id="496">脚注</h3><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。   <br><br>     <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
@@ -769,6 +783,21 @@ function onIntersection(entries) {
 
     </div>
 
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
 
 </body>
 
