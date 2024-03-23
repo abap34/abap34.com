@@ -272,7 +272,7 @@
         });
     }
 
-    fetch('public/recent_posts.json')
+    fetch('recent_posts.json')
         .then(response => response.json())
         .then(posts => {
             showPosts(posts, 'recent-posts');
