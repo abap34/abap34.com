@@ -1,9 +1,20 @@
 import json
 import time
-import os
+import subprocess
 import sys
 
 
+def load_rawtext(ir, result=''):
+    if 'childs' in ir.keys():
+        for child in ir['childs']:
+            result += load_rawtext(child)
+    else:
+        if 'content' in ir.keys():
+            result += ir['content']
+        elif ir['class'] == 'NewLine':
+            result += '\n'
+
+    return result
 
 def build_article(config, args):
     corresponding = {
@@ -14,7 +25,7 @@ def build_article(config, args):
         "template": "-b"
     }
 
-    cmd = 'ALMO/almo {} -o {} -d'.format(args[1], args[2])
+    cmd = 'almo {} -o {} -d'.format(args[1], args[2])
 
     for key, value in corresponding.items():
         if key in config:
@@ -27,11 +38,7 @@ def build_article(config, args):
         + cmd
     )
     
-    os.system(cmd)
-
-    content = ''
-    with open(args[2], 'r') as f:
-        content = f.read()
+    subprocess.run(cmd, shell=True)
 
     with open('tmp.json', 'r') as f:
         tmp = json.load(f)
@@ -39,8 +46,15 @@ def build_article(config, args):
         date = tmp['meta']['date']
         html_path = tmp['meta']['out_path']
         ogp_url = tmp['meta']['ogp_url']
+        ir = tmp['ir']
+        tags = tmp['meta']['tag']
     
     url = config["root_url"]  + html_path[6:]
+    content = load_rawtext(ir)
+
+    tags = tags[1:-1].split(',')    
+    tags = [tag.strip() for tag in tags]
+
 
     with open('public/posts.json', 'r') as f:
         posts = json.load(f)
@@ -51,7 +65,8 @@ def build_article(config, args):
                     'post_date': date,
                     'url': url,
                     'thumbnail_url': ogp_url,
-                    'content': content
+                    'content': content,
+                    'tags': tags
                 }
                 posts.remove(post)
                 posts.append(updated_post)
@@ -62,7 +77,8 @@ def build_article(config, args):
                 'post_date': date,
                 'url': url,
                 'thumbnail_url': ogp_url,
-                'content': content
+                'content': content,
+                'tags': tags
             })
 
         
