@@ -57,7 +57,7 @@
         }
 
         .thumbnail {
-            width: auto;
+            width: 100px;
             height: 100px;
             margin-right: 1.5rem;
             border-radius: 5px;
@@ -67,6 +67,21 @@
         .post-content {
             flex: 1;
             font-size: 0.9rem;
+        }
+
+        .intro {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-right: 0.5rem;
+            padding: 0.2rem 0.5rem;
+            background-color: #f5f5f5;
+            color: #666;
+            font-size: 0.8rem;
+            border-radius: 5px;
         }
 
         .post-content a {
@@ -230,10 +245,15 @@
             posts.forEach(post => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("post-list-item");
+                const intro = post.content.substring(0, 50);
+                const tags = post.tags;
+
                 listItem.innerHTML = `
             <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
             <div class="post-content">
               ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
+                <div class="intro">${intro}...</div>
+                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
             </div>`;
                 postList.appendChild(listItem);
             });
