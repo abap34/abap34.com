@@ -25,7 +25,7 @@ def build_article(config, args):
         "template": "-b"
     }
 
-    cmd = 'almo {} -o {} -d'.format(args[1], args[2])
+    cmd = 'ALMO/almo {} -o {} -d'.format(args[1], args[2])
 
     for key, value in corresponding.items():
         if key in config:
