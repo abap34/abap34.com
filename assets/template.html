@@ -84,7 +84,7 @@
                 {{date}}
             </div>
             <br>
-            <div class="tag">
+            <div class="tag-placeholder">
                 {{tag}}
             </div>
 
@@ -159,6 +159,21 @@
 
     </div>
 
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
 
 </body>
 
