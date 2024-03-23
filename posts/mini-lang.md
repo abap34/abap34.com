@@ -517,4 +517,4 @@ end
 $1$ 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 [ref](https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3)　
 
 
-  
+   
