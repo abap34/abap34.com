@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>投稿一覧</title>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: 'M PLUS 1p', sans-serif;
@@ -91,7 +91,8 @@
         }
 
 
-        #home {
+        #home,
+        #posts {
             color: #006699;
             text-decoration: none;
             font-size: 1.3rem;
@@ -161,7 +162,12 @@
 
         <br>
 
-        <a id="home" href="index.html">⇨ ホームへ</a>
+        <a id="home" href="index.html"><i class="fas fa-home"></i> ホーム </a>
+
+        <br>
+        
+
+        <a id="posts" href="posts.html?tags=all""><i class=" fas fa-book-open"></i> 記事一覧 </a>
 
         <br>
 
@@ -186,7 +192,7 @@
         </div>
 
 
-        <h2 id="posts-title">過去の投稿</h2>
+        <h2 id="posts-title"></h2>
         <ul class="post-list" id="past-posts"></ul>
     </div>
     <script>
@@ -250,40 +256,44 @@
                 const tags = post.tags;
 
                 listItem.innerHTML = `
-            <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
-            <div class="post-content">
-              ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
-                <div class="intro">${intro}...</div>
-                ${post.tags.map(tag => `<span class="tag"><a href="posts.html?tags=${tag}">${tag}</a></span>`).join('')}
-            </div>`;
+                <img class="thumbnail" src="${post.thumbnail_url}" alt="Thumbnail">
+                <div class="post-content">
+                ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
+                    <div class="intro">${intro}...</div>
+                    ${post.tags.map(tag => `<span class="tag"><a href="posts.html?tags=${tag}">${tag}</a></span>`).join('')}
+                </div>`;
                 postList.appendChild(listItem);
             });
         }
 
-        function main() {
+        function show() {
             const urlParams = new URLSearchParams(window.location.search);
             const tags = urlParams.get('tags');
             if (tags) {
-                document.getElementById('posts-title').innerText = `「${tags}」の投稿一覧`;
-                fetch('./posts.json')
-                    .then(response => response.json())
-                    .then(posts => {
-                        const filteredPosts = posts.filter(post => post.tags.includes(tags));
-                        showPosts(filteredPosts, 'past-posts');
-                    })
-                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
-            } else {
-                fetch('./posts.json')
-                    .then(response => response.json())
-                    .then(posts => {
-                        showPosts(posts, 'past-posts');
-                    })
-                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
+                if (tags === 'all') {
+                    document.getElementById('posts-title').innerText = 'すべての投稿';
+                    fetch('./posts.json')
+                        .then(response => response.json())
+                        .then(posts => {
+                            showPosts(posts, 'past-posts');
+                        })
+                        .catch(error => console.error('投稿情報の取得に失敗しました', error));
+                    return;
+                } else {
+                    document.getElementById('posts-title').innerText = `「${tags}」の投稿一覧`;
+                    fetch('./posts.json')
+                        .then(response => response.json())
+                        .then(posts => {
+                            const filteredPosts = posts.filter(post => post.tags.includes(tags));
+                            showPosts(filteredPosts, 'past-posts');
+                        })
+                        .catch(error => console.error('投稿情報の取得に失敗しました', error));
+                }
             }
-            
+
         }
 
-        main();
+        show();
     </script>
 </body>
 
