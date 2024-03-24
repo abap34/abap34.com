@@ -211,6 +211,7 @@ td {
     list-style: none;
     padding: 0;
     border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
 }
 
 #toc li {
