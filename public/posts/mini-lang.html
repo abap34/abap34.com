@@ -233,7 +233,6 @@ td {
 }
 
 #toc {
-    background-color: transparent;
     border-radius: 4px;
     padding: 15px;
     padding-left: 0px;
@@ -248,12 +247,6 @@ td {
     transition: color 0.2s;
 }
 
-#toc a::before {
-    content: "▶";
-    font-size: small;
-    margin-right: 5px;
-}
-
 #toc a:hover {
     color: #007bff;
 }
@@ -261,32 +254,65 @@ td {
 #toc .active {
     font-weight: bold;
     color: #007bff;
-    font-size: 16px;
+    font-size: 1.1em;
 }
 
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+}
 
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+#toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+}
 
 .toc_H1 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
 }
 
+
 .toc_H2 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
+}
+
+.toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
 }
 
 .toc_H3 {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 10px;
     color: #007bff;
     padding-left: 10px;
+}
+
+.toc_H2::before {
+    display: none !important;
 }
 
 #toposts,
@@ -881,7 +907,7 @@ end
     "title":"今日の一曲"
 });
 </script>
-<h2 id="760">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>      <br>
+<h2 id="760">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>       <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
