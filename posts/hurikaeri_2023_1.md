@@ -27,7 +27,7 @@ twitter_site: @abap34
 まずは JuliaTokyo #11 です。 30分トーク枠で自動微分について話しました。
 
 いろんな方に反応貰えてれしかったですが、
-とくに [@aviatesk](https://github.com/aviatesk) さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。
+とくに Juliaコンパイラの中の人の [@aviatesk](https://github.com/aviatesk) さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。
 
 
 Juilaの対面のイベントに参加するのは5年前、高校1年生の時のJuliaTokai以来だったでしたが
