@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>2023年度後期振り返り</id>
+<title>2023年度後期振り返り</title>
+<link>https://abap34.com/posts/hurikaeri_2023_1.html</link>
+<pubDate>Sun, 24 Mar 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>Marp + GitHub Actionsのテンプレートを作った</id>
 <title>Marp + GitHub Actionsのテンプレートを作った</title>
 <link>https://abap34.com/posts/slide-template.html</link>
