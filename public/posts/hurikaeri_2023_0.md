@@ -2,7 +2,7 @@
 title: 2023年度前期振り返り
 author: abap34
 date: 2023/10/01
-tag: [日記, 振り返り, ネタ]
+tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
