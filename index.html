@@ -266,7 +266,7 @@
             <div class="post-content">
               ${post.post_date} <br> <a href="${post.url}">${post.title}</a>
                 <div class="intro">${intro}...</div>
-                ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                ${post.tags.map(tag => `<span class="tag"> <a href="posts.html?tags=${tag}">${tag}</a></span>`).join('')}
             </div>`;
             postList.appendChild(listItem);
         });
