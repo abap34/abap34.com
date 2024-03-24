@@ -165,9 +165,9 @@
         <a id="home" href="index.html"><i class="fas fa-home"></i> ホーム </a>
 
         <br>
-        
 
-        <a id="posts" href="posts.html?tags=all""><i class=" fas fa-book-open"></i> 記事一覧 </a>
+
+        <a id="posts" href="posts.html""><i class=" fas fa-book-open"></i> 記事一覧 </a>
 
         <br>
 
@@ -270,28 +270,17 @@
             const urlParams = new URLSearchParams(window.location.search);
             const tags = urlParams.get('tags');
             if (tags) {
-                if (tags === 'all') {
-                    document.getElementById('posts-title').innerText = 'すべての投稿';
-                    fetch('./posts.json')
-                        .then(response => response.json())
-                        .then(posts => {
-                            showPosts(posts, 'past-posts');
-                        })
-                        .catch(error => console.error('投稿情報の取得に失敗しました', error));
-                    return;
-                } else {
-                    document.getElementById('posts-title').innerText = `「${tags}」タグの投稿`;
-                    fetch('./posts.json')
-                        .then(response => response.json())
-                        .then(posts => {
-                            const filteredPosts = posts.filter(post => post.tags.includes(tags));
-                            showPosts(filteredPosts, 'past-posts');
-                        })
-                        .catch(error => console.error('投稿情報の取得に失敗しました', error));
-                }
+                document.getElementById('posts-title').innerText = `「${tags}」タグの投稿`;
+                fetch('./posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
+                        const filteredPosts = posts.filter(post => post.tags.includes(tags));
+                        showPosts(filteredPosts, 'past-posts');
+                    })
+                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
             } else {
-                document.getElementById('posts-title').innerText = '最近の投稿';
-                fetch('./recent_posts.json')
+                document.getElementById('posts-title').innerText = 'すべての投稿';
+                fetch('./posts.json')
                     .then(response => response.json())
                     .then(posts => {
                         showPosts(posts, 'past-posts');
