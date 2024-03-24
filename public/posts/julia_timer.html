@@ -233,7 +233,6 @@ td {
 }
 
 #toc {
-    background-color: transparent;
     border-radius: 4px;
     padding: 15px;
     padding-left: 0px;
@@ -248,12 +247,6 @@ td {
     transition: color 0.2s;
 }
 
-#toc a::before {
-    content: "▶";
-    font-size: small;
-    margin-right: 5px;
-}
-
 #toc a:hover {
     color: #007bff;
 }
@@ -261,32 +254,65 @@ td {
 #toc .active {
     font-weight: bold;
     color: #007bff;
-    font-size: 16px;
+    font-size: 1.1em;
 }
 
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+}
 
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+#toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+}
 
 .toc_H1 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
 }
 
+
 .toc_H2 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
+}
+
+.toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
 }
 
 .toc_H3 {
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 10px;
     color: #007bff;
     padding-left: 10px;
+}
+
+.toc_H2::before {
+    display: none !important;
 }
 
 #toposts,
@@ -643,7 +669,7 @@ end
         do_something()
     end
 end
-</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br><br><br>      <br>
+</code></pre> </div><br><br>という感じです。<br><span class="inline-code"> <code>reset!</code> </span> で計測のリセット、 <span class="inline-code"> <code>rate</code> </span> で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)<br><br><br><br>       <br>
         </div>
 
         <script src="https://utteranc.es/client.js"
