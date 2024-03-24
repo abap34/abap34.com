@@ -2,7 +2,7 @@
 title: 2023年度後期振り返り
 author: abap34
 date: 2024/03/24
-tag: [日記, 振り返り]
+tag: [Julia, 競技プログラミング, 日記]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
@@ -11,15 +11,16 @@ description:
 url: https://abap34.com/posts/hurikaeri_2023_1.html
 site_name: abap34's blog
 twitter_site: @abap34
+
 ---
 
-# 2023年度後期の振り返り
+## 2023年度後期の振り返り
 
 2023年度・学部2年生もほぼ終わりました。
 
 とりあえず後期(10月~3月)の振り返りです。
 
-## JuliaTokyo11
+### JuliaTokyo11
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日の JuliaTokyo でのトーク、「Juliaで歩く自動微分」のスライドをアップしました！ <br>- DLフレームワークの中身が気になる方<br>- 何もかも勾配降下法で最適化したい方<br>- 低レイヤと機械学習の絡みが気になる方<br>はぜひ！！<a href="https://twitter.com/hashtag/juliatokyo?src=hash&amp;ref_src=twsrc%5Etfw">#juliatokyo</a><a href="https://t.co/XZ8ovEJvvs">https://t.co/XZ8ovEJvvs</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1753681336702009787?ref_src=twsrc%5Etfw">February 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -36,7 +37,7 @@ Juilaの対面のイベントは5年前、高校1年生の時のJuliaTokai以来
 
 自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。
 
-## ALMO関連
+### ALMO関連
 振り返ってみると、後期は結構ALMOの開発にリソース使ってました。
 
 このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。
@@ -65,7 +66,7 @@ Juilaの対面のイベントは5年前、高校1年生の時のJuliaTokai以来
 
 トップページとかのデザインも割と綺麗になった気がします。
 
-## Minia.jl
+### Minia.jl
 Juliaで書いた処理系です。
 
 PEGで構文を書いて、JuiaのASTに変換して実行するみたいなやつです。 
@@ -81,7 +82,7 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 
 これもブログの [【週刊 PEGパーサジェネレータ を作ろう】](https://www.abap34.com/posts/tinypeg.html) の方が価値がある気がしますが...
 
-## atmaCup
+### atmaCup
 
 [atmaCup #16 in collaboration with RECRUIT](https://www.guruguru.science/competitions/22) に参加しました。
 
@@ -91,7 +92,7 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 
 ![懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました](hurikaeri_2023_1/sushi.png)
 
-## age++
+### age++
 
 ついに 20歳になりました。
 
@@ -107,7 +108,7 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 
 
 
-## その他・大学など
+### その他・大学など
 - 2回目の作問ハッカソンで作問をしました。 一回目は [†連続最適化な見た目の問題†](https://yukicoder.me/problems/no/2438) を出したので、今回は [†離散最適化†な問題](https://yukicoder.me/problems/10681) になりました。
 - 最近スライドを作る機会が多かったので、いい感じのテンプレを作ったら QoL があがりました。 
    <a href="https://github.com/abap34/slide-template"><img src="https://gh-card.dev/repos/abap34/slide-template.svg"></a>
@@ -119,7 +120,7 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
   - <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">医療AIコンやってて、NIfTI 画像をコマンドライン一発でプレビューできるツールでいい感じのがなかったのが不満でチャッと実装してみた<br>sixel と格闘してたものの全然うまくいかなかったので一旦 GUI版で... 便利！<br>(実際はロード時間が結構かかっているのでいい感じに爆速にして公開したい) <a href="https://t.co/Z6pqseeCll">pic.twitter.com/Z6pqseeCll</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1771371540514247088?ref_src=twsrc%5Etfw">March 23, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 - 大学で所属しているサークルで「Kaggle班」を立ち上げました。昨年度も色々やってきましたが、今年も面白いことができるよう運営を頑張ります。
 
-# 2024年度の抱負
+## 2024年度の抱負
 
 ついに学部3年生になります。
 
