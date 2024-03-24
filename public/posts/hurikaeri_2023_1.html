@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <title> 2023年度後期振り返り </title>
+
+    <meta property="og:title" content="2023年度後期振り返り">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/spitz-japanese/tofu.jpg">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2023_1.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    padding-left: 20px;
+    padding-right: 50px;
+    font-family: "Noto Sans Mono", sans-serif;
+
+}
+
+
+@media (max-width: 768px) {
+    .side #toc {
+        display: none;
+    }
+
+    body {
+        display: block;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .article-header .title {
+        font-size: 18px;
+    }
+}
+
+
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+    padding-left: 0px;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+.article-header {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 50px;
+}
+
+.article-header .thumbnail {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: blur(3px);
+}
+
+.article-header .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-header .title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    border-bottom: solid 1px #ddd;
+    font-weight: bold;
+    background-color: #44444477;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    background-color: #f5f5f5;
+    font-size: 0.8rem;
+    border-radius: 5px;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+h3 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+pre {
+    padding: 10px;
+    background-color: #f8f8f8
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+@media (max-width: 768px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a::before {
+    content: "▶";
+    font-size: small;
+    margin-right: 5px;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 16px;
+}
+
+
+
+.toc_H1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.toc_H2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.toc_H3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+
+.code-block {
+    font-family: monospace;
+    line-height: 1.5;
+    background-color: #f0f0f0;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.5;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}</style>
+
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="content">
+
+        <div class="article-header">
+            <div class="thumbnail" style="text-align: center">
+                <img height="300px" width="300px" src="https://images.dog.ceo/breeds/spitz-japanese/tofu.jpg">
+            </div>
+
+
+            <div class="title">
+                2023年度後期振り返り
+            </div>
+
+            <script>
+                title = document.querySelector(".title").innerHTML;
+            </script>
+
+            <br>
+            <div class="date">
+                2024/03/24
+            </div>
+            <br>
+            <div class="tag-placeholder">
+                
+            </div>
+
+        </div>
+
+        <div class="article-body">
+            <br><script>page_contents.push({
+    "type":"H1",
+    "id":"2",
+    "title":"2023年度後期の振り返り"
+});
+</script>
+<h1 id="2">2023年度後期の振り返り</h1><br>2023年度・学部2年生もほぼ終わりました。<br>とりあえず振り返っておきます。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"15",
+    "title":"JuliaTokyo11"
+});
+</script>
+<h2 id="15">JuliaTokyo11</h2><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日の JuliaTokyo でのトーク、「Juliaで歩く自動微分」のスライドをアップしました！ <br>- DLフレームワークの中身が気になる方<br>- 何もかも勾配降下法で最適化したい方<br>- 低レイヤと機械学習の絡みが気になる方<br>はぜひ！！<a href="https://twitter.com/hashtag/juliatokyo?src=hash&amp;ref_src=twsrc%5Etfw">#juliatokyo</a><a href="https://t.co/XZ8ovEJvvs">https://t.co/XZ8ovEJvvs</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1753681336702009787?ref_src=twsrc%5Etfw">February 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>まずは JuliaTokyo #11 です。 30分トーク枠で自動微分について話しました。<br><br>Juliaコンパイラを作っている <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。<br><br>Juilaの対面のイベントは5年前、高校1年生の時のJuliaTokai以来だったですが、いろんな人に再会できてとても楽しかったです。<br>最近は Juliaの日本語コミュニティが Discordで発足して割と動いていたり、コミュニティが活性化していてなんかいい感じです。<br><br>自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"51",
+    "title":"ALMO関連"
+});
+</script>
+<h2 id="51">ALMO関連</h2>振り返ってみると、後期は結構ALMOの開発にリソース使ってました。<br>このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。<br>例えば <url> <a href="https://github.com/abap34/ALMO-extension">https://github.com/abap34/ALMO-extension</a> </url> はALMOのVSCode拡張です。<br>他にも <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url> とかもあります。ぽちぽちでブログが作れるやつです。<br><br>本体も結構アップデートされています。 リリースは 20回を超えて v0.7.0 まできました。 <url> <a href="https://github.com/abap34/ALMO/releases">https://github.com/abap34/ALMO/releases</a> </url><br>ひとまず今の issue を全て片付けて、 v1 のリリースを目指しています。<br><figure><img src="https://github.com/abap34/ALMO-extension/raw/main/assets/almo-ext-demo.gif" ><figcaption>https://github.com/abap34/ALMO-extension によるプレビュー</figcaption></figure><br><br>ついでにこのブログ自体にも、<br><ul><li>記事の検索機能</li><li>タグ機能</li><li>RSS</li></ul><br>などなどついて結構便利になりました。<br>トップページとかのデザインも割と綺麗になった気がします。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"133",
+    "title":"Minia.jl"
+});
+</script>
+<h2 id="133">Minia.jl</h2>Juliaで書いた処理系です。<br>PEGで構文を書いて、JuiaのASTに変換して実行するみたいなやつです。 <br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg"></a><br><br>どちらかというと、付随して書いた <url> <a href="https://www.abap34.com/posts/mini-lang.html">3時間で作る自作言語のJuliaトランスパイラ</a> </url> の評判が良かったです。<br>それと、 Miniaのパーサは PEG.jl という既存のパーサジェネレータを使っているのですが、せっかくなのでこれも自前で書きました。<br><br>これもブログの <url> <a href="https://www.abap34.com/posts/tinypeg.html">【週刊 PEGパーサジェネレータ を作ろう】</a> </url> の方が価値がある気がしますが...<br><script>page_contents.push({
+    "type":"H2",
+    "id":"172",
+    "title":"atmaCup"
+});
+</script>
+<h2 id="172">atmaCup</h2><br><url> <a href="https://www.guruguru.science/competitions/22">atmaCup #16 in collaboration with RECRUIT</a> </url> に参加しました。<br>宿のレコメンドというタスクでしたが、ユーザの行動履歴が短く、めちゃくちゃむずかしかったです。<br>学生枠でなんとか入賞して表彰式に参加させていただいたんですが、懇親会で色々な方と交流できてめちゃくちゃよかったです！<br><figure><img src="hurikaeri_2023_1/sushi.png" ><figcaption>懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました</figcaption></figure><br><script>page_contents.push({
+    "type":"H2",
+    "id":"201",
+    "title":"age++"
+});
+</script>
+<h2 id="201">age++</h2><br>ついに 20歳になりました。<br><br>祝ってもらいました。マジで恵まれてるなぁと言う感じです。<br>周りの全部の人に感謝してます。<br><figure><img src="hurikaeri_2023_1/20party.png" ><figcaption></figcaption></figure><br>ぜひ🍺誘ってください。<br><br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"234",
+    "title":"その他・大学など"
+});
+</script>
+<h2 id="234">その他・大学など</h2><ul><li>2回目の作問ハッカソンで作問をしました。 一回目は <url> <a href="https://yukicoder.me/problems/no/2438">†連続最適化な見た目の問題†</a> </url> を出したので、今回は <url> <a href="https://yukicoder.me/problems/10681">†離散最適化†な問題</a> </url> になりました。</li><li>最近スライドを作る機会が多かったので、いい感じのテンプレを作ったら QoL があがりました。  <a href="https://github.com/abap34/slide-template"><img src="https://gh-card.dev/repos/abap34/slide-template.svg"></a></li><li>大学では、ドイツ語のやる気が出ないことが確実視されたので、履修登録から抹消して代わりに3年次の文系教養の履修を済ませました。</li><ul><li>これで3年次はドイツ語にさえ集中すればいいわけですが、一年間やる気が出なかった科目に来年度やる気が出るかは不明です。</li></ul><li>全国医療AIコンテストに参加しました...とは言っても参加した頃には LBでかなり差が開いていて意気消沈状態でした。1subだけして撤退してしまったのですが、セグメンテーションのコンペはやったことなかったのと、monaiは初めて使ったのでこれに詳しくなれたのはとてもよかったです。</li><ul><li>コンペをやっていていい感じに NIfTIをプレビューするツールがなかったので試作したりしました。 速度をマシにしたら公開します。</li><li><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">医療AIコンやってて、NIfTI 画像をコマンドライン一発でプレビューできるツールでいい感じのがなかったのが不満でチャッと実装してみた<br>sixel と格闘してたものの全然うまくいかなかったので一旦 GUI版で... 便利！<br>(実際はロード時間が結構かかっているのでいい感じに爆速にして公開したい) <a href="https://t.co/Z6pqseeCll">pic.twitter.com/Z6pqseeCll</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1771371540514247088?ref_src=twsrc%5Etfw">March 23, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li></ul><li>大学で所属しているサークルで「Kaggle班」を立ち上げました。昨年度も色々やってきましたが、今年も面白いことができるよう運営を頑張ります。</li></ul><br><script>page_contents.push({
+    "type":"H1",
+    "id":"282",
+    "title":"2024年度の抱負"
+});
+</script>
+<h1 id="282">2024年度の抱負</h1><br>ついに学部3年生になります。<br>学部生も折り返しですが、一応卒業要件的なのは大丈夫そうでホッとしています。<br><br>目標は色々ありますが、<br><ul><li>Kaggle班運営を軌道に乗せる</li><li>OSS Contribution を積極的にやる</li></ul><br>あたりはやりたいところです。<br>技術面での目標ですが、特に最近はCSのいろんなことが面白くて色々やっていて、多分来年も同じ調子だと思うので、そのとき興味あることをちゃんとできればと思います。<br>なので　<span class="strong"> <strong>手を動かす！！</strong> </span> ことを忘れずスーパー最強エンジニアになるぞ〜〜<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"335",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="335">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yuNOotQ6mNU?si=wBDdwOiWOuw6o40R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+        </div>
+
+        <script src="https://utteranc.es/client.js"
+        repo="abap34/abap34com-comment"
+        issue-term="og:title"
+        label="comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+
+    </div>
+
+    <div class="side">
+        <div class="side-sticky">
+            <div class="sidebar">
+                <ul id="toc"></ul>
+            </div>
+
+            <div class="links">
+
+
+                <div class="to-links">
+                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                    <br>
+
+
+                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                </div>
+                <br>
+                <br>
+
+                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                        class="tolink"> @abap34</a>
+                </p>
+                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                        class="tolink"> @abap34</a></p>
+                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink"> abap0002@gmail.com</a>
+                </p>
+
+
+
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                <footer>
+                    <p>&copy; abap34 </p>
+                </footer>
+
+            </div>
+        </div>
+
+        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+        <script>
+
+const tocContainer = document.querySelector("#toc");
+const tocTitle = document.createElement("div");
+tocTitle.innerHTML = title;
+tocTitle.classList.add("toc_title");
+tocContainer.appendChild(tocTitle);
+
+
+
+page_contents.forEach(item => {
+    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+        listItem.classList.add("toc_" + item.type);
+        tocContainer.appendChild(listItem);
+    }
+});
+
+const options = {
+    root: null,
+    rootMargin: "-50% 0px",
+    threshold: 0
+};
+
+const observer = new IntersectionObserver(onIntersection, options);
+
+page_contents.forEach(item => {
+    const element = document.getElementById(item.id);
+    if (element) {
+        observer.observe(element);
+    }
+});
+
+// page_contensts の先頭を active にしておく
+const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+first_item.classList.add("active");
+
+prev_item = first_item;
+
+function onIntersection(entries) {
+    entries.forEach(entry => {
+        const id = entry.target.id;
+        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+        if (tocItem) {
+            if (entry.isIntersecting) {
+                tocItem.classList.add("active");
+                prev_item.classList.remove("active");
+                prev_item = tocItem;
+            }
+        }
+    });
+}
+
+</script>
+
+    </div>
+
+
+    <script>
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+        
+    </script>
+
+</body>
+
+
+</html>
