@@ -2,7 +2,7 @@
 title: 2023年度後期振り返り
 author: abap34
 date: 2024/03/24
-tag: [Julia, 競技プログラミング, 日記]
+tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
