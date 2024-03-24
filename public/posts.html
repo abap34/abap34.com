@@ -263,7 +263,6 @@
         function main() {
             const urlParams = new URLSearchParams(window.location.search);
             const tags = urlParams.get('tags');
-            console.log(tags);
             if (tags) {
                 document.getElementById('posts-title').innerText = `「${tags}」の投稿一覧`;
                 fetch('./posts.json')
