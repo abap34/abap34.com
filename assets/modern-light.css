@@ -261,7 +261,7 @@ td {
     padding-left: 10px;
 }
 
-.toc_H2::before {
+.toc_H3::before {
     display: none !important;
 }
 
