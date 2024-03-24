@@ -88,7 +88,7 @@ def build_article(config, args):
         json.dump(posts, f)
 
 
-    recent_posts = posts[:5]
+    recent_posts = posts[:6]
     with open('public/recent_posts.json', 'w') as f:
         json.dump(recent_posts, f)
 
