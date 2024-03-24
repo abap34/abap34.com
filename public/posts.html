@@ -280,7 +280,7 @@
                         .catch(error => console.error('投稿情報の取得に失敗しました', error));
                     return;
                 } else {
-                    document.getElementById('posts-title').innerText = `「${tags}」の投稿一覧`;
+                    document.getElementById('posts-title').innerText = `「${tags}」タグの投稿`;
                     fetch('./posts.json')
                         .then(response => response.json())
                         .then(posts => {
@@ -289,6 +289,14 @@
                         })
                         .catch(error => console.error('投稿情報の取得に失敗しました', error));
                 }
+            } else {
+                document.getElementById('posts-title').innerText = '最近の投稿';
+                fetch('./recent_posts.json')
+                    .then(response => response.json())
+                    .then(posts => {
+                        showPosts(posts, 'past-posts');
+                    })
+                    .catch(error => console.error('投稿情報の取得に失敗しました', error));
             }
 
         }
