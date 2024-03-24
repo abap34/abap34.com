@@ -30,15 +30,16 @@ twitter_site: @abap34
 とくに Juliaコンパイラの中の人の [@aviatesk](https://github.com/aviatesk) さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。
 
 
-Juilaの対面のイベントに参加するのは5年前、高校1年生の時のJuliaTokai以来だったでしたが
-懇親会でいろんな人に再会できてとても楽しかったです。 海外の人とも話せて楽しかったです。(英語力の無さも痛感...)
+Juilaの対面のイベントに参加するのは5年前、高校1年生の時のJuliaTokai以来でしたが
+懇親会でいろんな人に再会でき、海外の人とも話せて楽しかったです。(英語力の無さも痛感...)
 
 
 最近は Juliaの日本語コミュニティが Discordで発足して割と動いていたり、コミュニティが活性化していてなんかいい感じです。
+
 自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。
 
 ### ALMO関連
-振り返ってみると、後期は結構ALMOの開発にリソース使ってました。
+振り返ってみると、後期は結構ALMOの開発にリソースを使ってました。
 
 このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。
 
@@ -147,4 +148,4 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 
 ## 今日の一曲
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/yuNOotQ6mNU?si=wBDdwOiWOuw6o40R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>   
+<iframe width="560" height="315" src="https://www.youtube.com/embed/x5pJvuktHfY?si=oDZ40FgpojFgpnGB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
