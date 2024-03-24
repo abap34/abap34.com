@@ -25,6 +25,7 @@ twitter_site: @abap34
 - 「いかしかめか」と読みます。部内ハッカソンで作りました。
 - 部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。
 - 諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。
+- bot と検索エンジンの実装と発表を担当しました
 - 発表スライド : [https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink](https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 
@@ -33,15 +34,16 @@ twitter_site: @abap34
 ### Wuff
   
 - コメントをするとリアルタイムにニコニコみたいな感じで画面に流れるやつです。
-- Cloud Run を初めて使ってみて、めちゃくちゃ簡単で、感動しました
-
+- LINEみたいな感じでみんなでチャットできます。WebSocket でみんなのコメントを同期しています。
+- Google Cloud Run で動かしていますが Dockerfile 書いてぽちぽちするだけで動かせて感動しました
+- 配信する自分は適当に収集して表示するスクリプトを書いて OBSに合成したり、対面で発表するときは GeekTool で透過ウィンドウに表示したりして使っていました。
 
 ![](https://trap.jp/content/images/2023/07/wc-1.png?original=1)
  
 
 ### DacQ
 
-- 部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやとかなり簡素なものですが作りました。
+- 部内 mini Kaggleです。昨年度にも先輩の間で開発の構想があったみたいなのですが頓挫してしまっていて、えいやと作りました。
 - 部内 PaaS の Neoshowcase を使うとめちゃくちゃ簡単に traP部員だけが使えるように認証できて、感動しました
   
 
@@ -49,22 +51,19 @@ twitter_site: @abap34
 
 ### 機械学習の入門資料
 
-- [https://www.abap34.com/ml-lecture/slide.html](https://www.abap34.com/ml-lecture/slide.html)
-- 400ページ近くの資料を作った。 めちゃくちゃ大変だったけど割と楽しかったです。
-- 内容をきちんとめに直してどこかに出したいな〜　(色々と微妙なところがある上に書き込み前提の資料なので)
+- 400ページ近くの機械学習の入門資料を作りました。 めちゃくちゃ大変だったけど割と楽しかったです。
+- 内容をきちんとめに直してどこかに出したいですね　(色々と微妙なところがある上に書き込み前提の資料なので)
 
-
-![こういう書きたいこと書けて楽しかった。](hurikaeri_2023_0/cg.png)
+![こういう書きたいこと書けて楽しかったです](hurikaeri_2023_0/cg.png)
 
 ### 機械学習講習会
 
-- ここまで 3つの内容は全部これです！
+- ここまで 3つの内容は全部これです
 - 新入部員向けの教育でやりました。
 - 全7回、合計10時間講義 + 演習やりました。
 - 内容は traP のブログにまとまっているので読んでみてください。 個人的には結構頑張りました。
 - サークルを卒業した先輩とか弊学の先生とかに結構褒められていて嬉しかったです。
 - ブログ: [Kaggle部で機械学習講習会を開催しました！](https://trap.jp/post/1918/)
-
 
 ![ノリでピザを出したりしていました。大学生っぽくて楽しいですね](hurikaeri_2023_0/pz.png)
 
@@ -101,7 +100,6 @@ twitter_site: @abap34
   - 今年はスポンサーがついたので、それも含めて色々やることが多くて大変でしたがめちゃくちゃ楽しかったです。
   - 開催記録が例によって traP のブログにまとまっているので読んでみてください。
   - ブログ: [traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記](https://trap.jp/post/1975/)
-
 
 ![👍](hurikaeri_2023_0/mito.png)
 
