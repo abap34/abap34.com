@@ -638,25 +638,25 @@ a {
     "title":"いろいろな言語の解析の計算量"
 });
 </script>
-<h2 id="26">いろいろな言語の解析の計算量</h2><br>PEG自体は上について説明を書きましたが、パーサジェネレータを作るからには吐かれるパーサのパフォーマンスも気になります。<br>そこで一旦、 いろんな文法で定義された構文の計算量の話をしようと思います。<br><script>page_contents.push({
+<h2 id="26">いろいろな言語の解析の計算量</h2><br>PEG自体は上について説明を書きましたが、パーサジェネレータを作るからには吐かれるパーサのパフォーマンスも気になります。<br>そこで一旦、 いろんな文法で定義された構文の解析の計算量の話をしようと思います。<br><script>page_contents.push({
     "type":"H3",
     "id":"39",
-    "title":"1. バックトラックなしの正規言語(表現) の計算量 (DFA型の正規表現エンジン)"
+    "title":"1. バックトラックなしの正規言語(表現) の解析 (DFA型の正規表現エンジン)"
 });
 </script>
-<h3 id="39">1. バックトラックなしの正規言語(表現) の計算量 (DFA型の正規表現エンジン)</h3><br>形式言語の講義で習うような、定義通りの正規言語(<span class="math-inline"> \( \leftrightarrow \) </span> 正規表現で表現された) 言語 <span class="math-inline"> \( L \) </span> について考えてみると、入力文字列 <span class="math-inline"> \( S \) </span> の長さを <span class="math-inline"> \( n \) </span> として　毎回 <span class="math-inline"> \( \Theta(n) \) </span> で  <span class="math-inline"> \( S \in L \) </span> かを判定できます。<br><br>というのも、全ての正規言語に対して対応するDFAが存在するので、これをあらかじめ作っておけば、 <span class="math-inline"> \( n \) </span> ステップで受理できるか判定できるからです。<br><br>実用的には、<span class="math-inline"> \( L \) </span> は正規表現で書かれることが多いでしょうから、DFAの構築自体も考えなければいけません。<br><br>正規表現をNFAに変換するのは正規表現の長さに対して時間・空間ともに線形でできます。<br>DFAにNFAを変換する際はナイーブにやると状態が正規表現の長さに対して指数オーダーになってしまいますが、遅延評価で必要な状態だけを作ることで正規表現の長さに対して線形時間・空間 + 入力文字列の長さに対しても線形時間・空間で出来ます。<br><br>grepや<url> <a href="https://github.com/google/re2">https://github.com/google/re2</a> </url> などはこうして実装されています。<br><br>というわけで安心─というわけにもいきません。<br><script>page_contents.push({
+<h3 id="39">1. バックトラックなしの正規言語(表現) の解析 (DFA型の正規表現エンジン)</h3><br>形式言語の講義で習うような、定義通りの正規言語(<span class="math-inline"> \( \leftrightarrow \) </span> 正規表現で表現された) 言語 <span class="math-inline"> \( L \) </span> について考えてみると、入力文字列 <span class="math-inline"> \( S \) </span> の長さを <span class="math-inline"> \( n \) </span> として　毎回 <span class="math-inline"> \( \Theta(n) \) </span> 時間’で  <span class="math-inline"> \( S \in L \) </span> かを判定できます。<br><br>というのも、全ての正規言語に対して対応するDFAが存在するので、これをあらかじめ作っておけば、 <span class="math-inline"> \( n \) </span> ステップで受理できるか判定できるからです。<br><br>実用的には、<span class="math-inline"> \( L \) </span> は正規表現で書かれることが多いでしょうから、DFAの構築自体も考えなければいけません。<br><br>正規表現をNFAに変換するのは正規表現の長さに対して時間・空間ともに線形でできます。<br>DFAにNFAを変換する際はナイーブにやると状態が正規表現の長さに対して指数オーダーになってしまいますが、遅延評価で必要な状態だけを作ることで正規表現の長さに対して線形時間・空間 + 入力文字列の長さに対しても線形時間・空間で出来ます。<br><br>grepや<url> <a href="https://github.com/google/re2">https://github.com/google/re2</a> </url> などはこうして実装されています。<br><br>というわけで安心─というわけにもいきません。<br><script>page_contents.push({
     "type":"H3",
     "id":"119",
-    "title":"2. バックトラックありの正規言語の計算量 (VM型の正規表現エンジン)"
+    "title":"2. バックトラックありの正規言語の解析 (VM型の正規表現エンジン)"
 });
 </script>
-<h3 id="119">2. バックトラックありの正規言語の計算量 (VM型の正規表現エンジン)</h3><br>世の中で「正規表現」という顔をして提供されている <span class="inline-code"> <code>regex</code> </span> みたいな名前のパッケージたちは形式言語理論の正規言語の範囲を逸脱した機能が提供されていることが多いです。<br><br>例えば後方参照などは正規文法では表現できません。Perl が これらの「拡張」正規表現を採用し、 PCREとして広く普及してしまったためにこのような拡張が一般化してしまいました。(ただ、最初に導入したのは SNOBOL という言語らしいです。)<br><br>では、このような「拡張」正規表現によって表現される言語の解析はどれくらい難しいでしょうか？<br><br>バックトラックが...とか書こうと思ったのですが、そのような記事は結構ある("ReDoS" とかで検索すると出てくる)ので、<br>ここではちょっと面白い結果でおそらく線形時間ではできないだろう、もっと進んで多項式時間まで緩めてもできないだろうということを主張したいと思います。<br><br><url> <a href="https://perl.plover.com/NPC/NPC-3SAT.html">Reduction of 3-CNF-SAT to Perl Regular Expression Matching</a> </url> によれば、Perlの正規表現エンジンは、3SATを解くことが出来ます。 <br>3SAT は NP困難な問題なので、もしこの正規表現が多項式時間で解析できたら 無事に P=NP となります。　<br><br>なので、少なくとも Perlの正規表現を常識的な (?) 多項式時間で解析するアルゴリズムにお目にかかれる日が来るかは怪しいところです。<br>(常識的でなくてもお目にかかれたらすごいですが)<br><br><script>page_contents.push({
+<h3 id="119">2. バックトラックありの正規言語の解析 (VM型の正規表現エンジン)</h3><br>世の中で「正規表現」という顔をして提供されている <span class="inline-code"> <code>regex</code> </span> みたいな名前のパッケージたちは形式言語理論の正規言語の範囲を逸脱した機能が提供されていることが多いです。<br><br>例えば後方参照などは正規文法では表現できません。Perl が これらの「拡張」正規表現を採用し、 PCREとして広く普及してしまったためにこのような拡張が一般化してしまいました。(ただ、最初に導入したのは SNOBOL という言語らしいです。)<br><br>では、このような「拡張」正規表現によって表現される言語の解析はどれくらい難しいでしょうか？<br><br>バックトラックが...とか書こうと思ったのですが、そのような記事は結構ある("ReDoS" とかで検索すると出てくる)ので、<br>ここではちょっと面白い結果でおそらく線形時間ではできないだろう、もっと進んで多項式時間まで緩めてもできないだろうということを主張したいと思います。<br><br><url> <a href="https://perl.plover.com/NPC/NPC-3SAT.html">Reduction of 3-CNF-SAT to Perl Regular Expression Matching</a> </url> によれば、Perlの正規表現エンジンは、3SATを解くことが出来ます。 <br>3SAT は NP困難な問題なので、もしこの正規表現が多項式時間で解析できたら 無事に P=NP となります。　<br><br>なので、少なくとも Perlの正規表現を常識的な (?) 多項式時間で解析するアルゴリズムにお目にかかれる日が来るかは怪しいところです。<br>(常識的でなくてもお目にかかれたらすごいですが)<br><br><script>page_contents.push({
     "type":"H3",
     "id":"192",
-    "title":"3. 文脈自由言語の計算量"
+    "title":"3. 文脈自由言語の解析"
 });
 </script>
-<h3 id="192">3. 文脈自由言語の計算量</h3><br>有名なものとして、CYKアルゴリズムがあります。<br><br>これは DPを使って 時間計算量 <span class="math-inline"> \( \Theta(n^3) \) </span> で動作するアルゴリズムです。<br>また、 Earleyアルゴリズムという改良もあります。曖昧でない文脈自由言語に対しては <span class="math-inline"> \( \Theta(n^2) \) </span> で、一般の文脈自由言語に対しても <span class="math-inline"> \( O(n^3) \) </span> で解析できます。<br><br>とはいえこれでもあまり実用的なパフォーマンスが出にくく、任意の文脈自由言語に対して高速になるようアルゴリズムを改良するのではなく、<br>解析しやすい性質のいい言語を考える方向性で頑張るという方向性に進んでいったようです。<br><br>この辺の流れは全然体験しておらず、読んだ文章を鵜呑みにしています。歴史とかいずれ調べてみたいです。<br><br>そのため、多くのプログラミング言語などは LALR(1) などで解析できるものになっています。<br>(ということになっていますが実際はあれやこれやと補っていることも多いようです。例えば C は <span class="inline-code"> <code>typedef</code> </span> 構文の存在によって文脈依存言語になっています。)<br><script>page_contents.push({
+<h3 id="192">3. 文脈自由言語の解析</h3><br>有名なものとして、CYKアルゴリズムがあります。<br><br>これは DPを使って 時間計算量 <span class="math-inline"> \( \Theta(n^3) \) </span> で動作するアルゴリズムです。<br>また、 Earleyアルゴリズムという改良もあります。曖昧でない文脈自由言語に対しては <span class="math-inline"> \( \Theta(n^2) \) </span> で、一般の文脈自由言語に対しても <span class="math-inline"> \( O(n^3) \) </span> で解析できます。<br><br>とはいえこれでもあまり実用的なパフォーマンスが出にくく、任意の文脈自由言語に対して高速になるようアルゴリズムを改良するのではなく、<br>解析しやすい性質のいい言語を考える方向性で頑張るという方向性に進んでいったようです。<br><br>この辺の流れは全然体験しておらず、読んだ文章を鵜呑みにしています。歴史とかいずれ調べてみたいです。<br><br>そのため、多くのプログラミング言語などは LALR(1) などで解析できるものになっています。<br>(ということになっていますが実際はあれやこれやと補っていることも多いようです。例えば C は <span class="inline-code"> <code>typedef</code> </span> 構文の存在によって文脈依存言語になっています。)<br><script>page_contents.push({
     "type":"H2",
     "id":"258",
     "title":"PEG と Packrat Parsing"
@@ -674,10 +674,10 @@ B = b B? c
 </code></pre> </div><br>逆に文脈自由文法では表現できるが、PEGでは表現できないという言語が存在するかは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br>したがって、直感的には PEGで書かれた言語の解析は難しそうな気がします。<br><script>page_contents.push({
     "type":"H3",
     "id":"314",
-    "title":"(wip) PEG の計算量"
+    "title":"(wip) PEG の解析"
 });
 </script>
-<h3 id="314">(wip) PEG の計算量</h3><br><br>まず、ナイーブにやると最悪計算量は普通に <span class="math-inline"> \( \Omega(2^n) \) </span> になります。<br>PEGは順序付き選択をサポートしているので、ここでバックトラックが発生してしまうためです。<br>しかし、 解析を進める際に、その時見ている非終端記号と位置をキーにして結果をメモ化しておくだけで、なんと一挙に <span class="math-inline"> \( O(n) \) </span> が保証されます。<br>これが <span class="strong"> <strong>Packrat Parsing</strong> </span> と呼ばれる手法です。<br><script>page_contents.push({
+<h3 id="314">(wip) PEG の解析</h3><br><br>まず、ナイーブにやると最悪計算量は普通に <span class="math-inline"> \( \Omega(2^n) \) </span> になります。<br>PEGは順序付き選択をサポートしているので、ここでバックトラックが発生してしまうためです。<br>しかし、 解析を進める際に、その時見ている非終端記号と位置をキーにして結果をメモ化しておくだけで、なんと一挙に <span class="math-inline"> \( O(n) \) </span> が保証されます。<br>これが <span class="strong"> <strong>Packrat Parsing</strong> </span> と呼ばれる手法です。<br><script>page_contents.push({
     "type":"H3",
     "id":"353",
     "title":"Packrat Parsingは本当に効率的？"
