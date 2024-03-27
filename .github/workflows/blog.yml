@@ -27,7 +27,6 @@ jobs:
         with:
             fetch-depth: 0
 
-
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v44
@@ -47,8 +46,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-            fetch-depth: 0
 
       - name: Setup Git
         run: |
@@ -72,11 +69,25 @@ jobs:
     if: ${{ needs.setup.result == 'success' }}
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Generate HTML
-        env:
-          ALL_CHANGED_FILES: ${{ env.ALL_CHANGED_FILES }}
         run: |
           python3 blog_builder/build.py
 
+      - name: Update RSS
+        run: |
+          python3 blog_builder/rss.py
 
+      - name: Commit changes
+        run: |
+          git config pull.rebase false
+          git add .
+          git commit -m "Update blog"
           
+      - name: Push changes
+        uses: ad-m/github-push-action@master  
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main  

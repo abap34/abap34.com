@@ -38,6 +38,11 @@ def to_outputpath(article_path: pathlib.Path):
 def build_article(config: dict, article_path: pathlib.Path):
     outputpath = to_outputpath(article_path)
 
+    subprocess.run(
+        'cp -r posts/{} public/posts/'.format(article_path.stem),
+        shell=True
+    )
+
     cmd = 'almo {} -o {} -d'.format(article_path, outputpath)
 
     for key, value in CONFIG_CORRESPONDING.items():
