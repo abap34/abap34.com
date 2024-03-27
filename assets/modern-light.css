@@ -18,15 +18,11 @@ body {
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
-}
 
-
-@media (max-width: 768px) {
     .article-header .title {
         font-size: 18px;
     }
 }
-
 
 
 .side {
@@ -85,6 +81,7 @@ body {
 
 .tag-placeholder {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .tag {
