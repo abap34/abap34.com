@@ -1,8 +1,18 @@
 import json
-import time
 import subprocess
-import sys
+import pathlib
 
+CONFIG_CORRESPONDING = {
+    "overall_theme": "-t",
+    "custom_css": "-c",
+    "editor_theme": "-e",
+    "syntax_theme": "-s",
+    "template": "-b"
+}
+
+def load_json(path: pathlib.Path):
+    with open(path, 'r') as f:
+        return json.load(f)
 
 def load_rawtext(ir, result=''):
     if 'childs' in ir.keys():
@@ -16,18 +26,21 @@ def load_rawtext(ir, result=''):
 
     return result
 
-def build_article(config, args):
-    corresponding = {
-        "overall_theme": "-t",
-        "custom_css": "-c",
-        "editor_theme": "-e",
-        "syntax_theme": "-s",
-        "template": "-b"
-    }
 
-    cmd = 'ALMO/almo {} -o {} -d'.format(args[1], args[2])
+def to_outputpath(article_path: pathlib.Path):
+    return pathlib.Path(
+        'public/posts/'
+        + article_path.stem
+        + '.html'
+    )
 
-    for key, value in corresponding.items():
+
+def build_article(config: dict, article_path: pathlib.Path):
+    outputpath = to_outputpath(article_path)
+
+    cmd = 'almo {} -o {} -d'.format(article_path, outputpath)
+
+    for key, value in CONFIG_CORRESPONDING.items():
         if key in config:
             cmd += ' {} {}'.format(value, config[key])
 
@@ -37,29 +50,27 @@ def build_article(config, args):
         'Building article with the following command: \n'
         + cmd
     )
-    
+
     subprocess.run(cmd, shell=True)
 
     with open('tmp.json', 'r') as f:
         tmp = json.load(f)
         title = tmp['meta']['title']
         date = tmp['meta']['date']
-        html_path = tmp['meta']['out_path']
         ogp_url = tmp['meta']['ogp_url']
         ir = tmp['ir']
         tags = tmp['meta']['tag']
-    
-    url = config["root_url"]  + html_path[6:]
+
+    url = config["root_url"]  + outputpath.as_posix()
     content = load_rawtext(ir)
 
-    tags = tags[1:-1].split(',')    
+    tags = tags[1:-1].split(',')
     tags = [tag.strip() for tag in tags]
-
 
     with open('public/posts.json', 'r') as f:
         posts = json.load(f)
         for post in posts:
-            if post['title'] == title:
+            if post['url'] == url:
                 updated_post = {
                     'title': title,
                     'post_date': date,
@@ -70,6 +81,7 @@ def build_article(config, args):
                 }
                 posts.remove(post)
                 posts.append(updated_post)
+
                 break
         else:
             posts.append({
@@ -81,26 +93,15 @@ def build_article(config, args):
                 'tags': tags
             })
 
-        
-    posts = sorted(posts, key=lambda x: time.strptime(x['post_date'], '%Y/%m/%d'), reverse=True)
+    posts = sorted(posts, key=lambda x: x['post_date'], reverse=True)
 
     with open('public/posts.json', 'w') as f:
         json.dump(posts, f)
 
 
-    recent_posts = posts[:6]
-    with open('public/recent_posts.json', 'w') as f:
-        json.dump(recent_posts, f)
-
-    with open('public/posts.html', 'r') as f:
-        html = f.read()
-    
-    html = html.replace('{{blog_name}}', config["blog_name"])
-    with open('public/posts.html', 'w') as f:
-        f.write(html)
-
-
-
 if __name__ == '__main__':
-    config = json.load(open('config/config.json', 'r'))
-    build_article(config, sys.argv)
+    change = load_json(pathlib.Path('changed_files.json'))
+    config = load_json(pathlib.Path('config/config.json'))
+
+    for article_path in change:
+        build_article(config, pathlib.Path(article_path))
