@@ -66,6 +66,7 @@ jobs:
             config/**
             assets/**
             blog_builder/**
+            .rebuild
           
       - name: Output need rebuild
         if:  ${{ steps.check.outputs.all_changed_files }} != ""
@@ -78,6 +79,12 @@ jobs:
       - name: Update RSS
         run: |
           python3 blog_builder/rss.py
+      
+      - name: Clean up
+        run: |
+          rm changed_files.json
+          rm tmp.json
+          rm build.log
 
       - name: Commit changes
         run: |
