@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - 'posts/**.md'
+      - 'config/**'
+      - 'assets/**'
+      - 'blog_builder/**'
 
 
 permissions:
