@@ -272,12 +272,10 @@
         });
     }
 
-    fetch('recent_posts.json')
+    fetch("posts.json")
         .then(response => response.json())
-        .then(posts => {
-            showPosts(posts, 'recent-posts');
-        })
-        .catch(error => console.error('投稿情報の取得に失敗しました', error));
+        .then(data => showPosts(data.slice(0, 6), "recent-posts"));
+
 </script>
 
 <footer>
