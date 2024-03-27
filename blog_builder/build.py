@@ -100,7 +100,7 @@ def build_article(config: dict, article_path: pathlib.Path):
                 'thumbnail_url': ogp_url,
                 'content': content,
                 'tags': tags
-            })
+            }) 
 
     posts = sorted(posts, key=lambda x: x['post_date'], reverse=True)
 
