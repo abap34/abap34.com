@@ -1,6 +1,7 @@
 import json
 import subprocess
 import pathlib
+import os
 
 CONFIG_CORRESPONDING = {
     "overall_theme": "-t",
@@ -13,6 +14,7 @@ CONFIG_CORRESPONDING = {
 def load_json(path: pathlib.Path):
     with open(path, 'r') as f:
         return json.load(f)
+
 
 def load_rawtext(ir, result=''):
     if 'childs' in ir.keys():
@@ -104,9 +106,26 @@ def build_article(config: dict, article_path: pathlib.Path):
         json.dump(posts, f)
 
 
-if __name__ == '__main__':
-    change = load_json(pathlib.Path('changed_files.json'))
-    config = load_json(pathlib.Path('config/config.json'))
+def build(config: dict, article_paths: list[pathlib.Path]):
+    for article_path in article_paths:
+        build_article(config, article_path)
 
-    for article_path in change:
-        build_article(config, pathlib.Path(article_path))
+
+if __name__ == '__main__':
+    if os.getenv('REBUILD'):
+        with open('public/posts.json', 'w') as f:
+            f.write('[]')
+        with open('public/recent_posts.json', 'w') as f:
+            f.write('[]')
+
+        config = load_json(pathlib.Path('config/config.json'))
+        build(config, list(pathlib.Path('posts').glob('*.md')))
+        
+    else:
+        change = load_json(pathlib.Path('changed_files.json'))
+        config = load_json(pathlib.Path('config/config.json'))
+
+        for article_path in change:
+            build_article(config, pathlib.Path(article_path))
+
+    
