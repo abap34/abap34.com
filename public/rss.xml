@@ -8,7 +8,7 @@
 <item>
 <id>2023年度後期振り返り</id>
 <title>2023年度後期振り返り</title>
-<link>https://abap34.com/posts/hurikaeri_2023_1.html</link>
+<link>https://abap34.compublic/posts/hurikaeri_2023_1.html</link>
 <pubDate>Sun, 24 Mar 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -16,7 +16,7 @@
 <item>
 <id>Marp + GitHub Actionsのテンプレートを作った</id>
 <title>Marp + GitHub Actionsのテンプレートを作った</title>
-<link>https://abap34.com/posts/slide-template.html</link>
+<link>https://abap34.compublic/posts/slide-template.html</link>
 <pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -24,7 +24,7 @@
 <item>
 <id>(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</id>
 <title>(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</title>
-<link>https://abap34.com/posts/tinypeg.html</link>
+<link>https://abap34.compublic/posts/tinypeg.html</link>
 <pubDate>Wed, 06 Mar 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -32,7 +32,7 @@
 <item>
 <id>3時間で作る自作言語のJuliaトランスパイラ</id>
 <title>3時間で作る自作言語のJuliaトランスパイラ</title>
-<link>https://abap34.com/posts/mini-lang.html</link>
+<link>https://abap34.compublic/posts/mini-lang.html</link>
 <pubDate>Thu, 22 Feb 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -40,7 +40,7 @@
 <item>
 <id>作問ハッカソン 002で作問しました </id>
 <title>作問ハッカソン 002で作問しました </title>
-<link>https://abap34.com/posts/sakumon2.html</link>
+<link>https://abap34.compublic/posts/sakumon2.html</link>
 <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -48,7 +48,7 @@
 <item>
 <id>JuliaTokyo #11 でトークをしてきました</id>
 <title>JuliaTokyo #11 でトークをしてきました</title>
-<link>https://abap34.com/posts/juliatokyo11.html</link>
+<link>https://abap34.compublic/posts/juliatokyo11.html</link>
 <pubDate>Wed, 07 Feb 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -56,7 +56,7 @@
 <item>
 <id>marp で counter が使えない</id>
 <title>marp で counter が使えない</title>
-<link>https://abap34.com/posts/marp-counter.html</link>
+<link>https://abap34.compublic/posts/marp-counter.html</link>
 <pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -64,7 +64,7 @@
 <item>
 <id>n 次精度 k 階数値微分の導出</id>
 <title>n 次精度 k 階数値微分の導出</title>
-<link>https://abap34.com/posts/n-order-diff.html</link>
+<link>https://abap34.compublic/posts/n-order-diff.html</link>
 <pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -72,7 +72,7 @@
 <item>
 <id>自明ギャグの定義とその発展</id>
 <title>自明ギャグの定義とその発展</title>
-<link>https://abap34.com/posts/jimei.html</link>
+<link>https://abap34.compublic/posts/jimei.html</link>
 <pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -80,7 +80,7 @@
 <item>
 <id>DrRacketがかなりおもしろIDEだった</id>
 <title>DrRacketがかなりおもしろIDEだった</title>
-<link>https://abap34.com/posts/racket.html</link>
+<link>https://abap34.compublic/posts/racket.html</link>
 <pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -88,7 +88,7 @@
 <item>
 <id>2023年度前期振り返り</id>
 <title>2023年度前期振り返り</title>
-<link>https://abap34.com/posts/hurikaeri_2023_0.html</link>
+<link>https://abap34.compublic/posts/hurikaeri_2023_0.html</link>
 <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -96,7 +96,7 @@
 <item>
 <id>gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</id>
 <title>gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</title>
-<link>https://abap34.com/posts/grpc_ml.html</link>
+<link>https://abap34.compublic/posts/grpc_ml.html</link>
 <pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -104,7 +104,7 @@
 <item>
 <id>頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</id>
 <title>頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</title>
-<link>https://abap34.com/posts/caesar.html</link>
+<link>https://abap34.compublic/posts/caesar.html</link>
 <pubDate>Fri, 29 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
@@ -112,39 +112,39 @@
 <item>
 <id>オセロ探索の並列化の戦略</id>
 <title>オセロ探索の並列化の戦略</title>
-<link>https://abap34.com/posts/parallel_othello.html</link>
+<link>https://abap34.compublic/posts/parallel_othello.html</link>
 <pubDate>Mon, 25 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>Scheme入門した m1macでのScheme環境構築</id>
-<title>Scheme入門した m1macでのScheme環境構築</title>
-<link>https://abap34.com/posts/hello_scheme.html</link>
-<pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
 <id>Juliaで実行時間を制限する用のタイマー</id>
 <title>Juliaで実行時間を制限する用のタイマー</title>
-<link>https://abap34.com/posts/julia_timer.html</link>
+<link>https://abap34.compublic/posts/julia_timer.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</id>
-<title>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</title>
-<link>https://abap34.com/posts/githubactions_trap.html</link>
-<pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
+<id>Scheme入門した m1macでのScheme環境構築</id>
+<title>Scheme入門した m1macでのScheme環境構築</title>
+<link>https://abap34.compublic/posts/hello_scheme.html</link>
+<pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
 <id>ブログを自作Markdownパーサで作り直しました</id>
 <title>ブログを自作Markdownパーサで作り直しました</title>
-<link>https://abap34.com/posts/rebuild_abap34_com.html</link>
+<link>https://abap34.compublic/posts/rebuild_abap34_com.html</link>
+<pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
+<id>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</id>
+<title>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</title>
+<link>https://abap34.compublic/posts/githubactions_trap.html</link>
 <pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
