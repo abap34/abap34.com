@@ -69,8 +69,8 @@ def build_article(config: dict, article_path: pathlib.Path):
         ir = tmp['ir']
         tags = tmp['meta']['tag']
 
-    url = config["root_url"] + 'public/posts/' + outputpath.name
-    
+    url = config["root_url"] + '/posts/' + outputpath.name
+
     content = load_rawtext(ir)
 
     tags = tags[1:-1].split(',')
