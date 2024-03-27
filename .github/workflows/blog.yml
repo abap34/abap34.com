@@ -92,10 +92,9 @@ jobs:
           git diff-index --quiet HEAD || echo "CHANGE=true" >> $GITHUB_ENV
         
       - name: Commit changes
-        if: env.CHANGE == 'true'
         run: |
           git add .
-          git commit -m "Update blog"
+          git commit --allow-empty -m "Update blog"
 
       - name: Push changes
         uses: ad-m/github-push-action@master  
