@@ -46,7 +46,7 @@ def build_article(config: dict, article_path: pathlib.Path):
         shell=True
     )
 
-    cmd = 'almo {} -o {} -d'.format(article_path, outputpath)
+    cmd = 'ALMO/almo {} -o {} -d'.format(article_path, outputpath)
 
     for key, value in CONFIG_CORRESPONDING.items():
         if key in config:
