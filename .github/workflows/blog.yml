@@ -9,6 +9,7 @@ on:
       - 'config/**'
       - 'assets/**'
       - 'blog_builder/**'
+      - '.rebuild'
 
 
 permissions:
