@@ -8,17 +8,7 @@ import datetime
 class FileAlreadyExistsError(Exception):
     pass
 
-
-def create_article(config, filename):
-    ogp_url = requests.get('https://dog.ceo/api/breeds/image/random').json()['message']
-    date = datetime.datetime.now().strftime('%Y/%m/%d')
-    basename = os.path.splitext(os.path.basename(filename))[0]
-
-    config["ogp_url"] = ogp_url
-    config["date"] = date
-    config["basename"] = basename
-
-    head =  """---
+HEAD = """---
 title: 
 author: {author}
 date: {date}
@@ -32,7 +22,20 @@ url: {root_url}/posts/{basename}.html
 site_name: {blog_name}
 twitter_site: @{twitter_id}
 ---
-""".format_map(config)
+"""
+
+
+
+def create_article(config, filename):
+    ogp_url = requests.get('https://dog.ceo/api/breeds/image/random').json()['message']
+    date = datetime.datetime.now().strftime('%Y/%m/%d')
+    basename = os.path.splitext(os.path.basename(filename))[0]
+
+    config["ogp_url"] = ogp_url
+    config["date"] = date
+    config["basename"] = basename
+    
+    head = HEAD.format_map(config)
 
     if os.path.exists('posts/' + filename):
         raise FileAlreadyExistsError("記事のファイル名が重複しています")
