@@ -87,12 +87,16 @@ jobs:
           rm tmp.json
           rm build.log
 
-      - name: Commit changes
+      - name: Check change
         run: |
-          git config pull.rebase false
+          git diff-index --quiet HEAD || echo "CHANGE=true" >> $GITHUB_ENV
+        
+      - name: Commit changes
+        if: env.CHANGE == 'true'
+        run: |
           git add .
           git commit -m "Update blog"
-          
+
       - name: Push changes
         uses: ad-m/github-push-action@master  
         with:
