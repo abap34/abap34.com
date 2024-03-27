@@ -585,7 +585,6 @@ a {
     word-break: break-all;
 }</style>
 
-
     <script>
         page_contents = []
     </script>
@@ -779,14 +778,9 @@ done
 <h2 id="124">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/ayDVB4IAZWA?si=NrdiIKGNQkvdetr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>         <br>
         </div>
 
-        <script src="https://utteranc.es/client.js"
-        repo="abap34/abap34com-comment"
-        issue-term="og:title"
-        label="comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-    </script>
+        <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+            label="comment" theme="github-light" crossorigin="anonymous" async>
+            </script>
 
 
     </div>
@@ -902,7 +896,7 @@ function onIntersection(entries) {
     <script>
         tag = document.querySelector(".tag-placeholder").innerHTML;
         document.querySelector(".tag-placeholder").innerHTML = "";
-        
+
         tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
 
         tag.forEach(tag => {
@@ -911,8 +905,10 @@ function onIntersection(entries) {
             each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
-        
     </script>
+
+
+
 
 </body>
 

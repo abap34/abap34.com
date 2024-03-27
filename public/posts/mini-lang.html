@@ -585,7 +585,6 @@ a {
     word-break: break-all;
 }</style>
 
-
     <script>
         page_contents = []
     </script>
@@ -907,14 +906,9 @@ end
 <h2 id="760">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>         <br>
         </div>
 
-        <script src="https://utteranc.es/client.js"
-        repo="abap34/abap34com-comment"
-        issue-term="og:title"
-        label="comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-    </script>
+        <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+            label="comment" theme="github-light" crossorigin="anonymous" async>
+            </script>
 
 
     </div>
@@ -1030,7 +1024,7 @@ function onIntersection(entries) {
     <script>
         tag = document.querySelector(".tag-placeholder").innerHTML;
         document.querySelector(".tag-placeholder").innerHTML = "";
-        
+
         tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
 
         tag.forEach(tag => {
@@ -1039,8 +1033,10 @@ function onIntersection(entries) {
             each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
-        
     </script>
+
+
+
 
 </body>
 
