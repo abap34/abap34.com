@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'posts/**.md'
 
 
 permissions:
@@ -11,12 +13,14 @@ permissions:
   pages: write
   id-token: write
 
-concurrency: build
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -24,102 +28,61 @@ jobs:
             fetch-depth: 0
 
 
-      - name: Check for Changes in MD Files
-        id: check_changes
-        run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md$' || true)
-          changed_files="${changed_files//'%'/'%25'}"
-          changed_files="${changed_files//$'\n'/'%0A'}"
-          changed_files="${changed_files//$'\r'/'%0D'}"
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
-          if [[ -z "$changed_files" ]]; then
-            echo "No changes in MD files. Skipping build."
-          else
-            echo "Change: $changed_files"
-          fi
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+        with:
+          files: 'posts/**.md'
+          json: true
+
+      - name: Write changed files to output
+        id: write-changed-files
+        run: echo "${{ steps.changed-files.outputs.all_changed_files }}" > changed_files.json
+
+      - name: If changed files are empty, skip the rest of the job. There is change, save the list of changed files to variable.
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        if: ${{ env.ALL_CHANGED_FILES == '' }}
+        run: exit 78
+
+  setup:
+    runs-on: ubuntu-latest
+    needs: check
+    if: ${{ needs.check.result == 'success' }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
 
       - name: Setup Git
-        if: steps.check_changes.outputs.changed_files != ''
         run: |
             cd ${{ github.workspace }}
             git config --global user.email "actions@example.com"
             git config --global user.name "GitHub Actions"
 
       - name: Setup ALMO
-        if: steps.check_changes.outputs.changed_files != ''
         run: |
             git submodule update --init --recursive --remote 
-            
-      - name: Install g++ 
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y g++ 
 
       - name: Compile almo.cpp
-        if: steps.check_changes.outputs.changed_files != ''
         run: |
           cd ALMO
           bash build.sh
-
-      - name: Generate HTML Files
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          cd ${{ github.workspace }}
-          changed_files=${{ steps.check_changes.outputs.changed_files }}
-          changed_files="${changed_files//'%25'/'%'}"
-          changed_files="${changed_files//'%0A'/$'\n'}"
-          changed_files="${changed_files//'%0D'/$'\r'}"
-          echo "changed_files=$changed_files" 
-          for file in $changed_files; do
-            if [ ! -e $file ]; then
-              continue
-            fi
-            filename_without_extension=$(basename $file .md)
-            filename_without_extension=${filename_without_extension#posts-md/}
-            out_path="public/posts/${filename_without_extension}.html"
-            echo "Generating HTML for $file"
-            python3 blog_builder/build.py $file $out_path
-          done
-          rm tmp.json
       
-      - name: Update RSS Feed
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          cd ${{ github.workspace }}
-          python3 blog_builder/rss.py
 
-      - name: Copy Image Files
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          cd ${{ github.workspace }}
-          changed_files=${{ steps.check_changes.outputs.changed_files }}
-          changed_files="${changed_files//'%25'/'%'}"
-          changed_files="${changed_files//'%0A'/$'\n'}"
-          changed_files="${changed_files//'%0D'/$'\r'}"
-          echo "changed_files=$changed_files" 
-          for file in $changed_files; do
-            if [ ! -e $file ]; then
-              continue
-            fi
-            filename_without_extension=$(basename $file .md)
-            filename_without_extension=${filename_without_extension#posts-md/}
-            out_path="public/posts/${filename_without_extension}.html"
-            echo "Copying images for $file"
-            cp -r posts/${filename_without_extension} public/posts/
-          done  
-    
-      - name: Commit HTML Files
-        if: steps.check_changes.outputs.changed_files != ''
-        run: |
-          cd ${{ github.workspace }}
-          git add .
-          git config pull.rebase false
-          git commit -m "Add generated HTML files"
+  build:
+    runs-on: ubuntu-latest
+    needs: setup
+    if: ${{ needs.setup.result == 'success' }}
 
-      - name: Push changes
-        if: steps.check_changes.outputs.changed_files != ''
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Generate HTML
+        env:
+          ALL_CHANGED_FILES: ${{ env.ALL_CHANGED_FILES }}
+        run: |
+          python3 blog_builder/build.py
 
+
+          
