@@ -1,7 +1,7 @@
 ---
 title: 2023年度後期振り返り
 author: abap34
-date: 2024/03/24
+date: 2024/03/29
 tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
@@ -19,6 +19,8 @@ twitter_site: @abap34
 2023年度・学部2年生もほぼ終わりました。
 
 とりあえず後期(10月~3月)の振り返りです。
+
+前期の振り返りは　[→ こちら](https://www.abap34.com/posts/hurikaeri_2023_0.html)
 
 ### JuliaTokyo11
 
