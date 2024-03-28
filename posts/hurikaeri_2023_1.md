@@ -38,34 +38,44 @@ Juilaの対面のイベントに参加するのは5年前、高校1年生の時�
 
 自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。
 
-### ALMO関連
-振り返ってみると、後期は結構ALMOの開発にリソースを使ってました。
+### atmaCut #16
 
-このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。
+[atmaCup #16 in collaboration with RECRUIT](https://www.guruguru.science/competitions/22) に参加しました。
 
-例えば [https://github.com/abap34/ALMO-extension](https://github.com/abap34/ALMO-extension) はALMOのVSCode拡張です。
+宿のレコメンドというタスクでしたが、ユーザの行動履歴が短く、めちゃくちゃむずかしかったです。
+
+学生枠でなんとか入賞して表彰式に参加させていただいたんですが、懇親会とその後の飲み会でいろいろな人と話せて楽しかったです。
+
+![懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました](hurikaeri_2023_1/sushi.png)
+
+### ALMO
+
+結構ALMOの開発は進んでいます。このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。
+
+リリースは 20回を超えて v0.7.0 まできました。 
+[https://github.com/abap34/ALMO/releases](https://github.com/abap34/ALMO/releases)
+
+
+エコシステムも色々整備してます。例えば
+ [https://github.com/abap34/ALMO-extension](https://github.com/abap34/ALMO-extension) は VSCode でプレビューしてくれるやつです。便利。
 
 他にも [https://github.com/abap34/ALMO-blog-template](https://github.com/abap34/ALMO-blog-template) とかもあります。
 ぽちぽちでブログが作れるやつです。
 
-
-本体も結構アップデートされています。 リリースは 20回を超えて v0.7.0 まできました。 
-[https://github.com/abap34/ALMO/releases](https://github.com/abap34/ALMO/releases)
-
-ひとまず今の issue を全て片付けて、 v1 のリリースを目指しています。
-
 ![https://github.com/abap34/ALMO-extension によるプレビュー](https://github.com/abap34/ALMO-extension/raw/main/assets/almo-ext-demo.gif)
 
 
-ついでにこのブログ自体にも
+### abap34.com
+
+このサイト自体がずいぶんアップデートされて綺麗になりました。
+
+ブログだけでも
 
 - 記事の検索機能
 - タグ機能
 - RSS
 
-などなどついて結構便利になりました。
-
-トップページとかのデザインも割と綺麗になった気がします。 
+などなどついて結構いい感じです。
 
 
 ### Minia.jl
@@ -80,20 +90,14 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 
 どちらかというと、付随して書いた [3時間で作る自作言語のJuliaトランスパイラ](https://www.abap34.com/posts/mini-lang.html) の評判が良かったです。
 
-それと、 Miniaのパーサは PEG.jl という既存のパーサジェネレータを使っているのですが、せっかくなのでこれも自前で書きました。
+### TinyPEG.jl
 
+Miniaのパーサは PEG.jl という既存のパーサジェネレータを使っているのですが、せっかくなので PEGパーサジェネレータを作りました。
 
-これもブログの [【週刊 PEGパーサジェネレータ を作ろう】](https://www.abap34.com/posts/tinypeg.html) の方が価値がある気がしますが...
+<a href="https://github.com/abap34/TinyPEG.jl"><img src="https://gh-card.dev/repos/abap34/TinyPEG.jl.svg"></a>
 
-### atmaCup
+これもブログ [【週刊 PEGパーサジェネレータ を作ろう】](https://www.abap34.com/posts/tinypeg.html) にしました。
 
-[atmaCup #16 in collaboration with RECRUIT](https://www.guruguru.science/competitions/22) に参加しました。
-
-宿のレコメンドというタスクでしたが、ユーザの行動履歴が短く、めちゃくちゃむずかしかったです。
-
-学生枠でなんとか入賞して表彰式に参加させていただいたんですが、懇親会とその後の飲み会でいろいろな人と話せて楽しかったです。
-
-![懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました](hurikaeri_2023_1/sushi.png)
 
 ### age++
 
@@ -141,9 +145,11 @@ PEGで構文を書いて、JuiaのASTに変換して実行するみたいなや�
 特に最近、コンピュータサイエンスがみんな面白くて、多分来年も同じ調子だと思うので、
 そのとき興味あることをちゃんとできればと思います。
 
-**手を動かす** ことを忘れないで頑張ります。
 
-スーパー最強エンジニアになるぞ〜〜〜
+とにかくプレイヤーでいたいです。
+
+頑張ります。
+
 
 
 ## 今日の一曲
