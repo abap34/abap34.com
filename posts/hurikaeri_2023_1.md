@@ -104,7 +104,7 @@ Miniaのパーサは PEG.jl という既存のパーサジェネレータを使�
 ついに 20歳になりました。
 
 
-祝ってもらいました。マジで恵まれてるなぁと言う感じです。
+いろんな人に祝ってもらいました。マジで恵まれてるなぁと言う感じです。
 
 周りの全部の人に感謝してます。
 
@@ -154,4 +154,4 @@ Miniaのパーサは PEG.jl という既存のパーサジェネレータを使�
 
 ## 今日の一曲
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/x5pJvuktHfY?si=oDZ40FgpojFgpnGB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7xx66mR_HeE?si=U0YEvzeB4kqud4OK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
