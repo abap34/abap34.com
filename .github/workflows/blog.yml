@@ -85,7 +85,6 @@ jobs:
         run: |
           rm changed_files.json
           rm tmp.json
-          rm build.log
 
       - name: Check change
         run: |

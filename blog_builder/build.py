@@ -52,7 +52,7 @@ def build_article(config: dict, article_path: pathlib.Path):
         if key in config:
             cmd += ' {} {}'.format(value, config[key])
 
-    cmd += '> tmp.json 2>> build.log'
+    cmd += '> tmp.json'
 
     print(
         'Building article with the following command: \n'
