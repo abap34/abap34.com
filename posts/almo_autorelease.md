@@ -1,8 +1,8 @@
 ---
-title: リリース時にDocker HubにイメージをアップしてGitHub Actionsと連携
+title: GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用
 author: abap34
 date: 2024/04/02
-tag: [Docker, GitHub Actions, CI/CD, 日記]
+tag: [Docker Hub, Docker, GitHub Actions, CI/CD, 日記]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
