@@ -826,7 +826,7 @@ f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
 
  \] </div><br><br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
  <div class="editor" id="124" rows="3" cols="80"></div> 
-<script>editor = ace.edit("124"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+<script>editor = ace.edit("124"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -905,7 +905,7 @@ x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^
 
  \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに一意で、また具体的に計算することができました。<br>実際に計算してみようと思います。<br>右から <span class="math-inline"> \( e_k \) </span> をかけるのはちょうど <span class="math-inline"> \( k \) </span> 列目のベクトルを取り出すことなのでそう実装します。<br><br><br> 
  <div class="editor" id="383" rows="3" cols="80"></div> 
-<script>editor = ace.edit("383"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+<script>editor = ace.edit("383"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
 import matplotlib.pyplot as plt
 
 def central_weight(n, k):
@@ -952,7 +952,7 @@ print(numerical_diff(f, x, 4, k=2))
 <button class="runbutton" onclick="runBlock('383')"> Run </button>
 <br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
  <div class="editor" id="394" rows="3" cols="80"></div> 
-<script>editor = ace.edit("394"); editor.setTheme("ace/theme/xcode");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+<script>editor = ace.edit("394"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
 x = np.pi / 3
 h = np.logspace(0, -10, 100)
 
