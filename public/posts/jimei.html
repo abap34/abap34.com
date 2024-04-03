@@ -51,10 +51,10 @@
     <style>body {
     display: grid;
     grid-template-columns: 1fr 5fr;
-    padding-left: 20px;
-    padding-right: 50px;
+    max-width: 1500px;
     font-family: "Noto Sans Mono", sans-serif;
-
+    margin-right: auto;
+    margin-left: auto;
 }
 
 
@@ -77,9 +77,11 @@
 
 .side {
     order: 1;
+    border-left: solid 1px #ddd;
+    padding-left: 20px;
+
     border-right: solid 1px #ddd;
     padding-right: 20px;
-    padding-left: 0px;
 }
 
 .side-sticky {
@@ -87,27 +89,29 @@
     top: 20px;
 }
 
-.article-header {
+/* .article-header {
     position: relative;
     width: 100%;
     height: 200px;
     margin-bottom: 50px;
-}
+} */
 
-.article-header .thumbnail {
+/* .article-header .thumbnail {
     position: relative;
     width: 100%;
     height: 100%;
     filter: blur(3px);
-}
+} */
+
+/* 
 
 .article-header .thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
+} */
 
-.article-header .title {
+/* .article-header .title {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -118,6 +122,22 @@
     font-weight: bold;
     background-color: #44444477;
     width: 75%;
+} */
+
+
+.article-header {
+    margin: 20px 0;
+}
+
+.article-body {
+    padding: 20px;
+}
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
 }
 
 .date {
@@ -152,6 +172,7 @@
 .content {
     order: 2;
     padding: 20px;
+    border-right: 1px solid #ddd;
 }
 
 .toc_title {
@@ -277,7 +298,7 @@ td {
     position: relative;
 }
 
-#toc li::before {
+/* #toc li::before {
     content: '';
     width: 10px;
     height: 10px;
@@ -288,7 +309,7 @@ td {
     left: -7px;
     top: 0;
     transform: translateY(50%);
-}
+} */
 
 .toc_H1 {
     font-size: 16px;
@@ -307,10 +328,10 @@ td {
     font-weight: bold;
 }
 
-.toc_H2::before {
+/* .toc_H2::before {
     background: #f8f8f8 !important;
     border: 1px solid #3498db !important;
-}
+} */
 
 .toc_H3 {
     font-size: 12px;
@@ -616,10 +637,6 @@ a {
     <div class="content">
 
         <div class="article-header">
-            <div class="thumbnail" style="text-align: center">
-                <img height="300px" width="300px" src="https://images.dog.ceo/breeds/clumber/n02101556_3878.jpg">
-            </div>
-
 
             <div class="title">
                 自明ギャグの定義とその発展
@@ -825,7 +842,7 @@ function onIntersection(entries) {
         tag.forEach(tag => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
