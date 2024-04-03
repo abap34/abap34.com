@@ -9,5 +9,5 @@
     "custom_css": "assets/modern-light.css",
     "template": "assets/template.html",
     "editor_theme": "ace/theme/xcode",
-    "syntax_theme": "github.min"
+    "syntax_theme": "monokai.min"
   }
