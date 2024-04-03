@@ -16,7 +16,7 @@ body {
     border-radius: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .side #toc {
         display: none;
     }
@@ -25,6 +25,7 @@ body {
         display: block !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
+        margin: 10px !important;
     }
 
 }
@@ -127,7 +128,7 @@ img {
     height: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     figure {
         margin-left: calc(50% - 50vw);
         margin-right: calc(50% - 50vw);
@@ -172,7 +173,7 @@ td {
     color: white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .exec_plot {
         width: 100%;
         overflow-x: auto;
