@@ -62,93 +62,94 @@
 
 <body>
 
-    <div class="content">
+    <div class="article-header">
 
-        <div class="article-header">
-
-            <div class="title">
-                {{title}}
-            </div>
-
-            <script>
-                title = document.querySelector(".title").innerHTML;
-            </script>
-
-            <br>
-            <div class="date">
-                {{date}}
-            </div>
-            <br>
-            <div class="tag-placeholder">
-                {{tag}}
-            </div>
-
+        <div class="title">
+            {{title}}
         </div>
 
-        <div class="article-body">
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            {{date}}
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            {{tag}}
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
             {{contents}}
-        </div>
 
-        <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-            label="comment" theme="github-light" crossorigin="anonymous" async>
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
             </script>
 
-
-    </div>
-
-    <div class="side">
-        <div class="side-sticky">
-            <div class="sidebar">
-                <ul id="toc"></ul>
-            </div>
-
-            <div class="links">
-
-
-                <div class="to-links">
-                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                    <br>
-
-
-                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                    <br>
-                    <br>
-                    <br>
-
-                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                </div>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{twitter_id}}"
-                        class="tolink"> @{{twitter_id}}</a>
-                </p>
-                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{github_id}}"
-                        class="tolink"> @{{github_id}}</a></p>
-                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{mail}}" class="tolink"> {{mail}}</a>
-                </p>
-
-
-
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-show-count="false">Tweet</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                <footer>
-                    <p>&copy; {{author}} </p>
-                </footer>
-
-            </div>
         </div>
 
-        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
-        {{sidebar_builder}}
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{twitter_id}}"
+                            class="tolink"> @{{twitter_id}}</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{github_id}}"
+                            class="tolink"> @{{github_id}}</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{mail}}" class="tolink">
+                            {{mail}}</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; {{author}} </p>
+                    </footer>
+
+                </div>
+            </div>
+
+            <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+            {{sidebar_builder}}
+
+        </div>
 
     </div>
-
 
     <script>
         tag = document.querySelector(".tag-placeholder").innerHTML;

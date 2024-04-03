@@ -1,98 +1,72 @@
 body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
     max-width: 1500px;
-    font-family: "Noto Sans Mono", sans-serif;
     margin-right: auto;
     margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "Noto Sans JP", sans-serif;
+    color: #333;
 }
 
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
 
 @media (max-width: 768px) {
     .side #toc {
         display: none;
     }
 
-    body {
-        display: block;
+    .article-body {
+        display: block !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
 
-    .article-header .title {
-        font-size: 18px;
-    }
 }
-
 
 .side {
     order: 1;
-    border-left: solid 1px #ddd;
-    padding-left: 20px;
-
     border-right: solid 1px #ddd;
     padding-right: 20px;
 }
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
 
 .side-sticky {
     position: sticky;
     top: 20px;
 }
 
-/* .article-header {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 50px;
-} */
-
-/* .article-header .thumbnail {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    filter: blur(3px);
-} */
-
-/* 
-
-.article-header .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
-
-/* .article-header .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 18px;
-    border-bottom: solid 1px #ddd;
-    font-weight: bold;
-    background-color: #44444477;
-    width: 75%;
-} */
-
 
 .article-header {
-    margin: 20px 0;
+    padding-top: 30px;
 }
 
-.article-body {
-    padding: 20px;
-}
+
 
 .article-header .title {
     color: #001e43;
     font-size: 1.4rem;
     font-weight: bold;
     border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .date {
     font-size: 14px;
     text-align: center;
+    color: gray;
 }
 
 .date::before {
@@ -109,9 +83,9 @@ body {
     display: inline-block;
     margin-right: 0.5rem;
     padding: 0.2rem 0.5rem;
-    background-color: #f5f5f5;
     font-size: 0.8rem;
     border-radius: 5px;
+    border: 1px solid gray;
 }
 
 .tag a {
@@ -119,11 +93,6 @@ body {
     text-decoration-line: none;
 }
 
-.content {
-    order: 2;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-}
 
 .toc_title {
     display: none;
@@ -450,12 +419,6 @@ pre {
     border-radius: 5px;
 }
 
-.code-block {
-    font-family: monospace;
-    background-color: #000000;
-    border-radius: 50%;
-    line-height: 1.5;
-}
 
 .inline-code {
     font-family: monospace;
