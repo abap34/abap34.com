@@ -178,6 +178,10 @@ td {
     padding: 8px;
 }
 
+.exec_out {
+    color: white;
+}
+
 @media (max-width: 768px) {
     .exec_plot {
         width: 100%;
