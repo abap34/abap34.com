@@ -8,6 +8,6 @@
     "overall_theme": "light",
     "custom_css": "assets/modern-light.css",
     "template": "assets/template.html",
-    "editor_theme": "ace/theme/xcode",
+    "editor_theme": "ace/theme/monokai",
     "syntax_theme": "monokai.min"
   }
