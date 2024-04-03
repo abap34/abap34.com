@@ -13,8 +13,6 @@ site_name: abap34's blog
 twitter_site: @abap34
 ---
 
-
-
 ## いろいろ大変リリース作業
 
 <a href="https://github.com/abap34/ALMO"><img src="https://gh-card.dev/repos/abap34/ALMO.svg"></a>
