@@ -49,100 +49,74 @@
 
 
     <style>body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
     max-width: 1500px;
-    font-family: "Noto Sans Mono", sans-serif;
     margin-right: auto;
     margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "Noto Sans JP", sans-serif;
+    color: #333;
 }
 
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
 
 @media (max-width: 768px) {
     .side #toc {
         display: none;
     }
 
-    body {
-        display: block;
+    .article-body {
+        display: block !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
 
-    .article-header .title {
-        font-size: 18px;
-    }
 }
-
 
 .side {
     order: 1;
-    border-left: solid 1px #ddd;
-    padding-left: 20px;
-
     border-right: solid 1px #ddd;
     padding-right: 20px;
 }
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
 
 .side-sticky {
     position: sticky;
     top: 20px;
 }
 
-/* .article-header {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 50px;
-} */
-
-/* .article-header .thumbnail {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    filter: blur(3px);
-} */
-
-/* 
-
-.article-header .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
-
-/* .article-header .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 18px;
-    border-bottom: solid 1px #ddd;
-    font-weight: bold;
-    background-color: #44444477;
-    width: 75%;
-} */
-
 
 .article-header {
-    margin: 20px 0;
+    padding-top: 30px;
 }
 
-.article-body {
-    padding: 20px;
-}
+
 
 .article-header .title {
     color: #001e43;
     font-size: 1.4rem;
     font-weight: bold;
     border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .date {
     font-size: 14px;
     text-align: center;
+    color: gray;
 }
 
 .date::before {
@@ -159,9 +133,9 @@
     display: inline-block;
     margin-right: 0.5rem;
     padding: 0.2rem 0.5rem;
-    background-color: #f5f5f5;
     font-size: 0.8rem;
     border-radius: 5px;
+    border: 1px solid gray;
 }
 
 .tag a {
@@ -169,11 +143,6 @@
     text-decoration-line: none;
 }
 
-.content {
-    order: 2;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-}
 
 .toc_title {
     display: none;
@@ -500,12 +469,6 @@ pre {
     border-radius: 5px;
 }
 
-.code-block {
-    font-family: monospace;
-    background-color: #000000;
-    border-radius: 50%;
-    line-height: 1.5;
-}
 
 .inline-code {
     font-family: monospace;
@@ -634,30 +597,29 @@ a {
 
 <body>
 
-    <div class="content">
+    <div class="article-header">
 
-        <div class="article-header">
-
-            <div class="title">
-                作問ハッカソン 002で作問しました 
-            </div>
-
-            <script>
-                title = document.querySelector(".title").innerHTML;
-            </script>
-
-            <br>
-            <div class="date">
-                2024/02/17
-            </div>
-            <br>
-            <div class="tag-placeholder">
-                [競プロ, traP, 日記]
-            </div>
-
+        <div class="title">
+            作問ハッカソン 002で作問しました 
         </div>
 
-        <div class="article-body">
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/02/17
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [競プロ, traP, 日記]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
             <br><script>page_contents.push({
     "type":"H2",
     "id":"2",
@@ -665,65 +627,66 @@ a {
 });
 </script>
 <h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、このあたりに着想を得て作りました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので<span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください〜〜！！！<br> また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br>
-        </div>
 
-        <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-            label="comment" theme="github-light" crossorigin="anonymous" async>
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
             </script>
 
-
-    </div>
-
-    <div class="side">
-        <div class="side-sticky">
-            <div class="sidebar">
-                <ul id="toc"></ul>
-            </div>
-
-            <div class="links">
-
-
-                <div class="to-links">
-                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                    <br>
-
-
-                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                    <br>
-                    <br>
-                    <br>
-
-                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                </div>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                        class="tolink"> @abap34</a>
-                </p>
-                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                        class="tolink"> @abap34</a></p>
-                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink"> abap0002@gmail.com</a>
-                </p>
-
-
-
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-show-count="false">Tweet</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                <footer>
-                    <p>&copy; abap34 </p>
-                </footer>
-
-            </div>
         </div>
 
-        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
-        <script>
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+            <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+            <script>
 
 const tocContainer = document.querySelector("#toc");
 const tocTitle = document.createElement("div");
@@ -779,8 +742,9 @@ function onIntersection(entries) {
 
 </script>
 
-    </div>
+        </div>
 
+    </div>
 
     <script>
         tag = document.querySelector(".tag-placeholder").innerHTML;

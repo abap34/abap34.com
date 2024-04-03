@@ -49,100 +49,74 @@
 
 
     <style>body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
     max-width: 1500px;
-    font-family: "Noto Sans Mono", sans-serif;
     margin-right: auto;
     margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "Noto Sans JP", sans-serif;
+    color: #333;
 }
 
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
 
 @media (max-width: 768px) {
     .side #toc {
         display: none;
     }
 
-    body {
-        display: block;
+    .article-body {
+        display: block !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
 
-    .article-header .title {
-        font-size: 18px;
-    }
 }
-
 
 .side {
     order: 1;
-    border-left: solid 1px #ddd;
-    padding-left: 20px;
-
     border-right: solid 1px #ddd;
     padding-right: 20px;
 }
+
+.content {
+    order: 2;
+    padding: 20px;
+}
+
 
 .side-sticky {
     position: sticky;
     top: 20px;
 }
 
-/* .article-header {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 50px;
-} */
-
-/* .article-header .thumbnail {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    filter: blur(3px);
-} */
-
-/* 
-
-.article-header .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
-
-/* .article-header .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 18px;
-    border-bottom: solid 1px #ddd;
-    font-weight: bold;
-    background-color: #44444477;
-    width: 75%;
-} */
-
 
 .article-header {
-    margin: 20px 0;
+    padding-top: 30px;
 }
 
-.article-body {
-    padding: 20px;
-}
+
 
 .article-header .title {
     color: #001e43;
     font-size: 1.4rem;
     font-weight: bold;
     border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .date {
     font-size: 14px;
     text-align: center;
+    color: gray;
 }
 
 .date::before {
@@ -159,9 +133,9 @@
     display: inline-block;
     margin-right: 0.5rem;
     padding: 0.2rem 0.5rem;
-    background-color: #f5f5f5;
     font-size: 0.8rem;
     border-radius: 5px;
+    border: 1px solid gray;
 }
 
 .tag a {
@@ -169,11 +143,6 @@
     text-decoration-line: none;
 }
 
-.content {
-    order: 2;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-}
 
 .toc_title {
     display: none;
@@ -500,12 +469,6 @@ pre {
     border-radius: 5px;
 }
 
-.code-block {
-    font-family: monospace;
-    background-color: #000000;
-    border-radius: 50%;
-    line-height: 1.5;
-}
 
 .inline-code {
     font-family: monospace;
@@ -634,30 +597,29 @@ a {
 
 <body>
 
-    <div class="content">
+    <div class="article-header">
 
-        <div class="article-header">
-
-            <div class="title">
-                2023年度前期振り返り
-            </div>
-
-            <script>
-                title = document.querySelector(".title").innerHTML;
-            </script>
-
-            <br>
-            <div class="date">
-                2023/10/01
-            </div>
-            <br>
-            <div class="tag-placeholder">
-                [日記, 振り返り, ネタ]
-            </div>
-
+        <div class="title">
+            2023年度前期振り返り
         </div>
 
-        <div class="article-body">
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2023/10/01
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [日記, 振り返り, ネタ]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
             <br><br>一番嫌いな...冬に...突入！！<br><script>page_contents.push({
     "type":"H2",
     "id":"7",
@@ -737,65 +699,66 @@ a {
 });
 </script>
 <h2 id="352">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/A2k6ZO6B0A8?si=llQhLWX-WATgUhGN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>         <br>
-        </div>
 
-        <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-            label="comment" theme="github-light" crossorigin="anonymous" async>
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
             </script>
 
-
-    </div>
-
-    <div class="side">
-        <div class="side-sticky">
-            <div class="sidebar">
-                <ul id="toc"></ul>
-            </div>
-
-            <div class="links">
-
-
-                <div class="to-links">
-                    <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                    <br>
-
-
-                    <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                    <br>
-                    <br>
-                    <br>
-
-                    <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                </div>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                        class="tolink"> @abap34</a>
-                </p>
-                <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                        class="tolink"> @abap34</a></p>
-                <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink"> abap0002@gmail.com</a>
-                </p>
-
-
-
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-show-count="false">Tweet</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                <footer>
-                    <p>&copy; abap34 </p>
-                </footer>
-
-            </div>
         </div>
 
-        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
-        <script>
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+            <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
+            <script>
 
 const tocContainer = document.querySelector("#toc");
 const tocTitle = document.createElement("div");
@@ -851,8 +814,9 @@ function onIntersection(entries) {
 
 </script>
 
-    </div>
+        </div>
 
+    </div>
 
     <script>
         tag = document.querySelector(".tag-placeholder").innerHTML;
