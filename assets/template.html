@@ -65,10 +65,6 @@
     <div class="content">
 
         <div class="article-header">
-            <div class="thumbnail" style="text-align: center">
-                <img height="300px" width="300px" src="{{ogp_url}}">
-            </div>
-
 
             <div class="title">
                 {{title}}
@@ -163,7 +159,7 @@
         tag.forEach(tag => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'>" + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
