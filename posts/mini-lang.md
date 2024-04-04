@@ -95,7 +95,7 @@ PEG.jl はそんな PEGを使って構文を定義・解析してくれるライ
 
 例えば、一桁の数字同士の足し算を定義するとこんな感じになります。
 
-```julia
+```julia-repl
 julia> using PEG
 
 julia> @rule add = r"[0-9]" & "+" & r"[0-9]"  # 一桁の足し算
@@ -119,7 +119,7 @@ julia> parse_whole(add, "1+2")
 
 例えば、 文字列 `x` を `parse(Int, x)`  で整数に変換して、計算式をその場で評価してみます。
 
-```julia
+```julia-repl
 julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> (parse(Int, w[1]) + parse(Int, w[3])))
 add (generic function with 2 methods)
 
@@ -185,7 +185,7 @@ Julia においては、 `Expr` 型によってその構文を表現できます
 
 (出力は一部省略しています)
 
-```julia
+```julia-repl
 julia> ex = quote
                   x = 10
                   y = x * 2
@@ -232,7 +232,7 @@ Expr
 
 あるいは、 S式の形で出力することもできます。
 
-```julia
+```julia-repl
 julia> Meta.show_sexpr(ex)
 (:block,
   :(#= REPL[50]:2 =#),
@@ -255,7 +255,7 @@ julia> Meta.show_sexpr(ex)
 例えば、 `1 + 2` を計算して出力するようなASTを、「手で」作ってみることにします
 
 
-```julia
+```julia-repl
 julia> ex = Expr(:call, :println, Expr(:call, :+, 1, 2))
 :(println(1 + 2))
 
@@ -272,7 +272,7 @@ julia> eval(ex)
 
 これで、最初の例の足し算のパーサを書き換えて、ASTを作るようにすれば、自動的にJuliaのコードに変換できるようになります。
 
-```
+```julia-repl
 julia> @rule add = (r"[0-9]" & "+" & r"[0-9]") |>  (w -> Expr(:call, :+, parse(Int, w[1]), parse(Int, w[3])))
 add (generic function with 2 methods)
 
@@ -347,7 +347,7 @@ fizzbuzz(100)
 
 定義したら REPL に送って試してみます。
 
-```julia
+```julia-repl
 julia> parse_whole(int, "0")
 "0"
 
@@ -371,7 +371,7 @@ Stacktrace:
 
 こんな感じの再帰的に `Vector` を flatten して結合してくれるやつを用意しておくと便利です。
 
-```julia
+```julia-repl
 julia> recjoin(arr::AbstractArray) = join(recjoin.(arr))
 recjoin (generic function with 2 methods)
 
@@ -393,7 +393,7 @@ julia> parse_whole(int, "123")
 
 浮動小数点数リテラルも同様に定義します。
 
-```julia
+```julia-repl
 julia> @rule float = (
                        r"[0-9]"[+] & r"." & r"[0-9]"[+]
                    ) |> build_float
@@ -428,7 +428,7 @@ Stacktrace:
 
 これで数字リテラルが使えるようになりました。 表記に応じて適切なパースができています。
 
-```
+```julia-repl
 julia> @rule num = float, int
 num (generic function with 2 methods)
 

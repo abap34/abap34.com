@@ -34,7 +34,7 @@ GitHub Actions では、 `use: docker://hoge/huga:latest` のように指定す�
 
 とりあえず Dockerfile を作ります。
 
-```Dockerfile
+```
 FROM alpine:latest
 
 RUN apk add --no-cache g++
