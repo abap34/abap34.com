@@ -9,5 +9,5 @@
     "custom_css": "assets/modern-light.css",
     "template": "assets/template.html",
     "editor_theme": "ace/theme/monokai",
-    "syntax_theme": "atome-one-dark.min"
+    "syntax_theme": "atom-one-dark.min"
   }
