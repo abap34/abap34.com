@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -654,7 +656,7 @@ a {
     "title":"GiHub Actions"
 });
 </script>
-<h4 id="68">GiHub Actions</h4><br><div class="code-block"> <pre><code class="yaml">name: Build Slide and Deploy
+<h4 id="68">GiHub Actions</h4><br><div class="code-block"> <pre><code class="language-yaml">name: Build Slide and Deploy
 on:
   push:
     branches:
@@ -703,7 +705,7 @@ jobs:
     "title":"Makefile"
 });
 </script>
-<h4 id="85">Makefile</h4><br><br><div class="code-block"> <pre><code class="makefile">SRC_DIR = slides
+<h4 id="85">Makefile</h4><br><br><div class="code-block"> <pre><code class="language-makefile">SRC_DIR = slides
 BUILD_DIR = build
 SRC_FILES = $(wildcard $(SRC_DIR)/*[0-9]_*.md)
 HEADER_FILE = $(firstword $(SRC_FILES))
@@ -761,7 +763,7 @@ clean:
 	@rm -rf honwaka-theme
 
 .PHONY: all preprocess pdf html preview clean
-</code></pre> </div><br><br>本質パートはここです。<br><div class="code-block"> <pre><code class="Makefile">@echo "HEADER_FILE = $(HEADER_FILE)"
+</code></pre> </div><br><br>本質パートはここです。<br><div class="code-block"> <pre><code class="language-Makefile">@echo "HEADER_FILE = $(HEADER_FILE)"
 @cat $(HEADER_FILE) > $(OUTPUT_FILE)
 
 @for file in $(REST_FILES); do \
@@ -780,7 +782,7 @@ done
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 

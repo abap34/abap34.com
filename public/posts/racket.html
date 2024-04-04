@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -636,7 +638,7 @@ a {
     "title":"一応ソースコードの中身を見てみる"
 });
 </script>
-<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br> ファイルの先頭を見ると、 <div class="code-block"> <pre><code class="racket">#reader(lib"read.ss""wxme")WXME0111 ## 
+<h2 id="67">一応ソースコードの中身を見てみる</h2>流石に衝撃的すぎます。一応 <span class="inline-code"> <code>main.rkt</code> </span> の中身を見てみます。<br> ファイルの先頭を見ると、 <div class="code-block"> <pre><code class="language-racket">#reader(lib"read.ss""wxme")WXME0111 ## 
 #|
    This file uses the GRacket editor format.
    Open this file in DrRacket version 8.10 or later to read it.
@@ -653,7 +655,7 @@ a {
 2 0 8 #"wxmedia\0"
 4 1 34 #"(lib \"syntax-browser.ss\" \"mrlib\")\0"
 1 0 36 #"(lib \"cache-image-snip.ss\" \"mrlib\")\0"
-</code></pre> </div><br>みたいなことが書いてあり、そもそも素(?)のracketのソースコードではなく、DrRacket前提のソースコードになっているみたいです。<br><br>続いて、<br><div class="code-block"> <pre><code class="racket">�PNG
+</code></pre> </div><br>みたいなことが書いてあり、そもそも素(?)のracketのソースコードではなく、DrRacket前提のソースコードになっているみたいです。<br><br>続いて、<br><div class="code-block"> <pre><code class="language-racket">�PNG
 
    
 IHDR   �   �   �>a�    IDATx�����,�u��9'"3k���_����pI��H��E-���y �Ȁm�?��������1����آ��F#Y�D��������w�U��q�CDV�{��"�@ݥnݪ�8��|ω�����ޓ\E�s�����^� 
@@ -673,7 +675,7 @@ IEND�B`�
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 

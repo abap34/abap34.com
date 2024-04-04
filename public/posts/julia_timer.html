@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -630,7 +632,7 @@ a {
     "title":"Juliaで実行時間を制限する用のタイマー"
 });
 </script>
-<h2 id="2">Juliaで実行時間を制限する用のタイマー</h2><br><br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><br><div class="code-block"> <pre><code class="julia">mutable struct Timer
+<h2 id="2">Juliaで実行時間を制限する用のタイマー</h2><br><br>ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。<br>競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。<br><br><div class="code-block"> <pre><code class="language-julia">mutable struct Timer
     timeout::Millisecond
     created::DateTime
 end
@@ -657,7 +659,7 @@ function rate(x::Timer)
     elapsed_time = now_time - x.created
     return x.timeout / elapsed_time
 end
-</code></pre> </div><br><br>使い方は、<br><div class="code-block"> <pre><code class="julia">function solve()
+</code></pre> </div><br><br>使い方は、<br><div class="code-block"> <pre><code class="language-julia">function solve()
     # 1000 [ms] (1 [s]) でタイムアウトするタイマーを作成
     timer = Timer(1000)
     while !(is_timeout(timer))
@@ -670,7 +672,7 @@ end
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 

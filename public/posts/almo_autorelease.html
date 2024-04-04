@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -636,7 +638,7 @@ a {
     "title":"Docker Hub にイメージをアップロードする"
 });
 </script>
-<h3 id="38">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="Dockerfile">FROM alpine:latest
+<h3 id="38">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="language-plaintext">FROM alpine:latest
 
 RUN apk add --no-cache g++
 
@@ -649,7 +651,7 @@ COPY . .
 RUN bash build.sh
 
 ENTRYPOINT [ "./docker-entrypoint.sh" ]
-</code></pre> </div><br><url> <a href="https://hub.docker.com/">Docker Hub</a> </url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"> <code>DOCKERHUB_USERNAME</code> </span> と <span class="inline-code"> <code>DOCKERHUB_TOKEN</code> </span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"> <pre><code class="yaml">name: Build and push Docker image
+</code></pre> </div><br><url> <a href="https://hub.docker.com/">Docker Hub</a> </url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"> <code>DOCKERHUB_USERNAME</code> </span> と <span class="inline-code"> <code>DOCKERHUB_TOKEN</code> </span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"> <pre><code class="language-yaml">name: Build and push Docker image
 
 on:
   release:
@@ -681,7 +683,7 @@ jobs:
     "title":"リリース時にいろんなプラットフォームに対応する"
 });
 </script>
-<h3 id="114">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="yaml">name: Release for all platforms
+<h3 id="114">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="language-yaml">name: Release for all platforms
 
 on:
   release:
@@ -716,9 +718,9 @@ jobs:
     "title":"使用例"
 });
 </script>
-<h3 id="131">使用例</h3><br>Docker Hubにアップロードしたおかげで誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="bash">docker pull abap/almo:latest
-</code></pre> </div><br>して、<br><div class="code-block"> <pre><code class="bash">docker run abap/almo:latest example.md
-</code></pre> </div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"> <pre><code class="yaml">uses: docker://abap/almo:latest
+<h3 id="131">使用例</h3><br>Docker Hubにアップロードしたおかげで誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="language-bash">docker pull abap/almo:latest
+</code></pre> </div><br>して、<br><div class="code-block"> <pre><code class="language-bash">docker run abap/almo:latest example.md
+</code></pre> </div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"> <pre><code class="language-yaml">uses: docker://abap/almo:latest
 args:
     example.md
 </code></pre> </div><br>だけで利用できます。<br><script>page_contents.push({
@@ -739,7 +741,7 @@ args:
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 

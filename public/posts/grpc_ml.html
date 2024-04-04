@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -636,14 +638,14 @@ a {
     "title":"実装"
 });
 </script>
-<h2 id="49">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。 こういうファイル構造にします。<br><div class="code-block"> <pre><code class="text">├── api
+<h2 id="49">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。 こういうファイル構造にします。<br><div class="code-block"> <pre><code class="language-text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
 ├── main.go
 └── pkg
     └── grpc
-</code></pre> </div><br>で、<span class="inline-code"> <code>pred.proto</code> </span>はこんな感じです。<br><div class="code-block"> <pre><code class="proto">// proto3 で書く
+</code></pre> </div><br>で、<span class="inline-code"> <code>pred.proto</code> </span>はこんな感じです。<br><div class="code-block"> <pre><code class="language-proto">// proto3 で書く
 syntax = "proto3";
 
 // パッケージ名
@@ -666,15 +668,15 @@ message Request {
 message Response {
   string result = 1;
 }
-</code></pre> </div><br>え、これだけで諸々作ってくれるらしいです。天才？<br>セットアップして、<br><div class="code-block"> <pre><code class="bash">cd src 
+</code></pre> </div><br>え、これだけで諸々作ってくれるらしいです。天才？<br>セットアップして、<br><div class="code-block"> <pre><code class="language-bash">cd src 
 go init mypred
 sudo apt-get install protobuf-compiler
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-</code></pre> </div><br>Go用のコードを生成します。<br><div class="code-block"> <pre><code class="bash">cd api
+</code></pre> </div><br>Go用のコードを生成します。<br><div class="code-block"> <pre><code class="language-bash">cd api
 protoc --go_out=. --go-grpc_out=. pred.proto
-</code></pre> </div><br>Python用のコードを生成します。<br><br><div class="code-block"> <pre><code class="bash">python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
-</code></pre> </div><br>こんな感じになります。<br><div class="code-block"> <pre><code class="text">├── api
+</code></pre> </div><br>Python用のコードを生成します。<br><br><div class="code-block"> <pre><code class="language-bash">python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
+</code></pre> </div><br>こんな感じになります。<br><div class="code-block"> <pre><code class="language-text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
@@ -691,7 +693,7 @@ protoc --go_out=. --go-grpc_out=. pred.proto
     "title":"サーバ側"
 });
 </script>
-<h3 id="112">サーバ側</h3><br><div class="code-block"> <pre><code class="python">from concurrent import futures
+<h3 id="112">サーバ側</h3><br><div class="code-block"> <pre><code class="language-python">from concurrent import futures
 import logging
 
 import grpc
@@ -729,7 +731,7 @@ if __name__ == '__main__':
     "title":"クライアント側"
 });
 </script>
-<h3 id="119">クライアント側</h3><br><div class="code-block"> <pre><code class="go">package main
+<h3 id="119">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
 
 import (
 	"context"
@@ -800,7 +802,7 @@ func main() {
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 

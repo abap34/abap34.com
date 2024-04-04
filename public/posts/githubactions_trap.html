@@ -28,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/monokai.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -630,7 +632,7 @@ a {
     "title":"<span class="inline-code"> <code>git diff</code> </span> が通らない"
 });
 </script>
-<h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="bash">- name: Check for Changes in MD Files
+<h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="language-bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
     changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md' || true)
@@ -646,7 +648,7 @@ a {
     "title":"対応策"
 });
 </script>
-<h2 id="65">対応策</h2><br><div class="code-block"> <pre><code class="bash">steps:
+<h2 id="65">対応策</h2><br><div class="code-block"> <pre><code class="language-bash">steps:
   - name: Checkout Repository
     uses: actions/checkout@v2
     with:
@@ -657,7 +659,7 @@ a {
 
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
-            </script>
+                </script>
 
         </div>
 
