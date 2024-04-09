@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>livereload でいい感じにリアルタイムプレビュー</id>
+<title>livereload でいい感じにリアルタイムプレビュー</title>
+<link>https://abap34.com/posts/livereload.html</link>
+<pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用</id>
 <title>GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用</title>
 <link>https://abap34.com/posts/almo_autorelease.html</link>
