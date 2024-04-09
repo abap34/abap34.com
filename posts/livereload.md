@@ -13,8 +13,6 @@ site_name: abap34's blog
 twitter_site: @abap34
 ---
 
-![**alt text**](image.png)
-
 ## livereload
 
 [livereload](https://livereload.readthedocs.io/en/latest/) は Pythonのパッケージで、ファイルの変更イベントを検知していろいろ走らせることができます。
