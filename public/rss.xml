@@ -6,8 +6,8 @@
 <description> abap34's blog </description>
 
 <item>
-<id>livereload でいい感じにリアルタイムプレビュー</id>
-<title>livereload でいい感じにリアルタイムプレビュー</title>
+<id>livereload でホットリロードするCLIツールを作る</id>
+<title>livereload でホットリロードするCLIツールを作る</title>
 <link>https://abap34.com/posts/livereload.html</link>
 <pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
