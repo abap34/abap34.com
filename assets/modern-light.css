@@ -1,9 +1,3 @@
-@font-face {
-    font-family: JuliaMono-Light;
-    src: url("https://cdn.jsdelivr.net/gh/cormullion/juliamono/webfonts/JuliaMono-Light.woff2");
-}
-
-
 body {
     max-width: 1200px;
     margin-right: auto;
@@ -45,7 +39,7 @@ body {
 .content {
     order: 2;
     padding: 20px;
-    width: 100%;
+    width: 95%;
     max-width: 900px;
     margin: auto;
     padding: auto;
@@ -396,7 +390,7 @@ td {
     width: 100%;
     height: 300px;
     font-size: 16px;
-    font-family: JuliaMono-Light;
+    font-family: monospace;
     background-color: #f0f0f0;
     color: #333;
     padding: 10px;
@@ -411,7 +405,7 @@ td {
     padding: 5px 5px;
     overflow-x: auto;
     font-size: 16px;
-    font-family: JuliaMono-Light;
+    font-family: monospace;
     background-color: #f0f0f0;
     color: #333;
     border: solid 1px #ddd;
