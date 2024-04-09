@@ -442,6 +442,41 @@ pre code {
     color: #e43e3ee0;
 }
 
+.hljs-ln td {
+    padding-left: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* for block of numbers */
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #787878;
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+code th, td {
+    border: none;
+}
+
+
+@media (max-width: 1200px) {
+    .hljs-ln-numbers {
+        display: none;
+    }
+}
+
 .success,
 .info,
 .warning,
