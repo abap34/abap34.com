@@ -1,0 +1,4 @@
+theme: dark
+css: assets/modern-light.css
+template: assets/template.html
+editor_theme: ace/theme/monokai
