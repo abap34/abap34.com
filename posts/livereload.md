@@ -1,5 +1,5 @@
 ---
-title: livereload でいい感じにリアルタイムプレビュー
+title: livereload でホットリロードするCLIツールを作る
 author: abap34
 date: 2024/04/09
 tag: [Python, Web, CLI]
@@ -7,7 +7,7 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://abap34.com/posts/livereload/thumb.png
-description: livereload を使ってリアルタイムプレビューを実装します。
+description: livereload を使ってホットリロードするCLIツールを作ります。
 url: https://abap34.com/posts/livereload.html
 site_name: abap34's blog
 twitter_site: @abap34
@@ -138,10 +138,11 @@ setup(
 ![](livereload/demo.gif)
 
 
-いい感じにリアルタイムプレビューできるようになりました！ 
+いい感じにプレビューできるようになりました！ 
 
 
-もうすでに VSCode拡張でリアルタイムにプレビューできていましたが、実際ブラウザで見ると微妙に表示が違ったり `WebViewPanel` は別ウィンドウで開けなかったりと色々と不満があったので、
+もうすでに VSCode拡張で同じ機能が実現されていましたが、
+ブラウザと微妙に表示が違ったり `WebViewPanel` は別ウィンドウで開けなかったりと色々と不満があったので、
 ブラウザで見ることができるのはかなり便利です。
 
 
