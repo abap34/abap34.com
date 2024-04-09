@@ -427,7 +427,7 @@ pre {
 pre code {
     color: #abb2bf;
     line-height: 1.2;
-    font-family: JuliaMono;
+    font-family: monospace;
 }
 
 .inline-code {
