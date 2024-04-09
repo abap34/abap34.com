@@ -45,6 +45,7 @@ body {
 .content {
     order: 2;
     padding: 20px;
+    width: 100%;
     max-width: 900px;
     margin: auto;
     padding: auto;
