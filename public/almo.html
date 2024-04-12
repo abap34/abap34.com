@@ -1,10 +1,17 @@
-
-
 <!DOCTYPE html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
 <meta charset="UTF-8">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
     <title> ALMO デモページ </title>
 
     <meta property="og:title" content="ALMO デモページ">
@@ -21,13 +28,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/github.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -41,37 +50,37 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    <style>
-
-body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    padding-left: 20px;
-    padding-right: 50px;
-    font-family: "Noto Sans", sans-serif;
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "Noto Sans JP", sans-serif;
+    color: #333;
 }
 
 
-@media (max-width: 768px) {
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
     .side #toc {
         display: none;
     }
 
-    body {
-        display: block;
+    .article-body {
+        display: block !important;
         padding-left: 10px !important;
         padding-right: 10px !important;
+        margin: 10px !important;
     }
+
 }
-
-
-@media (max-width: 768px) {
-    .article-header .title {
-        font-size: 18px;
-    }
-}
-
-
 
 .side {
     order: 1;
@@ -79,46 +88,43 @@ body {
     padding-right: 20px;
 }
 
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
 .side-sticky {
     position: sticky;
     top: 20px;
 }
 
+
 .article-header {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 50px;
+    padding-top: 30px;
+    margin: 10px;
 }
 
-.article-header .thumbnail {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    filter: blur(3px);
-}
 
-.article-header .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
 .article-header .title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 24px;
-    border-bottom: solid 1px #ddd;
+    color: #001e43;
+    font-size: 1.4rem;
     font-weight: bold;
-    background-color: #44444477;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .date {
     font-size: 14px;
     text-align: center;
+    color: gray;
 }
 
 .date::before {
@@ -126,15 +132,25 @@ body {
     font-family: "Font Awesome 5 Free";
 }
 
-.tag {
-    font-size: 14px;
+.tag-placeholder {
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.content {
-    order: 2;
-    padding: 20px;
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
 }
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
 
 .toc_title {
     display: none;
@@ -169,7 +185,7 @@ img {
     height: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     figure {
         margin-left: calc(50% - 50vw);
         margin-right: calc(50% - 50vw);
@@ -179,14 +195,18 @@ img {
 }
 
 
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
 h3 {
-    margin-bottom: 0;
-    padding-bottom: 0;
+    border-bottom: 1px solid #ddd !important;
 }
 
 pre {
     padding: 10px;
-    background-color: #f8f8f8
 }
 
 .tex-equations {
@@ -205,7 +225,11 @@ td {
     padding: 8px;
 }
 
-@media (max-width: 768px) {
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
     .exec_plot {
         width: 100%;
         overflow-x: auto;
@@ -213,11 +237,10 @@ td {
 }
 
 #toc {
-    background-color: transparent;
     border-radius: 4px;
     padding: 15px;
+    padding-left: 0px;
     list-style: none;
-    border-left: solid 1px #ddd;
 }
 
 #toc a {
@@ -228,11 +251,6 @@ td {
     transition: color 0.2s;
 }
 
-#toc a::before {
-    content: "▶";
-    margin-right: 5px;
-}
-
 #toc a:hover {
     color: #007bff;
 }
@@ -240,36 +258,116 @@ td {
 #toc .active {
     font-weight: bold;
     color: #007bff;
-    font-size: 16px;
+    font-size: 1.1em;
 }
 
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
 
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
 
 .toc_H1 {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
 }
 
+
 .toc_H2 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #007bff;
     font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
     padding-left: 10px;
 }
 
-.toc_H3 {
-    font-size: 14px;
-    margin-bottom: 10px;
-    color: #007bff;
-    padding-left: 20px;
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
 }
 
 
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
 
 
 .content_list_h1 {
@@ -373,11 +471,21 @@ td {
     color: #777;
 }
 
-.inline-code,
-.code-block {
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #abb2bf;
+    line-height: 1.2;
     font-family: monospace;
-    line-height: 1.5;
-    background-color: #f0f0f0;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
 }
 
 .success,
@@ -485,15 +593,12 @@ iframe {
 
 
 a {
-    color: #007bff;
+    color: #006699;
     word-break: break-all;
-}
-
-</style>
-
+}</style>
 
     <script>
-    page_contents = []
+        page_contents = []
     </script>
 
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script><script>
@@ -668,34 +773,29 @@ const runBlock = async (objectid) => {
 
 <body>
 
-    <div class="content">
+    <div class="article-header">
 
-        <div class="article-header">
-            <div class="thumbnail" style="text-align: center">
-                <img height="300px" width="300px" src="https://www.abap34.com/almo_logo.jpg">
-            </div>
-
-
-            <div class="title">
-                ALMO デモページ
-            </div>
-
-            <script>
-                title = document.querySelector(".title").innerHTML;
-            </script>
-
-            <br>
-            <div class="date">
-                2023-08-10
-            </div>
-            <br>
-            <div class="tag">
-                [ALMO, Python, Markdown, Pyodide, WebAssembly]
-            </div>
-
+        <div class="title">
+            ALMO デモページ
         </div>
 
-        <div class="article-body">
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2023-08-10
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [ALMO, Python, Markdown, Pyodide, WebAssembly]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
             <br><br><script>page_contents.push({
     "type":"H2",
     "id":"3",
@@ -710,7 +810,7 @@ const runBlock = async (objectid) => {
 </script>
 <h3 id="8">Meet ALMO!</h3><br>ALMOは拡張Markdownパーサ / 静的サイトジェネレータ です。 入力として Markdownファイルを受け取り、単一の HTMLファイルを出力します。<br>ALMOの拡張構文の最大の特徴は、 <span class="strong"> <strong>実行環境を含むページを作成できる</strong> </span> ことです。<br>下にいかにも入力可能そうなエディタと、ボタンがあります。<br>そこに、入力を受け取って、 <span class="inline-code"> <code>Hello {入力された文字列}!</code> </span> という文字列を出力するPythonのプログラムを書いてみましょう。<br>(Pythonの文字列結合は <span class="inline-code"> <code>+</code> </span> でできます。)<br><h3 class="problem_title"> <div class='badge' id='47_status'>WJ</div>   Hello ALMO! </h2>
 <div class="editor" id="47" rows="3" cols="80"></div> 
-<script>editor = ace.edit("47"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`s = input()
+<script>editor = ace.edit("47"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 25,     maxLines: 25,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`s = input()
 
 print(
     # write your code here
@@ -752,14 +852,14 @@ judge_types["47"] = `equal`
     "title":"キホンのキ"
 });
 </script>
-<h3 id="115">キホンのキ</h3><br>ALMO は、競技プログラミング・データ分析・科学技術計算などのプログラミングに関連する記事を簡単に執筆できるように設計されています。<br>通常の Markdown記法のようにコードブロックを作ることもで画像を表示することもできますし、<br><br><div class="code-block"> <pre><code class="python">def hello():
+<h3 id="115">キホンのキ</h3><br>ALMO は、競技プログラミング・データ分析・科学技術計算などのプログラミングに関連する記事を簡単に執筆できるように設計されています。<br>通常の Markdown記法のようにコードブロックを作ることもで画像を表示することもできますし、<br><br><div class="code-block"> <pre><code class="language-python">def hello():
     print("Hello ALMO!")
 
 if __name__ == "__main__":
     hello()
 </code></pre> </div><br><figure><img src="https://imagingsolution.net/wordpress/wp-content/uploads/2011/03/Mandrill.png" ><figcaption>マンドリル</figcaption></figure><br>単に実行可能なコードブロックも書くことができます。<br><br> 
  <div class="editor" id="146" rows="3" cols="80"></div> 
-<script>editor = ace.edit("146"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 11,     maxLines: 11,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def kuku():
+<script>editor = ace.edit("146"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 11,     maxLines: 11,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`def kuku():
     print('+----' * 9 + '+')
     for i in range(1, 10):
         row = '|'
@@ -782,7 +882,7 @@ kuku()
     "title":"ライブラリの読み込み"
 });
 </script>
-<h3 id="238">ライブラリの読み込み</h3><br>さらに、主要なPythonのライブラリも実行環境に読み込ませることが可能です。<br><div class="code-block"> <pre><code class="">:::loadlib
+<h3 id="238">ライブラリの読み込み</h3><br>さらに、主要なPythonのライブラリも実行環境に読み込ませることが可能です。<br><div class="code-block"> <pre><code class="language-plaintext">:::loadlib
 numpy
 scipy
 matplotlib
@@ -795,7 +895,7 @@ matplotlib
 </script>
 <h3 id="271">matplotlibのサポート</h3><br><span class="inline-code"> <code>matplotlib</code> </span> を使ったプロットをサポートしています。<br>事前に <span class="inline-code"> <code>matplotlib</code> </span> を読み込んでおいて、 <span class="inline-code"> <code>matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")</code> </span> を追加すると、通常のように <span class="inline-code"> <code>plt.show()</code> </span> とするだけで、ブラウザ上でプロットを表示することができます。<br><br> 
  <div class="editor" id="303" rows="3" cols="80"></div> 
-<script>editor = ace.edit("303"); editor.setTheme("ace/theme/chrome");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
+<script>editor = ace.edit("303"); editor.setTheme("ace/theme/monokai");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import matplotlib.pyplot as plt
 
 import matplotlib
 matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
@@ -846,9 +946,9 @@ plt.show()
     "title":"インストール"
 });
 </script>
-<h2 id="306">インストール</h2><br>ALMOは、Homebrewを使ってインストールすることができます。<br><div class="code-block"> <pre><code class="bash">brew tap abap34/homebrew-almo
+<h2 id="306">インストール</h2><br>ALMOは、Homebrewを使ってインストールすることができます。<br><div class="code-block"> <pre><code class="language-bash">brew tap abap34/homebrew-almo
 brew install almo
-</code></pre> </div><br>インストールが完了したら、MarkdownファイルをALMOに渡してみましょう。<br><div class="code-block"> <pre><code class="bash">almo example/example.md -o example.html
+</code></pre> </div><br>インストールが完了したら、MarkdownファイルをALMOに渡してみましょう。<br><div class="code-block"> <pre><code class="language-bash">almo example/example.md -o example.html
 </code></pre> </div><br>記法の詳細については <url> <a href="https://github.com/abap34/ALMO">レポジトリのREADME.md</a> </url>を参照してください。<br><script>page_contents.push({
     "type":"H2",
     "id":"331",
@@ -868,100 +968,143 @@ brew install almo
 });
 </script>
 <h3 id="359">2. GitHub Pages へのデプロイ <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url></h3><br><br>GitHub Pages を使って、簡単にブログを構築することができます。<br><figure><img src="https://github.com/abap34/ALMO-blog-template/raw/main/assets/index-example.png" ><figcaption></figcaption></figure><br>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
         </div>
 
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <!-- <div class="links">
+                    
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div> -->
+            </div>
+
+
+
+        </div>
 
     </div>
 
-    <div class="side">
-        <div class="side-sticky">
-            <div class="sidebar">
-                <ul id="toc"></ul>
-            </div>
-
-            <div class="links">
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-show-count="false">Tweet</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-                <br>
-                <br>
-                <br>
-
-                <p><i class="icon fab fa-twitter"></i><a href="https://twitter.com/abap34">@abap34</a>
-                </p>
-                <p><i class="icon fab fa-github"></i><a href="https://github.com/abap34">@abap34</a></p>
-                <p><i class="icon fas fa-envelope"></i><a href="mailto:abap0002@gmail.com"> abap0002@gmail.com</a></p>
-
-                <footer>
-                    <p>&copy; abap34 </p>
-                </footer>
-
-            </div>
-        </div>
-
-        <!-- サイドバーの情報は content 内のスクリプトで追加されていて、構築は sidebar を参照しているので content と sidebar より後に置かなければいけないことに注意！ -->
-        <script>
-
-const tocContainer = document.querySelector("#toc");
-const tocTitle = document.createElement("div");
-tocTitle.innerHTML = title;
-tocTitle.classList.add("toc_title");
-tocContainer.appendChild(tocTitle);
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
 
 
 
-page_contents.forEach(item => {
-    if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
-        listItem.classList.add("toc_" + item.type);
-        tocContainer.appendChild(listItem);
-    }
-});
-
-const options = {
-    root: null,
-    rootMargin: "-50% 0px",
-    threshold: 0
-};
-
-const observer = new IntersectionObserver(onIntersection, options);
-
-page_contents.forEach(item => {
-    const element = document.getElementById(item.id);
-    if (element) {
-        observer.observe(element);
-    }
-});
-
-// page_contensts の先頭を active にしておく
-const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
-first_item.classList.add("active");
-
-prev_item = first_item;
-
-function onIntersection(entries) {
-    entries.forEach(entry => {
-        const id = entry.target.id;
-        const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
-        if (tocItem) {
-            if (entry.isIntersecting) {
-                tocItem.classList.add("active");
-                prev_item.classList.remove("active");
-                prev_item = tocItem;
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
             }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
         }
-    });
-}
 
-</script>
 
-    </div>
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
 
 </body>
 
 
 </html>
-
-
