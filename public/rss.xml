@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>rebaseしてもGitHub上でのコミット時刻を保つ</id>
+<title>rebaseしてもGitHub上でのコミット時刻を保つ</title>
+<link>https://abap34.com/posts/git_date.html</link>
+<pubDate>Sat, 13 Apr 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>livereload でホットリロードするCLIツールを作る</id>
 <title>livereload でホットリロードするCLIツールを作る</title>
 <link>https://abap34.com/posts/livereload.html</link>
