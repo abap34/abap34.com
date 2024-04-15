@@ -2,7 +2,7 @@
 title: rebaseしてもGitHub上でのコミット時刻を保つ
 author: abap34
 date: 2024/04/13
-tag: [Git, GitHub] 
+tag: [Git, GitHub]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
