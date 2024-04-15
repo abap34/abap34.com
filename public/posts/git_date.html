@@ -12,14 +12,14 @@
         gtag('config', 'G-10Y7GMS7GV');
     </script>
 
-    <title> marp で counter が使えない </title>
+    <title> rebaseしてもGitHub上でのコミット時刻を保つ </title>
 
-    <meta property="og:title" content="marp で counter が使えない">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/clumber/n02101556_6170.jpg">
-    <meta property="og:description" content="">
-    <meta property="og:url" content="https://abap34.com/posts/marp-counter.html">
+    <meta property="og:title" content="rebaseしてもGitHub上でのコミット時刻を保つ">
+    <meta property="og:image" content="https://abap34.com/posts/git_date/image.png">
+    <meta property="og:description" content="git rebase するときにコミット履歴をいい感じにする方法です。">
+    <meta property="og:url" content="https://abap34.com/posts/add_coauthor.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="abap34.com">
+    <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
@@ -612,7 +612,7 @@ a {
     <div class="article-header">
 
         <div class="title">
-            marp で counter が使えない
+            rebaseしてもGitHub上でのコミット時刻を保つ
         </div>
 
         <script>
@@ -621,31 +621,113 @@ a {
 
         <br>
         <div class="date">
-            2024/01/05
+            2024/04/13
         </div>
         <br>
         <div class="tag-placeholder">
-            [日記]
+            [Git, GitHub] 
         </div>
 
     </div>
 
     <div class="article-body">
         <div class="content">
-            <br><script>page_contents.push({
-    "type":"H1",
-    "id":"2",
-    "title":"marp で counter が使えない"
+            <script>page_contents.push({
+    "type":"H2",
+    "id":"1",
+    "title":"イントロ"
 });
 </script>
-<h1 id="2">marp で counter が使えない</h1><br>普段は marp でスライドを作っています。<br>数学チックな長めなスライドを作っていたので定理に番号をつけたくなりテーマに counter を追加しました。<br><div class="code-block"> <pre><code class="language-css">body {
-  counter-reset: def-counter;
-}
+<h2 id="1">イントロ</h2><br><span class="inline-code"> <code>git rebase</code> </span> を使うと昔のコミットを編集することができます。<br><br>昔のコミットに Co-Author を追加したくなり rebase した後に、コミット時刻が <span class="inline-code"> <code>git log</code> </span> で見ているときと GitHub で違うことに気がつき、いろいろ調べてみたのでまとめます。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"24",
+    "title":"Git の二つの Date"
+});
+</script>
+<h2 id="24">Git の二つの Date</h2><br>Git でコミットするとコミット時刻を記録してくれますが、実は二つの時刻があります。<br>実例で見てみます。<br><br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop❱✔≻ mkcd git-commit-date
+❰yuchi❙~/Desktop/git-commit-date❱✔≻ git init .
+Initialized empty Git repository in /Users/yuchi/Desktop/git-commit-date/.git/
+❰yuchi❙~/Desktop/git-commit-date(gitmain)❱✔≻ date > first.txt
+❰yuchi❙~/Desktop/git-commit-date(gitmain)❱✔≻ git add first.txt
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "first-14:57"
+[main (root-commit) f2c73d7] first-14:57
+ 1 file changed, 1 insertion(+)
+ create mode 100644 first.txt
+</code></pre> </div><br>とりあえず <span class="inline-code"> <code>first.txt</code> </span> というファイルを作成して <span class="inline-code"> <code>git commit</code> </span> しました。<br>このコミットの時刻を調べてみます。　<br>(<span class="inline-code"> <code>git log</code> </span> に ハイライトが当たらなくて死ぬほど見にくいので、スクショにします)<br><figure><img src="git_date/log1.png" ><figcaption></figcaption></figure><br>コミットした時刻の <span class="inline-code"> <code>Date:   Mon Apr 15 14:57:17 2024 +0900</code> </span> が記録されています。 これを push して GitHub 上で見ても当然この時刻が表示されます。<br><br>ところが、 <span class="inline-code"> <code>git log --pretty=fuller</code> </span> でくわしく見てみると、<br><figure><img src="git_date/log2.png" ><figcaption></figcaption></figure><br>さっきまで一個しかなかった Date が <span class="inline-code"> <code>AuthorDate</code> </span> と <span class="inline-code"> <code>CommitDate</code> </span> の二つになっています。<br><br>もう一個コミットを積んでみます。<br><figure><img src="git_date/log3.png" ><figcaption></figcaption></figure><br><br>おやつを食べてたら 16:13 でした。<br>この場合も同様に、<span class="inline-code"> <code>AuthorDate</code> </span> と <span class="inline-code"> <code>CommitDate</code> </span> として同じ時刻が記録されています。<br>ここで、 最後のコミットメッセージを変更してみます。<br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✘≻ git rebase -i f2c73d733fbfdb7187545b9a272833c167e1289f
+Stopped at 20101e1...  second-16:13
+You can amend the commit now, with
 
-.def {
-  counter-increment: def-counter;
-}
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br>         <br>
+  git commit --amend
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+
+❰yuchi❙~/Desktop/git-commit-date❱✘≻ git commit --amend -m "edit: 16:16"
+[detached HEAD 243ec47] edit: 16:16
+ Date: Mon Apr 15 16:13:22 2024 +0900
+ 1 file changed, 1 insertion(+)
+ create mode 100644 second.txt
+</code></pre> </div><br>さっきのコミットメッセージを <span class="inline-code"> <code>edit: 16:16</code> </span> に変更しました。<br>このコミットの時刻を見てると、編集前のコミット時刻である <span class="inline-code"> <code>16:13:22</code> </span> が記録されていますが、<br>では <span class="inline-code"> <code>git log --pretty=fuller</code> </span> で見てみると、<br><figure><img src="git_date/log4.png" ><figcaption></figcaption></figure><br><br><br>こんな感じで、 <span class="inline-code"> <code>AuthorDate</code> </span> にはコミット時刻が、 <span class="inline-code"> <code>CommitDate</code> </span> には <span class="inline-code"> <code>git commit --amend</code> </span> した時刻が記録されていることがわかります。<br><br>これを GitHub で見てみるとどうなるでしょうか。<br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/git-commit-date❱✔≻ git rebase --continue
+Successfully rebased and updated refs/heads/main.
+❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git push origin main -f
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 318 bytes | 318.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/abap34/git-commit-date.git
+   f2c73d7..243ec47  main -> main
+</code></pre> </div><br><br><figure><img src="git_date/github-log.png" ><figcaption>大学でこの記事を書いてるせいか、大岡山の公文の広告が出ていてキモいですね。</figcaption></figure><br><br>と、こういう感じで <span class="inline-code"> <code>CommitDate</code> </span> が表示されます。つまり、<br><ul><li><span class="inline-code"> <code>AuthorDate</code> </span></li><ul><li>コミットが作られた時刻</li><li><span class="inline-code"> <code>git log</code> </span> で表示される</li></ul><li><span class="inline-code"> <code>CommitDate</code> </span></li><ul><li>コミットが最後に編集された時刻</li><li>GitHub で表示される</li></ul></ul><br>です。なんで <span class="inline-code"> <code>git log</code> </span> と GitHub で揃ってないんでしょうか。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"272",
+    "title":"AuthorDate と CommitDate を揃える"
+});
+</script>
+<h2 id="272">AuthorDate と CommitDate を揃える</h2><br>さて、二つの時刻があるのはいいとして、これで困ることもあります。<br><br>最初にも書いたのですが、昔ペアプロで作ったコミットを自分名義だけでコミットしてしまったので、今更ながら Co-Author を追加したくなりました。<br><br>Co-Authorの追加 は Gitの機能ではなく GitHub の機能ですが、要はコミットメッセージに <span class="inline-code"> <code>Co-Authored-By: </code> </span> を追加するという作業です。<br><br>なので昔のコミットまで戻ってコミットメッセージを修正すればいいのですが、ここまでで分かるように普通に rebase してしまうと <span class="inline-code"> <code>CommitDate</code> </span> が変わってしまい、GitHub で表示される時刻が変わってしまいます。<br><br><span class="inline-code"> <code>AuthorDate</code> </span> は残ってますが、 GitHub上でコミット履歴を見たときに全部 rebase したときの時刻になっているのはちょっと嫌です。<br><br>そんな困った人のために実は rebase にオプションが用意されています。<br><br>説明のために何個かコミットを積みます。<br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date > third.txt
+❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git add .
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "third: 16:37"
+[main 4bbedd6] third: 16:37
+ 1 file changed, 1 insertion(+)
+ create mode 100644 third.txt
+❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date > fourth.txt
+❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git add .
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "fourth: 16:38"
+[main bfa019a] fourth: 16:38
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fourth.txt
+</code></pre> </div><br>今はこんな感じです。<br><figure><img src="git_date/commits.png" ><figcaption>GitHub Desktopで表示されるのも AuthorDateでした。　</figcaption></figure><br><br>三番目のコミットを同じように編集します。<br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git rebase -i 243ec4704c8bcbe7c6d4e0ecd771c3eee5efaf8e
+Stopped at 9e2ce60...  edit: 16:51
+You can amend the commit now, with
+
+  git commit --amend
+
+Once you are satisfied with your changes, run
+
+  git rebase --continue
+❰yuchi❙~/Desktop/git-commit-date❱✔≻ git commit --amend -m "edit: 16:53"
+[detached HEAD 3c7157c] edit: 16:53
+ Date: Mon Apr 15 16:37:11 2024 +0900
+ 1 file changed, 1 insertion(+)
+ create mode 100644 third.txt
+❰yuchi❙~/Desktop/git-commit-date❱✔≻ git rebase --continue
+Successfully rebased and updated refs/heads/main.
+</code></pre> </div><br>これをすると先ほど見たように <span class="inline-code"> <code>CommitDate</code> </span> が変わってしまいます。<br><figure><img src="git_date/log.png" ><figcaption></figcaption></figure><br><br>ここから <span class="inline-code"> <code>CommitDate</code> </span> を揃えましょう。<br><br>先ほどと同じところまで rebaseするときに、 <span class="inline-code"> <code>--committer-date-is-author-date</code> </span> オプションをつけます。<br><div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✘≻ git rebase -i 243ec4704c8bcbe7c6d4e0ecd771c3eee5efaf8e --committer-date-is-author-date
+Successfully rebased and updated refs/heads/main.
+</code></pre> </div><br><figure><img src="git_date/log5.png" ><figcaption></figcaption></figure><br><br>すると、三番目のコミットの <span class="inline-code"> <code>CommitDate</code> </span> が <span class="inline-code"> <code>AuthorDate</code> </span> と同じになりました！<br>これで GitHub上でも履歴を保ったまま Co-Author を追加することができました。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"409",
+    "title":"まとめ"
+});
+</script>
+<h2 id="409">まとめ</h2><ul><li>コミットには時刻が二つ記録されてるよ</li><li>ところによって表示されるものが違うので気をつけよう</li><li>rebase するときに <span class="inline-code"> <code>--committer-date-is-author-date</code> </span> オプションをつけると <span class="inline-code"> <code>CommitDate</code> </span> を <span class="inline-code"> <code>AuthorDate</code> </span> に揃えることができて便利</li></ul><br><script>page_contents.push({
+    "type":"H2",
+    "id":"439",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="439">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/fGx6K90TmCI?si=7QNwsgeLoPxrsEo_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
 
             <hr>
 
