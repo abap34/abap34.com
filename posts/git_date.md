@@ -90,8 +90,7 @@ Once you are satisfied with your changes, run
 さっきのコミットメッセージを `edit: 16:16` に変更しました。
 
 このコミットの時刻を見てると、編集前のコミット時刻である `16:13:22` が記録されていますが、
-
-では `git log --pretty=fuller` で見てみると、
+`git log --pretty=fuller` で見てみると、
 
 ![](git_date/log4.png)
 
@@ -187,8 +186,8 @@ You can amend the commit now, with
 Once you are satisfied with your changes, run
 
   git rebase --continue
-❰yuchi❙~/Desktop/git-commit-date❱✔≻ git commit --amend -m "edit: 16:53"
-[detached HEAD 3c7157c] edit: 16:53
+❰yuchi❙~/Desktop/git-commit-date❱✔≻ git commit --amend -m "edit: 16:51"
+[detached HEAD 3c7157c] edit: 16:51
  Date: Mon Apr 15 16:37:11 2024 +0900
  1 file changed, 1 insertion(+)
  create mode 100644 third.txt
