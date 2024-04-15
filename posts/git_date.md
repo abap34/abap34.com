@@ -27,7 +27,7 @@ Git でコミットするとコミット時刻を記録してくれますが、�
 実例で見てみます。
 
 
-```
+```bash
 ❰yuchi❙~/Desktop❱✔≻ mkcd git-commit-date
 ❰yuchi❙~/Desktop/git-commit-date❱✔≻ git init .
 Initialized empty Git repository in /Users/yuchi/Desktop/git-commit-date/.git/
@@ -69,7 +69,7 @@ Initialized empty Git repository in /Users/yuchi/Desktop/git-commit-date/.git/
 
 ここで、 最後のコミットメッセージを変更してみます。
 
-```
+```bash
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✘≻ git rebase -i f2c73d733fbfdb7187545b9a272833c167e1289f
 Stopped at 20101e1...  second-16:13
 You can amend the commit now, with
@@ -101,7 +101,7 @@ Once you are satisfied with your changes, run
 
 これを GitHub で見てみるとどうなるでしょうか。
 
-```
+```bash
 ❰yuchi❙~/Desktop/git-commit-date❱✔≻ git rebase --continue
 Successfully rebased and updated refs/heads/main.
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git push origin main -f
@@ -154,7 +154,7 @@ Co-Authorの追加 は Gitの機能ではなく GitHub の機能ですが、要�
 
 説明のために何個かコミットを積みます。
 
-```
+```bash
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date > third.txt
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git add .
 ❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "third: 16:37"
@@ -176,7 +176,7 @@ Co-Authorの追加 は Gitの機能ではなく GitHub の機能ですが、要�
 
 三番目のコミットを同じように編集します。
 
-```
+```bash
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git rebase -i 243ec4704c8bcbe7c6d4e0ecd771c3eee5efaf8e
 Stopped at 9e2ce60...  edit: 16:51
 You can amend the commit now, with
@@ -205,7 +205,7 @@ Successfully rebased and updated refs/heads/main.
 
 先ほどと同じところまで rebaseするときに、 `--committer-date-is-author-date` オプションをつけます。
 
-```
+```bash
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✘≻ git rebase -i 243ec4704c8bcbe7c6d4e0ecd771c3eee5efaf8e --committer-date-is-author-date
 Successfully rebased and updated refs/heads/main.
 ```
