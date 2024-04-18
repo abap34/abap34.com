@@ -152,7 +152,20 @@ section#works {
   padding: 20px;
 }
 
+#about-user {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
 
+
+#about-user social {
+  text-align: center;
+}
+
+#about about-desc {
+  display: flex;
+  flex-direction: column;
+}
 
 .work-item .description {
   opacity: 0;
@@ -209,7 +222,7 @@ section#works {
   list-style: none;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(1200px, 1fr));
   grid-gap: 1.5rem;
 }
 
