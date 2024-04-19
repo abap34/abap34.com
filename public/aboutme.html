@@ -330,7 +330,28 @@
                 margin-right: 1rem;
             }
         }
+
+        #canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
+
+
 
     <title>abap34.com</title>
 </head>
@@ -351,10 +372,12 @@
     </div>
     <h1>好きなこと </h1>
     <section>計算機を使って、人間にできなかったようなことができるようになること、 <br>もしくは人間しかできなかったようなことが機械にできるようになることが好きです。
-        <br>それを実現する技術として、とくに機械学習に興味を持っています。 <br></section>
+        <br>それを実現する技術として、とくに機械学習に興味を持っています。 <br>
+    </section>
     <h1>好きな技術 </h1>
     <section>機械学習が主な興味の対象ですが、数学・コンピュータサイエンス全般が基本的に好きです。 <br>とくにコンパイラ・数理最適化・統計は好きです。 <br>また、 Kaggleなどのデータ分析コンペも好きです。
-        <br>普段はなかなか時間が取れないので短期コンによく参加しています。 <br></section>
+        <br>普段はなかなか時間が取れないので短期コンによく参加しています。 <br>
+    </section>
     <h1>好きなプログラミング言語・フレームワーク </h1>
     <section id="about">自由で、遊べるものが好きです。 <br><br>プログラミング言語では、メタプログラミングで遊べたり可視化が得意な Juliaを好んで使っています。 <br>他にも Python や
         C++を使う場面が多いです。 <br>フレームワークは PyTorch をよく使います。 <br><br>ただ、どのプログラミング言語・技術も適している場面があると思っているので、
@@ -371,6 +394,75 @@
             <li><a href="https://www.youtube.com/watch?v=YJRFD1AdaUE">櫻坂46</a>のファンです。</li>
         </ul>
     </section>
+
+    <canvas id="canvas"></canvas>
+    <div class="ball"></div>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const ball = document.querySelector('.ball');
+        const ballColor = 'lightblue';
+        const strokeColor = 'lightblue'
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let dx = 2; // ボールの移動量（x軸）
+        let dy = -2; // ボールの移動量（y軸）
+        const ballRadius = 10;
+        const gravity = 0.1; // 重力
+
+        let trajectory = [{ x, y }]; // 軌道の座標を保持する配列
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = ballColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawTrajectory() {
+            ctx.beginPath();
+            ctx.moveTo(trajectory[0].x, trajectory[0].y);
+            for (let i = 1; i < trajectory.length; i++) {
+                ctx.lineTo(trajectory[i].x, trajectory[i].y);
+            }
+            ctx.strokeStyle = strokeColor;
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawTrajectory();
+            drawBall();
+            dy += gravity; // 重力を適用
+            x += dx;
+            y += dy;
+            // 反発係数をたまにデカくする
+            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                dy = -dy * 0.9;
+            }
+
+            trajectory.push({ x, y }); // 現在の座標を軌道に追加
+            if (trajectory.length > 50) {
+                trajectory.shift(); // 最初の座標を削除して配列を短く保つ
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+
+    </script>
+
+
 </body>
 <footer>
     <p>© 2024 abap34</p>
