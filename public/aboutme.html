@@ -42,6 +42,7 @@
             margin-left: 100px;
             margin-right: 100px;
             padding: 20px;
+            padding-top: 0;
         }
 
 
@@ -106,14 +107,6 @@
             color: #0073b7;
         }
 
-        .header ul {
-            display: flex;
-            gap: 20px;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            justify-content: flex-end;
-        }
 
         footer {
             background-color: #0074b7b9;
@@ -349,6 +342,24 @@
             top: 0;
             left: 0;
         }
+
+        #top {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .header {
+            position: fixed;
+            background-color: white;
+            width: 100%;
+            padding: 0px;
+            margin: 0px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .container {
+            padding-top: 70px;
+        }
     </style>
 
 
@@ -358,43 +369,36 @@
 
 <body>
     <div class="header">
-        <h1>abap34.com</h1>
-        <nav>
-            <ul>
-                <div class="links">
-                    <li><a href="https://twitter.com/abap34" target="_blank" rel="noopener noreferrer"><i
-                                class="fab fa-twitter"></i></a></li>
-                    <li><a href="https://github.com/abap34" target="_blank" rel="noopener noreferrer"><i
-                                class="fab fa-github"></i></a></li>
-                </div>
-            </ul>
-        </nav>
+        <h1><a href="https://www.abap34.com/" id="top">abap34.com</a></h1>
     </div>
-    <h1>好きなこと </h1>
-    <section>計算機を使って、人間にできなかったようなことができるようになること、 <br>もしくは人間しかできなかったようなことが機械にできるようになることが好きです。
-        <br>それを実現する技術として、とくに機械学習に興味を持っています。 <br>
-    </section>
-    <h1>好きな技術 </h1>
-    <section>機械学習が主な興味の対象ですが、数学・コンピュータサイエンス全般が基本的に好きです。 <br>とくにコンパイラ・数理最適化・統計は好きです。 <br>また、 Kaggleなどのデータ分析コンペも好きです。
-        <br>普段はなかなか時間が取れないので短期コンによく参加しています。 <br>
-    </section>
-    <h1>好きなプログラミング言語・フレームワーク </h1>
-    <section id="about">自由で、遊べるものが好きです。 <br><br>プログラミング言語では、メタプログラミングで遊べたり可視化が得意な Juliaを好んで使っています。 <br>他にも Python や
-        C++を使う場面が多いです。 <br>フレームワークは PyTorch をよく使います。 <br><br>ただ、どのプログラミング言語・技術も適している場面があると思っているので、
-        <br>使う言語やライブラリにはあまりこだわりはなく、必要ならその場で使う勉強して使うタイプです。 <img src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=6&count_private=true&layout=compact&disable_animations=true
+
+    <div class="container">
+        <h1>好きなこと </h1>
+        <section>計算機を使って、人間にできなかったようなことができるようになること、 <br>もしくは人間しかできなかったようなことが機械にできるようになることが好きです。
+            <br>それを実現する技術として、とくに機械学習に興味を持っています。 <br>
+        </section>
+        <h1>好きな技術 </h1>
+        <section>機械学習が主な興味の対象ですが、数学・コンピュータサイエンス全般が基本的に好きです。 <br>とくにコンパイラ・数理最適化・統計は好きです。 <br>また、 Kaggleなどのデータ分析コンペも好きです。
+            <br>普段はなかなか時間が取れないので短期コンによく参加しています。 <br>
+        </section>
+        <h1>好きなプログラミング言語・フレームワーク </h1>
+        <section id="about">自由で、遊べるものが好きです。 <br><br>プログラミング言語では、メタプログラミングで遊べたり可視化が得意な Juliaを好んで使っています。 <br>他にも Python や
+            C++を使う場面が多いです。 <br>フレームワークは PyTorch をよく使います。 <br><br>ただ、どのプログラミング言語・技術も適している場面があると思っているので、
+            <br>使う言語やライブラリにはあまりこだわりはなく、必要ならその場で使う勉強して使うタイプです。 <img src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=6&count_private=true&layout=compact&disable_animations=true
  " alt=" Top Langs" />
 
-    </section>
-    <h1>その他の話題になりそうなトピック </h1>
-    <section id="about">
-        <ul>
-            <li>愛知県出身です。</li>
-            <li>大学には、高校時代に参加したコンペの話と、開発していた深層学習フレームワークの研究の話をして、いわゆるAO入試で入学しました。</li>
-            <li>小学生のときから野球をしていました。今はもっぱら見るのがメインですが、東京ヤクルトスワローズの大ファンで、暇さえあれば大学から神宮球場に通っています。</li>
-            <li><a href="https://www.youtube.com/watch?v=YJRFD1AdaUE">櫻坂46</a>のファンです。</li>
-        </ul>
-    </section>
+        </section>
+        <h1>その他の話題になりそうなトピック </h1>
+        <section id="about">
+            <ul>
+                <li>愛知県出身です。</li>
+                <li>大学には、高校時代に参加したコンペの話と、開発していた深層学習フレームワークの研究の話をして、いわゆるAO入試で入学しました。</li>
+                <li>小学生のときから野球をしていました。今はもっぱら見るのがメインですが、東京ヤクルトスワローズの大ファンで、暇さえあれば大学から神宮球場に通っています。</li>
+                <li><a href="https://www.youtube.com/watch?v=YJRFD1AdaUE">櫻坂46</a>のファンです。</li>
+            </ul>
+        </section>
 
+    </div>
     <canvas id="canvas"></canvas>
     <div class="ball"></div>
     <script>
