@@ -2,7 +2,7 @@
 title: forkはバッファもコピーするのでフラッシュしておこう 
 author: abap34
 date: 2024/04/23
-tag: [Linux, OS, C]
+tag: [Unix, OS, C]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
