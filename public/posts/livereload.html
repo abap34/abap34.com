@@ -654,13 +654,13 @@ import yaml
 import livereload
 
 def info(message):
-    print(f"\033[32m{message}\033[0m")
+    print(f&quot;\033[32m{message}\033[0m&quot;)
 
 
 def get_free_port():
     for port in range(8000, 8100):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            if s.connect_ex(("localhost", port)) != 0:
+            if s.connect_ex((&quot;localhost&quot;, port)) != 0:
                 return port
 
 
@@ -670,11 +670,11 @@ class ALMOConfig():
         self.config = yaml.safe_load(open(config_path))
 
         self.args = {
-            'output': '-o',
-            'template': '-b',
-            'theme':  '-t',
-            'css': '-c',
-            'editor_theme': '-e',
+            &#39;output&#39;: &#39;-o&#39;,
+            &#39;template&#39;: &#39;-b&#39;,
+            &#39;theme&#39;:  &#39;-t&#39;,
+            &#39;css&#39;: &#39;-c&#39;,
+            &#39;editor_theme&#39;: &#39;-e&#39;,
         }
 
         self.validate()
@@ -682,7 +682,7 @@ class ALMOConfig():
     def validate(self):
         for key in self.config.keys():
             if key not in self.args.keys():
-                raise Exception(f"Invalid key: {key}")
+                raise Exception(f&quot;Invalid key: {key}&quot;)
 
     def add_config(self, key, value):
         self.config[key] = value
@@ -691,54 +691,54 @@ class ALMOConfig():
         return self.config[key]
             
     def command(self):
-        command = ["almo", self.target]
+        command = [&quot;almo&quot;, self.target]
         for key, value in self.config.items():
             command.append(self.args[key])
             command.append(value)
         
-        return " ".join(command)
+        return &quot; &quot;.join(command)
 
 
 def watch(target, config_path):
     config = ALMOConfig(target, config_path)
-    config.add_config("output", "_almo_output/index.html")
+    config.add_config(&quot;output&quot;, &quot;_almo_output/index.html&quot;)
     
-    os.makedirs("_almo_output/", exist_ok=True)
+    os.makedirs(&quot;_almo_output/&quot;, exist_ok=True)
     
     subprocess.run(config.command(), shell=True)
 
     port = get_free_port()
     server = livereload.Server()
     server.watch(target, livereload.shell(config.command(), shell=True))
-    server.serve(port=port, root="_almo_output/", host="localhost")
+    server.serve(port=port, root=&quot;_almo_output/&quot;, host=&quot;localhost&quot;)
 
 
 def main():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("target", help="Markdown file to be converted")
-    parser.add_argument("config", help="Configuration file")
+    parser.add_argument(&quot;target&quot;, help=&quot;Markdown file to be converted&quot;)
+    parser.add_argument(&quot;config&quot;, help=&quot;Configuration file&quot;)
 
     args = parser.parse_args()
 
     watch(args.target, args.config)
     
     
-if __name__ == '__main__':
+if __name__ == &#39;__main__&#39;:
     main()
 </code></pre> </div><br><br><span class="inline-code"> <code>setup.py</code> </span> を適当に書いて、コマンド一個で叩けるようにしておきます。<br><div class="code-block"> <pre><code class="language-python">from setuptools import setup, find_packages
 
 setup(
-    name='almo',
-    version='0.1',
+    name=&#39;almo&#39;,
+    version=&#39;0.1&#39;,
     packages=find_packages(),
     install_requires=[
-        'livereload',
-        'PyYAML'
+        &#39;livereload&#39;,
+        &#39;PyYAML&#39;
     ],
     entry_points={
-        'console_scripts': [
-            'almo-cli=almo_cli.almo_cli:main [cli]',
+        &#39;console_scripts&#39;: [
+            &#39;almo-cli=almo_cli.almo_cli:main [cli]&#39;,
         ],
     },
 )

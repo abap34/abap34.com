@@ -652,13 +652,13 @@ a {
 └── pkg
     └── grpc
 </code></pre> </div><br>で、<span class="inline-code"> <code>pred.proto</code> </span>はこんな感じです。<br><div class="code-block"> <pre><code class="language-proto">// proto3 で書く
-syntax = "proto3";
+syntax = &quot;proto3&quot;;
 
 // パッケージ名
 package prediction;
 
 // ここにGoの生成されたコードが置かれる
-option go_package = "pkg/grpc";
+option go_package = &quot;pkg/grpc&quot;;
 
 // Prediction というサービスは、Predict というメソッドを持って、PredictはRequestを受け取ってResponseを返す
 service Prediction {
@@ -714,7 +714,7 @@ class PredServicer(pred_pb2_grpc.PredictionServicer):
     def Predict(self, request, context):
         # == ここで推論する ==
         data_df = string_to_df(request.input_data)
-        pred = data_df['x'] + data_df['y']
+        pred = data_df[&#39;x&#39;] + data_df[&#39;y&#39;]
         pred_str = pred.to_csv(index=False)
         # ==================
         return pred_pb2.Response(result=pred_str)
@@ -723,12 +723,12 @@ def serve():
     port = 50051
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     pred_pb2_grpc.add_PredictionServicer_to_server(PredServicer(), server)
-    server.add_insecure_port('[::]:{}'.format(port))
+    server.add_insecure_port(&#39;[::]:{}&#39;.format(port))
     server.start()
-    print('start server, listening on port {}'.format(port))
+    print(&#39;start server, listening on port {}&#39;.format(port))
     server.wait_for_termination()
 
-if __name__ == '__main__':
+if __name__ == &#39;__main__&#39;:
     logging.basicConfig()
     serve()
 </code></pre> </div><br><script>page_contents.push({
@@ -740,23 +740,23 @@ if __name__ == '__main__':
 <h3 id="119">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
 
 import (
-	"context"
-	"log"
-	"net/http"
-	"io/ioutil"
+	&quot;context&quot;
+	&quot;log&quot;
+	&quot;net/http&quot;
+	&quot;io/ioutil&quot;
 
-	"github.com/gorilla/mux"
-	"google.golang.org/grpc"
-	predpb "mypred/pkg/grpc"
+	&quot;github.com/gorilla/mux&quot;
+	&quot;google.golang.org/grpc&quot;
+	predpb &quot;mypred/pkg/grpc&quot;
 	
 )
 
 func PredictHandler(w http.ResponseWriter, r *http.Request) {
 	// gRPCサーバーに接続
-	adress := "localhost:50051"
+	adress := &quot;localhost:50051&quot;
 	conn, err := grpc.Dial(adress, grpc.WithInsecure())
 	if err != nil {
-		log.Fatalf("Failed to connect: %v", err)
+		log.Fatalf(&quot;Failed to connect: %v&quot;, err)
 	}
 
 	defer conn.Close()
@@ -767,18 +767,18 @@ func PredictHandler(w http.ResponseWriter, r *http.Request) {
 	// リクエストボディを読み込む
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		log.Fatalf("Failed to read body: %v", err)
+		log.Fatalf(&quot;Failed to read body: %v&quot;, err)
 	}
 	
 	// リクエストを作成
-	req := &predpb.Request{
+	req := &amp;predpb.Request{
 		InputData: string(body),
 	}
 
 	// リクエストを送信
 	res, err := c.Predict(context.Background(), req)
 	if err != nil {
-		log.Fatalf("Failed to predict: %v", err)
+		log.Fatalf(&quot;Failed to predict: %v&quot;, err)
 	}
 
 	// レスポンスを返す
@@ -787,8 +787,8 @@ func PredictHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/predict", PredictHandler)
-	http.ListenAndServe(":8080", r)
+	r.HandleFunc(&quot;/predict&quot;, PredictHandler)
+	http.ListenAndServe(&quot;:8080&quot;, r)
 }
 </code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",

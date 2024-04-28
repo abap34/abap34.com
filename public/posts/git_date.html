@@ -647,9 +647,9 @@ a {
 <h2 id="24">Git の二つの Date</h2><br>Git でコミットするとコミット時刻を記録してくれますが、実は二つの時刻があります。<br>実例で見てみます。<br><br><div class="code-block"> <pre><code class="language-bash">❰yuchi❙~/Desktop❱✔≻ mkcd git-commit-date
 ❰yuchi❙~/Desktop/git-commit-date❱✔≻ git init .
 Initialized empty Git repository in /Users/yuchi/Desktop/git-commit-date/.git/
-❰yuchi❙~/Desktop/git-commit-date(gitmain)❱✔≻ date > first.txt
+❰yuchi❙~/Desktop/git-commit-date(gitmain)❱✔≻ date &gt; first.txt
 ❰yuchi❙~/Desktop/git-commit-date(gitmain)❱✔≻ git add first.txt
-❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "first-14:57"
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m &quot;first-14:57&quot;
 [main (root-commit) f2c73d7] first-14:57
  1 file changed, 1 insertion(+)
  create mode 100644 first.txt
@@ -663,7 +663,7 @@ Once you are satisfied with your changes, run
 
   git rebase --continue
 
-❰yuchi❙~/Desktop/git-commit-date❱✘≻ git commit --amend -m "edit: 16:16"
+❰yuchi❙~/Desktop/git-commit-date❱✘≻ git commit --amend -m &quot;edit: 16:16&quot;
 [detached HEAD 243ec47] edit: 16:16
  Date: Mon Apr 15 16:13:22 2024 +0900
  1 file changed, 1 insertion(+)
@@ -678,22 +678,22 @@ Compressing objects: 100% (2/2), done.
 Writing objects: 100% (3/3), 318 bytes | 318.00 KiB/s, done.
 Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
 To https://github.com/abap34/git-commit-date.git
-   f2c73d7..243ec47  main -> main
+   f2c73d7..243ec47  main -&gt; main
 </code></pre> </div><br><br><figure><img src="git_date/github-log.png" ><figcaption>大学でこの記事を書いてるせいか、大岡山の公文の広告が出ていてキモいですね。</figcaption></figure><br><br>と、こういう感じで <span class="inline-code"> <code>CommitDate</code> </span> が表示されます。つまり、<br><ul><li><span class="inline-code"> <code>AuthorDate</code> </span></li><ul><li>コミットが作られた時刻</li><li><span class="inline-code"> <code>git log</code> </span> で表示される</li></ul><li><span class="inline-code"> <code>CommitDate</code> </span></li><ul><li>コミットが最後に編集された時刻</li><li>GitHub で表示される</li></ul></ul><br>です。なんで <span class="inline-code"> <code>git log</code> </span> と GitHub で揃ってないんでしょうか。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"271",
     "title":"AuthorDate と CommitDate を揃える"
 });
 </script>
-<h2 id="271">AuthorDate と CommitDate を揃える</h2><br>さて、二つの時刻があるのはいいとして、これで困ることもあります。<br><br>最初にも書いたのですが、昔ペアプロで作ったコミットを自分名義だけでコミットしてしまったので、今更ながら Co-Author を追加したくなりました。<br><br>Co-Authorの追加 は Gitの機能ではなく GitHub の機能ですが、要はコミットメッセージに <span class="inline-code"> <code>Co-Authored-By: </code> </span> を追加するという作業です。<br><br>なので昔のコミットまで戻ってコミットメッセージを修正すればいいのですが、ここまでで分かるように普通に rebase してしまうと <span class="inline-code"> <code>CommitDate</code> </span> が変わってしまい、GitHub で表示される時刻が変わってしまいます。<br><br><span class="inline-code"> <code>AuthorDate</code> </span> は残ってますが、 GitHub上でコミット履歴を見たときに全部 rebase したときの時刻になっているのはちょっと嫌です。<br><br>そんな困った人のために実は rebase にオプションが用意されています。<br><br>説明のために何個かコミットを積みます。<br><div class="code-block"> <pre><code class="language-bash">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date > third.txt
+<h2 id="271">AuthorDate と CommitDate を揃える</h2><br>さて、二つの時刻があるのはいいとして、これで困ることもあります。<br><br>最初にも書いたのですが、昔ペアプロで作ったコミットを自分名義だけでコミットしてしまったので、今更ながら Co-Author を追加したくなりました。<br><br>Co-Authorの追加 は Gitの機能ではなく GitHub の機能ですが、要はコミットメッセージに <span class="inline-code"> <code>Co-Authored-By: </code> </span> を追加するという作業です。<br><br>なので昔のコミットまで戻ってコミットメッセージを修正すればいいのですが、ここまでで分かるように普通に rebase してしまうと <span class="inline-code"> <code>CommitDate</code> </span> が変わってしまい、GitHub で表示される時刻が変わってしまいます。<br><br><span class="inline-code"> <code>AuthorDate</code> </span> は残ってますが、 GitHub上でコミット履歴を見たときに全部 rebase したときの時刻になっているのはちょっと嫌です。<br><br>そんな困った人のために実は rebase にオプションが用意されています。<br><br>説明のために何個かコミットを積みます。<br><div class="code-block"> <pre><code class="language-bash">❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date &gt; third.txt
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git add .
-❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "third: 16:37"
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m &quot;third: 16:37&quot;
 [main 4bbedd6] third: 16:37
  1 file changed, 1 insertion(+)
  create mode 100644 third.txt
-❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date > fourth.txt
+❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ date &gt; fourth.txt
 ❰yuchi❙~/Desktop/git-commit-date(git:main)❱✔≻ git add .
-❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m "fourth: 16:38"
+❰yuchi❙~/Desktop/git-commit-date(git≠main)❱✔≻ git commit -m &quot;fourth: 16:38&quot;
 [main bfa019a] fourth: 16:38
  1 file changed, 1 insertion(+)
  create mode 100644 fourth.txt
@@ -706,7 +706,7 @@ You can amend the commit now, with
 Once you are satisfied with your changes, run
 
   git rebase --continue
-❰yuchi❙~/Desktop/git-commit-date❱✔≻ git commit --amend -m "edit: 16:51"
+❰yuchi❙~/Desktop/git-commit-date❱✔≻ git commit --amend -m &quot;edit: 16:51&quot;
 [detached HEAD 3c7157c] edit: 16:51
  Date: Mon Apr 15 16:37:11 2024 +0900
  1 file changed, 1 insertion(+)
