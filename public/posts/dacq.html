@@ -12,12 +12,12 @@
         gtag('config', 'G-10Y7GMS7GV');
     </script>
 
-    <title> 2023年度後期振り返り </title>
+    <title> mini Kaggle を streamlit で作った </title>
 
-    <meta property="og:title" content="2023年度後期振り返り">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/spitz-japanese/tofu.jpg">
-    <meta property="og:description" content="">
-    <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2023_1.html">
+    <meta property="og:title" content="mini Kaggle を streamlit で作った">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/terrier-lakeland/n02095570_1947.jpg">
+    <meta property="og:description" content="部内データ分析コンペ用の mini Kaggle を streamlit で作りました。">
+    <meta property="og:url" content="https://abap34.com/posts/dacq.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
@@ -612,7 +612,7 @@ a {
     <div class="article-header">
 
         <div class="title">
-            2023年度後期振り返り
+            mini Kaggle を streamlit で作った
         </div>
 
         <script>
@@ -621,11 +621,11 @@ a {
 
         <br>
         <div class="date">
-            2024/03/29
+            2024/05/12
         </div>
         <br>
         <div class="tag-placeholder">
-            [日記, 振り返り]
+            [日記, Python, streamlit, Kaggle]
         </div>
 
     </div>
@@ -635,70 +635,105 @@ a {
             <br><script>page_contents.push({
     "type":"H2",
     "id":"2",
-    "title":"2023年度後期の振り返り"
+    "title":"開発の経緯"
 });
 </script>
-<h2 id="2">2023年度後期の振り返り</h2><br>2023年度・学部2年生もほぼ終わりました。<br>とりあえず後期(10月~3月)の振り返りです。<br>前期の振り返りは　<url> <a href="https://www.abap34.com/posts/hurikaeri_2023_0.html">→ こちら</a> </url><br><script>page_contents.push({
-    "type":"H3",
-    "id":"23",
-    "title":"JuliaTokyo11"
-});
-</script>
-<h3 id="23">JuliaTokyo11</h3><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日の JuliaTokyo でのトーク、「Juliaで歩く自動微分」のスライドをアップしました！ <br>- DLフレームワークの中身が気になる方<br>- 何もかも勾配降下法で最適化したい方<br>- 低レイヤと機械学習の絡みが気になる方<br>はぜひ！！<a href="https://twitter.com/hashtag/juliatokyo?src=hash&amp;ref_src=twsrc%5Etfw">#juliatokyo</a><a href="https://t.co/XZ8ovEJvvs">https://t.co/XZ8ovEJvvs</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1753681336702009787?ref_src=twsrc%5Etfw">February 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>まずは JuliaTokyo #11 です。 30分トーク枠で自動微分について話しました。<br>いろんな方に反応貰えてれしかったですが、とくに Juliaコンパイラの中の人の <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。<br><br>Juilaの対面のイベントに参加するのは5年前、高校1年生の時のJuliaTokai以来でしたが懇親会でいろんな人に再会でき、海外の人とも話せて楽しかったです。(英語力の無さも痛感...)<br><br>最近は Juliaの日本語コミュニティが Discordで発足して割と動いていたり、コミュニティが活性化していてなんかいい感じです。<br>自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。<br><script>page_contents.push({
-    "type":"H3",
-    "id":"64",
-    "title":"atmaCut #16"
-});
-</script>
-<h3 id="64">atmaCut #16</h3><br><url> <a href="https://www.guruguru.science/competitions/22">atmaCup #16 in collaboration with RECRUIT</a> </url> に参加しました。<br>宿のレコメンドというタスクでしたが、ユーザの行動履歴が短く、めちゃくちゃむずかしかったです。<br>学生枠でなんとか入賞して表彰式に参加させていただいたんですが、懇親会とその後の飲み会でいろいろな人と話せて楽しかったです。<br><figure><img src="hurikaeri_2023_1/sushi.png" ><figcaption>懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました</figcaption></figure><br><script>page_contents.push({
-    "type":"H3",
-    "id":"93",
-    "title":"ALMO"
-});
-</script>
-<h3 id="93">ALMO</h3><br>結構ALMOの開発は進んでいます。このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。<br>リリースは 20回を超えて v0.7.0 まできました。 <url> <a href="https://github.com/abap34/ALMO/releases">https://github.com/abap34/ALMO/releases</a> </url><br><br>エコシステムも色々整備してます。例えば <url> <a href="https://github.com/abap34/ALMO-extension">https://github.com/abap34/ALMO-extension</a> </url> は VSCode でプレビューしてくれるやつです。便利。<br>他にも <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url> とかもあります。ぽちぽちでブログが作れるやつです。<br><figure><img src="https://github.com/abap34/ALMO-extension/raw/main/assets/almo-ext-demo.gif" ><figcaption>https://github.com/abap34/ALMO-extension によるプレビュー</figcaption></figure><br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"145",
-    "title":"abap34.com"
-});
-</script>
-<h3 id="145">abap34.com</h3><br>このサイト自体がずいぶんアップデートされて綺麗になりました。<br>ブログだけでも<br><ul><li>記事の検索機能</li><li>タグ機能</li><li>コメント機能</li><li>RSS</li></ul><br>などなどついて結構いい感じです。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"181",
-    "title":"Minia.jl"
-});
-</script>
-<h3 id="181">Minia.jl</h3><br>Juliaで書いた処理系です。<br>PEGで構文を書いて、JuiaのASTに変換して実行するみたいなやつです。 <br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg"></a><br><br>どちらかというと、付随して書いた <url> <a href="https://www.abap34.com/posts/mini-lang.html">3時間で作る自作言語のJuliaトランスパイラ</a> </url> の評判が良かったです。<br><script>page_contents.push({
-    "type":"H3",
-    "id":"208",
-    "title":"TinyPEG.jl"
-});
-</script>
-<h3 id="208">TinyPEG.jl</h3><br>Miniaのパーサは PEG.jl という既存のパーサジェネレータを使っているのですが、せっかくなので PEGパーサジェネレータを作りました。<br><a href="https://github.com/abap34/TinyPEG.jl"><img src="https://gh-card.dev/repos/abap34/TinyPEG.jl.svg"></a><br>これもブログ <url> <a href="https://www.abap34.com/posts/tinypeg.html">【週刊 PEGパーサジェネレータ を作ろう】</a> </url> にしました。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"230",
-    "title":"age++"
-});
-</script>
-<h3 id="230">age++</h3><br>ついに 20歳になりました。<br><br>いろんな人に祝ってもらいました。マジで恵まれてるなぁと言う感じです。<br>周りの全部の人に感謝してます。<br><figure><img src="hurikaeri_2023_1/20party.png" ><figcaption></figcaption></figure><br>ぜひ🍺誘ってください。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"261",
-    "title":"その他・大学など"
-});
-</script>
-<h3 id="261">その他・大学など</h3><ul><li>2回目の作問ハッカソンで作問をしました。 一回目は <url> <a href="https://yukicoder.me/problems/no/2438">†連続最適化な見た目の問題†</a> </url> を出したので、今回は <url> <a href="https://yukicoder.me/problems/10681">†離散最適化†な問題</a> </url> になりました。</li><li>最近スライドを作る機会が多かったので、いい感じのテンプレを作ったら QoL があがりました。 <a href="https://github.com/abap34/slide-template"><img src="https://gh-card.dev/repos/abap34/slide-template.svg"></a></li><li>大学では、ドイツ語のやる気が出ないことが確実視されたので、履修登録から抹消して代わりに3年次の文系教養の履修を済ませました。</li><ul><li>これで3年次はドイツ語にさえ集中すればいいわけですが、一年間やる気が出なかった科目に来年度やる気が出るかは不明です。</li></ul><li>全国医療AIコンテストに参加しました...とは言っても参加した頃には LBでかなり差が開いていて意気消沈状態でした。1subだけして撤退してしまったのですが、セグメンテーションのコンペはやったことなかったのと、monaiは初めて使ったのでこれに詳しくなれたのはとてもよかったです。</li><ul><li>コンペをやっていていい感じに NIfTIをプレビューするツールがなかったので試作したりしました。 速度をマシにしたら公開します。</li><li><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">医療AIコンやってて、NIfTI 画像をコマンドライン一発でプレビューできるツールでいい感じのがなかったのが不満でチャッと実装してみた<br>sixel と格闘してたものの全然うまくいかなかったので一旦 GUI版で... 便利！<br>(実際はロード時間が結構かかっているのでいい感じに爆速にして公開したい) <a href="https://t.co/Z6pqseeCll">pic.twitter.com/Z6pqseeCll</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1771371540514247088?ref_src=twsrc%5Etfw">March 23, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li></ul><li>大学で所属しているサークルで「Kaggle班」を立ち上げました。昨年度も色々やってきましたが、今年も面白いことができるよう運営を頑張ります。</li></ul><br><script>page_contents.push({
+<h2 id="2">開発の経緯</h2><br><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-<br>mlに興味がある人が多くてうれしい<br>運営がんばります‼️ <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1788718306008125491?ref_src=twsrc%5Etfw">May 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br><br>ギャグの人数がいるサークル用に、昨年部内コンペ用のプラットフォームを作ったのですが、Go言語でハリボテもいいところのコードを書いてしまったので、以前から綺麗にしたいと思っていました。<br>それに加えて、今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。流石にそれはまずいだろということで以前から気になっていた streamlit を使って作り直すことにしました。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"309",
-    "title":"2024年度の抱負"
+    "id":"29",
+    "title":"作ったもの"
 });
 </script>
-<h2 id="309">2024年度の抱負</h2><br>ついに学部3年生になります。<br>学部生も折り返しですが、一応卒業要件的なのは大丈夫そうでホッとしています。<br><br>目標は色々ありますが、<br><ul><li>Kaggle班運営を軌道に乗せる</li><li>OSS Contribution を積極的にやる</li></ul><br>あたりはやりたいところです。<br>あとはいろんなコミュニティで色々な人と交流したいです。<br>技術面での目標ですが、特に最近、コンピュータサイエンスがみんな面白くて、多分来年も同じ調子だと思うので、そのとき興味あることをちゃんとできればと思います。<br><br>とにかくプレイヤーでいたいです。<br>頑張ります。<br><br><br><script>page_contents.push({
+<h2 id="29">作ったもの</h2><br><br><figure><img src="posts/dacq/image.png" ><figcaption>完成したもの</figcaption></figure><br><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"45",
+    "title":"コンペ機能"
+});
+</script>
+<h3 id="45">コンペ機能</h3><br>まずメインのコンペの機能ですが、画面を見てもらうとわかるように<br><ul><li>順位表</li><li>submit</li><li>ルールの確認</li><li>スコアの推移の確認</li><li>チームの作成, 設定</li></ul><br>とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。<br><figure><img src="posts/dacq/image-1.png" ><figcaption>submit 画面</figcaption></figure><br>ベストスコアが出るとお祝いしてくれます。<br><figure><img src="posts/dacq/image-2.png" ><figcaption>ベストスコアの表示</figcaption></figure><br><br><figure><img src="posts/dacq/image-3.png" ><figcaption>ルールの表示</figcaption></figure><br><figure><img src="posts/dacq/image-4.png" ><figcaption>スコアの表示。各チームの public scoreのprogress が見れます。</figcaption></figure><br><figure><img src="posts/dacq/image-5.png" ><figcaption>チーム設定画面</figcaption></figure><br><br>デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"134",
+    "title":"ディスカッション機能"
+});
+</script>
+<h3 id="134">ディスカッション機能</h3><br>コンペを盛り上げるにはディスカッションが必須です。<br>なのでディスカッションのページも作りました。<br><figure><img src="posts/dacq/image-6.png" ><figcaption>ディスカッション画面</figcaption></figure><br><br>ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。<br><br><figure><img src="posts/dacq/image-8.png" ><figcaption>投稿画面</figcaption></figure><br><br><figure><img src="posts/dacq/image-7.png" ><figcaption>Jupyter Notebookがそのままディスカッションに</figcaption></figure><br>Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。<br>実装するとこんな感じです。<br><div class="code-block"> <pre><code class="language-python">def render_notebook(notebook: bytes):
+    notebook = nbformat.reads(notebook, as_version=4)
+    for cell in notebook.cells:
+        if cell.cell_type == &quot;code&quot;:
+            st.code(cell.source)
+            for output in cell.outputs:
+                if output.output_type == &quot;display_data&quot;:
+                    st.image(read_nbimage(output.data[&quot;image/png&quot;]))
+                elif output.output_type == &quot;execute_result&quot;:
+                    if &quot;text/html&quot; in output.data:
+                        render_html_out(output.data[&quot;text/html&quot;])
+                    else:
+                        st.write(output.data[&quot;text/plain&quot;])
+                elif output.output_type == &quot;stream&quot;:
+                    st.write(output.text)
+                elif output.output_type == &quot;error&quot;:
+                    st.error(output.ename)
+                    st.error(output.evalue)
+                elif output.output_type == &quot;dataframe&quot;:
+                    st.dataframe(output.data[&quot;text/plain&quot;])
+        elif cell.cell_type == &quot;markdown&quot;:
+            st.markdown(cell.source)
+</code></pre> </div><br>便利ですね〜<br><script>page_contents.push({
     "type":"H2",
-    "id":"366",
+    "id":"192",
+    "title":"開発記録"
+});
+</script>
+<h2 id="192">開発記録</h2><br>こういうのはガッと作るのがいいので、土曜の深夜から作り始めて、一旦寝て日曜に集中して作業して終わらせました。<br>wakatime で見てみると大体9時間くらいの作業時間でした。<br><figure><img src="posts/dacq/image-9.png" ><figcaption></figcaption></figure><br>streamlit 使ったらすぐ終わるやろ！　という方向性の想定よりは少しかかりましたが、とはいえこれくらい綺麗な見た目のものがこの短時間でできるのはすごいですよね！ streamlit ほんとにすごいと思いました。<br><br>YAMLを 1時間もかかっているのは、 mariadb の healthcheck をするときに <span class="inline-code"> <code>mysqladmin</code> </span> で <span class="inline-code"> <code>ping</code> </span> する方法がなぜか一向にうまくいかずにガチャガチャやっていたせいです。<br><br>結局、 mariadb のイメージに最近つくようになった <span class="inline-code"> <code>healthcheck.sh</code> </span> を使う方法でうまくいきました。<br><br><div class="code-block"> <pre><code class="language-yaml">version: &#39;3&#39;
+
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - &quot;3306:3306&quot;
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: app_db
+      TZ: Asia/Tokyo
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          &quot;CMD&quot;,
+          &quot;healthcheck.sh&quot;,
+          &quot;--su-mysql&quot;,
+          &quot;--connect&quot;,
+          &quot;--innodb_initialized&quot;
+        ]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build: ./backend
+    ports:
+      - &quot;5001:5001&quot;
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+volumes:
+  mariadb_data:
+</code></pre> </div><br>また、SQL はそんなに得意ではないので消耗しそうだな〜と思っていたのですが、GitHub Copilot を使ってみると ほとんど一発で所望のクエリを書いてくれてめちゃくちゃ効率がアップしました。<br>(一方で streamlit は更新が早いのであまりろくなコードをサジェストしてくれませんでしたが、まぁしゃーなしですね)<br><br>また、全てを Pythonで書いているのと、大した量のデータを扱っていないので、結構な部分でデータを全て DataFrame にしてしまって、pandas 芸人力を遺憾無く発揮して実装を済ませました。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"264",
+    "title":"感想"
+});
+</script>
+<h2 id="264">感想</h2><br>綺麗な見た目の Webサービスが作れてうれしい 😊<br><br>これでコンペが盛り上がるといいな〜<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"279",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="366">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/7xx66mR_HeE?si=U0YEvzeB4kqud4OK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+<h2 id="279">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/mwfgMm2RGNk?si=00Oh44vU7f2shXU2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
 
             <hr>
 
