@@ -644,19 +644,19 @@ a {
     "title":"作ったもの"
 });
 </script>
-<h2 id="29">作ったもの</h2><br><br><figure><img src="posts/dacq/image.png" ><figcaption>完成したもの</figcaption></figure><br><br><br><script>page_contents.push({
+<h2 id="29">作ったもの</h2><br><br><figure><img src="dacq/image.png" ><figcaption>完成したもの</figcaption></figure><br><br><br><script>page_contents.push({
     "type":"H3",
     "id":"45",
     "title":"コンペ機能"
 });
 </script>
-<h3 id="45">コンペ機能</h3><br>まずメインのコンペの機能ですが、画面を見てもらうとわかるように<br><ul><li>順位表</li><li>submit</li><li>ルールの確認</li><li>スコアの推移の確認</li><li>チームの作成, 設定</li></ul><br>とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。<br><figure><img src="posts/dacq/image-1.png" ><figcaption>submit 画面</figcaption></figure><br>ベストスコアが出るとお祝いしてくれます。<br><figure><img src="posts/dacq/image-2.png" ><figcaption>ベストスコアの表示</figcaption></figure><br><br><figure><img src="posts/dacq/image-3.png" ><figcaption>ルールの表示</figcaption></figure><br><figure><img src="posts/dacq/image-4.png" ><figcaption>スコアの表示。各チームの public scoreのprogress が見れます。</figcaption></figure><br><figure><img src="posts/dacq/image-5.png" ><figcaption>チーム設定画面</figcaption></figure><br><br>デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！<br><br><script>page_contents.push({
+<h3 id="45">コンペ機能</h3><br>まずメインのコンペの機能ですが、画面を見てもらうとわかるように<br><ul><li>順位表</li><li>submit</li><li>ルールの確認</li><li>スコアの推移の確認</li><li>チームの作成, 設定</li></ul><br>とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。<br><figure><img src="dacq/image-1.png" ><figcaption>submit 画面</figcaption></figure><br>ベストスコアが出るとお祝いしてくれます。<br><figure><img src="dacq/image-2.png" ><figcaption>ベストスコアの表示</figcaption></figure><br><br><figure><img src="dacq/image-3.png" ><figcaption>ルールの表示</figcaption></figure><br><figure><img src="dacq/image-4.png" ><figcaption>スコアの表示。各チームの public scoreのprogress が見れます。</figcaption></figure><br><figure><img src="dacq/image-5.png" ><figcaption>チーム設定画面</figcaption></figure><br><br>デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！<br><br><script>page_contents.push({
     "type":"H3",
     "id":"134",
     "title":"ディスカッション機能"
 });
 </script>
-<h3 id="134">ディスカッション機能</h3><br>コンペを盛り上げるにはディスカッションが必須です。<br>なのでディスカッションのページも作りました。<br><figure><img src="posts/dacq/image-6.png" ><figcaption>ディスカッション画面</figcaption></figure><br><br>ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。<br><br><figure><img src="posts/dacq/image-8.png" ><figcaption>投稿画面</figcaption></figure><br><br><figure><img src="posts/dacq/image-7.png" ><figcaption>Jupyter Notebookがそのままディスカッションに</figcaption></figure><br>Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。<br>実装するとこんな感じです。<br><div class="code-block"> <pre><code class="language-python">def render_notebook(notebook: bytes):
+<h3 id="134">ディスカッション機能</h3><br>コンペを盛り上げるにはディスカッションが必須です。<br>なのでディスカッションのページも作りました。<br><figure><img src="dacq/image-6.png" ><figcaption>ディスカッション画面</figcaption></figure><br><br>ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。<br><br><figure><img src="dacq/image-8.png" ><figcaption>投稿画面</figcaption></figure><br><br><figure><img src="dacq/image-7.png" ><figcaption>Jupyter Notebookがそのままディスカッションに</figcaption></figure><br>Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。<br>実装するとこんな感じです。<br><div class="code-block"> <pre><code class="language-python">def render_notebook(notebook: bytes):
     notebook = nbformat.reads(notebook, as_version=4)
     for cell in notebook.cells:
         if cell.cell_type == &quot;code&quot;:
@@ -684,7 +684,7 @@ a {
     "title":"開発記録"
 });
 </script>
-<h2 id="192">開発記録</h2><br>こういうのはガッと作るのがいいので、土曜の深夜から作り始めて、一旦寝て日曜に集中して作業して終わらせました。<br>wakatime で見てみると大体9時間くらいの作業時間でした。<br><figure><img src="posts/dacq/image-9.png" ><figcaption></figcaption></figure><br>streamlit 使ったらすぐ終わるやろ！　という方向性の想定よりは少しかかりましたが、とはいえこれくらい綺麗な見た目のものがこの短時間でできるのはすごいですよね！ streamlit ほんとにすごいと思いました。<br><br>YAMLを 1時間もかかっているのは、 mariadb の healthcheck をするときに <span class="inline-code"> <code>mysqladmin</code> </span> で <span class="inline-code"> <code>ping</code> </span> する方法がなぜか一向にうまくいかずにガチャガチャやっていたせいです。<br><br>結局、 mariadb のイメージに最近つくようになった <span class="inline-code"> <code>healthcheck.sh</code> </span> を使う方法でうまくいきました。<br><br><div class="code-block"> <pre><code class="language-yaml">version: &#39;3&#39;
+<h2 id="192">開発記録</h2><br>こういうのはガッと作るのがいいので、土曜の深夜から作り始めて、一旦寝て日曜に集中して作業して終わらせました。<br>wakatime で見てみると大体9時間くらいの作業時間でした。<br><figure><img src="dacq/image-9.png" ><figcaption></figcaption></figure><br>streamlit 使ったらすぐ終わるやろ！　という方向性の想定よりは少しかかりましたが、とはいえこれくらい綺麗な見た目のものがこの短時間でできるのはすごいですよね！ streamlit ほんとにすごいと思いました。<br><br>YAMLを 1時間もかかっているのは、 mariadb の healthcheck をするときに <span class="inline-code"> <code>mysqladmin</code> </span> で <span class="inline-code"> <code>ping</code> </span> する方法がなぜか一向にうまくいかずにガチャガチャやっていたせいです。<br><br>結局、 mariadb のイメージに最近つくようになった <span class="inline-code"> <code>healthcheck.sh</code> </span> を使う方法でうまくいきました。<br><br><div class="code-block"> <pre><code class="language-yaml">version: &#39;3&#39;
 
 services:
   mariadb:
