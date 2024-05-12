@@ -30,7 +30,7 @@ twitter_site: @abap34
 ## 作ったもの
 
 
-![完成したもの](posts/dacq/image.png)
+![完成したもの](dacq/image.png)
 
 
 
@@ -47,18 +47,18 @@ twitter_site: @abap34
 
 とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。
 
-![submit 画面](posts/dacq/image-1.png)
+![submit 画面](dacq/image-1.png)
 
 ベストスコアが出るとお祝いしてくれます。
 
-![ベストスコアの表示](posts/dacq/image-2.png)
+![ベストスコアの表示](dacq/image-2.png)
 
 
-![ルールの表示](posts/dacq/image-3.png)
+![ルールの表示](dacq/image-3.png)
 
-![スコアの表示。各チームの public scoreのprogress が見れます。](posts/dacq/image-4.png)
+![スコアの表示。各チームの public scoreのprogress が見れます。](dacq/image-4.png)
 
-![チーム設定画面](posts/dacq/image-5.png)
+![チーム設定画面](dacq/image-5.png)
 
 
 デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！
@@ -70,16 +70,16 @@ twitter_site: @abap34
 
 なのでディスカッションのページも作りました。
 
-![ディスカッション画面](posts/dacq/image-6.png)
+![ディスカッション画面](dacq/image-6.png)
 
 
 ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。
 
 
-![投稿画面](posts/dacq/image-8.png)
+![投稿画面](dacq/image-8.png)
 
 
-![Jupyter Notebookがそのままディスカッションに](posts/dacq/image-7.png)
+![Jupyter Notebookがそのままディスカッションに](dacq/image-7.png)
 
 Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。
 
@@ -118,7 +118,7 @@ def render_notebook(notebook: bytes):
 
 wakatime で見てみると大体9時間くらいの作業時間でした。
 
-![](posts/dacq/image-9.png)
+![](dacq/image-9.png)
 
 streamlit 使ったらすぐ終わるやろ！　という方向性の想定よりは少しかかりましたが、
 とはいえこれくらい綺麗な見た目のものがこの短時間でできるのはすごいですよね！ streamlit ほんとにすごいと思いました。
