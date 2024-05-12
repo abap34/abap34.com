@@ -656,7 +656,7 @@ COPY . .
 
 RUN bash build.sh
 
-ENTRYPOINT [ "./docker-entrypoint.sh" ]
+ENTRYPOINT [ &quot;./docker-entrypoint.sh&quot; ]
 </code></pre> </div><br><url> <a href="https://hub.docker.com/">Docker Hub</a> </url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"> <code>DOCKERHUB_USERNAME</code> </span> と <span class="inline-code"> <code>DOCKERHUB_TOKEN</code> </span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"> <pre><code class="language-yaml">name: Build and push Docker image
 
 on:

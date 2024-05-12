@@ -651,7 +651,7 @@ end
 function is_timeout(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
-    return elapsed_time >= x.timeout
+    return elapsed_time &gt;= x.timeout
 end
 
  

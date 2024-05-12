@@ -641,12 +641,12 @@ a {
 <h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="language-bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
-    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.md' || true)
-    echo "changed_files=$changed_files" >> $GITHUB_OUTPUT
-    if [[ -z "$changed_files" ]]; then
-      echo "No changes in MD files. Skipping build."
+    changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep &#39;\.md&#39; || true)
+    echo &quot;changed_files=$changed_files&quot; &gt;&gt; $GITHUB_OUTPUT
+    if [[ -z &quot;$changed_files&quot; ]]; then
+      echo &quot;No changes in MD files. Skipping build.&quot;
     else
-      echo "Change: $changed_files"
+      echo &quot;Change: $changed_files&quot;
     fi
 </code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは<span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。 <br><br>全然原因がわからず、<span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br> <figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
     "type":"H2",

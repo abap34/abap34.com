@@ -638,23 +638,23 @@ a {
     "title":"fork関数の挙動"
 });
 </script>
-<h2 id="2">fork関数の挙動</h2><br>C言語では <span class="inline-code"> <code>fork</code> </span> 関数を使って <span class="inline-code"> <code>fork(2)</code> </span> システムコールを呼び出すことができます。<br><div class="code-block"> <pre><code class="language-c">#include <stdio.h>
-#include <unistd.h>
+<h2 id="2">fork関数の挙動</h2><br>C言語では <span class="inline-code"> <code>fork</code> </span> 関数を使って <span class="inline-code"> <code>fork(2)</code> </span> システムコールを呼び出すことができます。<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
 
 int main(void) {
     pid_t pid = fork();
     if (pid == 0) {
-        printf("Hello from child process\n");
+        printf(&quot;Hello from child process\n&quot;);
     } else {
-        printf("Hello from parent process\n");
+        printf(&quot;Hello from parent process\n&quot;);
     }
 }
 </code></pre> </div><br><div class="code-block"> <pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork
 ❰yuchi❙~/Desktop/sysprog❱✔≻ ./fork
 Hello from parent process
 Hello from child process
-</code></pre> </div><br>こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。<br><br>ところで、 <span class="inline-code"> <code>fork</code> </span> したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。<br><div class="code-block"> <pre><code class="language-c">#include <stdio.h>
-#include <unistd.h>
+</code></pre> </div><br>こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。<br><br>ところで、 <span class="inline-code"> <code>fork</code> </span> したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
 
 int main(void) {
     pid_t pid = fork();
@@ -662,30 +662,30 @@ int main(void) {
     int x = 123;
 
     if (pid == 0) {
-        printf("Hello from child process! btw x = %d\n", x);
+        printf(&quot;Hello from child process! btw x = %d\n&quot;, x);
     } else {
-        printf("Hello from parent process! btw x = %d\n", x);
+        printf(&quot;Hello from parent process! btw x = %d\n&quot;, x);
     }
 }
 </code></pre> </div><br><div class="code-block"> <pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✘≻ gcc fork.c -o fork
 ❰yuchi❙~/Desktop/sysprog❱✔≻ ./fork
 Hello from parent process! btw x = 123
 Hello from child process! btw x = 123
-</code></pre> </div><br><br>では次のコードはどうなるでしょうか<br><div class="code-block"> <pre><code class="language-c">#include <stdio.h>
-#include <unistd.h>
+</code></pre> </div><br><br>では次のコードはどうなるでしょうか<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
 
 int main(void) {
-    for (size_t i = 0; i < 3; i++)
+    for (size_t i = 0; i &lt; 3; i++)
     {
-        printf("hoge");
+        printf(&quot;hoge&quot;);
     }
     
     pid_t pid = fork();
 
     if (pid == 0) {
-        printf("Hello from child %d!\n", getpid());
+        printf(&quot;Hello from child %d!\n&quot;, getpid());
     } else {
-        printf("Hello from parent %d!\n", getpid());
+        printf(&quot;Hello from parent %d!\n&quot;, getpid());
     }
 }
 </code></pre> </div><br>これの出力はこうなります。<div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork

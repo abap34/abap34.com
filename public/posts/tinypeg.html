@@ -674,7 +674,7 @@ a {
     "title":"PEG vs CFG"
 });
 </script>
-<h3 id="262">PEG vs CFG</h3><br>さて、となると気になるのは PEGです。<br>直感的には、文法の表現能力が高いほど解析も難しくなるのではないかという気になるので、PEGの表現能力について考えてみます。<br>まず、有名な話として <span class="math-inline"> \( L = \{ a^n b^n \mid n \geq 0 \} \) </span> は正規言語ではありません。<br>さらに、　<span class="math-inline"> \( L = \{ a^n b^n c^n \mid n \geq 0 \} \) </span> まで行くと文脈自由言語でもありません。<br>そこでこれを PEG で表現できるかを考えてみると、PEG では以下のようにすると <span class="math-inline"> \( L \) </span> が表現できます。<br><div class="code-block"> <pre><code class="language-plaintext">S = &(A !b) a + B
+<h3 id="262">PEG vs CFG</h3><br>さて、となると気になるのは PEGです。<br>直感的には、文法の表現能力が高いほど解析も難しくなるのではないかという気になるので、PEGの表現能力について考えてみます。<br>まず、有名な話として <span class="math-inline"> \( L = \{ a^n b^n \mid n \geq 0 \} \) </span> は正規言語ではありません。<br>さらに、　<span class="math-inline"> \( L = \{ a^n b^n c^n \mid n \geq 0 \} \) </span> まで行くと文脈自由言語でもありません。<br>そこでこれを PEG で表現できるかを考えてみると、PEG では以下のようにすると <span class="math-inline"> \( L \) </span> が表現できます。<br><div class="code-block"> <pre><code class="language-plaintext">S = &amp;(A !b) a + B
 A = a A? b
 B = b B? c
 </code></pre> </div><br>逆に文脈自由文法では表現できるが、PEGでは表現できないという言語が存在するかは未解決のようです。<br><br>まとめると、PEG は少なくとも文脈自由言語と同等あるいはそれ以上の表現能力を持っていると言えます。<br>したがって、直感的には PEGで書かれた言語の解析は難しそうな気がします。<br><script>page_contents.push({
@@ -727,10 +727,10 @@ end
 function watching(context::ParseContext)
     return SubString(context.input, context.pos, context.endpos)
 end
-</code></pre> </div><br>ここで、文字列のスライスは allocation が発生するので、これを避けるために <span class="inline-code"> <code>SubString</code> </span> を使います。<br><div class="code-block"> <pre><code class="language-julia">julia> S = randstring(10^6)
-"mx ⋯ 999175 bytes ⋯ EA"
+</code></pre> </div><br>ここで、文字列のスライスは allocation が発生するので、これを避けるために <span class="inline-code"> <code>SubString</code> </span> を使います。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; S = randstring(10^6)
+&quot;mx ⋯ 999175 bytes ⋯ EA&quot;
 
-julia> @benchmark S[100:10^6-100]
+julia&gt; @benchmark S[100:10^6-100]
 BenchmarkTools.Trial: 10000 samples with 1 evaluation.
  Range (min … max):  14.500 μs … 146.375 μs  ┊ GC (min … max): 0.00% … 0.00%
  Time  (median):     42.166 μs               ┊ GC (median):    0.00%
@@ -738,11 +738,11 @@ BenchmarkTools.Trial: 10000 samples with 1 evaluation.
 
   ▄▃                                ▆█▄▁▁▁ ▁▂▂▃▃▃▃▂▂▁          ▂
   █████▇▇███▅▁▃▃▁▁▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁███████████████████▇▇▇▆▇▆▇ █
-  14.5 μs       Histogram: log(frequency) by time      61.6 μs <
+  14.5 μs       Histogram: log(frequency) by time      61.6 μs &lt;
 
  Memory estimate: 976.50 KiB, allocs estimate: 1.
 
-julia> @benchmark SubString(S, 100, 10^6-100)
+julia&gt; @benchmark SubString(S, 100, 10^6-100)
 BenchmarkTools.Trial: 10000 samples with 893 evaluations.
  Range (min … max):  126.120 ns …  1.929 μs  ┊ GC (min … max): 0.00% … 0.00%
  Time  (median):     131.205 ns              ┊ GC (median):    0.00%
@@ -750,10 +750,10 @@ BenchmarkTools.Trial: 10000 samples with 893 evaluations.
 
    ▁▄▂     ▅█▆▄▃▁  ▃▄▃▁                                        ▁
   ▄███▇▅▃▄▄██████▇██████▇▇▇██▇██▆▆▆▆▆▆▅▇█▇█▇▇▇▇▇▅▅▅▅▅▅▅▄▄▄▅▃▄▃ █
-  126 ns        Histogram: log(frequency) by time       154 ns <
+  126 ns        Histogram: log(frequency) by time       154 ns &lt;
 
  Memory estimate: 32 bytes, allocs estimate: 1.
-</code></pre> </div><br>ので、パースコンテクストは入力文字列だけ持って、 <span class="inline-code"> <code>SubString</code> </span> を返すようにしておきます。<br><br><span class="inline-code"> <code>startswith</code> </span> とかはもちろん <span class="inline-code"> <code>AbstractString</code> </span> なら使えるので、これで色々実装していきます。<br>例えば <span class="inline-code"> <code>PStr</code> </span> :<br><div class="code-block"> <pre><code class="language-julia">struct PStr <: TerminalExpression
+</code></pre> </div><br>ので、パースコンテクストは入力文字列だけ持って、 <span class="inline-code"> <code>SubString</code> </span> を返すようにしておきます。<br><br><span class="inline-code"> <code>startswith</code> </span> とかはもちろん <span class="inline-code"> <code>AbstractString</code> </span> なら使えるので、これで色々実装していきます。<br>例えば <span class="inline-code"> <code>PStr</code> </span> :<br><div class="code-block"> <pre><code class="language-julia">struct PStr &lt;: TerminalExpression
     text::String
 end
 
@@ -765,11 +765,11 @@ function match(expr::PStr, context::ParseContext)
         return MatchResult(false, nothing, context.pos, context.pos)
     end
 end
-</code></pre> </div><br><span class="inline-code"> <code>PAny</code> </span>:<br><div class="code-block"> <pre><code class="language-julia">struct PAny <: TerminalExpression end
+</code></pre> </div><br><span class="inline-code"> <code>PAny</code> </span>:<br><div class="code-block"> <pre><code class="language-julia">struct PAny &lt;: TerminalExpression end
 
 
 function match(::PAny, context::ParseContext)
-    if context.pos <= context.endpos
+    if context.pos &lt;= context.endpos
         newpos = context.pos + 1
         return MatchResult(true, watching(context)[1], newpos, newpos)
     else

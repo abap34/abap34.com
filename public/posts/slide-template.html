@@ -725,56 +725,56 @@ MARPRC_FILE = .marprc.yml
 all: clean preprocess pdf html pptx
 
 preprocess: $(OUTPUT_FILE)
-	@echo "Preprocessing..."
+	@echo &quot;Preprocessing...&quot;
 	
 $(OUTPUT_FILE): $(SRC_FILES)
 	@mkdir -p $(BUILD_DIR)
-	@echo "Clone theme..."
+	@echo &quot;Clone theme...&quot;
 	@git clone $(THEME_REPO)
 	@mv $(THEME_NAME) $(BUILD_DIR)
-	@echo "Creating slide file..."
-	@echo "N_SECTION = $(words $(SRC_FILES))"
+	@echo &quot;Creating slide file...&quot;
+	@echo &quot;N_SECTION = $(words $(SRC_FILES))&quot;
 
 	@cp -r $(SRC_DIR)/* $(BUILD_DIR)/
 
-	@echo "HEADER_FILE = $(HEADER_FILE)"
-	@cat $(HEADER_FILE) > $(OUTPUT_FILE)
+	@echo &quot;HEADER_FILE = $(HEADER_FILE)&quot;
+	@cat $(HEADER_FILE) &gt; $(OUTPUT_FILE)
 	
 	@for file in $(REST_FILES); do \
-		echo "### section: $file"; \
-		awk 'BEGIN { found = 0; } { if (found >= 2) print; if ($0 == "---") found++; }' $file >> $(OUTPUT_FILE); \
+		echo &quot;### section: $file&quot;; \
+		awk &#39;BEGIN { found = 0; } { if (found &gt;= 2) print; if ($0 == &quot;---&quot;) found++; }&#39; $file &gt;&gt; $(OUTPUT_FILE); \
 	done
 
 pdf: preprocess
-	@echo "Creating PDF..."
+	@echo &quot;Creating PDF...&quot;
 	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pdf
 
 html: preprocess
-	@echo "Creating HTML..."
+	@echo &quot;Creating HTML...&quot;
 	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.html
 
 pptx: preprocess
-	@echo "Creating PPTX..."
+	@echo &quot;Creating PPTX...&quot;
 	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --output $(BUILD_DIR)/slide.pptx
 
 
 preview: clean preprocess
-	@echo "Creating preview..."
+	@echo &quot;Creating preview...&quot;
 	@marp $(OUTPUT_FILE) --config-file $(MARPRC_FILE) --preview
 
 
 clean:
-	@echo "Cleaning up..."
+	@echo &quot;Cleaning up...&quot;
 	@rm -rf $(BUILD_DIR)
 	@rm -rf honwaka-theme
 
 .PHONY: all preprocess pdf html preview clean
-</code></pre> </div><br><br>本質パートはここです。<br><div class="code-block"> <pre><code class="language-Makefile">@echo "HEADER_FILE = $(HEADER_FILE)"
-@cat $(HEADER_FILE) > $(OUTPUT_FILE)
+</code></pre> </div><br><br>本質パートはここです。<br><div class="code-block"> <pre><code class="language-Makefile">@echo &quot;HEADER_FILE = $(HEADER_FILE)&quot;
+@cat $(HEADER_FILE) &gt; $(OUTPUT_FILE)
 
 @for file in $(REST_FILES); do \
-    echo "### section: $file"; \
-    awk 'BEGIN { found = 0; } { if (found >= 2) print; if ($0 == "---") found++; }' $file >> $(OUTPUT_FILE); \
+    echo &quot;### section: $file&quot;; \
+    awk &#39;BEGIN { found = 0; } { if (found &gt;= 2) print; if ($0 == &quot;---&quot;) found++; }&#39; $file &gt;&gt; $(OUTPUT_FILE); \
 done
 </code></pre> </div><br>Marpでは YAML Front Matter で設定を行うことができます.<br>これがないと VSCode でプレビューができないので、それぞれのファイルで先頭にこれを書く必要がありますが、結合するときに不都合です。<br><br>なのでちゃっと <span class="inline-code"> <code>awk</code> </span> で二つ目の <span class="inline-code"> <code>---</code> </span> までを削除することでいい感じに結合できます。<br><script>page_contents.push({
     "type":"H2",
