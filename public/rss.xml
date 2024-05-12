@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>mini Kaggle を streamlit で作った</id>
+<title>mini Kaggle を streamlit で作った</title>
+<link>https://abap34.com/posts/dacq.html</link>
+<pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>forkはバッファもコピーするのでフラッシュしておこう </id>
 <title>forkはバッファもコピーするのでフラッシュしておこう </title>
 <link>https://abap34.com/posts/fork_buffer.html</link>
