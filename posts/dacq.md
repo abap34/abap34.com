@@ -6,7 +6,7 @@ tag: [日記, Python, streamlit, Kaggle]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://abap34.com/dacq/image.png
+ogp_url: https://www.abap34.com/posts/dacq/image.png
 description: 部内データ分析コンペ用の mini Kaggle を streamlit で作りました。
 url: https://abap34.com/posts/dacq.html
 site_name: abap34's blog
