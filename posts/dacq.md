@@ -16,24 +16,21 @@ twitter_site: @abap34
 ## 開発の経緯
 
 
+ギャグの人数がいるサークル用に、昨年部内コンペ用のプラットフォームを運営しています。
+
+今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
+
+- 評価指標が全然使えない
+  - 評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。
+- 引き継ぎがやばそう
+  - 今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
+
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-<br>mlに興味がある人が多くてうれしい<br>運営がんばります‼️ <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1788718306008125491?ref_src=twsrc%5Etfw">May 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
-
-ギャグの人数がいるサークル用に、昨年部内コンペ用のプラットフォームを作ったのですが、Go言語でハリボテもいいところのコードを書いてしまったので、
-以前から綺麗にしたいと思っていました。
-
-それに加えて、今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。
-流石にそれはまずいだろということで以前から気になっていた streamlit を使って作り直すことにしました。
-
+というわけで以前から気になっていた streamlit を使って作り直すことにしました。
 
 ## 作ったもの
-
-
 ![完成したもの](dacq/image.png)
-
-
-
 ### コンペ機能
 
 まずメインのコンペの機能ですが、
@@ -48,21 +45,14 @@ twitter_site: @abap34
 とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。
 
 ![submit 画面](dacq/image-1.png)
-
 ベストスコアが出るとお祝いしてくれます。
 
 ![ベストスコアの表示](dacq/image-2.png)
-
-
 ![ルールの表示](dacq/image-3.png)
-
 ![スコアの表示。各チームの public scoreのprogress が見れます。](dacq/image-4.png)
-
 ![チーム設定画面](dacq/image-5.png)
 
-
 デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！
-
 
 ### ディスカッション機能
 
@@ -72,13 +62,10 @@ twitter_site: @abap34
 
 ![ディスカッション画面](dacq/image-6.png)
 
-
 ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。
 
 
 ![投稿画面](dacq/image-8.png)
-
-
 ![Jupyter Notebookがそのままディスカッションに](dacq/image-7.png)
 
 Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。
