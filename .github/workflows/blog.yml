@@ -42,8 +42,6 @@ jobs:
 
       - name: Setup g++13
         run: |
-          sudo add-apt-repository universe  
-          sudo apt-get update
           sudo apt-get -y install gcc-13
 
       - name: Make g++13 default
