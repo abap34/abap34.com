@@ -11,7 +11,6 @@ CONFIG_CORRESPONDING = {
     "template": "-b"
 }
 
-
 def load_json(path: pathlib.Path):
     with open(path, 'r') as f:
         return json.load(f)
