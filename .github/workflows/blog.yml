@@ -46,6 +46,10 @@ jobs:
           sudo apt-get update
           sudo apt-get -y install gcc-13
 
+      - name: Check g++ version
+        run: |
+          g++ --version
+
       - name: Compile almo.cpp
         run: |
           cd ALMO
