@@ -39,6 +39,13 @@ jobs:
         run: |
             git submodule update --init --recursive --remote 
 
+
+      - name: Setup g++14
+        run: |
+          sudo add-apt-repository universe  
+          sudo apt-get update
+          sudo apt-get install gcc-14
+
       - name: Compile almo.cpp
         run: |
           cd ALMO
