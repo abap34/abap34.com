@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -44,7 +44,7 @@ jobs:
         run: |
           sudo add-apt-repository universe  
           sudo apt-get update
-          sudo apt-get install gcc-14
+          sudo apt-get -y install gcc-14
 
       - name: Compile almo.cpp
         run: |
