@@ -108,6 +108,12 @@ PYBIND11_MODULE(example, m) {
 
 コンパイルしてみます。
 
+`python3 -m pybind11 --includes` で、pybind11 のインクルードパスが取得できるので、これを渡してやってコンパイルします。
+
+
+Apple Silicon だと `-undefined dynamic_lookup` というオプションをつけないとエラーが出るので注意してください。
+
+
 ```bash
 g++ \
  -O3 -shared -std=c++23 -undefined dynamic_lookup \
@@ -127,7 +133,6 @@ $1 + 2$ が計算されてます！
 無事に Python から C++ の関数を呼び出すことができました！　革命ですね 
 
 
-Apple Silicon だと `-undefined dynamic_lookup` というオプションをつけないとエラーが出るので注意してください。
 
 
 ## 実践編
@@ -154,3 +159,6 @@ Python から `almo.md_to_html` するだけで HTML が生成されるように
 
 
 
+![alt text](posts/pybind11/image.png)
+
+![alt text](pybind11/image.png)
