@@ -6,7 +6,7 @@ tag: [C++, Python, pybind11, 日記]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://images.dog.ceo/breeds/bulldog-french/n02108915_311.jpg
+ogp_url: https://abap34.com/posts/pybind/image.png
 description: pybind11 を使って C++の関数を .so にして Python から呼び出す方法を紹介します。
 url: https://abap34.com/posts/pybind11.html
 site_name: abap34's blog
@@ -157,8 +157,3 @@ Python から `almo.md_to_html` するだけで HTML が生成されるように
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/FEfJB32wvsk?si=JQzQdx6nhqMSXlw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-
-
-![alt text](posts/pybind11/image.png)
-
-![alt text](pybind11/image.png)
