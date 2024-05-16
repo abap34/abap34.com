@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -39,15 +39,17 @@ jobs:
         run: |
             git submodule update --init --recursive --remote 
 
+      - name: Check g++ version
+        run: |
+          g++ --version
+
 
       - name: Setup g++13
-        run: |
-          sudo apt-get -y install gcc-13
-
-      - name: Make g++13 default
-        run: |
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 100
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: 13
+          platform: x64
+    
 
       - name: Check g++ version
         run: |
