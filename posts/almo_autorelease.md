@@ -15,10 +15,7 @@ twitter_site: @abap34
 
 ## いろいろ大変リリース作業
 
-<a href="https://github.com/abap34/ALMO"><img src="https://gh-card.dev/repos/abap34/ALMO.svg"></a>
-
-
-を毎日たのしく開発しています。
+拡張 Markdownパーサ兼静的サイトジェネレータの [https://github.com/abap34/ALMO](https://github.com/abap34/ALMO)  を毎日たのしく開発しています。
 
 ところで、これは静的サイトジェネレータなので、いろんな人のブログなどに使ってもらうことを想定しています。
 
