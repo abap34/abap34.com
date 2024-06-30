@@ -666,37 +666,37 @@ a {
     "title":"技術スタック"
 });
 </script>
-<h2 id="29">技術スタック</h2><br><script>page_contents.push({
+<h2 id="29">技術スタック</h2><br><ul><li>フロントエンド: React (Vercel でホスティング) </li><li>バックエンド: FastAPI (家のサーバから ngrok でトンネリング)</li></ul><br><script>page_contents.push({
     "type":"H3",
-    "id":"32",
-    "title":"概要"
-});
-</script>
-<h3 id="32">概要</h3><br><ul><li>フロントエンド: React (Vercel でホスティング) </li><li>バックエンド: FastAPI (家のサーバから ngrok でトンネリング)</li></ul><br><script>page_contents.push({
-    "type":"H3",
-    "id":"41",
+    "id":"38",
     "title":"フロントエンドについて"
 });
 </script>
-<h3 id="41">フロントエンドについて</h3><br>React です。デザインのセンスまたは努力が足りていないので、Material-UI を甘んじて使っていますが、簡単に綺麗な見た目を作れて大感激です。<br><script>page_contents.push({
+<h3 id="38">フロントエンドについて</h3><br>React です。デザインのセンスまたは努力が足りていないので、Material-UI を甘んじて使っていますが、簡単に綺麗な見た目を作れて大感激です。<br><script>page_contents.push({
     "type":"H3",
-    "id":"46",
+    "id":"43",
     "title":"バックエンドについて"
 });
 </script>
-<h3 id="46">バックエンドについて</h3><br>FastAPI で書いています。 ジャッジは一旦ジョブを投げて待たせることが多いので非同期処理が多いです。 FastAPI だとその辺がかなり簡単にかけてすごいな〜と思いました。<br><br>また、性質上同時に大量に提出される場合があるので、適切にジョブをキューイングする必要があります。<br>幸いこの知識だけはあったので、 ジャッジのジョブはCelery と Redis を使ってキューイングして、適切な並列度で実行されるようになっています。 これによって大崩壊するほどの実行時間のブレを防ぐことができます。 (ちゃんとしたジャッジはもう少し真面目にやっていそうですが)<br>実際のコードの実行では、ユーザのコードをそのまま実行するわけにはいかないので、 Dockerを使ってサンドボックスを作り、その中で実行します。<br>コンテナランタイムの知識があまりないのでセキュリティに対して絶対の自信があるわけでは正直ないのですが、幸い Library Checker のジャッジシステムが公開されていて比較的読みやすかったので、 それを大いに参考にして実装した結果、ある程度典型的な攻撃は防げるようになりました。<br><a href="https://github.com/yosupo06/library-checker-judge"><img src="https://gh-card.dev/repos/yosupo06/library-checker-judge.svg"></a><br><br><script>page_contents.push({
+<h3 id="43">バックエンドについて</h3><br>FastAPI で書いています。 ジャッジは一旦ジョブを投げて待たせることが多いので非同期処理が多いです。 FastAPI だとその辺がかなり簡単にかけてすごいな〜と思いました。<br><br>また、性質上同時に大量に提出される場合があるので、適切にジョブをキューイングする必要があります。<br>幸いこの知識だけはあったので、 ジャッジのジョブはCelery と Redis を使ってキューイングして、適切な並列度で実行されるようになっています。 これによって大崩壊するほどの実行時間のブレを防ぐことができます。 (ちゃんとしたジャッジはもう少し真面目にやっていそうですが)<br>実際のコードの実行では、ユーザのコードをそのまま実行するわけにはいかないので、 Dockerを使ってサンドボックスを作り、その中で実行します。<br>コンテナランタイムの知識があまりないのでセキュリティに対して絶対の自信があるわけでは正直ないのですが、幸い Library Checker のジャッジシステムが公開されていて比較的読みやすかったので、 それを大いに参考にして実装した結果、ある程度典型的な攻撃は防げるようになりました。<br><a href="https://github.com/yosupo06/library-checker-judge"><img src="https://gh-card.dev/repos/yosupo06/library-checker-judge.svg"></a><br><script>page_contents.push({
+    "type":"H3",
+    "id":"59",
+    "title":"デプロイについて"
+});
+</script>
+<h3 id="59">デプロイについて</h3><br>フロントエンドは Vercel です。<br>APIサーバですが、家のサーバで立ち上げて ngrok でトンネリングしています。<br>稼働するのが高々2週間程度の予定なこと、ジャッジを高速にできるようにそれなりのスペックが欲しいこと、そして <span class="strong"> <strong>どこかに必ずバグを仕込んでいるので停止したとき素早くデータを救出できそうなこと</strong> </span> などを鑑みて ngrok を使ってみました。<br>感想としては、かなり良かったです。お手軽かつ安定していてログも見やすいですしかなり気に入っています。 今後も短期的にサービスを公開するときは使っていきたいと思いました。<br><script>page_contents.push({
     "type":"H2",
-    "id":"63",
+    "id":"73",
     "title":"最後に"
 });
 </script>
-<h2 id="63">最後に</h2><br>今は認証が traP に依存しているので、その辺を独立させて OSS にする予定です。<br><script>page_contents.push({
+<h2 id="73">最後に</h2><br>今は認証が traP に依存しているので、その辺を独立させて OSS にする予定です。<br><script>page_contents.push({
     "type":"H2",
-    "id":"68",
+    "id":"78",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="68">今日の一曲</h2><br>渋谷より東に進出できるようになりたい<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/KYvq8-xY1Gg?si=xbxsze8kJfULjrbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+<h2 id="78">今日の一曲</h2><br>渋谷より東に進出できるようになりたい<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/KYvq8-xY1Gg?si=xbxsze8kJfULjrbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
 
             <hr>
 
