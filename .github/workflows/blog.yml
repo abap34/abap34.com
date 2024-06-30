@@ -58,8 +58,10 @@ jobs:
       - name: Compile almo.cpp
         run: |
           SHELL=/bin/bash
-          cd almo
-          make build
+          cd ./almo
+          bash setup.sh
+          cd ./almo
+          g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
       - name: Checkout Repository
         uses: actions/checkout@v2
