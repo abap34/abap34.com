@@ -14,6 +14,14 @@
 </item>
 
 <item>
+<id>オンラインジャッジを作った. </id>
+<title>オンラインジャッジを作った. </title>
+<link>https://abap34.com/posts/oj_abap34.html</link>
+<pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</id>
 <title>pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</title>
 <link>https://abap34.com/posts/pybind11.html</link>
