@@ -1,3 +1,6 @@
 [submodule "ALMO"]
 	path = ALMO
 	url = https://github.com/abap34/ALMO.git
+[submodule "almo"]
+	path = almo
+	url = https://github.com/abap34/almo.git
