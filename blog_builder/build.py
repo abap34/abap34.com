@@ -41,7 +41,7 @@ def build_article(config: dict, article_path: pathlib.Path):
 
     subprocess.run("cp -r posts/{} public/posts/".format(article_path.stem), shell=True)
 
-    cmd = "ALMO/build/almo {} -o {} -d".format(article_path, outputpath)
+    cmd = "almo/build/almo {} -o {} -d".format(article_path, outputpath)
 
     for key, value in CONFIG_CORRESPONDING.items():
         if key in config:
