@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - 'github/workflows/blog.yml'
       - 'posts/**.md'
       - 'config/**'
       - 'assets/**'
@@ -60,7 +61,6 @@ jobs:
           SHELL=/bin/bash
           cd ./almo
           bash ./scripts/setup.sh
-          cd ./almo
           g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
       - name: Checkout Repository
@@ -83,6 +83,7 @@ jobs:
         uses: tj-actions/changed-files@v44
         with:
           files: |
+            .github/workflows/blog.yml
             config/**
             assets/**
             blog_builder/**
