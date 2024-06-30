@@ -57,6 +57,7 @@ jobs:
 
       - name: Compile almo.cpp
         run: |
+          SHELL=/bin/bash
           cd almo
           make build
 
