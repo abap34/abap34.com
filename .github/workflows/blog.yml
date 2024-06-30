@@ -61,6 +61,8 @@ jobs:
           SHELL=/bin/bash
           cd ./almo
           bash ./scripts/setup.sh
+          ls
+          pwd
           g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
       - name: Checkout Repository
