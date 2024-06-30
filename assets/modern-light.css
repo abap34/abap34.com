@@ -151,6 +151,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
