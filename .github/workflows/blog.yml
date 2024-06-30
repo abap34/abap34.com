@@ -59,7 +59,7 @@ jobs:
         run: |
           SHELL=/bin/bash
           cd ./almo
-          bash setup.sh
+          bash ./scripts/setup.sh
           cd ./almo
           g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
