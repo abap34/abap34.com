@@ -6,17 +6,17 @@
 <description> abap34's blog </description>
 
 <item>
-<id>最急降下法の収束定理の主張とその証明</id>
-<title>最急降下法の収束定理の主張とその証明</title>
-<link>https://abap34.com/posts/gd_convergence_theorem.html</link>
-<pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
+<id>オンラインジャッジを作った. </id>
+<title>オンラインジャッジを作った. </title>
+<link>https://abap34.com/posts/oj_abap34.html</link>
+<pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>オンラインジャッジを作った. </id>
-<title>オンラインジャッジを作った. </title>
-<link>https://abap34.com/posts/oj_abap34.html</link>
+<id>最急降下法の収束定理の主張とその証明</id>
+<title>最急降下法の収束定理の主張とその証明</title>
+<link>https://abap34.com/posts/gd_convergence_theorem.html</link>
 <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
