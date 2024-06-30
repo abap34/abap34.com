@@ -58,7 +58,7 @@ jobs:
       - name: Compile almo.cpp
         run: |
           cd ALMO
-          bash build.sh
+          make build
 
       - name: Checkout Repository
         uses: actions/checkout@v2
