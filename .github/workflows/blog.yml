@@ -62,6 +62,7 @@ jobs:
           cd ./almo
           bash ./scripts/setup.sh
           ls
+          ls ./build
           pwd
           g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
