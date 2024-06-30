@@ -57,7 +57,7 @@ jobs:
 
       - name: Compile almo.cpp
         run: |
-          cd ALMO
+          cd almo
           make build
 
       - name: Checkout Repository
