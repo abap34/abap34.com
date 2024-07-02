@@ -6,7 +6,7 @@ tag: [C++, Python, pybind11, 日記]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://asciinema.org/a/659310
+ogp_url: https://abap34.com/posts/pybind11/image.png
 description: pybind11 を使って C++の関数を .so にして Python から呼び出す方法を紹介します。
 url: https://abap34.com/posts/pybind11.html
 site_name: abap34's blog
