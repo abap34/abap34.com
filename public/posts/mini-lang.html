@@ -18,7 +18,7 @@
     <title> 3時間で作る自作言語のJuliaトランスパイラ </title>
 
     <meta property="og:title" content="3時間で作る自作言語のJuliaトランスパイラ">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/dane-great/n02109047_6265.jpg">
+    <meta property="og:image" content="https://abap34.com/posts/mini-lang/image.png">
     <meta property="og:description" content="Julia言語で簡易処理系を爆速で作ります。">
     <meta property="og:url" content="https://abap34.com/posts/mini-lang.html">
     <meta property="og:type" content="article">
@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -635,37 +642,37 @@ a {
 
     <div class="article-body">
         <div class="content">
-            <br><br><script>page_contents.push({
+            <br><script>page_contents.push({
     "type":"H2",
-    "id":"3",
+    "id":"2",
     "title":"Abstract"
 });
 </script>
-<h2 id="3">Abstract</h2><br><ul><li>Julia で簡単な処理系を作ります</li><li>PEG.jl を使うと簡単に厳密な構文を定義・解析できます</li><li>入力をJuliaのASTに変換して実行する方式だと簡単にできて便利で楽しいです</li></ul><br><script>page_contents.push({
+<h2 id="2">Abstract</h2><br><ul><li>Julia で簡単な処理系を作ります</li><li>PEG.jl を使うと簡単に厳密な構文を定義・解析できます</li><li>入力をJuliaのASTに変換して実行する方式だと簡単にできて便利で楽しいです</li></ul><br><script>page_contents.push({
     "type":"H2",
-    "id":"22",
+    "id":"13",
     "title":"はじめに"
 });
 </script>
-<h2 id="22">はじめに</h2><br>I県の国立T大学の講義では、簡易インタプリタを作る課題が出るらしいです。<br>また、言語が指定されていないようで色々な言語での実装を GitHubで見かけて、<url> <a href="https://gist.github.com/eggplants/fbd3422839653b211b314d2bb151c1d7">実装がまとまっているgist</a> </url> なんかもあったりしていいなぁと思ったので Juliaでも作ってみました。<br><br>というか <url> <a href="https://kdb.tsukuba.ac.jp/syllabi/2022/GB27001/jpn/0">元の講義</a> </url> がイケてるエンジニアの人呼んで面白そうな話が並んでいて羨ましいです。T工業大学でも同じようなテイスト(卒業生が来る系)の講義があったような気がしますが、卒業生でえんえんビジネス人生を語る皆様がたくさんいらっしゃるのでそういう話に興味がある人が受講するといいかもしれません。<br><br>それはそれとして、いろんな言語で実装されてるなら自分もなんかでやりたくなってくるところです。<br>今までの自分の構文解析遍歴は、<br><ul><li>講義(形式言語とオートマトン) で理論かじったり</li><li>自作の拡張 Markdownパーサの <url> <a href="https://github.com/abap34/ALMO">ALMO</a> </url> とか </li><li>大学のアセンブリ言語の課題で数式をパースしてみたり </li></ul><br>みたいな感じなのですが、 C/C++ でしかやったことがありません。C++ はまだしも Cは全然自分の手足感がないので、慣れている Python / Julia あたりでやりたいと思っていて、さっきの gist をみていると Python実装はもう結構あるみたいなので Juliaでやってみることにします。<br><br>それに加えて、自分で素のパーサを書くのは Markdownパーサを書いたときに、もうこりごりだ〜〜(本当に)と思ったので、今回はパーサジェネレータを使っていい感じにやることに決めました。(Markdown の仕様によるところもある気がしますが...)<br><script>page_contents.push({
+<h2 id="13">はじめに</h2><br>I県の国立T大学の講義では、簡易インタプリタを作る課題が出るらしいです。<br>また、言語が指定されていないようで色々な言語での実装を GitHubで見かけて、 <url> <a href="https://gist.github.com/eggplants/fbd3422839653b211b314d2bb151c1d7">実装がまとまっているgist</a> </url> なんかもあったりしていいなぁと思ったので Juliaでも作ってみました。<br><br>というか <url> <a href="https://kdb.tsukuba.ac.jp/syllabi/2022/GB27001/jpn/0">元の講義</a> </url> がイケてるエンジニアの人呼んで面白そうな話が並んでいて羨ましいです。 T工業大学でも同じようなテイスト(卒業生が来る系)の講義があったような気がしますが、卒業生でえんえんビジネス人生を語る皆様がたくさんいらっしゃるのでそういう話に興味がある人が受講するといいかもしれません。<br><br>それはそれとして、いろんな言語で実装されてるなら自分もなんかでやりたくなってくるところです。<br>今までの自分の構文解析遍歴は、<br><ul><li>講義(形式言語とオートマトン) で理論かじったり</li><li>自作の拡張 Markdownパーサの <url> <a href="https://github.com/abap34/ALMO">ALMO</a> </url> とか </li><li>大学のアセンブリ言語の課題で数式をパースしてみたり </li></ul><br>みたいな感じなのですが、 C/C++ でしかやったことがありません。 C++ はまだしも Cは全然自分の手足感がないので、慣れている Python / Julia あたりでやりたいと思っていて、 さっきの gist をみていると Python実装はもう結構あるみたいなので Juliaでやってみることにします。<br><br>それに加えて、自分で素のパーサを書くのは Markdownパーサを書いたときに、もうこりごりだ〜〜(本当に)と思ったので、今回はパーサジェネレータを使っていい感じにやることに決めました。 (Markdown の仕様によるところもある気がしますが...)<br><script>page_contents.push({
     "type":"H2",
-    "id":"99",
+    "id":"47",
     "title":"PEG.jl で構文を書く"
 });
 </script>
-<h2 id="99">PEG.jl で構文を書く</h2><script>page_contents.push({
+<h2 id="47">PEG.jl で構文を書く</h2><script>page_contents.push({
     "type":"H3",
-    "id":"103",
+    "id":"49",
     "title":"PEG とは"
 });
 </script>
-<h3 id="103">PEG とは</h3><br>さて、プログラミング言語を作るからにはパーサを作らなくてはいけないですが、今回は<br><br><a href="https://github.com/wdebeaum/PEG.jl"><img src="https://gh-card.dev/repos/wdebeaum/PEG.jl.svg?fullname="></a><br><br>を使います。<br>そもそも PEGという耳馴染みのない(僕はありませんでした)という単語について説明しておきます。<br>PEGは Parsing Expression Grammar の略で、日本語だと解析表現文法とか言われるものです。 <br><br>その名の通り文法なのですが、多くのプログラミング言語の構文の記述に使われる <span class="math-inline"> \( ^1 \) </span> 文脈自由文法とは違い、構文木が常に一意に定まるという特徴があります。<br><br>さらに、PEGは文脈自由文法ではできない <span class="math-inline"> \( \{a^n b^n c^n \mid n \ge 1\} \) </span> を受理する構文を定義することができ、また 「PEGで記述不可能だが文脈自由文法で記述可能な構文」 は今のところ見つかっていないので、PEGは文脈自由文法よりも表現力のある文法だと考えられているようです。<br><br>PEGは、技術としては思ったよりだいぶ最近のもので、なんと提案されたのは 2004年です。 大学の講義でも多分扱っていなかったと思うのですが(先生へ: 扱ってたらすいません)、たまたま大学図書館で<url> <a href="https://www.morikita.co.jp/books/mid/085651">Pythonで学ぶ解析表現文法と構文解析</a> </url>  という本を見つけて読んでへ〜となったので使ってみることにしました。<br>(この本では構文解析自体の説明から平易に書かれていて実装もPythonで読みやすく、おすすめです。最後の方の章の計算量とかのところでこれは大丈夫か...? と思うところもありますが、全体としては実践的で好きです。)<br>しかも、Python 3.9からはPythonのパーサがPEGベースになり、JuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、世はまさに大パーサ改善時代と言えそうです。<br><br>構文解析がそこまで最近に進化しているのは正直イメージと違ったのでびっくりしました。　もっと早く知ってたらもう少しオートマトンにやる気が出たかもしれない...<br><script>page_contents.push({
+<h3 id="49">PEG とは</h3><br>さて、プログラミング言語を作るからにはパーサを作らなくてはいけないですが、今回は<br><br><a href="https://github.com/wdebeaum/PEG.jl"><img src="https://gh-card.dev/repos/wdebeaum/PEG.jl.svg?fullname="></a><br><br>を使います。<br>そもそも PEGという耳馴染みのない(僕はありませんでした)という単語について説明しておきます。<br>PEGは Parsing Expression Grammar の略で、日本語だと解析表現文法とか言われるものです。 <br><br>その名の通り文法なのですが、多くのプログラミング言語の構文の記述に使われる <span class="math-inline"> \( ^1 \) </span> 文脈自由文法とは違い、 構文木が常に一意に定まるという特徴があります。<br><br>さらに、PEGは文脈自由文法ではできない <span class="math-inline"> \( \{a^n b^n c^n \mid n \ge 1\} \) </span> を受理する構文を定義することができ、 また 「PEGで記述不可能だが文脈自由文法で記述可能な構文」 は今のところ見つかっていないので、 PEGは文脈自由文法よりも表現力のある文法だと考えられているようです。<br><br>PEGは、技術としては思ったよりだいぶ最近のもので、なんと提案されたのは 2004年です。  大学の講義でも多分扱っていなかったと思うのですが(先生へ: 扱ってたらすいません)、たまたま大学図書館で <url> <a href="https://www.morikita.co.jp/books/mid/085651">Pythonで学ぶ解析表現文法と構文解析</a> </url>  という本を見つけて読んでへ〜となったので使ってみることにしました。<br>(この本では構文解析自体の説明から平易に書かれていて実装もPythonで読みやすく、おすすめです。最後の方の章の計算量とかのところでこれは大丈夫か...? と思うところもありますが、全体としては実践的で好きです。)<br>しかも、Python 3.9からはPythonのパーサがPEGベースになり、JuliaのパーサもScheme製だったのが Julia製になって Syntax Error がだいぶ見やすくなったりと、 世はまさに大パーサ改善時代と言えそうです。<br><br>構文解析がそこまで最近に進化しているのは正直イメージと違ったのでびっくりしました。　もっと早く知ってたらもう少しオートマトンにやる気が出たかもしれない...<br><script>page_contents.push({
     "type":"H3",
-    "id":"188",
+    "id":"86",
     "title":"PEG の特徴と PEG.jl を使った実践"
 });
 </script>
-<h3 id="188">PEG の特徴と PEG.jl を使った実践</h3><br>PEG.jl はそんな PEGを使って構文を定義・解析してくれるライブラリです。最終更新はとても前ですが、READMEに書いてある通り機能がすでに十分に揃っているので特に困るポイントはありません。<br>さて、PEG.jl を使って構文を定義してみます。見た目は拡張BNF記法そっくりで、直感的に書けるのでとても使いやすいです。<br>例えば、一桁の数字同士の足し算を定義するとこんな感じになります。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; using PEG
+<h3 id="86">PEG の特徴と PEG.jl を使った実践</h3><br>PEG.jl はそんな PEGを使って構文を定義・解析してくれるライブラリです。 最終更新はとても前ですが、READMEに書いてある通り機能がすでに十分に揃っているので特に困るポイントはありません。<br>さて、PEG.jl を使って構文を定義してみます。 見た目は拡張BNF記法そっくりで、直感的に書けるのでとても使いやすいです。<br>例えば、一桁の数字同士の足し算を定義するとこんな感じになります。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; using PEG
 
 julia&gt; @rule add = r&quot;[0-9]&quot; &amp; &quot;+&quot; &amp; r&quot;[0-9]&quot;  # 一桁の足し算
 add (generic function with 2 methods)
@@ -685,13 +692,13 @@ julia&gt; parse_whole(add, &quot;1+4&quot;)
 5
 </code></pre> </div><br>足し算のパース・解釈ができるようになりました。<br><br><br>ここまでだとあまりBNFと変わらないように見えますが、違うポイントを見てみます。<br>といっても違うポイントは一つだけで、選言(<span class="inline-code"> <code>|</code> </span>) と順序付き選言(<span class="inline-code"> <code>/</code> </span>) です。<br>例えば BNF記法で<br><div class="code-block"> <pre><code class="language-plaintext">A ::= B | C
 </code></pre> </div><br>と書いた場合、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> または <span class="inline-code"> <code>C</code> </span> どちらにマッチしてもかまいません。<br><br>これにたいして PEG では順序付きの選言を使います。<br><div class="code-block"> <pre><code class="language-plaintext">A = B / C
-</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチを試みます。<br>したがって結果は必ず一意に定まります。<br><br>さらに、これは選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると割と自然です。ふつうの処理系では <span class="inline-code"> <code>(f() &gt; 0) || (g() &gt; 0)</code> </span> という式の <span class="inline-code"> <code>g</code> </span> は短絡評価で <span class="inline-code"> <code>f() &gt; 0</code> </span> が　<span class="inline-code"> <code>false</code> </span> だったその時に限り評価されるわけですから、どちらかというと順序付きの選言の方が <span class="inline-code"> <code>||</code> </span> に近い感じがします。<br><script>page_contents.push({
+</code></pre> </div><br>と書いたとき、 <span class="inline-code"> <code>A</code> </span> は <span class="inline-code"> <code>B</code> </span> にマッチするか試し、成功したら <span class="inline-code"> <code>B</code> </span> にマッチし、そして失敗したその時に限り <span class="inline-code"> <code>C</code> </span> にマッチを試みます。<br>したがって結果は必ず一意に定まります。<br><br>さらに、これは選言がプログラムでの <span class="inline-code"> <code>||</code> </span> に対応してほしいという気持ちになると割と自然です。 ふつうの処理系では <span class="inline-code"> <code>(f() &gt; 0) || (g() &gt; 0)</code> </span> という式の <span class="inline-code"> <code>g</code> </span> は短絡評価で <span class="inline-code"> <code>f() &gt; 0</code> </span> が　<span class="inline-code"> <code>false</code> </span> だったその時に限り評価されるわけですから、 どちらかというと順序付きの選言の方が <span class="inline-code"> <code>||</code> </span> に近い感じがします。<br><script>page_contents.push({
     "type":"H3",
-    "id":"371",
+    "id":"177",
     "title":"Julia の ASTへの変換"
 });
 </script>
-<h3 id="371">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。<br>Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
+<h3 id="177">Julia の ASTへの変換</h3><br>上の例ではパースしたものをその場で解釈していましたが、これだと評価を自分で書く必要があってめんどくさいため、誰かに実行をやってほしくなります。<br>…よくよく考えてみるとパースを動かしている処理系、Juliaがすでに手元にあるわけですから、なんならパースだけでなく実行もやってほしいような気がします。<br><br><span class="strong"> <strong>つまりは、Juliaへのトランスパイラが書きたくなってきます。</strong> </span><br><br>大変な仕事に見える人もいるかもしれませんが、実はこれは本当に簡単な作業です。<br><br>Julia はそれ自身の構文を普通のデータとして扱うことができます。 これは同図像性(Homoiconicity)などと呼ばれる性質で、同様の性質を持つ言語として、代表的なものに Lisp があります。<br>Lisp の構文はただの(?) リストなので、 Lisp のコードの表現は Lisp の基本的なデータ構造に過ぎません。<br><br>Julia においては、 <span class="inline-code"> <code>Expr</code> </span> 型によってその構文を表現できます。実例で見てみます。 <br>(出力は一部省略しています)<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
                   x = 10
                   y = x * 2
                   if y &gt; 15
@@ -730,7 +737,7 @@ Expr
               args: Array{Any}((2,))
                 1: Symbol println
                 2: String &quot;!?&quot;
-</code></pre> </div><br><span class="inline-code"> <code>quote ... end</code> </span> で囲むと中の式を評価せずに、その式自体の構造、つまりはASTを得ることができます。これは <span class="inline-code"> <code>typeof</code> </span> でわかるように <span class="inline-code"> <code>Expr</code> </span> 型で保持されていて、 <span class="inline-code"> <code>dump</code> </span> で中身を見ると、確かに元の式の構造っぽいものが保存されているようです。<br>あるいは、 S式の形で出力することもできます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; Meta.show_sexpr(ex)
+</code></pre> </div><br><span class="inline-code"> <code>quote ... end</code> </span> で囲むと中の式を評価せずに、その式自体の構造、つまりはASTを得ることができます。 これは <span class="inline-code"> <code>typeof</code> </span> でわかるように <span class="inline-code"> <code>Expr</code> </span> 型で保持されていて、 <span class="inline-code"> <code>dump</code> </span> で中身を見ると、確かに元の式の構造っぽいものが保存されているようです。<br>あるいは、 S式の形で出力することもできます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; Meta.show_sexpr(ex)
 (:block,
   :(#= REPL[50]:2 =#),
   (:(=), :x, 10),
@@ -761,19 +768,19 @@ julia&gt; parse_whole(add, &quot;1+2&quot;)
 
 julia&gt; eval(ans)
 3
-</code></pre> </div><br><span class="inline-code"> <code>&quot;1+2&quot;</code> </span> という単なる文字列から <span class="inline-code"> <code>1 + 2</code> </span> を表現する <span class="strong"> <strong>Juliaの</strong> </span> AST を得ることができました。つまり、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
+</code></pre> </div><br><span class="inline-code"> <code>&quot;1+2&quot;</code> </span> という単なる文字列から <span class="inline-code"> <code>1 + 2</code> </span> を表現する <span class="strong"> <strong>Juliaの</strong> </span> AST を得ることができました。 つまり、<br>🎉 <span class="strong"> <strong>まさに今、自作言語をJuliaにトランスパイルするプログラムが動きました。</strong> </span> 🎉<br>もはやあとは作業ゲーで、これを気合いで拡張していけば完成です。<br>ひとまず、どんな言語にするか考えてみることにします。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"533",
+    "id":"257",
     "title":"言語の設計"
 });
 </script>
-<h2 id="533">言語の設計</h2><script>page_contents.push({
+<h2 id="257">言語の設計</h2><script>page_contents.push({
     "type":"H3",
-    "id":"537",
+    "id":"259",
     "title":"イメージ"
 });
 </script>
-<h3 id="537">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数定義 / 呼び出し / <span class="inline-code"> <code>return</code> </span></li><li>ブロック</li><li><span class="inline-code"> <code>while</code> </span>, <span class="inline-code"> <code>if</code> </span></li><li>整数, 浮動小数点数, 文字列　あたりのリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。<br><br><div class="code-block"> <pre><code class="language-julia">function fizzbuzz(n) {
+<h3 id="259">イメージ</h3><br>さて、本格的に言語を作り始めます。<br>だいたい、次の要素を含むプログラミング言語を作ることにします<br><ul><li>基本的な二項演算(四則演算, 剰余, べき乗, 比較演算)</li><li>変数</li><li>関数定義 / 呼び出し / <span class="inline-code"> <code>return</code> </span></li><li>ブロック</li><li><span class="inline-code"> <code>while</code> </span>, <span class="inline-code"> <code>if</code> </span></li><li>整数, 浮動小数点数, 文字列　あたりのリテラル</li></ul><br>これだけあれば十分実用的な感じの言語な感じがします。 構文は、元の実装を参考にしてよくある感じの波括弧を使うものにすると、だいたいイメージとしては以下のように  FizzBuzz が書ける言語を作るのが目標になります。　結構見た目は立派な言語ですね。<br><br><div class="code-block"> <pre><code class="language-julia">function fizzbuzz(n) {
     i = 0
     while (i &lt; 100){
         i = i + 1
@@ -792,11 +799,11 @@ julia&gt; eval(ans)
 fizzbuzz(100)
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"601",
+    "id":"288",
     "title":"PEG.jl による記述"
 });
 </script>
-<h3 id="601">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="language-julia">@rule int = (
+<h3 id="288">PEG.jl による記述</h3><br>あとは対応を考えてえいやえいやと文法を定義します、<br>例えば自然数リテラルはこんな感じになります。<br><div class="code-block"> <pre><code class="language-julia">@rule int = (
                 r&quot;0&quot;p, 
                 r&quot;[1-9]&quot; &amp; r&quot;[0-9]&quot;[*]
             )
@@ -872,7 +879,7 @@ julia&gt; parse_whole(num, &quot;123.45&quot;)
 
 julia&gt; parse_whole(int, &quot;123&quot;)
 123
-</code></pre> </div><br><br>さて、今回は浮動小数点数の左右(?)の省略は許さないことにしたので <span class="inline-code"> <code>&quot;.3&quot;</code> </span> がエラーになるのは意図した挙動ですが、どうしてもこういう場合意図した挙動にできてるかを見逃してしまいがちです。<br><br>なので、構文を定義して動かす前に必ずテストケースを十分用意しておきましょう。<br>テストケース作る <span class="math-inline"> \( \to \) </span> 構文一個作る <span class="math-inline"> \( \to \) </span> テストケース通る <span class="math-inline"> \( \to \) </span> 次の構文一個作る <span class="math-inline"> \( \cdots \) </span> のループを踏まなかった人には等しく死が訪れます。<br>例えばこんな感じの実装の仕方がありそうです。<br><div class="code-block"> <pre><code class="language-julia">using PEG
+</code></pre> </div><br><br>さて、今回は浮動小数点数の左右(?)の省略は許さないことにしたので <span class="inline-code"> <code>&quot;.3&quot;</code> </span> がエラーになるのは意図した挙動ですが、 どうしてもこういう場合意図した挙動にできてるかを見逃してしまいがちです。<br><br>なので、構文を定義して動かす前に必ずテストケースを十分用意しておきましょう。<br>テストケース作る <span class="math-inline"> \( \to \) </span> 構文一個作る <span class="math-inline"> \( \to \) </span> テストケース通る <span class="math-inline"> \( \to \) </span> 次の構文一個作る <span class="math-inline"> \( \cdots \) </span> のループを踏まなかった人には等しく死が訪れます。<br>例えばこんな感じの実装の仕方がありそうです。<br><div class="code-block"> <pre><code class="language-julia">using PEG
 using Test
 
 onfail(body, _::Test.Pass) = true
@@ -901,19 +908,19 @@ end
         check(src, rule, expected)
     end
 end
-</code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます. 値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br>完成したものがこちらになります。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
+</code></pre> </div><br><span class="inline-code"> <code>isequal(x)</code> </span> は <span class="inline-code"> <code>x</code> </span> と等しいか判定する関数を返してくれます.  値を直接書いて比較するより、この形で書いておくとエラーさえ起きなければいい、とか割と自由にテストを書けるので便利です。<br>正直これ以上はもはや書くことがあんまりなく、<br><ul><li><span class="inline-code"> <code>@rule</code> </span> で構文を定義</li><li>REPL に送ってパースしてみて吐かれる解析結果を見る</li><li>それの対応を見て、 AST を作る</li></ul><br>というのを繰り返していけば良いです。<br>完成したものがこちらになります。　実装に詰まったら見てみてください。<br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg?fullname="></a><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"750",
+    "id":"367",
     "title":"感想"
 });
 </script>
-<h2 id="750">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
+<h2 id="367">感想</h2><br>もし自分が生まれるのが10年, 20年早かったら Lispとかどハマりしてそうだな〜　とおもいました<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"760",
+    "id":"373",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="760">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br>         <br>
+<h2 id="373">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=BExLRLOYtO5nDJZj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><hr><br><br><span class="math-inline"> \( 1 \) </span> 文脈自由文法の日本語のWikipediaに残ってるレスバの痕跡が好きです。 <url> <a href="https://ja.wikipedia.org/wiki/%E6%96%87%E8%84%88%E8%87%AA%E7%94%B1%E6%96%87%E6%B3%95#cite_ref-3">ref</a> </url>　<br><br><br><br>
 
             <hr>
 

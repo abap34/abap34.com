@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -641,7 +648,7 @@ a {
     "title":"<span class="inline-code"> <code>git diff</code> </span> が通らない"
 });
 </script>
-<h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="language-bash">- name: Check for Changes in MD Files
+<h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、 マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="language-bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
     changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep &#39;\.md&#39; || true)
@@ -651,18 +658,18 @@ a {
     else
       echo &quot;Change: $changed_files&quot;
     fi
-</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは<span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。 <br><br>全然原因がわからず、<span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br> <figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
+</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは <span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。<br><br><br>全然原因がわからず、 <span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br><br><figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
     "type":"H2",
-    "id":"65",
+    "id":"26",
     "title":"対応策"
 });
 </script>
-<h2 id="65">対応策</h2><br><div class="code-block"> <pre><code class="language-bash">steps:
+<h2 id="26">対応策</h2><br><div class="code-block"> <pre><code class="language-bash">steps:
   - name: Checkout Repository
     uses: actions/checkout@v2
     with:
         fetch-depth: 0
-</code></pre> </div><br>として全てのコミットを参照できるようにすると<span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。 <br><br>         <br>
+</code></pre> </div><br>として全てのコミットを参照できるようにすると <span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。<br><br><br><br><br>
 
             <hr>
 

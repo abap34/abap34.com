@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -643,29 +650,29 @@ a {
 </script>
 <h2 id="3">Marp + GitHub Actionsのテンプレートを作った</h2><br>タイトルの通りです。<br>レポジトリは、<br><br><a href="https://github.com/abap34/slide-template"><img src="https://gh-card.dev/repos/abap34/slide-template.svg"></a><br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"23",
+    "id":"15",
     "title":"内容としくみ"
 });
 </script>
-<h2 id="23">内容としくみ</h2><br><script>page_contents.push({
+<h2 id="15">内容としくみ</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"28",
+    "id":"18",
     "title":"内容"
 });
 </script>
-<h3 id="28">内容</h3><br>このテンプレートを使うと、<br><ul><li>Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイ</li><li>スライドのソースファイル分割</li></ul><br>ができます。<br>スライドが共有しやすくなりますし、 Git管理の設定の手間が省けます。<br><br>また、 ファイルが長大になるとdiffがわかりづらくなる、VSCode extensionで表示がチラつくなどの現象がよく発生してましたが、ファイル分割することで、これらの問題も解消されます。<br><script>page_contents.push({
+<h3 id="18">内容</h3><br>このテンプレートを使うと、<br><ul><li>Marp でスライドを書いて、 main に push すると自動でビルド & GitHub Pages にデプロイ</li><li>スライドのソースファイル分割</li></ul><br>ができます。<br>スライドが共有しやすくなりますし、 Git管理の設定の手間が省けます。<br><br>また、 ファイルが長大になるとdiffがわかりづらくなる、VSCode extensionで表示がチラつくなどの現象がよく発生してましたが、 ファイル分割することで、これらの問題も解消されます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"63",
+    "id":"36",
     "title":"しくみ"
 });
 </script>
-<h3 id="63">しくみ</h3><br><script>page_contents.push({
+<h3 id="36">しくみ</h3><br><script>page_contents.push({
     "type":"H4",
-    "id":"68",
+    "id":"39",
     "title":"GiHub Actions"
 });
 </script>
-<h4 id="68">GiHub Actions</h4><br><div class="code-block"> <pre><code class="language-yaml">name: Build Slide and Deploy
+<h4 id="39">GiHub Actions</h4><br><div class="code-block"> <pre><code class="language-yaml">name: Build Slide and Deploy
 on:
   push:
     branches:
@@ -710,11 +717,11 @@ jobs:
         uses: actions/deploy-pages@v4
 </code></pre> </div><br><br>ここは特に何もしてなく、普通に Marp のビルドを行って、 GitHub Pages にデプロイしています。<br>Marpは公式でDockerイメージを提供しているので、それを使っています。<br><br><script>page_contents.push({
     "type":"H4",
-    "id":"85",
+    "id":"50",
     "title":"Makefile"
 });
 </script>
-<h4 id="85">Makefile</h4><br><br><div class="code-block"> <pre><code class="language-makefile">SRC_DIR = slides
+<h4 id="50">Makefile</h4><br><br><div class="code-block"> <pre><code class="language-makefile">SRC_DIR = slides
 BUILD_DIR = build
 SRC_FILES = $(wildcard $(SRC_DIR)/*[0-9]_*.md)
 HEADER_FILE = $(firstword $(SRC_FILES))
@@ -779,13 +786,13 @@ clean:
     echo &quot;### section: $file&quot;; \
     awk &#39;BEGIN { found = 0; } { if (found &gt;= 2) print; if ($0 == &quot;---&quot;) found++; }&#39; $file &gt;&gt; $(OUTPUT_FILE); \
 done
-</code></pre> </div><br>Marpでは YAML Front Matter で設定を行うことができます.<br>これがないと VSCode でプレビューができないので、それぞれのファイルで先頭にこれを書く必要がありますが、結合するときに不都合です。<br><br>なのでちゃっと <span class="inline-code"> <code>awk</code> </span> で二つ目の <span class="inline-code"> <code>---</code> </span> までを削除することでいい感じに結合できます。<br><script>page_contents.push({
+</code></pre> </div><br>Marpでは YAML Front Matter で設定を行うことができます.<br>これがないと VSCode でプレビューができないので、それぞれのファイルで先頭にこれを書く必要がありますが、 結合するときに不都合です。<br><br>なのでちゃっと <span class="inline-code"> <code>awk</code> </span> で二つ目の <span class="inline-code"> <code>---</code> </span> までを削除することでいい感じに結合できます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"124",
+    "id":"72",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="124">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/ayDVB4IAZWA?si=NrdiIKGNQkvdetr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>         <br>
+<h2 id="72">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/ayDVB4IAZWA?si=NrdiIKGNQkvdetr8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br>
 
             <hr>
 

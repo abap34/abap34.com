@@ -18,7 +18,7 @@
     <title> marp で counter が使えない </title>
 
     <meta property="og:title" content="marp で counter が使えない">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/clumber/n02101556_6170.jpg">
+    <meta property="og:image" content="https://abap34.com/posts/marp-counter/img.png">
     <meta property="og:description" content="">
     <meta property="og:url" content="https://abap34.com/posts/marp-counter.html">
     <meta property="og:type" content="article">
@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -648,7 +655,7 @@ a {
 .def {
   counter-increment: def-counter;
 }
-</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br>         <br>
+</code></pre> </div><br><br>↑ こういうの<br>でもこれはうまく動きません<br><figure><img src="marp-counter/img.png" ><figcaption></figcaption></figure><br>調べてみると、 marp は各ページが <span class="inline-code"> <code>foreignObject</code> </span> で囲まれているので、 <span class="inline-code"> <code>counter</code> </span> を <span class="inline-code"> <code>body</code> </span> でリセットしても共有できないようです。<br>そんな....<br><br>諦めて手で書きましょう.<br><br><br><br>
 
             <hr>
 

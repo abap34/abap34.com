@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -643,11 +650,11 @@ a {
 </script>
 <h2 id="2">いろいろ大変リリース作業</h2><br>拡張 Markdownパーサ兼静的サイトジェネレータの <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url>  を毎日たのしく開発しています。<br>ところで、これは静的サイトジェネレータなので、いろんな人のブログなどに使ってもらうことを想定しています。<br><br>となると、 GitHub Actions などでも利用しやすいように環境を整える必要があります。<br>GitHub Actions では、 <span class="inline-code"> <code>use: docker://hoge/huga:latest</code> </span> のように指定することで Docker Hub にあるイメージを利用することができます。<br><br>そこで、リリースを打つたびに Docker イメージをビルドして、 Docker Hub にアップロードするようにします。作業記録です。<br><script>page_contents.push({
     "type":"H3",
-    "id":"37",
+    "id":"21",
     "title":"Docker Hub にイメージをアップロードする"
 });
 </script>
-<h3 id="37">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="language-plaintext">FROM alpine:latest
+<h3 id="21">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="language-plaintext">FROM alpine:latest
 
 RUN apk add --no-cache g++
 
@@ -688,11 +695,11 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/almo:latest
 </code></pre> </div><br><br>注意ポイントとしては、 GitHub Actions からこのイメージを利用するときは <span class="inline-code"> <code>WORKDIR</code> </span> などが上書きされるみたいなので気をつけて <span class="inline-code"> <code>Dockerfile</code> </span> と <span class="inline-code"> <code>docker-entrypoint.sh</code> </span> を作らないとハマります。<br><figure><img src="almo_autorelease/image.png" ><figcaption>run の引数</figcaption></figure><br><br>これで、リリース時に Docker イメージをビルドして Docker Hub にアップロードすることができるようになりました。<br><figure><img src="almo_autorelease/almo.png" ><figcaption></figcaption></figure><br><script>page_contents.push({
     "type":"H3",
-    "id":"113",
+    "id":"58",
     "title":"リリース時にいろんなプラットフォームに対応する"
 });
 </script>
-<h3 id="113">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="language-yaml">name: Release for all platforms
+<h3 id="58">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="language-yaml">name: Release for all platforms
 
 on:
   release:
@@ -723,28 +730,28 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 </code></pre> </div><br><br>便利ですね。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"130",
+    "id":"69",
     "title":"使用例"
 });
 </script>
-<h3 id="130">使用例</h3><br>Docker Hubにアップロードしたおかげで誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="language-bash">docker pull abap/almo:latest
+<h3 id="69">使用例</h3><br>Docker Hubにアップロードしたおかげで 誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="language-bash">docker pull abap/almo:latest
 </code></pre> </div><br>して、<br><div class="code-block"> <pre><code class="language-bash">docker run abap/almo:latest example.md
 </code></pre> </div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"> <pre><code class="language-yaml">uses: docker://abap/almo:latest
 args:
     example.md
 </code></pre> </div><br>だけで利用できます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"165",
+    "id":"89",
     "title":"おわりに"
 });
 </script>
-<h2 id="165">おわりに</h2><br>終わりです。<br><br><script>page_contents.push({
+<h2 id="89">おわりに</h2><br>終わりです。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"175",
+    "id":"95",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="175">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/EJ8lBjQls4w?si=PdBx5TBPvW-z3_ZG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+<h2 id="95">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/EJ8lBjQls4w?si=PdBx5TBPvW-z3_ZG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
 
             <hr>
 

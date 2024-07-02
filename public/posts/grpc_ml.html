@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -637,17 +644,17 @@ a {
         <div class="content">
             <br> 　<script>page_contents.push({
     "type":"H2",
-    "id":"5",
+    "id":"3",
     "title":"推論を goでやりたい人がいる"
 });
 </script>
-<h2 id="5">推論を goでやりたい人がいる</h2><br>世の中ではGoを使っている人が割と多く、機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。(しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
+<h2 id="3">推論を goでやりたい人がいる</h2><br>世の中ではGoを使っている人が割と多く、 機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、 学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。 (しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"49",
+    "id":"24",
     "title":"実装"
 });
 </script>
-<h2 id="49">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。 こういうファイル構造にします。<br><div class="code-block"> <pre><code class="language-text">├── api
+<h2 id="24">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="language-text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
@@ -698,11 +705,11 @@ protoc --go_out=. --go-grpc_out=. pred.proto
         └── pred_grpc.pb.go
 </code></pre> </div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"112",
+    "id":"60",
     "title":"サーバ側"
 });
 </script>
-<h3 id="112">サーバ側</h3><br><div class="code-block"> <pre><code class="language-python">from concurrent import futures
+<h3 id="60">サーバ側</h3><br><div class="code-block"> <pre><code class="language-python">from concurrent import futures
 import logging
 
 import grpc
@@ -736,11 +743,11 @@ if __name__ == &#39;__main__&#39;:
     serve()
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"119",
+    "id":"65",
     "title":"クライアント側"
 });
 </script>
-<h3 id="119">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
+<h3 id="65">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
 
 import (
 	&quot;context&quot;
@@ -795,17 +802,17 @@ func main() {
 }
 </code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"147",
+    "id":"79",
     "title":"まとめ"
 });
 </script>
-<h2 id="147">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
+<h2 id="79">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
     "type":"H2",
-    "id":"170",
+    "id":"92",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="170">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br>         <br>
+<h2 id="92">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br>
 
             <hr>
 

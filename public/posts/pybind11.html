@@ -18,7 +18,7 @@
     <title> pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac) </title>
 
     <meta property="og:title" content="pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)">
-    <meta property="og:image" content="https://abap34.com/posts/pybind/image.png">
+    <meta property="og:image" content="https://asciinema.org/a/659310">
     <meta property="og:description" content="pybind11 を使って C++の関数を .so にして Python から呼び出す方法を紹介します。">
     <meta property="og:url" content="https://abap34.com/posts/pybind11.html">
     <meta property="og:type" content="article">
@@ -206,6 +206,13 @@ figure {
 
 h3 {
     border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 pre {
@@ -641,19 +648,19 @@ a {
     "title":"ことの経緯"
 });
 </script>
-<h2 id="2">ことの経緯</h2><br>今日も自作マークダウンパーサである <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url> の開発をしています。<br>昨今の機能拡張にともなって色々なライブラリを使いたくなってきたのですが、C++のパッケージマネージャにあまりちゃんとしたものがなく、<span class="strong"> <strong>C++を使うのがかなりしんどくなってきました。</strong> </span><br><br>Rust とかで書き換えるのは個人的にありでしたが、開発メンバは C++ なら書けるという人が多い (というか、それが C++で書かれた理由です)　のでみんなに働いてもらうためにもあまり大幅な変更は避けたいところです。<br><br>というわけで、最終的に現在の内部実装には手を入れず、外部から Python で呼び出せるようにすることにしました。<br><br>実際にパースするところなど、パフォーマンス的に重要な部分は今の C++で書かれたままにして、 Front YAML のパースやリアルタイムのプレビュー、 Jupyter Notebook の解析のような、パフォーマンスにそこまで影響せずかつライブラリに頼りたい部分はライブラリが豊富な Python で書く案です。　<br><br><script>page_contents.push({
+<h2 id="2">ことの経緯</h2><br>今日も自作マークダウンパーサである <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url> の開発をしています。<br>昨今の機能拡張にともなって色々なライブラリを使いたくなってきたのですが、 C++のパッケージマネージャにあまりちゃんとしたものがなく、<span class="strong"> <strong>C++を使うのがかなりしんどくなってきました。</strong> </span><br><br>Rust とかで書き換えるのは個人的にありでしたが、開発メンバは C++ なら書けるという人が多い (というか、それが C++で書かれた理由です)　ので みんなに働いてもらうためにもあまり大幅な変更は避けたいところです。<br><br>というわけで、最終的に現在の内部実装には手を入れず、外部から Python で呼び出せるようにすることにしました。<br><br>実際にパースするところなど、パフォーマンス的に重要な部分は今の C++で書かれたままにして、  Front YAML のパースやリアルタイムのプレビュー、 Jupyter Notebook の解析のような、 パフォーマンスにそこまで影響せずかつライブラリに頼りたい部分はライブラリが豊富な Python で書く案です。　<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"53",
+    "id":"23",
     "title":"pybind11"
 });
 </script>
-<h2 id="53">pybind11</h2><br><a href="https://github.com/pybind/pybind11"><img src="https://gh-card.dev/repos/pybind/pybind11.svg"></a> <br><br><span class="strong"> <strong>pybind11</strong> </span> は、 C++の関数やクラスをバインドして Python から呼び出すためのライブラリです。<br>PyTorch や TensorFlow もこれを使っています。<br>かなり少ないコード量でかつオーバーヘッドもかなり少なく Python から C++ を呼び出すことができます。<br><br><script>page_contents.push({
+<h2 id="23">pybind11</h2><br><a href="https://github.com/pybind/pybind11"><img src="https://gh-card.dev/repos/pybind/pybind11.svg"></a> <br><br><span class="strong"> <strong>pybind11</strong> </span> は、 C++の関数やクラスをバインドして Python から呼び出すためのライブラリです。<br>PyTorch や TensorFlow もこれを使っています。<br>かなり少ないコード量でかつオーバーヘッドもかなり少なく Python から C++ を呼び出すことができます。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"82",
+    "id":"38",
     "title":"セットアップ"
 });
 </script>
-<h3 id="82">セットアップ</h3><br>環境は以下の通りです。<br><div class="code-block"> <pre><code class="language-plaintext">---------------------
+<h3 id="38">セットアップ</h3><br>環境は以下の通りです。<br><div class="code-block"> <pre><code class="language-plaintext">---------------------
 OS: macOS 13.5 22G74 arm64
 Host: Mac14,2
 Kernel: 22.6.0
@@ -676,7 +683,7 @@ Memory: 3397MiB / 24576MiB
 int add(int i, int j) {
     return i + j;
 }
-</code></pre> </div><br>これを <span class="inline-code"> <code>example</code> </span> という名前のモジュールにバインドしてみます。 <br><div class="code-block"> <pre><code class="language-cpp">PYBIND11_MODULE(example, m) {
+</code></pre> </div><br>これを <span class="inline-code"> <code>example</code> </span> という名前のモジュールにバインドしてみます。<br><br><div class="code-block"> <pre><code class="language-cpp">PYBIND11_MODULE(example, m) {
     m.doc() = &quot;pybind11 example plugin&quot;; // optional module docstring
 
     m.def(&quot;add&quot;, &amp;add, &quot;A function which adds two numbers&quot;);
@@ -687,25 +694,25 @@ int add(int i, int j) {
  example.cpp -o example.so
 </code></pre> </div><br><span class="inline-code"> <code>example.so</code> </span> が生成されました。 早速動かしてみます。<br><div class="code-block"> <pre><code class="language-bash">$ pipenv run python3 -c &quot;import example; print(example.add(1, 2))&quot;
 3
-</code></pre> </div><br><br><span class="math-inline"> \( 1 + 2 \) </span> が計算されてます！無事に Python から C++ の関数を呼び出すことができました！　革命ですね <br><br><br><br><script>page_contents.push({
+</code></pre> </div><br><br><span class="math-inline"> \( 1 + 2 \) </span> が計算されてます！ 無事に Python から C++ の関数を呼び出すことができました！　革命ですね <br><br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"182",
+    "id":"94",
     "title":"実践編"
 });
 </script>
-<h2 id="182">実践編</h2><br>ALMO の関数もバインディングすると...<br><br><a href="https://asciinema.org/a/659310" target="_blank"><img src="https://asciinema.org/a/659310.svg" /></a><br><br>Python から <span class="inline-code"> <code>almo.md_to_html</code> </span> するだけで HTML が生成されるようになりました　🥳<br>たいていの型はいい感じに 対応づけられているので、そこまで変なことをしていなければかなり簡単にバインドできると思います。<br><script>page_contents.push({
+<h2 id="94">実践編</h2><br>ALMO の関数もバインディングすると...<br><br><a href="https://asciinema.org/a/659310" target="_blank"><img src="https://asciinema.org/a/659310.svg" /></a><br><br>Python から <span class="inline-code"> <code>almo.md_to_html</code> </span> するだけで HTML が生成されるようになりました　🥳<br>たいていの型はいい感じに 対応づけられているので、そこまで変なことをしていなければかなり簡単にバインドできると思います。<br><script>page_contents.push({
     "type":"H2",
-    "id":"209",
+    "id":"109",
     "title":"まとめ"
 });
 </script>
-<h2 id="209">まとめ</h2>割とお手軽に C++ の関数を Python から呼べました。<br>良くも悪くも最近の機械学習のソフトウェアによくある構成なので一応動かし方がわかってﾊｯﾋﾟｰﾊｯﾋﾟｰハッピー<br><script>page_contents.push({
+<h2 id="109">まとめ</h2>割とお手軽に C++ の関数を Python から呼べました。<br>良くも悪くも最近の機械学習のソフトウェアによくある構成なので一応動かし方がわかってﾊｯﾋﾟｰﾊｯﾋﾟｰハッピー<br><script>page_contents.push({
     "type":"H2",
-    "id":"221",
+    "id":"115",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="221">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/FEfJB32wvsk?si=JQzQdx6nhqMSXlw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br>
+<h2 id="115">今日の一曲</h2><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/FEfJB32wvsk?si=JQzQdx6nhqMSXlw8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br>
 
             <hr>
 
