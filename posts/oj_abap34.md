@@ -19,7 +19,7 @@ twitter_site: @abap34
 
 ## 作ったもの
 
-![traP の OIDC 認証を使ってログインすると、](oj_abap34/image.png)
+![OIDC を使って traQ のアカウントでログインすると、](oj_abap34/image.png)
 
 ![問題がたくさんあり、](oj_abap34/image-1.png)
 
