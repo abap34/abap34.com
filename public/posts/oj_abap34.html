@@ -648,55 +648,55 @@ a {
     "title":"あらすじ"
 });
 </script>
-<h2 id="2">あらすじ</h2><br>エンジニアが作りがちなものとしてオンラインジャッジがあると思います。<br>自分もご多分に漏れず作ってしまったので紹介します。<br><script>page_contents.push({
+<h2 id="2">あらすじ</h2><br>オンラインジャッジを作ったので紹介します。<br><script>page_contents.push({
     "type":"H2",
-    "id":"9",
+    "id":"7",
     "title":"作ったもの"
 });
 </script>
-<h2 id="9">作ったもの</h2><br><figure><img src="oj_abap34/image.png" ><figcaption>traP の OIDC 認証を使ってログインすると、</figcaption></figure><br><figure><img src="oj_abap34/image-1.png" ><figcaption>問題がたくさんあり、</figcaption></figure><br><figure><img src="oj_abap34/image-2.png" ><figcaption>コードを書いて、</figcaption></figure><br><figure><img src="oj_abap34/image-3.png" ><figcaption>ジャッジできます。</figcaption></figure><br><figure><img src="oj_abap34/image-5.png" ><figcaption>順位表とかもあります</figcaption></figure><br><script>page_contents.push({
+<h2 id="7">作ったもの</h2><br><figure><img src="oj_abap34/image.png" ><figcaption>traP の OIDC 認証を使ってログインすると、</figcaption></figure><br><figure><img src="oj_abap34/image-1.png" ><figcaption>問題がたくさんあり、</figcaption></figure><br><figure><img src="oj_abap34/image-2.png" ><figcaption>コードを書いて、</figcaption></figure><br><figure><img src="oj_abap34/image-3.png" ><figcaption>ジャッジできます。</figcaption></figure><br><figure><img src="oj_abap34/image-5.png" ><figcaption>順位表とかもあります</figcaption></figure><br><script>page_contents.push({
     "type":"H2",
-    "id":"22",
+    "id":"20",
     "title":"経緯"
 });
 </script>
-<h2 id="22">経緯</h2><br>今年も traP で機械学習講習会をしているんですが、せっかくなので演習問題にジャッジがつけたくなりました。<br>既存の OSS を使うことも考えたのですが、デプロイの仕方や実行環境の追加の仕方を調べるのがあまり楽しくなさそうだったこと、 traPの認証との連携も面倒そうというあたりから、自分で作った方が早いだろうという判断で作りました。<br><script>page_contents.push({
+<h2 id="20">経緯</h2><br>今年も traP で機械学習講習会をしているんですが、せっかくなので演習問題にジャッジがつけたくなりました。<br>既存の OSS を使うことも考えたのですが、デプロイの仕方や実行環境の追加の仕方を調べるのがあまり楽しくなさそうだったこと、 traPの認証との連携も面倒そうというあたりから、自分で作った方が早いだろうという判断で作りました。<br><script>page_contents.push({
     "type":"H2",
-    "id":"29",
+    "id":"27",
     "title":"技術スタック"
 });
 </script>
-<h2 id="29">技術スタック</h2><br><ul><li>フロントエンド: React (Vercel でホスティング) </li><li>バックエンド: FastAPI (家のサーバから ngrok でトンネリング)</li></ul><br><script>page_contents.push({
+<h2 id="27">技術スタック</h2><br><ul><li>フロントエンド: React (Vercel でホスティング) </li><li>バックエンド: FastAPI (家のサーバから ngrok でトンネリング)</li></ul><br><script>page_contents.push({
     "type":"H3",
-    "id":"38",
+    "id":"36",
     "title":"フロントエンドについて"
 });
 </script>
-<h3 id="38">フロントエンドについて</h3><br>React です。 <br>Material-UI でかなり楽ができて感動しました。<br><script>page_contents.push({
+<h3 id="36">フロントエンドについて</h3><br>React です。 <br>Material-UI でかなり楽ができて感動しました。<br><script>page_contents.push({
     "type":"H3",
-    "id":"45",
+    "id":"43",
     "title":"バックエンドについて"
 });
 </script>
-<h3 id="45">バックエンドについて</h3><br>FastAPI です。 とくにジャッジ周りは非同期処理が多いですが、FastAPI だとそのあたりがかなり簡単にかけてすごいな〜と思いました。<br>また、性質上同時に大量に提出される場合があるので、適切にジョブをキューイングする必要があります。<br>幸いこの知識だけはあったので、 ジャッジのジョブはCelery と Redis を使ってキューイングして、適切な並列度で実行されるようになっています。 これによって大崩壊するほどの実行時間のブレを防ぐことができます。 (ちゃんとしたジャッジは複数回実行など、もう少し真面目にやっていそうですが)<br>実際のコードの実行では、ユーザのコードをそのまま実行するわけにはいかないので、 Dockerを使ってサンドボックスを作り、その中で実行します。<br>コンテナランタイムの知識があまりないのでセキュリティに対して絶対の自信があるわけでは正直ないのですが、幸い Library Checker のジャッジシステムが公開されていて比較的読みやすかったので、 それを大いに参考にして実装した結果、ある程度典型的な攻撃は防げるようになりました。<br><a href="https://github.com/yosupo06/library-checker-judge"><img src="https://gh-card.dev/repos/yosupo06/library-checker-judge.svg"></a><br><script>page_contents.push({
+<h3 id="43">バックエンドについて</h3><br>FastAPI です。 とくにジャッジ周りは非同期処理が多いですが、FastAPI だとそのあたりがかなり簡単にかけてすごいな〜と思いました。<br>また、性質上同時に大量に提出される場合があるので、適切にジョブをキューイングする必要があります。<br>幸いこの知識だけはあったので、 ジャッジのジョブはCelery と Redis を使ってキューイングして、適切な並列度で実行されるようになっています。 これによって大崩壊するほどの実行時間のブレを防ぐことができます。 (ちゃんとしたジャッジは複数回実行など、もう少し真面目にやっていそうですが)<br>実際のコードの実行では、ユーザのコードをそのまま実行するわけにはいかないので、 Dockerを使ってサンドボックスを作り、その中で実行します。<br>コンテナランタイムの知識があまりないのでセキュリティに対して絶対の自信があるわけでは正直ないのですが、幸い Library Checker のジャッジシステムが公開されていて比較的読みやすかったので、 それを大いに参考にして実装した結果、ある程度典型的な攻撃は防げるようになりました。<br><a href="https://github.com/yosupo06/library-checker-judge"><img src="https://gh-card.dev/repos/yosupo06/library-checker-judge.svg"></a><br><script>page_contents.push({
     "type":"H3",
-    "id":"60",
+    "id":"58",
     "title":"デプロイについて"
 });
 </script>
-<h3 id="60">デプロイについて</h3><br>フロントエンドは Vercel です。<br>APIサーバですが、家のサーバで立ち上げて ngrok でトンネリングしています。<br>稼働するのが高々2週間程度の予定なこと、ジャッジを高速にできるようそれなりのスペックが欲しいこと、そして <span class="strong"> <strong>どこかに必ずバグを仕込んでいる確信があったので、停止したとき素早くデータを救出できそうなこと</strong> </span> などを鑑みて ngrok を使ってみました。<br>感想としては、かなり良かったです。お手軽かつ安定していてログも見やすいですしかなり気に入っています。 今後も短期的にサービスを公開するときは使っていきたいと思いました。<br><script>page_contents.push({
+<h3 id="58">デプロイについて</h3><br>フロントエンドは Vercel です。<br>APIサーバですが、家のサーバで立ち上げて ngrok でトンネリングしています。<br>稼働するのが高々2週間程度の予定なこと、ジャッジを高速にできるようそれなりのスペックが欲しいこと、そして <span class="strong"> <strong>どこかに必ずバグを仕込んでいる確信があったので、停止したとき素早くデータを救出できそうなこと</strong> </span> などを鑑みて ngrok を使ってみました。<br>感想としては、かなり良かったです。お手軽かつ安定していてログも見やすいですしかなり気に入っています。 今後も短期的にサービスを公開するときは使っていきたいと思いました。<br><script>page_contents.push({
     "type":"H2",
-    "id":"74",
+    "id":"72",
     "title":"最後に"
 });
 </script>
-<h2 id="74">最後に</h2><br>今は認証が traP に依存しているので、その辺を独立させて公開する予定です。<br><script>page_contents.push({
+<h2 id="72">最後に</h2><br>今は認証が traP に依存しているので、その辺を独立させて公開する予定です。<br><script>page_contents.push({
     "type":"H2",
-    "id":"79",
+    "id":"77",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="79">今日の一曲</h2><br>昨日シブツタでCD買いました。<br>渋谷より東に進出できるようになりたい。<br><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/KYvq8-xY1Gg?si=xbxsze8kJfULjrbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+<h2 id="77">今日の一曲</h2><br>昨日シブツタでCD買いました。<br>渋谷より東に進出できるようになりたい。<br><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/KYvq8-xY1Gg?si=xbxsze8kJfULjrbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
 
             <hr>
 
