@@ -6,7 +6,7 @@ tag: [日記]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://images.dog.ceo/breeds/clumber/n02101556_6170.jpg
+ogp_url: https://abap34.com/posts/marp-counter/img.png
 description: 
 url: https://abap34.com/posts/marp-counter.html
 site_name: abap34.com
