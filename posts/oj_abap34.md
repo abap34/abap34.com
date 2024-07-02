@@ -1,5 +1,5 @@
 ---
-title: オンラインジャッジを作った. 
+title: オンラインジャッジを作った
 author: abap34
 date: 2024/07/01
 tag: [日記, Web, FastAPI, React, Docker]
