@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたのレートはいずこから</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input {
+            margin: 10px 0;
+            display: block;
+        }
+        button {
+            margin-top: 10px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>あなたのレートはいずこから</h1>
+    <!-- 入力フォーム -->
+     <p>
+        ここに "https://atcoder.jp/users/{ユーザ名}/json" の結果を貼り付けてね
+     </p>
+
+    <textarea id="json" rows="10" cols="50"></textarea>
+    <button id="submit">計算</button>
+    <!-- 結果表示 -->
+    <div id="result"></div>
+
+
+    <script>
+        document.getElementById('submit').addEventListener('click', () => {
+            const json = document.getElementById('json').value;
+            const data = JSON.parse(json);
+            // data の "ContestScreenName" に "abc"　が含まれるものを抽出
+            const abc = data.filter(d => d.ContestScreenName.includes('abc'));
+            // "arc" が入っているものを抽出
+            const arc = data.filter(d => d.ContestScreenName.includes('arc'));
+            // "agc" が入っているものを抽出
+            const agc = data.filter(d => d.ContestScreenName.includes('agc'));
+            // それ以外
+            const other = data.filter(d => !d.ContestScreenName.includes('abc') && !d.ContestScreenName.includes('arc') && !d.ContestScreenName.includes('agc'));
+
+            // それぞれの newRating - oldRating の合計を計算
+            const abcSum = abc.reduce((acc, cur) => acc + (cur.NewRating - cur.OldRating), 0);
+            const arcSum = arc.reduce((acc, cur) => acc + (cur.NewRating - cur.OldRating), 0);
+            const agcSum = agc.reduce((acc, cur) => acc + (cur.NewRating - cur.OldRating), 0);
+            const otherSum = other.reduce((acc, cur) => acc + (cur.NewRating - cur.OldRating), 0);
+
+            // それぞれの Performance の平均を計算
+            const abcPerf = abc.reduce((acc, cur) => acc + cur.Performance, 0) / abc.length;
+            const arcPerf = arc.reduce((acc, cur) => acc + cur.Performance, 0) / arc.length;
+            const agcPerf = agc.reduce((acc, cur) => acc + cur.Performance, 0) / agc.length;
+            const otherPerf = other.reduce((acc, cur) => acc + cur.Performance, 0) / other.length;
+
+            // それぞれの最大値と最小値を計算
+            const abcMax = Math.max(...abc.map(d => d.Performance));
+            const abcMin = Math.min(...abc.map(d => d.Performance));
+            const arcMax = Math.max(...arc.map(d => d.Performance));
+            const arcMin = Math.min(...arc.map(d => d.Performance));
+            const agcMax = Math.max(...agc.map(d => d.Performance));
+            const agcMin = Math.min(...agc.map(d => d.Performance));
+            const otherMax = Math.max(...other.map(d => d.Performance));
+            const otherMin = Math.min(...other.map(d => d.Performance));
+
+
+            // 結果をテーブル形式で表示
+            const result = `
+                <table>
+                    <tr>
+                        <th>コンテスト</th>
+                        <th>回数</th>
+                        <th>Rating変動の和</th>
+                        <th>Performance平均</th>
+                        <th>最大パフォーマンス</th>
+                        <th>最小パフォーマンス</th>
+                    </tr>
+                    <tr>
+                        <td>ABC</td>
+                        <td>${abc.length}</td>
+                        <td>${abcSum}</td>
+                        <td>${abcPerf}</td>
+                        <td>${abcMax}</td>
+                        <td>${abcMin}</td>
+                    </tr>
+                    <tr>
+                        <td>ARC</td>
+                        <td>${arc.length}</td>
+                        <td>${arcSum}</td>
+                        <td>${arcPerf}</td>
+                        <td>${arcMax}</td>
+                        <td>${arcMin}</td>
+                    </tr>
+                    <tr>
+                        <td>AGC</td>
+                        <td>${agc.length}</td>
+                        <td>${agcSum}</td>
+                        <td>${agcPerf}</td>
+                        <td>${agcMax}</td>
+                        <td>${agcMin}</td>
+                    </tr>
+                    <tr>
+                        <td>その他</td>
+                        <td>${other.length}</td>
+                        <td>${otherSum}</td>
+                        <td>${otherPerf}</td>
+                        <td>${otherMax}</td>
+                        <td>${otherMin}</td>
+                    </tr>
+                </table>
+            `;
+                
+            document.getElementById('result').innerHTML = result;
+        });
+    </script>
+</body>
+</html>
