@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +10,17 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        label, input {
+
+        label,
+        input {
             margin: 10px 0;
             display: block;
         }
+
         button {
             margin-top: 10px;
         }
+
         pre {
             background-color: #f5f5f5;
             padding: 10px;
@@ -23,12 +28,34 @@
         }
     </style>
 </head>
+
 <body>
     <h1>あなたのレートはいずこから</h1>
-    <!-- 入力フォーム -->
-     <p>
+    <p>
         ここに "https://atcoder.jp/users/{ユーザ名}/history/json" の結果を貼り付けてね
-     </p>
+    </p>
+
+    <p>
+        ここにユーザ名を入れて押すとこのリンクを別タブで開くよ
+    </p>
+
+    <input type="text" id="username" placeholder="ユーザ名" style="display: inline"> 
+
+    <button id="jump" onclick="jump()">リンクを開く</button>
+
+    <br>
+
+
+
+
+    <script>
+        function jump() {
+            const username = document.getElementById('username').value;
+            window.open(`https://atcoder.jp/users/${username}/history/json`, '_blank');
+        }
+    </script>
+
+
 
     <textarea id="json" rows="10" cols="50"></textarea>
     <button id="submit">計算</button>
@@ -117,9 +144,10 @@
                     </tr>
                 </table>
             `;
-                
+
             document.getElementById('result').innerHTML = result;
         });
     </script>
 </body>
+
 </html>
