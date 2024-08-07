@@ -13,7 +13,7 @@ site_name: abap34's blog
 twitter_site: @abap34
 ---
 
-## 脚注機能の実装に関する議論のメモ
+## 脚注機能の実装に関するメモ
 
 最近、このブログを作ってくれている Markdownパーサである almo [^1] に脚注を実装しました。
 

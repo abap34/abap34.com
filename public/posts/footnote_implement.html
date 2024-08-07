@@ -676,10 +676,10 @@ a {
             <br><script>page_contents.push({
     "type":"H2",
     "id":"2",
-    "title":"脚注機能の実装に関する議論のメモ"
+    "title":"脚注機能の実装に関するメモ"
 });
 </script>
-<h2 id="2">脚注機能の実装に関する議論のメモ</h2><br>最近、このブログを作ってくれている Markdownパーサである almo <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> に脚注を実装しました。<br>(まさに今つかったこれです)<br><br>脚注は、 Common Mark <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> でも GFM <span class="footnote-ref"><sup id="ref_3"><a href="#label_3">[3]</a></sup></span>　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。<br><br><br>ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。<br>そのため実装の仕方に割と幅があります。　<br>この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。<br><script>page_contents.push({
+<h2 id="2">脚注機能の実装に関するメモ</h2><br>最近、このブログを作ってくれている Markdownパーサである almo <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> に脚注を実装しました。<br>(まさに今つかったこれです)<br><br>脚注は、 Common Mark <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> でも GFM <span class="footnote-ref"><sup id="ref_3"><a href="#label_3">[3]</a></sup></span>　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。<br><br><br>ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。<br>そのため実装の仕方に割と幅があります。　<br>この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。<br><script>page_contents.push({
     "type":"H2",
     "id":"35",
     "title":"脚注の何が特別なのか？"
