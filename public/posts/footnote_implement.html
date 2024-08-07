@@ -18,7 +18,7 @@
     <title> 脚注機能の実装に関するメモ </title>
 
     <meta property="og:title" content="脚注機能の実装に関するメモ">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/springer-english/n02102040_35.jpg">
+    <meta property="og:image" content="https://abap34.com/posts/footnote_implement/thumbnail.png">
     <meta property="og:description" content="">
     <meta property="og:url" content="https://abap34.com/posts/footnote_implement.html">
     <meta property="og:type" content="article">
@@ -81,6 +81,15 @@
         padding-left: 10px !important;
         padding-right: 10px !important;
         margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
     }
 
 }
@@ -670,13 +679,13 @@ a {
     "title":"脚注機能の実装方法に関する議論のメモ"
 });
 </script>
-<h2 id="2">脚注機能の実装方法に関する議論のメモ</h2><br>最近、このブログを作ってくれている Markdownパーサである almo <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> に脚注を実装しました。<br>(まさに今つかったこれです)<br><br>脚注は、 Common Mark <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> でも GFM <span class="footnote-ref"><sup id="ref_3"><a href="#label_3">[3]</a></sup></span>　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。<br><br><br>ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。<br>そのため実装の仕方に割と幅があります。　この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。<br><script>page_contents.push({
+<h2 id="2">脚注機能の実装方法に関する議論のメモ</h2><br>最近、このブログを作ってくれている Markdownパーサである almo <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> に脚注を実装しました。<br>(まさに今つかったこれです)<br><br>脚注は、 Common Mark <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> でも GFM <span class="footnote-ref"><sup id="ref_3"><a href="#label_3">[3]</a></sup></span>　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。<br><br><br>ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。<br>そのため実装の仕方に割と幅があります。　<br>この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。<br><script>page_contents.push({
     "type":"H2",
-    "id":"33",
+    "id":"35",
     "title":"脚注の何が特別なのか？"
 });
 </script>
-<h2 id="33">脚注の何が特別なのか？</h2><br>そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。<br><ol><li>Markdown をパースして AST に変換</li><li>AST を走査して HTML に変換</li></ol><br>almo も同様です。<br><br>例えば<br><div class="code-block"> <pre><code class="language-md"># Heading  1
+<h2 id="35">脚注の何が特別なのか？</h2><br>そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。<br><ol><li>Markdown をパースして AST に変換</li><li>AST を走査して HTML に変換</li></ol><br>almo も同様です。<br><br>例えば<br><div class="code-block"> <pre><code class="language-md"># Heading  1
 
 **~~To be or not to be~~**
 
@@ -698,19 +707,19 @@ md = &quot;&quot;&quot;
 &quot;&quot;&quot;
 
 ast = almo.parse(md)
-</code></pre> </div><br><br><span class="inline-code"> <code>ast.to_dot()</code> </span> してみると<br><figure><img src="footnote_implement/ast.svg" ><figcaption></figcaption></figure><br>という結果が吐かれて、こんな感じの AST が得られていることがわかります。<br>ここから HTML に変換するわけです。<br><br>ここで、パースするとき・この AST から HTML を生成するときのうれしい性質として各ノードは独立に考えてもいいというのがあります。<br><br>それぞれのノードは (子ノードが valid な出力をしてくれているという前提に立って)、　自分が正しい出力をすれば良いだけです。<br><span class="lined"><span class="strong"> <strong>しかし、脚注は違います。</strong> </span></span><br>脚注 (の定義) は、末尾に生成される必要があります。<br>そのほかにも、<br><ul><li>番号を振る</li><li>未定義な脚注がないかチェックする</li></ul><br>などを考えると、AST 全体に渡るグローバルな状態を検査する必要があります。<br><br>したがって、脚注の実装は単に構文を追加するというより全体にわたる実装の変更を考える必要があります。<br><br><script>page_contents.push({
+</code></pre> </div><br><br><span class="inline-code"> <code>ast.to_dot()</code> </span> してみると<br><figure><img src="footnote_implement/ast.svg" ><figcaption></figcaption></figure><br>という結果が吐かれてます。<br><br>ここから HTML に変換するわけです。<br><br>ここで、パースするとき・この AST から HTML を生成するとき　のうれしい性質として、「各ノードは独立に考えてもいい」というのがあります。<br><br>例えば HTML に変換するときは、それぞれのノードは (他のノードが valid な出力をしてくれているという前提に立って)、　自分が正しい出力をすれば良いだけです。<br><br><br><span class="lined"><span class="strong"> <strong>しかし、脚注は違います。</strong> </span></span><br><br><br>脚注は以下のような性質があります:<br><ul><li>定義は末尾に生成される</li><li>番号を振る</li><li>未定義な脚注がないかチェックする</li></ul><br><br>したがって、 <span class="strong"> <strong>AST 全体にわたるグローバルな状態を検査する必要があります。</strong> </span><br><br><br>したがって、脚注の実装は単に構文を追加するというより全体にわたる実装の変更を考える必要があります。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"92",
+    "id":"103",
     "title":"どう実装するのか？"
 });
 </script>
-<h2 id="92">どう実装するのか？</h2><br>最初に自分が提案したのは、パースをする際に使う <span class="inline-code"> <code>Reader</code> </span> にグローバルな状態を持たせてパースさせていくことでした。<br><br>というのも、実は類似の仕組みがすでに実装されていたためです。<br>これは almo 特有の事情ですが、Pyodide をロードするのは非常にコストがかかるので、不要ならこれをスキップするために 「Pyodide が必要か？」というのを調べるために <span class="inline-code"> <code>Reader</code> </span> クラスに情報を持たせる仕組みがすでにありました。<br><br>そのため、自分は当初脚注の実装を任せた共同開発者にこれを提案しましたが、他の共同開発者からは別の仕組みを提案されました。<br><br>そもそも、 <span class="inline-code"> <code>Reader</code> </span> クラスにあまり情報を持たせるのはうれしくありません。 この手の構文が増えるたびに肥大化していくのが目に見えています。<br><br>そこで、脚注の実装を AST に対する後処理として行うことを提案されました。<br>つまり、 (第一段階の) AST を作る段階では末尾に移動する、正しい脚注定義がなされているかをチェックする、などの処理は行わず、AST が完成した後に AST を走査して脚注を処理する方式です。<br><br>この実装で統一することで 「Pyodide が必要か？」という処理も書き直して、割とスッキリした実装になりました。<br><br><script>page_contents.push({
+<h2 id="103">どう実装するのか？</h2><br>最初に自分が提案したのは、パースをする際に使う <span class="inline-code"> <code>Reader</code> </span> にグローバルな状態を持たせてパースさせていくことでした。<br><br>というのも、実は類似の仕組みがすでに実装されていたためです。<br>これは almo 特有の事情ですが、Pyodide をロードするのは非常にコストがかかるので、不要ならこれをスキップするために 「Pyodide が必要か？」というのを調べるために <span class="inline-code"> <code>Reader</code> </span> クラスに情報を持たせる仕組みがすでにありました。<br><br>そのため、自分は当初これと同様の実装を提案しましたが、一緒に開発している友人から別の仕組みを提案されました。<br><br><br>そもそも、 <span class="inline-code"> <code>Reader</code> </span> クラスにあまり情報を持たせるのはうれしくありません。 この手の構文が増えるたびに肥大化していくのが目に見えています。<br><br>そこで、脚注の実装を AST に対する後処理として行うことを提案されました。<br><br><br>つまり、 (第一段階の) AST を作る段階では末尾に移動させる、正しい脚注定義がなされているかをチェックする、などの処理は行わず、 AST が完成した後に走査・操作を行なって所望の結果を得る、というものです。<br><br>この実装で統一することで 「Pyodide が必要か？」という処理も単に特定のノードが含まれるかを最後にチェックするだけに書き直して、割とスッキリした実装になりました。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"123",
+    "id":"137",
     "title":"実装"
 });
 </script>
-<h2 id="123">実装</h2><br><url> <a href="https://github.com/abap34/almo/blob/b3389f3126551e85ae6d3bebe8a77913793fa61d/src/render.hpp#L100">実際の実装</a> </url>　では、<br><br><div class="code-block"> <pre><code class="language-cpp">void move_footnote_to_end(Markdown&amp; ast) {
+<h2 id="137">実装</h2><br><url> <a href="https://github.com/abap34/almo/blob/b3389f3126551e85ae6d3bebe8a77913793fa61d/src/render.hpp#L100">実際の実装</a> </url>　では、<br><br><div class="code-block"> <pre><code class="language-cpp">void move_footnote_to_end(Markdown&amp; ast) {
     std::vector&lt;std::shared_ptr&lt;ASTNode&gt;&gt; footnote_defs =
         ast.nodes_byclass(&quot;FootnoteDefinition&quot;);
 
@@ -723,19 +732,19 @@ ast = almo.parse(md)
         ast.move_node(node, footnote_div);
     }
 }
-</code></pre> </div><br>という感じで、 AST を走査して脚注を末尾に移動させる処理を行っています。　便利！<br><br><script>page_contents.push({
+</code></pre> </div><br>という感じで、 脚注のノードを末尾に移動させる処理を行っています。　便利！<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"135",
+    "id":"149",
     "title":"感想"
 });
 </script>
-<h2 id="135">感想</h2><br>こんな感じの流れでこういう実装にしたんだよね、という話を 同じく自分のブログのためにマークアップ言語を作っている友人に話したら、 「全く同じ流れで全く同じ方式に行き着いた」と言われてびっくりしました。　<br>おもしろいもんですね 🤗<br><br><script>page_contents.push({
+<h2 id="149">感想</h2><br>こんな感じの流れでこういう実装にしたんだよね、という話を 同じく自分のブログのためにマークアップ言語を作っている別の友人に話したら、 「全く同じ議論で全く同じ方式に行き着いた」と言われてびっくりしました。　<br>おもしろいもんですね 🤗<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"143",
+    "id":"157",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="143">今日の一曲</h2><br>最近雨やばいですよね<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yEpKC0wXy4M?si=MvIcU92Y6I_1f1rt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://github.com/abap34/almo">https://github.com/abap34/almo</a> </url></span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> <url> <a href="https://spec.commonmark.org/">https://spec.commonmark.org/</a> </url></span><span class="footnote-def" id="label_3"><a href="#ref_3">[3]</a> <url> <a href="https://github.github.com/gfm/">https://github.github.com/gfm/</a> </url></span></div>
+<h2 id="157">今日の一曲</h2><br>最近雨やばいですよね<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yEpKC0wXy4M?si=MvIcU92Y6I_1f1rt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://github.com/abap34/almo">https://github.com/abap34/almo</a> </url></span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> <url> <a href="https://spec.commonmark.org/">https://spec.commonmark.org/</a> </url></span><span class="footnote-def" id="label_3"><a href="#ref_3">[3]</a> <url> <a href="https://github.github.com/gfm/">https://github.github.com/gfm/</a> </url></span></div>
 
             <hr>
 
