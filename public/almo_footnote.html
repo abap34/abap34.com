@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.15.0/vis.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.15.0/vis.min.css" />
+
+    <title>Example Article</title>
+
+    <style>
+        /* simple academic */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin: 100px;
+  padding: 100px;
+}
+
+.title::before {
+    content: "Title: ";
+    font-weight: bold;
+}
+
+.author::before {
+    content: "Author: ";
+    font-weight: bold;
+}
+
+.date::before {
+    content: "Date: ";
+    font-weight: bold;
+}
+
+.tag {
+    font-weight: bold;
+    color: #666;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather', serif;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+h2 {
+    border-bottom: 1px solid #333;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+}
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+    margin-top: 50px;
+}
+
+
+.footnote > * {
+    display: block;
+}
+    </style>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <script>
+        var page_contents = [];
+    </script>
+
+    
+
+</head>
+
+<body>
+    <div class="date">
+        2020-01-01
+    </div>
+
+
+    <div class="tag-placeholder">
+        
+        <div class="tag">
+            # example
+        </div>
+        
+        <div class="tag">
+            # article
+        </div>
+        
+    </div>
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <script>page_contents.push({
+    "type":"H1",
+    "id":"1",
+    "title":"Parse Markdown and Render as HTML via almo <span class="footnote-ref"> <sup id="ref_1"><a href="#note_1">[1]</a></sup> </span>"
+});
+</script>
+<h1 id="1">Parse Markdown and Render as HTML via almo <span class="footnote-ref"> <sup id="ref_1"><a href="#note_1">[1]</a></sup> </span></h1><br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"10",
+    "title":"Quick Start"
+});
+</script>
+<h2 id="10">Quick Start</h2><br><div class="code-block"> <pre><code class="language-bash">$ pip3 install almo-cli
+</code></pre> </div><br><script>page_contents.push({
+    "type":"H3",
+    "id":"15",
+    "title":"Common options"
+});
+</script>
+<h3 id="15">Common options</h3><br><table>
+<thead>
+<tr>
+<th align="left"> Argument </th>
+<th align="left"> Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> <span class="inline-code"> <code>build</code> </span> </td>
+<td align="left"> Build the target file or directory. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>preview</code> </span> </td>
+<td align="left"> Live preview the target file or directory. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-h, --help</code> </span> </td>
+<td align="left"> Show this help message and exit. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-v, --version</code> </span> </td>
+<td align="left"> Show version information. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-t, --template</code> </span> </td>
+<td align="left"> The template file to use. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-s, --style</code> </span> </td>
+<td align="left"> The style file to use. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-o, --output</code> </span> </td>
+<td align="left"> The output file or directory. </td>
+</tr>
+<tr>
+<td align="left"> <span class="inline-code"> <code>-c, --config</code> </span> </td>
+<td align="left"> The configuration file to use. </td>
+</tr>
+</tbody>
+</table>
+<br><br><div class="code-block"> <pre><code class="language-bash">$ almo-cli build example/article.md --template example/assets/template.html --style example/assets/style.css -o index.html
+</code></pre> </div><br><script>page_contents.push({
+    "type":"H2",
+    "id":"75",
+    "title":"How to make it work ?"
+});
+</script>
+<h2 id="75">How to make it work ?</h2><br>First, almo parse the markdown file and create a AST (Abstract Syntax Tree) from it.<br>For example, this markdown file will be parsed as below:<br><div id="network" style='height:400px'></div></div><br>Then, almo render the AST as HTML.<br><br>This article is written by @abap34.<div class="footnote"><span class="footnote-def"><a href="#ref_1">^1</a> <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url></span></div>
+        </div>
+    </div>
+
+
+    <script type="application/dot" id="dot">
+        digraph G {
+            graph [rankdir=LR];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" [label="Markdown"];
+            "f1fadc95-5187-402d-a3a3-9897194e51fd" [label="Header"];
+            "ffe424c6-0204-4c38-b9e9-9828647c362c" [label="RawText"];
+            "f1fadc95-5187-402d-a3a3-9897194e51fd" -> "ffe424c6-0204-4c38-b9e9-9828647c362c";
+            "43ef2296-0c8a-4dfb-939a-26c4b737c9be" [label="InlineFootnoteReference"];
+            "f1fadc95-5187-402d-a3a3-9897194e51fd" -> "43ef2296-0c8a-4dfb-939a-26c4b737c9be";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "f1fadc95-5187-402d-a3a3-9897194e51fd";
+            "54977dc1-c5a9-4d1c-afd5-d06236b94d34" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "54977dc1-c5a9-4d1c-afd5-d06236b94d34";
+            "3a215dea-aa0e-4c3c-bd6f-abd911cace5d" [label="FootnoteDefinition"];
+            "7060760e-813f-4b62-b956-52a4e85f51b0" [label="RawText"];
+            "3a215dea-aa0e-4c3c-bd6f-abd911cace5d" -> "7060760e-813f-4b62-b956-52a4e85f51b0";
+            "17c2e38e-a5d5-4e39-a664-a882451754ff" [label="InlineUrl"];
+            "3a215dea-aa0e-4c3c-bd6f-abd911cace5d" -> "17c2e38e-a5d5-4e39-a664-a882451754ff";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "3a215dea-aa0e-4c3c-bd6f-abd911cace5d";
+            "a9a7392b-4325-463a-98a5-dae998d163c5" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "a9a7392b-4325-463a-98a5-dae998d163c5";
+            "2a7c65cd-4bcf-437b-bab9-da10586cd8a8" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "2a7c65cd-4bcf-437b-bab9-da10586cd8a8";
+            "a15ed225-df98-408c-b287-fb88602b5d6f" [label="Header"];
+            "4d83d1b6-0a8d-4c56-b2ac-231d7e4a1b54" [label="RawText"];
+            "a15ed225-df98-408c-b287-fb88602b5d6f" -> "4d83d1b6-0a8d-4c56-b2ac-231d7e4a1b54";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "a15ed225-df98-408c-b287-fb88602b5d6f";
+            "9e3c25e4-b8e5-4c87-adac-03acbae2c6a8" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "9e3c25e4-b8e5-4c87-adac-03acbae2c6a8";
+            "b9671ebe-bf73-4d4e-bc88-b7e9e27a5a65" [label="CodeBlock"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "b9671ebe-bf73-4d4e-bc88-b7e9e27a5a65";
+            "971d44f5-ab33-4475-b224-93c482e51de9" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "971d44f5-ab33-4475-b224-93c482e51de9";
+            "871e3e98-3c78-4808-9e8a-0c50afe09089" [label="Header"];
+            "4aa07146-de0d-431d-a623-053ecdd059e4" [label="RawText"];
+            "871e3e98-3c78-4808-9e8a-0c50afe09089" -> "4aa07146-de0d-431d-a623-053ecdd059e4";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "871e3e98-3c78-4808-9e8a-0c50afe09089";
+            "98ff9691-4ba4-495e-8973-ea549502a6c8" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "98ff9691-4ba4-495e-8973-ea549502a6c8";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" [label="Table"];
+            "996f36f5-9119-46d1-ae0a-0ad222b8d9c4" [label="Markdown"];
+            "ebea44e8-0dbb-400a-ae56-a7715a995a09" [label="RawText"];
+            "996f36f5-9119-46d1-ae0a-0ad222b8d9c4" -> "ebea44e8-0dbb-400a-ae56-a7715a995a09";
+            "e097d82e-f563-49bd-895c-30fbae0d3b62" [label="InlineCodeBlock"];
+            "996f36f5-9119-46d1-ae0a-0ad222b8d9c4" -> "e097d82e-f563-49bd-895c-30fbae0d3b62";
+            "db4e0ff7-1742-4ee3-8eb4-d840a3994ff1" [label="RawText"];
+            "996f36f5-9119-46d1-ae0a-0ad222b8d9c4" -> "db4e0ff7-1742-4ee3-8eb4-d840a3994ff1";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "996f36f5-9119-46d1-ae0a-0ad222b8d9c4";
+            "d343747b-daac-4b67-9ec6-ad9c7011329c" [label="Markdown"];
+            "64d9d207-e073-4bd8-9cc3-ba9f63205f0f" [label="RawText"];
+            "d343747b-daac-4b67-9ec6-ad9c7011329c" -> "64d9d207-e073-4bd8-9cc3-ba9f63205f0f";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "d343747b-daac-4b67-9ec6-ad9c7011329c";
+            "6048f07d-4485-4ebe-9817-f1e9e923055b" [label="Markdown"];
+            "a1049379-80f5-46f5-81c8-cbf42517e026" [label="RawText"];
+            "6048f07d-4485-4ebe-9817-f1e9e923055b" -> "a1049379-80f5-46f5-81c8-cbf42517e026";
+            "b8910027-54a9-41a7-8136-6cba0e710d5f" [label="InlineCodeBlock"];
+            "6048f07d-4485-4ebe-9817-f1e9e923055b" -> "b8910027-54a9-41a7-8136-6cba0e710d5f";
+            "993b8f7a-9191-4817-a984-f82cbf4eb2b3" [label="RawText"];
+            "6048f07d-4485-4ebe-9817-f1e9e923055b" -> "993b8f7a-9191-4817-a984-f82cbf4eb2b3";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "6048f07d-4485-4ebe-9817-f1e9e923055b";
+            "9ed61c81-358e-44e9-afbe-7a30a672b2a4" [label="Markdown"];
+            "1c54c638-699b-4183-868c-c401999ebf11" [label="RawText"];
+            "9ed61c81-358e-44e9-afbe-7a30a672b2a4" -> "1c54c638-699b-4183-868c-c401999ebf11";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "9ed61c81-358e-44e9-afbe-7a30a672b2a4";
+            "6e368169-e34c-4168-9b87-ac606c5dfee4" [label="Markdown"];
+            "54558f7d-6a33-423c-aed2-71e5695883b3" [label="RawText"];
+            "6e368169-e34c-4168-9b87-ac606c5dfee4" -> "54558f7d-6a33-423c-aed2-71e5695883b3";
+            "400dd57e-9da7-4855-a5cd-06179dda2481" [label="InlineCodeBlock"];
+            "6e368169-e34c-4168-9b87-ac606c5dfee4" -> "400dd57e-9da7-4855-a5cd-06179dda2481";
+            "ba08e38a-b304-4656-b6cc-0fed2263e6b5" [label="RawText"];
+            "6e368169-e34c-4168-9b87-ac606c5dfee4" -> "ba08e38a-b304-4656-b6cc-0fed2263e6b5";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "6e368169-e34c-4168-9b87-ac606c5dfee4";
+            "5a762ede-3023-4329-b63a-29de0a8a6913" [label="Markdown"];
+            "ef030bbc-8fd3-4c12-b9b5-5b1726e0d62f" [label="RawText"];
+            "5a762ede-3023-4329-b63a-29de0a8a6913" -> "ef030bbc-8fd3-4c12-b9b5-5b1726e0d62f";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "5a762ede-3023-4329-b63a-29de0a8a6913";
+            "0897edb3-6752-481b-b36b-772be37387a5" [label="Markdown"];
+            "c6fe1bfa-411c-45c0-a361-e377acf23bc2" [label="RawText"];
+            "0897edb3-6752-481b-b36b-772be37387a5" -> "c6fe1bfa-411c-45c0-a361-e377acf23bc2";
+            "18b2e896-82c4-4bd8-9d76-c954f8f4e739" [label="InlineCodeBlock"];
+            "0897edb3-6752-481b-b36b-772be37387a5" -> "18b2e896-82c4-4bd8-9d76-c954f8f4e739";
+            "7bbcbd3b-313d-48d8-85da-c27d1ad6a384" [label="RawText"];
+            "0897edb3-6752-481b-b36b-772be37387a5" -> "7bbcbd3b-313d-48d8-85da-c27d1ad6a384";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "0897edb3-6752-481b-b36b-772be37387a5";
+            "6216f5b7-1599-4c5d-a207-dea4f17478bf" [label="Markdown"];
+            "77570ca5-4fbe-4b8a-9a7b-609fe03a4c44" [label="RawText"];
+            "6216f5b7-1599-4c5d-a207-dea4f17478bf" -> "77570ca5-4fbe-4b8a-9a7b-609fe03a4c44";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "6216f5b7-1599-4c5d-a207-dea4f17478bf";
+            "80e1a4d1-9e60-4c77-90b8-0a431c3ffe34" [label="Markdown"];
+            "59d0bbd7-ca10-4530-9464-f2c84c40b289" [label="RawText"];
+            "80e1a4d1-9e60-4c77-90b8-0a431c3ffe34" -> "59d0bbd7-ca10-4530-9464-f2c84c40b289";
+            "c2f44ac9-a940-45de-933a-07e37eb7b013" [label="InlineCodeBlock"];
+            "80e1a4d1-9e60-4c77-90b8-0a431c3ffe34" -> "c2f44ac9-a940-45de-933a-07e37eb7b013";
+            "98ed3638-a2b5-45a2-8106-b6ac6d35afb4" [label="RawText"];
+            "80e1a4d1-9e60-4c77-90b8-0a431c3ffe34" -> "98ed3638-a2b5-45a2-8106-b6ac6d35afb4";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "80e1a4d1-9e60-4c77-90b8-0a431c3ffe34";
+            "af4d6afb-b3c3-4c2a-a20c-9adafdbd380b" [label="Markdown"];
+            "91224a16-8789-4b42-9a8c-1ded7493ea41" [label="RawText"];
+            "af4d6afb-b3c3-4c2a-a20c-9adafdbd380b" -> "91224a16-8789-4b42-9a8c-1ded7493ea41";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "af4d6afb-b3c3-4c2a-a20c-9adafdbd380b";
+            "84b84ba8-68c0-4c34-b41f-5e98b0260dfb" [label="Markdown"];
+            "d88f94e6-4489-4fae-ba36-ea6d298c144e" [label="RawText"];
+            "84b84ba8-68c0-4c34-b41f-5e98b0260dfb" -> "d88f94e6-4489-4fae-ba36-ea6d298c144e";
+            "bb9f73ce-658c-4ca3-8fbb-c9a3d72ba2dd" [label="InlineCodeBlock"];
+            "84b84ba8-68c0-4c34-b41f-5e98b0260dfb" -> "bb9f73ce-658c-4ca3-8fbb-c9a3d72ba2dd";
+            "7bae2f40-90bb-4e83-9b01-85ffaf0238e7" [label="RawText"];
+            "84b84ba8-68c0-4c34-b41f-5e98b0260dfb" -> "7bae2f40-90bb-4e83-9b01-85ffaf0238e7";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "84b84ba8-68c0-4c34-b41f-5e98b0260dfb";
+            "65987fdd-5788-40c8-8d1a-2f84a0d35e7e" [label="Markdown"];
+            "4c2d26aa-0ff7-4fef-aa9f-f5b0a202a3a1" [label="RawText"];
+            "65987fdd-5788-40c8-8d1a-2f84a0d35e7e" -> "4c2d26aa-0ff7-4fef-aa9f-f5b0a202a3a1";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "65987fdd-5788-40c8-8d1a-2f84a0d35e7e";
+            "49352c65-7bbc-4da3-a8f1-bbf296399289" [label="Markdown"];
+            "f5d5dd1f-1077-4556-bdba-fbc4cff02a5e" [label="RawText"];
+            "49352c65-7bbc-4da3-a8f1-bbf296399289" -> "f5d5dd1f-1077-4556-bdba-fbc4cff02a5e";
+            "27f061c9-5d31-4c67-8b64-0ac17d81e74b" [label="InlineCodeBlock"];
+            "49352c65-7bbc-4da3-a8f1-bbf296399289" -> "27f061c9-5d31-4c67-8b64-0ac17d81e74b";
+            "1541bfef-c5a9-442f-89fc-6c5f94a65fc2" [label="RawText"];
+            "49352c65-7bbc-4da3-a8f1-bbf296399289" -> "1541bfef-c5a9-442f-89fc-6c5f94a65fc2";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "49352c65-7bbc-4da3-a8f1-bbf296399289";
+            "71747b55-1e95-4c57-8edf-a196cd50c2a9" [label="Markdown"];
+            "e14d001a-7846-456c-844b-a226fc57e47b" [label="RawText"];
+            "71747b55-1e95-4c57-8edf-a196cd50c2a9" -> "e14d001a-7846-456c-844b-a226fc57e47b";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "71747b55-1e95-4c57-8edf-a196cd50c2a9";
+            "fc2e1986-95c8-4625-ae89-3ecef724148f" [label="Markdown"];
+            "9dfadb9e-bb8b-4b9e-aa6e-7ec31b8465ad" [label="RawText"];
+            "fc2e1986-95c8-4625-ae89-3ecef724148f" -> "9dfadb9e-bb8b-4b9e-aa6e-7ec31b8465ad";
+            "f0f61799-7ed2-499b-9892-b9804317270e" [label="InlineCodeBlock"];
+            "fc2e1986-95c8-4625-ae89-3ecef724148f" -> "f0f61799-7ed2-499b-9892-b9804317270e";
+            "239595ab-2228-4e8e-8ff9-874cb0410cd0" [label="RawText"];
+            "fc2e1986-95c8-4625-ae89-3ecef724148f" -> "239595ab-2228-4e8e-8ff9-874cb0410cd0";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "fc2e1986-95c8-4625-ae89-3ecef724148f";
+            "8e29d11f-1580-4764-b790-80bb1ce1d9f2" [label="Markdown"];
+            "e7470f24-20c5-4e36-899a-37bbe1d418ad" [label="RawText"];
+            "8e29d11f-1580-4764-b790-80bb1ce1d9f2" -> "e7470f24-20c5-4e36-899a-37bbe1d418ad";
+            "6dcdf6f0-aedf-4906-bcba-cae7a32b7573" -> "8e29d11f-1580-4764-b790-80bb1ce1d9f2";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "6dcdf6f0-aedf-4906-bcba-cae7a32b7573";
+            "b123554b-73c8-4c49-bd09-77b3340c1b02" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "b123554b-73c8-4c49-bd09-77b3340c1b02";
+            "c94ec906-da0c-4d3b-8771-dd011503acd9" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "c94ec906-da0c-4d3b-8771-dd011503acd9";
+            "04323c1e-a998-4613-82eb-b61e0082f99f" [label="CodeBlock"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "04323c1e-a998-4613-82eb-b61e0082f99f";
+            "f41e7365-d205-4726-94f4-63321472e69d" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "f41e7365-d205-4726-94f4-63321472e69d";
+            "424e00ea-4dad-474c-be77-08e309170f30" [label="Header"];
+            "c3c4a1d1-a155-42e8-973b-478b47c74e59" [label="RawText"];
+            "424e00ea-4dad-474c-be77-08e309170f30" -> "c3c4a1d1-a155-42e8-973b-478b47c74e59";
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "424e00ea-4dad-474c-be77-08e309170f30";
+            "dc7fa3c9-eef8-47d7-8fe2-5c0b652940c3" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "dc7fa3c9-eef8-47d7-8fe2-5c0b652940c3";
+            "2a5f3dbf-2b9c-4758-b962-c75a43e937e7" [label="RawText"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "2a5f3dbf-2b9c-4758-b962-c75a43e937e7";
+            "d1847ce1-1b8d-46b0-992f-4ff8e5bc509c" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "d1847ce1-1b8d-46b0-992f-4ff8e5bc509c";
+            "fdd58b8c-a9fb-405f-96a7-2245d91ad5de" [label="RawText"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "fdd58b8c-a9fb-405f-96a7-2245d91ad5de";
+            "23d4a212-dd4c-4294-b5db-a592c84feace" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "23d4a212-dd4c-4294-b5db-a592c84feace";
+            "7adc03ec-f4ae-439e-b7f0-21466d954ba4" [label="RawText"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "7adc03ec-f4ae-439e-b7f0-21466d954ba4";
+            "ec27e554-2a4b-40c6-815a-b010e336814b" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "ec27e554-2a4b-40c6-815a-b010e336814b";
+            "b5c3efd5-cac3-4861-b819-5500ff615fc9" [label="RawText"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "b5c3efd5-cac3-4861-b819-5500ff615fc9";
+            "068d19e5-f027-4265-9685-8804a72d6803" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "068d19e5-f027-4265-9685-8804a72d6803";
+            "28ee288e-6c12-4691-9646-f6090fac7d88" [label="NewLine"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "28ee288e-6c12-4691-9646-f6090fac7d88";
+            "287fb4eb-c26a-4d05-bc22-4604555387d0" [label="RawText"];
+            "4a1b5034-2d33-4419-8233-871b9e6efd22" -> "287fb4eb-c26a-4d05-bc22-4604555387d0";
+            }
+    </script>
+
+    <script type="text/javascript">
+        var dotScript = document.getElementById('dot').innerHTML;
+        var parsedData = vis.network.convertDot(dotScript);
+        var nodes = parsedData.nodes;
+        for (var i = 0; i < nodes.length; ++i)
+        {
+          parsedData.nodes[i].x = i * 100;
+          parsedData.nodes[i].y = i;
+        }
+        var data = {
+          nodes: parsedData.nodes,
+          edges: parsedData.edges
+        };
+        var options = {layout:{
+            hierarchical:{
+                direction:"UD",
+                sortMethod:"directed"
+            },
+        }};
+        var container = document.getElementById('network');
+        var network = new vis.Network(container, data, options);
+        </script>
+</body>
+
+</html>
