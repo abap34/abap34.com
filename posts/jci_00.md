@@ -25,17 +25,12 @@ twitter_site: @abap34
 ### 前提
 
 - 読んでいるコードやドキュメントは全て Julia 1.11-rc3 (コミット: 616e45539db4c49ab019b7ccd318800f240743f6) のものです。
-- 内容について、誤りがあるかもしれません。その際はコメントでご指摘いただけるとありがたいです。　
+- なるべく正確になるよう頑張りますが、誤り等あればコメントで指摘していただけるとありがたいです。
 - 解説記事というよりメモ書きに近い形態です。 コンパイラや Julia に関する知識を割と前提にしています。
 
-### スタートと目標
+### 目標
 
-一応、目標としては
-
-- Julia の IR まわり　
-- 最適化
-
-をきちんとめに理解することを目標にしています。
+一応、 **Julia の IR・最適化周りをきちんとめに理解する** ことを目標にしています。
 
 そのため、 例えば
 
@@ -57,13 +52,13 @@ twitter_site: @abap34
 
 ![Julia ドキュメントより](jci_00/image.png)
 
-Julia がコード実際に実行するまでの流れをざっと理解します。
+Julia がコードを実際に実行するまでの流れをざっと理解します。
 
 ### パース
 
 ソースコードはまずパースされて AST に変換されます。
 
-Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、Julia 1.9 までは lispで書かれたパーサが使われていたのが、Julia 1.10 からは [https://github.com/JuliaLang/JuliaSyntax.jl](https://github.com/JuliaLang/JuliaSyntax.jl) がデフォルトのパーサになりました。
+Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、 Julia 1.9 までは lisp で書かれたパーサが使われていたのが、Julia 1.10 からは [https://github.com/JuliaLang/JuliaSyntax.jl](https://github.com/JuliaLang/JuliaSyntax.jl) がデフォルトになりました。
 
 ### マクロの展開
 
