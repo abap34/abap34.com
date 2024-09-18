@@ -40,30 +40,10 @@ jobs:
         run: |
             git submodule update --init --recursive --remote 
 
-      - name: Check g++ version
-        run: |
-          g++ --version
-
-
-      - name: Setup g++13
-        uses: egor-tensin/setup-gcc@v1
-        with:
-          version: 13
-          platform: x64
-    
-
-      - name: Check g++ version
-        run: |
-          g++ --version
-
       - name: Compile almo.cpp
         run: |
-          SHELL=/bin/bash
           cd ./almo
           bash ./scripts/setup.sh
-          ls
-          ls ./build
-          pwd
           g++ -std=c++23 ./build/almo.cpp -o ./build/almo
 
       - name: Checkout Repository
