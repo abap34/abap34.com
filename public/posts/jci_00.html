@@ -686,40 +686,40 @@ a {
     "title":"前提"
 });
 </script>
-<h3 id="12">前提</h3><br><ul><li>読んでいるコードやドキュメントは全て Julia 1.11-rc3 (コミット: 616e45539db4c49ab019b7ccd318800f240743f6) のものです。</li><li>内容について、誤りがあるかもしれません。その際はコメントでご指摘いただけるとありがたいです。　</li><li>解説記事というよりメモ書きに近い形態です。 コンパイラや Julia に関する知識を割と前提にしています。</li></ul><br><script>page_contents.push({
+<h3 id="12">前提</h3><br><ul><li>読んでいるコードやドキュメントは全て Julia 1.11-rc3 (コミット: 616e45539db4c49ab019b7ccd318800f240743f6) のものです。</li><li>なるべく正確になるよう頑張りますが、誤り等あればコメントで指摘していただけるとありがたいです。</li><li>解説記事というよりメモ書きに近い形態です。 コンパイラや Julia に関する知識を割と前提にしています。</li></ul><br><script>page_contents.push({
     "type":"H3",
     "id":"23",
-    "title":"スタートと目標"
+    "title":"目標"
 });
 </script>
-<h3 id="23">スタートと目標</h3><br>一応、目標としては<br><ul><li>Julia の IR まわり　</li><li>最適化</li></ul><br>をきちんとめに理解することを目標にしています。<br>そのため、 例えば<br><ul><li>パーサ周り</li><li>マクロ展開まわり</li></ul><br>についてはそこまで深くは追求しないことになりそうです。<br>目標としてこの辺りを定めたのは<br><ul><li>現代の自動微分ライブラリ: <url> <a href="https://arxiv.org/abs/1810.07951">https://arxiv.org/abs/1810.07951</a> </url>　や <url> <a href="https://arxiv.org/abs/2010.01709">https://arxiv.org/abs/2010.01709</a> </url> あたりをきちんと理解したい。</li><li>「Julia ってなんで速いの？」 に対する回答を常に適切な粒度でできるまできちんと理解したい。</li></ul><br>あたりによるものです。<br>なのでこのあたりに関心がある人は面白いと思います。<br><script>page_contents.push({
+<h3 id="23">目標</h3><br>一応、 <span class="strong"> <strong>Julia の IR・最適化周りをきちんとめに理解する</strong> </span> ことを目標にしています。<br>そのため、 例えば<br><ul><li>パーサ周り</li><li>マクロ展開まわり</li></ul><br>についてはそこまで深くは追求しないことになりそうです。<br>目標としてこの辺りを定めたのは<br><ul><li>現代の自動微分ライブラリ: <url> <a href="https://arxiv.org/abs/1810.07951">https://arxiv.org/abs/1810.07951</a> </url> や <url> <a href="https://arxiv.org/abs/2010.01709">https://arxiv.org/abs/2010.01709</a> </url> あたりをきちんと理解したい。</li><li>「Julia ってなんで速いの？」 に対する回答を常に適切な粒度でできるまできちんと理解したい。</li></ul><br>あたりによるものです。<br>なのでこのあたりに関心がある人は面白いと思います。<br><script>page_contents.push({
     "type":"H2",
-    "id":"62",
+    "id":"57",
     "title":"00. Julia の処理系の大枠"
 });
 </script>
-<h2 id="62">00. Julia の処理系の大枠</h2><br><figure><img src="jci_00/image.png" ><figcaption>Julia ドキュメントより</figcaption></figure><br>Julia がコード実際に実行するまでの流れをざっと理解します。<br><script>page_contents.push({
+<h2 id="57">00. Julia の処理系の大枠</h2><br><figure><img src="jci_00/image.png" ><figcaption>Julia ドキュメントより</figcaption></figure><br>Julia がコードを実際に実行するまでの流れをざっと理解します。<br><script>page_contents.push({
     "type":"H3",
-    "id":"69",
+    "id":"64",
     "title":"パース"
 });
 </script>
-<h3 id="69">パース</h3><br>ソースコードはまずパースされて AST に変換されます。<br>Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、Julia 1.9 までは lispで書かれたパーサが使われていたのが、Julia 1.10 からは <url> <a href="https://github.com/JuliaLang/JuliaSyntax.jl">https://github.com/JuliaLang/JuliaSyntax.jl</a> </url> がデフォルトのパーサになりました。<br><script>page_contents.push({
+<h3 id="64">パース</h3><br>ソースコードはまずパースされて AST に変換されます。<br>Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、 Julia 1.9 までは lisp で書かれたパーサが使われていたのが、Julia 1.10 からは <url> <a href="https://github.com/JuliaLang/JuliaSyntax.jl">https://github.com/JuliaLang/JuliaSyntax.jl</a> </url> がデフォルトになりました。<br><script>page_contents.push({
     "type":"H3",
-    "id":"78",
+    "id":"73",
     "title":"マクロの展開"
 });
 </script>
-<h3 id="78">マクロの展開</h3><br>Julia のマクロはこのタイミングで展開されます。<br>そのため、この後出てくる型推論の結果などをマクロに反映させることは難しいです。<br><script>page_contents.push({
+<h3 id="73">マクロの展開</h3><br>Julia のマクロはこのタイミングで展開されます。<br>そのため、この後出てくる型推論の結果などをマクロに反映させることは難しいです。<br><script>page_contents.push({
     "type":"H3",
-    "id":"85",
+    "id":"80",
     "title":"Lowering"
 });
 </script>
-<h3 id="85">Lowering</h3><br>AST は Lowering という処理を経て、 IR に変換されます。<br>AST と IR の違いですが、 IR の方がかなりネイティブに近い形式になっています。<br>実際に見るのがわかりやすいと思います。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia">for i in 1:10
+<h3 id="80">Lowering</h3><br>AST は Lowering という処理を経て、 IR に変換されます。<br>AST と IR の違いですが、 IR の方がかなりネイティブに近い形式になっています。<br>実際に見るのがわかりやすいと思います。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia-repl">for i in 1:10
     s += i
 end
-</code></pre> </div><br>の AST は<br><div class="code-block"> <pre><code class="language-julia">julia&gt; ex = :(for i in 1:10
+</code></pre> </div><br>の AST は<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = :(for i in 1:10
            s += i
        end)
 :(for i = 1:10
@@ -757,11 +757,11 @@ julia&gt; Meta.show_sexpr(ex)
 ))))
 </code></pre> </div><br>と、ループ構造が <span class="inline-code"> <code>goto</code> </span> とかで書き換えられているのがわかります。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"111",
+    "id":"106",
     "title":"Infer types "
 });
 </script>
-<h3 id="111">Infer types </h3><br>この IR に対して型推論が行われます。<br>ここがおそらく今回のシリーズで一番難しい部分になるかと思います。 今書けることといえば<br><span class="inline-code"> <code>@code_typed</code> </span> とかで型推論の結果を見ることができますよ、くらいでしょうか。 　<div class="code-block"> <pre><code class="language-julia">julia&gt; @code_typed 1 + 3.4
+<h3 id="106">Infer types </h3><br>この IR に対して型推論が行われます。<br>ここがおそらく今回のシリーズで一番難しい部分になるかと思います。 今書けることといえば<br><span class="inline-code"> <code>@code_typed</code> </span> とかで型推論の結果を見ることができますよ、くらいでしょうか。 　<div class="code-block"> <pre><code class="language-julia">julia&gt; @code_typed 1 + 3.4
 CodeInfo(
 1 ─ %1 = Base.sitofp(Float64, x)::Float64
 │   %2 = Base.add_float(%1, y)::Float64
@@ -769,35 +769,41 @@ CodeInfo(
 ) =&gt; Float64
 </code></pre> </div><br><script>page_contents.push({
     "type":"H3",
-    "id":"122",
+    "id":"117",
     "title":"SSA Convert"
 });
 </script>
-<h3 id="122">SSA Convert</h3><br>Julia は最適化のために IR を SSA形式の IR に変換します。<br><script>page_contents.push({
+<h3 id="117">SSA Convert</h3><br>Julia は最適化のために IR を SSA形式の IR に変換します。<br><script>page_contents.push({
     "type":"H3",
-    "id":"127",
+    "id":"122",
     "title":"Optimize"
 });
 </script>
-<h3 id="127">Optimize</h3><br>ここも難しそうです。<br>SSA形式の IR をこねこねすることで最適化を行います。<br><script>page_contents.push({
+<h3 id="122">Optimize</h3><br>ここも難しそうです。<br>SSA形式の IR をこねこねすることで最適化を行います。<br><script>page_contents.push({
     "type":"H3",
-    "id":"134",
+    "id":"129",
     "title":"Translate"
 });
 </script>
-<h3 id="134">Translate</h3><br>Julia は バックエンドとして LLVM を使っています。<br>得られた最適化された IR は LLVM IR に変換されます。<br><script>page_contents.push({
+<h3 id="129">Translate</h3><br>Julia は バックエンドとして LLVM を使っています。<br>得られた最適化された IR は LLVM IR に変換されます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"141",
+    "id":"136",
     "title":"Generate"
 });
 </script>
-<h3 id="141">Generate</h3><br>最後に、LLVM IR からネイティブコードが生成されます。<br><script>page_contents.push({
+<h3 id="136">Generate</h3><br>最後に、LLVM IR からネイティブコードが生成されます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"146",
+    "id":"141",
     "title":"まとめ"
 });
 </script>
-<h2 id="146">まとめ</h2><br><br><div class="footnote"></div>
+<h2 id="141">まとめ</h2><br>がんばっていきたい。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"146",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="146">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/tcV1IIARPX4?si=7F0HxxLLAqT8Arpk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
 
             <hr>
 
