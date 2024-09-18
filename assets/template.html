@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{ title }} </title>
+    <title> {{title}} </title>
 
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:image" content="{{ ogp_url }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:image" content="{{ogp_url}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:url" content="{{url}}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:site_name" content="{{site_name}}">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{ twitter_site }}" />
+    <meta name="twitter:site" content="{{twitter_site}}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{syntax_theme}}.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,13 +53,13 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    {{ style | safe }}
+    {{style}}
 
     <script>
         page_contents = []
     </script>
 
-    {{ runner | safe }}
+    {{runner}}
 
 
 </head>
@@ -70,7 +70,7 @@
     <div class="article-header">
 
         <div class="title">
-            {{ title }}
+            {{title}}
         </div>
 
         <script>
@@ -79,23 +79,18 @@
 
         <br>
         <div class="date">
-            {{ date }}
+            {{date}}
         </div>
         <br>
-
         <div class="tag-placeholder">
-            <!-- loop tags -->
-            {% for tag in tags %}
-            <div class="tag">
-                # {{ tag }}
-            </div>
-            {% endfor %}
+            {{tag}}
         </div>
+
     </div>
 
     <div class="article-body">
         <div class="content">
-            {{ content | safe }}
+            {{contents}}
 
             <hr>
 
@@ -131,13 +126,13 @@
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
-                            class="tolink"> @{{ twitter_id }}</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{twitter_id}}"
+                            class="tolink"> @{{twitter_id}}</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
-                            class="tolink"> @{{ github_id }}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
-                            {{ mail }}</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{github_id}}"
+                            class="tolink"> @{{github_id}}</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{mail}}" class="tolink">
+                            {{mail}}</a>
                     </p>
 
 
@@ -212,6 +207,20 @@
                 }
             });
         }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
     </script>
 
 
