@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> 作問ハッカソン 002で作問しました  </title>
+    <title> {{ title }} </title>
 
-    <meta property="og:title" content="作問ハッカソン 002で作問しました ">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/rottweiler/n02106550_3528.jpg">
-    <meta property="og:description" content="">
-    <meta property="og:url" content="https://abap34.com/posts/sakumon2.html">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:image" content="{{ ogp_url }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ url }}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="abap34.com">
+    <meta property="og:site_name" content="{{ site_name }}">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="{{ twitter_site }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,565 +53,13 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    <style>body {
-    max-width: 1200px;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: rgb(240, 244, 246);
-    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-    color: #333;
-}
-
-
-.article-body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-@media (max-width: 1200px) {
-    .side #toc {
-        display: none;
-    }
-
-    .article-body {
-        display: block !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        margin: 10px !important;
-    }
-
-}
-
-.side {
-    order: 1;
-    border-right: solid 1px #ddd;
-    padding-right: 20px;
-}
-
-.content {
-    order: 2;
-    padding: 20px;
-    width: 95%;
-    max-width: 900px;
-    margin: auto;
-    padding: auto;
-}
-
-
-.side-sticky {
-    position: sticky;
-    top: 20px;
-}
-
-
-.article-header {
-    padding-top: 30px;
-    margin: 10px;
-}
-
-
-
-.article-header .title {
-    color: #001e43;
-    font-size: 1.4rem;
-    font-weight: bold;
-    border-bottom: dotted 3px #001e43;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.date {
-    font-size: 14px;
-    text-align: center;
-    color: gray;
-}
-
-.date::before {
-    content: "\f073";
-    font-family: "Font Awesome 5 Free";
-}
-
-.tag-placeholder {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.tag {
-    display: inline-block;
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    border: 1px solid gray;
-}
-
-.tag a {
-    color: #666;
-    text-decoration-line: none;
-}
-
-
-.toc_title {
-    display: none;
-}
-
-.math-block {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.math-inline {
-    display: inline-grid;
-    overflow-x: hidden;
-    ;
-}
-
-mjx-container {
-    display: inline-block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-}
-
-h2 {
-    border-left: solid 5px #85c0ff;
-    padding-left: 10px;
-}
-
-
-img {
-    max-width: 100% !important;
-    height: auto;
-}
-
-@media (max-width: 1200px) {
-    figure {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        overflow: hidden;
-        padding: 20px;
-    }
-}
-
-
-figure {
-    text-align: center;
-    color: gray;
-}
-
-
-h3 {
-    border-bottom: 1px solid #ddd !important;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-h4 {
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-pre {
-    padding: 10px;
-}
-
-.tex-equations {
-    overflow-x: auto;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.exec_out {
-    color: white;
-}
-
-@media (max-width: 1200px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
-
-#toc {
-    border-radius: 4px;
-    padding: 15px;
-    padding-left: 0px;
-    list-style: none;
-}
-
-#toc a {
-    text-decoration: none;
-    color: #777;
-    display: block;
-    margin: 5px 0;
-    transition: color 0.2s;
-}
-
-#toc a:hover {
-    color: #007bff;
-}
-
-#toc .active {
-    font-weight: bold;
-    color: #007bff;
-    font-size: 1.1em;
-}
-
-#toc {
-    list-style: none;
-    padding: 0;
-    border-left: 2px dotted #a3c5db;
-    border-radius: 0%;
-}
-
-#toc li {
-    padding-left: 20px;
-    margin-top: 10px;
-    position: relative;
-}
-
-/* #toc li::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #c4e4f9;
-    border-radius: 50%;
-    border: 1px solid #a3c5db;
-    position: absolute;
-    left: -7px;
-    top: 0;
-    transform: translateY(50%);
-} */
-
-.toc_H1 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-
-.toc_H2 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-/* .toc_H2::before {
-    background: #f8f8f8 !important;
-    border: 1px solid #3498db !important;
-} */
-
-.toc_H3 {
-    font-size: 12px;
-    margin-bottom: 10px;
-    color: #007bff;
-    padding-left: 10px;
-}
-
-.toc_H3::before {
-    display: none !important;
-}
-
-#toposts,
-#tohome,
-#torss {
-    display: inline-block;
-    text-decoration: none;
-}
-
-
-.links {
-    border-top: solid 1px #ddd;
-    padding-top: 20px;
-    color: hwb(211 18% 52%);
-}
-
-.links a {
-    text-decoration: none;
-    color: #3c3c3c;
-}
-
-.links {
-    /* 等幅フォント */
-    font-family: "Noto Sans Mono", monospace;
-}
-
-#toposts {
-    color: #979797 !important;
-
-}
-
-#tohome {
-    color: #b8792c !important;
-}
-
-#torss {
-    color: #d88914 !important;
-}
-
-#twitter {
-    color: #1da1f2 !important;
-}
-
-#github {
-    color: #000000 !important;
-}
-
-#mail {
-    color: #bbbbbb !important;
-}
-
-
-.content_list_h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
-}
-
-.content_list_h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.content_list_problem {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.badge {
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #777;
-    border: 1px solid #444;
-    margin: 0 8px;
-    float: left;
-}
-
-.runbutton,
-.submitbutton {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-}
-
-.runbutton {
-    background-color: #007bff;
-}
-
-.runbutton:hover {
-    background-color: #005580;
-}
-
-.submitbutton {
-    background-color: #008000;
-}
-
-.submitbutton:hover {
-    background-color: #006400;
-}
-
-.problem_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
-
-.editor {
-    width: 100%;
-    height: 300px;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 10px;
-    border: solid 1px #ddd;
-}
-
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
-    width: 100%;
-    padding: 5px 5px;
-    overflow-x: auto;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    border: solid 1px #ddd;
-}
-
-.box-title,
-.problem_list {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #777;
-}
-
-pre {
-    background-color: #282c34;
-    border-radius: 5px;
-}
-
-pre code {
-    color: #e8ebf0;
-    line-height: 1.2;
-    font-family: monospace;
-}
-
-.inline-code {
-    font-family: monospace;
-    line-height: 1.2;
-    color: #e43e3ee0;
-}
-
-.success,
-.info,
-.warning,
-.danger {
-    padding: 12px;
-    border: 1px solid;
-    border-radius: 4px;
-}
-
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-
-.danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
-.definition {
-    counter-increment: definition;
-    border: #31708f 3px dotted;
-    border-left: #31708fa1 5px solid;
-}
-
-.definition::before {
-    content: "Definition " counter(definition) ".";
-}
-
-.theorem {
-    counter-increment: theorem;
-    border: #318f5a 3px dotted;
-    border-left: #318f4fa1 5px solid;
-}
-
-.theorem::before {
-    content: "Theorem " counter(theorem) ".";
-}
-
-.lemma {
-    counter-increment: lemma;
-    border: #ab5b64 3px dotted;
-    border-left: #d071a4a1 5px solid;
-}
-
-.lemma::before {
-    content: "Lemma " counter(lemma) ".";
-}
-
-.proof {
-    counter-increment: proof;
-    border: #5b64ab 3px dotted;
-    border-left: #8cc1e7a1 5px solid;
-}
-
-.proof::before {
-    content: "Proof " counter(proof) ".";
-}
-
-.definition::before,
-.theorem::before,
-.proof::before,
-.lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
-
-
-.definition,
-.theorem,
-.proof,
-.lemma {
-    padding: 12px;
-    margin: 12px;
-}
-
-.proof::after {
-    content: "∎";
-    margin-left: auto;
-    display: block;
-}
-
-iframe {
-    width: 100%;
-}
-
-
-a {
-    color: #006699;
-    word-break: break-all;
-}</style>
+    {{ style | safe }}
 
     <script>
         page_contents = []
     </script>
 
-    <!-- Runner is not required. Skip this. -->
+    {{ runner | safe }}
 
 
 </head>
@@ -622,7 +70,7 @@ a {
     <div class="article-header">
 
         <div class="title">
-            作問ハッカソン 002で作問しました 
+            {{ title }}
         </div>
 
         <script>
@@ -631,24 +79,23 @@ a {
 
         <br>
         <div class="date">
-            2024/02/17
+            {{ date }}
         </div>
         <br>
-        <div class="tag-placeholder">
-            [競プロ, traP, 日記]
-        </div>
 
+        <div class="tag-placeholder">
+            <!-- loop tags -->
+            {% for tag in tags %}
+            <div class="tag">
+                # {{ tag }}
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="article-body">
         <div class="content">
-            <br><script>page_contents.push({
-    "type":"H2",
-    "id":"2",
-    "title":"Don't cut line!"
-});
-</script>
-<h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、 今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、このあたりに着想を得て作りました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので <span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、 そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、 今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください！<br>また、解説を頑張って書いたのでここにも掲載しておきます。<br><br><details style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;"> <summary>解説(ネタバレ注意)</summary><br><span class="math-inline"> \( P(T) \) </span> は、<span class="math-inline"> \( T \) </span> に含まれる最も <span class="math-inline"> \( p_e \) </span> の大きい辺の <span class="math-inline"> \( p_e \) </span> のみによって決まります。<br>そのため、 条件を満たすように<span class="math-inline"> \( P(T) \) </span> を最大化するには、なるべく大きい <span class="math-inline"> \( p_e \) </span> を持つ辺を一つ採用し、あとはコストが最も小さくなるような全域木を作れば良いです。<br>つまり、<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法で今回の問題を解くことができます。<br>これを行う最も素直な方法は、辺を一つ選んだのちに、その辺が結ぶ二つの頂点をまとめて新しく得たグラフの最小全域木を得て、条件を満たすか確認することです。<br>しかし、最小全域木を作る際には <span class="math-inline"> \( N-2 \) </span> 本の辺を選ぶ必要があるので、 毎回 <span class="math-inline"> \( \Omega(N) \) </span> の計算量がかかってしまいます。<br>そして、あらかじめ選ぶ辺の候補は <span class="math-inline"> \( K \) </span> 本あるので、今回の制約でこのアルゴリズムを時間内に実行することは難しいです。<br>そこで、これを高速化することを考えます。<br><br>実は、毎回最小全域木を求め直すのではなく、与えられたグラフ <span class="math-inline"> \( G \) </span> に対する最小全域木をあらかじめ求めておくと、<br>ある辺が含まれるような全域木の最小コストを高速に求めることができます。<br><br><br><span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T = (V, E) \) </span> をあらかじめ求めたとします。<br>これに操作を加えることで、辺 <span class="math-inline"> \( e \notin E \) </span> が含まれるような全域木のうち最もコストが小さくなるようなものを得たいです。<br>まず、<span class="math-inline"> \( e \) </span> を <span class="math-inline"> \( T \) </span> に加えると、 <span class="math-inline"> \( T \) </span> にあらたに閉路がただひとつできます。<br>したがって、この閉路の辺をどれかひとつ削除すれば全域木となります。<br>そしてこのとき、この閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストの大きい辺を削除することで <span class="math-inline"> \( e \) </span> を含む最もコストの小さい全域木を得ることができます。<br>これは、あらかじめ <span class="math-inline"> \( e \) </span> を採用した状態でクラスカル法を適用することを考えればわかります。<br>この閉路を構成する辺のうち、最後に選ばれる辺である最もコストの大きい辺を追加すると、 <span class="math-inline"> \( e \) </span> がすでにあることから閉路ができるため、採用されなくなるためです。<br><br><br>したがって、 <span class="math-inline"> \( e \) </span> が含まれる最もコストの小さい全域木は、<br><br>木 <span class="math-inline"> \( T \) </span> があったとき、<br><br><strong>「 <span class="math-inline"> \( T \) </span> に 辺 <span class="math-inline"> \( e \) </span> を追加したとき、できる閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストが高いものはいくつか？」</strong><br><br>というクエリに高速で答えられるようになれば、高速に求まることになります。<br>ここからは、これについて考えます。<br><br><h3>削除する辺の高速な求め方</h3><br>ここで、できる閉路は、 <span class="math-inline"> \( u, v \) </span> の最小共通祖先を <span class="math-inline"> \( r \) </span> としたときに<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路と <span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路という二つの経路が合わさったものである」ということに注目します。<br>すると、<span class="math-inline"> \( u, v \) </span> を繋いだことでできる閉路の辺のコストの最大値は、<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 と 「<span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 の大きい方になります。<br><br>つまり、先ほどのクエリは 「<span class="math-inline"> \( T \) </span> の <span class="math-inline"> \( u, v \) </span> の最小共通祖先までの経路上のうち最もコストが高いものはいくつか？」<br>と言い換えられ、これにはダブリングと呼ばれるテクニックを用いると高速に答えることができます。<br><br><br><br>ダブリングを用いると、頂点数 <span class="math-inline"> \( V \) </span> の木の二つの頂点 <span class="math-inline"> \( u, v \) </span> の最小共通祖先は <span class="math-inline"> \( O(\log V) \) </span> で求めることができます。<br><br><br>さらに、これを求める際に、各頂点からの親への遷移の情報と共に、親への遷移の経路上の辺のコストの最大値を管理することで、<br><br><br><span class="math-inline"> \( u, v \) </span> それぞれからの最小共通祖先への経路上の最大コストを同時に求められます。<br><br>したがって、この方法で <span class="math-inline"> \( O(\log N) \) </span> の時間計算量で目的の辺を特定することができます。<br><br><h3>最終的なアルゴリズム</h3><br>ここまでの議論から、最初に登場した<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法は、<br>クラスカル法などで、<span class="math-inline"> \( O(K \log K  + K \alpha(N)) \) </span> の時間計算量であらかじめ <span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T \) </span> を求めておくことで、<br><br>\1. の時間計算量が 毎回 <span class="math-inline"> \( O (\log N) \) </span>となり、<br>試す辺の数は高々 <span class="math-inline"> \( K \) </span> 本なので、全体としては <span class="math-inline"> \( O(K \log K + K \log N) \) </span> の時間計算量となります。<br>今回の問題では、このアルゴリズムを時間制限に十分間に合うように動作させることが可能です。<br></details><br><br>また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、 大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br>
+            {{ content | safe }}
 
             <hr>
 
@@ -684,13 +131,13 @@ a {
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
+                            class="tolink"> @{{ twitter_id }}</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
-                            abap0002@gmail.com</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
+                            class="tolink"> @{{ github_id }}</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
+                            {{ mail }}</a>
                     </p>
 
 
@@ -765,20 +212,6 @@ a {
                 }
             });
         }
-
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
-        document.querySelector(".tag-placeholder").innerHTML = "";
-
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
-            const each_tag = document.createElement("span");
-            each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
-            document.querySelector(".tag-placeholder").appendChild(each_tag);
-        });
     </script>
 
 
