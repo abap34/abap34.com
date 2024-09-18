@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{ title }} </title>
+    <title> 脚注機能の実装に関するメモ </title>
 
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:image" content="{{ ogp_url }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="脚注機能の実装に関するメモ">
+    <meta property="og:image" content="https://abap34.com/posts/footnote_implement/thumbnail.png">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="https://abap34.com/posts/footnote_implement.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{ twitter_site }}" />
+    <meta name="twitter:site" content="@abap34" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,13 +53,600 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    {{ style | safe }}
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}</style>
 
     <script>
         page_contents = []
     </script>
 
-    {{ runner | safe }}
+    <!-- Runner is not required. Skip this. -->
 
 
 </head>
@@ -70,7 +657,7 @@
     <div class="article-header">
 
         <div class="title">
-            {{ title }}
+            脚注機能の実装に関するメモ
         </div>
 
         <script>
@@ -79,23 +666,89 @@
 
         <br>
         <div class="date">
-            {{ date }}
+            2024/08/07
         </div>
         <br>
-
         <div class="tag-placeholder">
-            <!-- loop tags -->
-            {% for tag in tags %}
-            <div class="tag">
-                # {{ tag }}
-            </div>
-            {% endfor %}
+            [日記, Markdown, ALMO, AST]
         </div>
+
     </div>
 
     <div class="article-body">
         <div class="content">
-            {{ content | safe }}
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"脚注機能の実装に関するメモ"
+});
+</script>
+<h2 id="2">脚注機能の実装に関するメモ</h2><br>最近、このブログを作ってくれている Markdownパーサである almo <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> に脚注を実装しました。<br>(まさに今つかったこれです)<br><br>脚注は、 Common Mark <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> でも GFM <span class="footnote-ref"><sup id="ref_3"><a href="#label_3">[3]</a></sup></span>　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。<br><br><br>ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。<br>そのため実装の仕方に割と幅があります。　<br>この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"35",
+    "title":"脚注の何が特別なのか？"
+});
+</script>
+<h2 id="35">脚注の何が特別なのか？</h2><br>そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。<br><ol><li>Markdown をパースして AST に変換</li><li>AST を走査して HTML に変換</li></ol><br>almo も同様です。<br><br>例えば<br><div class="code-block"> <pre><code class="language-md"># Heading  1
+
+**~~To be or not to be~~**
+
+- list1
+- list2
+  - list3
+  - list4
+</code></pre> </div><br>のような md ファイルを almo に渡して、<br><div class="code-block"> <pre><code class="language-python">import almo
+
+md = &quot;&quot;&quot;
+# Heading  1
+
+**~~To be or not to be~~**
+
+- list1
+- list2
+  - list3
+  - list4
+&quot;&quot;&quot;
+
+ast = almo.parse(md)
+</code></pre> </div><br><br><span class="inline-code"> <code>ast.to_dot()</code> </span> してみると<br><figure><img src="footnote_implement/ast.svg" ><figcaption></figcaption></figure><br>という結果が吐かれてます。<br><br>ここから HTML に変換するわけです。<br><br>ここで、パースするとき・この AST から HTML を生成するとき　のうれしい性質として、「各ノードは独立に考えてもいい」というのがあります。<br><br>例えば HTML に変換するときは、それぞれのノードは (他のノードが valid な出力をしてくれているという前提に立って)、　自分が正しい出力をすれば良いだけです。<br><br><br><span class="lined"><span class="strong"> <strong>しかし、脚注は違います。</strong> </span></span><br><br><br>脚注は以下のような性質があります:<br><ul><li>定義は末尾に生成される</li><li>番号を振る</li><li>未定義な脚注がないかチェックする</li></ul><br><br>したがって、 <span class="strong"> <strong>AST 全体にわたるグローバルな状態を検査する必要があります。</strong> </span><br>これが脚注の他の構文との違いです。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"101",
+    "title":"どう実装するのか？"
+});
+</script>
+<h2 id="101">どう実装するのか？</h2><br>最初に自分が提案したのは、パースをする際に使う <span class="inline-code"> <code>Reader</code> </span> にグローバルな状態を持たせてパースさせていくことでした。<br><br>というのも、実は類似の仕組みがすでに実装されていたためです。<br>これは almo 特有の事情ですが、Pyodide をロードするのは非常にコストがかかるので、不要ならこれをスキップするために 「Pyodide が必要か？」というのを調べるために <span class="inline-code"> <code>Reader</code> </span> クラスに情報を持たせる仕組みがすでにありました。<br><br>そのため、自分は当初これと同様の実装を提案しましたが、一緒に開発している友人から別の仕組みを提案されました。<br><br><br>そもそも、 <span class="inline-code"> <code>Reader</code> </span> クラスにあまり情報を持たせるのはうれしくありません。 この手の構文が増えるたびに肥大化していくのが目に見えています。<br><br>そこで、脚注の実装を AST に対する後処理として行うことを提案されました。<br><br><br>つまり、 (第一段階の) AST を作る段階では末尾に移動させる、正しい脚注定義がなされているかをチェックする、などの処理は行わず、 AST が完成した後に走査・操作を行なって所望の結果を得る、というものです。<br><br>この実装で統一することで 「Pyodide が必要か？」という処理も単に特定のノードが含まれるかを最後にチェックするだけに書き直して、割とスッキリした実装になりました。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"135",
+    "title":"実装"
+});
+</script>
+<h2 id="135">実装</h2><br><url> <a href="https://github.com/abap34/almo/blob/b3389f3126551e85ae6d3bebe8a77913793fa61d/src/render.hpp#L100">実際の実装</a> </url>　では、<br><br><div class="code-block"> <pre><code class="language-cpp">void move_footnote_to_end(Markdown&amp; ast) {
+    std::vector&lt;std::shared_ptr&lt;ASTNode&gt;&gt; footnote_defs =
+        ast.nodes_byclass(&quot;FootnoteDefinition&quot;);
+
+    std::shared_ptr&lt;DivBlock&gt; footnote_div =
+        std::make_shared&lt;DivBlock&gt;(&quot;footnote&quot;);
+
+    ast.pushback_child(footnote_div);
+
+    for (auto node : footnote_defs) {
+        ast.move_node(node, footnote_div);
+    }
+}
+</code></pre> </div><br>という感じで、 脚注のノードを末尾に移動させる処理を行っています。　便利！<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"147",
+    "title":"感想"
+});
+</script>
+<h2 id="147">感想</h2><br>こんな感じの流れでこういう実装にしたんだよね、という話を 同じく自分のブログのためにマークアップ言語を作っている別の友人に話したら、 「全く同じ議論で全く同じ方式に行き着いた」と言われてびっくりしました。　<br>おもしろいもんですね 🤗<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"155",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="155">今日の一曲</h2><br>最近雨やばいですよね<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yEpKC0wXy4M?si=MvIcU92Y6I_1f1rt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://github.com/abap34/almo">https://github.com/abap34/almo</a> </url></span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> <url> <a href="https://spec.commonmark.org/">https://spec.commonmark.org/</a> </url></span><span class="footnote-def" id="label_3"><a href="#ref_3">[3]</a> <url> <a href="https://github.github.com/gfm/">https://github.github.com/gfm/</a> </url></span></div>
 
             <hr>
 
@@ -131,13 +784,13 @@
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
-                            class="tolink"> @{{ twitter_id }}</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
-                            class="tolink"> @{{ github_id }}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
-                            {{ mail }}</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
                     </p>
 
 
@@ -212,6 +865,20 @@
                 }
             });
         }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
     </script>
 
 

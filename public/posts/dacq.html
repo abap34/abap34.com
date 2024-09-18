@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{ title }} </title>
+    <title> mini Kaggle を streamlit で作った </title>
 
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:image" content="{{ ogp_url }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="mini Kaggle を streamlit で作った">
+    <meta property="og:image" content="https://www.abap34.com/posts/dacq/image.png">
+    <meta property="og:description" content="部内データ分析コンペ用の mini Kaggle を streamlit で作りました。">
+    <meta property="og:url" content="https://abap34.com/posts/dacq.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{ twitter_site }}" />
+    <meta name="twitter:site" content="@abap34" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,13 +53,600 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    {{ style | safe }}
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}</style>
 
     <script>
         page_contents = []
     </script>
 
-    {{ runner | safe }}
+    <!-- Runner is not required. Skip this. -->
 
 
 </head>
@@ -70,7 +657,7 @@
     <div class="article-header">
 
         <div class="title">
-            {{ title }}
+            mini Kaggle を streamlit で作った
         </div>
 
         <script>
@@ -79,23 +666,119 @@
 
         <br>
         <div class="date">
-            {{ date }}
+            2024/05/12
         </div>
         <br>
-
         <div class="tag-placeholder">
-            <!-- loop tags -->
-            {% for tag in tags %}
-            <div class="tag">
-                # {{ tag }}
-            </div>
-            {% endfor %}
+            [日記, Python, streamlit, Kaggle]
         </div>
+
     </div>
 
     <div class="article-body">
         <div class="content">
-            {{ content | safe }}
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"開発の経緯"
+});
+</script>
+<h2 id="2">開発の経緯</h2><br><br>ギャグの人数がいるサークル用に、昨年から部内コンペ用のプラットフォームを運営しています。<br>今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。<br><ul><li>評価指標が全然使えない</li><ul><li>評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。</li></ul><li>引き継ぎがやばそう</li><ul><li>今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。</li></ul></ul><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-<br>mlに興味がある人が多くてうれしい<br>運営がんばります‼️ <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1788718306008125491?ref_src=twsrc%5Etfw">May 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>というわけで以前から気になっていた streamlit を使って作り直すことにしました。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"26",
+    "title":"作ったもの"
+});
+</script>
+<h2 id="26">作ったもの</h2><figure><img src="dacq/image.png" ><figcaption>完成したもの</figcaption></figure><script>page_contents.push({
+    "type":"H3",
+    "id":"29",
+    "title":"コンペ機能"
+});
+</script>
+<h3 id="29">コンペ機能</h3><br>まずメインのコンペの機能ですが、 画面を見てもらうとわかるように<br><ul><li>順位表</li><li>submit</li><li>ルールの確認</li><li>スコアの推移の確認</li><li>チームの作成, 設定</li></ul><br>とかが実装されていて、割とちゃんとしたプラットフォームな建て付けをしています。<br><figure><img src="dacq/image-1.png" ><figcaption>submit 画面</figcaption></figure> ベストスコアが出るとお祝いしてくれます。<br><figure><img src="dacq/image-2.png" ><figcaption>ベストスコアの表示</figcaption></figure> <figure><img src="dacq/image-3.png" ><figcaption>ルールの表示</figcaption></figure> <figure><img src="dacq/image-4.png" ><figcaption>スコアの表示。各チームの public scoreのprogress が見れます。</figcaption></figure> <figure><img src="dacq/image-5.png" ><figcaption>チーム設定画面</figcaption></figure><br>デザイン力が皆無な自分ですが、streamlit を使うとかなり綺麗なものが出来上がってしまってマジですごい！<br><script>page_contents.push({
+    "type":"H3",
+    "id":"61",
+    "title":"ディスカッション機能"
+});
+</script>
+<h3 id="61">ディスカッション機能</h3><br>コンペを盛り上げるにはディスカッションが必須です。<br>なのでディスカッションのページも作りました。<br><figure><img src="dacq/image-6.png" ><figcaption>ディスカッション画面</figcaption></figure><br>ディスカッションでは、 Jupyter notebook をそのままアップロードすることでディスカッションを作ることができます。<br><br><figure><img src="dacq/image-8.png" ><figcaption>投稿画面</figcaption></figure> <figure><img src="dacq/image-7.png" ><figcaption>Jupyter Notebookがそのままディスカッションに</figcaption></figure><br>Jupyter Notebookの実体は jsonで、各セルの属性が書いてあるのでそれを丁寧丁寧丁寧に場合わけすると簡単に streamlit で表示できるようになります。<br>実装するとこんな感じです。<br><div class="code-block"> <pre><code class="language-python">def render_notebook(notebook: bytes):
+    notebook = nbformat.reads(notebook, as_version=4)
+    for cell in notebook.cells:
+        if cell.cell_type == &quot;code&quot;:
+            st.code(cell.source)
+            for output in cell.outputs:
+                if output.output_type == &quot;display_data&quot;:
+                    st.image(read_nbimage(output.data[&quot;image/png&quot;]))
+                elif output.output_type == &quot;execute_result&quot;:
+                    if &quot;text/html&quot; in output.data:
+                        render_html_out(output.data[&quot;text/html&quot;])
+                    else:
+                        st.write(output.data[&quot;text/plain&quot;])
+                elif output.output_type == &quot;stream&quot;:
+                    st.write(output.text)
+                elif output.output_type == &quot;error&quot;:
+                    st.error(output.ename)
+                    st.error(output.evalue)
+                elif output.output_type == &quot;dataframe&quot;:
+                    st.dataframe(output.data[&quot;text/plain&quot;])
+        elif cell.cell_type == &quot;markdown&quot;:
+            st.markdown(cell.source)
+</code></pre> </div><br>便利ですね〜<br><script>page_contents.push({
+    "type":"H2",
+    "id":"85",
+    "title":"開発記録"
+});
+</script>
+<h2 id="85">開発記録</h2><br>こういうのはガッと作るのがいいので、土曜の深夜から作り始めて、一旦寝て日曜に集中して作業して終わらせました。<br>wakatime で見てみると大体9時間くらいの作業時間でした。<br><figure><img src="dacq/image-9.png" ><figcaption></figcaption></figure><br>streamlit 使ったらすぐ終わるやろ！　という方向性の想定よりは少しかかりましたが、 とはいえこれくらい綺麗な見た目のものがこの短時間でできるのはだいぶ驚きです。<br>streamlit ほんとにすごいと思いました。<br><br>YAMLを1時間も触ってる謎の時間がありますが、 mariadb の healthcheck をするときに <span class="inline-code"> <code>mysqladmin</code> </span> で <span class="inline-code"> <code>ping</code> </span> する方法がなぜか一向にうまくいかずにガチャガチャやっていたせいです。<br><br>結局、 mariadb のイメージに最近つくようになった <span class="inline-code"> <code>healthcheck.sh</code> </span> を使う方法でうまくいきました。<br><br><div class="code-block"> <pre><code class="language-yaml">version: &#39;3&#39;
+
+services:
+  mariadb:
+    image: mariadb
+    ports:
+      - &quot;3306:3306&quot;
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: app_db
+      TZ: Asia/Tokyo
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          &quot;CMD&quot;,
+          &quot;healthcheck.sh&quot;,
+          &quot;--su-mysql&quot;,
+          &quot;--connect&quot;,
+          &quot;--innodb_initialized&quot;
+        ]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build: ./backend
+    ports:
+      - &quot;5001:5001&quot;
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+volumes:
+  mariadb_data:
+</code></pre> </div><br>それと、SQL はそんなに得意ではないので消耗しそうだな〜と思っていたのですが、 GitHub Copilot を使ってみると ほとんど一発で所望のクエリを書いてくれてめちゃくちゃ効率がアップしました。<br>(一方で streamlit は更新が早いのでろくなコードをサジェストしてくれませんでしたが、まぁしゃーなしですね)<br><br>全てを Pythonで書いているのと、大した量のデータを扱っていないので、結構な部分でデータを全て DataFrame にしてしまって、 pandas 芸人力を遺憾無く発揮して手早く実装を済ませました。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"120",
+    "title":"感想"
+});
+</script>
+<h2 id="120">感想</h2><br>綺麗な見た目の Webサービスが作れてうれしい 😊<br><br>これでコンペが盛り上がるといいな〜<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"129",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="129">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/mwfgMm2RGNk?si=00Oh44vU7f2shXU2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
 
             <hr>
 
@@ -131,13 +814,13 @@
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
-                            class="tolink"> @{{ twitter_id }}</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
-                            class="tolink"> @{{ github_id }}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
-                            {{ mail }}</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
                     </p>
 
 
@@ -212,6 +895,20 @@
                 }
             });
         }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
     </script>
 
 

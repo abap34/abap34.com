@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{ title }} </title>
+    <title> n 次精度 k 階数値微分の導出 </title>
 
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:image" content="{{ ogp_url }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="n 次精度 k 階数値微分の導出">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/cattledog-australian/IMG_2432.jpg">
+    <meta property="og:description" content="n次精度 k階数値微分の係数の導出と実装例">
+    <meta property="og:url" content="https://abap34.com/posts/n-order-diff.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{ twitter_site }}" />
+    <meta name="twitter:site" content="@abap34" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,13 +53,765 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    {{ style | safe }}
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}</style>
 
     <script>
         page_contents = []
     </script>
 
-    {{ runner | safe }}
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.0/full/pyodide.js"></script><script>
+            
+
+all_sample_input = {}
+all_sample_output = {}
+
+all_input = {}
+all_output = {}
+
+use_libs = []
+
+judge_types = {}
+problem_status = {}
+
+const pyodidePromise = loadPyodide({
+    stdin: stdin_func,
+    stdout: stdout_func,
+});
+
+function stdin_func() {
+    if (submit_run) {
+        return all_input[target_objectid][judge_idx];
+    } else {
+        return all_sample_input[target_objectid];
+    }
+}
+
+function stdout_func(answer) {
+    outputs += answer + "\n";
+}
+
+function error_handle(error) {
+    document.getElementById(target_objectid + "_out").innerText = error;
+    document.getElementById(target_objectid + "_out").style.color = "orange";
+    status = "RE";
+}
+
+const runCode = async (objectid, require_judge) => {
+    target_objectid = objectid;
+    submit_run = require_judge;
+
+    let pyodide = await pyodidePromise;
+
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    let result_bar_id = target_objectid + "_status";
+    let result_bar = document.getElementById(result_bar_id)
+
+    document.getElementById(target_objectid + "_out").innerText = "";
+    document.getElementById(target_objectid + "_out").style.color = "";
+    result_bar.innerText = "Running...";
+
+
+    if (require_judge) {
+        let n_input = all_input[target_objectid].length;
+        for (let i = 0; i < n_input; i++) {
+            judge_idx = i;
+            result_bar.innerText = "Running...   " + judge_idx + "/" + (n_input);
+            try {
+                outputs = "";
+                await pyodide.runPythonAsync(code);
+                let expect_out = all_output[target_objectid][judge_idx];
+                if (outputs.slice(-1) == "\n") {
+                    outputs = outputs.slice(0, -1);
+                }
+                judge(outputs, expect_out);
+            } catch (error) {
+                error_handle(error);
+                result_bar.innerText = "WJ";
+            }
+
+            if (status == "TLE" || status == "MLE" || status == "RE" || status == "WA") {
+                result_bar.style.backgroundColor = "#ffe500";
+                result_bar.innerText = status + "   " + judge_idx + "/" + (n_input);
+                break;
+            }
+        }
+
+        if (status == "AC") {
+            result_bar.style.backgroundColor = "lightgreen";
+            result_bar.innerText = "AC";
+            confetti();
+        } else {
+            result_bar.style.backgroundColor = "#ffe500";
+        }
+    } else {
+        try {
+            outputs = "";
+            await pyodide.runPythonAsync(code);
+            document.getElementById(target_objectid + "_out").innerText = outputs;
+            result_bar.innerText = "WJ";
+        } catch (error) {
+            error_handle(error);
+            result_bar.innerText = "RE";
+        }
+    }
+};
+
+function judge(answer, expect_out) {
+    // trim \n from both
+    if (answer.slice(-1) == "\n") {
+        answer = answer.slice(0, -1);
+    }
+
+    if (expect_out.slice(-1) == "\n") {
+        expect_out = expect_out.slice(0, -1);
+    }
+
+    let judge_type = judge_types[target_objectid];
+    if (judge_type == 'equal') {
+        if (answer === expect_out) {
+            status = "AC";
+        } else {
+            status = "WA";
+        }
+    } else if (judge_type.includes('err')) {
+        status = "AC";
+        let admissible_absolute_error = parseFloat(judge_type.split('_')[1]);
+        let answer_list = answer.split('\n');
+        let expect_out_list = expect_out.split('\n');
+        for (let i = 0; i < answer_list.length; i++) {
+            let answer_line = answer_list[i].split(' ');
+            let expect_out_line = expect_out_list[i].split(' ');
+            for (let j = 0; j < answer_line.length; j++) {
+                let answer_out = parseFloat(answer_line[j]);
+                let expect_out_out = parseFloat(expect_out_line[j]);
+                if (Math.abs(answer_out - expect_out_out) > admissible_absolute_error) {
+                    status = "WA";
+                    return;
+                }
+            }
+        }
+
+    }
+}
+
+// ExecutableCodeblockのコードを実行する
+const runBlock = async (objectid) => {
+    let out_area = document.getElementById(objectid + "_out");
+    out_area.style.color = "";
+
+    let pyodide = await pyodidePromise;
+    let editor = ace.edit(objectid);
+    let code = editor.getValue();
+    document.pyodideMplTarget = document.getElementById(objectid + "_plot");
+    out_area.innerText = "Loading libraries...";
+    for (let i = 0; i < use_libs.length; i++) {
+        out_area.innerText = "Loading " + use_libs[i] + "...";
+        let lib = use_libs[i];
+        await pyodide.loadPackage(lib);
+    }
+    out_area.innerText = "Running...";
+
+    outputs = "";
+    try {
+        await pyodide.runPythonAsync(code);
+        out_area.innerText = outputs;
+    } catch (error) {
+        out_area.innerText = error;
+        out_area.style.color = "orange";
+    }
+}
+
+
+
+</script>
 
 
 </head>
@@ -70,7 +822,7 @@
     <div class="article-header">
 
         <div class="title">
-            {{ title }}
+            n 次精度 k 階数値微分の導出
         </div>
 
         <script>
@@ -79,23 +831,212 @@
 
         <br>
         <div class="date">
-            {{ date }}
+            2023/11/10
         </div>
         <br>
-
         <div class="tag-placeholder">
-            <!-- loop tags -->
-            {% for tag in tags %}
-            <div class="tag">
-                # {{ tag }}
-            </div>
-            {% endfor %}
+            [数学, Python, 微分, 日記]
         </div>
+
     </div>
 
     <div class="article-body">
         <div class="content">
-            {{ content | safe }}
+            <br><br><script>page_contents.push({
+    "type":"H1",
+    "id":"3",
+    "title":"Abstract"
+});
+</script>
+<h1 id="3">Abstract</h1><br>みなさん微分していますか？私はしています。 数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。 なので精度よくやりたくなってきます。 ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、 中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、 各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"21",
+    "title":"前進差分・中心差分の精度の確認"
+});
+</script>
+<h2 id="21">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における <span class="math-inline"> \( h \) </span> 差分の前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
+
+f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
+
+ \] </div><br></div><br><br>これが一次精度、つまり誤差 <span class="math-inline"> \( e(h) \) </span> が <span class="math-inline"> \( O(h) \) </span> であることを確かめます。<br>上の式の右辺をテイラー展開すると、<br><div class="math-block"> \[ 
+
+\begin{align}
+f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
+&= \frac{f(x) + f'(x)h + \frac{f''(x)}{2!}h^2 + \frac{f'''(x)}{3!}h^3 + \cdots - f(x)}{h} \\
+&= \frac{f'(x)h + O(h^2)}{h} \\
+&= f'(x) + O(h)
+\end{align}
+
+ \] </div><br><br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
+ <div class="editor" id="62" rows="3" cols="80"></div> 
+<script>editor = ace.edit("62"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+
+import matplotlib
+import matplotlib.pyplot as plt
+
+matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
+
+def numerical_diff(f, x, h):
+    return (f(x+h) - f(x)) / h
+
+def numerical_diff_center(f, x, h):
+    return (f(x+h) - f(x-h)) / (2*h)
+
+def f(x):
+    return np.sin(x)
+
+h = np.logspace(0, -20, num=100)
+grad_forward = numerical_diff(f, np.pi/3, h)
+grad_center = numerical_diff_center(f, np.pi/3, h)
+grad_true = np.cos(np.pi/3)
+
+error_forward = np.abs(grad_forward - grad_true)
+error_center = np.abs(grad_center - grad_true)
+
+plt.plot(h, error_forward, label='forward')
+plt.plot(h, error_center, label='center')
+plt.xscale('log')
+plt.yscale('log')
+plt.xlabel('h')
+plt.ylabel('grad')
+plt.legend()
+plt.show()
+plt.close()
+`, -1);</script>
+<pre class="exec_out" id="62_out"></pre>
+<div class="exec_plot" id="62_plot"></div>
+<button class="runbutton" onclick="runBlock('62')"> Run </button>
+<br><br><br>よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"69",
+    "title":"任意の k 階 n 次精度数値微分"
+});
+</script>
+<h2 id="69">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、 ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
+
+f_{n}^{(k)}(x; h) = \boldsymbol{w_{n,k}} \cdot 
+\begin{pmatrix}
+f(x - ph) \\
+f(x - (p-1)h) \\
+\vdots \\
+f(x) \\
+\vdots \\
+f(x + (p-1)h) \\
+f(x + ph) \\
+\end{pmatrix}^{\top}
+
+ \] </div><br>は <span class="math-inline"> \( f_{n}^{(k)}(x; h)   = f^{(k)}(x) + O(h^n) \) </span> を満たす。<br><br></div><br>つまり、 各 <span class="math-inline"> \( n \) </span>, <span class="math-inline"> \( k \) </span> に対して中心差分と同様に、微分係数を求めたい点から左右に <span class="math-inline"> \( h \) </span> ずつ幅をとって点を取り評価した <span class="math-inline"> \( n + 1 \) </span>点に対して、適切な重み付き和が存在して <span class="math-inline"> \( k \) </span> 階導関数の <span class="math-inline"> \( n \) </span> 次精度の数値微分を実現できるということです。<br><br>証明してみます。<br><div class="proof"><br><span class="math-inline"> \( f(x + kh) = f(x) + \dfrac{f'(x)}{1!}kh + \dfrac{f''(x)}{2!}k^2h^2 + \cdots + \dfrac{f^{(n)}(x)}{n!}k^nh^n + O(h^{n+1}) \) </span> より、<br><br>これを <span class="math-inline"> \( k = -p, -p+1, \cdots, p-1, \ p \) </span> について足し合わせて <span class="math-inline"> \( k + 1 \) </span> 番目の項以外の係数を <span class="math-inline"> \( 0 \) </span> にすればよい。<br><br>したがって、<br><div class="math-block"> \[ 
+
+A = \begin{pmatrix}
+1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+-p & (-p + 1) & \cdots & 1 & 0 & 1 & \cdots & (p-1) & p \\
+(-p)^2 & (-p + 1)^2 & \cdots & (-1)^2 & 0 & 1^2 & \cdots & (p-1)^2 & p^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+(-p)^{n} & (-p + 1)^{n} & \cdots & (-1)^{n} &0 & 1^{n} & \cdots & (p-1)^{n} & p^{n} \\
+\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
+
+ \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> が存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> で、 <span class="math-inline"> \( p \neq 0 \) </span> のとき正則。 <br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> がただ存在して条件を満たす。</div><br><details> <summary>正則性について</summary> ヴァンデルモンド行列は、<div class="math-block"> \[ 
+
+A = \begin{pmatrix}
+1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
+x_1 & x_2 & \cdots & x_{n-1} & x_n & x_1 & \cdots & x_{n-1} & x_n \\
+x_1^2 & x_2^2 & \cdots & x_{n-1}^2 & x_n^2 & x_1^2 & \cdots & x_{n-1}^2 & x_n^2 \\
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+x_1^{n-1} & x_2^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} & x_1^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} \\
+x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^{n} & x_n^{n} \\
+\end{pmatrix} \in \mathbb{R}^{n \times n}
+
+ \] </div><br>という各列が等比数列のようになっている行列のことを言います。  (各行の派閥もいるらしいです。)<br>ヴァンデルモンド行列は、その行列式が<br><div class="math-block"> \[ 
+
+\det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
+
+ \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに一意で、また具体的に計算することができました。<br>実際に計算してみようと思います。<br>右から <span class="math-inline"> \( e_k \) </span> をかけるのはちょうど <span class="math-inline"> \( k \) </span> 列目のベクトルを取り出すことなのでそう実装します。<br><br><br> 
+ <div class="editor" id="197" rows="3" cols="80"></div> 
+<script>editor = ace.edit("197"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
+import matplotlib.pyplot as plt
+
+def central_weight(n, k):
+    p = n // 2
+    A = np.zeros((n+1, n+1), dtype=float)
+    r = np.arange(-p, p+1)
+    
+    for i in range(n+1):
+        A[i] = r**i
+        
+    w = np.linalg.inv(A)[:, k]
+    return w
+
+def numerical_diff(f, x, n, h=1e-5, k=1):
+    w = central_weight(n, k)
+    p = n // 2
+    
+    w = central_weight(n, k)
+    x = np.arange(-p, p+1) * h + x
+    y = f(x)
+
+    return np.dot(w, y) * np.prod(np.arange(1, k+1)) / h**k
+
+
+def f(x):
+    return np.sin(x)
+
+def df(x):
+    return np.cos(x)
+
+x = np.pi / 3
+
+
+print('w_2,1 =', central_weight(2, 1))
+print('w_4,1 =', central_weight(4, 1))
+print('w_4,2 =', central_weight(4, 2))
+
+print(numerical_diff(f, x, 2))
+print(numerical_diff(f, x, 4))    
+print(numerical_diff(f, x, 4, k=2))
+`, -1);</script>
+<pre class="exec_out" id="197_out"></pre>
+<div class="exec_plot" id="197_plot"></div>
+<button class="runbutton" onclick="runBlock('197')"> Run </button>
+<br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
+ <div class="editor" id="204" rows="3" cols="80"></div> 
+<script>editor = ace.edit("204"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
+x = np.pi / 3
+h = np.logspace(0, -10, 100)
+
+label = [f'O(h^{i})' for i in n]
+
+err = np.zeros((len(n), len(h)))
+
+for i, _n in enumerate(n):
+    for j, _h in enumerate(h):
+        err[i, j] = abs(numerical_diff(f, x, _n, h=_h) - df(x))
+
+plt.figure(figsize=(8, 6))
+for i in range(len(n)):
+    plt.loglog(h, err[i], label=label[i])
+
+plt.legend()
+plt.grid()
+plt.xlabel('h')
+plt.ylabel('Error')
+plt.show()
+`, -1);</script>
+<pre class="exec_out" id="204_out"></pre>
+<div class="exec_plot" id="204_plot"></div>
+<button class="runbutton" onclick="runBlock('204')"> Run </button>
+<br><br>打ち切り誤差の変化によって最適な点が変化していることがわかります。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"210",
+    "title":"感想"
+});
+</script>
+<h2 id="210">感想</h2>線形代数が役に立ってすごい<br>また、上のアルゴリズムは逆行列を求めるところがボトルネックで　時間計算量は <span class="math-inline"> \( O(N^3) \) </span>　ですが、 調べたところによるとヴァンデルモンド行列の逆行列は <span class="math-inline"> \( O(N^2) \) </span> で求められるようなのでそうすればもう少し早くなりそうです。 (中心差分よりも正確にやろうとする場面すらなかなかみないので実用的ではないですが)<br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"222",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="222">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>MV良すぎてめちゃくちゃ好きです。<br><br><br><br><br><div class="footnote"></div>
 
             <hr>
 
@@ -131,13 +1072,13 @@
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
-                            class="tolink"> @{{ twitter_id }}</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
-                            class="tolink"> @{{ github_id }}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
-                            {{ mail }}</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
                     </p>
 
 
@@ -212,6 +1153,20 @@
                 }
             });
         }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
     </script>
 
 

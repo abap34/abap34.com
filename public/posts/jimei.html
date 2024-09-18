@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{ title }} </title>
+    <title> 自明ギャグの定義とその発展 </title>
 
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:image" content="{{ ogp_url }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="自明ギャグの定義とその発展">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/clumber/n02101556_3878.jpg">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="https://abap34.com/posts/jimei.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:site_name" content="abap34.com">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="{{ twitter_site }}" />
+    <meta name="twitter:site" content="@abap34" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,13 +53,600 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    {{ style | safe }}
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}</style>
 
     <script>
         page_contents = []
     </script>
 
-    {{ runner | safe }}
+    <!-- Runner is not required. Skip this. -->
 
 
 </head>
@@ -70,7 +657,7 @@
     <div class="article-header">
 
         <div class="title">
-            {{ title }}
+            自明ギャグの定義とその発展
         </div>
 
         <script>
@@ -79,23 +666,76 @@
 
         <br>
         <div class="date">
-            {{ date }}
+            2023/10/13
         </div>
         <br>
-
         <div class="tag-placeholder">
-            <!-- loop tags -->
-            {% for tag in tags %}
-            <div class="tag">
-                # {{ tag }}
-            </div>
-            {% endfor %}
+            [自明ギャグ]
         </div>
+
     </div>
 
     <div class="article-body">
         <div class="content">
-            {{ content | safe }}
+            <br> 　<script>page_contents.push({
+    "type":"H2",
+    "id":"3",
+    "title":"Abstract"
+});
+</script>
+<h2 id="3">Abstract</h2>自明ギャグとは、一見正しそうな定義を自明に満たすものの、 経験的には非自明である物質を面白がるギャグである。<br>本記事は、この自明ギャグの定義や基本的構造、面白さの分析、 発展について述べ、乱立している自明ギャグについての整理を行うことを試みた。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"10",
+    "title":"自明ギャグの定義"
+});
+</script>
+<h2 id="10">自明ギャグの定義</h2><script>page_contents.push({
+    "type":"H3",
+    "id":"12",
+    "title":"自明丼"
+});
+</script>
+<h3 id="12">自明丼</h3><br>具体例から始める。<br>自明ギャグの原点は、<br><br><span class="strong"> <strong>「自明丼」</strong> </span>  である。 <span class="math-inline"> \( ^1 \) </span><br><br><br>「丼」を以下のように定義しよう。<br><br><div class="definition"><br>丼は、米の上に、以下の条件を満たす集合 <span class="math-inline"> \( X \) </span> が乗っているものである。<br><div class="math-block"> \[ 
+
+\forall x \in X, x \ \text{は具である。}
+
+ \] </div></div><br>さて、この場合具体的にどのようなものが丼になるかを考えると、次のようなことがわかる。<br><br><div class="theorem"><br>米の上に空集合が乗っているものは丼である。</div><br>これは丼の定義から自明であるし、　<br>やや不思議な言い方だが、「最も自明である」丼であろう。<br>なので、この丼のことを <span class="strong"> <strong>自明丼</strong> </span> と呼ぶことにする。<br><br><figure><img src="https://rensai.jp/wp-content/uploads/2022/02/yoshinoya-nikushita2.jpg" ><figcaption>自明丼</figcaption></figure><br><br>このように、<br><br><span class="strong"> <strong>自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</strong> </span><br><br><br>(ここでの「自明に満たす」という意味合いはかなり厳しくとることが共通見解である。どこまでが、何が「自明」の根拠として採用できるのかは、この後の「自明ギャグのように見えるが、自明ギャグではないもの」のセクションなどを参照してほしい。)<br><br><div class="definition">自然そうな定義の条件に対して、ある物体が定義を数学的には自明に満たすが、日常的な感覚からすると極めて非自明であることのギャップを利用したギャグを自明ギャグと呼ぶ。</div><br>以下は、自明丼と極めて構造が似通っている自明ギャグの例である。<br><br><div class="theorem">ハンバーガをバンズの間に具の集合が挟まっているものと定義したとき、 バンズだけのハンバーガは自明ハンバーガである。</div><br><div class="theorem">小銭入れを財布の中に通貨の集合が入っているものと定義したとき、 中身が空の小銭入れは自明小銭入れである。</div><br><br>これらは<br><ul><li>定義が単一の集合に対して与えられている</li><li>その集合が空集合ならば自明に条件を満たす</li></ul><br>というタイプの自明ギャグである。<br>このようなタイプの自明ギャグは、「自明丼型の自明ギャグ」と呼ばれる。<br><br><figure><img src="https://img06.shop-pro.jp/PA01313/765/product/101506659.jpg?cmsp_timestamp=20210617170652" ><figcaption>自明ハンバーガ</figcaption></figure><br><script>page_contents.push({
+    "type":"H3",
+    "id":"102",
+    "title":"自明ギャグのように見えるが、自明ギャグではないもの"
+});
+</script>
+<h3 id="102">自明ギャグのように見えるが、自明ギャグではないもの</h3><br>さて、ここまでで登場した自明ギャグの例をもとに自明ギャグを考える場合、典型的に陥る 誤謬をいくつか紹介しておく。<br><br>まずは「寿司型の自明ギャグ」である。<br>以下のようなギャグは、自明丼型の自明ギャグのように見えるが、自明ギャグではないものである。<br><br><div class="theorem">寿司を米の上にネタが乗っているものと定義したとき、 シャリだけの寿司は自明寿司である。</div><br>これは一見自明ギャグのように見えるが、自明ギャグにおいて最も重要である「自明にするために変化する部分」がなんであるかが不明瞭である。<br>正確に書き直すと以下のようになるであろう。<br><br><div class="theorem">寿司を米の上にネタ集合の元が乗っているものと定義したとき、 シャリだけの寿司は自明寿司である。</div><br>すると、この場合自明寿司のシャリの上に乗っているのは <span class="math-inline"> \( \emptyset \) </span> ではなくいわば「空オブジェクト」で、そもそもこれはネタの集合の元ではない。<br><span class="strong"> <strong>したがって、このギャグは自明ギャグとして成立していない。</strong> </span><br>自明丼は最も典型的なタイプの自明ギャグだが、変化する部分が集合となっているかどうかに注意が必要である。<br><br>次が、「非自明自明ギャグ」である。<br>以下のようなギャグについて考えよう。<br><br><div class="theorem">丼を米の上に具の集合が乗っているものと定義したとき、 エビの天ぷらが <span class="math-inline"> \( 100000 \) </span> 個乗っている丼は自明丼である。</div><br>これは、自明ギャグのように見えるが、非自明自明ギャグと言われるタイプのギャグで、自明ギャグではないと基本的には考えられている。<br><br>というのも、これが丼であるかどうかを判定するには、エビの天ぷらが具であるかどうかという議論が必要であり、 空集合の場合の「自明度」と比較すれば自明であると言えばないと考えられているからである。<br><br>つまり、自明ギャグは、<br><ul><li>公理</li><li>(vacuous truthのような) 完全に認められていて、広く知られている事実から直ちに従う</li></ul><br>レベルの「自明度」が求められており、特に現在は<span class="strong"> <strong>自明丼に代表されるように空集合などを利用したもののみが認められる</strong> </span>風潮が強い。<br>とはいえこれでは極めて自明ギャグの幅が狭くなってしまうため、自明ギャグの「自明度」を保っての拡張が考えられている。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"169",
+    "title":"自明ギャグの発展"
+});
+</script>
+<h2 id="169">自明ギャグの発展</h2><script>page_contents.push({
+    "type":"H3",
+    "id":"171",
+    "title":"自明丼からの一般化"
+});
+</script>
+<h3 id="171">自明丼からの一般化</h3><br>さて、ここまでは空集合を利用した極めて限定的なギャグのみが認められていたが、現在はこれらの拡張が盛んに研究されている。<br>代表例は、空列への応用である。<br>再び具体例から始める。<br><br><div class="theorem">コーデを、何も服を着ていない状態から、服を着る動作の列を適用して得られる状態と定義したとき、 何も服を着ていない状態は自明コーデである。</div><br>これは、空集合を空列に変えたのみであり、自明ギャグの一種であると広く認められていて、<br>「コーデ型の自明ギャグ」と呼ばれている。<br><br>コーデ型の自明ギャグは、動作を繰り返す日常の行為をよく表現できるため、非常に活発に開拓されているタイプの自明ギャグである。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"192",
+    "title":"対比型の自明ギャグ、最上川型の自明ギャグ"
+});
+</script>
+<h3 id="192">対比型の自明ギャグ、最上川型の自明ギャグ</h3><br>さらに、発展系として極めて自由なタイプのギャグである対比型の自明ギャグと最上川型の自明ギャグがある。<br>注意点として、<br><br><div class="danger"><span class="strong"> <strong>対比型の自明ギャグ、最上川型の自明ギャグは、自明ギャグではない。</strong> </span></div><br>ことに注意が必要である。<br><br><br>まず、対比型の自明ギャグは、条件を満たすものが二つしか存在しない場合にそれぞれを自明/非自明に分類することでユーモアを生み出すギャグである。<br>例えば、<br><ul><li>普通の傘を自明傘と呼び、折りたたみ傘を非自明傘と呼ぶ</li><li>結婚式の挨拶で実の父親を自明親と呼び、義理の父親を非自明親と呼ぶ</li></ul><br>というようなものが対比型の自明ギャグと呼ばれる。<br>これは、もはや自明ギャグの定義からは外れているが、自明というワードが中核概念であるため、このような非自明な命名がなされている。<br>次に、最上川型の自明ギャグは<br><ul><li>非自明最上川</li><li>非自明大谷翔平</li></ul><br>のような固有名詞に「非自明」とつけることで理解不能な状況を作り出すギャグである。<br>これも、もはや自明ギャグの定義からは外れているが、同様に自明というワードが中核概念であるため、このような命名がなされている。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"236",
+    "title":"Conclusion"
+});
+</script>
+<h2 id="236">Conclusion</h2><br>自明ギャグは、自明丼を起源として、現在では様々なタイプの自明ギャグが存在する。<br>さらに、構造や面白さの理論的分析も進んでおり今後の発展が期待される分野である。<br>一方で課題としては、このギャグが通じる相手があまりにも限定的であることが知られているため、 自明に良いタイミングでの使用が求められている。 <span class="math-inline"> \( ^2 \) </span><br><br><hr><br><script>page_contents.push({
+    "type":"H4",
+    "id":"249",
+    "title":"脚注"
+});
+</script>
+<h4 id="249">脚注</h4><br><span class="math-inline"> \( ^1 \) </span> 丼に定義を入れて、また空集合を認めるというユーモアは <url> <a href="http://mugenji.web.fc2.com/kare.pdf">http://mugenji.web.fc2.com/kare.pdf</a> </url> がおそらく発祥と思われる。<br><span class="math-inline"> \( ^2 \) </span> 理系単科大学での使用など。 <br><br><br><br><br><div class="footnote"></div>
 
             <hr>
 
@@ -131,13 +771,13 @@
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
-                            class="tolink"> @{{ twitter_id }}</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
-                            class="tolink"> @{{ github_id }}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
-                            {{ mail }}</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
                     </p>
 
 
@@ -212,6 +852,20 @@
                 }
             });
         }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
     </script>
 
 
