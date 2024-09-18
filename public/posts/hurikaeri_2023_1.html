@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> 2023年度後期振り返り </title>
+    <title> {{ title }} </title>
 
-    <meta property="og:title" content="2023年度後期振り返り">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/spitz-japanese/tofu.jpg">
-    <meta property="og:description" content="">
-    <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2023_1.html">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:image" content="{{ ogp_url }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ url }}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:site_name" content="{{ site_name }}">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="{{ twitter_site }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,565 +53,13 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    <style>body {
-    max-width: 1200px;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: rgb(240, 244, 246);
-    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-    color: #333;
-}
-
-
-.article-body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-@media (max-width: 1200px) {
-    .side #toc {
-        display: none;
-    }
-
-    .article-body {
-        display: block !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        margin: 10px !important;
-    }
-
-}
-
-.side {
-    order: 1;
-    border-right: solid 1px #ddd;
-    padding-right: 20px;
-}
-
-.content {
-    order: 2;
-    padding: 20px;
-    width: 95%;
-    max-width: 900px;
-    margin: auto;
-    padding: auto;
-}
-
-
-.side-sticky {
-    position: sticky;
-    top: 20px;
-}
-
-
-.article-header {
-    padding-top: 30px;
-    margin: 10px;
-}
-
-
-
-.article-header .title {
-    color: #001e43;
-    font-size: 1.4rem;
-    font-weight: bold;
-    border-bottom: dotted 3px #001e43;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.date {
-    font-size: 14px;
-    text-align: center;
-    color: gray;
-}
-
-.date::before {
-    content: "\f073";
-    font-family: "Font Awesome 5 Free";
-}
-
-.tag-placeholder {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.tag {
-    display: inline-block;
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    border: 1px solid gray;
-}
-
-.tag a {
-    color: #666;
-    text-decoration-line: none;
-}
-
-
-.toc_title {
-    display: none;
-}
-
-.math-block {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.math-inline {
-    display: inline-grid;
-    overflow-x: hidden;
-    ;
-}
-
-mjx-container {
-    display: inline-block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-}
-
-h2 {
-    border-left: solid 5px #85c0ff;
-    padding-left: 10px;
-}
-
-
-img {
-    max-width: 100% !important;
-    height: auto;
-}
-
-@media (max-width: 1200px) {
-    figure {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        overflow: hidden;
-        padding: 20px;
-    }
-}
-
-
-figure {
-    text-align: center;
-    color: gray;
-}
-
-
-h3 {
-    border-bottom: 1px solid #ddd !important;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-h4 {
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-pre {
-    padding: 10px;
-}
-
-.tex-equations {
-    overflow-x: auto;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.exec_out {
-    color: white;
-}
-
-@media (max-width: 1200px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
-
-#toc {
-    border-radius: 4px;
-    padding: 15px;
-    padding-left: 0px;
-    list-style: none;
-}
-
-#toc a {
-    text-decoration: none;
-    color: #777;
-    display: block;
-    margin: 5px 0;
-    transition: color 0.2s;
-}
-
-#toc a:hover {
-    color: #007bff;
-}
-
-#toc .active {
-    font-weight: bold;
-    color: #007bff;
-    font-size: 1.1em;
-}
-
-#toc {
-    list-style: none;
-    padding: 0;
-    border-left: 2px dotted #a3c5db;
-    border-radius: 0%;
-}
-
-#toc li {
-    padding-left: 20px;
-    margin-top: 10px;
-    position: relative;
-}
-
-/* #toc li::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #c4e4f9;
-    border-radius: 50%;
-    border: 1px solid #a3c5db;
-    position: absolute;
-    left: -7px;
-    top: 0;
-    transform: translateY(50%);
-} */
-
-.toc_H1 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-
-.toc_H2 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-/* .toc_H2::before {
-    background: #f8f8f8 !important;
-    border: 1px solid #3498db !important;
-} */
-
-.toc_H3 {
-    font-size: 12px;
-    margin-bottom: 10px;
-    color: #007bff;
-    padding-left: 10px;
-}
-
-.toc_H3::before {
-    display: none !important;
-}
-
-#toposts,
-#tohome,
-#torss {
-    display: inline-block;
-    text-decoration: none;
-}
-
-
-.links {
-    border-top: solid 1px #ddd;
-    padding-top: 20px;
-    color: hwb(211 18% 52%);
-}
-
-.links a {
-    text-decoration: none;
-    color: #3c3c3c;
-}
-
-.links {
-    /* 等幅フォント */
-    font-family: "Noto Sans Mono", monospace;
-}
-
-#toposts {
-    color: #979797 !important;
-
-}
-
-#tohome {
-    color: #b8792c !important;
-}
-
-#torss {
-    color: #d88914 !important;
-}
-
-#twitter {
-    color: #1da1f2 !important;
-}
-
-#github {
-    color: #000000 !important;
-}
-
-#mail {
-    color: #bbbbbb !important;
-}
-
-
-.content_list_h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
-}
-
-.content_list_h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.content_list_problem {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.badge {
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #777;
-    border: 1px solid #444;
-    margin: 0 8px;
-    float: left;
-}
-
-.runbutton,
-.submitbutton {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-}
-
-.runbutton {
-    background-color: #007bff;
-}
-
-.runbutton:hover {
-    background-color: #005580;
-}
-
-.submitbutton {
-    background-color: #008000;
-}
-
-.submitbutton:hover {
-    background-color: #006400;
-}
-
-.problem_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
-
-.editor {
-    width: 100%;
-    height: 300px;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 10px;
-    border: solid 1px #ddd;
-}
-
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
-    width: 100%;
-    padding: 5px 5px;
-    overflow-x: auto;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    border: solid 1px #ddd;
-}
-
-.box-title,
-.problem_list {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #777;
-}
-
-pre {
-    background-color: #282c34;
-    border-radius: 5px;
-}
-
-pre code {
-    color: #e8ebf0;
-    line-height: 1.2;
-    font-family: monospace;
-}
-
-.inline-code {
-    font-family: monospace;
-    line-height: 1.2;
-    color: #e43e3ee0;
-}
-
-.success,
-.info,
-.warning,
-.danger {
-    padding: 12px;
-    border: 1px solid;
-    border-radius: 4px;
-}
-
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-
-.danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
-.definition {
-    counter-increment: definition;
-    border: #31708f 3px dotted;
-    border-left: #31708fa1 5px solid;
-}
-
-.definition::before {
-    content: "Definition " counter(definition) ".";
-}
-
-.theorem {
-    counter-increment: theorem;
-    border: #318f5a 3px dotted;
-    border-left: #318f4fa1 5px solid;
-}
-
-.theorem::before {
-    content: "Theorem " counter(theorem) ".";
-}
-
-.lemma {
-    counter-increment: lemma;
-    border: #ab5b64 3px dotted;
-    border-left: #d071a4a1 5px solid;
-}
-
-.lemma::before {
-    content: "Lemma " counter(lemma) ".";
-}
-
-.proof {
-    counter-increment: proof;
-    border: #5b64ab 3px dotted;
-    border-left: #8cc1e7a1 5px solid;
-}
-
-.proof::before {
-    content: "Proof " counter(proof) ".";
-}
-
-.definition::before,
-.theorem::before,
-.proof::before,
-.lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
-
-
-.definition,
-.theorem,
-.proof,
-.lemma {
-    padding: 12px;
-    margin: 12px;
-}
-
-.proof::after {
-    content: "∎";
-    margin-left: auto;
-    display: block;
-}
-
-iframe {
-    width: 100%;
-}
-
-
-a {
-    color: #006699;
-    word-break: break-all;
-}</style>
+    {{ style | safe }}
 
     <script>
         page_contents = []
     </script>
 
-    <!-- Runner is not required. Skip this. -->
+    {{ runner | safe }}
 
 
 </head>
@@ -622,7 +70,7 @@ a {
     <div class="article-header">
 
         <div class="title">
-            2023年度後期振り返り
+            {{ title }}
         </div>
 
         <script>
@@ -631,84 +79,23 @@ a {
 
         <br>
         <div class="date">
-            2024/03/29
+            {{ date }}
         </div>
         <br>
-        <div class="tag-placeholder">
-            [日記, 振り返り]
-        </div>
 
+        <div class="tag-placeholder">
+            <!-- loop tags -->
+            {% for tag in tags %}
+            <div class="tag">
+                # {{ tag }}
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="article-body">
         <div class="content">
-            <br><script>page_contents.push({
-    "type":"H2",
-    "id":"2",
-    "title":"2023年度後期の振り返り"
-});
-</script>
-<h2 id="2">2023年度後期の振り返り</h2><br>2023年度・学部2年生もほぼ終わりました。<br>とりあえず後期(10月~3月)の振り返りです。<br>前期の振り返りは　<url> <a href="https://www.abap34.com/posts/hurikaeri_2023_0.html">→ こちら</a> </url><br><script>page_contents.push({
-    "type":"H3",
-    "id":"12",
-    "title":"JuliaTokyo11"
-});
-</script>
-<h3 id="12">JuliaTokyo11</h3><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日の JuliaTokyo でのトーク、「Juliaで歩く自動微分」のスライドをアップしました！ <br>- DLフレームワークの中身が気になる方<br>- 何もかも勾配降下法で最適化したい方<br>- 低レイヤと機械学習の絡みが気になる方<br>はぜひ！！<a href="https://twitter.com/hashtag/juliatokyo?src=hash&amp;ref_src=twsrc%5Etfw">#juliatokyo</a><a href="https://t.co/XZ8ovEJvvs">https://t.co/XZ8ovEJvvs</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1753681336702009787?ref_src=twsrc%5Etfw">February 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>まずは JuliaTokyo #11 です。 30分トーク枠で自動微分について話しました。<br>いろんな方に反応貰えてれしかったですが、 とくに Juliaコンパイラの中の人の <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> さんに懇親会とその後 Twitterで褒めてもらえたのが嬉しかったです。<br><br>Juilaの対面のイベントに参加するのは5年前、高校1年生の時のJuliaTokai以来でしたが 懇親会でいろんな人に再会でき、海外の人とも話せて楽しかったです。(英語力の無さも痛感...)<br><br>最近は Juliaの日本語コミュニティが Discordで発足して割と動いていたり、コミュニティが活性化していてなんかいい感じです。<br>自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。<br><script>page_contents.push({
-    "type":"H3",
-    "id":"31",
-    "title":"atmaCut #16"
-});
-</script>
-<h3 id="31">atmaCut #16</h3><br><url> <a href="https://www.guruguru.science/competitions/22">atmaCup #16 in collaboration with RECRUIT</a> </url> に参加しました。<br>宿のレコメンドというタスクでしたが、ユーザの行動履歴が短く、めちゃくちゃむずかしかったです。<br>学生枠でなんとか入賞して表彰式に参加させていただいたんですが、懇親会とその後の飲み会でいろいろな人と話せて楽しかったです。<br><figure><img src="hurikaeri_2023_1/sushi.png" ><figcaption>懇親会で普通に職人さんが寿司を握っていて嘘だろと思いました</figcaption></figure><br><script>page_contents.push({
-    "type":"H3",
-    "id":"43",
-    "title":"ALMO"
-});
-</script>
-<h3 id="43">ALMO</h3><br>結構ALMOの開発は進んでいます。このブログを動かしてるので、欲しい機能を追加し続けていく過程で色々やっていたみたいです。<br>リリースは 20回を超えて v0.7.0 まできました。  <url> <a href="https://github.com/abap34/ALMO/releases">https://github.com/abap34/ALMO/releases</a> </url><br><br>エコシステムも色々整備してます。例えば  <url> <a href="https://github.com/abap34/ALMO-extension">https://github.com/abap34/ALMO-extension</a> </url> は VSCode でプレビューしてくれるやつです。便利。<br>他にも <url> <a href="https://github.com/abap34/ALMO-blog-template">https://github.com/abap34/ALMO-blog-template</a> </url> とかもあります。 ぽちぽちでブログが作れるやつです。<br><figure><img src="https://github.com/abap34/ALMO-extension/raw/main/assets/almo-ext-demo.gif" ><figcaption>https://github.com/abap34/ALMO-extension によるプレビュー</figcaption></figure><br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"63",
-    "title":"abap34.com"
-});
-</script>
-<h3 id="63">abap34.com</h3><br>このサイト自体がずいぶんアップデートされて綺麗になりました。<br>ブログだけでも<br><ul><li>記事の検索機能</li><li>タグ機能</li><li>コメント機能</li><li>RSS</li></ul><br>などなどついて結構いい感じです。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"83",
-    "title":"Minia.jl"
-});
-</script>
-<h3 id="83">Minia.jl</h3><br>Juliaで書いた処理系です。<br>PEGで構文を書いて、JuiaのASTに変換して実行するみたいなやつです。 <br><br><a href="https://github.com/abap34/Minia.jl"><img src="https://gh-card.dev/repos/abap34/Minia.jl.svg"></a><br><br>どちらかというと、付随して書いた <url> <a href="https://www.abap34.com/posts/mini-lang.html">3時間で作る自作言語のJuliaトランスパイラ</a> </url> の評判が良かったです。<br><script>page_contents.push({
-    "type":"H3",
-    "id":"98",
-    "title":"TinyPEG.jl"
-});
-</script>
-<h3 id="98">TinyPEG.jl</h3><br>Miniaのパーサは PEG.jl という既存のパーサジェネレータを使っているのですが、せっかくなので PEGパーサジェネレータを作りました。<br><a href="https://github.com/abap34/TinyPEG.jl"><img src="https://gh-card.dev/repos/abap34/TinyPEG.jl.svg"></a><br>これもブログ <url> <a href="https://www.abap34.com/posts/tinypeg.html">【週刊 PEGパーサジェネレータ を作ろう】</a> </url> にしました。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"110",
-    "title":"age++"
-});
-</script>
-<h3 id="110">age++</h3><br>ついに 20歳になりました。<br><br>いろんな人に祝ってもらいました。マジで恵まれてるなぁと言う感じです。<br>周りの全部の人に感謝してます。<br><figure><img src="hurikaeri_2023_1/20party.png" ><figcaption></figcaption></figure><br>ぜひ🍺誘ってください。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"125",
-    "title":"その他・大学など"
-});
-</script>
-<h3 id="125">その他・大学など</h3><ul><li>2回目の作問ハッカソンで作問をしました。 一回目は <url> <a href="https://yukicoder.me/problems/no/2438">†連続最適化な見た目の問題†</a> </url> を出したので、今回は <url> <a href="https://yukicoder.me/problems/10681">†離散最適化†な問題</a> </url> になりました。</li><li>最近スライドを作る機会が多かったので、いい感じのテンプレを作ったら QoL があがりました。 <a href="https://github.com/abap34/slide-template"><img src="https://gh-card.dev/repos/abap34/slide-template.svg"></a></li><li>大学では、ドイツ語のやる気が出ないことが確実視されたので、履修登録から抹消して代わりに3年次の文系教養の履修を済ませました。</li><ul><li>これで3年次はドイツ語にさえ集中すればいいわけですが、一年間やる気が出なかった科目に来年度やる気が出るかは不明です。</li></ul><li>全国医療AIコンテストに参加しました...とは言っても参加した頃には LBでかなり差が開いていて意気消沈状態でした。1subだけして撤退してしまったのですが、セグメンテーションのコンペはやったことなかったのと、monaiは初めて使ったのでこれに詳しくなれたのはとてもよかったです。</li><ul><li>コンペをやっていていい感じに NIfTIをプレビューするツールがなかったので試作したりしました。 速度をマシにしたら公開します。</li><li><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">医療AIコンやってて、NIfTI 画像をコマンドライン一発でプレビューできるツールでいい感じのがなかったのが不満でチャッと実装してみた<br>sixel と格闘してたものの全然うまくいかなかったので一旦 GUI版で... 便利！<br>(実際はロード時間が結構かかっているのでいい感じに爆速にして公開したい) <a href="https://t.co/Z6pqseeCll">pic.twitter.com/Z6pqseeCll</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1771371540514247088?ref_src=twsrc%5Etfw">March 23, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li></ul><li>大学で所属しているサークルで「Kaggle班」を立ち上げました。昨年度も色々やってきましたが、今年も面白いことができるよう運営を頑張ります。</li></ul><br><script>page_contents.push({
-    "type":"H2",
-    "id":"151",
-    "title":"2024年度の抱負"
-});
-</script>
-<h2 id="151">2024年度の抱負</h2><br>ついに学部3年生になります。<br>学部生も折り返しですが、一応卒業要件的なのは大丈夫そうでホッとしています。<br><br>目標は色々ありますが、<br><ul><li>Kaggle班運営を軌道に乗せる</li><li>OSS Contribution を積極的にやる</li></ul><br>あたりはやりたいところです。<br>あとはいろんなコミュニティで色々な人と交流したいです。<br>技術面での目標ですが、 特に最近、コンピュータサイエンスがみんな面白くて、多分来年も同じ調子だと思うので、 そのとき興味あることをちゃんとできればと思います。<br><br>とにかくプレイヤーでいたいです。<br>頑張ります。<br><br><br><script>page_contents.push({
-    "type":"H2",
-    "id":"180",
-    "title":"今日の一曲"
-});
-</script>
-<h2 id="180">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/7xx66mR_HeE?si=U0YEvzeB4kqud4OK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+            {{ content | safe }}
 
             <hr>
 
@@ -744,13 +131,13 @@ a {
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
+                            class="tolink"> @{{ twitter_id }}</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
-                            abap0002@gmail.com</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
+                            class="tolink"> @{{ github_id }}</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
+                            {{ mail }}</a>
                     </p>
 
 
@@ -825,20 +212,6 @@ a {
                 }
             });
         }
-
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
-        document.querySelector(".tag-placeholder").innerHTML = "";
-
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
-            const each_tag = document.createElement("span");
-            each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
-            document.querySelector(".tag-placeholder").appendChild(each_tag);
-        });
     </script>
 
 

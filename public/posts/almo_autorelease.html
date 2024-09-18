@@ -15,23 +15,23 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用 </title>
+    <title> {{ title }} </title>
 
-    <meta property="og:title" content="GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/basenji/n02110806_4199.jpg">
-    <meta property="og:description" content="GitHub Actions を利用して、リリース時に自動で Docker Hub にイメージをアップロードして、そのイメージを利用する方法を紹介します。">
-    <meta property="og:url" content="https://abap34.com/posts/almo_autorelease.html">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:image" content="{{ ogp_url }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ url }}">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:site_name" content="{{ site_name }}">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="{{ twitter_site }}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{ syntax_theme }}.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -53,565 +53,13 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 
-    <style>body {
-    max-width: 1200px;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: rgb(240, 244, 246);
-    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-    color: #333;
-}
-
-
-.article-body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-@media (max-width: 1200px) {
-    .side #toc {
-        display: none;
-    }
-
-    .article-body {
-        display: block !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        margin: 10px !important;
-    }
-
-}
-
-.side {
-    order: 1;
-    border-right: solid 1px #ddd;
-    padding-right: 20px;
-}
-
-.content {
-    order: 2;
-    padding: 20px;
-    width: 95%;
-    max-width: 900px;
-    margin: auto;
-    padding: auto;
-}
-
-
-.side-sticky {
-    position: sticky;
-    top: 20px;
-}
-
-
-.article-header {
-    padding-top: 30px;
-    margin: 10px;
-}
-
-
-
-.article-header .title {
-    color: #001e43;
-    font-size: 1.4rem;
-    font-weight: bold;
-    border-bottom: dotted 3px #001e43;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.date {
-    font-size: 14px;
-    text-align: center;
-    color: gray;
-}
-
-.date::before {
-    content: "\f073";
-    font-family: "Font Awesome 5 Free";
-}
-
-.tag-placeholder {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.tag {
-    display: inline-block;
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-    border-radius: 5px;
-    border: 1px solid gray;
-}
-
-.tag a {
-    color: #666;
-    text-decoration-line: none;
-}
-
-
-.toc_title {
-    display: none;
-}
-
-.math-block {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.math-inline {
-    display: inline-grid;
-    overflow-x: hidden;
-    ;
-}
-
-mjx-container {
-    display: inline-block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-}
-
-h2 {
-    border-left: solid 5px #85c0ff;
-    padding-left: 10px;
-}
-
-
-img {
-    max-width: 100% !important;
-    height: auto;
-}
-
-@media (max-width: 1200px) {
-    figure {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        overflow: hidden;
-        padding: 20px;
-    }
-}
-
-
-figure {
-    text-align: center;
-    color: gray;
-}
-
-
-h3 {
-    border-bottom: 1px solid #ddd !important;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-h4 {
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-pre {
-    padding: 10px;
-}
-
-.tex-equations {
-    overflow-x: auto;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.exec_out {
-    color: white;
-}
-
-@media (max-width: 1200px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
-
-#toc {
-    border-radius: 4px;
-    padding: 15px;
-    padding-left: 0px;
-    list-style: none;
-}
-
-#toc a {
-    text-decoration: none;
-    color: #777;
-    display: block;
-    margin: 5px 0;
-    transition: color 0.2s;
-}
-
-#toc a:hover {
-    color: #007bff;
-}
-
-#toc .active {
-    font-weight: bold;
-    color: #007bff;
-    font-size: 1.1em;
-}
-
-#toc {
-    list-style: none;
-    padding: 0;
-    border-left: 2px dotted #a3c5db;
-    border-radius: 0%;
-}
-
-#toc li {
-    padding-left: 20px;
-    margin-top: 10px;
-    position: relative;
-}
-
-/* #toc li::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #c4e4f9;
-    border-radius: 50%;
-    border: 1px solid #a3c5db;
-    position: absolute;
-    left: -7px;
-    top: 0;
-    transform: translateY(50%);
-} */
-
-.toc_H1 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-
-.toc_H2 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-/* .toc_H2::before {
-    background: #f8f8f8 !important;
-    border: 1px solid #3498db !important;
-} */
-
-.toc_H3 {
-    font-size: 12px;
-    margin-bottom: 10px;
-    color: #007bff;
-    padding-left: 10px;
-}
-
-.toc_H3::before {
-    display: none !important;
-}
-
-#toposts,
-#tohome,
-#torss {
-    display: inline-block;
-    text-decoration: none;
-}
-
-
-.links {
-    border-top: solid 1px #ddd;
-    padding-top: 20px;
-    color: hwb(211 18% 52%);
-}
-
-.links a {
-    text-decoration: none;
-    color: #3c3c3c;
-}
-
-.links {
-    /* 等幅フォント */
-    font-family: "Noto Sans Mono", monospace;
-}
-
-#toposts {
-    color: #979797 !important;
-
-}
-
-#tohome {
-    color: #b8792c !important;
-}
-
-#torss {
-    color: #d88914 !important;
-}
-
-#twitter {
-    color: #1da1f2 !important;
-}
-
-#github {
-    color: #000000 !important;
-}
-
-#mail {
-    color: #bbbbbb !important;
-}
-
-
-.content_list_h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
-}
-
-.content_list_h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.content_list_problem {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.badge {
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #777;
-    border: 1px solid #444;
-    margin: 0 8px;
-    float: left;
-}
-
-.runbutton,
-.submitbutton {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-}
-
-.runbutton {
-    background-color: #007bff;
-}
-
-.runbutton:hover {
-    background-color: #005580;
-}
-
-.submitbutton {
-    background-color: #008000;
-}
-
-.submitbutton:hover {
-    background-color: #006400;
-}
-
-.problem_title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
-
-.editor {
-    width: 100%;
-    height: 300px;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 10px;
-    border: solid 1px #ddd;
-}
-
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
-    width: 100%;
-    padding: 5px 5px;
-    overflow-x: auto;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    border: solid 1px #ddd;
-}
-
-.box-title,
-.problem_list {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #777;
-}
-
-pre {
-    background-color: #282c34;
-    border-radius: 5px;
-}
-
-pre code {
-    color: #e8ebf0;
-    line-height: 1.2;
-    font-family: monospace;
-}
-
-.inline-code {
-    font-family: monospace;
-    line-height: 1.2;
-    color: #e43e3ee0;
-}
-
-.success,
-.info,
-.warning,
-.danger {
-    padding: 12px;
-    border: 1px solid;
-    border-radius: 4px;
-}
-
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-
-.info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-}
-
-.danger {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-}
-
-.definition {
-    counter-increment: definition;
-    border: #31708f 3px dotted;
-    border-left: #31708fa1 5px solid;
-}
-
-.definition::before {
-    content: "Definition " counter(definition) ".";
-}
-
-.theorem {
-    counter-increment: theorem;
-    border: #318f5a 3px dotted;
-    border-left: #318f4fa1 5px solid;
-}
-
-.theorem::before {
-    content: "Theorem " counter(theorem) ".";
-}
-
-.lemma {
-    counter-increment: lemma;
-    border: #ab5b64 3px dotted;
-    border-left: #d071a4a1 5px solid;
-}
-
-.lemma::before {
-    content: "Lemma " counter(lemma) ".";
-}
-
-.proof {
-    counter-increment: proof;
-    border: #5b64ab 3px dotted;
-    border-left: #8cc1e7a1 5px solid;
-}
-
-.proof::before {
-    content: "Proof " counter(proof) ".";
-}
-
-.definition::before,
-.theorem::before,
-.proof::before,
-.lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
-
-
-.definition,
-.theorem,
-.proof,
-.lemma {
-    padding: 12px;
-    margin: 12px;
-}
-
-.proof::after {
-    content: "∎";
-    margin-left: auto;
-    display: block;
-}
-
-iframe {
-    width: 100%;
-}
-
-
-a {
-    color: #006699;
-    word-break: break-all;
-}</style>
+    {{ style | safe }}
 
     <script>
         page_contents = []
     </script>
 
-    <!-- Runner is not required. Skip this. -->
+    {{ runner | safe }}
 
 
 </head>
@@ -622,7 +70,7 @@ a {
     <div class="article-header">
 
         <div class="title">
-            GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用
+            {{ title }}
         </div>
 
         <script>
@@ -631,127 +79,23 @@ a {
 
         <br>
         <div class="date">
-            2024/04/02
+            {{ date }}
         </div>
         <br>
-        <div class="tag-placeholder">
-            [Docker, Docker Hub, GitHub Actions, CI/CD, 日記]
-        </div>
 
+        <div class="tag-placeholder">
+            <!-- loop tags -->
+            {% for tag in tags %}
+            <div class="tag">
+                # {{ tag }}
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div class="article-body">
         <div class="content">
-            <br><script>page_contents.push({
-    "type":"H2",
-    "id":"2",
-    "title":"いろいろ大変リリース作業"
-});
-</script>
-<h2 id="2">いろいろ大変リリース作業</h2><br>拡張 Markdownパーサ兼静的サイトジェネレータの <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url>  を毎日たのしく開発しています。<br>ところで、これは静的サイトジェネレータなので、いろんな人のブログなどに使ってもらうことを想定しています。<br><br>となると、 GitHub Actions などでも利用しやすいように環境を整える必要があります。<br>GitHub Actions では、 <span class="inline-code"> <code>use: docker://hoge/huga:latest</code> </span> のように指定することで Docker Hub にあるイメージを利用することができます。<br><br>そこで、リリースを打つたびに Docker イメージをビルドして、 Docker Hub にアップロードするようにします。作業記録です。<br><script>page_contents.push({
-    "type":"H3",
-    "id":"21",
-    "title":"Docker Hub にイメージをアップロードする"
-});
-</script>
-<h3 id="21">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="language-plaintext">FROM alpine:latest
-
-RUN apk add --no-cache g++
-
-RUN apk add --no-cache bash
-
-WORKDIR /app
-
-COPY . .
-
-RUN bash build.sh
-
-ENTRYPOINT [ &quot;./docker-entrypoint.sh&quot; ]
-</code></pre> </div><br><url> <a href="https://hub.docker.com/">Docker Hub</a> </url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"> <code>DOCKERHUB_USERNAME</code> </span> と <span class="inline-code"> <code>DOCKERHUB_TOKEN</code> </span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"> <pre><code class="language-yaml">name: Build and push Docker image
-
-on:
-  release:
-    types: [published]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/almo:latest
-</code></pre> </div><br><br>注意ポイントとしては、 GitHub Actions からこのイメージを利用するときは <span class="inline-code"> <code>WORKDIR</code> </span> などが上書きされるみたいなので気をつけて <span class="inline-code"> <code>Dockerfile</code> </span> と <span class="inline-code"> <code>docker-entrypoint.sh</code> </span> を作らないとハマります。<br><figure><img src="almo_autorelease/image.png" ><figcaption>run の引数</figcaption></figure><br><br>これで、リリース時に Docker イメージをビルドして Docker Hub にアップロードすることができるようになりました。<br><figure><img src="almo_autorelease/almo.png" ><figcaption></figcaption></figure><br><script>page_contents.push({
-    "type":"H3",
-    "id":"58",
-    "title":"リリース時にいろんなプラットフォームに対応する"
-});
-</script>
-<h3 id="58">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="language-yaml">name: Release for all platforms
-
-on:
-  release:
-    types: [published]
-
-jobs:
-  build_and_upload:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-14]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Build
-        run: bash build.sh
-
-      - name: Upload Release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/almo
-          asset_name: ${{ matrix.os }}
-          asset_content_type: application/octet-stream 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-</code></pre> </div><br><br>便利ですね。<br><br><script>page_contents.push({
-    "type":"H3",
-    "id":"69",
-    "title":"使用例"
-});
-</script>
-<h3 id="69">使用例</h3><br>Docker Hubにアップロードしたおかげで 誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="language-bash">docker pull abap/almo:latest
-</code></pre> </div><br>して、<br><div class="code-block"> <pre><code class="language-bash">docker run abap/almo:latest example.md
-</code></pre> </div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"> <pre><code class="language-yaml">uses: docker://abap/almo:latest
-args:
-    example.md
-</code></pre> </div><br>だけで利用できます。<br><script>page_contents.push({
-    "type":"H2",
-    "id":"89",
-    "title":"おわりに"
-});
-</script>
-<h2 id="89">おわりに</h2><br>終わりです。<br><br><script>page_contents.push({
-    "type":"H2",
-    "id":"95",
-    "title":"今日の一曲"
-});
-</script>
-<h2 id="95">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/EJ8lBjQls4w?si=PdBx5TBPvW-z3_ZG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br>
+            {{ content | safe }}
 
             <hr>
 
@@ -787,13 +131,13 @@ args:
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{ twitter_id }}"
+                            class="tolink"> @{{ twitter_id }}</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
-                            abap0002@gmail.com</a>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{ github_id }}"
+                            class="tolink"> @{{ github_id }}</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{ mail }}" class="tolink">
+                            {{ mail }}</a>
                     </p>
 
 
@@ -868,20 +212,6 @@ args:
                 }
             });
         }
-
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
-        document.querySelector(".tag-placeholder").innerHTML = "";
-
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
-            const each_tag = document.createElement("span");
-            each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
-            document.querySelector(".tag-placeholder").appendChild(each_tag);
-        });
     </script>
 
 
