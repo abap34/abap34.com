@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>Julia Compiler Internals (00) - Introduction</id>
+<title>Julia Compiler Internals (00) - Introduction</title>
+<link>https://abap34.com/posts/jci_00.html</link>
+<pubDate>Wed, 18 Sep 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>脚注機能の実装に関するメモ</id>
 <title>脚注機能の実装に関するメモ</title>
 <link>https://abap34.com/posts/footnote_implement.html</link>
