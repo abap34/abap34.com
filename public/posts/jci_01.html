@@ -691,12 +691,12 @@ a {
 });
 </script>
 <h2 id="13">Lowering</h2><br><url> <a href="https://abap34.com/posts/jci_00.html">前回</a> </url> は Juliaの処理系の大まかな流れを見ました。<br>今回からは、各セクション (Lowering, Type Inference, ...) の処理の大枠を見ていきます。<br><script>page_contents.push({
-    "type":"H2",
+    "type":"H3",
     "id":"21",
     "title":"What is Lowering?"
 });
 </script>
-<h2 id="21">What is Lowering?</h2><br>前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
+<h3 id="21">What is Lowering?</h3><br>前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
        s = 0
        for i in 1:10
            s += i
@@ -735,10 +735,10 @@ a {
 </code></pre> </div><br><br>と、 <span class="inline-code"> <code>for</code> </span> ループが 直列の命令と分岐に展開されているのがわかります。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"41",
-    "title":"Lowering の処理"
+    "title":"jl_expand"
 });
 </script>
-<h3 id="41">Lowering の処理</h3><br><span class="inline-code"> <code>base/meta.jl#L161</code> </span> を見てください。<br><div class="code-block"> <pre><code class="language-julia">lower(m::Module, @nospecialize(x)) = ccall(:jl_expand, Any, (Any, Any), x, m)
+<h3 id="41">jl_expand</h3><br><span class="inline-code"> <code>base/meta.jl#L161</code> </span> を見てください。<br><div class="code-block"> <pre><code class="language-julia">lower(m::Module, @nospecialize(x)) = ccall(:jl_expand, Any, (Any, Any), x, m)
 </code></pre> </div><br>このように Lowering は <span class="inline-code"> <code>jl_expand</code> </span> によって行われます。　<br><span class="inline-code"> <code>src/ast.jl#L1280</code> </span> に定義があります。<br><div class="code-block"> <pre><code class="language-c">// Lower an expression tree into Julia&#39;s intermediate-representation.
 JL_DLLEXPORT jl_value_t *jl_expand(jl_value_t *expr, jl_module_t *inmodule)
 {
@@ -765,7 +765,13 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
     JL_GC_POP();
     return expr;
 }
-</code></pre> </div><br>と、結局 <span class="inline-code"> <code>jl_expand_in_world</code> </span> が呼ばれています。    <br><span class="inline-code"> <code>jl_expand_in_world</code> </span> では gc・マクロ展開関連の処理もありますが、一旦今回は<br><span class="inline-code"> <code>jl_expand_macros</code> </span> と <span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> に集中することにします。<br><span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> では Scheme で書かれた Lowering の処理がよばれます。<br><br>(ちなみに、最近では Juliaでこれを書き直すという取り組み<span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span>もあるようです。)<br><br>さて、 Scheme側ではなんやかんやあって最終的に <span class="inline-code"> <code>src/julia-syntax.scm</code> </span> にある実装たちが本質パートを担当してくれます。<br>このファイルは 5000行以上あってかなり大変な見た目をしていますが、一旦やっていることをあたるにはおそらく <span class="inline-code"> <code>src/julia-syntax.scm#L5176</code> </span> を見れば良さそうです。<br><div class="code-block"> <pre><code class="language-scheme">(define (julia-expand1 ex file line)
+</code></pre> </div><br>と、結局 <span class="inline-code"> <code>jl_expand_in_world</code> </span> が呼ばれています。    <br><span class="inline-code"> <code>jl_expand_in_world</code> </span> では gc・マクロ展開関連の処理もありますが、一旦今回は<br><span class="inline-code"> <code>jl_expand_macros</code> </span> と <span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> に集中することにします。<br><span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> では Scheme で書かれた Lowering の処理がよばれます。<br><br>(ちなみに、最近では Juliaでこれを書き直すという取り組み<span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span>もあるようです。)<br><script>page_contents.push({
+    "type":"H3",
+    "id":"78",
+    "title":"compile-body"
+});
+</script>
+<h3 id="78">compile-body</h3><br><br>さて、 Scheme側ではなんやかんやあって最終的に <span class="inline-code"> <code>src/julia-syntax.scm</code> </span> にある実装たちが本質パートを担当してくれます。<br>このファイルは 5000行以上あってかなり大変な見た目をしていますが、一旦やっていることをあたるにはおそらく <span class="inline-code"> <code>src/julia-syntax.scm#L5176</code> </span> を見れば良さそうです。<br><div class="code-block"> <pre><code class="language-scheme">(define (julia-expand1 ex file line)
   (compact-and-renumber
    (linearize
     (closure-convert
@@ -843,17 +849,17 @@ julia&gt; Meta.lower(Main, ex)
 ))))
 </code></pre> </div><br>ですね。 最初に見た <span class="inline-code"> <code>make&amp;mark-label</code> </span> で goto のラベルを作っているのがわかります。<br><br>このような定義が前後で延々と続いていて、どうも素直に制御構文ごとにバラし方を考えて、順番にバラしているようです。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"140",
+    "id":"143",
     "title":"まとめ"
 });
 </script>
-<h2 id="140">まとめ</h2><br>julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。<br>... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。<br><script>page_contents.push({
+<h2 id="143">まとめ</h2><br>julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。<br>... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。<br><script>page_contents.push({
     "type":"H2",
-    "id":"147",
+    "id":"150",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="147">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url> <a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a> </url>  </span></div>
+<h2 id="150">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url> <a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a> </url>  </span></div>
 
             <hr>
 
