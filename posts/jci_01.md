@@ -175,7 +175,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
 
 まず、先頭ではラベルのカウンタとかが置いてあります。 これを使って goto のラベルを作っているように見えますね。
 
-```shcjme
+```scheme
 (define (make-label)
     (begin0 label-counter
             (set! label-counter (+ 1 label-counter))))
@@ -261,11 +261,16 @@ julia> Meta.lower(Main, ex)
 このような定義が前後で延々と続いていて、どうも素直に制御構文ごとにバラし方を考えて、順番にバラしているようです。
 
 
-### まとめ
+## まとめ
 
 julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。
 
 ... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。
 
+## 今日の一曲
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 [^1]: JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  [JuliaLowering.jl](https://github.com/c42f/JuliaLowering.jl)  
+
