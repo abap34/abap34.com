@@ -19,8 +19,6 @@ Juliaのコンパイラの内部実装を読んでいくシリーズです。
 
 シリーズ自体については [第0回](https://abap34.com/posts/jci_00.html) を見てください。
 
-あまり正確なことを書けている自信がないので、誤り等あればコメントで指摘していただけるとありがたいです
-
 ## Lowering
 
 [前回](https://abap34.com/posts/jci_00.html) は Juliaの処理系の大まかな流れを見ました。
@@ -79,7 +77,7 @@ julia> Meta.lower(Main, ex)
 ```
 
 
-と、 `for` ループが 直列の命令と分岐に展開されているのがわかります。
+と、 `for` ループが 直列に展開されているのがわかります。
 
 
 ### jl_expand
@@ -125,9 +123,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
 
 と、結局 `jl_expand_in_world` が呼ばれています。    
 
-`jl_expand_in_world` では gc・マクロ展開関連の処理もありますが、一旦今回は
-
-`jl_expand_macros` と `jl_call_scm_on_ast_and_loc` に集中することにします。
+`jl_expand_in_world` では gc・マクロ展開関連の処理もありますが、今回は `jl_call_scm_on_ast_and_loc` に集中することにします。
 
 `jl_call_scm_on_ast_and_loc` では Scheme で書かれた Lowering の処理がよばれます。
 
@@ -136,10 +132,9 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
 
 ### compile-body
 
+Scheme側ではなんやかんやあって最終的に `src/julia-syntax.scm` にある実装たちが本質パートを担当してくれます。
 
-さて、 Scheme側ではなんやかんやあって最終的に `src/julia-syntax.scm` にある実装たちが本質パートを担当してくれます。
-
-このファイルは 5000行以上あってかなり大変な見た目をしていますが、一旦やっていることをあたるにはおそらく `src/julia-syntax.scm#L5176` を見れば良さそうです。
+このファイルは 5000行以上あってかなり大変な見た目をしていますが、やっていることをあたるにはおそらく `julia-expand1` を見れば良さそうです。
 
 ```scheme
 (define (julia-expand1 ex file line)
@@ -151,7 +146,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
 ```
 
 
-一旦、 Lowering でおそらく一番核心的なことである制御構文をバラして直列の命令にしているところ (= `linearize`) だけ注目してみることにします。
+一旦、 Lowering でおそらく一番核心的なことである制御構文をバラして直列にしているところ (= `linearize`) だけ注目してみることにします。
 
 するとこれは `compile-body` という関数がやってくれいていることを読み取れます。
 
@@ -267,7 +262,8 @@ julia> Meta.lower(Main, ex)
 
 julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。
 
-... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。
+
+... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 Juliaによる書き換えには期待したいところですね。
 
 ## 今日の一曲
 
