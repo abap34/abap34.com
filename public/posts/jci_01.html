@@ -40,6 +40,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
 
 
     <script>hljs.highlightAll();</script>
@@ -778,7 +779,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
                                            e)))
         (else (for-each linearize (cdr e))))
   e)
-</code></pre> </div><br><span class="inline-code"> <code>compile-body</code> </span> を見ましょう。 <span class="inline-code"> <code>src/julia-syntax.scm#4296</code> </span> です。<br><br><span class="strong"> <strong>... 長い！！！ (700行↑)</strong> </span><br><br>一旦真面目に全部読むのは後に回すとして、処理の概略を雰囲気で読み取ることを試みます。<br>まず、先頭ではラベルのカウンタとかが置いてあります。 これを使って goto のラベルを作っているように見えますね。<br><div class="code-block"> <pre><code class="language-shcjme">(define (make-label)
+</code></pre> </div><br><span class="inline-code"> <code>compile-body</code> </span> を見ましょう。 <span class="inline-code"> <code>src/julia-syntax.scm#4296</code> </span> です。<br><br><span class="strong"> <strong>... 長い！！！ (700行↑)</strong> </span><br><br>一旦真面目に全部読むのは後に回すとして、処理の概略を雰囲気で読み取ることを試みます。<br>まず、先頭ではラベルのカウンタとかが置いてあります。 これを使って goto のラベルを作っているように見えますね。<br><div class="code-block"> <pre><code class="language-scheme">(define (make-label)
     (begin0 label-counter
             (set! label-counter (+ 1 label-counter))))
 (define (mark-label l) (emit `(label ,l)))
@@ -841,12 +842,18 @@ julia&gt; Meta.lower(Main, ex)
 3 ─      return 0
 ))))
 </code></pre> </div><br>ですね。 最初に見た <span class="inline-code"> <code>make&amp;mark-label</code> </span> で goto のラベルを作っているのがわかります。<br><br>このような定義が前後で延々と続いていて、どうも素直に制御構文ごとにバラし方を考えて、順番にバラしているようです。<br><br><script>page_contents.push({
-    "type":"H3",
+    "type":"H2",
     "id":"140",
     "title":"まとめ"
 });
 </script>
-<h3 id="140">まとめ</h3><br>julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。<br>... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。<br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url> <a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a> </url>  </span></div>
+<h2 id="140">まとめ</h2><br>julia-syntax.scm の blame をみるとわかるんですが、 10年近く前に Jeff さんが書いたコードが大部分を占めていてすごい。<br>... すごいんですが、やっぱり読むのはなかなか骨が折れるので、 JuliaLowering には期待したいところですね。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"147",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="147">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url> <a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a> </url>  </span></div>
 
             <hr>
 
