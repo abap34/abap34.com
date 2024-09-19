@@ -27,7 +27,7 @@ Juliaのコンパイラの内部実装を読んでいくシリーズです。
 
 今回からは、各セクション (Lowering, Type Inference, ...) の処理の大枠を見ていきます。
 
-## What is Lowering?
+### What is Lowering?
 
 前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。
 
@@ -82,7 +82,7 @@ julia> Meta.lower(Main, ex)
 と、 `for` ループが 直列の命令と分岐に展開されているのがわかります。
 
 
-### Lowering の処理
+### jl_expand
 
 `base/meta.jl#L161` を見てください。
 
@@ -133,6 +133,8 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
 
 
 (ちなみに、最近では Juliaでこれを書き直すという取り組み[^1]もあるようです。)
+
+### compile-body
 
 
 さて、 Scheme側ではなんやかんやあって最終的に `src/julia-syntax.scm` にある実装たちが本質パートを担当してくれます。
