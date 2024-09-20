@@ -1,7 +1,7 @@
 ---
 title: Julia Compiler Internals (02) - Lowering (2) for の linearize
 author: abap34
-date: 2024/09/20
+date: 2024/09/21
 tag: [JuliaCompilerInternals, Julia, Scheme, コンパイラ, Lowering]
 twitter_id: abap34
 github_id: abap34
@@ -12,7 +12,6 @@ url: https://abap34.com/posts/jci_02.html
 site_name: abap34's blog
 twitter_site: @abap34
 ---
-
 
 ## あらすじ
 
@@ -151,3 +150,10 @@ desugar → (while として) `compile` というながれで AST から lineari
 
 ヤクルト最近ちょっと強いですね〜
 
+## 今日の一曲
+
+何かの間違いでヤクルトに入団してほしい。
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BtH57Tku3qY?si=aMpxcnxTpfFvwmbf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
