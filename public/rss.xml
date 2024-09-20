@@ -6,17 +6,17 @@
 <description> abap34's blog </description>
 
 <item>
-<id>Julia Compiler Internals (01) - Lowering (1)</id>
-<title>Julia Compiler Internals (01) - Lowering (1)</title>
-<link>https://abap34.com/posts/jci_01.html</link>
-<pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
+<id>Julia Compiler Internals (02) - Lowering (2) for の linearize</id>
+<title>Julia Compiler Internals (02) - Lowering (2) for の linearize</title>
+<link>https://abap34.com/posts/jci_02.html</link>
+<pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>Julia Compiler Internals (02) - Lowering (2) for の linearize</id>
-<title>Julia Compiler Internals (02) - Lowering (2) for の linearize</title>
-<link>https://abap34.com/posts/jci_02.html</link>
+<id>Julia Compiler Internals (01) - Lowering (1)</id>
+<title>Julia Compiler Internals (01) - Lowering (1)</title>
+<link>https://abap34.com/posts/jci_01.html</link>
 <pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
