@@ -1,9 +1,7 @@
 import json
-import subprocess
-import pathlib
 import os
-
-
+import pathlib
+import subprocess
 
 CONFIG_CORRESPONDING = {
     "overall_theme": "-t",
@@ -61,6 +59,11 @@ def build_article(config: dict, article_path: pathlib.Path):
         ir = tmp["ir"]
         tags = tmp["meta"]["tag"]
 
+        if "featured" in tmp["meta"]:
+            featured = tmp["meta"]["featured"]
+        else:
+            featured = False
+
     url = config["root_url"] + "/posts/" + outputpath.name
 
     content = load_rawtext(ir)
@@ -79,6 +82,7 @@ def build_article(config: dict, article_path: pathlib.Path):
                     "thumbnail_url": ogp_url,
                     "content": content,
                     "tags": tags,
+                    "featured": featured,
                 }
                 posts.remove(post)
                 posts.append(updated_post)
@@ -93,6 +97,7 @@ def build_article(config: dict, article_path: pathlib.Path):
                     "thumbnail_url": ogp_url,
                     "content": content,
                     "tags": tags,
+                    "featured": featured,
                 }
             )
 
