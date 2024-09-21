@@ -11,6 +11,7 @@ description: 直線探索法を用いた最急降下法の収束定理の主張�
 url: https://abap34.com/posts/gd_convergence_theorem.html
 site_name: abap34's blog
 twitter_site: abap34
+featured: true
 ---
 
 ## あらすじ
