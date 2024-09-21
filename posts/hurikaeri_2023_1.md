@@ -11,7 +11,7 @@ description:
 url: https://abap34.com/posts/hurikaeri_2023_1.html
 site_name: abap34's blog
 twitter_site: @abap34
-
+featured: true
 ---
 
 ## 2023年度後期の振り返り

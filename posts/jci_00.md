@@ -11,6 +11,7 @@ description: Julia コンパイラの内部実装を調べるシリーズの第0
 url: https://abap34.com/posts/jci_00.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 ## はじめに

@@ -11,6 +11,7 @@ description: n次精度 k階数値微分の係数の導出と実装例
 url: https://abap34.com/posts/n-order-diff.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 

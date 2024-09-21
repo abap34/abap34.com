@@ -11,6 +11,7 @@ description: Julia言語で簡易処理系を爆速で作ります。
 url: https://abap34.com/posts/mini-lang.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 ## Abstract
