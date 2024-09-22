@@ -106,7 +106,7 @@ export default function Component() {
                                 @abap34
                             </a>
 
-                            <a href="https://abap34.com/posts.html" target="_blank" rel="noreferrer" className="text-white px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 flex items-center transition duration-300 shadow-sm dark:hover:bg-orange-400">
+                            <a href="https://abap34.com/blog" target="_blank" rel="noreferrer" className="text-white px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 flex items-center transition duration-300 shadow-sm dark:hover:bg-orange-400">
                                 <FaLink className="mr-2" />
                                 abap34's blog
                             </a>
