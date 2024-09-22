@@ -99,7 +99,7 @@ abap34.com:
   repo: abap34/abap34.com
   short_desc: このサイト
   desc: |
-    このサイトです。 Comming Soon
+    このサイトです。ブログは almo を使って実装しています。それ以外は React です。
   lang:
     - HTML
     - CSS
@@ -142,9 +142,9 @@ ml-lecture-judge:
   repo: abap34/ml-lecture-judge
   short_desc: React + FastAPI 製のオンラインジャッジシステム
   desc: |
-    オンラインジャッジシステムです。
+    サークルで使うために開発したオンラインジャッジシステムです。
     
-    フロントは React、 バックエンドは FastAPI で実装していて、ジャッジキューを Celery で管理しています。
+    フロントは React、 バックエンドは FastAPI で実装していて、ジャッジキューを Celery で適切に管理して実行を安定して行うなどの工夫をしています。
   lang:
     - Python
     - JavaScript
