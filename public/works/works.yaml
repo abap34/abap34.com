@@ -1,0 +1,156 @@
+JITrench.jl: 
+  title: JITrench.jl
+  img: /works/img/jitrench.png
+  repo: abap34/JITrench.jl
+  short_desc: Julia言語製の自動微分ライブラリ・深層学習フレームワーク
+  desc: |
+    JITrench.jl は Julia言語製の自動微分ライブラリ・深層学習フレームワークです。
+
+    深層学習フレームワークの動作原理に興味をもち、フルクスラッチで実装しました。
+    Define-by-Run、 Explicitなパラメータ管理など、 現代的な深層学習フレームワークの特徴を持っています。
+    
+    また、量子化や計算グラフの最適化など、さまざまなアルゴリズムが実装されています。
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - 機械学習
+    - 深層学習
+    - OSS
+  period: 2021 ~ 2023
+  relatedlinks:
+    - https://www.abap34.com/posts/jitrench.html
+  
+almo: 
+  title: almo
+  img: /works/img/almo.png
+  repo: abap34/almo
+  lang: 
+    - C++
+    - Python
+  relatedlinks:
+    - https://www.abap34.com/posts/footnote_implement.html
+  short_desc: C++・Python製の拡張 Markdownパーサ・静的サイトジェネレータ
+  desc: |
+    almo は 拡張 Markdownパーサ・静的サイトジェネレータです。
+    
+    パーサ本体はパフォーマンスを重視して C++ で実装されていますが、Python向けのバインディングも提供しており、Pythonからも利用・拡張が可能です。 
+    almo のもっとも特徴的な機能として、 WebAssembly を利用してブラウザ上で Pythonファイルの実行・プロットができるというものがあります。
+    
+    最終的には、機械学習や数値計算、アルゴリズムなどに関心がある人にとって便利な執筆環境を提供することを目指して、VSCode機能や Jupyter Notebook からの変換なども実装されています。
+    
+    このサイトのブログも almo によって作られています.
+
+    チームで開発していて、主にプロジェクト全体の設計・実装を担当しています。
+  tags:
+    - C++
+    - Python
+    - パーサ
+    - OSS
+  period: 2023 ~
+
+    
+
+Q_Q:
+  title: Q_Q
+  img: /works/img/q_q.png
+  short_desc: SNS内の質問収集・回答システム
+  desc: |
+    Q_Q は、 質問収集・回答システムです。
+    SNS 内で発生した質問とその回答を集約したページを作成するとともに、類似質問をサジェストすることによって回答の負担を軽減します。
+    サークルメンバーとハッカソンで開発したもので、主に類似質問のサジェストなどの実装を担当しました。
+  lang:
+    - Python
+    - Streamlit
+  tags:
+    - Python
+    - Streamlit
+    - Web
+    - 機械学習
+    - 自然言語処理
+  period: 2024
+  relatedlinks:
+    - https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit
+
+
+Minia.jl:
+  title: Minia.jl
+  img: /works/img/minia.png
+  repo: abap34/Minia.jl
+  short_desc: Julia 言語製の言語処理系
+  desc: |
+    Minia.jl は Julia 製の言語処理系です。
+    PEG によって文法を定義・パースし、 Julia の AST にトランスパイルして実行するのが特徴です。
+  lang: 
+    - Julia
+  relatedlinks:
+    - https://www.abap34.com/posts/mini-lang.html
+    - https://www.abap34.com/posts/tinypeg.html
+  tags:
+    - Julia
+    - パーサ
+    - 言語処理系
+    - OSS
+  period: 2023
+
+abap34.com:
+  title: abap34.com
+  img: /works/img/abap34com.png
+  repo: abap34/abap34.com
+  short_desc: このサイト
+  desc: |
+    このサイトです。 Comming Soon
+  lang:
+    - HTML
+    - CSS
+    - JavaScript
+  tags:
+    - React
+    - Web
+  relatedlinks:
+    - https://www.abap34.com/posts.html
+  period: 2022
+
+
+DacQ-v2:  
+  title: DacQ-v2
+  img: /works/img/dacq.png
+  repo: abap34/DacQ-v2
+  short_desc: Streamlit 製のデータ分析コンペティションプラットフォーム
+  desc: |
+    DacQ-v2 は、 サークルでデータ分析コンペを開催するために開発した、 Streamlit製のデータ分析コンペティションプラットフォームです。
+    
+    チーム戦機能や Jupyter Notebookベースのディスカッション機能など、 基本的なデータ分析コンペの機能が実装されています。
+  lang:
+    - Python
+    - Streamlit
+    - mariaDB
+  tags:
+    - Python
+    - Streamlit
+    - Web
+    - mariaDB
+    - 機械学習
+
+  period: 2024
+  relatedlinks:
+    - https://www.abap34.com/posts/dacq.html
+  
+ml-lecture-judge:
+  title: ml-lecture-judge
+  img: /works/img/ml-lecture-judge.png
+  repo: abap34/ml-lecture-judge
+  short_desc: React + FastAPI 製のオンラインジャッジシステム
+  desc: |
+    オンラインジャッジシステムです。
+    
+    フロントは React、 バックエンドは FastAPI で実装していて、ジャッジキューを Celery で管理しています。
+  lang:
+    - Python
+    - JavaScript
+  tags:
+    - Web
+    - React
+    - FastAPI
+    - Celery
+    - SQLite
