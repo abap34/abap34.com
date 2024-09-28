@@ -29,9 +29,7 @@ twitter_site: @abap34
 あたりを整備する手順をまとめます。
 
 
-最初は CMake を使っていましたが、やっているプロジェクト特有の事情もあり、本当に辛くなってしまったので Meson というビルドツールを使ってみます。
-
-(自分は C++ をあまり使わないのであまりこの辺には詳しくないですが、 Scipy のビルドシステムに使われている、というのを知っていたので使ってみようと思いました。)
+今回は Meson というビルドツールを使ってみます。
 
 ドキュメントの先頭にはこんな感じのことが書いてあります。
 
@@ -46,9 +44,6 @@ user friendry, いいことばですね (ほんとに)
 ドキュメントもいちおうあります.　[https://mesonbuild.com/index.html](https://mesonbuild.com/index.html)
 
 正直あまり網羅的には書いてくれていない印象ですが... 😢 
-
-
-**ここから本当に手順を書いているだけなので面白くはないです。**
 
 
 以下の Dockerfile で作った devcontainer で作業しています。
@@ -75,7 +70,6 @@ RUN apt-get update && apt-get install -y \
 
 とくに Mac の人は devcontainer でやるのがおすすめです。 (400敗)
 
-不幸が訪れます。
 
 ## ローカルでの環境構築
 
@@ -130,7 +124,7 @@ int try_to_sum(int a, int b, int c) {
 #include "mylib.hpp"
 
 int main() {
-    std::cout << "Sum: " << sum(1, 2, 3) << std::endl;
+    std::cout << "Sum: " << try_to_sum(1, 2, 3) << std::endl;
     return 0;
 }
 ```
@@ -198,13 +192,13 @@ Sum: 6
 
 ### Google Test の導入
 
-まずは `git submodule` で.... もしくは `cmake` の `fetch_content` で... ではなく、 meson にはなんと `wrap` という機能があります。
+まずは `git submodule` で.... もしくは `cmake` の `fetch_content` で... ではなく、 なんと Meson は wrapdb というところにいろんなライブラリを置いてくれていて簡単にとってくることができます。
 
 
 [https://mesonbuild.com/Wrapdb-projects.html](https://mesonbuild.com/Wrapdb-projects.html)
 
 
-`meson wrap install {name}` で各種ライブラリを取ってくることができます。
+`meson wrap install {name}` で取れます。
 
 早速 Google Test を取ってきます。
 
@@ -670,7 +664,7 @@ jobs:
 
 (実は最初に CMake でやろうとして酷い目にあい、 Meson に逃げたはいいもののカバレッジ周りで Clang と GCC の競合に苦しむなど、かなり辛かったです。
 
-例えばちゃんと `CXX=g++` しても `gcov` は Clang 用のものがデフォルトでは使われていて... などのパッとわからない依存がたくさんあり、大変なことになっていました。)
+例えば、ちゃんと `CXX=g++` しても `gcov` は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)
 
 
 とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。
