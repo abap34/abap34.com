@@ -16,12 +16,8 @@ twitter_site: @abap34
 ## できるもの
 
 ![テスト](cpp_ci/image-10.png)
-
- 
 ![ベンチマーク](cpp_ci/image-11.png)
-
 ![カバレッジ計測](cpp_ci/image.png)
-
 ![自動ベンチ・Peformance Alert](cpp_ci/image-7.png)
 ![パフォーマンスの推移を記録](cpp_ci/image-5.png)
 ![CodeCovでカバレッジを見る](cpp_ci/image-9.png)
@@ -49,7 +45,7 @@ twitter_site: @abap34
 
 
 > Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible.
-The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.
+> The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.
 
 
 user friendry, いいことばですね (ほんとに)
@@ -526,8 +522,8 @@ jobs:
 
 この Action を使うと、
 
-- ベンチマークの結果をコメントに書いてくれる
-- ベンチマークの推移を記録して GitHub Pages に表示してくれる
+- ベンチマークの結果をコメントに書く
+- ベンチマークの推移を記録して GitHub Pages に表示
 
 などができます。
 
@@ -601,14 +597,14 @@ int try_to_sum(int a, int b, int c) {
 
 ![](cpp_ci/image-7.png)
 
-警告を出してテストが失敗します！便利！
+テストが失敗します！便利！
 
 
 さらに、 `gh-pages` ブランチを生やしておいて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、
 
 ![](cpp_ci/image-5.png)
 
-パフォーマンスの推移が見れるページが生成されます。便利。
+パフォーマンスの推移を見られるページが生成されます。便利。
 
 ### カバレッジ計測
 
@@ -670,15 +666,15 @@ jobs:
 
 ## まとめ
 
-かなりもうこりごりという気持ちです。
+
+実は最初は CMake + devcontainer なしでやろうとして本当に酷い目あったりしていました。
+
+(例えば、ちゃんと `CXX=g++` な事をしても `gcov` は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)
 
 
 令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。
 
-
-(実は最初に CMake でやろうとして酷い目にあい、 Meson に逃げたはいいもののカバレッジ周りで Clang と GCC の競合に苦しむなど、かなり辛かったです。
-
-例えば、ちゃんと `CXX=g++` しても `gcov` は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)
+約2日間、「C++ やめていい？」しか言っていなかったです。
 
 
 とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。
