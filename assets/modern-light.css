@@ -589,9 +589,9 @@ a {
 
 /* 引用 */
 blockquote {
-    border-left: solid 5px #ddd;
+    border-left: solid 5px #e2e6ff;
     padding-left: 10px;
     margin-left: 0;
-    color: #a8a8a8 !important;
+    color: #6d6d6d !important;
     font-weight: bold !important;
 }
