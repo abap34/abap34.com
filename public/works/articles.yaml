@@ -74,7 +74,7 @@ blog:
   repo: abap34/my-site
   short_desc: "このサイトのブログ"
   desc: |
-    [このサイトのブログ](https://www.abap34.com/posts.html) に、多くの技術記事を投稿しています。
+    [このサイトのブログ](https://www.abap34.com/blog) に、多くの技術記事を投稿しています。
 
     
     プログラム・数学関連の記事を中心に書いています。
@@ -82,7 +82,7 @@ blog:
    - 数学
   period: 2023 ~
   relatedlinks:
-    - https://www.abap34.com/posts.html
+    - https://www.abap34.com/blog
 
 blog2:
   title: ブログ (サークル)
