@@ -1058,7 +1058,7 @@ int try_to_sum(int a, int b, int c) {
     "title":"カバレッジ計測"
 });
 </script>
-<h3 id="351">カバレッジ計測</h3><br>最後に、カバレッジ計測を Codecov で行うようにします。<br><br>といっても本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。<br><url> <a href="https://app.codecov.io/">https://app.codecov.io/</a> </url> にいって　Key をもらい、 Secrets に登録しておきます。<br>そして Action を書きます。<br><div class="code-block"> <pre><code class="language-yaml">name: Codecov
+<h3 id="351">カバレッジ計測</h3><br>最後に、カバレッジ計測を Codecov で行うようにします。<br><url> <a href="https://app.codecov.io/">https://app.codecov.io/</a> </url> にいって　Key をもらい、 Secrets に登録しておきます。<br><br>本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。 公式の example や色んな情報を見ると <span class="inline-code"> <code>bash (curl codecov...)</code> </span> のような事をして直接(?) しているものが多いですが、以下のように Actions 経由で渡す方が色々設定できて圧倒的に良いと思います。<br><br><div class="code-block"> <pre><code class="language-yaml">name: Codecov
 
 on: [push, pull_request]
 
@@ -1091,17 +1091,17 @@ jobs:
         files: builddir_cov/meson-logs/coverage.xml
 </code></pre> </div><br>するとこんな感じでカバレッジ計測結果が見られます　(´・ω・｀)🎉<br><figure><img src="cpp_ci/image-8.png" ><figcaption></figcaption></figure><br><br><span class="inline-code"> <code>a + b + c &gt; 100</code> </span> などがテストできていないことがわかりますね。<br>また、新たに PR を出すと<br><figure><img src="cpp_ci/image-9.png" ><figcaption></figcaption></figure><br>カバレッジの変化が見られます。便利。<br><script>page_contents.push({
     "type":"H2",
-    "id":"380",
+    "id":"381",
     "title":"まとめ"
 });
 </script>
-<h2 id="380">まとめ</h2><br><br>実は最初は CMake + devcontainer なしでやろうとして本当に酷い目あったりしていました。<br>(例えば、ちゃんと <span class="inline-code"> <code>CXX=g++</code> </span> な事をしても <span class="inline-code"> <code>gcov</code> </span> は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)<br><br>令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。<br>約2日間、「C++ やめていい？」しか言っていなかったです。<br><br>とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。<br><script>page_contents.push({
+<h2 id="381">まとめ</h2><br><br>実は最初は CMake + devcontainer なしでやろうとして本当に酷い目あったりしていました。<br>(例えば、ちゃんと <span class="inline-code"> <code>CXX=g++</code> </span> な事をしても <span class="inline-code"> <code>gcov</code> </span> は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)<br><br>令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。<br>約2日間、「C++ やめていい？」しか言っていなかったです。<br><br>とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。<br><script>page_contents.push({
     "type":"H2",
-    "id":"400",
+    "id":"401",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="400">今日の一曲</h2><br><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1591947091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/koshy-226161802" title="Watson (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Watson (Official)</a> · <a href="https://soundcloud.com/koshy-226161802/mj-freestyle" title="MJ Freestyle" target="_blank" style="color: #cccccc; text-decoration: none;">MJ Freestyle</a></div><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://logmi.jp/tech/articles/330373">「自分の未来予測を信じてちょっと意地を張ってみる」 まつもとゆきひろ氏がRubyに型宣言を入れない理由</a> </url> より.</span></div>
+<h2 id="401">今日の一曲</h2><br><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1591947091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/koshy-226161802" title="Watson (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Watson (Official)</a> · <a href="https://soundcloud.com/koshy-226161802/mj-freestyle" title="MJ Freestyle" target="_blank" style="color: #cccccc; text-decoration: none;">MJ Freestyle</a></div><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://logmi.jp/tech/articles/330373">「自分の未来予測を信じてちょっと意地を張ってみる」 まつもとゆきひろ氏がRubyに型宣言を入れない理由</a> </url> より.</span></div>
 
             <hr>
 
