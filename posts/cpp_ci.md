@@ -37,15 +37,20 @@ twitter_site: @abap34
 > Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible.
 The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.
 
+
 user friendry, いいことばですね (ほんとに)
+
 
 ドキュメントもいちおうあります.　[https://mesonbuild.com/index.html](https://mesonbuild.com/index.html)
 
 正直あまり網羅的には書いてくれていない印象ですが... 😢 
 
+
 **ここから本当に手順を書いているだけなので面白くはないです。**
 
+
 以下の Dockerfile で作った devcontainer で作業しています。
+
 
 ```Dockerfile
 FROM ubuntu:22.04
@@ -70,8 +75,9 @@ RUN apt-get update && apt-get install -y \
 
 不幸が訪れます。
 
+## ローカルでの環境構築
 
-## サンプルプロジェクト
+### サンプルプロジェクト
 
 こんな感じのプロジェクトを作ります。
 
@@ -128,7 +134,7 @@ int main() {
  
 3 つの数の総和を取る (ただし、前 2 つの和が 100 を超える場合は -1 を返す) です。
 
-## Meson の設定
+### Meson の設定
 
 Meson の設定を書きます。　とりあえず `main.cpp` を実行できるとこまで行きます。
 
@@ -184,7 +190,7 @@ Sum: 6
 
 無事に実行されました！　いいですね〜
 
-## Google Test の導入
+### Google Test の導入
 
 まずは `git submodule` で.... もしくは `cmake` の `fetch_content` で... ではなく、 meson にはなんと `wrap` という機能があります。
 
@@ -297,7 +303,7 @@ Full log written to /Users/yuchi/Desktop/this-is-practice-repository-removed-soo
 
 いいですね
 
-## Google Benchmark の導入
+### Google Benchmark の導入
 
 Google Benchmark も同様に `meson wrap install` で取ってきます。ありがたい...*
 
@@ -380,7 +386,7 @@ BM_Sum           2.64 ns         2.64 ns    259362043
 無事にベンチマークが取れました！
 
 
-## カバレッジ計測
+### カバレッジ計測
 
 最後に、カバレッジの計測をします。
 
