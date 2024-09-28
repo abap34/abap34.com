@@ -15,24 +15,16 @@ twitter_site: @abap34
 
 ## できるもの
 
-- テスト
+![テスト](cpp_ci/image-10.png)
 
-![](cpp_ci/image-10.png)
-
-- ベンチマーク
  
-![](cpp_ci/image-11.png)
+![ベンチマーク](cpp_ci/image-11.png)
 
-- カバレッジ計測
+![カバレッジ計測](cpp_ci/image.png)
 
-![](cpp_ci/image.png)
-
-- GitHub Actions でテスト、ベンチマーク、カバレッジ計測の自動化
-
-
-![](cpp_ci/image-7.png)
-![](cpp_ci/image-5.png)
-![](cpp_ci/image-8.png)
+![自動ベンチ・Peformance Alert](cpp_ci/image-7.png)
+![パフォーマンスの推移を記録](cpp_ci/image-5.png)
+![CodeCovでカバレッジを見る](cpp_ci/image-9.png)
 
 
 ## はじめに
