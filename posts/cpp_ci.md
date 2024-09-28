@@ -610,12 +610,12 @@ int try_to_sum(int a, int b, int c) {
 
 最後に、カバレッジ計測を Codecov で行うようにします。
 
-
-といっても本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。
-
 [https://app.codecov.io/](https://app.codecov.io/) にいって　Key をもらい、 Secrets に登録しておきます。
 
-そして Action を書きます。
+
+本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。
+公式の example や色んな情報を見ると `bash (curl codecov...)` のような事をして直接(?) しているものが多いですが、以下のように Actions 経由で渡す方が色々設定できて圧倒的に良いと思います。
+
 
 ```yaml
 name: Codecov
