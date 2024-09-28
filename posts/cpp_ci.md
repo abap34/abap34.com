@@ -13,6 +13,28 @@ site_name: abap34's blog
 twitter_site: @abap34
 ---
 
+## できるもの
+
+- テスト
+
+![](cpp_ci/image-10.png)
+
+- ベンチマーク
+ 
+![](cpp_ci/image-11.png)
+
+- カバレッジ計測
+
+![](cpp_ci/image.png)
+
+- GitHub Actions でテスト、ベンチマーク、カバレッジ計測の自動化
+
+
+![](cpp_ci/image-7.png)
+![](cpp_ci/image-5.png)
+![](cpp_ci/image-8.png)
+
+
 ## はじめに
 
 > 人類はまだテストを不要とする技術を開発していないので、テストはいるんですね. [^1] 
