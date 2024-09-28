@@ -28,11 +28,13 @@ twitter_site: @abap34
 
 あたりを整備する手順をまとめます。
 
+
 最初は CMake を使っていましたが、やっているプロジェクト特有の事情もあり、本当に辛くなってしまったので Meson というビルドツールを使ってみます。
 
 (自分は C++ をあまり使わないのであまりこの辺には詳しくないですが、 Scipy のビルドシステムに使われている、というのを知っていたので使ってみようと思いました。)
 
 ドキュメントの先頭にはこんな感じのことが書いてあります。
+
 
 > Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible.
 The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.
@@ -80,6 +82,7 @@ RUN apt-get update && apt-get install -y \
 ### サンプルプロジェクト
 
 こんな感じのプロジェクトを作ります。
+
 
 ```
 ➤ tree .
@@ -154,10 +157,13 @@ executable('sumsum', src)
 
 実際にビルドしてみます。
 
+
 `meson setup {dir}` で `{dir}` にビルドディレクトリが作られます。
+
 
 そこで `meson compile` でビルドが走ります。
 (前までは `ninja` を直接叩くことになっていたようですが、今は `meson compile` で適切にバックエンドを見つけてやってくれるみたいです)
+
 
 ```bash
 ➤ meson setup builddir && cd builddir
@@ -188,17 +194,20 @@ INFO: calculating backend command to run: /opt/homebrew/bin/ninja
 Sum: 6
 ```
 
-無事に実行されました！　いいですね〜
+無事に実行されました！　
 
 ### Google Test の導入
 
 まずは `git submodule` で.... もしくは `cmake` の `fetch_content` で... ではなく、 meson にはなんと `wrap` という機能があります。
 
+
 [https://mesonbuild.com/Wrapdb-projects.html](https://mesonbuild.com/Wrapdb-projects.html)
+
 
 `meson wrap install {name}` で各種ライブラリを取ってくることができます。
 
 早速 Google Test を取ってきます。
+
 
 ```bash
 ➤ mkdir subprojects
@@ -207,9 +216,7 @@ Sum: 6
 Installed gtest version 1.15.0 revision 1
 ```
 
-すると、
-
-`subprojects/gtest.wrap` というファイルができていて、
+すると、 `subprojects/gtest.wrap` というファイルができていて、
 
 ```ini
 [wrap-file]
@@ -231,6 +238,7 @@ gmock_main = gmock_main_dep
 ```
 
 ではこれを使ってテストを書きます。
+
 
 `tests/test_mylib.cpp` を作ります。
 
@@ -301,11 +309,12 @@ Timeout:            0
 Full log written to /Users/yuchi/Desktop/this-is-practice-repository-removed-soon/builddir/meson-logs/testlog.txt
 ```
 
-いいですね
+ヨシ!
 
 ### Google Benchmark の導入
 
-Google Benchmark も同様に `meson wrap install` で取ってきます。ありがたい...*
+Google Benchmark も同様に `meson wrap install` で取ってきます。ありがたい...
+
 
 ```bash
 ➤ meson wrap install google-benchmark
@@ -327,7 +336,6 @@ BENCHMARK(BM_Sum);
 
 BENCHMARK_MAIN();
 ```
-
 
 `meson.build` にベンチマークの設定を追加します。
 
@@ -361,8 +369,8 @@ index c231b3a..5788c5c 100644
 +
 ```
 
-
 ビルドして実行すると、
+
 
 ```bash
 ➤ ./benchmark_sumsum
@@ -385,10 +393,10 @@ BM_Sum           2.64 ns         2.64 ns    259362043
 
 無事にベンチマークが取れました！
 
-
 ### カバレッジ計測
 
 最後に、カバレッジの計測をします。
+
 
 なんと Meson は Meson のレベルでカバレッジをよしなにやってくれます。
 
@@ -414,6 +422,7 @@ builddir_cov/libsumsum.dylib.p/
 
 のように、 `.gcno` ファイルができています。 
 
+
 ではテストを実行してみます。
 
 ```bash
@@ -432,6 +441,7 @@ builddir_cov/libsumsum.dylib.p/
 ```
 
 と、 `.gcda` ファイルが無事に生成されています。
+
 
 そうしたら、カバレッジレポートを生成します。
 
@@ -513,6 +523,7 @@ jobs:
 
 などができます。
 
+
 README.md にしたがって、このアクションで使えるように結果を吐く、以下のような Action を書きます。
 
 
@@ -582,18 +593,19 @@ int try_to_sum(int a, int b, int c) {
 
 ![](cpp_ci/image-7.png)
 
-こんな感じで警告を出してテストが失敗するようになります！便利！
+警告を出してテストが失敗します！便利！
 
 
-さらに、 `gh-pages` ブランチを生やしていて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、
+さらに、 `gh-pages` ブランチを生やしておいて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、
 
 ![](cpp_ci/image-5.png)
 
-こんな感じのパフォーマンスの推移のページが生成されます。便利。
+パフォーマンスの推移が見れるページが生成されます。便利。
 
 ### カバレッジ計測
 
 最後に、カバレッジ計測を Codecov で行うようにします。
+
 
 といっても本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。
 
@@ -639,10 +651,10 @@ jobs:
 
 ![](cpp_ci/image-8.png)
 
+
 `a + b + c > 100` などがテストできていないことがわかりますね。
 
 また、新たに PR を出すと
-
 
 ![](cpp_ci/image-9.png)
 
@@ -652,15 +664,17 @@ jobs:
 
 かなりもうこりごりという気持ちです。
 
-令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいな言論が盛んになっていますが、それをひしひしと感じる作業でした。
+
+令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。
+
 
 (実は最初に CMake でやろうとして酷い目にあい、 Meson に逃げたはいいもののカバレッジ周りで Clang と GCC の競合に苦しむなど、かなり辛かったです。
+
 例えばちゃんと `CXX=g++` しても `gcov` は Clang 用のものがデフォルトでは使われていて... などのパッとわからない依存がたくさんあり、大変なことになっていました。)
+
 
 とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。
 
-## 今日に一曲
+## 今日の一曲
 
-ふたり Meson
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mNpPQXMgtmw?si=7LylWAN0ZufbLSC7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1591947091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/koshy-226161802" title="Watson (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Watson (Official)</a> · <a href="https://soundcloud.com/koshy-226161802/mj-freestyle" title="MJ Freestyle" target="_blank" style="color: #cccccc; text-decoration: none;">MJ Freestyle</a></div>
