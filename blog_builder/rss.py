@@ -8,7 +8,7 @@ RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
 <title> abap34's blog </title>
-<link> https://abap34.com/posts.html </link>
+<link> https://abap34.com/blog </link>
 <description> abap34's blog </description>
 {items}
 </channel>
