@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</id>
+<title>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</title>
+<link>https://abap34.com/posts/cpp_ci.html</link>
+<pubDate>Mon, 23 Sep 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>Julia Compiler Internals (02) - Lowering (2) for の linearize</id>
 <title>Julia Compiler Internals (02) - Lowering (2) for の linearize</title>
 <link>https://abap34.com/posts/jci_02.html</link>

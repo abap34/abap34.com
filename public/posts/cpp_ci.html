@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title> C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する </title>
+
+    <meta property="og:title" content="C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する">
+    <meta property="og:image" content="https://abap34.com/posts/cpp_ci/image-7.png">
+    <meta property="og:description" content="C++ のプロジェクトの CI 環境を構築する手順をまとめます。 Meson によるビルド、 GitHub Actions + (Google Test, Google Benchmark) による継続的テスト、ベンチマーク、カバレッジ計測を行います。">
+    <meta property="og:url" content="https://abap34.com/posts/cpp_ci.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}
+
+/* 引用 */
+blockquote {
+    border-left: solid 5px #ddd;
+    padding-left: 10px;
+    margin-left: 0;
+    color: #a8a8a8 !important;
+    font-weight: bold !important;
+}</style>
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="article-header">
+
+        <div class="title">
+            C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する
+        </div>
+
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/09/23
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [C++, CI, GitHub Actions, Google Test, Google Benchmark, Meson]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"はじめに"
+});
+</script>
+<h2 id="2">はじめに</h2><br><blockquote>人類はまだテストを不要とする技術を開発していないので、テストはいるんですね. <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> </blockquote><br><br>というわけでテストを書きます。 GitHub で C++ のプロジェクトをやることを想定して、<br><ul><li>Google Test でテストを書く</li><li>Google Benchmark でベンチマークを取る</li><li>それの結果の推移の統計を GitHub Pages でいい感じに表示する</li><li>Codecov でカバレッジを計測する</li></ul><br>あたりを整備する手順をまとめます。<br>最初は CMake を使っていましたが、やっているプロジェクト特有の事情もあり、本当に辛くなってしまったので Meson というビルドツールを使ってみます。<br>(自分は C++ をあまり使わないのであまりこの辺には詳しくないですが、 Scipy のビルドシステムに使われている、というのを知っていたので使ってみようと思いました。)<br>ドキュメントの先頭にはこんな感じのことが書いてあります。<br><blockquote>Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible.</blockquote>The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.<br>user friendry, いいことばですね (ほんとに)<br>ドキュメントもいちおうあります.　<url> <a href="https://mesonbuild.com/index.html">https://mesonbuild.com/index.html</a> </url><br>正直あまり網羅的には書いてくれていない印象ですが... 😢 <br><span class="strong"> <strong>ここから本当に手順を書いているだけなので面白くはないです。</strong> </span><br>以下の Dockerfile で作った devcontainer で作業しています。<br><div class="code-block"> <pre><code class="language-Dockerfile">FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update &amp;&amp; apt-get install -y \
+    build-essential \
+    meson \
+    ninja-build \
+    gcc \
+    g++ \
+    lcov \
+    gcovr \
+    git \
+    python3-pip \
+    python3-setuptools \
+    &amp;&amp; apt-get clean
+</code></pre> </div><br>とくに Mac の人は devcontainer でやるのがおすすめです。 (400敗)<br>不幸が訪れます。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"60",
+    "title":"サンプルプロジェクト"
+});
+</script>
+<h2 id="60">サンプルプロジェクト</h2><br>こんな感じのプロジェクトを作ります。<br><div class="code-block"> <pre><code class="language-plaintext">➤ tree .
+.
+├── LICENSE
+└── src
+    ├── main.cpp
+    ├── mylib.cpp
+    └── mylib.hpp
+</code></pre> </div><br><span class="inline-code"> <code>src/mylib.hpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#ifndef MYLIB_HPP
+#define MYLIB_HPP
+
+int sum(int a, int b, int c);
+int try_to_sum(int a, int b, int c);
+
+#endif // MYLIB_HPP
+</code></pre> </div><br><span class="inline-code"> <code>src/mylib.cpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
+
+int sum(int a, int b, int c) {
+    return a + b + c;
+}
+
+int try_to_sum(int a, int b, int c) {
+    if (a + b + c &gt; 100) {
+        return -1;
+    }
+    return a + b + c;
+}
+</code></pre> </div><br><span class="inline-code"> <code>src/main.cpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &quot;mylib.hpp&quot;
+
+int main() {
+    std::cout &lt;&lt; &quot;Sum: &quot; &lt;&lt; sum(1, 2, 3) &lt;&lt; std::endl;
+    return 0;
+}
+</code></pre> </div><br>3 つの数の総和を取る (ただし、前 2 つの和が 100 を超える場合は -1 を返す) です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"84",
+    "title":"Meson の設定"
+});
+</script>
+<h2 id="84">Meson の設定</h2><br>Meson の設定を書きます。　とりあえず <span class="inline-code"> <code>main.cpp</code> </span> を実行できるとこまで行きます。<br>設定ファイルは <span class="inline-code"> <code>meson.build</code> </span> という名前で作ります。<br><br><div class="code-block"> <pre><code class="language-plaintext">project(&#39;sumsum&#39;, &#39;cpp&#39;,
+  version: &#39;0.1.0&#39;,
+  default_options: [&#39;cpp_std=c++20&#39;])
+
+src = [&#39;src/main.cpp&#39;, &#39;src/mylib.cpp&#39;]
+
+executable(&#39;sumsum&#39;, src)
+</code></pre> </div><br><br>実際にビルドしてみます。<br><span class="inline-code"> <code>meson setup {dir}</code> </span> で <span class="inline-code"> <code>{dir}</code> </span> にビルドディレクトリが作られます。<br>そこで <span class="inline-code"> <code>meson compile</code> </span> でビルドが走ります。 (前までは <span class="inline-code"> <code>ninja</code> </span> を直接叩くことになっていたようですが、今は <span class="inline-code"> <code>meson compile</code> </span> で適切にバックエンドを見つけてやってくれるみたいです)<br><div class="code-block"> <pre><code class="language-bash">➤ meson setup builddir &amp;&amp; cd builddir
+The Meson build system
+Version: 1.5.2
+...
+Build type: native build
+Project name: sumsum
+Project version: 0.1.0
+C++ compiler for the host machine: c++ (clang 14.0.3 &quot;Apple clang version 14.0.3 (clang-1403.0.22.14.1)&quot;)
+C++ linker for the host machine: c++ ld64 857.1
+Host machine cpu family: aarch64
+Host machine cpu: aarch64
+Build targets in project: 1
+
+Found ninja-1.12.1 at /opt/homebrew/bin/ninja
+➤ meson compile
+
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /opt/homebrew/bin/ninja
+[3/3] Linking target sumsum
+</code></pre> </div><br>というわけでビルドが終わると、<br><div class="code-block"> <pre><code class="language-bash">➤ ./sumsum
+Sum: 6
+</code></pre> </div><br>無事に実行されました！　いいですね〜<br><script>page_contents.push({
+    "type":"H2",
+    "id":"122",
+    "title":"Google Test の導入"
+});
+</script>
+<h2 id="122">Google Test の導入</h2><br>まずは <span class="inline-code"> <code>git submodule</code> </span> で.... もしくは <span class="inline-code"> <code>cmake</code> </span> の <span class="inline-code"> <code>fetch_content</code> </span> で... ではなく、 meson にはなんと <span class="inline-code"> <code>wrap</code> </span> という機能があります。<br><url> <a href="https://mesonbuild.com/Wrapdb-projects.html">https://mesonbuild.com/Wrapdb-projects.html</a> </url><br><span class="inline-code"> <code>meson wrap install {name}</code> </span> で各種ライブラリを取ってくることができます。<br>早速 Google Test を取ってきます。<br><div class="code-block"> <pre><code class="language-bash">➤ mkdir subprojects
+
+➤ meson wrap install gtest
+Installed gtest version 1.15.0 revision 1
+</code></pre> </div><br>すると、<br><span class="inline-code"> <code>subprojects/gtest.wrap</code> </span> というファイルができていて、<br><div class="code-block"> <pre><code class="language-ini">[wrap-file]
+directory = googletest-1.15.0
+source_url = https://github.com/google/googletest/archive/refs/tags/v1.15.0.tar.gz
+source_filename = gtest-1.15.0.tar.gz
+source_hash = 7315acb6bf10e99f332c8a43f00d5fbb1ee6ca48c52f6b936991b216c586aaad
+patch_filename = gtest_1.15.0-1_patch.zip
+patch_url = https://wrapdb.mesonbuild.com/v2/gtest_1.15.0-1/get_patch
+patch_hash = 5f8e484c48fdc1029c7fd08807bd2615f8c9d16f90df6d81984f4f292752c925
+source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/gtest_1.15.0-1/gtest-1.15.0.tar.gz
+wrapdb_version = 1.15.0-1
+
+[provide]
+gtest = gtest_dep
+gtest_main = gtest_main_dep
+gmock = gmock_dep
+gmock_main = gmock_main_dep
+</code></pre> </div><br>ではこれを使ってテストを書きます。<br><span class="inline-code"> <code>tests/test_mylib.cpp</code> </span> を作ります。<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;gtest/gtest.h&gt;
+#include &quot;src/mylib.hpp&quot;
+
+TEST(MyLibTest, SumTest) {
+    EXPECT_EQ(sum(1, 2, 3), 6);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&amp;argc, argv);
+    return RUN_ALL_TESTS();
+}
+</code></pre> </div><br><span class="inline-code"> <code>meson.build</code> </span> にテストの設定を追加します。<br><div class="code-block"> <pre><code class="language-cmake">project(&#39;sumsum&#39;, &#39;cpp&#39;,
+  version: &#39;0.1.0&#39;,
+  default_options: [&#39;cpp_std=c++20&#39;])
+
+src = [&#39;src/main.cpp&#39;]
+lib = [&#39;src/mylib.cpp&#39;]
+test_src = [&#39;tests/test_mylib.cpp&#39;]
+
+sumsum_lib = library(&#39;sumsum&#39;, lib,
+  include_directories: include_directories(&#39;src&#39;))
+
+executable(&#39;sumsum&#39;, src, link_with: sumsum_lib)
+
+gtest = dependency(&#39;gtest&#39;)
+
+test_exe = executable(&#39;test_sumsum&#39;, test_src,
+  include_directories: include_directories(&#39;src&#39;),
+  link_with: sumsum_lib,
+  dependencies: [gtest]
+)
+
+test(&#39;test_sumsum&#39;, test_exe)
+</code></pre> </div><br><span class="inline-code"> <code>builddir</code> </span> を一旦消して再度ビルドすると、<br><div class="code-block"> <pre><code class="language-bash">➤ meson compile
+INFO: autodetecting backend as ninja
+INFO: calculating backend command to run: /opt/homebrew/bin/ninja
+[8/8] Linking target test_sumsum
+
+➤ ./sumsum
+Sum: 6
+
+➤ meson test
+ninja: Entering directory `/Users/yuchi/Desktop/this-is-practice-repository-removed-soon/builddir&#39;
+ninja: no work to do.
+1/1 test_sumsum        OK              0.22s
+
+Ok:                 1
+Expected Fail:      0
+Fail:               0
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            0
+
+Full log written to /Users/yuchi/Desktop/this-is-practice-repository-removed-soon/builddir/meson-logs/testlog.txt
+</code></pre> </div><br>いいですね<br><script>page_contents.push({
+    "type":"H2",
+    "id":"170",
+    "title":"Google Benchmark の導入"
+});
+</script>
+<h2 id="170">Google Benchmark の導入</h2><br>Google Benchmark も同様に <span class="inline-code"> <code>meson wrap install</code> </span> で取ってきます。ありがたい...*<br><div class="code-block"> <pre><code class="language-bash">➤ meson wrap install google-benchmark
+</code></pre> </div><br><span class="inline-code"> <code>tests/benchmark_mylib.cpp</code> </span> を作ります。<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
+#include &quot;src/mylib.hpp&quot;
+
+static void BM_Sum(benchmark::State&amp; state) {
+    for (auto _ : state) {
+        sum(1, 2, 3);
+    }
+}
+
+BENCHMARK(BM_Sum);
+
+BENCHMARK_MAIN();
+</code></pre> </div><br><br><span class="inline-code"> <code>meson.build</code> </span> にベンチマークの設定を追加します。<br><div class="code-block"> <pre><code class="language-diff">➤ git diff meson.build
+diff --git a/meson.build b/meson.build
+index c231b3a..5788c5c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -5,6 +5,7 @@ project(&#39;sumsum&#39;, &#39;cpp&#39;,
+ src = [&#39;src/main.cpp&#39;]
+ lib = [&#39;src/mylib.cpp&#39;]
+ test_src = [&#39;tests/test_mylib.cpp&#39;]
++bench_src = [&#39;tests/benchmark_mylib.cpp&#39;]
+
+ sumsum_lib = library(&#39;sumsum&#39;, lib,
+   include_directories: include_directories(&#39;src&#39;))
+@@ -20,3 +21,14 @@ test_exe = executable(&#39;test_sumsum&#39;, test_src,
+ )
+
+ test(&#39;test_sumsum&#39;, test_exe)
++
++gbenchmark = dependency(&#39;benchmark&#39;)
++
++benchmark_exe = executable(&#39;benchmark_sumsum&#39;, bench_src,
++  include_directories: include_directories(&#39;src&#39;),
++  link_with: sumsum_lib,
++  dependencies: [gbenchmark]
++)
++
++
+</code></pre> </div><br><br>ビルドして実行すると、<br><div class="code-block"> <pre><code class="language-bash">➤ ./benchmark_sumsum
+Unable to determine clock rate from sysctl: hw.cpufrequency: No such file or directory
+This does not affect benchmark measurements, only the metadata output.
+***WARNING*** Failed to set thread affinity. Estimated CPU frequency may be incorrect.
+2024-09-27T16:44:58+09:00
+Running ./benchmark_sumsum
+Run on (8 X 24 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x8)
+Load Average: 6.87, 5.16, 4.16
+-----------------------------------------------------
+Benchmark           Time             CPU   Iterations
+-----------------------------------------------------
+BM_Sum           2.64 ns         2.64 ns    259362043
+</code></pre> </div><br>無事にベンチマークが取れました！<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"198",
+    "title":"カバレッジ計測"
+});
+</script>
+<h2 id="198">カバレッジ計測</h2><br>最後に、カバレッジの計測をします。<br>なんと Meson は Meson のレベルでカバレッジをよしなにやってくれます。<br>順番に見ていきましょう。<br>まずは、カバレッジ用のビルドを作ります。<br><div class="code-block"> <pre><code class="language-bash">➤ meson setup builddir_cov --buildtype=debugoptimized -Db_coverage=true
+
+➤ meson compile -C builddir_cov
+</code></pre> </div><br>すると、例えば <br><div class="code-block"> <pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
+builddir_cov/libsumsum.dylib.p/
+├── libsumsum.dylib.symbols
+├── src_mylib.cpp.gcno
+└── src_mylib.cpp.o
+</code></pre> </div><br>のように、 <span class="inline-code"> <code>.gcno</code> </span> ファイルができています。 <br>ではテストを実行してみます。<br><div class="code-block"> <pre><code class="language-bash">➤ ./test_sumsum
+</code></pre> </div><br>すると、例えば<br><div class="code-block"> <pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
+builddir_cov/libsumsum.dylib.p/
+├── libsumsum.dylib.symbols
+├── src_mylib.cpp.gcda
+├── src_mylib.cpp.gcno
+└── src_mylib.cpp.o
+</code></pre> </div><br>と、 <span class="inline-code"> <code>.gcda</code> </span> ファイルが無事に生成されています。<br>そうしたら、カバレッジレポートを生成します。<br><div class="code-block"> <pre><code class="language-bash">➤ ninja -C builddir_cov coverage-html
+</code></pre> </div><br>すると、 <span class="inline-code"> <code>meson-logs/coveragereport/index.html</code> </span> が生成されます。<br>これを開くと...<br><figure><img src="cpp_ci/image.png" ><figcaption></figcaption></figure><br>無事にカバレッジレポートが生成されました！　(´・ω・｀)🎉<br><script>page_contents.push({
+    "type":"H2",
+    "id":"245",
+    "title":"GitHub Actions で CI する"
+});
+</script>
+<h2 id="245">GitHub Actions で CI する</h2><br>最後に、これを GitHub Actions で継続的に行うようにします。<br>(ここから出てくる Action は <span class="inline-code"> <code>on</code> </span> などは適当なので適宜必要なものに変えてください)<br><script>page_contents.push({
+    "type":"H3",
+    "id":"254",
+    "title":"テスト"
+});
+</script>
+<h3 id="254">テスト</h3><br>まずはテストを走らせるようにします。<br>依存ライブラリをまとめてインストールするスクリプトを書きます。<br><div class="code-block"> <pre><code class="language-bash">mkdir subprojects
+meson wrap install gtest
+meson wrap install google-benchmark
+</code></pre> </div><br>あとは適当な Action を書きます。<br><div class="code-block"> <pre><code class="language-yaml">name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Meson
+      run: sudo apt-get install -y meson ninja-build
+
+    - name: Install dependencies
+      run: bash install.sh
+    
+    - name: Build
+      run: meson setup builddir &amp;&amp; meson compile -C builddir
+
+    - name: Test
+      run: cd builddir &amp;&amp; ./test_sumsum
+</code></pre> </div><br>すると、<br><figure><img src="cpp_ci/image-1.png" ><figcaption></figcaption></figure><br>これで PR時にはテストが走るようになりました。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"273",
+    "title":"ベンチマーク"
+});
+</script>
+<h3 id="273">ベンチマーク</h3><br>続いてべンチマークを走らせるようにします。<br><url> <a href="https://github.com/benchmark-action/github-action-benchmark">https://github.com/benchmark-action/github-action-benchmark</a> </url><br>という素晴らしい　Action があるのでこれを使います。<br>この Action を使うと、<br><ul><li>ベンチマークの結果をコメントに書いてくれる</li><li>ベンチマークの推移を記録して GitHub Pages に表示してくれる</li></ul><br>などができます。<br>README.md にしたがって、このアクションで使えるように結果を吐く、以下のような Action を書きます。<br><br><div class="code-block"> <pre><code class="language-yaml">name: Benchmark
+
+on: [push, pull_request]
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Meson
+      run: sudo apt-get install -y meson ninja-build
+
+    - name: Install dependencies
+      run: bash install.sh
+    
+    - name: Build
+      run: meson setup builddir &amp;&amp; meson compile -C builddir 
+
+    - name: Run benchmark
+      run: cd builddir &amp;&amp; ./benchmark_sumsum --benchmark_format=json | tee benchmark_result.json
+
+    - name: Store benchmark result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        tool: &#39;googlecpp&#39;
+        output-file-path: builddir/benchmark_result.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-on-alert: true
+        summary-always: true
+        fail-on-alert: true
+        auto-push: true
+        comment-always: true
+</code></pre> </div><br>すると、<br><figure><img src="cpp_ci/image-6.png" ><figcaption></figcaption></figure><br>こんな感じで、各コミットに対してベンチマークの結果を教えてくれます。<br>さらに、例えば <span class="inline-code"> <code>mylib.hpp</code> </span> を<br><div class="code-block"> <pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
+#include &lt;unistd.h&gt;
+
+int sum(int a, int b, int c) {
+    return a + b + c;
+}
+
+int try_to_sum(int a, int b, int c) {
+    usleep(1 * 1000 * 1000);
+    if (a + b + c &gt; 100) {
+        return -1;
+    }
+    return a + b + c;
+}
+</code></pre> </div><br>こんな感じにして 1秒の <span class="inline-code"> <code>sleep</code> </span> を入れてものすごくパフォーマンスを落とすようにしてみると、<br><figure><img src="cpp_ci/image-7.png" ><figcaption></figcaption></figure><br>こんな感じで警告を出してテストが失敗するようになります！便利！<br><br>さらに、 <span class="inline-code"> <code>gh-pages</code> </span> ブランチを生やしていて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、<br><figure><img src="cpp_ci/image-5.png" ><figcaption></figcaption></figure><br>こんな感じのパフォーマンスの推移のページが生成されます。便利。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"326",
+    "title":"カバレッジ計測"
+});
+</script>
+<h3 id="326">カバレッジ計測</h3><br>最後に、カバレッジ計測を Codecov で行うようにします。<br>といっても本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。<br><url> <a href="https://app.codecov.io/">https://app.codecov.io/</a> </url> にいって　Key をもらい、 Secrets に登録しておきます。<br>そして Action を書きます。<br><div class="code-block"> <pre><code class="language-yaml">name: Codecov
+
+on: [push, pull_request]
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Meson
+      run: sudo apt-get install -y meson ninja-build
+
+    - name: Install dependencies
+      run: bash install.sh
+    
+    - name: Build
+      run: meson setup builddir_cov --buildtype=debugoptimized -Db_coverage=true &amp;&amp; meson compile -C builddir_cov
+
+    - name: Test
+      run: cd builddir_cov &amp;&amp; ./test_sumsum
+
+    - name: Export XML
+      run: cd builddir_cov &amp;&amp; ninja coverage-xml
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: builddir_cov/meson-logs/coverage.xml
+</code></pre> </div><br>するとこんな感じでカバレッジ計測結果が見られます　(´・ω・｀)🎉<br><figure><img src="cpp_ci/image-8.png" ><figcaption></figcaption></figure><br><span class="inline-code"> <code>a + b + c &gt; 100</code> </span> などがテストできていないことがわかりますね。<br>また、新たに PR を出すと<br><br><figure><img src="cpp_ci/image-9.png" ><figcaption></figcaption></figure><br>カバレッジの変化が見られます。便利。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"354",
+    "title":"まとめ"
+});
+</script>
+<h2 id="354">まとめ</h2><br>かなりもうこりごりという気持ちです。<br>令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいな言論が盛んになっていますが、それをひしひしと感じる作業でした。<br>(実は最初に CMake でやろうとして酷い目にあい、 Meson に逃げたはいいもののカバレッジ周りで Clang と GCC の競合に苦しむなど、かなり辛かったです。 例えばちゃんと <span class="inline-code"> <code>CXX=g++</code> </span> しても <span class="inline-code"> <code>gcov</code> </span> は Clang 用のものがデフォルトでは使われていて... などのパッとわからない依存がたくさんあり、大変なことになっていました。)<br>とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"369",
+    "title":"今日に一曲"
+});
+</script>
+<h2 id="369">今日に一曲</h2><br>ふたり Meson<br><iframe width="560" height="315" src="https://www.youtube.com/embed/mNpPQXMgtmw?si=7LylWAN0ZufbLSC7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://logmi.jp/tech/articles/330373">「自分の未来予測を信じてちょっと意地を張ってみる」 まつもとゆきひろ氏がRubyに型宣言を入れない理由</a> </url> より.</span></div>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
+        </div>
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false" data-via="abap34">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+
+
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
+
+</body>
+
+
+</html>
