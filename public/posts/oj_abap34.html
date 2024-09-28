@@ -763,7 +763,7 @@ blockquote {
 
 
                     <div class="to-links">
-                        <a href="https://abap34.com/posts.html"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
 
                         <br>
 
@@ -871,7 +871,7 @@ blockquote {
         tag.forEach(tag => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/posts.html?tags=" + tag + "'> # " + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/blog?tags=" + tag + "'> # " + tag + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
