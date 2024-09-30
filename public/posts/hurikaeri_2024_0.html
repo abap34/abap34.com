@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title> 2024年度前期振り返り </title>
+
+    <meta property="og:title" content="2024年度前期振り返り">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/australian-shepherd/forest.jpg">
+    <meta property="og:description" content="2024年度前期の振り返りです。">
+    <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2024_0.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}
+
+/* 引用 */
+blockquote {
+    border-left: solid 5px #e2e6ff;
+    padding-left: 10px;
+    margin-left: 0;
+    color: #6d6d6d !important;
+    font-weight: bold !important;
+}</style>
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="article-header">
+
+        <div class="title">
+            2024年度前期振り返り
+        </div>
+
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/09/30
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [日記, 振り返り]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"2024年度前期の振り返り"
+});
+</script>
+<h2 id="2">2024年度前期の振り返り</h2><br>2024年度前期 (4月~9月) の振り返りです。<br><br>去年の前期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2023_0.html">→ こちら</a> </url><br>去年の後期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2023_1.html">→ こちら</a> </url><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"15",
+    "title":"作ったもの"
+});
+</script>
+<h2 id="15">作ったもの</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"18",
+    "title":"このサイト"
+});
+</script>
+<h3 id="18">このサイト</h3><br><a href="https://github.com/abap34/abap34.com"><img src="https://gh-card.dev/repos/abap34/abap34.com.svg"></a><br>このサイト <url> <a href="abap34.com">abap34.com</a> </url> がリニューアルされました。<br>個人的には記事検索画面 <url> <a href="https://www.abap34.com/search?tag=%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9&q=Julia">https://www.abap34.com/search</a> </url> は結構気に入ってます。<br><figure><img src="hurikaeri_2024_0/image.png" ><figcaption>検索画面</figcaption></figure><br><script>page_contents.push({
+    "type":"H3",
+    "id":"33",
+    "title":"almo "
+});
+</script>
+<h3 id="33">almo </h3><br><a href="https://github.com/abap34/almo"><img src="https://gh-card.dev/repos/abap34/almo.svg"></a><br><url> <a href="https://github.com/abap34/almo/tags">ついにリリースが v0.9.5-alpha まできてしまいました。</a> </url><br><br>すいません、いつ v1 になるんでしょうか。<br><br>それはともかくいくつか重要な進展があり、<br><ul><li>Python 向けバインディングの提供とメインのインターフェースをそちらに移動</li><li>パーサの根本的な書き直し <url> <a href="https://github.com/abap34/almo/pull/130">https://github.com/abap34/almo/pull/130</a> </url></li><li>脚注の追加</li></ul><br>などが行われました。 (44個の PR が mainにマージされました。)<br><br>とくにパーサの書き直しは noya2 が、 脚注の追加は potato167 さんが Contribution してくれました。大感謝。<br><br>Python 向けバインディングは自分が作業していて、 Python側から AST を操作したり、 Jupyter Notebook から変換したり、 jinja2 を使った拡張性の高いテンプレートの作成などができるようになりました。<br>(今はその過程で見つかったパフォーマンス上の問題に対応するために、そもそものベンチマークの仕組みの整備などをしています。)<br>こういう感じのコードが動きます。 (中身は全部 C++ です！)<br><div class="code-block"> <pre><code class="language-python">import almo
+
+divblock = almo.DivBlock(&quot;code&quot;)
+
+rawtext = almo.RawText(&quot;import matplotlib.pyplot as plt&quot;)
+
+divblock.add_child(rawtext)
+
+print(divblock.to_html())
+# =&gt; &lt;div class=&quot;code&quot;&gt;import matplotlib.pyplot as plt&lt;/div&gt;
+
+md = &quot;&quot;&quot;
+# Head1
+
+**~~Strong, But Strikethrough~~**, $x^2$
+&quot;&quot;&quot;
+
+ast = almo.parse(md)
+
+def pretty_print(ast, indent=0, last=False):
+    print(&quot;  &quot; * indent + f&quot;{&#39;└──&#39; if last else &#39;├──&#39;} {ast}&quot;)
+    for i, child in enumerate(ast.childs):
+        pretty_print(child, indent + 1, i == len(ast.childs) - 1)
+
+def count_node(ast):
+    count = 1
+    for child in ast.childs:
+        count += count_node(child)
+    return count
+
+print(ast)
+# =&gt; &lt;almo.Markdown (uuid: 2)&gt;
+
+print(count_node(ast))
+# =&gt; 12
+
+pretty_print(ast)
+# ├── &lt;almo.Markdown (uuid: 2)&gt;
+# │   ├── &lt;almo.NewLine (uuid: 3)&gt;
+# │   ├── &lt;almo.Header (uuid: 4)&gt;
+# │   │   └── &lt;almo.RawText (uuid: 5)&gt;
+# │   ├── &lt;almo.NewLine (uuid: 6)&gt;
+# │   ├── &lt;almo.InlineStrong (uuid: 7)&gt;
+# │   │   ├── &lt;almo.InlineOverline (uuid: 8)&gt;
+# │   │   │   └── &lt;almo.RawText (uuid: 9)&gt;
+# │   ├── &lt;alm.oRawText (uuid: 10)&gt;
+# │   ├── &lt;almo.RawText (uuid: 11)&gt;
+# │   └── &lt;almo.NewLine (uuid: 12)&gt;
+</code></pre> </div><br><br>almo に関連する記事もいくつか書きました:<br><ul><li><url> <a href="https://www.abap34.com/posts/pybind11.html">pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</a> </url></li><li><url> <a href="https://www.abap34.com/posts/livereload.html">livereload でホットリロードするCLIツールを作る</a> </url></li><li><url> <a href="https://www.abap34.com/posts/footnote_implement.html">脚注機能の実装に関するメモ</a> </url></li><li><url> <a href="https://www.abap34.com/posts/cpp_ci.html">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</a> </url></li></ul><br><br>これ書いてて思ったんですが、やっぱり早急にリンクカード欲しいですね。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"85",
+    "title":"DacQ (-v2)"
+});
+</script>
+<h3 id="85">DacQ (-v2)</h3><br>データ分析コンペのプラットフォームです。<br><br><a href="https://github.com/abap34/DacQ-v2"><img src="https://gh-card.dev/repos/abap34/DacQ-v2.svg"></a><br><br><br>軽率にやりたい放題コンペをやるために作りました。 <br>記事: <url> <a href="https://www.abap34.com/posts/dacq.html">mini Kaggle を streamlit で作った</a> </url><br>チーム戦を含めたコンペの機能、 Discussion 機能などがあります。<br><figure><img src="hurikaeri_2024_0/image-2.png" ><figcaption></figcaption></figure><br><br>実際にこれを使ってコンペをしましたが、なんとか致命的な不具合なく終わってくれてよかったです。<br><br><figure><img src="hurikaeri_2024_0/image-1.png" ><figcaption>順位表</figcaption></figure><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"111",
+    "title":"ml-lecture-judge"
+});
+</script>
+<h3 id="111">ml-lecture-judge</h3><br><br>オンラインジャッジです。<br><br><a href="https://github.com/abap34/ml-lecture-judge"><img src="https://gh-card.dev/repos/abap34/ml-lecture-judge.svg"></a><br><br><figure><img src="hurikaeri_2024_0/image-3.png" ><figcaption></figcaption></figure><br>　 最初、既存の適当な OSS を動かそうと思っていたのですが、 PyTorch などを導入してのデプロイの手順が一生分からず、しょうがないので自分で作りました。<br><figure><img src="hurikaeri_2024_0/image-4.png" ><figcaption></figcaption></figure><br><br>問題は自分でも作成しつつ、後輩・同級生にも手伝ってもらえて楽ができました。大感謝。<br><br>他にも、複数出力時のジャッジを konkoma が実装してくれるなどしました。大感謝。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"134",
+    "title":"ml-lecture"
+});
+</script>
+<h3 id="134">ml-lecture</h3><br>以前から学部一年生向けに機械学習の入門資料を公開したいと思っていたのですが、ちゃんと書いて公開しました。<br><br><a href="https://github.com/abap34/ml-lecture"><img src="https://gh-card.dev/repos/abap34/ml-lecture.svg"></a><br><br>なるべく誤魔化したくない + なるべく完全に理解してほしい　の落とし所としてワントピックを掘り下げる感じで頑張って書きました。<br><br>力作です。 あまり類似した資料はないと思います。 個人的にはこれにはとても満足しています。 　<script>page_contents.push({
+    "type":"H3",
+    "id":"147",
+    "title":"コンペ開催"
+});
+</script>
+<h3 id="147">コンペ開催</h3><br>上に付随して講習会とコンペを一つやりました: <url> <a href="https://trap.jp/post/2289/">https://trap.jp/post/2289/</a> </url><br>大抵のことはこの記事に書いてありますが、<br><ul><li>38 チームが 1Sub 以上 (<span class="strong"> <strong>1チーム3人です！</strong> </span>)</li><li>合計で 1692 Sub</li></ul><br>と、今までやったコンペの中では一番大規模でした。<br><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日は機械学習講習会の第6回の講義とコンペの開会式(?) でした。ネットワークの攻撃検知を題材に1週間のコンペを始めました！！40以上のチームが組まれていて盛り上がっています🙌<br> <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a> <a href="https://t.co/Q8OQLVJAxS">pic.twitter.com/Q8OQLVJAxS</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1811009775033078126?ref_src=twsrc%5Etfw">July 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>盛り上がってよかった。<br><br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"175",
+    "title":"書いたもの"
+});
+</script>
+<h2 id="175">書いたもの</h2><br>ブログなどを全て入れると多すぎてブロガーの振り返り記事になってしまうので、特に時間をかけたものだけ載せます。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"181",
+    "title":"並列化時代の乱数生成"
+});
+</script>
+<h3 id="181">並列化時代の乱数生成</h3><br>擬似乱数生成は、数値計算・機械学習において欠かせない存在です。 また、現代においてはこれらの計算を並列化によって高速化することもまた重要です。<br><br>一方で、単純な並列化は擬似乱数生成の再現性を損なうことがあります。<br><br>この資料は、まず擬似乱数・並列処理の基礎からはじめ、最終的には並列実行時に再現性を保つための手法について解説しています。<br><br>具体例として、 Julia のマルチプロセス・マルチスレッドにおける擬似乱数生成器の状態管理の手法と実装を紹介しています。<br>(コピペ)<br><br><iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/c43f18061d8a4493968b8ddb9e67ab6f" title="「並列化時代の乱数生成」" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"201",
+    "title":"Julia Compiler Internals"
+});
+</script>
+<h3 id="201">Julia Compiler Internals</h3><br>mrkn さんと antimon2 さんと一緒に毎週木曜日の夜に Juliaの処理系の実装を読む会をしていて、そこで知った内容をまとめるシリーズを始めました。 大体週に 1, 2本のペースで書いていて、今後も続けていくつもりです。<br>JuliaLangJa の Discord で毎週開催しているので、興味がある方はぜひ 🤗<br><url> <a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">https://www.abap34.com/search?tag=JuliaCompilerInternals</a> </url><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"211",
+    "title":"その他・大学など"
+});
+</script>
+<h2 id="211">その他・大学など</h2><ul><li><span class="strong"> <strong>何事もなければ</strong> </span> 4年で卒業できそうです。 よかった.</li><li>atmaCup #17 に参加しました。 (68/319 ...) NLPコンペは数年ぶりで、自分の知識が化石と化していることを痛感しました。ちゃんとキャッチアップします。</li><li>大学の OS の授業がめちゃくちゃ面白くて、興味を持ちました。 それまでは知識も興味も全然なかったですが、 授業を受けてからかなり多くの文章がスッと読めるようになり感動しました。今後も割と真面目に勉強していきたいです。</li><li>夏休みの前半に帰省して全ての親知らずを抜きました。歯が痛いだけで脳がまともなパフォーマンスを一切発揮してくれなく、人間弱すぎるなぁと思いました。</li><li>東京ヤクルトスワローズは今年もダメでした。 <figure><img src="hurikaeri_2024_0/image-8.png" ><figcaption>どうして</figcaption></figure></li><li>東京工業大学が消滅しました。</li><li>前期のコントリビューション数は 1982 Contributions でした。 (<span class="inline-code"> <code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2024-04-01&quot;) | .contributionCount] | add&#39;</code> </span> してください)</li></ul><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"235",
+    "title":"ふりかえりと抱負"
+});
+</script>
+<h2 id="235">ふりかえりと抱負</h2><br>なんとなく記事を見てみると Web っぽいものが多いです。  Web 系の知識は何も知らずに今までやってきましたが、 それこそ ChatGPT などのおかげでかなり学びやすくなって、低いクオリティのものならサッと作れるようになっていい話です。 (streamlit にもありがとう)<br><br>とはいえ、自分にとって人と差別化できる要素だとは思っていないので、 後期はもっと機械学習・低レイヤ、、、 「発展させるために自分の人生を使っても良さそう」 と思っていることの勉強に時間を使っていきたいです。<br><br>また、それなりに (とくに、大学の) コミュニティに色々と返せたような気もするので、なるべく自分のために頑張りたいです。<br><hr><br>なんとなく以前より 「これ (計算機) で食べていくぞ」 という実感 (自覚?) が強くなってきました。<br><span class="strong"> <strong>正直に言うと、半年あったらもうちょっとできただろという気持ちがあり、自分の目指しているエンジニア像になれるか不安しかない</strong> </span>ので、後期は一層頑張ります。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"255",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="255">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/u5KV0B0teIA?si=0OK8OPChXR6rfMIN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><br><div class="footnote"></div>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
+        </div>
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false" data-via="abap34">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+
+
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/blog?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
+
+</body>
+
+
+</html>

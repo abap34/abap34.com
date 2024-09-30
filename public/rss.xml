@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>2024年度前期振り返り</id>
+<title>2024年度前期振り返り</title>
+<link>https://abap34.com/posts/hurikaeri_2024_0.html</link>
+<pubDate>Mon, 30 Sep 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</id>
 <title>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</title>
 <link>https://abap34.com/posts/cpp_ci.html</link>
