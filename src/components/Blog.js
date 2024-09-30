@@ -1,4 +1,4 @@
-import { ArrowRight, Tags, TrendingUp } from 'lucide-react';
+import { ArrowRight, TrendingUp } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { FaRss } from 'react-icons/fa';
 import swal from 'sweetalert2';
@@ -101,10 +101,21 @@ export default function Blog() {
                     <h1 className="text-4xl font-bold">
                         <span className="text-blue-600">abap34</span>'s Blog
                     </h1>
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-orange-400 hidden lg:flex" onClick={copyRSS}>
-                        <FaRss className="mr-2" />
-                        Copy RSS URL
-                    </button>
+                    <div className="flex items-center space-x-2">
+
+
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-blue-400  lg:flex">
+                            <ArrowRight className="mr-2" />
+                            View All Posts
+                        </button>
+
+                        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-orange-400 hidden lg:flex" onClick={copyRSS}>
+                            <FaRss className="mr-2" />
+                            Copy RSS URL
+                        </button>
+
+                    </div>
+
                     <div className="flex space-x-2">
                         <SearchBar />
                     </div>
@@ -115,17 +126,12 @@ export default function Blog() {
             </div>
 
             <div className="grid lg:grid-cols-[4fr,1fr] gap-8 md:grid-cols-1 px-0 py-4 lg:px-4">
-                <div className="space-y-8 border-gray-200 rounded-lg lg:p-2 md:p-2 dark:border-gray-700 overflow-y-scroll">
+                <div className="space-y-8 border-gray-200 rounded-lg lg:p-2 md:p-2 dark:border-gray-700 overflow-y-hidden">
                     <div className="flex items-center space-x-2 text-xl font-semibold">
-                        <TrendingUp className="w-6 h-6 text-green-500" />
-                        <h2 className="text-2xl font-bold"> Recent Posts </h2>
+                        <TrendingUp className="w-8 h-8 text-green-500" />
+                        <h2 className="text-5xl font-bold"> Recent Posts </h2>
 
                     </div>
-
-                    <a href="/search" className="text-blue-600 dark:text-blue-400 hover:underline flex items-center space-x-1">
-                        (View All)
-                        <ArrowRight className="w-4 h-4" />
-                    </a>
 
                     <BlogTimeline posts={posts.slice(0, 10)} />
                 </div>
