@@ -104,10 +104,10 @@ export default function Blog() {
                     <div className="flex items-center space-x-2">
 
 
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-blue-400  lg:flex">
+                        <a className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-blue-400  lg:flex" href="https://www.abap34.com/search" target="_blank" rel="noreferrer">
                             <ArrowRight className="mr-2" />
                             View All Posts
-                        </button>
+                        </a>
 
                         <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-orange-400 hidden lg:flex" onClick={copyRSS}>
                             <FaRss className="mr-2" />
