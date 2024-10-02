@@ -7,7 +7,7 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/dachshund/Dash_Dachshund_With_Hat.jpg
-description: Julia コンパイラの内部実装を調べるシリーズの第1回目です。今回は Lowering における for文の処理について少し書きます。
+description: Julia コンパイラの内部実装を調べるシリーズの第2回目です。今回は Lowering における for文の処理について少し書きます。
 url: https://abap34.com/posts/jci_02.html
 site_name: abap34's blog
 twitter_site: @abap34
