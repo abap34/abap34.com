@@ -15,18 +15,18 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> n 次精度 k 階数値微分の導出 </title>
+    <title> あなたがまだ知らない素数　(by noya2) </title>
 
-    <meta property="og:title" content="n 次精度 k 階数値微分の導出">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/cattledog-australian/IMG_2432.jpg">
-    <meta property="og:description" content="n次精度 k階数値微分の係数の導出と実装例">
-    <meta property="og:url" content="https://abap34.com/posts/n-order-diff.html">
+    <meta property="og:title" content="あなたがまだ知らない素数　(by noya2)">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/pinscher-miniature/n02107312_4943.jpg">
+    <meta property="og:description" content="あなたがまだ知らない素数　(by noya2)">
+    <meta property="og:url" content="https://abap34.com/posts/random_prime_generator_.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="@noya2" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -834,7 +834,7 @@ const runBlock = async (objectid) => {
     <div class="article-header">
 
         <div class="title">
-            n 次精度 k 階数値微分の導出
+            あなたがまだ知らない素数　(by noya2)
         </div>
 
         <script>
@@ -843,11 +843,11 @@ const runBlock = async (objectid) => {
 
         <br>
         <div class="date">
-            2023/11/10
+            2024/10/08
         </div>
         <br>
         <div class="tag-placeholder">
-            [数学, Python, 微分, 日記]
+            [competitive_programming]
         </div>
 
     </div>
@@ -855,200 +855,41 @@ const runBlock = async (objectid) => {
     <div class="article-body">
         <div class="content">
             <br><br><script>page_contents.push({
-    "type":"H1",
+    "type":"H2",
     "id":"3",
-    "title":"Abstract"
+    "title":"はじめまして"
 });
 </script>
-<h1 id="3">Abstract</h1><br>みなさん微分していますか？私はしています。 数値微分は自動微分のテストに使えるし実装が楽で嬉しいです。 なので精度よくやりたくなってきます。 ところで前進差分の打ち切り誤差が有限の幅 <span class="math-inline"> \( h \) </span> に対して <span class="math-inline"> \( O(h) \) </span> な一方、 中心差分は <span class="math-inline"> \( O(h^2) \) </span> であるというのは割と有名ですが、 各 <span class="math-inline"> \( n \) </span> に対して <span class="math-inline"> \( O(h^n) \) </span> で計算する式が常に存在します。(たぶん)<br>調べたのですが出てこなかったので導出してみます。<br><br><script>page_contents.push({
+<h2 id="3">はじめまして</h2><br>はじめまして、noya2 です。普段は競技プログラミングをしています。almo の contributors の一人です。はじめての寄稿です。<br><script>page_contents.push({
     "type":"H2",
-    "id":"21",
-    "title":"前進差分・中心差分の精度の確認"
+    "id":"8",
+    "title":"あなたがまだ知らない素数"
 });
 </script>
-<h2 id="21">前進差分・中心差分の精度の確認</h2><br>まずは前進差分と中心差分の精度を確認してみます。<br><br>前進差分は以下のような計算で得られます。<br><br><div class="definition"><span class="math-inline"> \( f \) </span> の <span class="math-inline"> \( x \) </span> における <span class="math-inline"> \( h \) </span> 差分の前進差分による近似 <span class="math-inline"> \( f_{forward}' (x; h) \) </span> は、<br><div class="math-block"> \[ 
+<h2 id="8">あなたがまだ知らない素数</h2><br>次の python プログラムを実行してみましょう。あなたがまだ知らない素数を <span class="math-inline"> \( 1 \) </span> つ得ることができます。<br><script> use_libs.push("sympy"); </script><br><br> 
+ <div class="editor" id="17" rows="3" cols="80"></div> 
+<script>editor = ace.edit("17"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 12,     maxLines: 12,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import random
+import sympy
 
-f_{forward}'(x; h) = \frac{f(x+h) - f(x)}{h} 
+# 素数の範囲
+start = 10**9
+end = 2*10**9
 
- \] </div><br></div><br><br>これが一次精度、つまり誤差 <span class="math-inline"> \( e(h) \) </span> が <span class="math-inline"> \( O(h) \) </span> であることを確かめます。<br>上の式の右辺をテイラー展開すると、<br><div class="math-block"> \[ 
+# start から end の範囲の素数を生成し、その中からランダムに1つ選択
+random_prime = sympy.randprime(start, end)
 
-\begin{align}
-f_{forward}'(x; h) &= \frac{f(x+h) - f(x)}{h} \\
-&= \frac{f(x) + f'(x)h + \frac{f''(x)}{2!}h^2 + \frac{f'''(x)}{3!}h^3 + \cdots - f(x)}{h} \\
-&= \frac{f'(x)h + O(h^2)}{h} \\
-&= f'(x) + O(h)
-\end{align}
-
- \] </div><br><br>中心差分についても、全く同様に右辺をテイラー展開することで確かめられます。<br>Pythonでそれぞれ実装してみます。<br><script> use_libs.push("numpy"); </script><script> use_libs.push("matplotlib"); </script><br><br> 
- <div class="editor" id="62" rows="3" cols="80"></div> 
-<script>editor = ace.edit("62"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 34,     maxLines: 34,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
-
-import matplotlib
-import matplotlib.pyplot as plt
-
-matplotlib.use("module://matplotlib_pyodide.html5_canvas_backend")
-
-def numerical_diff(f, x, h):
-    return (f(x+h) - f(x)) / h
-
-def numerical_diff_center(f, x, h):
-    return (f(x+h) - f(x-h)) / (2*h)
-
-def f(x):
-    return np.sin(x)
-
-h = np.logspace(0, -20, num=100)
-grad_forward = numerical_diff(f, np.pi/3, h)
-grad_center = numerical_diff_center(f, np.pi/3, h)
-grad_true = np.cos(np.pi/3)
-
-error_forward = np.abs(grad_forward - grad_true)
-error_center = np.abs(grad_center - grad_true)
-
-plt.plot(h, error_forward, label='forward')
-plt.plot(h, error_center, label='center')
-plt.xscale('log')
-plt.yscale('log')
-plt.xlabel('h')
-plt.ylabel('grad')
-plt.legend()
-plt.show()
-plt.close()
+print(random_prime)
 `, -1);</script>
-<pre class="exec_out" id="62_out"></pre>
-<div class="exec_plot" id="62_plot"></div>
-<button class="runbutton" onclick="runBlock('62')"> Run </button>
-<br><br><br>よく言われる、打ち切り誤差と桁落ちのトレードオフが確認できます<br><br><script>page_contents.push({
+<pre class="exec_out" id="17_out"></pre>
+<div class="exec_plot" id="17_plot"></div>
+<button class="runbutton" onclick="runBlock('17')"> Run </button>
+<br>このコード中の <span class="inline-code"> <code>start</code> </span> と <span class="inline-code"> <code>end</code> </span> を調節することで、所望の範囲内の素数をランダムに得ることができます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"69",
-    "title":"任意の k 階 n 次精度数値微分"
+    "id":"25",
+    "title":"おわりに"
 });
 </script>
-<h2 id="69">任意の k 階 n 次精度数値微分</h2><br>本題を導出しようと思います。 まずは議論のしやすさのために特に <span class="math-inline"> \( n \) </span> が偶数の場合について考えます。<br><br><div class="theorem"><br>任意の <span class="math-inline"> \( n, \ k \leq n + 1 \) </span> に対して、<span class="math-inline"> \( n \) </span> が偶数のとき、 ある <span class="math-inline"> \( \boldsymbol{w_{n,k}} \in \mathbb{R}^{n+1} \) </span> が存在して<br><br><span class="math-inline"> \( p = \dfrac{n}{2} \) </span> として<br><br><div class="math-block"> \[ 
-
-f_{n}^{(k)}(x; h) = \boldsymbol{w_{n,k}} \cdot 
-\begin{pmatrix}
-f(x - ph) \\
-f(x - (p-1)h) \\
-\vdots \\
-f(x) \\
-\vdots \\
-f(x + (p-1)h) \\
-f(x + ph) \\
-\end{pmatrix}^{\top}
-
- \] </div><br>は <span class="math-inline"> \( f_{n}^{(k)}(x; h)   = f^{(k)}(x) + O(h^n) \) </span> を満たす。<br><br></div><br>つまり、 各 <span class="math-inline"> \( n \) </span>, <span class="math-inline"> \( k \) </span> に対して中心差分と同様に、微分係数を求めたい点から左右に <span class="math-inline"> \( h \) </span> ずつ幅をとって点を取り評価した <span class="math-inline"> \( n + 1 \) </span>点に対して、適切な重み付き和が存在して <span class="math-inline"> \( k \) </span> 階導関数の <span class="math-inline"> \( n \) </span> 次精度の数値微分を実現できるということです。<br><br>証明してみます。<br><div class="proof"><br><span class="math-inline"> \( f(x + kh) = f(x) + \dfrac{f'(x)}{1!}kh + \dfrac{f''(x)}{2!}k^2h^2 + \cdots + \dfrac{f^{(n)}(x)}{n!}k^nh^n + O(h^{n+1}) \) </span> より、<br><br>これを <span class="math-inline"> \( k = -p, -p+1, \cdots, p-1, \ p \) </span> について足し合わせて <span class="math-inline"> \( k + 1 \) </span> 番目の項以外の係数を <span class="math-inline"> \( 0 \) </span> にすればよい。<br><br>したがって、<br><div class="math-block"> \[ 
-
-A = \begin{pmatrix}
-1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
--p & (-p + 1) & \cdots & 1 & 0 & 1 & \cdots & (p-1) & p \\
-(-p)^2 & (-p + 1)^2 & \cdots & (-1)^2 & 0 & 1^2 & \cdots & (p-1)^2 & p^2 \\
-\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
-(-p)^{n} & (-p + 1)^{n} & \cdots & (-1)^{n} &0 & 1^{n} & \cdots & (p-1)^{n} & p^{n} \\
-\end{pmatrix} \in \mathbb{R}^{(n+1) \times (n+1)}
-
- \] </div><br><br>と <span class="math-inline"> \( A \) </span> を定めたときに <span class="math-inline"> \( A \boldsymbol{w} = \boldsymbol{e}_{k+1} \) </span> を満たす <span class="math-inline"> \( \boldsymbol{w} \in \mathbb{R}^{n+1} \) </span> が存在すればよい。<br>ここで、 <span class="math-inline"> \( A \) </span> は <span class="strong"> <strong>ヴァンデルモンド行列</strong> </span> で、 <span class="math-inline"> \( p \neq 0 \) </span> のとき正則。 <br>したがって、 <span class="math-inline"> \( \boldsymbol{w} = A^{-1}\boldsymbol{e}_{k+1} \) </span> なる <span class="math-inline"> \( \boldsymbol{w} \) </span> がただ存在して条件を満たす。</div><br><details> <summary>正則性について</summary> ヴァンデルモンド行列は、<div class="math-block"> \[ 
-
-A = \begin{pmatrix}
-1 & 1 & \cdots & 1 & 1 & 1 & \cdots & 1 & 1 \\
-x_1 & x_2 & \cdots & x_{n-1} & x_n & x_1 & \cdots & x_{n-1} & x_n \\
-x_1^2 & x_2^2 & \cdots & x_{n-1}^2 & x_n^2 & x_1^2 & \cdots & x_{n-1}^2 & x_n^2 \\
-\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
-x_1^{n-1} & x_2^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} & x_1^{n-1} & \cdots & x_{n-1}^{n-1} & x_n^{n-1} \\
-x_1^{n} & x_2^{n} & \cdots & x_{n-1}^{n} & x_n^{n} & x_1^{n} & \cdots & x_{n-1}^{n} & x_n^{n} \\
-\end{pmatrix} \in \mathbb{R}^{n \times n}
-
- \] </div><br>という各列が等比数列のようになっている行列のことを言います。  (各行の派閥もいるらしいです。)<br>ヴァンデルモンド行列は、その行列式が<br><div class="math-block"> \[ 
-
-\det A = \prod_{1 \leq i < j \leq n} (x_j - x_i)
-
- \] </div><br>となることが知られていて、 <span class="math-inline"> \( x_i \) </span> がすべて異なるときには <span class="math-inline"> \( 0 \) </span> でないことがわかります。<br>したがって今回の場合は <span class="math-inline"> \( x_i = -p + i \) </span> であり、 <span class="math-inline"> \( p \neq 0 \) </span> のときはすべて異なるので正則であることがわかります。<br></details><br><br>というわけで確かに存在したうえに一意で、また具体的に計算することができました。<br>実際に計算してみようと思います。<br>右から <span class="math-inline"> \( e_k \) </span> をかけるのはちょうど <span class="math-inline"> \( k \) </span> 列目のベクトルを取り出すことなのでそう実装します。<br><br><br> 
- <div class="editor" id="197" rows="3" cols="80"></div> 
-<script>editor = ace.edit("197"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 42,     maxLines: 42,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`import numpy as np
-import matplotlib.pyplot as plt
-
-def central_weight(n, k):
-    p = n // 2
-    A = np.zeros((n+1, n+1), dtype=float)
-    r = np.arange(-p, p+1)
-    
-    for i in range(n+1):
-        A[i] = r**i
-        
-    w = np.linalg.inv(A)[:, k]
-    return w
-
-def numerical_diff(f, x, n, h=1e-5, k=1):
-    w = central_weight(n, k)
-    p = n // 2
-    
-    w = central_weight(n, k)
-    x = np.arange(-p, p+1) * h + x
-    y = f(x)
-
-    return np.dot(w, y) * np.prod(np.arange(1, k+1)) / h**k
-
-
-def f(x):
-    return np.sin(x)
-
-def df(x):
-    return np.cos(x)
-
-x = np.pi / 3
-
-
-print('w_2,1 =', central_weight(2, 1))
-print('w_4,1 =', central_weight(4, 1))
-print('w_4,2 =', central_weight(4, 2))
-
-print(numerical_diff(f, x, 2))
-print(numerical_diff(f, x, 4))    
-print(numerical_diff(f, x, 4, k=2))
-`, -1);</script>
-<pre class="exec_out" id="197_out"></pre>
-<div class="exec_plot" id="197_plot"></div>
-<button class="runbutton" onclick="runBlock('197')"> Run </button>
-<br><br>と、いい感じに計算できています。<br>桁落ちとのトレードオフも確認してみます。<br><br> 
- <div class="editor" id="204" rows="3" cols="80"></div> 
-<script>editor = ace.edit("204"); editor.setTheme("{{ editor_theme }}");editor.session.setMode("ace/mode/python");editor.setShowPrintMargin(false);editor.setHighlightActiveLine(false);editor.setOptions({    enableBasicAutocompletion: true,    enableSnippets: true,    enableLiveAutocompletion: true,    minLines: 22,     maxLines: 22,     fontSize: "14px"});editor.renderer.setScrollMargin(10, 10);editor.setValue(`n = range(2, 12, 2)
-x = np.pi / 3
-h = np.logspace(0, -10, 100)
-
-label = [f'O(h^{i})' for i in n]
-
-err = np.zeros((len(n), len(h)))
-
-for i, _n in enumerate(n):
-    for j, _h in enumerate(h):
-        err[i, j] = abs(numerical_diff(f, x, _n, h=_h) - df(x))
-
-plt.figure(figsize=(8, 6))
-for i in range(len(n)):
-    plt.loglog(h, err[i], label=label[i])
-
-plt.legend()
-plt.grid()
-plt.xlabel('h')
-plt.ylabel('Error')
-plt.show()
-`, -1);</script>
-<pre class="exec_out" id="204_out"></pre>
-<div class="exec_plot" id="204_plot"></div>
-<button class="runbutton" onclick="runBlock('204')"> Run </button>
-<br><br>打ち切り誤差の変化によって最適な点が変化していることがわかります。<br><br><script>page_contents.push({
-    "type":"H2",
-    "id":"210",
-    "title":"感想"
-});
-</script>
-<h2 id="210">感想</h2>線形代数が役に立ってすごい<br>また、上のアルゴリズムは逆行列を求めるところがボトルネックで　時間計算量は <span class="math-inline"> \( O(N^3) \) </span>　ですが、 調べたところによるとヴァンデルモンド行列の逆行列は <span class="math-inline"> \( O(N^2) \) </span> で求められるようなのでそうすればもう少し早くなりそうです。 (中心差分よりも正確にやろうとする場面すらなかなかみないので実用的ではないですが)<br><br><br><script>page_contents.push({
-    "type":"H2",
-    "id":"222",
-    "title":"今日の一曲"
-});
-</script>
-<h2 id="222">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br>MV良すぎてめちゃくちゃ好きです。<br><br><br><br><br><div class="footnote"></div>
+<h2 id="25">おわりに</h2><br>競技プログラミングで <span class="strong"> <strong>乱択素数 <span class="math-inline"> \( \bmod \) </span></strong> </span> が欲しくなったときに使ってください。<br><div class="footnote"></div>
 
             <hr>
 
@@ -1084,11 +925,11 @@ plt.show()
                     <br>
                     <br>
 
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/noya2"
+                            class="tolink"> @noya2</a>
                     </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/noya2"
+                            class="tolink"> @noya2</a></p>
                     <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
                             abap0002@gmail.com</a>
                     </p>
@@ -1101,7 +942,7 @@ plt.show()
 
 
                     <footer>
-                        <p>&copy; abap34 </p>
+                        <p>&copy; noya2 </p>
                     </footer>
 
                 </div>
