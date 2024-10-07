@@ -1,10 +1,16 @@
 ---
 title: あなたがまだ知らない素数　(by noya2)
 author: noya2
-date: 2024/10/07
+date: 2024/10/08
 tag: [competitive_programming]
 twitter_id: noya2
 github_id: noya2
+mail: abap0002@gmail.com
+ogp_url: https://images.dog.ceo/breeds/pinscher-miniature/n02107312_4943.jpg
+description: あなたがまだ知らない素数　(by noya2)
+url: https://abap34.com/posts/random_prime_generator_.html
+site_name: abap34's blog
+twitter_site: @noya2
 ---
 
 
