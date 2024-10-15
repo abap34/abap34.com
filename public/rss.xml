@@ -30,6 +30,14 @@
 </item>
 
 <item>
+<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
+<title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
+<link>https://abap34.com/posts/jci_03.html</link>
+<pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>Julia Compiler Internals (02) - Lowering (2) for の linearize</id>
 <title>Julia Compiler Internals (02) - Lowering (2) for の linearize</title>
 <link>https://abap34.com/posts/jci_02.html</link>
