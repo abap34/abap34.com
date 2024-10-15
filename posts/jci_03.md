@@ -1,7 +1,7 @@
 ---
 title: Julia Compiler Internals (03) - Introduction to Type Inference 
 author: abap34
-date: 2024/09/21
+date: 2024/10/15
 tag: [JuliaCompilerInternals, Julia, 型推論, コンパイラ]
 twitter_id: abap34
 github_id: abap34
