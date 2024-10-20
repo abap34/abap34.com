@@ -6,17 +6,17 @@
 <description> abap34's blog </description>
 
 <item>
-<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
-<title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
-<link>https://abap34.com/posts/jci_03.html</link>
-<pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+<id>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</id>
+<title>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</title>
+<link>https://abap34.com/posts/jci_04.html</link>
+<pubDate>Mon, 21 Oct 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</id>
-<title>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</title>
-<link>https://abap34.com/posts/jci_04.html</link>
+<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
+<title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
+<link>https://abap34.com/posts/jci_03.html</link>
 <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
