@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title> Julia Compiler Internals (04) - Algorithm of Type Inference [1] </title>
+
+    <meta property="og:title" content="Julia Compiler Internals (04) - Algorithm of Type Inference [1]">
+    <meta property="og:image" content="https://abap34.com/posts/jci_04/image-2.png">
+    <meta property="og:description" content="Julia の型推論に使われている抽象解釈の理論とアルゴリズムについて考えます。この記事では基本概念と問題設定までを考えます。">
+    <meta property="og:url" content="https://abap34.com/posts/jci_04.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow-x: hidden;
+    ;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    margin: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    border-left: 5px solid #8a6d3b;
+}
+
+.danger {
+    color: #a94442;
+    border-color: #ebccd1;
+    border-left: 5px solid #a94442;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}
+
+/* 引用 */
+blockquote {
+    border-left: solid 5px #e2e6ff;
+    padding-left: 10px;
+    margin-left: 0;
+    color: #6d6d6d !important;
+    font-weight: bold !important;
+}</style>
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="article-header">
+
+        <div class="title">
+            Julia Compiler Internals (04) - Algorithm of Type Inference [1]
+        </div>
+
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/10/15
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [JuliaCompilerInternals, Julia, 型推論, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"小話"
+});
+</script>
+<h2 id="2">小話</h2><br>@abap34 です。<br>最近は腰と肩がかなり痛いです。いい椅子に座りたい 😢<br>この Julia 処理系を読む会もなんやかんや 2ヶ月くらい毎週続いているのですが、いくつかニュースがあったので本題に入る前に書いておきます！<br><script>page_contents.push({
+    "type":"H3",
+    "id":"11",
+    "title":"ちょっとしたニュース ① "
+});
+</script>
+<h3 id="11">ちょっとしたニュース ① </h3><br>先日 Julia の Co-Founder の <url> <a href="https://en.wikipedia.org/wiki/Jeff_Bezanson">Jeff Bezanson</a> </url> さんが来日されていて、なんとお会いすることができました。<br><br>Twitterのリンクでも貼ろうかと思ったら Wikipedia のページがありました。すごすぎ。<br><br><blockquote class="twitter-tweet"><p lang="en" dir="ltr">It was such an honor to meet <a href="https://twitter.com/JeffBezanson?ref_src=twsrc%5Etfw">@JeffBezanson</a> and fellow Julia compiler enthusiasts in Tokyo! <a href="https://t.co/r1vzPaP0X7">pic.twitter.com/r1vzPaP0X7</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1846208258216022469?ref_src=twsrc%5Etfw">October 15, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>そこで 「Julia の処理系を読む会を毎週やっていて、あなたが 10 年前に Scheme で書いたコードをみんなで何時間も読んでいるんです」と伝えたらとても喜んで貰えました！笑<br><br>やっててよかったですね〜　今後も頑張っていきたい。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"30",
+    "title":"ちょっとしたニュース ②"
+});
+</script>
+<h3 id="30">ちょっとしたニュース ②</h3><br>第5回のコードを読んでいるとき、まだ SSA形式の IR になっていないはずなのに SSA形式の IR にするようなチェックがなされている箇所を見つけ、 「不思議だな〜」と話していたところがあったのですが、今日の記事にも登場する Juliaコンパイラの中の人であるところの aviatesk さんに聞いてみたところ、どうもバグっぽいという結論に至りました。<br><br>これが本当にバグなのかはまだ分かりませんが、読み始めたときにバグの一つや二つでも見つけられたらいいな〜と思っていたのでこれは嬉しいです。<br><br>小話はこのくらいにして、本題に入ります。<br><hr><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"44",
+    "title":"あらすじ"
+});
+</script>
+<h2 id="44">あらすじ</h2><br>今回もJuliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><br><url> <a href="https://abap34.com/posts/jci_03.html">前回</a> </url> は Julia の型推論について概観しました。<br><br>今回は実際にアルゴリズムに踏み込んでいきます。<br>具体的には、一旦 Julia のソースコードから離れて aviatesk さんの記事 <url> <a href="https://zenn.dev/aviatesk/articles/data-flow-problem-20201025">Juliaの型推論アルゴリズムを実装する</a> </url> を読んで実装しようと思います。 (以下 「元記事」とかきます)<br><br>少し長くなりそうなので 2,3 個に分ける予定です。<br><br>まず今回は前提知識や問題設定などについて書きます。<br>ここからは aviatesk さんの記事とほぼ同じ内容が続きますが、なるべく理解の補足になるように頑張ります。<br>(※ この記事の執筆は aviatesk さんの許可をいただいて行われています。ありがとうございます！)<br><br>また、この記事を書くにあたって、元記事に加えて以下の資料を参考にしています。<br><ul><li><url> <a href="https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html">https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html</a> </url></li><li><url> <a href="https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html">https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html</a> </url></li><li><url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.</a> </url></li></ul><br>ラインナップからわかるように、抽象解釈 (というかコンパイラ全般そうですが...) はかなり入門したてなので間違い等あればコメントで教えていただけるとありがたいです 🙇 <br>特に以下のようなことに自信がありません。<br><ul><li>読んでいる文章によって順序関係 (後述) が逆転しているという現象が大量に発生しているため、自分でも混乱して誤って逆に書いている箇所があるかもしれません</li><li>一般的でない定義を一般的だと思ったりしている可能性があります.</li></ul><br>また、いくつかのポイントがわかっていないため、わかっていないと書いてあるところがあります。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"97",
+    "title":"束 (Lattice) の定義と具体例"
+});
+</script>
+<h2 id="97">束 (Lattice) の定義と具体例</h2><br>少しだけ使う概念の準備を書いておきます。<br><div class="definition"><span class="strong"> <strong>束 (Lattice)</strong> </span><br><br>集合 <span class="math-inline"> \( L \) </span> と <span class="math-inline"> \( L \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> が以下の条件を満たすとき、<span class="math-inline"> \( (L, \leq) \) </span> を束であるという。<br><ol><li><span class="math-inline"> \( \leq \) </span> が半順序である</li><li>各 <span class="math-inline"> \( x, y \in L \) </span> について <span class="math-inline"> \( \{ x, y \} \) </span> の上限と下限が常に存在する</li></ol><br>とくに <span class="math-inline"> \( L \) </span> が有限集合のとき、有限束という。</div><br><div class="definition"><span class="strong"> <strong>交わり(meet), 結び(join)</strong> </span><br><br>束 <span class="math-inline"> \( (L, \leq) \) </span> について、<br><ul><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \inf \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の交わり (meet)</li><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \sup \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の結び (join)</li></ul><br>という。</div><br>これ命名もう少しあったんじゃないかと思うのは自分だけでしょうか。<br>ともかく、これだけだとパッとわかりにくいので、具体例を挙げてみます。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"169",
+    "title":"束の例1: 論理関数"
+});
+</script>
+<h3 id="169">束の例1: 論理関数</h3><br>束は割と色々なところに現れる構造です。<br><br>例えば、自分は論理回路理論の講義で束に出会いました。調べたらあまり例に上がっていなかったのと、この記事のメインと構造が同じことに気がついたのででここで書いてみます。<br><br><span class="math-inline"> \( \mathbb{B} = \{ \text{0}, \text{1} \} \) </span> として、 (<span class="math-inline"> \( \text{0} \leq \text{1} \) </span> です) <br><span class="math-inline"> \( \mathbb{B}^n \to \mathbb{B} \) </span> な関数全体の集合を <span class="math-inline"> \( \mathcal{F} \) </span> とします。<br><span class="math-inline"> \( f, g \in \mathcal{F} \) </span> に対して次のように <span class="math-inline"> \( \mathcal{F} \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> を定義しましょう:<br><div class="math-block"> \[ 
+
+f \leq g \Leftrightarrow \forall x \in \mathbb{B}^n, f(x) \leq g(x)
+
+ \] </div><br>要は <span class="math-inline"> \( f(x) = 1 \) </span> なる入力の包含関係を見ています。<br>このとき <span class="math-inline"> \( (\mathcal{F}, \leq) \) </span> は束です。<br>確認してみます。<br><ol><li><span class="math-inline"> \( \leq \) </span> が半順序であること: これは一つずつ確認すると、それはそうです</li><li><span class="math-inline"> \( f, g \in \mathcal{F} \) </span> に対して、<span class="math-inline"> \( \{ f, g \} \) </span> の上限と下限が存在すること: <span class="math-inline"> \( h(x) := \max \{ f(x), g(x) \} \) </span> とすると、これは上限です。 <span class="math-inline"> \( h(x) := \min \{ f(x), g(x) \} \) </span> とすると、これは下限です。</li></ol><br>実際、例えば <span class="math-inline"> \( \mathbb{B} \to \mathbb{B} \) </span> の関数全体の集合は<br><br><table>
+<thead>
+<tr>
+<th align="left"> <span class="math-inline"> \( x \) </span>  </th>
+<th align="left"> <span class="math-inline"> \( f(x) \) </span> </th>
+<th align="left"> <span class="math-inline"> \( g(x) \) </span> </th>
+<th align="left"> <span class="math-inline"> \( h(x) \) </span> </th>
+<th align="left"> <span class="math-inline"> \( l(x) \) </span> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> 0    </td>
+<td align="left"> 0      </td>
+<td align="left"> 0      </td>
+<td align="left"> 1      </td>
+<td align="left"> 1      </td>
+</tr>
+<tr>
+<td align="left"> 1    </td>
+<td align="left"> 0      </td>
+<td align="left"> 1      </td>
+<td align="left"> 0      </td>
+<td align="left"> 1      </td>
+</tr>
+</tbody>
+</table>
+<br><br>からなるわけですが、<br>以下のような図でその束の構造を表すことができます。<br><div class="code-block"> <pre><code class="language-plaintext">     l
+     /\
+    /  \
+   /    \
+  /      \
+ h        g
+  \      /
+   \    /
+    \  /
+     \/
+     f
+</code></pre> </div><br>つまり、ふんわり言うと (有限) 束は上のような上下関係をいい感じの図にしたときに、どれをとっても下か上に辿れば交わるものと言えます。<br>なのでこういうグラフが得られているのであれば  <span class="math-inline"> \( \inf \{a, b\} \) </span> と <span class="math-inline"> \( \sup \{a, b\} \) </span> を求めるのは LCA を求める問題に帰着します。<br><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"285",
+    "title":"束の例2: Julia の型"
+});
+</script>
+<h3 id="285">束の例2: Julia の型</h3><br>Julia の型と、その親子関係による順序関係も束をなします。<br><span class="math-inline"> \( L \) </span> を Julia の型全体の集合とし、<br><span class="math-inline"> \( L = \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \cdots \} \) </span> <br><br>二項関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><span class="math-inline"> \( T \leq U \Leftrightarrow \) </span> 型 <span class="math-inline"> \( T \) </span> が型 <span class="math-inline"> \( U \) </span> のサブタイプである<br><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束になります。<br>上に載せた図を作ることで直感的に確認しておきましょう、 「Julia Type Tree」 とかで検索するといい感じの図が出てきます。<br><figure><img src="jci_04/image.png" ><figcaption>https://stackoverflow.com/questions/71524602/visualize-the-julia-type-tree より</figcaption></figure><br>おかしいです！ 束であるためには任意の 2つの元について下限が必要ですから、枝分かれのある木な訳がないです。<br><br>しかし Julia の Concrete Type は サブタイプを持たないはずです。どう言うことでしょうか？<br><br>──実は Julia の Concrete Type にサブタイプが存在しないと言うのが誤りで、 <span class="inline-code"> <code>Union{}</code> </span> 型と言う型が存在してこれは任意の型のサブタイプになります。<br>(<span class="inline-code"> <code>Union{}</code> </span> のオブジェクトは存在しません。型としてのみ存在します。)<br><br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; Union{} &lt;: Any
+true
+
+julia&gt; Union{} &lt;: Int64
+true
+</code></pre> </div><br>したがって、任意の Concrete Type <span class="math-inline"> \( T, U \) </span> に対して <span class="math-inline"> \( \inf \{ T, U \} = \text{Union\{\}} \) </span> となります。<br>この型の存在によって Julia の型の階層関係は束をなします。<br>さて、このように束は割といろんなところに現れる構造っぽいです。<br>そして、実はプログラムのさまざまな要素・状態を束で表現することでいろいろな性質の解析ができます。<br>ここからはそれを具体的に見ていきます。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"348",
+    "title":"抽象解釈"
+});
+</script>
+<h2 id="348">抽象解釈</h2><br>Julia の型推論アルゴリズムは抽象解釈と呼ばれる手法を使っています。<br>そこで、まずは 一旦 Julia の型推論のことは忘れて一般の抽象解釈についての話をしましょう。<br><br>まず前提として、プログラムの調べたい性質は大抵の場合 Undecidable で、静的解析をするには常に諦めもしくはある程度の抽象化が必要になります。<br><br>そこで、抽象解釈は読んで字の如し、プログラムをある程度抽象化して仮想的に実行することで、プログラムの性質を解析します。 つまり、抽象解釈という言葉は具体的なアルゴリズムというより、ある種のアプローチというかフレームワークというかを指す言葉です。<br><br>この抽象化の程度や方向性によって色々な解析をやっていくわけです。 例えば (役に立つのかはともかく、) 変数の偶奇だけに着目して「偶奇だけがわかるレベルで」プログラムを解釈して静的に偶奇の情報を得る、などができます。<br><br>... より役に立つ例を考えましょう。元記事では定数畳み込みを抽象解釈を使って行っています。<br>この記事でもまずはこの例を検討してみます。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"369",
+    "title":"抽象解釈による定数畳み込み: 問題設定"
+});
+</script>
+<h3 id="369">抽象解釈による定数畳み込み: 問題設定</h3><br>以下のような機能を持つ簡単な言語を考えます。<br><br><ul><li>代入: <span class="inline-code"> <code>x := 1</code> </span>, <span class="inline-code"> <code>r := y + z</code> </span></li><li>goto: <span class="inline-code"> <code>goto line</code> </span></li><li>条件つき goto: <span class="inline-code"> <code>if x &lt; 10 goto inst</code> </span>, <span class="inline-code"> <code>if x ≤ z goto inst</code> </span></li></ul><br>簡単のために、代入の右辺は定数か変数またはそれらの二項演算のみで、値は全て整数とします。<br>例えば以下のような感じです。 <br><div class="code-block"> <pre><code class="language-plaintext">0 ─ I₀ = x := 1
+│   I₁ = y := 2
+│   I₂ = z := 3
+└── I₃ = goto I₈
+1 ─ I₄ = r := y + z
+└── I₅ = if x ≤ z goto I₇
+2 ─ I₆ = r := z + y
+3 ─ I₇ = x := x + 1
+4 ─ I₈ = if x &lt; 10 goto I₄
+</code></pre> </div><br><details> <summary>左についている枠について</summary><br>命令列の左に枠がついていますが、これは基本ブロック (Basic Block) というものです。 基本ブロックは、文の列であって、分岐も合流もない、つまり一つの入り口と一つの出口を持つものをいいます。<br>これによってプログラム全体の流れを表したものを制御フローグラフ (Control Flow Graph) と言います。<br>プログラムが直列化されていれば goto, 条件付き goto によって分割することでこれが得られます。 (Julia では Lowering によってこれがされているんでした！このシリーズの過去記事を見てください。) </details><br>じっと見ると、以下のような処理をしていることがわかります。<br><div class="code-block"> <pre><code class="language-julia">x = 1
+y = 2
+z = 3
+
+while x &lt; 10
+     r = y + z
+     if !(x ≤ z)
+         r = z + y
+     end   
+     x += 1
+
+     # @show x, y, z, r
+end
+</code></pre> </div><br>手で実行してみると、こんな感じです.<br><br><table>
+<thead>
+<tr>
+<th align="left"> step </th>
+<th align="left"> <span class="math-inline"> \( I \) </span> </th>
+<th align="left"> <span class="math-inline"> \( x \) </span> </th>
+<th align="left"> <span class="math-inline"> \( y \) </span> </th>
+<th align="left"> <span class="math-inline"> \( z \) </span> </th>
+<th align="left"> <span class="math-inline"> \( r \) </span> </th>
+<th align="center">  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> 0 </td>
+<td align="left"> <span class="math-inline"> \( I_0 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> - </td>
+<td align="left"> - </td>
+<td align="left"> - </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 1 </td>
+<td align="left"> <span class="math-inline"> \( I_1 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> 2 </td>
+<td align="left"> - </td>
+<td align="left"> - </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 2 </td>
+<td align="left"> <span class="math-inline"> \( I_2 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> - </td>
+<td align="center"> </td>
+</tr>
+<tr>
+<td align="left"> 4 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> - </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 5 </td>
+<td align="left"> <span class="math-inline"> \( I_4 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 6 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 1 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x \leq z \) </span> なので <span class="math-inline"> \( I_7 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 7 </td>
+<td align="left"> <span class="math-inline"> \( I_7 \) </span> </td>
+<td align="left"> 2 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 8 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 2 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 9 </td>
+<td align="left"> <span class="math-inline"> \( I_4 \) </span> </td>
+<td align="left"> 2 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 10 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 2 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x \leq z \) </span> なので <span class="math-inline"> \( I_7 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 11 </td>
+<td align="left"> <span class="math-inline"> \( I_7 \) </span> </td>
+<td align="left"> 3 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 12 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 3 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 13 </td>
+<td align="left"> <span class="math-inline"> \( I_4 \) </span> </td>
+<td align="left"> 3 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 14 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 3 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x \leq z \) </span> なので <span class="math-inline"> \( I_7 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 15 </td>
+<td align="left"> <span class="math-inline"> \( I_7 \) </span> </td>
+<td align="left"> 4 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 16 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 4 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 17 </td>
+<td align="left"> <span class="math-inline"> \( I_4 \) </span> </td>
+<td align="left"> 4 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 18 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 4 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x \leq z \) </span> ではないのでジャンプはしない </td>
+</tr>
+<tr>
+<td align="left"> 19 </td>
+<td align="left"> <span class="math-inline"> \( I_6 \) </span> </td>
+<td align="left"> 4 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 20 </td>
+<td align="left"> <span class="math-inline"> \( I_7 \) </span> </td>
+<td align="left"> 5 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 21 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 5 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> 22 </td>
+<td align="left"> <span class="math-inline"> \( I_4 \) </span> </td>
+<td align="left"> 5 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 23 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 5 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x \leq z \) </span> ではないのでジャンプはしない </td>
+</tr>
+<tr>
+<td align="left"> 24 </td>
+<td align="left"> <span class="math-inline"> \( I_6 \) </span> </td>
+<td align="left"> 5 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 25 </td>
+<td align="left"> <span class="math-inline"> \( I_7 \) </span> </td>
+<td align="left"> 6 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center">  </td>
+</tr>
+<tr>
+<td align="left"> 26 </td>
+<td align="left"> <span class="math-inline"> \( I_8 \) </span> </td>
+<td align="left"> 6 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> なので <span class="math-inline"> \( I_4 \) </span> にジャンプ </td>
+</tr>
+<tr>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="center"> ... </td>
+</tr>
+<tr>
+<td align="left"> 45 </td>
+<td align="left"> <span class="math-inline"> \( I_5 \) </span> </td>
+<td align="left"> 10 </td>
+<td align="left"> 2 </td>
+<td align="left"> 3 </td>
+<td align="left"> 5 </td>
+<td align="center"> <span class="math-inline"> \( x < 10 \) </span> でないのでジャンプはしない. 終了 </td>
+</tr>
+</tbody>
+</table>
+<br><br><span class="inline-code"> <code>x</code> </span> をループカウンタとして使いつつ、最後の <span class="inline-code"> <code>10 - z</code> </span> 回は <span class="inline-code"> <code>r = z + y</code> </span> もする、みたいなコードです (これは何？)<br><br>さて、ここから以下の事実を静的解析によって見つけることが目標です:<br><br><div style="text-align: center;"><br><span class="strong"> <strong><span class="inline-code"> <code>y</code> </span>, <span class="inline-code"> <code>z</code> </span>, <span class="inline-code"> <code>r</code> </span> は定数である</strong> </span><br></div><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"950",
+    "title":"データフロー解析の形式的定義"
+});
+</script>
+<h3 id="950">データフロー解析の形式的定義</h3><br>このあと具体的なアルゴリズムに入る前に、もう少し解こうとしている問題をもう少し一般化して定式化してみます。<br>今回解きたい問題は、以下のように定義される 「データフロー解析」 と呼ばれる問題として捉えることができます。<br><br><div class="definition"><span class="strong"> <strong>データフロー解析 (Data Flow Analysis)</strong> </span><br><br>命令全体の集合を <span class="math-inline"> \( \text{Instr} \) </span> 、プログラムの状態全体の集合を <span class="math-inline"> \( A \) </span> とする。<br><span class="math-inline"> \( \text{Instr} \) </span> は <br><ul><li>代入 </li><li>goto</li><li>条件つき goto</li></ul><br>のいずれかに属する命令の集合。<br><br>ここで、以下のような四つ組 <span class="math-inline"> \( (P, L, ![.!], a_0) \) </span> を考える:<br><ul><li><span class="math-inline"> \( P = I_1, I_2, \cdots, I_n \in \text{Instr} \) </span>: プログラム (命令の有限列)</li><li><span class="math-inline"> \( L = (A, \leq) \) </span>: 有限束</li><li><span class="math-inline"> \( ![.!] \in \text{Instr} \to (A \to A) \) </span>: 各命令の作用</li><li><span class="math-inline"> \( a_0 \in A \) </span>: 初期状態</li></ul><br>このとき、データフロー解析は以下のような問題を解くことである:<br><br><span class="math-inline"> \( \text{Pred}_P: \{1, 2, \cdots, n\} \to 2^{\{1, 2, \cdots, n\}} \) </span> を<br><div class="math-block"> \[ 
+
+j \in \text{Pred}_P(i) \Leftrightarrow 
+I_j \in \{ \text{goto i}, \text{条件つき goto i} \} \text{ または } j = i - 1  \ かつ\  I_i \neq \text{goto}
+
+ \] </div><br>と定めたとき、連立方程式<br><div class="math-block"> \[ 
+
+s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n) 
+
+ \] </div><br>を満たす最大の解 <span class="math-inline"> \( s_1, s_2, \cdots, s_n \) </span> を求めよ。<br></div><br>少し補足をします。<br><ul><li>状態 <span class="math-inline"> \( s \in A \) </span> のときに 命令 <span class="math-inline"> \( I \) </span> を実行したときの状態は <span class="math-inline"> \( ![I!](s) \) </span> です (記法の確認です)</li><li><span class="inline-code"> <code>\bigsqcap</code> </span> が MathJax で使えなかったので <span class="math-inline"> \( \prod \) </span> で代用しています。交わりの意味です。</li><li><span class="math-inline"> \( \text{Pred}_P(i) \) </span> はややこしくなっていますが、要は命令 <span class="math-inline"> \( I_i \) </span> の直前になりうる命令のインデックスの集合になります。</li><li>つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。</li><li>元記事や <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">元論文</a> </url> では <span class="math-inline"> \( L \) </span> を その交わりと結びで定義していますが、ここでは準備に合わせて <span class="math-inline"> \( (A, \leq) \) </span> としています。</li><li>順序関係が <span class="math-inline"> \( A \) </span> 上で定まっていることに注意しましょう。 (後述します)</li></ul><br><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"1057",
+    "title":"定数畳み込みの形式的定義"
+});
+</script>
+<h3 id="1057">定数畳み込みの形式的定義</h3><br>実際に今回の問題をこの定義に落とし込みます。<br><br>上から行きましょう。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1065",
+    "title":"1. <span class="math-inline"> \( \text{Instr} \) </span>"
+});
+</script>
+<h4 id="1065">1. <span class="math-inline"> \( \text{Instr} \) </span></h4><br>ちゃんと定義したければ BNF とかを書けばいいと思いますがいったんふわっと書くと<br><div class="math-block"> \[ 
+
+\begin{align*}
+\text{Instr} =\  &\{ \\
+&x := 1, \\
+&x := 1 + y, \\
+&\text{goto 1}, \\
+&\text{if } x < 10 \text{ goto inst}, \\
+&\vdots \\
+\}
+\end{align*}
+
+ \] </div><br>みたいな集合です。全ての要素はそれぞれ 代入, goto, 条件つき goto のどれかただ一つに属することに注意してください。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1075",
+    "title":"2. <span class="math-inline"> \( A, \leq \) </span>"
+});
+</script>
+<h4 id="1075">2. <span class="math-inline"> \( A, \leq \) </span></h4><br>次はプログラムの状態 <span class="math-inline"> \( A \) </span> とその順序関係 <span class="math-inline"> \( \leq \) </span> です。<br>今回の設定では変数の状態以外に特に状態はありませんから、<br><span class="math-inline"> \( X \) </span> を変数の集合、 <span class="math-inline"> \( C \) </span> を変数の状態の集合として<br><span class="math-inline"> \( A = X \to C \) </span> とすればいいでしょう。<br><br>今さらっと <span class="math-inline"> \( C \) </span> を導入しましたが、ここが (多分自分が思うに) キモです。 これの中身をどうするかが抽象解釈の設計の本質パート (ではないかとと素人ながら) 思います.<br><br>というのもこの部分こそが調べたい性質のためにプログラムを抽象化するパートだからです。<br><br>例えば今回の場合、次のような集合と順序関係を考えることによって抽象化します。<br><br><span class="math-inline"> \( L = \{ \bot, 1, 2, 3, \cdots, \top \} \) </span> として、 <span class="math-inline"> \( \leq \) </span> を次のように定義する:<br><div class="math-block"> \[ 
+
+\bot \leq x \leq \top \quad (x \in \{ 1, 2, 3, \cdots \})
+
+ \] </div><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束です。 <br><br>図にすると<br><figure><img src="jci_04/image-1.png" ><figcaption>元記事より</figcaption></figure><br>みたいな感じです。<br><span class="math-inline"> \( \bot, \top \) </span> はそれぞれ次のような意味です。 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br><ul><li><span class="math-inline"> \( \bot \) </span>: 定数でない</li><li><span class="math-inline"> \( \top \) </span>: 未定義</li></ul><br><br>このような状態 <span class="math-inline"> \( C \) </span> を設定することで、実際の実行から、「定数かどうか && 定数ならその値」を考える抽象的な解釈に落とし込まれるわけです！ (たぶん)<br><br>例えば (そんなもんが役に立つのかはさておき) 単に「定数かどうか」だけ調べるのであれば <span class="math-inline"> \( C = \{ \bot, c, \top \} \) </span>  みたいな感じでいいのだと思います。<br><br>なお、注意する点として、 <span class="strong"> <strong>データフロー解析の問題設定においてはあくまでも束をなのは 各変数でなく状態 <span class="math-inline"> \( A \) </span>　と <span class="math-inline"> \( A \) </span> 上の順序です。</strong> </span><br>したがって <span class="math-inline"> \( A \) </span> 上の順序関係を考える必要があります。<br>が、そこまで大変でなく単に次のようにすればいいです。<br><div class="math-block"> \[ 
+
+a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
+
+ \] </div><br>これが束をなすのは論理関数のときと同じような感じでわかります！　<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1169",
+    "title":"3. <span class="math-inline"> \( ![.!] \) </span>"
+});
+</script>
+<h4 id="1169">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![x := \text{expr}!](s) \) </span> は次のようになります。<br><div class="math-block"> \[ 
+
+s'(x) = \begin{cases}
+\text{expr の値} & x = \text{右辺がどちらも定数} \\
+\bot & x = \bot \text{ が右辺に含まれる} \\
+s(x) & \text{otherwise}
+\end{cases}
+
+ \] </div><br><br>[goto]<br>何も変わらないです。<br><br>[条件つき goto]<br>何も変わらないです。<br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1203",
+    "title":"4. <span class="math-inline"> \( a_0 \) </span>"
+});
+</script>
+<h4 id="1203">4. <span class="math-inline"> \( a_0 \) </span></h4><br>初期状態は全ての変数が <span class="math-inline"> \( \top \) </span> です。 元記事によれば元論文が間違っているとのことです。自分が一から読んでいたら気がつけないだろうことなので、ありがたいです。。。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1212",
+    "title":"まとめ ！？"
+});
+</script>
+<h2 id="1212">まとめ ！？</h2><br>こうして今回の問題設定をデータフロー解析の形式的定義に落とし込むことができました。<br><br>次回は実際にこれを解くアルゴリズムを紹介します。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1221",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="1221">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
+        </div>
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false" data-via="abap34">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+
+
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
+
+</body>
+
+
+</html>
