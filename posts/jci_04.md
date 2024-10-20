@@ -1,7 +1,7 @@
 ---
 title: Julia Compiler Internals (04) - Algorithm of Type Inference [1]
 author: abap34
-date: 2024/10/15
+date: 2024/10/21
 tag: [JuliaCompilerInternals, Julia, 型推論, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
 twitter_id: abap34
 github_id: abap34
