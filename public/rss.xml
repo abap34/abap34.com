@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
+<title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
+<link>https://abap34.com/posts/jci_03.html</link>
+<pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>あなたがまだ知らない素数　(by noya2)</id>
 <title>あなたがまだ知らない素数　(by noya2)</title>
 <link>https://abap34.com/posts/random_prime_generator.html</link>
@@ -26,14 +34,6 @@
 <title>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</title>
 <link>https://abap34.com/posts/cpp_ci.html</link>
 <pubDate>Mon, 23 Sep 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
-<title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
-<link>https://abap34.com/posts/jci_03.html</link>
-<pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
