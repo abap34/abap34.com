@@ -433,7 +433,7 @@ $$
 &x := 1, \\
 &x := 1 + y, \\
 &\text{goto 1}, \\
-&\text{if } x < 10 \text{ goto inst}, \\
+&\text{if } x < 10 \text{ goto 2}, \\
 &\vdots \\
 \}
 \end{align*}
@@ -513,12 +513,22 @@ $$
 `x := expr` としたとき、 $x$ 以外の変数の状態は変わりません。
 
 右辺に現れるのが全て定数( $\neq \bot$) であれば `x` も定数になりますから、 
-$s' = ![x := \text{expr}!](s)$ は次のようになります。
+$s' = ![\text{var} := \text{expr}!](s)$ は次のようになります。
+
+
+$$
+a = 
+\begin{cases}
+\text{expr} & \text{右辺がすべて定数かつその結果が expr の値} \\
+\bot & \text{otherwise}
+\end{cases}
+$$
+
+として、
 
 $$
 s'(x) = \begin{cases}
-\text{expr の値} & x = \text{右辺がどちらも定数} \\
-\bot & x = \bot \text{ が右辺に含まれる} \\
+\text{a} & x = \text{\text{var}} \\
 s(x) & \text{otherwise}
 \end{cases}
 $$
