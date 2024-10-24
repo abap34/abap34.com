@@ -382,7 +382,7 @@ $\text{Instr}$ は
 
 - $P = I_1, I_2, \cdots, I_n \in \text{Instr}$: プログラム (命令の有限列)
 - $L = (A, \leq)$: 有限束
-- $![.!] \in \text{Instr} \to (A \to A)$: 各命令の作用
+- $![.!] \in \text{Instr} \to (A \to A)$: 各命令の作用を表す単調関数  ※
 - $a_0 \in A$: 初期状態
 
 このとき、データフロー解析は以下のような問題を解くことである:
@@ -413,6 +413,8 @@ $$
 - つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。
 - 元記事や [元論文](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df) では $L$ を その交わりと結びで定義していますが、ここでは準備に合わせて $(A, \leq)$ としています。
 - 順序関係が $A$ 上で定まっていることに注意しましょう。 (後述します)
+
+※ 元論文には "monotone semantic functional" と書いてあるんですが、 $\text{Instr}$ には順序が定まっていないように見えるので、少し謎です。意味がわかる方がいれば教えてください。
 
 
 
@@ -463,10 +465,10 @@ $A = X \to C$ とすればいいでしょう。
 
 
 $L = \{ \bot, 1, 2, 3, \cdots, \top \}$ として、
-$\leq$ を次のように定義する:
+$L$ 上の順序関係 $\leq$ を次のように定義します:
 
 $$
-\bot \leq x \leq \top \quad (x \in \{ 1, 2, 3, \cdots \})
+l_i \leq l_j \Leftrightarrow l_i = l_j \text{ または } l_i = \bot \text{ または } l_j = \top
 $$
 
 このとき $(L, \leq)$ は束です。 
