@@ -425,7 +425,7 @@ $\text{Instr}$ は
 
 - $P = I_1, I_2, \cdots, I_n \in \text{Instr}$: プログラム (命令の有限列)
 - $L = (A, \leq)$: 有限の鎖のみを持つ束
-- $![.!] \in \text{Instr} \to (A \to A)$: 各命令の作用を表す単調関数  ※
+- $![.!] \in \text{Instr} \to (A \to A)$: 各命令の作用を表す単調関数を返す関数 
 - $a_0 \in A$: 初期状態
 
 このとき、データフロー解析は以下のような問題を解くことである:
@@ -456,9 +456,6 @@ $$
 - つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。
 - 元記事や [元論文](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df) では $L$ を その交わりと結びで定義していますが、ここでは準備に合わせて $(A, \leq)$ としています。
 - 順序関係が $A$ 上で定まっていることに注意しましょう。 (後述します)
-
-※ 元論文には "monotone semantic functional" と書いてあるんですが、 $\text{Instr}$ には順序が定まっていないように見えるので、少し謎です。意味がわかる方がいれば教えてください。
-
 
 
 ### 定数畳み込みの形式的定義
