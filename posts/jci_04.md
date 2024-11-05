@@ -258,7 +258,7 @@ $$
 \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \}
 $$
 
-などは鎖です. ($\text{Any} \leq \text{Number} \leq \text{Real} \leq \text{Int64}$ なので)
+などは鎖で、長さは 4 です。
 
 
 今の自分の理解では Julia の型の階層構造は有限性条件を満たしているはずです。
