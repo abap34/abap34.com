@@ -16,21 +16,16 @@ function debug(args...; depth=0, color=:green, newline=true)
     end
 end
 
-function vartable(s::Vector{AbstractState}; depth=0)
-    all_keys = Set{Symbol}()
-    for _s in s
-        all_keys = all_keys ∪ keys(_s)
-    end
+function vartable(s::Vector{AbstractState})
+    _s = OrderedDict{Symbol, Any}[]
+    for (i, sᵢ) in enumerate(s)
+        push!(_s, OrderedDict{Symbol, Any}())
+        _s[i][:i] = i
 
-    _s = Dict{Symbol,Vector{Any}}()
-
-    for key in all_keys
-        _s[key] = Any[]
-        for i in 1:length(s)
-            push!(_s[key], get(s[i], key, "─"))
+        for (k, v) in sᵢ
+            _s[i][k] = v
         end
     end
-
 
     (!DEBUG) && return
 
@@ -55,6 +50,9 @@ function build_pred(I::Program)::Vector{Vector{Int}}
         Iᵢ = I[i]
         if isa(Iᵢ, Goto)
             push!(pred[Iᵢ.label], i)
+        elseif isa(Iᵢ, GotoIf)
+            push!(pred[Iᵢ.label], i)
+            push!(pred[i+1], i)
         else
             push!(pred[i+1], i)
         end
@@ -85,7 +83,7 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
 
         s[i] = reduce(⊓, (abstract_semantics(I[j])(s[j]) for j in pred[i]), init=a₀)
 
-        vartable(s; depth=i)
+        vartable(s)
     end
 
     return s
