@@ -58,3 +58,35 @@ debug(
 
 vartable(result)
 
+
+debug("--------------------")
+
+prog_gotoif = @prog begin
+    x = 1             # I₁
+    y = 2             # I₂
+    x = x + 1         # I₃
+    x == 3 && @goto 3 # I₄
+    x = 10            # I₅
+end
+
+
+result = abstract_interpret(
+    prog_gotoif,
+    abstract_semantics,
+    AbstractState(
+        :x => ⊤,
+        :y => ⊤,
+        :z => ⊤
+    )
+)
+
+debug(
+    "Result from\n",
+    prog_gotoif,
+    "is\n",
+)
+
+vartable(result)
+
+
+
