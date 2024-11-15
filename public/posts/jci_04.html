@@ -1131,13 +1131,13 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n)
 \}
 \end{align*}
 
- \] </div><br>みたいな集合です。全ての要素はそれぞれ 代入, goto, 条件つき goto のどれかただ一つに属することに注意してください。<br><script>page_contents.push({
+ \] </div><br>みたいな集合です。全ての要素はそれぞれ 代入, goto, 条件つき goto のどれかただ一つに属することに注意してください。<br>代入文の右辺には定数、変数またはそれらの二項演算がきます。(<span class="math-inline"> \( n \) </span> 項演算に拡張するのは容易ですが説明のために簡単にしています)<br><script>page_contents.push({
     "type":"H4",
-    "id":"1149",
+    "id":"1153",
     "title":"2. <span class="math-inline"> \( A, \leq \) </span>"
 });
 </script>
-<h4 id="1149">2. <span class="math-inline"> \( A, \leq \) </span></h4><br>次はプログラムの状態 <span class="math-inline"> \( A \) </span> とその順序関係 <span class="math-inline"> \( \leq \) </span> です。<br>今回の設定では変数の状態以外に特に状態はありませんから、<br><span class="math-inline"> \( X \) </span> を変数の集合、 <span class="math-inline"> \( C \) </span> を変数の状態の集合として<br><span class="math-inline"> \( A = X \to C \) </span> とすればいいでしょう。<br><br>今さらっと <span class="math-inline"> \( C \) </span> を導入しましたが、ここが (多分自分が思うに) キモです。 これの中身をどうするかが抽象解釈の設計の本質パート (ではないかとと素人ながら) 思います.<br><br>というのもこの部分こそが調べたい性質のためにプログラムを抽象化するパートだからです。<br><br>例えば今回の場合、次のような集合と順序関係を考えることによって抽象化します。<br><br><span class="math-inline"> \( L = \{ \bot, 1, 2, 3, \cdots, \top \} \) </span> として、 <span class="math-inline"> \( L \) </span> 上の順序関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><div class="math-block"> \[ 
+<h4 id="1153">2. <span class="math-inline"> \( A, \leq \) </span></h4><br>次はプログラムの状態 <span class="math-inline"> \( A \) </span> とその順序関係 <span class="math-inline"> \( \leq \) </span> です。<br>今回の設定では変数の状態以外に特に状態はありませんから、<br><span class="math-inline"> \( X \) </span> を変数の集合、 <span class="math-inline"> \( C \) </span> を変数の状態の集合として<br><span class="math-inline"> \( A = X \to C \) </span> とすればいいでしょう。<br><br>今さらっと <span class="math-inline"> \( C \) </span> を導入しましたが、ここが (多分自分が思うに) キモです。 これの中身をどうするかが抽象解釈の設計の本質パート (ではないかとと素人ながら) 思います.<br><br>というのもこの部分こそが調べたい性質のためにプログラムを抽象化するパートだからです。<br><br>例えば今回の場合、次のような集合と順序関係を考えることによって抽象化します。<br><br><span class="math-inline"> \( L = \{ \bot, 1, 2, 3, \cdots, \top \} \) </span> として、 <span class="math-inline"> \( L \) </span> 上の順序関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><div class="math-block"> \[ 
 
 l_i \leq l_j \Leftrightarrow l_i = l_j \text{ または } l_i = \bot \text{ または } l_j = \top
 
@@ -1147,11 +1147,11 @@ a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
 
  \] </div><br>これが束をなすのは論理関数のときと同じような感じでわかります！　<br>なお、次の記事で使うのでここでいくつかメモ書きをしておきます。 (また、これ以降では記法の煩雑さ回避のために全ての変数が共通の状態 <span class="math-inline"> \( l \) </span> である抽象状態 <span class="math-inline"> \( C: X \mapsto l \) </span> を単に <span class="math-inline"> \( l \) </span> と書きます.)<br><ol><li>meet の単位元は <span class="math-inline"> \( \bot \) </span> です</li><li>join の単位元は <span class="math-inline"> \( \top \) </span> です</li><li><span class="math-inline"> \( C \) </span> は有限性条件を満たします. (長さが最大の鎖は <span class="math-inline"> \( \bot \leq c \leq \top \) </span> です)</li></ol><br><script>page_contents.push({
     "type":"H4",
-    "id":"1268",
+    "id":"1272",
     "title":"3. <span class="math-inline"> \( ![.!] \) </span>"
 });
 </script>
-<h4 id="1268">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
+<h4 id="1272">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
 
 a = 
 \begin{cases}
@@ -1168,23 +1168,23 @@ s(x) & \text{otherwise}
 
  \] </div><br><br>[goto]<br>何も変わらないです。<br><br>[条件つき goto]<br>何も変わらないです。<br><br><script>page_contents.push({
     "type":"H4",
-    "id":"1307",
+    "id":"1311",
     "title":"4. <span class="math-inline"> \( a_0 \) </span>"
 });
 </script>
-<h4 id="1307">4. <span class="math-inline"> \( a_0 \) </span></h4><br>初期状態は全ての変数が <span class="math-inline"> \( \top \) </span> です。 元記事によれば元論文が間違っているとのことです。自分が一から読んでいたら気がつけないだろうことなので、ありがたいです。。。<br><br><script>page_contents.push({
+<h4 id="1311">4. <span class="math-inline"> \( a_0 \) </span></h4><br>初期状態は全ての変数が <span class="math-inline"> \( \top \) </span> です。 元記事によれば元論文が間違っているとのことです。自分が一から読んでいたら気がつけないだろうことなので、ありがたいです。。。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1316",
+    "id":"1320",
     "title":"まとめ ！？"
 });
 </script>
-<h2 id="1316">まとめ ！？</h2><br>こうして今回の問題設定をデータフロー解析の形式的定義に落とし込むことができました。<br><br>次回は実際にこれを解くアルゴリズムを紹介します。<br><br><script>page_contents.push({
+<h2 id="1320">まとめ ！？</h2><br>こうして今回の問題設定をデータフロー解析の形式的定義に落とし込むことができました。<br><br>次回は実際にこれを解くアルゴリズムを紹介します。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1325",
+    "id":"1329",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="1325">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
+<h2 id="1329">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
 
             <hr>
 
