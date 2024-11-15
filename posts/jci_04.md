@@ -82,6 +82,7 @@ Twitterのリンクでも貼ろうかと思ったら Wikipedia のページが�
 - [https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html](https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html)
 - [https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html](https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html)
 - [Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df)
+- コンパイラ 原理・技法・ツール 第二版
 
 ラインナップからわかるように、抽象解釈 (というかコンパイラ全般そうですが...) はかなり入門したてなので間違い等あればコメントで教えていただけるとありがたいです 🙇 
 
@@ -143,8 +144,6 @@ $f, g \in \mathcal{F}$ に対して次のように $\mathcal{F}$ 上の二項関
 $$
 f \leq g \Leftrightarrow \forall x \in \mathbb{B}^n, f(x) \leq g(x)
 $$
-
-要は $f(x) = 1$ なる入力の包含関係を見ています。
 
 このとき $(\mathcal{F}, \leq)$ は束です。
 
