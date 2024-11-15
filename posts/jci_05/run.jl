@@ -65,7 +65,7 @@ prog_gotoif = @prog begin
     x = 1             # I₁
     y = 2             # I₂
     x = x + 1         # I₃
-    x == 3 && @goto 3 # I₄
+    x != 3 && @goto 3 # I₄
     x = 10            # I₅
 end
 
@@ -76,7 +76,6 @@ result = abstract_interpret(
     AbstractState(
         :x => ⊤,
         :y => ⊤,
-        :z => ⊤
     )
 )
 
@@ -86,7 +85,34 @@ debug(
     "is\n",
 )
 
+
 vartable(result)
 
+debug("--------------------")
+
+prog0 = @prog begin
+    x = 1             # I₀
+    y = 2             # I₁
+    z = 3             # I₂
+    @goto 9           # I₃
+    r = y + z         # I₄
+    x ≤ z && @goto 7  # I₅
+    r = z + y         # I₆
+    x = x + 1         # I₇
+    x < 10 && @goto 5 # I₈
+end
 
 
+result = abstract_interpret(
+    prog0,
+    abstract_semantics,
+    AbstractState(
+        :x => ⊤,
+        :y => ⊤,
+        :z => ⊤,
+        :r => ⊤
+    )
+)
+
+
+vartable(result)

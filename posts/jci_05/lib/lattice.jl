@@ -34,7 +34,6 @@ show(io::IO, ::BotElement) = print(io, '⊥')
 ⊓(x::LatticeElement, y::LatticeElement) = x ≤ y ? x : y ≤ x ? y : ⊥
 
 
-
 # NOTE: the paper (https://api.semanticscholar.org/CorpusID:28519618) uses U+1D56E MATHEMATICAL BOLD FRAKTUR CAPITAL C for this
 # const AbstractState = Dict{Symbol,LatticeElement}
 const AbstractState = OrderedDict{Symbol,LatticeElement}

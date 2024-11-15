@@ -1,6 +1,5 @@
 module Refer
 
-using DataStructures
 
 #=
 "A Graph-Free Approach to Data-Flow Analysis" implementation – constant folding propagation example
@@ -14,6 +13,8 @@ NOTE: the code is originally adapted from https://github.com/JeffBezanson/datafl
 
 # Part 1: program P
 # -----------------
+
+
 
 abstract type Exp end
 
@@ -70,34 +71,34 @@ const ⊥ = BotElement()
 show(io::IO, ::TopElement) = print(io, '⊤')
 show(io::IO, ::BotElement) = print(io, '⊥')
 
-≤(x::LatticeElement, y::LatticeElement) = x ≡ y
-≤(::BotElement, ::TopElement) = true
-≤(::BotElement, ::LatticeElement) = true
-≤(::LatticeElement, ::TopElement) = true
+≤(x::LatticeElement, y::LatticeElement) = x≡y
+≤(::BotElement,      ::TopElement)      = true
+≤(::BotElement,      ::LatticeElement)  = true
+≤(::LatticeElement,  ::TopElement)      = true
 
 # NOTE: == and < are defined such that future LatticeElements only need to implement ≤
-==(x::LatticeElement, y::LatticeElement) = x ≤ y && y ≤ x
-<(x::LatticeElement, y::LatticeElement) = x ≤ y && !(y ≤ x)
+==(x::LatticeElement, y::LatticeElement) = x≤y && y≤x
+<(x::LatticeElement,  y::LatticeElement) = x≤y && !(y≤x)
 
 # join
-⊔(x::LatticeElement, y::LatticeElement) = x ≤ y ? y : y ≤ x ? x : ⊤
+⊔(x::LatticeElement, y::LatticeElement) = x≤y ? y : y≤x ? x : ⊤
 
 # meet
-⊓(x::LatticeElement, y::LatticeElement) = x ≤ y ? x : y ≤ x ? y : ⊥
+⊓(x::LatticeElement, y::LatticeElement) = x≤y ? x : y≤x ? y : ⊥
 
 # abstract state
 
 # NOTE: the paper (https://api.semanticscholar.org/CorpusID:28519618) uses U+1D56E MATHEMATICAL BOLD FRAKTUR CAPITAL C for this
-const AbstractState = OrderedDict{Symbol,LatticeElement}
+const AbstractState = Dict{Symbol,LatticeElement}
 
 # extend lattices of values to lattices of mappings of variables to values;
 # ⊓ and ⊔ operate pair-wise, and from there we can just rely on the Base implementation for
 # dictionary equiality comparison
 
-⊔(X::AbstractState, Y::AbstractState) = AbstractState(v => X[v] ⊔ Y[v] for v in keys(X))
-⊓(X::AbstractState, Y::AbstractState) = AbstractState(v => X[v] ⊓ Y[v] for v in keys(X))
+⊔(X::AbstractState, Y::AbstractState) = AbstractState( v => X[v] ⊔ Y[v] for v in keys(X) )
+⊓(X::AbstractState, Y::AbstractState) = AbstractState( v => X[v] ⊓ Y[v] for v in keys(X) )
 
-<(X::AbstractState, Y::AbstractState) = X ⊓ Y == X && X ≠ Y
+<(X::AbstractState, Y::AbstractState) = X⊓Y==X && X≠Y
 
 # Part 3: abstract semantics ![.!]
 # --------------------------------
@@ -120,12 +121,13 @@ function abstract_eval(x::Call, s::AbstractState)
 end
 
 # unwrap our lattice representation into actual Julia value
-unwrap_val(x::Num) = x.val
+unwrap_val(x::Num)   = x.val
 unwrap_val(x::Const) = x.val
 
 # Part 4: initial state a₀
 # ------------------------
 
+a₀ = AbstractState(:x => ⊤, :y => ⊤, :z => ⊤, :r => ⊤)
 
 # algorithm
 # ---------
@@ -133,8 +135,8 @@ unwrap_val(x::Const) = x.val
 # original, wrong version
 function max_fixed_point(prog::Program, a₀::AbstractState, eval)
     n = length(prog)
-    init = AbstractState(v => ⊤ for v in keys(a₀))
-    s = [a₀; [init for i = 2:n]]
+    init = AbstractState( v => ⊤ for v in keys(a₀) )
+    s = [ a₀; [ init for i = 2:n ] ]
     W = BitSet(0:n-1)
 
     while !isempty(W)
@@ -152,7 +154,7 @@ function max_fixed_point(prog::Program, a₀::AbstractState, eval)
             if isa(I, Goto)
                 pc´ = I.label
             else
-                pc´ = pc + 1
+                pc´ = pc+1
                 if isa(I, GotoIf)
                     l = I.label
                     if new < s[l+1]
@@ -161,7 +163,7 @@ function max_fixed_point(prog::Program, a₀::AbstractState, eval)
                     end
                 end
             end
-            if pc´ ≤ n - 1 && new < s[pc´+1]
+            if pc´≤n-1 && new < s[pc´+1]
                 s[pc´+1] = new
                 pc = pc´
             else
@@ -179,8 +181,8 @@ end
 # - and the condition we use to check whether or not the statement makes a change is `new ≠ prev`
 function max_fixed_point(prog::Program, a₀::AbstractState, eval)
     n = length(prog)
-    init = AbstractState(v => ⊤ for v in keys(a₀))
-    s = [a₀; [init for i = 2:n]]
+    init = AbstractState( v => ⊤ for v in keys(a₀) )
+    s = [ a₀; [ init for i = 2:n ] ]
     W = BitSet(0:n-1)
 
     while !isempty(W)
@@ -198,7 +200,7 @@ function max_fixed_point(prog::Program, a₀::AbstractState, eval)
             if isa(I, Goto)
                 pc´ = I.label
             else
-                pc´ = pc + 1
+                pc´ = pc+1
                 if isa(I, GotoIf)
                     l = I.label
                     if new ≠ s[l+1]
@@ -213,7 +215,7 @@ function max_fixed_point(prog::Program, a₀::AbstractState, eval)
                     # end
                 end
             end
-            if pc´ ≤ n - 1 && new ≠ s[pc´+1]
+            if pc´≤n-1 && new ≠ s[pc´+1]
                 s[pc´+1] = new ⊓ s[pc´+1]
                 pc = pc´
             else
@@ -235,6 +237,16 @@ end
 
 # example problem
 
+prog0 = [Assign(Sym(:x), Num(1)),                              # I₀
+         Assign(Sym(:y), Num(2)),                              # I₁
+         Assign(Sym(:z), Num(3)),                              # I₂
+         Goto(8),                                              # I₃
+         Assign(Sym(:r), Call(Sym(:(+)), [Sym(:y), Sym(:z)])), # I₄
+         GotoIf(7, Call(Sym(:(≤)), [Sym(:x), Sym(:z)])),       # I₅
+         Assign(Sym(:r), Call(Sym(:(+)), [Sym(:z), Sym(:y)])), # I₆
+         Assign(Sym(:x), Call(Sym(:(+)), [Sym(:x), Num(1)])),  # I₇
+         GotoIf(4, Call(Sym(:(<)), [Sym(:x), Num(10)])),       # I₈
+         ]::Program
 
 using MacroTools
 
@@ -263,26 +275,20 @@ end
 islnn(@nospecialize(_)) = false
 islnn(::LineNumberNode) = true
 
-prog0 = @prog begin
+prog0  = @prog begin
     x = 1       # I₁
-    y = 2       # I₂ 
+    y = 2       # I₂
     z = 3       # I₃
-    @goto 6     # I₄
+    @goto      # I₄
     x = 4 + y   # I₅
     y = 5       # I₆
     z = 6       # I₇
 end
+result = max_fixed_point(prog0, a₀, abstract_eval) # The solution contains the `:r => Const(5)`, which is not found in the program
 
-
-a₀ = AbstractState(:x => ⊤, :y => ⊤, :z => ⊤, :r => ⊤)
-
-r = max_fixed_point(prog0, a₀, abstract_eval)
-
-for _r in r
-    println(_r)
+for (i, s) in enumerate(result)
+    println("State at I$i: $s")
 end
 
 
 end
-
-
