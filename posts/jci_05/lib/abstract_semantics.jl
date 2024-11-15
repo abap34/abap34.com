@@ -7,14 +7,14 @@ _eval_expr(x::Sym, s::AbstractState) = get(s, x.name,  ⊤)
 
 function _eval_expr(x::Call, s::AbstractState)    
     f = getfield(@__MODULE__, x.head.name)
-
+    
+    (all(isequal(⊤), x.args)) && (return ⊤)
+    
     argvals = Int[]
     for arg in x.args
         arg = _eval_expr(arg, s)
 
-        if arg === ⊤
-            return ⊤
-        elseif arg === ⊥
+        if arg === ⊥
             return ⊥
         else
             push!(argvals, unwrap_val(arg))
