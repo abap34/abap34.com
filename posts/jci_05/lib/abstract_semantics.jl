@@ -3,25 +3,23 @@ unwrap_val(x::Const) = x.val
 
 
 _eval_expr(x::Num, ::AbstractState) = Const(x.val)
-_eval_expr(x::Sym, s::AbstractState) = get(s, x.name,  ⊤)
+_eval_expr(x::Sym, s::AbstractState) = get(s, x.name, ⊤)
 
-function _eval_expr(x::Call, s::AbstractState)    
+function _eval_expr(x::Call, s::AbstractState)
     f = getfield(@__MODULE__, x.head.name)
-    
-    (all(isequal(⊤), x.args)) && (return ⊤)
-    
-    argvals = Int[]
-    for arg in x.args
-        arg = _eval_expr(arg, s)
 
-        if arg === ⊥
-            return ⊥
-        else
-            push!(argvals, unwrap_val(arg))
-        end
+    arg_eval = _eval_expr.(x.args, Ref(s))
+    
+    if any(isequal(⊥), arg_eval)
+        return ⊥
+    end 
+
+    if all(arg -> arg isa Const, arg_eval)
+        argvals = unwrap_val.(arg_eval)
+        return Const(f(argvals...))
     end
 
-    return Const(f(argvals...))
+    return ⊤
 end
 
 function abstract_semantics(x::Assign)
@@ -32,7 +30,7 @@ function abstract_semantics(x::Assign)
         return new_s
     end
 end
- 
+
 function abstract_semantics(::Goto)
     return s::AbstractState -> s
 end
