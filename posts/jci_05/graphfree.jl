@@ -67,10 +67,10 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
     n = length(I)
     s = [copy(a₀) for _ in 1:n+1]
 
-    entry_points = [1, ]
+    entry_points = collect(1:n)
 
     while !isempty(entry_points)
-        pc = pop!(entry_points)
+        pc = popfirst!(entry_points)
         debug("Start From entrypoiny: $pc")
         while true
             Iᵢ = I[pc]
