@@ -12,9 +12,7 @@ function _eval_expr(x::Call, s::AbstractState)
     
     if any(isequal(⊥), arg_eval)
         return ⊥
-    end 
-
-    if all(arg -> arg isa Const, arg_eval)
+    elseif all(arg -> arg isa Const, arg_eval)
         argvals = unwrap_val.(arg_eval)
         return Const(f(argvals...))
     end
