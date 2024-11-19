@@ -79,19 +79,16 @@ Twitterのリンクでも貼ろうかと思ったら Wikipedia のページが�
 
 また、この記事を書くにあたって、元記事に加えて以下の資料を参考にしています。
 
-- [https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html](https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/10.ABSTRACT-INTERPRETATION.html)
-- [https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html](https://releases.llvm.org/14.0.0/tools/clang/docs/DataFlowAnalysisIntro.html)
+- [https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html](https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html)
+- コンパイラ 原理・技法・ツール 第二版 
 - [Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df)
-- コンパイラ 原理・技法・ツール 第二版
 
-ラインナップからわかるように、抽象解釈 (というかコンパイラ全般そうですが...) はかなり入門したてなので間違い等あればコメントで教えていただけるとありがたいです 🙇 
 
-特に以下のようなことに自信がありません。
+調べてみると、アルゴリズムだけの説明やどういうことができるのかという話は多少は書いてあるものは見つかります。
 
-- 読んでいる文章によって順序関係 (後述) が逆転しているという現象が大量に発生しているため、自分でも混乱して誤って逆に書いている箇所があるかもしれません
-- 一般的でない定義を一般的だと思ったりしている可能性があります.
 
-また、いくつかのポイントがわかっていないため、わかっていないと書いてあるところがあります。
+が、求解アルゴリズムの正当性や理論的な枠組みについて書いてくれている資料はなかなかなく、その点最初の二つは詳しくかつ平易に書いてあってかなりお勧めです。
+
 
 ## 束 (Lattice) の定義と具体例
 
@@ -121,11 +118,7 @@ Twitterのリンクでも貼ろうかと思ったら Wikipedia のページが�
 という。
 :::
 
-
-
-これ命名もう少しあったんじゃないかと思うのは自分だけでしょうか。
-
-ともかく、これだけだとパッとわかりにくいので、具体例を挙げてみます。
+これだけだとパッとわかりにくいので、具体例を挙げてみます。
 
 ### 束の例1: 論理関数
 
@@ -179,7 +172,8 @@ $$
      f
 ```
 
-つまり、ふんわり言うと (有限) 束は上のような上下関係をいい感じの図にしたときに、どれをとっても下か上に辿れば交わるものと言えます。
+つまり、ふんわり言うと束は上のような上下関係をいい感じの図にしたときに、どれをとっても下か上に辿れば交わるものと言えます。
+(このような図を Hasse 図と言います。なお、全ての束が Hasse 図で表せるわけではないです  (例えば $\mathbb{R}$ と通常の大小関係))
 
 なのでこういうグラフが得られているのであれば  $\inf \{a, b\}$ と $\sup \{a, b\}$ を求めるのは LCA を求める問題に帰着します。
 
