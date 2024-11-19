@@ -81,6 +81,7 @@ Twitterのリンクでも貼ろうかと思ったら Wikipedia のページが�
 
 - [https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html](https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html)
 - コンパイラ 原理・技法・ツール 第二版 
+- [平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics](https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf)
 - [Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df)
 
 
