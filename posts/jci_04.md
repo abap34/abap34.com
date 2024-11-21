@@ -77,20 +77,6 @@ Twitterのリンクでも貼ろうかと思ったら Wikipedia のページが�
 (※ この記事の執筆は aviatesk さんの許諾をいただいて行われています。ありがとうございます！)
 
 
-また、この記事を書くにあたって、元記事に加えて以下の資料を参考にしています。
-
-- [https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html](https://pages.cs.wisc.edu/~horwitz/CS704-NOTES/2.DATAFLOW.html)
-- コンパイラ 原理・技法・ツール 第二版 
-- [平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics](https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf)
-- [Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.](https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df)
-
-
-調べてみると、アルゴリズムだけの説明やどういうことができるのかという話は多少は書いてあるものは見つかります。
-
-
-が、求解アルゴリズムの正当性や理論的な枠組みについて書いてくれている資料はなかなかなく、その点最初の二つは詳しくかつ平易に書いてあってかなりお勧めです。
-
-
 ## 束 (Lattice) の定義と具体例
 
 少しだけ使う概念の準備を書いておきます。
@@ -240,8 +226,6 @@ true
 :::
 
 
-
-
 :::definition
 **高さ**
 
@@ -276,13 +260,22 @@ $$
 
 :::
 
-完備束はかなり良い性質を持っている束です。
-
 ここで、高さが有限な束は完備束です。証明は [平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics](https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf) に書いてあります。 (実はもう少し条件を緩めて、 最小元が存在する $L$ の任意の区間の鎖が有限長、までで完備束になりますがここでは省略します)
 
 
-したがって、このシリーズでは基本的には完備束を扱います。
+このシリーズで出てくる束は全て有限の高さなので完備束になります。
 
+完備束であることの嬉しい性質として、不動点に関する以下の性質があります。
+
+:::definition
+クナスタ・タルスキの不動点定理 (Knaster-Tarski Fixed Point Theorem)
+
+完備束 $(L, \leq)$ と $f: L \to L$ を考える。
+
+ここで、 $f$ が単調ならば $f$ は不動点をもち、さらに不動点の集合は完備束をなす。
+:::
+
+この定理は、このあと出てくる求解アルゴリズムで活躍します、
 
 ---
 
@@ -304,9 +297,6 @@ Julia の型推論アルゴリズムは抽象解釈と呼ばれる手法を使�
 
 そこで、抽象解釈は読んで字の如し、プログラムをある程度抽象化して仮想的に実行することで、プログラムの性質を解析します。
 つまり、抽象解釈という言葉は具体的なアルゴリズムというより、ある種のアプローチというかフレームワークというかを指す言葉です。
-
-調べると、 Nim でも同じことしているようです。しかも実装の方針も同じ。 [https://nim-lang.org/1.6.6/compiler/dfa.html](https://nim-lang.org/1.6.6/compiler/dfa.html).
-
 
 この抽象化の程度や方向性によって色々な解析をやっていくわけです。
 例えば (役に立つのかはともかく、) 変数の偶奇だけに着目して「偶奇だけがわかるレベルで」プログラムを解釈して静的に偶奇の情報を得る、などができます。
@@ -563,7 +553,7 @@ $$
 a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
 $$
 
-これが束をなすのは論理関数のときと同じような感じでわかります！　
+これが束をなすのは論理関数のときと同じような感じでわかります！　(一般に、束の直積は上のように順序関係を定義することで束になります)
 
 なお、次の記事で使うのでここでいくつかメモ書きをしておきます。
 (また、これ以降では記法の煩雑さ回避のために全ての変数が共通の状態 $l$ である抽象状態 $C: X \mapsto l$ を単に $l$ と書きます.)
