@@ -924,10 +924,10 @@ julia&gt; vartable(result)
 </code></pre> </div><br>無事に各命令の実行直前の抽象状態が求まっています！<br><script>page_contents.push({
     "type":"H3",
     "id":"190",
-    "title":"不正な遷移をどう扱うか？"
+    "title":"不正な遷移をどう扱うか？ ─ Unreachable な命令を例に"
 });
 </script>
-<h3 id="190">不正な遷移をどう扱うか？</h3><br>ここで、条件なしのジャンプ (Goto) が含まれるケースを例に実装上の一つの問題を考えます。<br>プログラムの具体例として、以下のようなものを使います。<br><div class="code-block"> <pre><code class="language-julia">prog_goto = @prog begin
+<h3 id="190">不正な遷移をどう扱うか？ ─ Unreachable な命令を例に</h3><br>ここで、条件なしのジャンプ (Goto) が含まれるケースを例に実装上の一つの問題を考えます。<br>プログラムの具体例として、以下のようなものを使います。<br><div class="code-block"> <pre><code class="language-julia">prog_goto = @prog begin
     x = 1       # 1
     y = 2       # 2 
     z = 3       # 3
