@@ -106,6 +106,13 @@
     padding-right: 20px;
 }
 
+.sidebar {
+   /* スクロールバーを表示 */
+    overflow-y: auto;
+    height: 100vh;
+    padding-right: 10px;
+}
+
 .content {
     order: 2;
     padding: 20px;
@@ -120,6 +127,7 @@
     position: sticky;
     top: 20px;
 }
+
 
 
 .article-header {
@@ -181,8 +189,7 @@
 
 .math-inline {
     display: inline-grid;
-    overflow-x: hidden;
-    ;
+    overflow: hidden !important;
 }
 
 mjx-container {
@@ -202,7 +209,9 @@ h2 {
 
 img {
     max-width: 100% !important;
-    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media (max-width: 1200px) {
@@ -533,6 +542,8 @@ pre code {
     line-height: 1.2;
     color: #e43e3ee0;
 }
+
+
 
 .success,
 .info,

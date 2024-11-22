@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title> Julia Compiler Internals (05) - Algorithm of Type Inference [2] </title>
+
+    <meta property="og:title" content="Julia Compiler Internals (05) - Algorithm of Type Inference [2]">
+    <meta property="og:image" content="https://abap34.com/posts/jci_05/image.png">
+    <meta property="og:description" content="Julia の型推論に使われているデータフロー解析のアルゴリズムについてです。">
+    <meta property="og:url" content="https://abap34.com/posts/jci_05.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.sidebar {
+   /* スクロールバーを表示 */
+    overflow-y: auto;
+    height: 100vh;
+    padding-right: 10px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow: hidden !important;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    /* 上下余白 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    max-width: 100%;
+    margin-bottom: 20px;
+    /* 中央に置く */
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+
+}
+
+/* テーブルの中身にちょっと余白つける */
+
+
+
+th {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+td {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    margin: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    border-left: 5px solid #8a6d3b;
+}
+
+.danger {
+    color: #a94442;
+    border-color: #ebccd1;
+    border-left: 5px solid #a94442;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}
+
+/* 引用 */
+blockquote {
+    border-left: solid 5px #e2e6ff;
+    padding-left: 10px;
+    margin-left: 0;
+    color: #6d6d6d !important;
+    font-weight: bold !important;
+}</style>
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="article-header">
+
+        <div class="title">
+            Julia Compiler Internals (05) - Algorithm of Type Inference [2]
+        </div>
+
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/11/22
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [JuliaCompilerInternals, Julia, 型推論, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"あらすじ"
+});
+</script>
+<h2 id="2">あらすじ</h2><br>今回もJuliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><br><url> <a href="https://abap34.com/posts/jci_03.html">前回</a> </url> は Julia の型推論について学ぶ前に、抽象解釈やデータフロー解析の基本的な部分をやりました。<br>今回は前回見たデータフロー解析問題を解くアルゴリズムを実際に実装してその性質を調べます。<br><br>さらに、世間の解説との diff として、停止性や正当性を含む各種性質の証明をすること、なぜこのように定義するのか？何が求まったのか？ などの解説をすることなどを試みてみました。<br><br>ただ、頑張って書いていますが、頑張ったからといって必ずしも誤りがなくなるわけではない 😢 (悲しい) ので、 あまり信用せずに読んでください。(とくに証明まわり)<br><br>何かあれば一番下のコメントからお願いします。<br><br>また、単に頻繁にアップデートが入る可能性が極めて高いというのもあるので、<span class="strong"> <strong>事実の出典にはしないことをとてもお勧めします。</strong> </span> 記事に末尾に読んだ文章をまとめておくので、正確な情報を得たい場合はそちらを参照するようにお願いします。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"33",
+    "title":"準備 1 ─ プログラムの表現の実装"
+});
+</script>
+<h2 id="33">準備 1 ─ プログラムの表現の実装</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"36",
+    "title":"プログラム自体の表現"
+});
+</script>
+<h3 id="36">プログラム自体の表現</h3><br>元記事で、 MacroTools を使ったパターンマッチングなどを活用したとても綺麗な実装があるのでそれを拝借させていただきます 🙏<br><br>こういう 言語内 DSL みたいなのが簡単に書けると面白いですよね〜<br>全然一ミリも本編に関係ないんですが、 MacroTools などを作った Mike さんという方は自動微分界隈で結構有名な方で、 Mike さんの書いた  <url> <a href="https://github.com/MikeInnes/diff-zoo">Differentiation for Hackers</a> </url> という文章は本当に面白いのでおすすめです。<br>Mike さんのブログ: <url> <a href="https://mikeinnes.io/">https://mikeinnes.io/</a> </url> にも本当に面白い記事がたくさんあります (例えば <url> <a href="https://mikeinnes.io/posts/modern-languages/">The Modern Language Designer</a> </url> とかおすすめです)<br><br>本編に戻ります。<br>元記事の 実装 > 問題設定で出てくる以下のコードをそれぞれ <span class="inline-code"> <code>lib/program.jl</code> </span>, <span class="inline-code"> <code>lib/lattice.jl</code> </span>  とします。 実装はさておき理屈を知りたい方はかなり飛ばしても大丈夫です。<br><span class="inline-code"> <code>lib/program.jl</code> </span>:<br><div class="code-block"> <pre><code class="language-julia"># This code is part of https://zenn.dev/aviatesk/articles/data-flow-problem-20201025
+
+abstract type Exp end
+
+struct Sym &lt;: Exp
+    name::Symbol
+end
+
+struct Num &lt;: Exp
+    val::Int
+end
+
+struct Call &lt;: Exp
+    head::Sym
+    args::Vector{Exp}
+end
+
+abstract type Instr end
+
+struct Assign &lt;: Instr
+    lhs::Sym
+    rhs::Exp
+end
+
+struct Goto &lt;: Instr
+    label::Int
+end
+
+struct GotoIf &lt;: Instr
+    label::Int
+    cond::Exp
+end
+
+const Program = Vector{Instr}
+</code></pre> </div><br><span class="inline-code"> <code>lib/lattice.jl</code> </span>:<br><div class="code-block"> <pre><code class="language-julia"># This code is part of https://zenn.dev/aviatesk/articles/data-flow-problem-20201025
+
+import Base: ≤, ==, &lt;, show
+
+abstract type LatticeElement end
+
+struct Const &lt;: LatticeElement
+    val::Int
+end
+
+struct TopElement &lt;: LatticeElement end
+struct BotElement &lt;: LatticeElement end
+
+const ⊤ = TopElement()
+const ⊥ = BotElement()
+
+show(io::IO, ::TopElement) = print(io, &#39;⊤&#39;)
+show(io::IO, ::BotElement) = print(io, &#39;⊥&#39;)
+
+≤(x::LatticeElement, y::LatticeElement) = x≡y
+≤(::BotElement,      ::TopElement)      = true
+≤(::BotElement,      ::LatticeElement)  = true
+≤(::LatticeElement,  ::TopElement)      = true
+
+# join
+⊔(x::LatticeElement, y::LatticeElement) = x≤y ? y : y≤x ? x : ⊤
+
+# meet
+⊓(x::LatticeElement, y::LatticeElement) = x≤y ? x : y≤x ? y : ⊥
+
+
+# NOTE: the paper (https://api.semanticscholar.org/CorpusID:28519618) uses U+1D56E MATHEMATICAL BOLD FRAKTUR CAPITAL C for this
+const AbstractState = Dict{Symbol,LatticeElement}
+
+# extend lattices of values to lattices of mappings of variables to values;
+# ⊓ and ⊔ operate pair-wise, and from there we can just rely on the Base implementation for
+# dictionary equiality comparison
+
+⊔(X::AbstractState, Y::AbstractState) = AbstractState( v =&gt; X[v] ⊔ Y[v] for v in keys(X) )
+⊓(X::AbstractState, Y::AbstractState) = AbstractState( v =&gt; X[v] ⊓ Y[v] for v in keys(X) )
+
+# ↓ 元記事とちょっと違いますが同じです
+≤(X::AbstractState, Y::AbstractState) = all(x -&gt; X[x] ≤ Y[x], keys(X))
+&lt;(X::AbstractState, Y::AbstractState) = X ≤ Y &amp;&amp; X ≠ Y
+</code></pre> </div><br><br>この部分は、よく見れば、そう。という感じでおそらく大丈夫だと思います。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"76",
+    "title":"抽象的意味論の実装"
+});
+</script>
+<h3 id="76">抽象的意味論の実装</h3><br>ここからは abstract semantics <span class="math-inline"> \( ![.!] \) </span> を実装していきます。 (元記事とほぼ同じです)<br>まずは、そもそも <span class="inline-code"> <code>Exp</code> </span> たちの evaluation がないことには何もできないので、それだけ一旦書きます。<br><div class="code-block"> <pre><code class="language-julia"># This code is part of https://zenn.dev/aviatesk/articles/data-flow-problem-20201025
+
+unwrap_val(x::Num) = x.val
+unwrap_val(x::Const) = x.val
+
+
+_eval_expr(m::Num, s::AbstractState) = Const(x.val)
+_eval_expr(x::Sym, s::AbstractState) = get(s, x.name, ⊥)
+
+
+function _eval_expr(x::Call, s::AbstractState)
+    f = getfield(@__MODULE__, x.head.name)
+
+    argvals = Int[]
+    for arg in x.args
+        arg = _eval_expr(arg, s)
+        arg === ⊥ &amp;&amp; return ⊥ # bail out if any of call arguments is non-constant
+        push!(argvals, unwrap_val(arg))
+    end
+
+    return Const(f(argvals...))
+end
+</code></pre> </div><br>続いて、 <span class="math-inline"> \( ![.!] \) </span> の実装です。<br><div class="code-block"> <pre><code class="language-julia">function abstract_eval(x::Assign, s::AbstractState)
+    new_s = copy(s)
+    lhs::Sym = x.lhs
+    new_s[lhs.name] = _eval_expr(lhs, s)
+    return new_s
+end
+
+function abstract_eval(::Goto, s::AbstractState)
+    return s 
+end
+
+function abstract_eval(::GotoIf, s::AbstractState)
+    return s
+end
+</code></pre> </div><br>これを <span class="inline-code"> <code>lib/abstract_semantics.jl</code> </span> とします。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"99",
+    "title":"準備 2 ─ 軽微な修正"
+});
+</script>
+<h2 id="99">準備 2 ─ 軽微な修正</h2><br>ここから実際にデータフロー解析問題を解くアルゴリズムを実装しますが、 少し細々とした注意について見るために簡単なケースで実装してみます。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"104",
+    "title":"定数の定義 ─ 制御構文がない場合を例に"
+});
+</script>
+<h3 id="104">定数の定義 ─ 制御構文がない場合を例に</h3><br>まずは、次のような Goto, GotoIf がないプログラムに対してうまく動かす例を考えましょう。<br><div class="code-block"> <pre><code class="language-julia">prog_simple = @prog begin
+    x = 1
+    y = 2
+    z = 3
+    x = 4 + y
+end
+</code></pre> </div><br>ここから見つけたいのは次の事実です:<br><ul><li><span class="inline-code"> <code>x</code> </span>, <span class="inline-code"> <code>y</code> </span>, <span class="inline-code"> <code>z</code> </span> は定数になる</li></ul><br>ここで注意ポイントですが、 <span class="inline-code"> <code>x</code> </span> は定数です。 <br>ここでいう定数というのはプログラムの中で最初から最後まで値が変わらない、という意味ではなく、 「ある命令前における値が条件分岐の結果に関わらず静的に決まる」という意味だからです。<br><br>つまりこの場合では、 <br><ul><li>1つ目の命令を実行したあとは <span class="inline-code"> <code>x = 1</code> </span></li><li>2つ目の命令を実行したあとは <span class="inline-code"> <code>x = 1</code> </span></li><li>3つ目の命令を実行したあとは <span class="inline-code"> <code>x = 1</code> </span></li><li>4つ目の命令を実行したあとは <span class="inline-code"> <code>x = 6</code> </span></li></ul><br>ということが分かりますから、 その意味では <span class="inline-code"> <code>x</code> </span> は定数です。<br>つまり、条件分岐がない valid なプログラムに対するデータフロー解析問題の解にはそのエントリポイントを除いて <span class="math-inline"> \( \bot \) </span> が含まれないことになります。<br>さて、これを求めるコードを書きます。<br>まずは 抽象状態の初期値 <span class="math-inline"> \( a_0 \) </span> を定義します。<br>前の記事で見たように、これは<br><div class="code-block"> <pre><code class="language-plaintext">AbstractState(
+    :x =&gt; ⊤,
+    :y =&gt; ⊤,
+    :z =&gt; ⊤
+)
+</code></pre> </div><br>なんでした。もう少し忠実に実装すると <span class="inline-code"> <code>get(s::AbstractState, varname::Symbol)</code> </span> とかで <span class="inline-code"> <code>haskey(s, varname) ? s[varname] : ⊤</code> </span> とかすれば良さそうですが、今回は簡単のために手で全部書いてしまいます。<br>プログラムと初期状態を受け取って実際に抽象解釈を行う関数を書いてみましょう。<br>今回は、 <span class="math-inline"> \( \text{Pred}_i = \{ i - 1 \} \) </span> ですから、解くべき連立方程式は<br><div class="math-block"> \[ 
+
+\begin{cases}
+s_1 = a_0 \\
+s_{i+1} = ![I_i!](s_i)
+\end{cases}
+
+ \] </div>です。<br>これは単に <span class="math-inline"> \( s_1, s_2, \dots, s_n \) </span> を順に計算すればいいだけです。<br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, a₀::AbstractState, abstract_semantics::Function)::Vector{AbstractState}
+    n = length(I)
+    s = [copy(a₀) for _ in 1:n+1]
+    for i in 1:n
+        s[i+1] = abstract_semantics(I[i])(s[i])
+    end
+
+    return s
+end
+</code></pre> </div><br>結果は以下のようになります。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; result = abstract_interpret(
+    prog_simple,
+    AbstractState(
+        :x =&gt; ⊤,
+        :y =&gt; ⊤,
+        :z =&gt; ⊤
+    ),
+    abstract_semantics
+)
+
+
+julia&gt; vartable(result)
+
+┌───┬──────────┬──────────┬──────────┐
+│ i │        x │        y │        z │
+├───┼──────────┼──────────┼──────────┤
+│ 1 │ Const(1) │        ⊤ │        ⊤ │
+│ 2 │ Const(1) │ Const(2) │        ⊤ │
+│ 3 │ Const(1) │ Const(2) │ Const(3) │
+│ 4 │ Const(6) │ Const(2) │ Const(3) │
+└───┴──────────┴──────────┴──────────┘
+
+</code></pre> </div><br>無事に各命令の実行直前の抽象状態が求まっています！<br><script>page_contents.push({
+    "type":"H3",
+    "id":"190",
+    "title":"不正な遷移をどう扱うか？"
+});
+</script>
+<h3 id="190">不正な遷移をどう扱うか？</h3><br>ここで、条件なしのジャンプ (Goto) が含まれるケースを例に実装上の一つの問題を考えます。<br>プログラムの具体例として、以下のようなものを使います。<br><div class="code-block"> <pre><code class="language-julia">prog_goto = @prog begin
+    x = 1       # 1
+    y = 2       # 2 
+    z = 3       # 3
+    @goto 6     # 4
+    x = 4 + y   # 5  unreachable
+    y = 5       # 6  go to here
+    z = 6       # 7
+end
+</code></pre> </div><br>この場合の <span class="math-inline"> \( \text{Pred}_P(i) \) </span> を定義:<br><div class="math-block"> \[ 
+
+j \in \text{Pred}_P(i) \Leftrightarrow 
+I_j \in \{ \text{goto i}, \text{条件つき goto i} \} \text{ または } j = i - 1  \ かつ\  I_i \neq \text{goto}
+
+ \] </div><br><br>にしたがって <span class="math-inline"> \( i = 1, 2, \dots, 8 \) </span>  について調べてみると <br><br><div class="math-block"> \[ 
+
+\begin{align*}
+\text{Pred}_P(1) &= \emptyset \\
+\text{Pred}_P(2) &= \{ 1 \} \\
+\text{Pred}_P(3) &= \{ 2 \} \\
+\text{Pred}_P(4) &= \{ 3 \} \\
+\text{Pred}_P(5) &= \emptyset \\
+\text{Pred}_P(6) &= \{ 4, 5 \} \\ 
+\text{Pred}_P(7) &= \{ 6 \} \\
+\text{Pred}_P(8) &= \{ 7 \}
+\end{align*}
+
+ \] </div><br>ということになります.<br><br>このまま実装すると<br><div class="code-block"> <pre><code class="language-julia">function build_pred(I::Program)::Vector{Vector{Int}}
+    n = length(I)
+    pred = [Int[] for _ in 1:n+1]
+
+    for i in 1:n
+        Iᵢ = I[i]
+        if isa(Iᵢ, Goto)
+            push!(pred[Iᵢ.label], i)
+        else
+            push!(pred[i+1], i)
+        end
+    end
+
+    return pred
+end
+</code></pre> </div><br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; build_pred(prog_goto)
+8-element Vector{Vector{Int64}}:
+ []
+ [1]
+ [2]
+ [3]
+ []
+ [4, 5]
+ [6]
+ [7]
+</code></pre> </div><br><br><br>これで <span class="math-inline"> \( \text{Pred}_P \) </span> が求まりました。<br>続いて解くべき連立方程式を考えましょう。<br>今回は<br><div class="math-block"> \[ 
+
+\begin{cases}
+s_1 = a_0 \\
+s_{i} = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j)
+\end{cases}
+
+ \] </div><br>を解かなければいけなくなったわけですが、 プログラムが無限ループにならないなら全ての <span class="math-inline"> \( j \in \text{Pred}_P(i) \) </span> が <span class="math-inline"> \( j < i \) </span> なので、例えば前から確定させていけば大丈夫です。<br><br>(この部分は最終的には使わないのであまり考えず適当でいいです)<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, a₀::AbstractState, abstract_semantics::Function)::Vector{AbstractState}
+    n = length(I)
+    s = [copy(a₀) for _ in 1:n+1]
+    pred = build_pred(I)
+
+    for i in 2:n+1
+        s[i] = reduce(⊓, (abstract_semantics(I[j])(s[j]) for j in pred[i]), init=a₀)
+    end
+
+    return s
+end
+
+</code></pre> </div><br>これを実行してみます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; prog_goto = @prog begin
+           x = 1       # I₁
+           y = 2       # I₂
+           z = 3       # I₃
+           @goto 6     # I₄
+           x = 4 + y   # I₅
+           y = 5       # I₆
+           z = 6       # I₇
+       end
+7-element Vector{Instr}:
+ Assign(Sym(:x), Num(1))
+ Assign(Sym(:y), Num(2))
+ Assign(Sym(:z), Num(3))
+ Goto(6)
+ Assign(Sym(:x), Call(Sym(:+), Exp[Num(4), Sym(:y)]))
+ Assign(Sym(:y), Num(5))
+ Assign(Sym(:z), Num(6))
+
+julia&gt; result = abstract_interpret(
+           prog_goto,
+           AbstractState(
+               :x =&gt; ⊤,
+               :y =&gt; ⊤,
+               :z =&gt; ⊤
+           ),
+           AbstractState(
+               :x =&gt; ⊥,
+               :y =&gt; ⊥,
+               :z =&gt; ⊥
+           ),
+           abstract_semantics
+       )
+
+
+ERROR: AssertionError: arg != ⊤
+Stacktrace:
+  [1] _eval_expr(x::Call, s::OrderedDict{Symbol, LatticeElement})
+</code></pre> </div><br>エラっています！ 右辺に <span class="math-inline"> \( \top \) </span> が入っているらしいです。<br><br>エラーの原因は よく考えるとそれはそうで、 <span class="math-inline"> \( s_5 = \top \) </span> なので <span class="math-inline"> \( ![I_5!](s_5) = ![\text{x = 4 + y}!](\top) \) </span> をするとき <span class="math-inline"> \( y \) </span> が Undefined で壊れています。<br><br>もう一度  <span class="math-inline"> \( ![I!] \) </span> の実装である <span class="inline-code"> <code>abstract_eval</code> </span> を確認してみると<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_eval(x::Assign, s::AbstractState)
+    new_s = copy(s)
+    lhs::Sym = x.lhs
+    new_s[lhs.name] = _eval_expr(lhs, s)
+    return new_s
+end
+
+
+function _eval_expr(x::Call, s::AbstractState)    
+    f = getfield(@__MODULE__, x.head.name)
+
+    argvals = Int[]
+    for arg in x.args
+        arg = _eval_expr(arg, s)
+
+        # 未定義のやつが引数に出てきたらおかしい
+        @assert arg != ⊤
+
+        arg === ⊥ &amp;&amp; return ⊥ # bail out if any of call arguments is non-constant
+        push!(argvals, unwrap_val(arg))
+    end
+
+    return Const(f(argvals...))
+end
+</code></pre> </div><br>引っかかる箇所としてはここの <span class="inline-code"> <code>assert</code> </span> になります.<br>実は論文の定義をじっと見ると<br><figure><img src="jci_05/image-2.png" ><figcaption>元論文より</figcaption></figure><br>本当の本当にこの定義だけちゃんと見ると右辺に <span class="math-inline"> \( \top \) </span> があるときも <span class="math-inline"> \( \bot \) </span> を返すべきとなっているように見えます。<br>一旦これを信じることにしてみます。<br><br><div class="code-block"> <pre><code class="language-julia">function _eval_expr(x::Call, s::AbstractState)    
+    f = getfield(@__MODULE__, x.head.name)
+
+    argvals = Int[]
+    for arg in x.args
+        arg = _eval_expr(arg, s)
+
+        if arg === ⊤ || arg === ⊥
+            return ⊥
+        else
+            push!(argvals, unwrap_val(arg))
+        end
+    end
+
+    return Const(f(argvals...))
+end
+</code></pre> </div><br>これで実行してみると<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; result = abstract_interpret(
+           prog_goto,
+           AbstractState(
+               :x =&gt; ⊤,
+               :y =&gt; ⊤,
+               :z =&gt; ⊤
+           ),
+           AbstractState(
+               :x =&gt; ⊥,
+               :y =&gt; ⊥,
+               :z =&gt; ⊥
+           ),
+           abstract_semantics
+       )
+
+julia&gt; vartable(result)
+┌───┬──────────┬──────────┬──────────┐
+│ i │        x │        y │        z │
+├───┼──────────┼──────────┼──────────┤
+│ 1 │        ⊤ │        ⊤ │        ⊤ │
+│ 2 │ Const(1) │        ⊤ │        ⊤ │
+│ 3 │ Const(1) │ Const(2) │        ⊤ │
+│ 4 │ Const(1) │ Const(2) │ Const(3) │
+│ 5 │        ⊤ │        ⊤ │        ⊤ │
+│ 6 │        ⊥ │ Const(2) │ Const(3) │
+│ 7 │        ⊥ │ Const(5) │ Const(3) │
+│ 8 │        ⊥ │ Const(5) │ Const(6) │
+└───┴──────────┴──────────┴──────────┘
+</code></pre> </div><br>という結果になりました。<br><span class="inline-code"> <code>x</code> </span> が定数であることは見つけられていませんね... 😢<br><br>正確には以下のように実装すると良いと思います。<br><div class="math-block"> \[ 
+   
+\begin{align*}
+a := \begin{cases}
+a_y \circ a_z & \text{どちらも定数} \\
+\bot & \text{どれかが} \bot \\
+\top & \text{otherwise}
+\end{cases}
+\end{align*}
+
+ \] </div><br><br><div class="code-block"> <pre><code class="language-julia">function _eval_expr(x::Call, s::AbstractState)
+    f = getfield(@__MODULE__, x.head.name)
+
+    arg_eval = _eval_expr.(x.args, Ref(s))
+    
+    if any(isequal(⊥), arg_eval)
+        return ⊥
+    elseif all(arg -&gt; arg isa Const, arg_eval)
+        argvals = unwrap_val.(arg_eval)
+        return Const(f(argvals...))
+    end
+
+    return ⊤
+end
+</code></pre> </div><br>です。こうすると Unreachable なコードからの遷移は無かったことになります。 <span class="math-inline"> \( \top \) </span> は meet の単位元だからです。<br><br>つまりこの実装は 「不正な遷移は無視して、正しい遷移のみが実行される」という仮定にたったものといえます。<br>このことは、エラーを起こしうるプログラムに対する最適化でとても興味深い挙動を引き起こします。 この記事の最後で少し紹介します。<br><br>また、重要な事実として、このように定義すれば単調性も保たれていることに注意してください。<br><br>この実装で実行してみると<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; result = abstract_interpret(
+           prog_goto,
+           AbstractState(
+               :x =&gt; ⊤,
+               :y =&gt; ⊤,
+               :z =&gt; ⊤
+           ),
+           AbstractState(
+               :x =&gt; ⊥,
+               :y =&gt; ⊥,
+               :z =&gt; ⊥
+           ),
+           abstract_semantics
+       )
+
+julia&gt; vartable(result)
+┌───┬──────────┬──────────┬──────────┐
+│ i │        x │        y │        z │
+├───┼──────────┼──────────┼──────────┤
+│ 1 │        ⊤ │        ⊤ │        ⊤ │
+│ 2 │ Const(1) │        ⊤ │        ⊤ │
+│ 3 │ Const(1) │ Const(2) │        ⊤ │
+│ 4 │ Const(1) │ Const(2) │ Const(3) │
+│ 5 │        ⊤ │        ⊤ │        ⊤ │
+│ 6 │ Const(1) │ Const(2) │ Const(3) │
+│ 7 │ Const(1) │ Const(5) │ Const(3) │
+│ 8 │ Const(1) │ Const(5) │ Const(6) │
+└───┴──────────┴──────────┴──────────┘
+</code></pre> </div><br>と、ちゃんと <span class="inline-code"> <code>x</code> </span> が定数であることが分かりました。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"331",
+    "title":"準備 3 ─ データフロー方程式を再考する"
+});
+</script>
+<h2 id="331">準備 3 ─ データフロー方程式を再考する</h2><br>代入, Goto, GotoIf の全てがある場合を考えます。<br>具体例として、次のような極めて単純なプログラムを例にして考えていきます。<br><div class="code-block"> <pre><code class="language-julia">prog_gotoif = @prog begin
+    x = 1             # I₁
+    y = 2             # I₂
+    x = x + 1         # I₃
+    x == 3 &amp;&amp; @goto 3 # I₄
+    x = 10            # I₅
+end
+</code></pre> </div><br>この場合、解くべき連立方程式は<br><div class="math-block"> \[ 
+
+\begin{cases}
+s_1 = a_0 \\
+s_2 = ![I_1!](s_1) \\
+s_3 = ![I_2!](s_2) \ \sqcap \ ![I_4!](s_4) \\
+s_4 = ![I_3!](s_3) \\
+s_5 = ![I_4!](s_4) \\
+s_6 = ![I_5!](s_5)
+\end{cases}
+
+ \] </div><br>です。<br>これを満たす <span class="math-inline"> \( s_1, s_2, \dots, s_8 \) </span> であって 各 <span class="math-inline"> \( s_i \) </span> が最大なものは<br><table>
+<thead>
+<tr>
+<th align="left"> <span class="math-inline"> \( i \) </span> </th>
+<th align="left"> <span class="math-inline"> \( s_i(\text{x}) \) </span> </th>
+<th align="left"> <span class="math-inline"> \( s_i(\text{y}) \) </span> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> 1   </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 2   </td>
+<td align="left"> 1               </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 3   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> 2               </td>
+</tr>
+<tr>
+<td align="left"> 4   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> 2               </td>
+</tr>
+<tr>
+<td align="left"> 5   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> 2               </td>
+</tr>
+<tr>
+<td align="left"> 6   </td>
+<td align="left"> 10              </td>
+<td align="left"> 2               </td>
+</tr>
+</tbody>
+</table>
+<br>です。<br>解が一意でないことに注意しましょう。例えば<br><table>
+<thead>
+<tr>
+<th align="left"> <span class="math-inline"> \( i \) </span> </th>
+<th align="left"> <span class="math-inline"> \( s_i(\text{x}) \) </span> </th>
+<th align="left"> <span class="math-inline"> \( s_i(\text{y}) \) </span> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> 1   </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 2   </td>
+<td align="left"> 1               </td>
+<td align="left"> <span class="math-inline"> \( \top \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 3   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 4   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 5   </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+</tr>
+<tr>
+<td align="left"> 6   </td>
+<td align="left"> 10              </td>
+<td align="left"> <span class="math-inline"> \( \bot \) </span>          </td>
+</tr>
+</tbody>
+</table>
+<br><br>も、実際上の連立方程式を満たします。 (欲しいのは一つ目の解です)<br>プログラムの CFG を描くと<br><div class="code-block"> <pre><code class="language-plaintext">        START
+          │
+          ▼
+ ┌──────────────────┐
+ │    I₁: x = 1     │
+ │    I₂: y = 2     │
+ └──────────────────┘
+          │
+          ▼
+ ┌──────────────────┐
+ │  I₃: x = x + 1   │◀︎──────────┐
+ └──────────────────┘           │
+          │                     │ 
+          ▼                     │
+ ┌──────────────────┐    True   │
+ │   I₄: x == 3 ?   │ ──────────┘
+ └──────────────────┘
+          │ False
+          ▼
+ ┌──────────────────┐
+ │    I₅: x = 10    │
+ └──────────────────┘
+          │
+          ▼
+         FIN
+</code></pre> </div><br>みたいな感じになります。 <span class="inline-code"> <code>x</code> </span> を 3 までインクリメントするだけのプログラムです。<br><br>これが実行終了されるまでの経路を考えると、以下のようなものがあります。<br><ul><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_4 \to I_5 \) </span></li><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_4 \to I_3 \to I_4 \to I_5 \) </span></li><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_4 \to I_3 \to I_4 \to I_3 \to I_4 \to I_5 \) </span></li><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_4 \to I_3 \to I_4 \to I_3 \to I_4 \dots \to I_5 \) </span></li></ul><br>この全ての経路の交わりを求めれば良いですが、これは見ての通りいくらでも考えられるので直接計算はできません。<br>一旦これについてもう少し考察しましょう。 かなり手戻りになりますが、再度解の意味から考察することにします。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"516",
+    "title":"理想の解と近似とそのまた近似"
+});
+</script>
+<h3 id="516">理想の解と近似とそのまた近似</h3><br>プログラムのエントリポイントから <span class="math-inline"> \( I_i \) </span> までの全ての <span class="strong"> <strong>実際に実行されうる</strong> </span> 経路の集合を <span class="math-inline"> \( \mathcal{P}_{\text{IDEAL}} \) </span> とします.<br><span class="math-inline"> \( \mathcal{P}_{\text{IDEAL}} \) </span>  の元 <span class="math-inline"> \( P \) </span> は  <span class="math-inline"> \( I_1 \to I_{l} \to I_{m} \to \dots \to I_i \) </span> のような経路です。<br>ここで、この経路によって得られる抽象状態は初期状態に全ての命令の作用の合成を作用させたものです. この合成した作用を <span class="math-inline"> \( ![I_P!] \) </span> と書くことにします。 つまり、 <span class="math-inline"> \( ![I_p]! = ![I_1!] \circ ![I_l!] \circ ![I_m!] \circ \dots \circ ![I_i!] \) </span> です。<br>そして、次のように<span class="math-inline"> \( \text{IDEAL}_i \) </span> を定義します。<br><div class="math-block"> \[ 
+
+\text{IDEAL}_i = \prod_{P \in \mathcal{P}_{\text{IDEAL}}} ![I_P!](s_1)
+
+ \] </div><br><br>よく考えると、これこそが求めたい解です。ですが前回ではそのことを説明せず、これと異なる定義をいきなり与えました。<br>定義をいきなり与えたのは、あの段階でここの議論をすると意味不明だったからですが、この定義を採用しないのは、残念ながらあるコントロールフローを実際通るのか判定するのは決定不能で、<span class="math-inline"> \( \text{IDEAL}_i \) </span> は普通の計算機では一般には求められないからです。<br><br>なのでここから解ける形に頑張って持っていきます。まず、次に以下のように定義される、 <span class="math-inline"> \( \text{MOP} \) </span> (Meet-Over-Paths) 解を考えます。 <br><br>(実際に実行されるかは考慮せず、 CFG 上で到達可能という意味で) ずべての実行経路を <span class="math-inline"> \( \mathcal{P}_{\text{MOP}} \) </span> として<br><div class="math-block"> \[ 
+
+\text{MOP}_i = \prod_{P \in \mathcal{P}_{\text{MOP}}}  ![I_P!](s_1)
+
+ \] </div><br>とします。<br>このとき、  <span class="math-inline"> \( \mathcal{P}_{\text{IDEAL}} \subseteq \mathcal{P}_{\text{MOP}} \) </span> であり、 <span class="math-inline"> \( x \sqcap y \leq x \) </span>, <span class="math-inline"> \( x \sqcap y \leq y \) </span> なので <span class="math-inline"> \( \text{MOP}_i \leq \text{IDEAL}_i \) </span> です。<br><br>つまり、条件分岐を考慮しないのは理想の解よりも安全な見積もりであることがわかります。 経路を余分に考えても抽象状態はより安全側に倒れるだけということです。<br><br>では <span class="math-inline"> \( \text{MOP} \) </span> は計算できるかというと、残念ながらこれも決定不能です。  参考文献にした文献の 3つ目に Post の対応問題に帰着させる証明が載っているのですが、少し考えたことを書いてみます。<br><br><br>何もわかっていない関数 <span class="inline-code"> <code>no_idea_function</code> </span> によって終了するループを含む、以下のようなプログラムがあるとします。<br><div class="code-block"> <pre><code class="language-plaintext">1. x = 0
+ 
+2. x = x + 1
+
+3. no_idea_function(x) ? goto 2
+
+4. y = x
+</code></pre> </div><br>このとき <span class="inline-code"> <code>y = x</code> </span> の実行後の抽象状態、つまりプログラムの終了状態を求めることを考えます。<br><span class="math-inline"> \( \text{MOP} \) </span> は、 <span class="inline-code"> <code>y = x</code> </span> を実行する前の全ての抽象状態を列挙して、最後にそれらの交わりを取る必要があります。<br>これは上にも書いたように、経路がいくらでも考えられるのでナイーブに列挙して計算するのは不可能です。 <span class="math-inline"> \( x \) </span> として <span class="math-inline"> \( 0, 1, 2, \dots \) </span> が無限に列挙されて停止しません。 じゃあ単に <span class="math-inline"> \( 0, 1 \) </span> と違う値来た時点で <span class="math-inline"> \( \bot \) </span> としてやめればいいのじゃないか、と思うかもしれませんが、<br><br><div class="code-block"> <pre><code class="language-plaintext">1. x = 0
+ 
+2. x = x + 0
+
+3. no_idea_function(x) ? goto 2
+
+4. y = x
+</code></pre> </div><br>としたときは <span class="math-inline"> \( 0, 0, \dots \) </span> が続くことになります。もちろん最後まで <span class="math-inline"> \( 0 \) </span> が続きますから、<span class="math-inline"> \( \text{MOP}_4(y) = 0 \) </span> な訳ですが、 そう結論づけるにはどうすればいいでしょうか。<br>ループ回数を一つ増やしても <span class="math-inline"> \( 0 \) </span> が続いたらそれ以降も <span class="math-inline"> \( 0 \) </span> としていいでしょうか？<br>もちろんそんなことはなく<br><br><div class="code-block"> <pre><code class="language-plaintext">1. x = 0
+2. y = 0
+
+3. x = x + 1
+4. y = y - 1
+5. x &lt;= 3 &amp;&amp; goto 7
+6. x = 100 
+
+7. no_idea_function(x) &amp;&amp; goto 3
+8. z = x + y    
+</code></pre> </div><br>では、<br><table>
+<thead>
+<tr>
+<th align="left"> ループ回数 </th>
+<th align="left"> x   </th>
+<th align="left"> y   </th>
+<th align="left"> z   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> 0                   </td>
+<td align="left"> 1   </td>
+<td align="left"> -1  </td>
+<td align="left"> 0   </td>
+</tr>
+<tr>
+<td align="left"> 1                   </td>
+<td align="left"> 2   </td>
+<td align="left"> -2  </td>
+<td align="left"> 0   </td>
+</tr>
+<tr>
+<td align="left"> 2                   </td>
+<td align="left"> 3   </td>
+<td align="left"> -3  </td>
+<td align="left"> 0   </td>
+</tr>
+<tr>
+<td align="left"> 3                   </td>
+<td align="left"> 100 </td>
+<td align="left"> -3  </td>
+<td align="left"> 97  </td>
+</tr>
+<tr>
+<td align="left"> 4                   </td>
+<td align="left"> 100 </td>
+<td align="left"> -4  </td>
+<td align="left"> 96  </td>
+</tr>
+<tr>
+<td align="left"> ...                 </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+<td align="left"> ... </td>
+</tr>
+</tbody>
+</table>
+<br>です。<br>このような、いくらでも大きな点で壊す例を構成できますから、結局どんなに <span class="math-inline"> \( 0 \) </span> が続こうと定数と結論づけることはできません。<br>なので後から交わりを取るならば、 ちゃんと<span class="math-inline"> \( 0 \) </span> が <span class="math-inline"> \( + \) </span> の右単位元であることを証明する必要があります。 このレベルなら Coq を担いでこなくても示せるかもしれませんが、一般の複雑なコントロールフローに対してこのような性質を示すことは困難です。<br>なので、 <span class="math-inline"> \( \text{MOP} \) </span> を計算することも無理でした。<br><br>そこでまた、<span class="math-inline"> \( \text{MOP} \) </span> に近い安全な解を求める方法を考えることにします。<br><br>それこそが前回定義したデータフロー解析で登場した方程式:<br><br><div class="math-block"> \[ 
+
+s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j)
+
+ \] </div><br>です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"724",
+    "title":"求解アルゴリズム"
+});
+</script>
+<h2 id="724">求解アルゴリズム</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"727",
+    "title":"最大不動点を求めるアルゴリズム"
+});
+</script>
+<h3 id="727">最大不動点を求めるアルゴリズム</h3><br>突然結論から述べますが、次のような実装のアルゴリズムで得られる解 <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解です。<br><br>このアルゴリズムは、先行命令からの全てを命令を作用させた交わりをとる、というのを状態が変化するまで繰り返すというものです。<br>言い換えれば、データフロー方程式の右辺を変化するまで繰り返す、つまりデータフロー方程式の不動点の一つを求めるアルゴリズムといえます。<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
+    n = length(I)
+    inputs = [copy(a₀) for _ in 1:n]
+    outputs = [copy(a₀) for _ in 1:n]
+    pred = build_pred(I) 
+
+    while true
+        change = false
+
+        for i in 1:n
+            current_input = inputs[i]
+            current_output = outputs[i]
+            
+            inputs[i] = reduce(⊓, outputs[j] for j in pred[i]; init=copy(a₀)) 
+            outputs[i] = abstract_semantics(I[i])(inputs[i])
+
+            
+            if (current_input != inputs[i]) || (current_output != outputs[i])
+                change = true
+            end
+        end
+
+
+        if !change
+            break
+        end
+    end           
+
+
+    return [inputs; outputs[end]]
+end
+</code></pre> </div><br>さて、いきなり出てきたからにはこのアルゴリズムはうまく働きます。<br><br>そのことを証明します。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"747",
+    "title":"解である証明"
+});
+</script>
+<h3 id="747">解である証明</h3><br><div class="theorem"><br><span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解である。<br></div><br><div class="proof"><br>連立方程式の解でないなら、 <span class="math-inline"> \( s_i \neq \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \) </span> なる <span class="math-inline"> \( i \) </span> があるので、 <span class="inline-code"> <code>outputs</code> </span> が更新されて <span class="inline-code"> <code>while</code> </span> が終了しない。<br>なので <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解。<br></div><br><script>page_contents.push({
+    "type":"H3",
+    "id":"775",
+    "title":"停止性の証明"
+});
+</script>
+<h3 id="775">停止性の証明</h3><br><div class="theorem"><br>このアルゴリズムは停止する。<br></div><br><div class="proof"><br><span class="math-inline"> \( \text{In}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{In}_i^{(k)} \) </span>, <span class="math-inline"> \( \text{Out}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{Out}_i^{(k)} \) </span> とかく。<br><br>まず、次の補題を示す。<br><div class="lemma"><br><div class="math-block"> \[ 
+
+\begin{cases}
+\text{In}_i^{(k+1)} \leq \text{In}_i^{(k)}  \\
+\text{Out}_i^{(k+1)} \leq \text{Out}_i^{(k)} 
+\end{cases}
+
+ \] </div><br></div><br><div class="proof"><br><span class="math-inline"> \( \text{In}_i, \text{Out}_i \) </span> が更新されるのは<br><div class="code-block"> <pre><code class="language-julia">inputs[i] = reduce(⊓, outputs[j] for j in pred[i]; init=copy(a₀)) 
+outputs[i] = abstract_semantics(I[i])(inputs[i])
+</code></pre> </div><br><div class="math-block"> \[ 
+
+\Leftrightarrow \begin{cases}
+\text{In}_i^{(k+1)} = \prod_{j \in \text{Pred}_P(i)} \text{Out}_j^{(k)} \\
+\text{Out}_i^{(k+1)} = ![I_i!](\text{In}_i^{(k+1)})
+\end{cases}
+
+ \] </div><br>に限るのでこの更新だけ調べればよい。<br><span class="math-inline"> \( k \) </span> について帰納法で示す。<br><br><span class="strong"> <strong>1. <span class="math-inline"> \( k = 0 \) </span> のとき</strong> </span><br><span class="math-inline"> \( \text{In}_i^{(0)} = \top, \text{Out}_i^{(0)} = \top \) </span> なので、その最大性から成立.<br><br><span class="strong"> <strong>2. <span class="math-inline"> \( k = n \) </span> のとき成立すると仮定</strong> </span><br>仮定: <span class="math-inline"> \( \text{Out}_i^{(n+1)} \leq \text{Out}_i^{(n)} \) </span> と <span class="math-inline"> \( \sqcap \) </span> の性質から<br><div class="math-block"> \[ 
+
+\prod_{j \in \text{Pred}_P(i)} \text{Out}_j^{(n)} \leq \prod_{j \in \text{Pred}_P(i)} \text{Out}_j^{(n+1)}
+
+ \] </div><br>つまり<br><div class="math-block"> \[ 
+
+\text{In}_i^{(n)} \leq \text{In}_i^{(n+1)}
+
+ \] </div><br>作用の単調性から<br><div class="math-block"> \[ 
+
+![I_i!](\text{In}_i^{(n)}) \leq ![I_i!](\text{In}_i^{(n+1)})
+
+ \] </div><br>なので、結局<br><div class="math-block"> \[ 
+
+\text{Out}_i^{(n)} \leq \text{Out}_i^{(n+1)}
+
+ \] </div></div><br>この補題から<br><br><div class="math-block"> \[ 
+
+\text{Out}_i^{(0)} \geq \text{Out}_i^{(1)} \geq \dots 
+
+ \] </div><br>ところで、束の高さの有限性から、ある <span class="math-inline"> \( k \) </span> が存在して<br><div class="math-block"> \[ 
+
+\text{Out}_i^{(k)} = \text{Out}_i^{(k+1)} = \dots
+
+ \] </div><br>が成立する。このアルゴリズムはそのような <span class="inline-code"> <code>k</code> </span> に達すると <span class="inline-code"> <code>while</code> </span> ループが終了するので、アルゴリズムは停止する。<br></div><br>また、証明から、束の高さを <span class="math-inline"> \( h \) </span> として 繰り返し回数は <span class="math-inline"> \( n \times h \) </span> で抑えられることがわかります. なので、変数の数を <span class="math-inline"> \( m \) </span> とすると、このアルゴリズムの計算量は <span class="math-inline"> \( \mathcal{O}(n \times h \times m) \) </span> です。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"890",
+    "title":"最大の解であることの証明"
+});
+</script>
+<h3 id="890">最大の解であることの証明</h3><br><br><div class="theorem  "><br>このアルゴリズムで得られる解は、データフロー方程式の最大の解である。<br>つまり、 <span class="math-inline"> \( s_1, s_2, \dots, s_n \) </span> がデータフロー方程式の解であるとき、 <br><div class="math-block"> \[ 
+
+s_i \leq \text{MFP}_i
+
+ \] </div><br></div><br><div class="proof"><br>このアルゴリズムの <span class="inline-code"> <code>while</code> </span> ループ一回での <span class="math-inline"> \( \text{In} \) </span> の更新を <span class="math-inline"> \( f \) </span> とする。<br>つまり、 <span class="math-inline"> \( f \) </span> は <span class="math-inline"> \( A^{n} \) </span> から <span class="math-inline"> \( A^{n} \) </span> の関数であって、<br><div class="math-block"> \[ 
+
+\text{In}_1^{(k)}, \text{In}_2^{(k)}, \dots, \text{In}_n^{(k)} = f(\text{In}_1^{(k-1)}, \text{In}_2^{(k-1)}, \dots, \text{In}_n^{(k-1)})
+
+ \] </div><br>ここで、 <span class="math-inline"> \( A^n \) </span> 上の半順序 <span class="math-inline"> \( \leq \) </span> を <span class="math-inline"> \( S \leq S' \Leftrightarrow \forall i, S_i \leq S'_i \) </span> として定めたとき、以下が成り立つ。<br><div class="lemma"><br><span class="math-inline"> \( f \) </span> は単調である。<br></div><br><div class="proof"><br><span class="math-inline"> \( \text{In} \leq \text{In'} \Rightarrow f(\text{In}) \leq f(\text{In'}) \) </span> であることを示せば良い。<br>仮定: <span class="math-inline"> \( \text{In} \leq \text{In'} \) </span> と作用の単調性から <span class="math-inline"> \( \text{Out} \leq \text{Out'} \) </span>.<br>すると、任意の <span class="math-inline"> \( i \) </span> について、 <span class="math-inline"> \( \sqcap \) </span> の性質から<br><span class="math-inline"> \( f(\text{In}_i) = \prod_{j \in \text{Pred}_P(i)} \text{Out}_j \leq \prod_{j \in \text{Pred}_P(i)} \text{Out'}_j = f(\text{In'}_i) \) </span><br>なので <span class="math-inline"> \( f(\text{In}) \leq f(\text{In'}) \) </span>. <br></div><br>したがって、以下を示せばよい。<br><div class="lemma"><br>高さが有限の束 <span class="math-inline"> \( (L, \leq) \) </span> と、単調な関数 <span class="math-inline"> \( f: L \to L \) </span> に対して、  <span class="math-inline"> \( f^{(k+1)}(\top) = f^{(k)}(\top) \) </span> なる <span class="math-inline"> \( k \) </span> が存在して、そのうち最小のものを <span class="math-inline"> \( k_0 \) </span> とすると、 <span class="math-inline"> \( f^{(k_0)}(\top) \) </span> は <span class="math-inline"> \( f \) </span> の最大不動点である。</div><br><div class="proof"><br>存在性は停止することの証明と同じ。<br>ここで、これが最大であることを示す。<br><span class="math-inline"> \( p \) </span> が不動点であるならば任意の <span class="math-inline"> \( i \) </span> について <span class="math-inline"> \( p \leq f^{(i)}(\top) \) </span> であることを <span class="math-inline"> \( i \) </span> についての帰納法で示す。<br><span class="strong"> <strong>1. <span class="math-inline"> \( i = 0 \) </span> のとき</strong> </span><br><span class="math-inline"> \( p \leq f^{(0)}(\top) \) </span> なので成立。<br><br><span class="strong"> <strong>2. <span class="math-inline"> \( i = n \) </span> のとき成立すると仮定</strong> </span><br><div class="math-block"> \[ 
+
+\begin{align*}
+\text{仮定:} \quad & p \leq f^{(n)}(\top) \\
+\Rightarrow \quad & f(p) \leq f(f^{(n)}(\top)) (\because f \text{ は単調}) \\
+\Rightarrow \quad & p \leq f^{(n+1)}(\top)  (\because p \text{ は不動点})
+\end{align*}
+
+ \] </div><br></div><br></div><br>これは、この図を見るともう少し直感的に理解できるかもしれません。<br><figure><img src="jci_05/image-3.png" ><figcaption></figcaption></figure><br>単調なら順序が保存されるので、縦軸を大小関係 <span class="math-inline"> \( \leq \) </span> にして <span class="math-inline"> \( f \) </span> で写した先と結んだときに交差することはありません。<br>ところで 不動点は不動点なので真横にいきます。もし最大の不動点以外に飛ぶとすると、真横に行く線と交わってしまいます。<br>なので、 <span class="math-inline"> \( \top \) </span> から <span class="math-inline"> \( f \) </span> を適用していくと、最大不動点に到達します。<br>したがって、このアルゴリズムによって最大の解が得られることがわかりました。<br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1048",
+    "title":"MFP 解と MOP 解の関係"
+});
+</script>
+<h2 id="1048">MFP 解と MOP 解の関係</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"1051",
+    "title":"交わりと作用の分配性"
+});
+</script>
+<h3 id="1051">交わりと作用の分配性</h3><br>当然の疑問として、<span class="math-inline"> \( \text{MOP} \) </span> との関係はどうなっているのか、そしてなぜデータフロー方程式なら解けるのか、という疑問が沸きます。<br>まずは、 <span class="math-inline"> \( \text{MFP} \) </span>　と　<span class="math-inline"> \( \text{MOP} \) </span> を比較して、「<span class="math-inline"> \( \text{MFP} \) </span> とは交わりを先にとったものである」ということを強調しようと思います。<br><br><br>例えば、経路が <span class="math-inline"> \( I_1 \to I_2 \to I_4 \to I_5 \) </span> と <span class="math-inline"> \( I_1 \to I_3 \to I_4 \to I_5 \) </span> の二つからなる場合を考えましょう。<br>つまり、<br><div class="code-block"> <pre><code class="language-plaintext">┌──────────┐
+│    I₁    │──────┐
+└──────────┘      │
+     │            │
+     ▼            │
+┌──────────┐ ┌──────────┐       
+│    I₂    │ │    I3    │
+└──────────┘ └──────────┘
+     │            │
+     ▼            │
+┌──────────┐      │    
+│    I₄    │ ◀︎────┘
+└──────────┘
+     │
+     ▼
+┌──────────┐
+│    I₅    │
+└──────────┘
+     │
+     ▼   
+</code></pre> </div><br>みたいな感じです.<br><span class="math-inline"> \( \text{MOP} \) </span> では、各経路について、先に全ての作用の合成を作用させて、最後に交わりをとっていました。<br>つまり、<br><div class="math-block"> \[ 
+
+\begin{align*}
+\text{MOP}_5 &= (![I_1!] \circ ![I_2!] \circ ![I_4!])(\top) \\
+&\sqcap \\
+& (![I_1!] \circ ![I_3!] \circ ![I_4!])(\top)
+\end{align*}
+
+ \] </div><br>です。<br>これに対してデータフロー方程式は<br><div class="math-block"> \[ 
+
+\begin{align*}
+s_1 &= a_0 \\
+s_2 &= ![I_1!](s_1) \\
+s_3 &= ![I_1!](s_1) \\
+s_4 &= ![I_2!](s_2) \ \sqcap \  ![I_3!](s_3) \\
+s_5 &= ![I_4!](s_4) 
+\end{align*}
+
+ \] </div><br>なので、<br><div class="math-block"> \[ 
+
+\begin{align*}
+\text{MFP}_5 = ![I_4!] &( \\
+&(![I_3] \circ ![I_1])(\top) \ \sqcap \  (![I_2] \circ ![I_1])(\top) \\
+)
+\end{align*}
+
+ \] </div><br><br>です。つまり、<br><img src="jci_05/image-4.png" height="500px !important"><br>のように、 <span class="math-inline"> \( I_4 \) </span> の適用と交わりをとるタイミングが入れ替わっています。 <br><br>そして、このことから二つの重大な事実が導かれます。<br><ol><li><span class="strong"> <strong><span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> は常には成り立たない</strong> </span></li><li><span class="strong"> <strong>常に <span class="math-inline"> \( \text{MFP} \leq \text{MOP} \) </span> である</strong> </span></li></ol><br><script>page_contents.push({
+    "type":"H3",
+    "id":"1120",
+    "title":"MFP != MOP なる例と解の一致条件 "
+});
+</script>
+<h3 id="1120">MFP != MOP なる例と解の一致条件 </h3><br>実際に、 <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> が成り立たない例を示します。<br><div class="code-block"> <pre><code class="language-julia">prog1 = @prog begin
+    x = 10             # I₁
+    y = 20             # I₂
+    p &amp;&amp; @goto 6       # I₃
+    x = 20             # I₄
+    y = 10             # I₅
+    z = x + y          # I₆
+end
+</code></pre> </div><br>は、 <span class="math-inline"> \( \text{MOP} \) </span> と <span class="math-inline"> \( \text{MFP} \) </span> が一致しません。これは<br><div class="code-block"> <pre><code class="language-julia">x = 10
+y = 20
+
+if !p
+    x = 20
+    y = 10
+end
+
+z = x + y
+</code></pre> </div><br>というプログラムと対応しています。<br>このとき、 実際 <span class="math-inline"> \( z \) </span> はその実行経路に関わらず、定数 <span class="math-inline"> \( 30 \) </span> になり、<span class="math-inline"> \( \text{MOP}_7(z) \) </span> もそうなります。<br>経路は<br><ul><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_6 \) </span></li><li><span class="math-inline"> \( I_1 \to I_2 \to I_3 \to I_4 \to I_5 \to I_6 \) </span></li></ul><br>のいずれかですが、<br><div class="math-block"> \[ 
+
+\begin{align*}
+![I_6!] \circ ![I_3!] \circ ![I_2!] \circ ![I_1!](\top) &= (10, 20, 30) \\
+![I_6!] \circ ![I_5!] \circ ![I_4!] \circ ![I_3!] \circ ![I_2!] \circ ![I_1!](\top) &= (10, 20, 30)
+\end{align*}
+
+ \] </div><br>なので、この交わりを取ると <span class="math-inline"> \( z \) </span> は <span class="math-inline"> \( 30 \) </span> になります。<br>ところが <span class="math-inline"> \( \text{MFP} \) </span> は <br><div class="math-block"> \[ 
+
+\begin{align*}
+s_1 &= a_0 \\
+s_2 &= ![I_1!](s_1) \\
+s_3 &= ![I_2!](s_2) \\
+s_4 &= ![I_3!](s_3) \\
+s_5 &= ![I_4!](s_4) \\
+s_6 &= ![I_5!](s_5) \ \sqcap \ ![I_3!](s_3) \\
+s_7 &= ![I_6!](s_6) \\
+\end{align*}
+
+ \] </div><br>で、 <span class="math-inline"> \( ![I_5!](s_5) = (20, 10, \top), ![I_3!](s_3) = (10, 20, \top) \) </span> なのでこれの交わりを取ると <span class="math-inline"> \( (\bot, \bot, 30) \) </span> になります。<br>これに <span class="math-inline"> \( ![I_6!] \) </span> を作用させると当然 <span class="math-inline"> \( (\bot, \bot, \bot) \) </span> になり、 <span class="math-inline"> \( \text{MFP}_7(z) = \bot \) </span> になります。<br><br>このように、交わりの適用タイミングが作用の前に来ることで、 <span class="math-inline"> \( \text{MFP} \) </span> と <span class="math-inline"> \( \text{MOP} \) </span> が一致しないことがあります。 つまり、 <span class="strong"> <strong>このアルゴリズム <span class="math-inline"> \( \text{MFP} \) </span> は最も具体的な抽象状態を必ずしも得られるわけではないことがわかります。</strong> </span>　😢<br><br>逆に、交わりと作用が<br><div class="math-block"> \[ 
+
+![I!](x \ \sqcap \ y) = ![I!](x) \ \sqcap \ ![I!](y)
+
+ \] </div><br>を満たすときはは明らかに <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> です。　次回の記事でいくつか紹介するつもりですが、データフロー解析として定式化できる問題のうちいくつかはこの条件を満たしていて、 常に <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> が保証されます。<br><br>ところが定数伝播などはこの条件を満たさず、今回のような例が出てきます。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1211",
+    "title":"MFP の安全性"
+});
+</script>
+<h3 id="1211">MFP の安全性</h3><br>さて、 <span class="math-inline"> \( \text{MFP} \neq \text{MOP} \) </span> であることもあることがわかりましたが、ここで注意すべきは<br><span class="math-inline"> \( \text{MFP} > \text{MOP} \) </span> となるかどうかということです。この不等式が成り立つと言うことは、例えば定数とわからないはずなのに定数とみなしている、つまり誤った解を得ているこということになるわけで、静的解析としてはあってはならないことです。<br><br>ですが、幸いこのようなことは起きません。<br><br>このことは以下の定理によって保証されます。<br><div class="theorem"><br>束 <span class="math-inline"> \( (L, \leq) \) </span> と、単調な関数 <span class="math-inline"> \( f: L \to L \) </span> は、<br>任意の <span class="math-inline"> \( x, y \in L \) </span> に対して<br><div class="math-block"> \[ 
+
+f(x \ \sqcap \  y)  \leq f(x) \ \sqcap \ f(y) 
+
+ \] </div><br>を満たす。<br></div><br><br><div class="proof"><br><div class="math-block"> \[ 
+
+\begin{cases}
+x \ \sqcap \ y \leq x \\
+x \ \sqcap \ y \leq y
+\end{cases}
+
+ \] </div><br>なので <span class="math-inline"> \( f \) </span> の単調性から<br><div class="math-block"> \[ 
+
+\begin{cases}
+f(x \ \sqcap \ y) \leq f(x) \\
+f(x \ \sqcap \ y) \leq f(y)
+\end{cases}
+
+ \] </div><br>さらに <span class="math-inline"> \( \sqcap \) </span> の定義から<br><div class="math-block"> \[ 
+
+f(x \ \sqcap \ y) \leq f(x) \ \sqcap \ f(y)
+
+ \] </div><br><br></div><br>(実は、この逆 (不等式を満たすなら単調) も成り立ちます。)<br><br>この定理は、「先に交わりを取ると、より小さな (<span class="math-inline"> \( \Leftrightarrow \) </span> 安全な) 解が得られる」ことを主張していますから、 <span class="math-inline"> \( \text{MFP} \leq \text{MOP} \) </span> であって、 <span class="math-inline"> \( \text{MFP} \) </span> が安全な解であることがわかりました！<br><br>というわけで <span class="math-inline"> \( \text{MFP} \) </span> 解を少なくとも「使っても被害のない情報」として使うことができます！　<br><br>今回は一旦ここまでです。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1284",
+    "title":"おまけ:　未定義動作と最適化"
+});
+</script>
+<h3 id="1284">おまけ:　未定義動作と最適化</h3><br>次のようなプログラムを考えましょう。<br><div class="code-block"> <pre><code class="language-julia">prog2 = @prog begin
+    p &amp;&amp; @goto 3      
+    @goto 4         
+    x = 1             
+    q &amp;&amp; @goto 6     
+    @goto 7         
+    y = x + 5      
+    z = y + 5         
+end
+</code></pre> </div><br>これは<br><div class="code-block"> <pre><code class="language-julia">if p
+    x = 1
+end
+
+if q
+    y = x + 5
+end
+
+z = y + 5
+</code></pre> </div><br>というプログラムです。<br>このとき、 <span class="inline-code"> <code>p</code> </span> が偽であって <span class="inline-code"> <code>q</code> </span> が真であるような実行経路では <span class="inline-code"> <code>x</code> </span> は Undefined で、実行時エラーか、言語によってはそもそもコンパイルが通らないでしょう。<br>このような場合どう推論するべきでしょうか？<br>一つの考え方は「プログラムは正しい」という前提に立つことです。<br>この考え方のもとでは <span class="inline-code"> <code>p</code> </span> が偽であって <span class="inline-code"> <code>q</code> </span> が真であるような実行経路を考える必要はなく、 <span class="inline-code"> <code>y = 11</code> </span> という定数伝播ができます。<br><br>このことは 今回の abstract semantics の実装と対応しています。<br><br>実はていていのプログラミング言語では未定義変数はどのような値を取っても良いとみなして最適化することが許されていて、 <url> <a href="https://rsk0315.hatenablog.com/entry/2019/09/10/213859">C++のコンパイラなどが未定義動作を無視して最適化をするみたいな有名な話</a> </url>  はこういうのが (実際この場合どうなるかはともかく、同じ構造の理屈として) 一つの例なんだと思います。たぶん...<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1326",
+    "title":"まとめと次回予告"
+});
+</script>
+<h2 id="1326">まとめと次回予告</h2><br>今回はデータフロー解析の基本的なアルゴリズムの実装とその性質を調べました。<br><br>ところが元記事を読んだ人は、あれ、あのアルゴリズムどこで出てきた？となっているかもしれません。<br><br>本当はそこまで書きたかったのですが、月曜日に期末テスト、水曜日と木曜日に締切のレポートを抱えているのに明後日はライブに参戦するので、このままでは逆転留年を決めかねないので一旦ここまででやめます。<br>次回は、このアルゴリズムを改良していき、元記事で紹介されているようなアルゴリズムへ到達するまでを調べる予定です。<br>また、定数畳み込み以外のデータフロー解析の例も紹介し、それの実装を示すことでこの抽象化の威力を確認しようと思います。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1342",
+    "title":"参考にした資料"
+});
+</script>
+<h2 id="1342">参考にした資料</h2><br>(1) コンパイラ 原理・技法・ツール 第二版 <br><ul><li>9章のデータフロー解析の章を読みました。かなり最初から平易に説明してくれてとてもよかったので、まずこれを読むと良いと思います。</li><li>MFP解 が最大不動点であることも証明が一応書いてあるんですが、証明になっているように見えなくて困っています。もし記述を完全に解釈できている方がいたら教えていただきたいです。</li></ul><br>(2) <url> <a href="https://www.cse.iitb.ac.in/~uday/soft-copies/dfa-theory.pdf">Uday Khedker, Theoretical Abstractions in Data Flow Analysis</a> </url><br><ul><li>異常に詳しく、いくつかの証明はこれを参考にしました。</li><li><url> <a href="https://www.taylorfrancis.com/books/mono/10.1201/9780849332517/data-flow-analysis-uday-khedker-bageshri-sathe-amitabha-sanyal">Data Flow Analysis Theory and Practice</a> </url> という本を書いている先生の資料らしく、この本は目次だけ見れるのですが、めちゃくちゃ詳しくかつ実践的で本当に欲しい 😭　ところがどっこい、お値段なんとびっくり <span class="strong"> <strong>￥26500 のところ今なら ￥22500</strong> </span> らしいです。 もし読者に石油王の方がいらっしゃいましたらぜひ大岡山までご郵送ください。</li></ul><br>(3) <url> <a href="https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf">平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics</a> </url><br>(4) <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.</a> </url><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1373",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="1373">今日の一曲</h2><br>こっちの M.O.P. はギャングの名前由来らしいです。<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/PLT68mI5Pwc?si=recMBvI2DLj4ktty" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
+        </div>
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false" data-via="abap34">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+
+
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
+
+</body>
+
+
+</html>
