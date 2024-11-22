@@ -883,7 +883,7 @@ end
     :y =&gt; ⊤,
     :z =&gt; ⊤
 )
-</code></pre> </div><br>なんでした。もう少し忠実に実装すると <span class="inline-code"> <code>get(s::AbstractState, varname::Symbol)</code> </span> とかで <span class="inline-code"> <code>haskey(s, varname) ? s[varname] : ⊤</code> </span> とかすれば良さそうですが、今回は簡単のために手で全部書いてしまいます。<br>プログラムと初期状態を受け取って実際に抽象解釈を行う関数を書いてみましょう。<br>今回は、 <span class="math-inline"> \( \text{Pred}_i = \{ i - 1 \} \) </span> ですから、解くべき連立方程式は<br><div class="math-block"> \[ 
+</code></pre> </div><br>なんでした。もう少し忠実に実装すると <span class="inline-code"> <code>get(s::AbstractState, varname::Symbol)</code> </span> とかで <span class="inline-code"> <code>haskey(s, varname) ? s[varname] : ⊤</code> </span> とかすれば良さそうですが、今回は簡単のために手で全部書いてしまいます。<br>プログラムと初期状態を受け取って実際に連立方程式を解く関数を書いてみましょう。<br>今回は、 <span class="math-inline"> \( \text{Pred}_i = \{ i - 1 \} \) </span> ですから、解くべき連立方程式は<br><div class="math-block"> \[ 
 
 \begin{cases}
 s_1 = a_0 \\
