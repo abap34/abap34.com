@@ -2,12 +2,12 @@
 title: Julia Compiler Internals (05) - Algorithm of Type Inference [2]
 author: abap34
 date: 2024/11/22
-tag: [JuliaCompilerInternals, Julia, 型推論, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
+tag: [JuliaCompilerInternals, Julia, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://abap34.com/posts/jci_05/image.png
-description: Julia の型推論に使われているデータフロー解析のアルゴリズムについてです。
+description: データフロー解析問題を解く基本的なアルゴリズムの実装と性質の証明をします。
 url: https://abap34.com/posts/jci_05.html
 site_name: abap34's blog
 twitter_site: abap34
