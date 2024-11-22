@@ -182,15 +182,34 @@ pre {
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
+    /* 上下余白 */
+    margin-top: 20px;
     margin-bottom: 20px;
+    border-collapse: collapse;
+    max-width: 100%;
+    margin-bottom: 20px;
+    /* 中央に置く */
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+
 }
 
-th,
-td {
+/* テーブルの中身にちょっと余白つける */
+
+
+
+th {
+    background-color: #f8f9fa;
     border: 1px solid #ddd;
-    padding: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+td {
+    border-right: 1px solid #ddd;
+    padding: 10px;
 }
 
 .exec_out {
