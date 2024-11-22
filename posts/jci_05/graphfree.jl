@@ -44,8 +44,6 @@ function build_pred(I::Program)::Vector{Vector{Int}}
     n = length(I)
     pred = [Int[] for _ in 1:n+1]
 
-    pred[1] = [0]
-
     for i in 1:n
         Iᵢ = I[i]
         if isa(Iᵢ, Goto)
@@ -62,79 +60,60 @@ function build_pred(I::Program)::Vector{Vector{Int}}
 end
 
 
+function build_succ(I::Program)::Vector{Vector{Int}}
+    n = length(I)
+    succ = [Int[] for _ in 1:n+1]
+
+    succ[1] = [2]
+
+    for i in 1:n
+        Iᵢ = I[i]
+        if isa(Iᵢ, Goto)
+            succ[i] = [Iᵢ.label]
+        elseif isa(Iᵢ, GotoIf)
+            succ[i] = [Iᵢ.label, i+1]
+        else
+            succ[i] = [i+1]
+        end
+    end
+
+    return succ
+end
+
+
 
 function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
     n = length(I)
-    s = [copy(a₀) for _ in 1:n+1]
+    inputs = [copy(a₀) for _ in 1:n]
+    outputs = [copy(a₀) for _ in 1:n]
+    pred = build_pred(I) 
 
-    entry_points = collect(1:n)
-
-    while !isempty(entry_points)
-        pc = popfirst!(entry_points)
-        debug("Start From entrypoiny: $pc")
-        while true
-            Iᵢ = I[pc]
-            new_state = abstract_semantics(Iᵢ)(s[pc])
+    while true
+        change = false
+        for i in 1:n
+            current_input = inputs[i]
+            current_output = outputs[i]
             
-            if Iᵢ isa Assign
-                next_pc = pc + 1
+            inputs[i] = reduce(
+                            ⊓, 
+                            outputs[j] for j in pred[i]; 
+                            init=copy(a₀)
+                        ) 
 
-                if s[next_pc] == new_state
-                    debug("$pc -> $next_pc has noeffect. Finish this entry point..,", depth=1)
-                    break
-                end
+            outputs[i] = abstract_semantics(I[i])(inputs[i])
 
-                s[next_pc] = s[next_pc] ⊓ new_state
-
-                pc = next_pc
-
-                if pc == n + 1
-                    debug(
-                        "Reach finish of program.", depth=1
-                    )
-                    break
-                end
-                
-            elseif Iᵢ isa Goto
-                next_pc = Iᵢ.label
-
-                if s[next_pc] == new_state
-                    debug("$pc -> $next_pc has noeffect. Finish this entry point..,", depth=1)
-                    break
-                end
-
-                pc = next_pc
-
-                s[next_pc] = s[next_pc] ⊓ new_state    
-            elseif Iᵢ isa GotoIf
-                next_pc = Iᵢ.label
-
-                if s[next_pc] != new_state
-                    debug("$pc -> $next_pc has effect! Add new entry point: $(Iᵢ.label)", depth=1, color=:red)
-                    s[next_pc] = s[next_pc] ⊓ new_state
-                    push!(entry_points, Iᵢ.label)
-                end
-                
-                next_pc = pc + 1
-
-                if s[next_pc] == new_state
-                    debug("$pc -> $next_pc has noeffect. Finish this entry point..,", depth=1)
-                    break                    
-                end
-
-                pc = next_pc
-                
-                s[next_pc] = s[next_pc] ⊓ new_state
-
-                if pc == n + 1
-                    debug(
-                        "Reach finish of program.", depth=1
-                    )
-                    break
-                end
-                    
-            end            
+            
+            if (current_input != inputs[i]) || (current_output != outputs[i])
+                change = true
+            end
         end
-    end            
-    return s
+
+
+        if !change
+            break
+        end
+    end           
+
+
+    return [inputs; outputs[end]]
 end
