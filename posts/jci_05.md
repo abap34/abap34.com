@@ -1017,19 +1017,19 @@ $$
 つまり
 
 $$
-\text{In}_i^{(n)} \leq \text{In}_i^{(n+1)}
+\text{In}_i^{(n+1)} \leq \text{In}_i^{(n+2)}
 $$
 
 作用の単調性から
 
 $$
-![I_i!](\text{In}_i^{(n)}) \leq ![I_i!](\text{In}_i^{(n+1)})
+![I_i!](\text{In}_i^{(n+1)}) \leq ![I_i!](\text{In}_i^{(n+2)})
 $$
 
 なので、結局
 
 $$
-\text{Out}_i^{(n)} \leq \text{Out}_i^{(n+1)}
+\text{Out}_i^{(n+1)} \leq \text{Out}_i^{(n+2)}
 $$
 :::
 
