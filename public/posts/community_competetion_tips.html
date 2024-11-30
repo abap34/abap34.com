@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-10Y7GMS7GV');
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title> コミュニティコンペティションを開催するときの Tips 集 </title>
+
+    <meta property="og:title" content="コミュニティコンペティションを開催するときの Tips 集">
+    <meta property="og:image" content="https://abap34.com/posts/community_competetion_tips/IMG_3692.jpeg">
+    <meta property="og:description" content="主にオープンなデータセットを使ってコミュニティ内でデータ分析コンペをやるときの Tips をまとめました。">
+    <meta property="og:url" content="https://abap34.com/posts/community_competetion_tips.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+
+
+
+    <script>hljs.highlightAll();</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+
+    <style>body {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: rgb(240, 244, 246);
+    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    color: #333;
+
+}
+
+
+.article-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .side #toc {
+        display: none;
+    }
+
+    .article-body {
+        display: block !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin: 10px !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .content {
+        margin-right: 30px !important;
+        margin-left: 5px !important;
+        padding-right: 20px !important;
+        padding-left: 5px !important;
+    }
+
+}
+
+.side {
+    order: 1;
+    border-right: solid 1px #ddd;
+    padding-right: 20px;
+}
+
+.sidebar {
+   /* スクロールバーを表示 */
+    overflow-y: auto;
+    height: 100vh;
+    padding-right: 10px;
+}
+
+.content {
+    order: 2;
+    padding: 20px;
+    width: 95%;
+    max-width: 900px;
+    margin: auto;
+    padding: auto;
+}
+
+
+.side-sticky {
+    position: sticky;
+    top: 20px;
+}
+
+
+
+.article-header {
+    padding-top: 30px;
+    margin: 10px;
+}
+
+
+
+.article-header .title {
+    color: #001e43;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border-bottom: dotted 3px #001e43;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.date {
+    font-size: 14px;
+    text-align: center;
+    color: gray;
+}
+
+.date::before {
+    content: "\f073";
+    font-family: "Font Awesome 5 Free";
+}
+
+.tag-placeholder {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+.tag a {
+    color: #666;
+    text-decoration-line: none;
+}
+
+
+.toc_title {
+    display: none;
+}
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow: hidden !important;
+}
+
+mjx-container {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+}
+
+h2 {
+    border-left: solid 5px #85c0ff;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+
+img {
+    max-width: 100% !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 1200px) {
+    figure {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        overflow: hidden;
+        padding: 20px;
+    }
+}
+
+
+figure {
+    text-align: center;
+    color: gray;
+}
+
+
+h3 {
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+h4 {
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+pre {
+    padding: 10px;
+}
+
+.tex-equations {
+    overflow-x: auto;
+}
+
+table {
+    /* 上下余白 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    max-width: 100%;
+    margin-bottom: 20px;
+    /* 中央に置く */
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+
+}
+
+/* テーブルの中身にちょっと余白つける */
+
+
+
+th {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+td {
+    border-right: 1px solid #ddd;
+    padding: 10px;
+}
+
+.exec_out {
+    color: white;
+}
+
+@media (max-width: 1200px) {
+    .exec_plot {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+#toc {
+    border-radius: 4px;
+    padding: 15px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #777;
+    display: block;
+    margin: 5px 0;
+    transition: color 0.2s;
+}
+
+#toc a:hover {
+    color: #007bff;
+}
+
+#toc .active {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+    border-left: 2px dotted #a3c5db;
+    border-radius: 0%;
+}
+
+#toc li {
+    padding-left: 20px;
+    margin-top: 10px;
+    position: relative;
+}
+
+/* #toc li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #c4e4f9;
+    border-radius: 50%;
+    border: 1px solid #a3c5db;
+    position: absolute;
+    left: -7px;
+    top: 0;
+    transform: translateY(50%);
+} */
+
+.toc_H1 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+
+.toc_H2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* .toc_H2::before {
+    background: #f8f8f8 !important;
+    border: 1px solid #3498db !important;
+} */
+
+.toc_H3 {
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+    padding-left: 10px;
+}
+
+.toc_H3::before {
+    display: none !important;
+}
+
+#toposts,
+#tohome,
+#torss {
+    display: inline-block;
+    text-decoration: none;
+}
+
+
+.links {
+    border-top: solid 1px #ddd;
+    padding-top: 20px;
+    color: hwb(211 18% 52%);
+}
+
+.links a {
+    text-decoration: none;
+    color: #3c3c3c;
+}
+
+.links {
+    /* 等幅フォント */
+    font-family: "Noto Sans Mono", monospace;
+}
+
+#toposts {
+    color: #979797 !important;
+
+}
+
+#tohome {
+    color: #b8792c !important;
+}
+
+#torss {
+    color: #d88914 !important;
+}
+
+#twitter {
+    color: #1da1f2 !important;
+}
+
+#github {
+    color: #000000 !important;
+}
+
+#mail {
+    color: #bbbbbb !important;
+}
+
+
+.content_list_h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: solid 1px #007bff;
+    color: #007bff;
+}
+
+.content_list_h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.content_list_problem {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.badge {
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #777;
+    border: 1px solid #444;
+    margin: 0 8px;
+    float: left;
+}
+
+.runbutton,
+.submitbutton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.runbutton {
+    background-color: #007bff;
+}
+
+.runbutton:hover {
+    background-color: #005580;
+}
+
+.submitbutton {
+    background-color: #008000;
+}
+
+.submitbutton:hover {
+    background-color: #006400;
+}
+
+.problem_title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editor {
+    width: 100%;
+    height: 300px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    border: solid 1px #ddd;
+}
+
+.output,
+.expect_out,
+.sample_in,
+.sample_out {
+    width: 100%;
+    padding: 5px 5px;
+    overflow-x: auto;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    color: #333;
+    border: solid 1px #ddd;
+}
+
+.box-title,
+.problem_list {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #777;
+}
+
+pre {
+    background-color: #282c34;
+    border-radius: 5px;
+}
+
+pre code {
+    color: #e8ebf0;
+    line-height: 1.2;
+    font-family: monospace;
+}
+
+.inline-code {
+    font-family: monospace;
+    line-height: 1.2;
+    color: #e43e3ee0;
+}
+
+
+
+.success,
+.info,
+.warning,
+.danger {
+    padding: 12px;
+    margin: 12px;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    border-left: 5px solid #8a6d3b;
+}
+
+.danger {
+    color: #a94442;
+    border-color: #ebccd1;
+    border-left: 5px solid #a94442;
+}
+
+.definition {
+    counter-increment: definition;
+    border: #31708f 3px dotted;
+    border-left: #31708fa1 5px solid;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) ".";
+}
+
+.theorem {
+    counter-increment: theorem;
+    border: #318f5a 3px dotted;
+    border-left: #318f4fa1 5px solid;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) ".";
+}
+
+.lemma {
+    counter-increment: lemma;
+    border: #ab5b64 3px dotted;
+    border-left: #d071a4a1 5px solid;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) ".";
+}
+
+.proof {
+    counter-increment: proof;
+    border: #5b64ab 3px dotted;
+    border-left: #8cc1e7a1 5px solid;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) ".";
+}
+
+.definition::before,
+.theorem::before,
+.proof::before,
+.lemma::before {
+    font-family: serif;
+    font-size: large;
+    font-weight: 600;
+    font-style: italic;
+    display: block;
+}
+
+
+.definition,
+.theorem,
+.proof,
+.lemma {
+    padding: 12px;
+    margin: 12px;
+}
+
+.proof::after {
+    content: "∎";
+    margin-left: auto;
+    display: block;
+}
+
+iframe {
+    width: 100%;
+}
+
+
+a {
+    color: #006699;
+    word-break: break-all;
+}
+
+.lined {
+    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
+    display: inline;
+}
+
+
+.footnote::before {
+    content: "Footnote: ";
+    font-weight: bold;
+}
+
+.footnote {
+    border-top: solid 1px #ddd;
+    font-style: italic;
+    color: #777;
+}
+
+
+.footnote>* {
+    display: block;
+}
+
+/* 引用 */
+blockquote {
+    border-left: solid 5px #e2e6ff;
+    padding-left: 10px;
+    margin-left: 0;
+    color: #6d6d6d !important;
+    font-weight: bold !important;
+}</style>
+
+    <script>
+        page_contents = []
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+
+
+</head>
+
+
+<body>
+
+    <div class="article-header">
+
+        <div class="title">
+            コミュニティコンペティションを開催するときの Tips 集
+        </div>
+
+        <script>
+            title = document.querySelector(".title").innerHTML;
+        </script>
+
+        <br>
+        <div class="date">
+            2024/12/1
+        </div>
+        <br>
+        <div class="tag-placeholder">
+            [Kaggle, データ分析コンペ]
+        </div>
+
+    </div>
+
+    <div class="article-body">
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"あらすじ"
+});
+</script>
+<h2 id="2">あらすじ</h2><br>先月、大学のサークルで運営していた機械学習を勉強するコミュニティを後輩に譲りました:<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">そういえば、大学のサークルの Kaggleコミュニティの長(?) を後輩に譲りました。<br>(抱えているプロジェクトがあるので、まだまだ色々しますが、一区切り)<br><br>2年半いろいろできて楽しかったです！ありがとうございました🙇‍♂️😊<a href="https://t.co/FTj9Ulm7dk">https://t.co/FTj9Ulm7dk</a><a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1846123877237150005?ref_src=twsrc%5Etfw">October 15, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>ここでは だいたい 2年半の期間で、だいたい 半年に一回くらいのペースで 計4回 コンペを主催して運営をしました。<br><table>
+<thead>
+<tr>
+<th align="left">      </th>
+<th align="left"> 参加者数 </th>
+<th align="left"> Sub数    </th>
+<th align="left"> 期間  </th>
+<th align="left"> 実施形態          </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"> B1夏 </td>
+<td align="left"> 17人     </td>
+<td align="left"> 約200件  </td>
+<td align="left"> 1週間 </td>
+<td align="left"> オンライン        </td>
+</tr>
+<tr>
+<td align="left"> B2春 </td>
+<td align="left"> 30人     </td>
+<td align="left"> 約200件  </td>
+<td align="left"> 3日   </td>
+<td align="left"> オンライン        </td>
+</tr>
+<tr>
+<td align="left"> B2夏 </td>
+<td align="left"> 37人     </td>
+<td align="left"> 約750件  </td>
+<td align="left"> 1週間 </td>
+<td align="left"> オンライン + 対面 </td>
+</tr>
+<tr>
+<td align="left"> B3春 </td>
+<td align="left"> 114人    </td>
+<td align="left"> 約1700件 </td>
+<td align="left"> 1週間 </td>
+<td align="left"> オンライン + 対面 </td>
+</tr>
+</tbody>
+</table>
+<br>コンペを開催すると、機械学習の実践的な勉強になるのはもちろんですが、not 機械学習のエンジニアの人が参加してくれたり、やはりなんだかんだみんな楽しくやってくれて盛り上がるのでいいなぁと思っています。<br><br><br>ところで、コンペを運営する側の知見はあまり転がっていないがちで、はじめてコンペをやろうとすると困ることや、どういう工夫が世の中にあるかわからないがちです。<br>そこで、後輩のためにコンペ運営のコツ、やった方がいいことなどを引き継ぎ資料として残しておこうと思っていたのですが、 特に企業秘密(?)にしておく理由もないのでここに書きたいと思います。<br>(細い運営記録などは <url> <a href="https://trap.jp/author/abap34/">https://trap.jp/author/abap34/</a> </url> などに転がっています.)<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"77",
+    "title":"Tips 1. データセットの便利な探し方"
+});
+</script>
+<h2 id="77">Tips 1. データセットの便利な探し方</h2><br>いうまでもなくどんなデータを持ってくるか、そしてどんなタスクを解かせるかはコンペの面白さに最も大きく影響します。<br><br>〇〇が好きな人が多いから、これをやろう！ ×× な会社だからこれにしよう！ のようにテーマが決まっている場合は特に書くことはないですが、とりあえず面白いコンペをやることだけが決まっていて、データセットの候補が特にない場合は何処かデータセットがまとまっているところから拾ってくることになると思います。<br><br>自分の場合、以下のあたりをよく見ていました。<br><ul><li><url> <a href="https://www.kaggle.com/datasets">Kaggle Datasets</a> </url></li><li><url> <a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a> </url></li><li><url> <a href="https://datasetsearch.research.google.com/">Google Dataset Search</a> </url></li></ul><br>個人的には Kaggle がデータセットのサイズやタスクで絞れたり使いやすいのでお勧めです。<br>ただ、Kaggle Datasets からとってくるときの注意として、 <span style="color: red;"> <span class="strong"> <strong>権利関係が明らかでないヤバそうなデータセットがちょくちょくあるので、この辺りのチェックが必須です。</strong> </span></span> <br>元ネタであろうデータセットが Credit されていなかったり、そもそも本物なのかすら怪しいものがちょくちょくあります。<br>本当の本当に身内でやる場合ならともかく、ちゃんとしたい場合は気をつけてください。<br><br>なので<br><ol><li>Kaggle Datasets でいい感じのテーマを見つける (アイデア出しとして使う)</li><li>そのテーマのちゃんとしたデータセットを拾う</li></ol><br>というのが自分のやり方でした。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"118",
+    "title":"Tips 2. 人工データセットを使うことを検討しよう"
+});
+</script>
+<h2 id="118">Tips 2. 人工データセットを使うことを検討しよう</h2><br>適当なテーマのデータセットを必ず手に入れる方法として、自前でそれっぽいものを生成してしまうというのもあります。<br>メリットはライセンスなどを気にしなくていいこと、準備の工数が見積もりやすいこと、難易度含めタスクをいくらでも調整できることなどがあります。<br>(とくに二つ目はかなり強いです。データ準備の期間を予測するのはかなり難しいです。)<br><br>デメリットとしては致命的なリークを生みやすい、タスクの説得力が生まれにくい (<span class="strong"> <strong>データの生成方法を推定するだけのバトルになってしまうと楽しくない</strong> </span>) などがパッとあがります。<br><br>ただ、初心者向けにとりあえず一回やってみる、というような場合はメリットがデメリットを上回ることも結構あると思います。 なので、そのような場合は人工データセットを使うのも一つの手です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"136",
+    "title":"Tips 3. Starter Notebook を用意して、 Submit までしてもらおう"
+});
+</script>
+<h2 id="136">Tips 3. Starter Notebook を用意して、 Submit までしてもらおう</h2><br>初心者の人にコンペに取り組んでもらうには、とにかく最初のサブミットをしてもらって順位表に乗せることが大事です。<br>そこでまずは簡単な Solution を <span class="strong"> <strong>完全に</strong> </span> 実装した Starter Notebook を作ることをお勧めします。<br><br>さらに、その Starter Notebook をほとんどそのまま実行してもらって順位表に乗ってもらうところまでやってもらうことも強くお勧めします。 やはり順位表に載って人を抜いたり抜かれたりすることは全ての人に有効なモチベーションになります。 (ランダムシードに好きな数字を入れて実行して投稿してみましょう〜　などがおすすめ)<br><br><br>注意点として、初心者の人が多い場合、このような Notebook がコンペの方向性を本当の本当に決定づけてしまうこともあります。 (例えば、 LightGBM でそこそこの Solution を提供してしまうと、全員が LightGBM のハイパラチューニングを 1週間しちゃうみたいなことがある) (1敗)<br><br>Starter Notebook がよい Solution であることは全くなく、Starter Notebook に工夫の余地を大量に残して、かつ選択肢を提示するのが大事です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"156",
+    "title":"Tips 4. 質問対応をしよう"
+});
+</script>
+<h2 id="156">Tips 4. 質問対応をしよう</h2><br>pandas でこういう処理をしたいけど分からない, こういうことをしたいけどライブラリを知らない etc などの理由で 改善を諦めてしまうのはもったいないです。<br><br>ですが、それをすべて質問できる一般的な形にしてもらって公開の場で質問してもらうのは初心者の人にとっては大変ですし、 毎回細かい話を Discussion にあげるのもハードルを感じる人が多いのも事実です。<br><br>そこで、実装レベルの話であれば運営が質問に答えますよ、とした方がうまく回るというのが自分の考えです。 (もちろんアイデアの話などはちゃんと Discussion にあげてもらうのがいいです)<br><figure><img src="community_competetion_tips/image.png" ><figcaption>実際、結構質問が飛んできました</figcaption></figure><br><script>page_contents.push({
+    "type":"H2",
+    "id":"169",
+    "title":"Tips 5. 簡単なサブセットを作ることで難易度を調整しよう"
+});
+</script>
+<h2 id="169">Tips 5. 簡単なサブセットを作ることで難易度を調整しよう</h2><br>多くの場合、コンペは<br><ul><li>初心者にとっては 1 Sub しやすく</li><li>上級者は飽きない</li></ul><br>ものであって欲しいです。<br>そこでおすすめなのは、データのうち処理が簡単なものだけを抜き出したサブセットを作ってあげることです。<br>例えば<br><ul><li><span class="inline-code"> <code>train.csv</code> </span>  　</li><li><span class="inline-code"> <code>test.csv</code> </span> </li><li><span class="inline-code"> <code>sample_submission.csv</code> </span> </li></ul><br>のような典型的な構成のコンペでは <span class="inline-code"> <code>train.csv, test.csv</code> </span> からパッと処理するのが難しい列を除いて、また <span class="inline-code"> <code>train</code> </span> は行数を少なくして  <span class="inline-code"> <code>train_tiny.csv</code> </span>  <span class="inline-code"> <code>test_tiny.csv</code> </span> のようなファイルを最初から配ってあげて、初心者の人はとりあえずこれを見てやってみてください、とすると良いです。<br><br>EDA・学習含めいろいろ処理が早く終わってとっつきやすいというのもありますし、 <span class="strong"> <strong>初心者の参加者が普段使うソフトウェアで扱えるファイルのサイズにしておく</strong> </span> ことで、 データ分析コンペの本質パートであるところの学習データを眺めて性質を考察する、というのを初心者の人でもやってくれて嬉しくなります。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"213",
+    "title":"Tips 6. Disucussion 賞を作ろう"
+});
+</script>
+<h2 id="213">Tips 6. Disucussion 賞を作ろう</h2><br>コンペ中に Disucussion や公開カーネルを出す文化は他のプログラムを書く競技ではあまりなく、ハードルを感じる人が多いです。<br><br>そこで絶対おすすめなのが Disucussion 賞を作ることです。<br>単に Upvote数で決めてもいいですし、運営が選ぶ、という方式でもいいです。<br><br>前者は客観的で公平ですが、そうすると終盤に Disucussion を出す動機が希薄になってしまうので、 余裕があれば後者も作ってあげると序盤中盤終盤、隙がない Disucussion になるかと思います。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"227",
+    "title":"Tips 7. 順位表 bot を作ろう / なろう"
+});
+</script>
+<h2 id="227">Tips 7. 順位表 bot を作ろう / なろう</h2><br>SNS がありとあらゆる大会の盛り上がりで役立つことはもはや明らかな事実だと思います。<br>そこで、順位表 bot を作って、順位の変更を検知して参加者が主に使う SNS に通知を飛ばすことをとてもお勧めします。<br><br>Kaggle であれば Kaggle api で Community Competition でも順位表が取れるので、 これを定期的に回して差分があれば通知を飛ばす、というのが一番簡単かと思います。<br><figure><img src="community_competetion_tips/image-1.png" ><figcaption></figcaption></figure><br>また、実装する時間がない場合も、例えば毎日適当な日時に順位表のスクショと上位の人の告知などをするだけでもだいぶ違うかと思います。<br>また、これは自前プラットフォームを持っているときなどに限られますが、結果などを一発で SNS に共有できる機能があるとかなり便利です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"243",
+    "title":"Tips 8. 振り返り会をしよう"
+});
+</script>
+<h2 id="243">Tips 8. 振り返り会をしよう</h2><br>コンペ終了直後に振り返り会をしましょう！ この時間が一番勉強になりますし、コンペの盛り上がりをコンペを一過性のイベントでなくその後の盛り上がりと勉強に繋げる一番大事なイベントだと思います。(3敗)<br><br>コンペ上位の人を表彰したり Solution を発表してもらったりするのはもちろん、やはり参加者同士であれがよかったこれはダメだったと話し合うのが一番大事だと思います。<br><figure><img src="community_competetion_tips/IMG_3744.jpeg" ><figcaption>優勝ボード これは生協で買えます</figcaption></figure><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"254",
+    "title":"Tips 9. チーム戦のすすめ"
+});
+</script>
+<h2 id="254">Tips 9. チーム戦のすすめ</h2><br>もし参加者がそれなりに確保できそうなら、チーム戦にすることをおすすめします。<br>これは、チーム戦も可能ですよとする話ではなく、コンペの最初からチームを結成してやってもらう、ということです。<br><br>いくつかメリットがあります。<br><ul><li>コンペの離脱率が格段に下がる</li><li>同じチームの人と仲良くなるのでコミュニティが育つ</li><li>単にコンペのレベルが上がる</li></ul><br>デメリットとしては<br><ul><li>参加者数が十分でないと少し順位表が寂しくなる</li><li>場合によってはチーム内・チーム間の力量差が大きくなりすぎて一部の参加者のモチベーションが下がる</li></ul><br>というのがあります。<br><br>なので、ある程度人数がいて、レベル感が大体同じコンペなら迷いなくチーム戦前提、というのがうまく回ると思っています。<br>もちろんソロでもチームでもいいですよ、という形でもいいのですが、特に短期のコンペだとチーム結成までのハードルが高いのでチームができにくく、 最初からチーム戦としてやってもらうのがいいかなと思います。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"287",
+    "title":"Tips 10. コンペを健全にするために"
+});
+</script>
+<h2 id="287">Tips 10. コンペを健全にするために</h2><br>コンペを開催すると、どうしても不正する人が現れます。 身内に不正を指摘するのはかなり気が重いですが、 不正をずっとそのままにすると不利益を被るのは他の人なので心を鬼にして検知と指摘をしないといけません。<br><br>例えば Private Sharing を検知するには、サブミッションの Correlation Matrix を作ってあげるなどすると良いです。<br><br>また、 Solution の公開を義務付けるとか、査収をちゃんとやるよ、とアピールするのも大切だと思います。 (振り返りにもなるので Solution を基本公開は大規模でなければ結構ポジティブな効果が大きいと思います) <br><br>とはいえ、残念ながら完璧に検知することは当然不可能です。 不正をするやつは　😇 、という風潮をうまく作ることが根本的にアプローチする上でやっぱり大事かなと思います。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"301",
+    "title":"おわりに"
+});
+</script>
+<h2 id="301">おわりに</h2><br>ほかにも、コンペの終了時刻を設定するときに UTC なことを絶対に忘れない (1大敗) などがあったのですが、 Kaggle ではアップデートで JTC で設定できるようになっていたので削除したりと、 コミュニティでコンペをやる環境は日々良くなっていていい話だなと思います。<br><br>コンペ運営は大変ですが、やっぱり自分の設定したお題をみんなが解いているのは見ていて割と楽しいですし、 リークに気をつける力がつくのでオススメです。 (ただ、とくに序盤はとんでもないリークを仕込んでいないか気が気でないですが)<br><br>もし頑張りたくなってみたらこれ読んで頑張ってみて！<br><script>page_contents.push({
+    "type":"H2",
+    "id":"312",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="312">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/PEnJbjBuxnw?si=9yMCnaCoGeXE5__m" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><div class="footnote"></div>
+
+            <hr>
+
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+
+        </div>
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+
+                <div class="links">
+
+
+                    <div class="to-links">
+                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
+
+                        <br>
+
+
+                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
+
+                        <br>
+                        <br>
+                        <br>
+
+                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
+                    </div>
+                    <br>
+                    <br>
+
+                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
+                            class="tolink"> @abap34</a>
+                    </p>
+                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
+                            class="tolink"> @abap34</a></p>
+                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
+                            abap0002@gmail.com</a>
+                    </p>
+
+
+
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                        data-show-count="false" data-via="abap34">Tweet</a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+                    <footer>
+                        <p>&copy; abap34 </p>
+                    </footer>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+
+
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+                observer.observe(element);
+            }
+        });
+
+        // page_contensts の先頭を active にしておく
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+
+        prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+
+
+        tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
+
+        tag.forEach(tag => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tags=" + tag + "'> # " + tag + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+    </script>
+
+
+
+
+</body>
+
+
+</html>

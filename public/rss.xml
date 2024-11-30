@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>コミュニティコンペティションを開催するときの Tips 集</id>
+<title>コミュニティコンペティションを開催するときの Tips 集</title>
+<link>https://abap34.com/posts/community_competetion_tips.html</link>
+<pubDate>Sun, 01 Dec 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>Julia Compiler Internals (05) - Algorithm of Type Inference [2]</id>
 <title>Julia Compiler Internals (05) - Algorithm of Type Inference [2]</title>
 <link>https://abap34.com/posts/jci_05.html</link>
