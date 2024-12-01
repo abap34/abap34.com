@@ -15,7 +15,7 @@ export default function About() {
             <section className="space-y-4">
                 <div className="flex items-center space-x-2 text-xl font-semibold">
                     <Book className="w-6 h-6 text-yellow-500" />
-                    <h2>About Me </h2>
+                    <h2> About Me </h2>
                 </div>
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <p>計算機を使うことで、</p>
@@ -25,8 +25,7 @@ export default function About() {
                     </ul>
                     <p>ができるようになることが好きです。</p>
                     <p>それを実現する技術として、とくに機械学習に興味を持っています。</p>
-                    <p>理論も実装もできるエンジニア・研究者が目標です。</p>
-
+                    <p>理論も実装も両方できるエンジニア・研究者が目標です。</p>
                 </div>
             </section>
 
@@ -40,7 +39,7 @@ export default function About() {
                 <p className="text-gray-700 dark:text-gray-300 ml-8">
                     機械学習が主な興味の対象ですが、数学・コンピュータサイエンス全般が基本的に好きです。
                     <br></br>
-                    機械学習以外だと、例えばコンパイラ・数理最適化・統計などにはとくに興味を持っています。
+                    機械学習以外だと、プログラミング言語処理系・数理最適化・統計などにはとくに興味を持っています。
                 </p>
             </section>
 
@@ -82,14 +81,13 @@ export default function About() {
                 </div>
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <p>
-                        最近は、 (最終更新: 2024年9月)
+                        最近は、 (最終更新: 2024年12月1日)
                     </p>
 
 
                     <ul className="list-disc list-inside space-y-2 p-2">
-                        <li>連続最適化の理論 (確率的最適化の周辺)  </li>
-                        <li>言語処理系と深く統合された、機械学習周りのソフトウェア的な基盤 (例えば、Julia言語の自動微分ライブラリの周辺) </li>
-                        <li>OS まわり </li>
+                        <li> コンパイラの最適化技術</li>
+                        <li> 定理証明支援系 </li>
                     </ul>
 
                     <p>
@@ -109,8 +107,7 @@ export default function About() {
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <p>
                         <ul className="list-disc list-inside space-y-2 p-2">
-                            <li> Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひみてください。</li>
-
+                            <li> Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。</li>
                         </ul>
                     </p>
                 </div>
