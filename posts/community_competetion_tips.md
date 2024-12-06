@@ -1,7 +1,7 @@
 ---
 title: コミュニティコンペティションを開催するときの Tips 集
 author: abap34
-date: 2024/12/1
+date: 2024/12/01
 tag: [Kaggle, データ分析コンペ]
 twitter_id: abap34
 github_id: abap34
