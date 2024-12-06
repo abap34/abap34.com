@@ -42,8 +42,10 @@ twitter_site: @abap34
 
 という感じです。
 
+## 基本
 
-## OS: macOS
+
+### OS: macOS
 
 小学校1年生のときに Mac を与えられて以来、 14年間　macOS を使い続けています。
 
@@ -53,7 +55,7 @@ twitter_site: @abap34
 
 これは初代 iMac で何かを書く @abap34 when he was 6 years old です。天才エンジニアの幼少期すぎる
 
-## ターミナルエミュレータ: iTerm2
+### ターミナルエミュレータ
 
 使っているターミナルエミュレータは iTerm2 です。
 
@@ -69,7 +71,7 @@ Ctrl 2回押し で全画面に表示するようにしています。
 数学記号系が非常に充実しているので、このフォントをいろいろなところで使っています。
 
 
-## シェル: fish
+### シェル
 
 シェルは fish を使っています。
 
@@ -82,7 +84,7 @@ Ctrl 2回押し で全画面に表示するようにしています。
 例えば `code .` を `ch` にする、みたいなノリで全てを 2タイプで終わらせています。便利かは不明です。
 
 
-## エディタ: Helix と VSCode
+### エディタ
 
 エディタは Helix と VSCode を使っています。
 
@@ -118,22 +120,26 @@ Helix 自体の設定で特徴的なところを挙げるなら、
 
 テーマで気分を変えるタイプで、VSCode にゆうに 300 個を超えるテーマを入れて毎日切り替えているので、Helix はその点でも評価高いです。
 
-## 便利な VSCode拡張: Data Preview
+## 便利な VSCode拡張
+
+### Data Preview
 
 [Data Preview](https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview) は、なんかやたらリッチなデータのプレビューができる拡張です。
 
 
 結構重いのであまり常に使える感じではないですが、小さいデータを見るときにはかなり便利でよく使っています。
 
-## 便利な VSCode拡張: Easzy Snippet
+### Easzy Snippet
 
 二秒でスニペットを登録できるやつです。
 
-## 便利な VSCode拡張: Draw.io Integration
+### Draw.io Integration
 
 VSCode で draw.io を使えるようにするやつです。ブログ書くときに便利。
 
-## 便利ツール: done
+## 便利な CLI ツール・Chrome拡張など
+
+### done
 
 やっていることの性質上、実行終了まで短くても数十分, 場合によっては数時間, 数十時間かかるプログラムをよく回すので終わったら通知してもらうやつが必要です。
 
@@ -145,7 +151,7 @@ VSCode で draw.io を使えるようにするやつです。ブログ書くと�
 で十分です。 これはある程度以上の長さのプログラムの実行が終わると Status と一緒に通知してくれる便利なやつです。おすすめです。
 
 
-## 便利ツール: nvitop
+### nvitop
 
 GPU が焼き切れないか心配しながら日々計算を回していますが、モニタリングで便利なのが
 
@@ -159,7 +165,7 @@ GPU が焼き切れないか心配しながら日々計算を回しています�
 
 かなりいい感じに CPU/GPU の使用率を表示してくれます。 `nvidia-smi` を回すのはやめてこっちを使いましょう。
 
-## 便利ツール: Google Scholar PDF Reader
+### Google Scholar PDF Reader
 
 [Google Scholar PDF Reader](https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp?hl=ja) は Chrome拡張なのですが、めちゃくちゃにおすすめです。
 
@@ -195,7 +201,7 @@ AI 要約をしてくれたり、また Google Scholar のマイラブラりに�
 
 基本的に ChatGPT に投げて要約を読んで、細かいところを読みつつ英語がわからなったりしたら訳してもらったり、必要な前提知識をあげてもらったりしています。
 
-## 便利ツール: Wakatime
+### Wakatime
 
 自分はあまり天才タイプではないので、なるべく長い時間計算機に触れたいと思っていて、
 Wakatime を入れてその確認・モチベ維持をしています。
@@ -204,7 +210,7 @@ Wakatime は VSCode, fish はもちろん、Chrome拡張を入れて GitHub を�
 毎日 10時間コーディング！(素振り) 
 
 
-## 便利ツール: GitHub 関連
+### GitHub 関連
 
 他の GitHub 関連の便利ツールだと、GitHub のファイルにアイコンをつけてくれる [Material Icons for GitHub](https://chromewebstore.google.com/detail/material-icons-for-github/bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc) とか Contribution Graph をいい感じにしてくれる [GitHub Isometric Contributions](https://chromewebstore.google.com/detail/github-isometric-contribu/mjoedlfflcchnleknnceiplgaeoegien)　とかも使っています。
 
