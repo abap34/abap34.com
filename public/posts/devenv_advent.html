@@ -728,103 +728,103 @@ blockquote {
     "title":"こんばんは"
 });
 </script>
-<h2 id="8">こんばんは</h2><br>おい全然埋まってないぞ！！！！ <url> <a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー！！！！！！！！</a> </url> <br>みなさんはあんまり使っている人がいない変な CLI ツール, エディタ, Chrome 拡張などをお使いでしょうか？<br><br>そうでなくともこの手の便利ツールを網羅的に知ることは難しいので、実は人の開発環境を見るのは結構面白いものを知れます。<br><br>というわけでこういうアドカレを作ったのですが全然埋まっていないのでまずは自分で書こうと思います。<br><br>(ここでいう開発環境は本当に広い意味で、開発に使うものの話ならなんでも良いです)<br>網羅的に書くのは当然無理なので適当に変なやつを載せます。<br>とくに関係ないと思いますが自分の素性をかくと<br><ul><li>機械学習, 言語処理系などをしています</li><li>プログラムもめっちゃ書くし pdf もめっちゃ読むし紙とペンカリカリもめっちゃする</li><li>よく書く言語は Python, Julia, C++ たまに Lisp 最近は Coq とかも</li></ul><br>という感じです。<br><script>page_contents.push({
+<h2 id="8">こんばんは</h2><br>おい全然埋まってないぞ！！！！ <url> <a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー！！！！！！！！</a> </url> <br>みなさんはあんまり使っている人がいない変な CLI ツール, エディタ, Chrome 拡張などをお使いでしょうか？<br><br>そうでなくともこの手の便利ツールを網羅的に知ることは難しいので、実は人の開発環境を見るのは結構面白いものを知れます。<br><br>というわけでこういうアドカレを作ったのですが全然埋まっていないのでまずは自分で書こうと思います。<br><br>(ここでいう開発環境は本当に広い意味で、開発に使うものの話ならなんでも良いです)<br>網羅的に書くのは当然無理なので適当に変なやつを載せます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"40",
+    "id":"28",
     "title":"基本"
 });
 </script>
-<h2 id="40">基本</h2><br><br><script>page_contents.push({
+<h2 id="28">基本</h2><br><br><script>page_contents.push({
     "type":"H3",
-    "id":"44",
+    "id":"32",
     "title":"OS: macOS"
 });
 </script>
-<h3 id="44">OS: macOS</h3><br>小学校1年生のときに Mac を与えられて以来、 14年間　macOS を使い続けています。<br>もはや他の OS を普段使いすることは考えられないです。<br><figure><img src="devenv_advent/image0.jpeg" ><figcaption></figcaption></figure><br>これは初代 iMac で何かを書く @abap34 when he was 6 years old です。天才エンジニアの幼少期すぎる<br><script>page_contents.push({
+<h3 id="32">OS: macOS</h3><br>小学校1年生のときに Mac を与えられて以来、 14年間　macOS を使い続けています。<br>もはや他の OS を普段使いすることは考えられないです。<br><figure><img src="devenv_advent/image0.jpeg" ><figcaption>初代 iMac で何かを書く abap34 when he was 6 years old.</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
-    "id":"55",
+    "id":"41",
     "title":"ターミナルエミュレータ"
 });
 </script>
-<h3 id="55">ターミナルエミュレータ</h3><br>使っているターミナルエミュレータは iTerm2 です。<br>Ctrl 2回押し で全画面に表示するようにしています。<br><figure><img src="devenv_advent/iterm2_hotkey.gif" ><figcaption></figcaption></figure><br>すぐに切り替えられて思考が飛ばないので気に入っています。<br>フォントは <url> <a href="https://juliamono.netlify.app/">JuliaMono</a> </url> というのを使っています。<br><br>数学記号系が非常に充実しているので、このフォントをいろいろなところで使っています。<br><br><script>page_contents.push({
+<h3 id="41">ターミナルエミュレータ</h3><br>使っているターミナルエミュレータは iTerm2 です。<br>Ctrl 2回押し で全画面に表示するようにしています。<br><figure><img src="devenv_advent/iterm2_hotkey.gif" ><figcaption></figcaption></figure><br>すぐに切り替えられて思考が飛ばないので気に入っています。<br>フォントは <url> <a href="https://juliamono.netlify.app/">JuliaMono</a> </url> というのを使っています。<br><br>数学記号系が非常に充実しているので、このフォントをいろいろなところで使っています。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"74",
+    "id":"60",
     "title":"シェル"
 });
 </script>
-<h3 id="74">シェル</h3><br>シェルは fish を使っています。<br>デフォルトでもいい感じの見た目・異常に補完が効くことなどが気に入ってずっと使っています。<br><figure><img src="devenv_advent/image-2.png" ><figcaption>今どきのエンジニアは天気もターミナルで確認します</figcaption></figure><br><br>また、アルファベット 2文字が枯渇するのではないかという勢いで異常な alias を貼りまくっており、 例えば <span class="inline-code"> <code>code .</code> </span> を <span class="inline-code"> <code>ch</code> </span> にする、みたいなノリで全てを 2タイプで終わらせています。便利かは不明です。<br><br><script>page_contents.push({
+<h3 id="60">シェル</h3><br>シェルは fish を使っています。<br>デフォルトでもいい感じの見た目・異常に補完が効くことなどが気に入ってずっと使っています。<br><figure><img src="devenv_advent/image-2.png" ><figcaption>今どきのエンジニアは天気もターミナルで確認します</figcaption></figure><br><br>また、アルファベット 2文字が枯渇するのではないかという勢いで異常な alias を貼りまくっており、 例えば <span class="inline-code"> <code>code .</code> </span> を <span class="inline-code"> <code>ch</code> </span> にする、みたいなノリで全てを 2タイプで終わらせています。便利かは不明です。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"91",
+    "id":"77",
     "title":"エディタ"
 });
 </script>
-<h3 id="91">エディタ</h3><br>エディタは Helix と VSCode を使っています。<br>長らく VSCode ユーザだったんですが、最近は Helix でも結構書いています。<br><br>Jupyter Notebook, Coq, Markdown, LaTeX を書くときは VSCode, それ以外では Helix を使っています。<br><br>脳にあるプログラムを文字にして書き込む、というパートはやはり Helix のようなモーダルエディタの方が速くできるだろうと思い練習中です。<br>Vim でなく Helix を選んだのは操作が体系的で覚えやすそうと思ったからです。 (逆張り精神もあります)<br><br>一方で、 Helix はまだまだ未成熟でなんとファイルツリーすら表示できない！ <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> ので、初見のコードベースをいじるときは VSCode を使っています。<br>AI による支援をたくさん受けられるというのもあります。 Copilot Chat めっちゃ便利。<br><br><br><figure><img src="devenv_advent/image-5.png" ><figcaption></figcaption></figure><br>Helix 自体の設定で特徴的なところを挙げるなら、<br><ul><li>Diagnostic をインラインに表示するようにしている</li><li>引数名や型推論の結果を Inlay Hints で表示するようにしている</li></ul><br>などを設定しています。上だと 4行め, 30行めとかがそうですね。<br>あとは Helix はテーマが結構オシャレなのがデフォルトでたくさん入っているのもいい点です。<br>テーマで気分を変えるタイプで、VSCode にゆうに 300 個を超えるテーマを入れて毎日切り替えているので、Helix はその点でも評価高いです。<br><script>page_contents.push({
+<h3 id="77">エディタ</h3><br>エディタは Helix と VSCode を使っています。<br>長らく VSCode ユーザだったんですが、最近は Helix でも結構書いています。<br><br>Jupyter Notebook, Coq, Markdown, LaTeX を書くときは VSCode, それ以外では Helix を使っています。<br><br>脳にあるプログラムを文字にして書き込む、というパートはやはり Helix のようなモーダルエディタの方が速くできるだろうと思い練習中です。<br>Vim でなく Helix を選んだのは操作が体系的で覚えやすそうと思ったからです。 (逆張り精神もあります)<br><br>一方で、 Helix はまだまだ未成熟でなんとファイルツリーすら表示できない！ <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> ので、初見のコードベースをいじるときは VSCode を使っています。<br>AI による支援をたくさん受けられるというのもあります。 Copilot Chat めっちゃ便利。<br><br><br><figure><img src="devenv_advent/image-5.png" ><figcaption></figcaption></figure><br>Helix 自体の設定で特徴的なところを挙げるなら、<br><ul><li>Diagnostic を inline に表示するようにしている</li><li>引数名や型推論の結果を Inlay Hints で表示するようにしている</li></ul><br>などを設定しています。上だと 4行め, 30行めとかがそうですね。<br>あとは Helix はテーマが結構オシャレなのがデフォルトでたくさん入っているのもいい点です。<br>テーマで気分を変えるタイプで、 (VSCode にゆうに 300 個を超えるテーマを入れて毎日切り替えている) Helix はその点でも評価高いです。<br><script>page_contents.push({
     "type":"H2",
-    "id":"133",
+    "id":"119",
     "title":"便利な VSCode拡張"
 });
 </script>
-<h2 id="133">便利な VSCode拡張</h2><br><script>page_contents.push({
+<h2 id="119">便利な VSCode拡張</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"136",
+    "id":"122",
     "title":"Data Preview"
 });
 </script>
-<h3 id="136">Data Preview</h3><br><url> <a href="https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview">Data Preview</a> </url> は、なんかやたらリッチなデータのプレビューができる拡張です。<br><br>結構重いのであまり常に使える感じではないですが、小さいデータを見るときにはかなり便利でよく使っています。<br><script>page_contents.push({
+<h3 id="122">Data Preview</h3><br><url> <a href="https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview">Data Preview</a> </url> は、なんかやたらリッチなデータのプレビューができる拡張です。<br><br>結構重いのであまり常に使える感じではないですが、小さいデータを見るときにはかなり便利でよく使っています。<br><script>page_contents.push({
     "type":"H3",
-    "id":"145",
+    "id":"131",
     "title":"Easzy Snippet"
 });
 </script>
-<h3 id="145">Easzy Snippet</h3><br>二秒でスニペットを登録できるやつです。<br><script>page_contents.push({
+<h3 id="131">Easzy Snippet</h3><br>二秒でスニペットを登録できるやつです。<br><script>page_contents.push({
     "type":"H3",
-    "id":"150",
+    "id":"136",
     "title":"Draw.io Integration"
 });
 </script>
-<h3 id="150">Draw.io Integration</h3><br>VSCode で draw.io を使えるようにするやつです。ブログ書くときに便利。<br><script>page_contents.push({
+<h3 id="136">Draw.io Integration</h3><br>VSCode で draw.io を使えるようにするやつです。　ブログ書くときに便利。<br><script>page_contents.push({
     "type":"H2",
-    "id":"155",
+    "id":"141",
     "title":"便利な CLI ツール・Chrome拡張など"
 });
 </script>
-<h2 id="155">便利な CLI ツール・Chrome拡張など</h2><br><script>page_contents.push({
+<h2 id="141">便利な CLI ツール・Chrome拡張など</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"158",
+    "id":"144",
     "title":"done"
 });
 </script>
-<h3 id="158">done</h3><br>やっていることの性質上、実行終了まで短くても数十分, 場合によっては数時間, 数十時間かかるプログラムをよく回すので終わったら通知してもらうやつが必要です。<br><br>数日かかる系は流石にまともな Notification (Slack とか Discord に投げるやつ) を使いますが、簡単なものなら<br><a href="https://github.com/franciscolourenco/done"><img src="https://gh-card.dev/repos/franciscolourenco/done.svg"></a><br>で十分です。 これはある程度以上の長さのプログラムの実行が終わると Status と一緒に通知してくれる便利なやつです。おすすめです。<br><br><script>page_contents.push({
+<h3 id="144">done</h3><br>やっていることの性質上、実行終了まで短くても数十分, 場合によっては数時間, 数十時間かかるプログラムをよく回すので終わったら通知してもらうやつが必要です。<br><br>数日かかる系は流石にまともな Notification (Slack とか Discord に投げるやつ) を使いますが、簡単なものなら<br><a href="https://github.com/franciscolourenco/done"><img src="https://gh-card.dev/repos/franciscolourenco/done.svg"></a><br>で十分です。 これはある程度以上の長さのプログラムの実行が終わると Status と一緒に通知してくれる便利なやつです。おすすめです。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"171",
+    "id":"157",
     "title":"nvitop"
 });
 </script>
-<h3 id="171">nvitop</h3><br>GPU が焼き切れないか心配しながら日々計算を回していますが、モニタリングで便利なのが<br><a href="https://github.com/XuehaiPan/nvitop"><img src="https://gh-card.dev/repos/XuehaiPan/nvitop.svg"></a><br>です.<br><br><figure><img src="devenv_advent/image-6.png" ><figcaption></figcaption></figure><br><br>かなりいい感じに CPU/GPU の使用率を表示してくれます。 <span class="inline-code"> <code>nvidia-smi</code> </span> を回すのはやめてこっちを使いましょう。<br><script>page_contents.push({
+<h3 id="157">nvitop</h3><br>GPU が焼き切れないか心配しながら日々計算を回していますが、モニタリングで便利なのが<br><a href="https://github.com/XuehaiPan/nvitop"><img src="https://gh-card.dev/repos/XuehaiPan/nvitop.svg"></a><br>です.<br><br><figure><img src="devenv_advent/image-6.png" ><figcaption></figcaption></figure><br><br>かなりいい感じに CPU/GPU の使用率を表示してくれます。 <span class="inline-code"> <code>nvidia-smi</code> </span> を回すのはやめてこっちを使いましょう。<br><script>page_contents.push({
     "type":"H3",
-    "id":"188",
+    "id":"174",
     "title":"Google Scholar PDF Reader"
 });
 </script>
-<h3 id="188">Google Scholar PDF Reader</h3><br><url> <a href="https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp?hl=ja">Google Scholar PDF Reader</a> </url> は Chrome拡張なのですが、めちゃくちゃにおすすめです。<br><figure><img src="devenv_advent/image-9.png" ><figcaption></figcaption></figure><br>pdf を開くとまずこのようにいい感じに目次を出してくれたり、<br><figure><img src="devenv_advent/image-10.png" ><figcaption></figcaption></figure><br>AI 要約をしてくれたり、また Google Scholar のマイラブラりに一発でグループ分けして追加したり、引用を一発で出せたり...とまぁ色々いいところはあるんですが、 個人的に一番革新的で感動したのは<br><figure><img src="devenv_advent/image-11.png" ><figcaption></figcaption></figure><br>この <span class="strong"> <strong>夜間モード</strong> </span> です。 これは何をしているかというと、夜間モードにするといい感じに黒基調の色に pdf を変換してくれます！<br>何がすごいかというと、<br><figure><img src="devenv_advent/image-12.png" ><figcaption></figcaption></figure><br>こんな感じのも<br><figure><img src="devenv_advent/image-13.png" ><figcaption></figcaption></figure><br>結構読める感じに変換してくれます！ <br>基本的に寝る前にベッドでこういうのを読んでいるので目が毎晩破壊されて無事不眠症を発動していたのですが、 これのおかげでかなり楽になって本当に感動しました。<br>なので普段はこれを使って pdf を読んでいます。<br>翻訳系は昔は Readable を使っていたんですが、 ChatGPT だけで同等以上のことができると感じたので今はそちらのみを使っています。<br>基本的に ChatGPT に投げて要約を読んで、細かいところを読みつつ英語がわからなったりしたら訳してもらったり、必要な前提知識をあげてもらったりしています。<br><script>page_contents.push({
+<h3 id="174">Google Scholar PDF Reader</h3><br><url> <a href="https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp?hl=ja">Google Scholar PDF Reader</a> </url> は Chrome拡張なのですが、めちゃくちゃにおすすめです。<br><figure><img src="devenv_advent/image-9.png" ><figcaption></figcaption></figure><br>pdf を開くとまずこのようにいい感じに目次を出してくれたり、<br><figure><img src="devenv_advent/image-10.png" ><figcaption></figcaption></figure><br>AI 要約をしてくれたり、また Google Scholar のマイライブラリに一発でグループ分けして追加したり、引用を一発で出せたり...とまぁ色々いいところはあるんですが、 個人的に一番革新的で感動したのは<br><figure><img src="devenv_advent/image-11.png" ><figcaption></figcaption></figure><br>この <span class="strong"> <strong>夜間モード</strong> </span> です。 いい感じに黒基調の色に pdf を変換してくれます！<br>何がすごいかというと、<br><figure><img src="devenv_advent/image-12.png" ><figcaption></figcaption></figure><br>こんな感じのも<br><figure><img src="devenv_advent/image-13.png" ><figcaption></figcaption></figure><br>結構読める感じに変換してくれます！ <br>基本的に寝る前にベッドで pdf を読んでいるので、 目が毎晩破壊され無事不眠症を発動していたのですが、 おかげでかなり楽になって本当に感動しました。<br>なので普段はこれを使って pdf を読んでいます。<br>翻訳系は昔は Readable を使っていたんですが、 ChatGPT だけで同等以上のことができると感じたので今はそちらのみを使っています。<br>基本的に ChatGPT に投げて要約を読んで、細かいところを読みつつ英語がわからなったりしたら訳してもらったり、必要な前提知識をあげてもらったりしています。<br><script>page_contents.push({
     "type":"H3",
-    "id":"227",
+    "id":"213",
     "title":"Wakatime"
 });
 </script>
-<h3 id="227">Wakatime</h3><br>自分はあまり天才タイプではないので、なるべく長い時間計算機に触れたいと思っていて、 Wakatime を入れてその確認・モチベ維持をしています。<br>Wakatime は VSCode, fish はもちろん、Chrome拡張を入れて GitHub を見てる時間とかも測れたりするのでおすすめです！  毎日 10時間コーディング！(素振り) <br><br><script>page_contents.push({
+<h3 id="213">Wakatime</h3><br>自分はあまり天才タイプではないので、なるべく長い時間計算機に触れたいと思っていて、 Wakatime を入れてその確認・モチベ維持をしています。<br>Wakatime は VSCode, fish はもちろん、Chrome拡張を入れて GitHub を見てる時間とかも測れたりするのでおすすめです！  毎日 10時間コーディング！(素振り) <br><br><script>page_contents.push({
     "type":"H3",
-    "id":"235",
+    "id":"221",
     "title":"GitHub 関連"
 });
 </script>
-<h3 id="235">GitHub 関連</h3><br>他の GitHub 関連の便利ツールだと、GitHub のファイルにアイコンをつけてくれる <url> <a href="https://chromewebstore.google.com/detail/material-icons-for-github/bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc">Material Icons for GitHub</a> </url> とか Contribution Graph をいい感じにしてくれる <url> <a href="https://chromewebstore.google.com/detail/github-isometric-contribu/mjoedlfflcchnleknnceiplgaeoegien">GitHub Isometric Contributions</a> </url>　とかも使っています。<br><br>飽きたのでこの辺にします。<br><br><script>page_contents.push({
+<h3 id="221">GitHub 関連</h3><br>他の GitHub 関連の便利ツールだと、GitHub のファイルにアイコンをつけてくれる <url> <a href="https://chromewebstore.google.com/detail/material-icons-for-github/bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc">Material Icons for GitHub</a> </url> とか Contribution Graph をいい感じにしてくれる <url> <a href="https://chromewebstore.google.com/detail/github-isometric-contribu/mjoedlfflcchnleknnceiplgaeoegien">GitHub Isometric Contributions</a> </url>　とかも使っています。<br><br>飽きたのでこの辺にします。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"248",
+    "id":"234",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="248">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/2dnYpOeH2Wg?si=JZvAku_8fJLjfGfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 実際に動く実装もありますが、コアに入れずにプラグインとして実装するという方針になり、プラグインシステムがまだ未実装なので使えないという感じです。なので既存の実装を手元でビルドすれば使えはします。</span></div>
+<h2 id="234">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/2dnYpOeH2Wg?si=JZvAku_8fJLjfGfR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 実際に動く実装もありますが、コアに入れずにプラグインとして実装するという方針になり、プラグインシステムがまだ未実装なので使えないという感じです。なので既存の実装を手元でビルドすれば使えはします。</span></div>
 
             <hr>
 
