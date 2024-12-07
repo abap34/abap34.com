@@ -34,7 +34,7 @@ twitter_site: @abap34
 
 網羅的に書くのは当然無理なので適当に変なやつを載せます。
 
-## 基本
+## Basics
 
 
 ### OS: macOS
@@ -43,7 +43,7 @@ twitter_site: @abap34
 
 もはや他の OS を普段使いすることは考えられないです。
 
-![初代 iMac で何かを書く abap34 when he was 6 years old.](devenv_advent/image0.jpeg)
+![初代 iMac で何かを書く abap34 (6歳)](devenv_advent/image0.jpeg)
 
 ### ターミナルエミュレータ
 
