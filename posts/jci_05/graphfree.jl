@@ -90,20 +90,18 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
 
     while true
         change = false
+
         for i in 1:n
             current_input = inputs[i]
             current_output = outputs[i]
-            
-            inputs[i] = reduce(
-                            ⊓, 
-                            outputs[j] for j in pred[i]; 
-                            init=copy(a₀)
-                        ) 
 
-            outputs[i] = abstract_semantics(I[i])(inputs[i])
+            new_input = reduce(⊓, outputs[j] for j in pred[i]; init=copy(a₀))
+            new_output = abstract_semantics(I[i])(new_input)
 
+            inputs[i] = new_input
+            outputs[i] = new_output
             
-            if (current_input != inputs[i]) || (current_output != outputs[i])
+            if (current_input != new_input) || (current_output != new_output)
                 change = true
             end
         end
