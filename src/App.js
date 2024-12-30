@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Background from './components/Background';
 import Blog from './components/Blog';
-import Education from './components/Education';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import SearchResult from './components/SearchResult';
@@ -16,7 +16,7 @@ function App() {
         <div className="min-h-screen max-w-6xl mx-auto">
           <Routes>
             <Route path="/" element={<TopPage />} />
-            <Route path="/education" element={<Education />} />
+            <Route path="/background" element={<Background />} />
             <Route path="/works" element={<Works title="Projects" path="/works/works.yaml" defaultVisibleCount={3} />} />
             <Route path="/articles" element={<Works title="Articles" path="/works/articles.yaml" defaultVisibleCount={2} />} />
             <Route path="/blog" element={<Blog />} />

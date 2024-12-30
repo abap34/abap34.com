@@ -47,7 +47,7 @@ export default function Header() {
 
         <nav className="hidden lg:flex space-x-4 items-center text-gray-600 dark:text-gray-400 md:space-x-8">
           <Link to="/"> About </Link>
-          <Link to="/education"> Education </Link>
+          <Link to="/background"> Background </Link>
           <Link to="/works"> Works </Link>
           <Link to="/articles"> Articles </Link>
           <Link to="/blog"> Blog </Link>
@@ -74,10 +74,10 @@ export default function Header() {
               <MenuItem>
                 {({ active }) => (
                   <Link
-                    to="/education"
+                    to="/background"
                     className={`block px-4 py-2 text-sm ${active ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
                   >
-                    Education
+                    Background
                   </Link>
                 )}
               </MenuItem>
