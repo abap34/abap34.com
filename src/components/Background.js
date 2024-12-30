@@ -23,7 +23,7 @@ function EachWork(props) {
 }
 
 
-export default function Education() {
+export default function Background() {
     return (
         <main className="container mx-auto px-4">
             <h2 className="text-2xl font-bold my-4"> Education </h2>
