@@ -67,6 +67,18 @@ parallelprng:
   relatedlinks:
     - https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng
 
+mllecture:
+  title: "機械学習講習会"
+  img: works/img/ml-lec.png
+  repo: abap34/ml-lecture
+  short_desc: "機械学習講習会の資料"
+  desc: |
+    大学のサークルで新入生教育のために作成した機械学習の入門資料です。
+  tags:
+    - 機械学習
+  period: 2023 
+  relatedlinks:
+    - https://abap34.github.io/ml-lecture/
 
 blog:
   title: "ブログ"
