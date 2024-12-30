@@ -14,7 +14,7 @@ export default function About() {
 
             <section className="space-y-4">
                 <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Book className="w-6 h-6 text-yellow-500" />
+                <Lightbulb className="w-6 h-6 text-purple-500" />
                     <h2> About Me </h2>
                 </div>
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
@@ -24,23 +24,10 @@ export default function About() {
                         <li>人間にはできなかったこと</li>
                     </ul>
                     <p>ができるようになることが好きです。</p>
-                    <p>それを実現する技術として、とくに機械学習に興味を持っています。</p>
+                    <p>それを実現する技術に興味があり、例えば機械学習や</p>
+                    <p>それを実行するためのプログラミング言語処理系に興味があります。</p>
                     <p>理論も実装も両方できるエンジニア・研究者が目標です。</p>
                 </div>
-            </section>
-
-
-
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Lightbulb className="w-6 h-6 text-purple-500" />
-                    <h2>興味・関心</h2>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 ml-8">
-                    機械学習が主な興味の対象ですが、数学・コンピュータサイエンス全般が基本的に好きです。
-                    <br></br>
-                    機械学習以外だと、プログラミング言語処理系・数理最適化・統計などにはとくに興味を持っています。
-                </p>
             </section>
 
             <section className="space-y-4">
@@ -52,7 +39,7 @@ export default function About() {
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <div className="space-y-2 justify-center">
                         <p>
-                            主には、Python / Julia / C++ あたりの言語を使うことが多いです。
+                            主には、Python / Julia / C++ あたりの言語が第一の選択肢になることが多いです。
                             <br></br>
                             ただ、どのプログラミング言語・技術も適している場面があると思っているので、
                             使う言語やライブラリにはあまりこだわりはなく、必要ならその場で使う勉強して使うタイプです。
@@ -81,13 +68,13 @@ export default function About() {
                 </div>
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <p>
-                        最近は、 (最終更新: 2024年12月1日)
+                        最近は、 (最終更新: 2024年12月31日)
                     </p>
 
 
                     <ul className="list-disc list-inside space-y-2 p-2">
                         <li> コンパイラの最適化技術</li>
-                        <li> 定理証明支援系 </li>
+                        <li> プログラミング言語の理論 </li>
                     </ul>
 
                     <p>
