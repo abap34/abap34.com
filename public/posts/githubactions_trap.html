@@ -5,18 +5,20 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-10Y7GMS7GV');
+        if (location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-10Y7GMS7GV');
+        }
     </script>
 
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった </title>
+    <title>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</title>
 
+    <!-- OGP / Twitter 用のメタタグ -->
     <meta property="og:title" content="GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった">
     <meta property="og:image" content="https://images.dog.ceo/breeds/clumber/n02101556_5007.jpg">
     <meta property="og:description" content="[衝撃] GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しなかった結果がヤバい....">
@@ -24,39 +26,30 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34.com">
     <meta property="og:locale" content="ja_JP">
-
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    
+    <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
     <script>hljs.highlightAll();</script>
 
+    <!-- その他ライブラリ -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    <script type="text/javascript" id="MathJax-script"
+            async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-
+    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
     <style>/* ===============================================
    Reset / Base
    =============================================== */
@@ -155,61 +148,60 @@ body {
     text-decoration: none;
 }
 
-
 /* ===============================================
-   TOC 
-   =============================================== */
-   .toc_title {
+      TOC 
+      =============================================== */
+.toc_title {
     font-size: 0.95rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: #555;
-  }
-  
-  #toc {
+}
+
+#toc {
     list-style: none;
     padding-left: 0;
     font-size: 0.9rem;
     color: #555;
     line-height: 1.4;
-  }
-  
-  #toc li {
+}
+
+#toc li {
     margin: 0.4rem 0;
-  }
-  
-  #toc a {
+}
+
+#toc a {
     text-decoration: none;
     color: #555;
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     transition: background-color 0.1s, opacity 0.1s;
     opacity: 1;
-  }
-  
-  #toc a:hover {
+}
+
+#toc a:hover {
     background-color: #f0f0f0;
     opacity: 1;
-  }
-  
-  #toc a.active {
-    background-color: #777; 
+}
+
+#toc a.active {
+    background-color: #777;
     color: #fff;
     opacity: 1 !important;
-  }
-  
-  /* 階層によるインデント */
-  .toc_H1 {
+}
+
+/* 階層によるインデント */
+.toc_H1 {
     margin-left: 0;
-  }
-  
-  .toc_H2 {
+}
+
+.toc_H2 {
     margin-left: 1rem;
-  }
-  
-  .toc_H3 {
+}
+
+.toc_H3 {
     margin-left: 2rem;
-  }
+}
 
 /* ===============================================
       Content
@@ -243,70 +235,67 @@ body {
     font-size: 0.95em;
 }
 
-/* 箇条書きはすべて少し字下げ */
+/* 箇条書きの字下げ */
 .content ul,
 .content ol {
     margin-left: 1.5rem;
 }
 
-/* ソースコードや画像のはみ出し対策 */
+/* 画像や動画のはみ出し対策 (特に縦長画像) */
 .content img,
 .content video {
     max-width: 100%;
+    max-height: 80vh;
+    /* ビューポートの80%を上限に */
     height: auto;
     display: block;
 }
 
-pre {
-    overflow-x: auto;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
 
+/* コードブロック内の行間を広げ可読性を向上 */
 pre code {
     display: block;
     white-space: pre;
+    border: none;
+    background: none;
+    line-height: 1.4;
+    margin: 1rem;
 }
 
-
+/* テーブルのデザイン (シンプル＆見やすい) */
 table {
     width: 100%;
-    border-collapse: collapse; /* 余分な隙間を除去 */
+    border-collapse: collapse;
+    /* 余分な隙間を除去 */
     margin: 1rem 0;
     font-size: 0.95rem;
     line-height: 1.4;
-  }
-  
-  table thead th {
+    margin: 1rem;
+}
+
+table thead th {
     background-color: #f6f8fa;
     border-bottom: 2px solid #ccc;
     padding: 0.6rem 0.8rem;
     text-align: left;
     font-weight: bold;
-  }
-  
-  table th,
-  table td {
+}
+
+table th,
+table td {
     border: 1px solid #ddd;
     padding: 0.5rem 0.8rem;
     vertical-align: top;
-  }
-  
-  table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶数行に薄い背景 */
-  }
-  
-  table tbody tr:hover {
-    background-color: #f0f0f0; /* ホバー時の強調 */
-  }
-  
+}
 
-  .content img,
-.content video {
-  max-width: 100%;
-  max-height: 80vh; /* ビューポートの80%を上限に */
-  height: auto;
-  display: block;
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* 偶数行に薄い背景 */
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* ホバー時の強調 */
 }
 
 /* ===============================================
@@ -318,8 +307,6 @@ footer {
     font-size: 0.8rem;
     color: #666;
 }
-
-
 
 /* ===============================================
       Responsive
@@ -333,7 +320,8 @@ footer {
     .side {
         width: 100%;
         margin-bottom: 1.5rem;
-        height: 100vh;
+        /* height: 100vh; を削除、autoに */
+        height: auto;
     }
 
     .content {
@@ -341,11 +329,9 @@ footer {
     }
 }
 
-
 /* ===============================================
-        Some Custom Styles
-        =============================================== */
-
+      Note / Warn / Danger blocks
+      =============================================== */
 .info {
     background-color: #f0f0f0;
     padding: 1rem;
@@ -353,217 +339,175 @@ footer {
     margin-bottom: 1rem;
 }
 
+/* Warn: ちょっと強めの注意喚起 (オレンジ系) */
 .warn {
-    background-color: #f0f0f0;
+    background-color: #fff3e0;
+    /* 薄いオレンジ */
     padding: 1rem;
-    border-left: 5px solid #f00;
+    border-left: 5px solid #ffa500;
+    /* オレンジ */
     margin-bottom: 1rem;
 }
 
+/* Danger: 重大な警告 (赤系) */
 .danger {
-    background-color: #f0f0f0;
+    background-color: #ffe7e7;
+    /* 薄い赤 */
     padding: 1rem;
-    border-left: 5px solid #f00;
+    border-left: 5px solid #ff4d4f;
+    /* 赤 */
     margin-bottom: 1rem;
 }
-
 
 /* ===============================================
-    Custom Styles for mathmatics
-    =============================================== */
+      Math Blocks (theorem / lemma / corollary / etc.)
+      =============================================== */
 
-
-
-.theorem {
-    counter-increment: theorem;
+/* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
+/* ベース: 背景は透明、左に太線のみ */
+.theorem,
+.lemma,
+.corollary,
+.proposition,
+.definition,
+.proof {
     margin-bottom: 1rem;
     padding: 1rem;
-    border-left: 5px solid #318f4fa1
+    background: none;
+    /* 背景色を排除 */
+    /* 全部同じスタイルにするなら共通色でもOK。
+       個別に変える場合は後で上書きする。 */
+    border-left: 4px solid #318f4f;
+}
+
+/* Theorem */
+.theorem {
+    counter-increment: theorem;
+    /* 他の色にしたい場合ここで上書き
+       border-left-color: #318f4f; */
 }
 
 .theorem::before {
-    content: "Theorem " counter(theorem);
+    content: "Theorem " counter(theorem) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.theorem p:last-child {
-    margin-bottom: 0;
-}
-
-.theorem p {
-    margin-bottom: 1rem;
-}
-
-.theorem p:first-child {
-    font-weight: bold;
-}
-
+/* Lemma */
 .lemma {
     counter-increment: lemma;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #318f4fa1
+    /* border-left-color: #318f4f; など */
 }
 
 .lemma::before {
-    content: "Lemma " counter(lemma);
+    content: "Lemma " counter(lemma) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.lemma p:last-child {
-    margin-bottom: 0;
-}
-
-.lemma p {
-    margin-bottom: 1rem;
-}
-
-.lemma p:first-child {
-    font-weight: bold;
-}
-
+/* Corollary */
 .corollary {
     counter-increment: corollary;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #a1314f
+    border-left-color: #a1314f;
+    /* 例: 赤紫系 */
 }
 
 .corollary::before {
-    content: "Corollary " counter(corollary);
+    content: "Corollary " counter(corollary) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.corollary p:last-child {
-    margin-bottom: 0;
-}
-
-.corollary p {
-    margin-bottom: 1rem;
-}
-
-.corollary p:first-child {
-    font-weight: bold;
-}
-
+/* Proposition */
 .proposition {
     counter-increment: proposition;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #c1a131
+    border-left-color: #c1a131;
+    /* 例: 黄土色系 */
 }
 
 .proposition::before {
-    content: "Proposition " counter(proposition);
+    content: "Proposition " counter(proposition) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.proposition p:last-child {
-    margin-bottom: 0;
-}
-
-.proposition p {
-    margin-bottom: 1rem;
-}
-
-.proposition p:first-child {
-    font-weight: bold;
-}
-
+/* Definition */
 .definition {
     counter-increment: definition;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #addef4
+    border-left-color: #addef4;
+    /* 例: 水色系 */
 }
 
 .definition::before {
-    content: "Definition " counter(definition);
+    content: "Definition " counter(definition) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.definition p:last-child {
-    margin-bottom: 0;
-}
-
-.definition p {
-    margin-bottom: 1rem;
-}
-
-.definition p:first-child {
-    font-weight: bold;
-}
-
+/* Proof */
 .proof {
     counter-increment: proof;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #c6e6e5
+    border-left-color: #c6e6e5;
+    /* 例: 淡いエメラルドグリーン */
 }
 
 .proof::before {
-    content: "Proof" counter(proof);
+    content: "Proof " counter(proof) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
+/* 最後の段落が余計な下余白を取らないための調整 */
+.theorem p:last-child,
+.lemma p:last-child,
+.corollary p:last-child,
+.proposition p:last-child,
+.definition p:last-child,
 .proof p:last-child {
     margin-bottom: 0;
-}
-
-.proof p {
-    margin-bottom: 1rem;
-}
-
-.proof p:first-child {
-    font-weight: bold;
 }</style>
 
+    <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
-        page_contents = []
+        page_contents = [];
     </script>
 
     <!-- Runner is not required. Skip this. -->
-
-
 </head>
-
 
 <body>
 
+    <!-- 1) 新たに追加する固定ヘッダー -->
+    <header class="global-header">
+        <div class="header-inner">
+            <!-- ここをクリックすると abap34.com/blog に戻る -->
+            <a href="https://abap34.com/blog" class="header-link">abap34.com/blog</a>
+        </div>
+    </header>
+
+    <!-- 2) 従来のヘッダー（タイトル・日付・タグなど） -->
     <div class="article-header">
-
-        <div class="title">
-            GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった
-        </div>
-
-        <script>
-            title = document.querySelector(".title").innerHTML;
-        </script>
-
+        <div class="title">GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</div>
+        <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">
-            2023/08/29
-        </div>
+        <div class="date">2023/08/29</div>
         <br>
-        <div class="tag-placeholder">
-            [GitHub Actions, GitHub, git]
-        </div>
-
+        <div class="tag-placeholder">[GitHub Actions, GitHub, git]</div>
     </div>
 
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
     <div class="article-body">
+
+        <!-- サイドバー (TOC) -->
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- メイン本文 -->
         <div class="content">
             <br><script>page_contents.push({
     "type":"H2",
@@ -593,70 +537,24 @@ footer {
     with:
         fetch-depth: 0
 </code></pre> </div><br>として全てのコミットを参照できるようにすると <span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。<br><br><br><br><br><div class="footnote"></div>
-
             <hr>
-
-            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-                label="comment" theme="github-light" crossorigin="anonymous" async>
-                </script>
-
+            <!-- コメント欄 (Utterances) -->
+            <script src="https://utteranc.es/client.js"
+                    repo="abap34/abap34com-comment"
+                    issue-term="og:title"
+                    label="comment"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
         </div>
 
-        <div class="side">
-            <div class="side-sticky">
-                <div class="sidebar">
-                    <ul id="toc"></ul>
-                </div>
-
-                <div class="links">
-
-
-                    <div class="to-links">
-                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                        <br>
-
-
-                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                    </div>
-                    <br>
-                    <br>
-
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
-                    </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
-                            abap0002@gmail.com</a>
-                    </p>
-
-
-
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                        data-show-count="false" data-via="abap34">Tweet</a>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                    <footer>
-                        <p>&copy; abap34 </p>
-                    </footer>
-
-                </div>
-            </div>
-
-
-
-        </div>
-
+        <footer>
+            <p>&copy; abap34</p>
+        </footer>
     </div>
 
+    <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
         const tocContainer = document.querySelector("#toc");
         const tocTitle = document.createElement("div");
@@ -664,8 +562,7 @@ footer {
         tocTitle.classList.add("toc_title");
         tocContainer.appendChild(tocTitle);
 
-
-
+        // TOC 要素生成
         page_contents.forEach(item => {
             if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
                 const listItem = document.createElement("li");
@@ -675,26 +572,22 @@ footer {
             }
         });
 
+        // IntersectionObserver でスクロール時に active 更新
         const options = {
             root: null,
             rootMargin: "-50% 0px",
             threshold: 0
         };
-
         const observer = new IntersectionObserver(onIntersection, options);
 
         page_contents.forEach(item => {
             const element = document.getElementById(item.id);
-            if (element) {
-                observer.observe(element);
-            }
+            if (element) observer.observe(element);
         });
 
-        // page_contensts の先頭を active にしておく
         const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
         first_item.classList.add("active");
-
-        prev_item = first_item;
+        let prev_item = first_item;
 
         function onIntersection(entries) {
             entries.forEach(entry => {
@@ -710,25 +603,18 @@ footer {
             });
         }
 
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
+        // タグ装飾
+        let tag = document.querySelector(".tag-placeholder").innerHTML;
         document.querySelector(".tag-placeholder").innerHTML = "";
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(t => t.trim());
 
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
+        tag.forEach(t => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + tag + "'> # " + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
 
-
-
-
 </body>
-
-
 </html>
