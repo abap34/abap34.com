@@ -1,629 +1,472 @@
+/* ===============================================
+   Reset / Base
+   =============================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
 body {
-    max-width: 1200px;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: rgb(240, 244, 246);
-    font-family: "UD新ゴNT M", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
     color: #333;
-
+    font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+    line-height: 1.5;
 }
 
-
+/* ===============================================
+      Layout
+      =============================================== */
 .article-body {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    word-wrap: break-word;
-}
-
-@media (max-width: 1200px) {
-    .side #toc {
-        display: none;
-    }
-
-    .article-body {
-        display: block !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        margin: 10px !important;
-        margin-right: 10px !important;
-        margin-left: 10px !important;
-    }
-
-    .content {
-        margin-right: 30px !important;
-        margin-left: 5px !important;
-        padding-right: 20px !important;
-        padding-left: 5px !important;
-    }
-
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    gap: 2rem;
 }
 
 .side {
-    order: 1;
-    border-right: solid 1px #ddd;
-    padding-right: 20px;
+    width: 240px;
+    flex-shrink: 0;
 }
-
-.sidebar {
-   /* スクロールバーを表示 */
-    overflow-y: auto;
-    height: 100vh;
-    padding-right: 10px;
-}
-
-.content {
-    order: 2;
-    padding: 20px;
-    width: 95%;
-    max-width: 900px;
-    margin: auto;
-    padding: auto;
-}
-
 
 .side-sticky {
     position: sticky;
-    top: 20px;
+    top: 1rem;
 }
 
+.sidebar {
+    padding: 0.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
+.content {
+    flex: 1;
+    padding: 0.5rem;
+    min-width: 0;
+    /* 内容があふれにくいように */
+}
 
+/* ===============================================
+      Header
+      =============================================== */
 .article-header {
-    padding-top: 30px;
-    margin: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
-
-
-.article-header .title {
-    color: #001e43;
-    font-size: 1.4rem;
+.title {
+    font-size: 1.5rem;
     font-weight: bold;
-    border-bottom: dotted 3px #001e43;
-    text-align: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin-bottom: 0.5rem;
 }
 
 .date {
-    font-size: 14px;
-    text-align: center;
-    color: gray;
-}
-
-.date::before {
-    content: "\f073";
-    font-family: "Font Awesome 5 Free";
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.5rem;
 }
 
 .tag-placeholder {
-    text-align: center;
-    margin-bottom: 20px;
+    margin-top: 0.5rem;
 }
 
 .tag {
     display: inline-block;
-    margin-right: 0.5rem;
-    padding: 0.2rem 0.5rem;
+    margin-right: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background-color: #eee;
     font-size: 0.8rem;
-    border-radius: 5px;
-    border: 1px solid gray;
+    color: #333;
+}
+
+.tag:hover {
+    background-color: #ddd;
 }
 
 .tag a {
-    color: #666;
-    text-decoration-line: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 
-.toc_title {
-    display: none;
-}
-
-.math-block {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-.math-inline {
-    display: inline-grid;
-    overflow: hidden !important;
-}
-
-mjx-container {
-    display: inline-block;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-}
-
-h2 {
-    border-left: solid 5px #85c0ff;
-    padding-left: 10px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-}
-
-
-img {
-    max-width: 100% !important;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (max-width: 1200px) {
-    figure {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        overflow: hidden;
-        padding: 20px;
-    }
-}
-
-
-figure {
-    text-align: center;
-    color: gray;
-}
-
-
-h3 {
-    border-bottom: 1px solid #ddd !important;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-h4 {
-    padding-bottom: 5px;
-    margin-bottom: 0px;
-}
-
-pre {
-    padding: 10px;
-}
-
-.tex-equations {
-    overflow-x: auto;
-}
-
-table {
-    /* 上下余白 */
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-    max-width: 100%;
-    margin-bottom: 20px;
-    /* 中央に置く */
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #ddd;
-
-}
-
-/* テーブルの中身にちょっと余白つける */
-
-
-
-th {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-
-td {
-    border-right: 1px solid #ddd;
-    padding: 10px;
-}
-
-.exec_out {
-    color: white;
-}
-
-@media (max-width: 1200px) {
-    .exec_plot {
-        width: 100%;
-        overflow-x: auto;
-    }
-}
-
-#toc {
-    border-radius: 4px;
-    padding: 15px;
-    padding-left: 0px;
+/* ===============================================
+   TOC 
+   =============================================== */
+   .toc_title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+  
+  #toc {
     list-style: none;
-}
-
-#toc a {
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+  }
+  
+  #toc li {
+    margin: 0.4rem 0;
+  }
+  
+  #toc a {
     text-decoration: none;
-    color: #777;
-    display: block;
-    margin: 5px 0;
-    transition: color 0.2s;
-}
-
-#toc a:hover {
-    color: #007bff;
-}
-
-#toc .active {
-    font-weight: bold;
-    color: #007bff;
-    font-size: 1.1em;
-}
-
-#toc {
-    list-style: none;
-    padding: 0;
-    border-left: 2px dotted #a3c5db;
-    border-radius: 0%;
-}
-
-#toc li {
-    padding-left: 20px;
-    margin-top: 10px;
-    position: relative;
-}
-
-/* #toc li::before {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #c4e4f9;
-    border-radius: 50%;
-    border: 1px solid #a3c5db;
-    position: absolute;
-    left: -7px;
-    top: 0;
-    transform: translateY(50%);
-} */
-
-.toc_H1 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-
-.toc_H2 {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-/* .toc_H2::before {
-    background: #f8f8f8 !important;
-    border: 1px solid #3498db !important;
-} */
-
-.toc_H3 {
-    font-size: 12px;
-    margin-bottom: 10px;
-    color: #007bff;
-    padding-left: 10px;
-}
-
-.toc_H3::before {
-    display: none !important;
-}
-
-#toposts,
-#tohome,
-#torss {
-    display: inline-block;
-    text-decoration: none;
-}
-
-
-.links {
-    border-top: solid 1px #ddd;
-    padding-top: 20px;
-    color: hwb(211 18% 52%);
-}
-
-.links a {
-    text-decoration: none;
-    color: #3c3c3c;
-}
-
-.links {
-    /* 等幅フォント */
-    font-family: "Noto Sans Mono", monospace;
-}
-
-#toposts {
-    color: #979797 !important;
-
-}
-
-#tohome {
-    color: #b8792c !important;
-}
-
-#torss {
-    color: #d88914 !important;
-}
-
-#twitter {
-    color: #1da1f2 !important;
-}
-
-#github {
-    color: #000000 !important;
-}
-
-#mail {
-    color: #bbbbbb !important;
-}
-
-
-.content_list_h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #007bff;
-    color: #007bff;
-}
-
-.content_list_h2 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.content_list_problem {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.badge {
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #777;
-    border: 1px solid #444;
-    margin: 0 8px;
-    float: left;
-}
-
-.runbutton,
-.submitbutton {
-    display: inline-block;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    color: #555;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    transition: background-color 0.1s, opacity 0.1s;
+    opacity: 1;
+  }
+  
+  #toc a:hover {
+    background-color: #f0f0f0;
+    opacity: 1;
+  }
+  
+  #toc a.active {
+    background-color: #777; 
     color: #fff;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-}
+    opacity: 1 !important;
+  }
+  
+  /* 階層によるインデント */
+  .toc_H1 {
+    margin-left: 0;
+  }
+  
+  .toc_H2 {
+    margin-left: 1rem;
+  }
+  
+  .toc_H3 {
+    margin-left: 2rem;
+  }
 
-.runbutton {
-    background-color: #007bff;
-}
+/* ===============================================
+      Content
+      =============================================== */
 
-.runbutton:hover {
-    background-color: #005580;
-}
-
-.submitbutton {
-    background-color: #008000;
-}
-
-.submitbutton:hover {
-    background-color: #006400;
-}
-
-.problem_title {
-    font-size: 20px;
+/* 見出しの見た目を少し改善し、下線とパディングを追加 */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
     font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
     color: #333;
 }
 
-.editor {
-    width: 100%;
-    height: 300px;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    padding: 10px;
-    border: solid 1px #ddd;
+.content p {
+    margin-bottom: 1rem;
 }
 
-.output,
-.expect_out,
-.sample_in,
-.sample_out {
-    width: 100%;
-    padding: 5px 5px;
-    overflow-x: auto;
-    font-size: 16px;
-    font-family: monospace;
-    background-color: #f0f0f0;
-    color: #333;
-    border: solid 1px #ddd;
+/* インラインコードを本文と区別しやすく */
+.content code {
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.95em;
 }
 
-.box-title,
-.problem_list {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #777;
+/* 箇条書きはすべて少し字下げ */
+.content ul,
+.content ol {
+    margin-left: 1.5rem;
+}
+
+/* ソースコードや画像のはみ出し対策 */
+.content img,
+.content video {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 pre {
-    background-color: #282c34;
-    border-radius: 5px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
 }
 
 pre code {
-    color: #e8ebf0;
-    line-height: 1.2;
-    font-family: monospace;
-}
-
-.inline-code {
-    font-family: monospace;
-    line-height: 1.2;
-    color: #e43e3ee0;
+    display: block;
+    white-space: pre;
 }
 
 
+table {
+    width: 100%;
+    border-collapse: collapse; /* 余分な隙間を除去 */
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+  
+  table thead th {
+    background-color: #f6f8fa;
+    border-bottom: 2px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.8rem;
+    vertical-align: top;
+  }
+  
+  table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* 偶数行に薄い背景 */
+  }
+  
+  table tbody tr:hover {
+    background-color: #f0f0f0; /* ホバー時の強調 */
+  }
+  
 
-.success,
-.info,
-.warning,
-.danger {
-    padding: 12px;
-    margin: 12px;
-    border: 1px solid;
-    border-radius: 4px;
+  .content img,
+.content video {
+  max-width: 100%;
+  max-height: 80vh; /* ビューポートの80%を上限に */
+  height: auto;
+  display: block;
 }
 
-.success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
+/* ===============================================
+      Footer
+      =============================================== */
+footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
 }
+
+
+
+/* ===============================================
+      Responsive
+      =============================================== */
+@media (max-width: 768px) {
+    .article-body {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .side {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        height: 100vh;
+    }
+
+    .content {
+        width: 100%;
+    }
+}
+
+
+/* ===============================================
+        Some Custom Styles
+        =============================================== */
 
 .info {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #333;
+    margin-bottom: 1rem;
 }
 
-.warning {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-    border-left: 5px solid #8a6d3b;
+.warn {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #f00;
+    margin-bottom: 1rem;
 }
 
 .danger {
-    color: #a94442;
-    border-color: #ebccd1;
-    border-left: 5px solid #a94442;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #f00;
+    margin-bottom: 1rem;
 }
 
-.definition {
-    counter-increment: definition;
-    border: #31708f 3px dotted;
-    border-left: #31708fa1 5px solid;
-}
 
-.definition::before {
-    content: "Definition " counter(definition) ".";
-}
+/* ===============================================
+    Custom Styles for mathmatics
+    =============================================== */
+
+
 
 .theorem {
     counter-increment: theorem;
-    border: #318f5a 3px dotted;
-    border-left: #318f4fa1 5px solid;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #318f4fa1
 }
 
 .theorem::before {
-    content: "Theorem " counter(theorem) ".";
+    content: "Theorem " counter(theorem);
+    font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.theorem p:last-child {
+    margin-bottom: 0;
+}
+
+.theorem p {
+    margin-bottom: 1rem;
+}
+
+.theorem p:first-child {
+    font-weight: bold;
 }
 
 .lemma {
     counter-increment: lemma;
-    border: #ab5b64 3px dotted;
-    border-left: #d071a4a1 5px solid;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #318f4fa1
 }
 
 .lemma::before {
-    content: "Lemma " counter(lemma) ".";
+    content: "Lemma " counter(lemma);
+    font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.lemma p:last-child {
+    margin-bottom: 0;
+}
+
+.lemma p {
+    margin-bottom: 1rem;
+}
+
+.lemma p:first-child {
+    font-weight: bold;
+}
+
+.corollary {
+    counter-increment: corollary;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #a1314f
+}
+
+.corollary::before {
+    content: "Corollary " counter(corollary);
+    font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.corollary p:last-child {
+    margin-bottom: 0;
+}
+
+.corollary p {
+    margin-bottom: 1rem;
+}
+
+.corollary p:first-child {
+    font-weight: bold;
+}
+
+.proposition {
+    counter-increment: proposition;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #c1a131
+}
+
+.proposition::before {
+    content: "Proposition " counter(proposition);
+    font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.proposition p:last-child {
+    margin-bottom: 0;
+}
+
+.proposition p {
+    margin-bottom: 1rem;
+}
+
+.proposition p:first-child {
+    font-weight: bold;
+}
+
+.definition {
+    counter-increment: definition;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #addef4
+}
+
+.definition::before {
+    content: "Definition " counter(definition);
+    font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.definition p:last-child {
+    margin-bottom: 0;
+}
+
+.definition p {
+    margin-bottom: 1rem;
+}
+
+.definition p:first-child {
+    font-weight: bold;
 }
 
 .proof {
     counter-increment: proof;
-    border: #5b64ab 3px dotted;
-    border-left: #8cc1e7a1 5px solid;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 5px solid #c6e6e5
 }
 
 .proof::before {
-    content: "Proof " counter(proof) ".";
-}
-
-.definition::before,
-.theorem::before,
-.proof::before,
-.lemma::before {
-    font-family: serif;
-    font-size: large;
-    font-weight: 600;
-    font-style: italic;
-    display: block;
-}
-
-
-.definition,
-.theorem,
-.proof,
-.lemma {
-    padding: 12px;
-    margin: 12px;
-}
-
-.proof::after {
-    content: "∎";
-    margin-left: auto;
-    display: block;
-}
-
-iframe {
-    width: 100%;
-}
-
-
-a {
-    color: #006699;
-    word-break: break-all;
-}
-
-.lined {
-    background: linear-gradient(transparent 70%, rgba(255, 165, 0, 0.6) 0) no-repeat;
-    display: inline;
-}
-
-
-.footnote::before {
-    content: "Footnote: ";
+    content: "Proof" counter(proof);
     font-weight: bold;
+    color: #333;
+    margin-right: 1rem;
 }
 
-.footnote {
-    border-top: solid 1px #ddd;
-    font-style: italic;
-    color: #777;
+.proof p:last-child {
+    margin-bottom: 0;
 }
 
-
-.footnote>* {
-    display: block;
+.proof p {
+    margin-bottom: 1rem;
 }
 
-/* 引用 */
-blockquote {
-    border-left: solid 5px #e2e6ff;
-    padding-left: 10px;
-    margin-left: 0;
-    color: #6d6d6d !important;
-    font-weight: bold !important;
+.proof p:first-child {
+    font-weight: bold;
 }
