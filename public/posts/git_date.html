@@ -322,9 +322,13 @@ table tbody tr:hover {
 }
 
 content a {
-    color: #007bff;
-    text-decoration: none;
     word-break: break-all;
+    color: #80bdff;
+    text-decoration: none;
+}
+
+iframe {
+    width: 100%;
 }
 
 /* ===============================================
@@ -354,10 +358,6 @@ footer {
     }
 
     .content {
-        width: 100%;
-    }
-
-    iframe {
         width: 100%;
     }
 }
@@ -404,20 +404,16 @@ footer {
 .proposition,
 .definition,
 .proof {
+    margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 1rem;
     background: none;
-    /* 背景色を排除 */
-    /* 全部同じスタイルにするなら共通色でもOK。
-       個別に変える場合は後で上書きする。 */
-    border-left: 4px solid #318f4f;
+    border: 1px solid #ddd;
 }
 
 /* Theorem */
 .theorem {
     counter-increment: theorem;
-    /* 他の色にしたい場合ここで上書き
-       border-left-color: #318f4f; */
 }
 
 .theorem::before {
@@ -429,7 +425,6 @@ footer {
 /* Lemma */
 .lemma {
     counter-increment: lemma;
-    /* border-left-color: #318f4f; など */
 }
 
 .lemma::before {
@@ -440,9 +435,8 @@ footer {
 
 /* Corollary */
 .corollary {
-    counter-increment: corollary;
-    border-left-color: #a1314f;
-    /* 例: 赤紫系 */
+    counter-increment: corollary
+    
 }
 
 .corollary::before {
@@ -454,8 +448,6 @@ footer {
 /* Proposition */
 .proposition {
     counter-increment: proposition;
-    border-left-color: #c1a131;
-    /* 例: 黄土色系 */
 }
 
 .proposition::before {
@@ -467,8 +459,6 @@ footer {
 /* Definition */
 .definition {
     counter-increment: definition;
-    border-left-color: #addef4;
-    /* 例: 水色系 */
 }
 
 .definition::before {
@@ -480,8 +470,6 @@ footer {
 /* Proof */
 .proof {
     counter-increment: proof;
-    border-left-color: #c6e6e5;
-    /* 例: 淡いエメラルドグリーン */
 }
 
 .proof::before {
@@ -498,6 +486,11 @@ footer {
 .definition p:last-child,
 .proof p:last-child {
     margin-bottom: 0;
+}
+
+/* mathjax の要素を少し小さめに表示 */
+.math-inline {
+    font-size: 0.8em;
 }
 
 
