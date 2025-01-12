@@ -9,7 +9,6 @@
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
-
             gtag('config', 'G-10Y7GMS7GV');
         }
     </script>
@@ -17,8 +16,9 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> {{title}} </title>
+    <title>{{title}}</title>
 
+    <!-- OGP / Twitter 用のメタタグ -->
     <meta property="og:title" content="{{title}}">
     <meta property="og:image" content="{{ogp_url}}">
     <meta property="og:description" content="{{description}}">
@@ -26,74 +26,64 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="{{site_name}}">
     <meta property="og:locale" content="ja_JP">
-
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="{{twitter_site}}" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/{{syntax_theme}}.css">
-
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/{{syntax_theme}}.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
-
-
-
     <script>hljs.highlightAll();</script>
 
+    <!-- その他ライブラリ -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    <script type="text/javascript" id="MathJax-script"
+            async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-
+    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
     {{style}}
 
+    <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
-        page_contents = []
+        page_contents = [];
     </script>
 
     {{runner}}
-
-
 </head>
 
-
 <body>
+
+    <!-- 1) 新たに追加する固定ヘッダー -->
+    <header class="global-header">
+        <div class="header-inner">
+            <!-- ここをクリックすると abap34.com/blog に戻る -->
+            <a href="https://abap34.com/blog" class="header-link">abap34.com/blog</a>
+        </div>
+    </header>
+
+    <!-- 2) 従来のヘッダー（タイトル・日付・タグなど） -->
     <div class="article-header">
-
-        <div class="title">
-            {{title}}
-        </div>
-
-        <script>
-            title = document.querySelector(".title").innerHTML;
-        </script>
-
+        <div class="title">{{title}}</div>
+        <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">
-            {{date}}
-        </div>
+        <div class="date">{{date}}</div>
         <br>
-        <div class="tag-placeholder">
-            {{tag}}
-        </div>
-
+        <div class="tag-placeholder">{{tag}}</div>
     </div>
 
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
     <div class="article-body">
 
+        <!-- サイドバー (TOC) -->
         <div class="side">
             <div class="side-sticky">
                 <div class="sidebar">
@@ -102,25 +92,27 @@
             </div>
         </div>
 
+        <!-- メイン本文 -->
         <div class="content">
             {{contents}}
-
             <hr>
-
-            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-                label="comment" theme="github-light" crossorigin="anonymous" async>
-                </script>
-
+            <!-- コメント欄 (Utterances) -->
+            <script src="https://utteranc.es/client.js"
+                    repo="abap34/abap34com-comment"
+                    issue-term="og:title"
+                    label="comment"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
         </div>
 
-
-
         <footer>
-            <p>&copy; {{author}} </p>
+            <p>&copy; {{author}}</p>
         </footer>
-
     </div>
 
+    <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
         const tocContainer = document.querySelector("#toc");
         const tocTitle = document.createElement("div");
@@ -128,8 +120,7 @@
         tocTitle.classList.add("toc_title");
         tocContainer.appendChild(tocTitle);
 
-
-
+        // TOC 要素生成
         page_contents.forEach(item => {
             if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
                 const listItem = document.createElement("li");
@@ -139,26 +130,22 @@
             }
         });
 
+        // IntersectionObserver でスクロール時に active 更新
         const options = {
             root: null,
             rootMargin: "-50% 0px",
             threshold: 0
         };
-
         const observer = new IntersectionObserver(onIntersection, options);
 
         page_contents.forEach(item => {
             const element = document.getElementById(item.id);
-            if (element) {
-                observer.observe(element);
-            }
+            if (element) observer.observe(element);
         });
 
-        // page_contensts の先頭を active にしておく
         const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
         first_item.classList.add("active");
-
-        prev_item = first_item;
+        let prev_item = first_item;
 
         function onIntersection(entries) {
             entries.forEach(entry => {
@@ -174,25 +161,18 @@
             });
         }
 
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
+        // タグ装飾
+        let tag = document.querySelector(".tag-placeholder").innerHTML;
         document.querySelector(".tag-placeholder").innerHTML = "";
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(t => t.trim());
 
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
+        tag.forEach(t => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + tag + "'> # " + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
 
-
-
-
 </body>
-
-
 </html>
