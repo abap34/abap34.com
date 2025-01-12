@@ -1,403 +1,416 @@
 /* ===============================================
    Reset / Base
    =============================================== */
-   *,
-   *::before,
-   *::after {
-       box-sizing: border-box;
-       margin: 0;
-       padding: 0;
-   }
-   
-   html,
-   body {
-       width: 100%;
-       height: 100%;
-       background-color: #fff;
-       color: #333;
-       font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
-       line-height: 1.5;
-   }
-   
-   /* ===============================================
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    color: #333;
+    font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+    line-height: 1.5;
+}
+
+/* ===============================================
       Layout
       =============================================== */
-   .article-body {
-       display: flex;
-       max-width: 1200px;
-       margin: 2rem auto;
-       padding: 0 1rem;
-       gap: 2rem;
-   }
-   
-   .side {
-       width: 240px;
-       flex-shrink: 0;
-   }
-   
-   .side-sticky {
-       position: sticky;
-       top: 1rem;
-   }
-   
-   .sidebar {
-       padding: 0.5rem;
-       max-height: 80vh;
-       overflow-y: auto;
-   }
-   
-   .content {
-       flex: 1;
-       padding: 0.5rem;
-       min-width: 0; /* 内容があふれにくいように */
-   }
-   
-   /* ===============================================
+.article-body {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    gap: 2rem;
+}
+
+.side {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 1rem;
+}
+
+.sidebar {
+    padding: 0.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.content {
+    flex: 1;
+    padding: 0.5rem;
+    min-width: 0;
+    /* 内容があふれにくいように */
+}
+
+/* ===============================================
       Header
       =============================================== */
-   .article-header {
-       padding: 1rem;
-       margin-bottom: 1rem;
-   }
-   
-   .title {
-       font-size: 1.5rem;
-       font-weight: bold;
-       margin-bottom: 0.5rem;
-   }
-   
-   .date {
-       font-size: 0.9rem;
-       color: #777;
-       margin-bottom: 0.5rem;
-   }
-   
-   .tag-placeholder {
-       margin-top: 0.5rem;
-   }
-   
-   .tag {
-       display: inline-block;
-       margin-right: 0.4rem;
-       padding: 0.2rem 0.4rem;
-       border-radius: 4px;
-       background-color: #eee;
-       font-size: 0.8rem;
-       color: #333;
-   }
-   
-   .tag:hover {
-       background-color: #ddd;
-   }
-   
-   .tag a {
-       color: inherit;
-       text-decoration: none;
-   }
-   
-   /* ===============================================
+.article-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+
+.tag-placeholder {
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background-color: #eee;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.tag:hover {
+    background-color: #ddd;
+}
+
+.tag a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===============================================
       TOC 
       =============================================== */
-   .toc_title {
-       font-size: 0.95rem;
-       font-weight: bold;
-       margin-bottom: 0.5rem;
-       color: #555;
-   }
-   
-   #toc {
-       list-style: none;
-       padding-left: 0;
-       font-size: 0.9rem;
-       color: #555;
-       line-height: 1.4;
-   }
-   
-   #toc li {
-       margin: 0.4rem 0;
-   }
-   
-   #toc a {
-       text-decoration: none;
-       color: #555;
-       padding: 0.2rem 0.4rem;
-       border-radius: 3px;
-       transition: background-color 0.1s, opacity 0.1s;
-       opacity: 1;
-   }
-   
-   #toc a:hover {
-       background-color: #f0f0f0;
-       opacity: 1;
-   }
-   
-   #toc a.active {
-       background-color: #777; 
-       color: #fff;
-       opacity: 1 !important;
-   }
-   
-   /* 階層によるインデント */
-   .toc_H1 {
-       margin-left: 0;
-   }
-   .toc_H2 {
-       margin-left: 1rem;
-   }
-   .toc_H3 {
-       margin-left: 2rem;
-   }
-   
-   /* ===============================================
+.toc_title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+#toc {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+#toc li {
+    margin: 0.4rem 0;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #555;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    transition: background-color 0.1s, opacity 0.1s;
+    opacity: 1;
+}
+
+#toc a:hover {
+    background-color: #f0f0f0;
+    opacity: 1;
+}
+
+#toc a.active {
+    background-color: #777;
+    color: #fff;
+    opacity: 1 !important;
+}
+
+/* 階層によるインデント */
+.toc_H1 {
+    margin-left: 0;
+}
+
+.toc_H2 {
+    margin-left: 1rem;
+}
+
+.toc_H3 {
+    margin-left: 2rem;
+}
+
+/* ===============================================
       Content
       =============================================== */
-   
-   /* 見出しの見た目を少し改善し、下線とパディングを追加 */
-   .content h1,
-   .content h2,
-   .content h3,
-   .content h4,
-   .content h5,
-   .content h6 {
-       font-weight: bold;
-       margin-top: 2rem;
-       margin-bottom: 1rem;
-       border-bottom: 1px solid #ccc;
-       padding-bottom: 0.3rem;
-       color: #333;
-   }
-   
-   .content p {
-       margin-bottom: 1rem;
-   }
-   
-   /* インラインコードを本文と区別しやすく */
-   .content code {
-       background-color: #f6f8fa;
-       border: 1px solid #ddd;
-       border-radius: 4px;
-       padding: 0.1rem 0.3rem;
-       font-size: 0.95em;
-   }
-   
-   /* 箇条書きの字下げ */
-   .content ul,
-   .content ol {
-       margin-left: 1.5rem;
-   }
-   
-   /* 画像や動画のはみ出し対策 (特に縦長画像) */
-   .content img,
-   .content video {
-       max-width: 100%;
-       max-height: 80vh; /* ビューポートの80%を上限に */
-       height: auto;
-       display: block;
-   }
-   
-   /* コードブロック */
-   pre {
-       overflow-x: auto;
-       margin-bottom: 1rem;
-       padding: 1rem;
-       background-color: #f6f8fa;
-       border: 1px solid #ccc;
-       border-radius: 4px;
-   }
-   
-   /* コードブロック内の行間を広げ可読性を向上 */
-   pre code {
-       display: block;
-       white-space: pre;
-       border: none;
-       background: none;
-       line-height: 1.4;
-   }
-   
-   /* テーブルのデザイン (シンプル＆見やすい) */
-   table {
-       width: 100%;
-       border-collapse: collapse; /* 余分な隙間を除去 */
-       margin: 1rem 0;
-       font-size: 0.95rem;
-       line-height: 1.4;
-   }
-   
-   table thead th {
-       background-color: #f6f8fa;
-       border-bottom: 2px solid #ccc;
-       padding: 0.6rem 0.8rem;
-       text-align: left;
-       font-weight: bold;
-   }
-   
-   table th,
-   table td {
-       border: 1px solid #ddd;
-       padding: 0.5rem 0.8rem;
-       vertical-align: top;
-   }
-   
-   table tbody tr:nth-child(even) {
-       background-color: #f9f9f9; /* 偶数行に薄い背景 */
-   }
-   
-   table tbody tr:hover {
-       background-color: #f0f0f0; /* ホバー時の強調 */
-   }
-   
-   /* ===============================================
+
+/* 見出しの見た目を少し改善し、下線とパディングを追加 */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+    color: #333;
+}
+
+.content p {
+    margin-bottom: 1rem;
+}
+
+/* インラインコードを本文と区別しやすく */
+.content code {
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.95em;
+}
+
+/* 箇条書きの字下げ */
+.content ul,
+.content ol {
+    margin-left: 1.5rem;
+}
+
+/* 画像や動画のはみ出し対策 (特に縦長画像) */
+.content img,
+.content video {
+    max-width: 100%;
+    max-height: 80vh;
+    /* ビューポートの80%を上限に */
+    height: auto;
+    display: block;
+}
+
+
+/* コードブロック内の行間を広げ可読性を向上 */
+pre code {
+    display: block;
+    white-space: pre;
+    border: none;
+    background: none;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+/* テーブルのデザイン (シンプル＆見やすい) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* 余分な隙間を除去 */
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+table thead th {
+    background-color: #f6f8fa;
+    border-bottom: 2px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.8rem;
+    vertical-align: top;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* 偶数行に薄い背景 */
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* ホバー時の強調 */
+}
+
+/* ===============================================
       Footer
       =============================================== */
-   footer {
-       margin-top: 2rem;
-       text-align: center;
-       font-size: 0.8rem;
-       color: #666;
-   }
-   
-   /* ===============================================
+footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* ===============================================
       Responsive
       =============================================== */
-   @media (max-width: 768px) {
-       .article-body {
-           flex-direction: column;
-           padding: 0 1rem;
-       }
-   
-       .side {
-           width: 100%;
-           margin-bottom: 1.5rem;
-           /* height: 100vh; を削除、autoに */
-           height: auto;
-       }
-   
-       .content {
-           width: 100%;
-       }
-   }
-   
-   /* ===============================================
+@media (max-width: 768px) {
+    .article-body {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .side {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        /* height: 100vh; を削除、autoに */
+        height: auto;
+    }
+
+    .content {
+        width: 100%;
+    }
+}
+
+/* ===============================================
       Note / Warn / Danger blocks
       =============================================== */
-   .info {
-       background-color: #f0f0f0;
-       padding: 1rem;
-       border-left: 5px solid #333;
-       margin-bottom: 1rem;
-   }
-   
-   /* Warn: ちょっと強めの注意喚起 (オレンジ系) */
-   .warn {
-       background-color: #fff3e0; /* 薄いオレンジ */
-       padding: 1rem;
-       border-left: 5px solid #ffa500; /* オレンジ */
-       margin-bottom: 1rem;
-   }
-   
-   /* Danger: 重大な警告 (赤系) */
-   .danger {
-       background-color: #ffe7e7; /* 薄い赤 */
-       padding: 1rem;
-       border-left: 5px solid #ff4d4f; /* 赤 */
-       margin-bottom: 1rem;
-   }
-   
-   /* ===============================================
+.info {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #333;
+    margin-bottom: 1rem;
+}
+
+/* Warn: ちょっと強めの注意喚起 (オレンジ系) */
+.warn {
+    background-color: #fff3e0;
+    /* 薄いオレンジ */
+    padding: 1rem;
+    border-left: 5px solid #ffa500;
+    /* オレンジ */
+    margin-bottom: 1rem;
+}
+
+/* Danger: 重大な警告 (赤系) */
+.danger {
+    background-color: #ffe7e7;
+    /* 薄い赤 */
+    padding: 1rem;
+    border-left: 5px solid #ff4d4f;
+    /* 赤 */
+    margin-bottom: 1rem;
+}
+
+/* ===============================================
       Math Blocks (theorem / lemma / corollary / etc.)
       =============================================== */
-   
-   /* 定理などに使うカウンタは自由に命名可能 */
-   counter-reset: theorem lemma corollary proposition definition proof;
-   
-   /* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
-   .theorem,
-   .lemma,
-   .corollary,
-   .proposition,
-   .definition,
-   .proof {
-       margin-bottom: 1rem;
-       padding: 1rem;
-       border-left: 5px solid #318f4f; /* 緑系 */
-       background-color: #f8fff8;
-   }
-   
-   /* -- Theorem -- */
-   .theorem {
-       counter-increment: theorem;
-   }
-   .theorem::before {
-       content: "Theorem " counter(theorem) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* -- Lemma -- */
-   .lemma {
-       counter-increment: lemma;
-   }
-   .lemma::before {
-       content: "Lemma " counter(lemma) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* -- Corollary -- */
-   .corollary {
-       counter-increment: corollary;
-       border-left-color: #a1314f; /* 赤紫系 */
-       background-color: #fff8fc;
-   }
-   .corollary::before {
-       content: "Corollary " counter(corollary) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* -- Proposition -- */
-   .proposition {
-       counter-increment: proposition;
-       border-left-color: #c1a131; /* 黄土色系 */
-       background-color: #fffded;
-   }
-   .proposition::before {
-       content: "Proposition " counter(proposition) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* -- Definition -- */
-   .definition {
-       counter-increment: definition;
-       border-left-color: #addef4; /* 青水色系 */
-       background-color: #f2fdff;
-   }
-   .definition::before {
-       content: "Definition " counter(definition) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* -- Proof -- */
-   .proof {
-       counter-increment: proof;
-       border-left-color: #c6e6e5; /* 淡いエメラルドグリーン */
-       background-color: #f2fffd;
-   }
-   .proof::before {
-       content: "Proof " counter(proof) " ";
-       font-weight: bold;
-       color: #333;
-   }
-   
-   /* ブロック内部の段落 */
-   .theorem p:last-child,
-   .lemma p:last-child,
-   .corollary p:last-child,
-   .proposition p:last-child,
-   .definition p:last-child,
-   .proof p:last-child {
-       margin-bottom: 0;
-   }
-   
+
+/* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
+/* ベース: 背景は透明、左に太線のみ */
+.theorem,
+.lemma,
+.corollary,
+.proposition,
+.definition,
+.proof {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: none;
+    /* 背景色を排除 */
+    /* 全部同じスタイルにするなら共通色でもOK。
+       個別に変える場合は後で上書きする。 */
+    border-left: 4px solid #318f4f;
+}
+
+/* Theorem */
+.theorem {
+    counter-increment: theorem;
+    /* 他の色にしたい場合ここで上書き
+       border-left-color: #318f4f; */
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Lemma */
+.lemma {
+    counter-increment: lemma;
+    /* border-left-color: #318f4f; など */
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Corollary */
+.corollary {
+    counter-increment: corollary;
+    border-left-color: #a1314f;
+    /* 例: 赤紫系 */
+}
+
+.corollary::before {
+    content: "Corollary " counter(corollary) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proposition */
+.proposition {
+    counter-increment: proposition;
+    border-left-color: #c1a131;
+    /* 例: 黄土色系 */
+}
+
+.proposition::before {
+    content: "Proposition " counter(proposition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Definition */
+.definition {
+    counter-increment: definition;
+    border-left-color: #addef4;
+    /* 例: 水色系 */
+}
+
+.definition::before {
+    content: "Definition " counter(definition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proof */
+.proof {
+    counter-increment: proof;
+    border-left-color: #c6e6e5;
+    /* 例: 淡いエメラルドグリーン */
+}
+
+.proof::before {
+    content: "Proof " counter(proof) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* 最後の段落が余計な下余白を取らないための調整 */
+.theorem p:last-child,
+.lemma p:last-child,
+.corollary p:last-child,
+.proposition p:last-child,
+.definition p:last-child,
+.proof p:last-child {
+    margin-bottom: 0;
+}
