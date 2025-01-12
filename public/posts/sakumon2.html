@@ -5,18 +5,20 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-10Y7GMS7GV');
+        if (location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-10Y7GMS7GV');
+        }
     </script>
 
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title> 作問ハッカソン 002で作問しました  </title>
+    <title>作問ハッカソン 002で作問しました </title>
 
+    <!-- OGP / Twitter 用のメタタグ -->
     <meta property="og:title" content="作問ハッカソン 002で作問しました ">
     <meta property="og:image" content="https://images.dog.ceo/breeds/rottweiler/n02106550_3528.jpg">
     <meta property="og:description" content="">
@@ -24,39 +26,30 @@
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34.com">
     <meta property="og:locale" content="ja_JP">
-
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    
+    <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
-
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
     <script>hljs.highlightAll();</script>
 
+    <!-- その他ライブラリ -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    <script type="text/javascript" id="MathJax-script"
+            async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-
-
+    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
     <style>/* ===============================================
    Reset / Base
    =============================================== */
@@ -155,61 +148,60 @@ body {
     text-decoration: none;
 }
 
-
 /* ===============================================
-   TOC 
-   =============================================== */
-   .toc_title {
+      TOC 
+      =============================================== */
+.toc_title {
     font-size: 0.95rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: #555;
-  }
-  
-  #toc {
+}
+
+#toc {
     list-style: none;
     padding-left: 0;
     font-size: 0.9rem;
     color: #555;
     line-height: 1.4;
-  }
-  
-  #toc li {
+}
+
+#toc li {
     margin: 0.4rem 0;
-  }
-  
-  #toc a {
+}
+
+#toc a {
     text-decoration: none;
     color: #555;
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     transition: background-color 0.1s, opacity 0.1s;
     opacity: 1;
-  }
-  
-  #toc a:hover {
+}
+
+#toc a:hover {
     background-color: #f0f0f0;
     opacity: 1;
-  }
-  
-  #toc a.active {
-    background-color: #777; 
+}
+
+#toc a.active {
+    background-color: #777;
     color: #fff;
     opacity: 1 !important;
-  }
-  
-  /* 階層によるインデント */
-  .toc_H1 {
+}
+
+/* 階層によるインデント */
+.toc_H1 {
     margin-left: 0;
-  }
-  
-  .toc_H2 {
+}
+
+.toc_H2 {
     margin-left: 1rem;
-  }
-  
-  .toc_H3 {
+}
+
+.toc_H3 {
     margin-left: 2rem;
-  }
+}
 
 /* ===============================================
       Content
@@ -243,70 +235,67 @@ body {
     font-size: 0.95em;
 }
 
-/* 箇条書きはすべて少し字下げ */
+/* 箇条書きの字下げ */
 .content ul,
 .content ol {
     margin-left: 1.5rem;
 }
 
-/* ソースコードや画像のはみ出し対策 */
+/* 画像や動画のはみ出し対策 (特に縦長画像) */
 .content img,
 .content video {
     max-width: 100%;
+    max-height: 80vh;
+    /* ビューポートの80%を上限に */
     height: auto;
     display: block;
 }
 
-pre {
-    overflow-x: auto;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
 
+/* コードブロック内の行間を広げ可読性を向上 */
 pre code {
     display: block;
     white-space: pre;
+    border: none;
+    background: none;
+    line-height: 1.4;
+    margin: 1rem;
 }
 
-
+/* テーブルのデザイン (シンプル＆見やすい) */
 table {
     width: 100%;
-    border-collapse: collapse; /* 余分な隙間を除去 */
+    border-collapse: collapse;
+    /* 余分な隙間を除去 */
     margin: 1rem 0;
     font-size: 0.95rem;
     line-height: 1.4;
-  }
-  
-  table thead th {
+    margin: 1rem;
+}
+
+table thead th {
     background-color: #f6f8fa;
     border-bottom: 2px solid #ccc;
     padding: 0.6rem 0.8rem;
     text-align: left;
     font-weight: bold;
-  }
-  
-  table th,
-  table td {
+}
+
+table th,
+table td {
     border: 1px solid #ddd;
     padding: 0.5rem 0.8rem;
     vertical-align: top;
-  }
-  
-  table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶数行に薄い背景 */
-  }
-  
-  table tbody tr:hover {
-    background-color: #f0f0f0; /* ホバー時の強調 */
-  }
-  
+}
 
-  .content img,
-.content video {
-  max-width: 100%;
-  max-height: 80vh; /* ビューポートの80%を上限に */
-  height: auto;
-  display: block;
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* 偶数行に薄い背景 */
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* ホバー時の強調 */
 }
 
 /* ===============================================
@@ -318,8 +307,6 @@ footer {
     font-size: 0.8rem;
     color: #666;
 }
-
-
 
 /* ===============================================
       Responsive
@@ -333,7 +320,8 @@ footer {
     .side {
         width: 100%;
         margin-bottom: 1.5rem;
-        height: 100vh;
+        /* height: 100vh; を削除、autoに */
+        height: auto;
     }
 
     .content {
@@ -341,11 +329,9 @@ footer {
     }
 }
 
-
 /* ===============================================
-        Some Custom Styles
-        =============================================== */
-
+      Note / Warn / Danger blocks
+      =============================================== */
 .info {
     background-color: #f0f0f0;
     padding: 1rem;
@@ -353,217 +339,175 @@ footer {
     margin-bottom: 1rem;
 }
 
+/* Warn: ちょっと強めの注意喚起 (オレンジ系) */
 .warn {
-    background-color: #f0f0f0;
+    background-color: #fff3e0;
+    /* 薄いオレンジ */
     padding: 1rem;
-    border-left: 5px solid #f00;
+    border-left: 5px solid #ffa500;
+    /* オレンジ */
     margin-bottom: 1rem;
 }
 
+/* Danger: 重大な警告 (赤系) */
 .danger {
-    background-color: #f0f0f0;
+    background-color: #ffe7e7;
+    /* 薄い赤 */
     padding: 1rem;
-    border-left: 5px solid #f00;
+    border-left: 5px solid #ff4d4f;
+    /* 赤 */
     margin-bottom: 1rem;
 }
-
 
 /* ===============================================
-    Custom Styles for mathmatics
-    =============================================== */
+      Math Blocks (theorem / lemma / corollary / etc.)
+      =============================================== */
 
-
-
-.theorem {
-    counter-increment: theorem;
+/* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
+/* ベース: 背景は透明、左に太線のみ */
+.theorem,
+.lemma,
+.corollary,
+.proposition,
+.definition,
+.proof {
     margin-bottom: 1rem;
     padding: 1rem;
-    border-left: 5px solid #318f4fa1
+    background: none;
+    /* 背景色を排除 */
+    /* 全部同じスタイルにするなら共通色でもOK。
+       個別に変える場合は後で上書きする。 */
+    border-left: 4px solid #318f4f;
+}
+
+/* Theorem */
+.theorem {
+    counter-increment: theorem;
+    /* 他の色にしたい場合ここで上書き
+       border-left-color: #318f4f; */
 }
 
 .theorem::before {
-    content: "Theorem " counter(theorem);
+    content: "Theorem " counter(theorem) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.theorem p:last-child {
-    margin-bottom: 0;
-}
-
-.theorem p {
-    margin-bottom: 1rem;
-}
-
-.theorem p:first-child {
-    font-weight: bold;
-}
-
+/* Lemma */
 .lemma {
     counter-increment: lemma;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #318f4fa1
+    /* border-left-color: #318f4f; など */
 }
 
 .lemma::before {
-    content: "Lemma " counter(lemma);
+    content: "Lemma " counter(lemma) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.lemma p:last-child {
-    margin-bottom: 0;
-}
-
-.lemma p {
-    margin-bottom: 1rem;
-}
-
-.lemma p:first-child {
-    font-weight: bold;
-}
-
+/* Corollary */
 .corollary {
     counter-increment: corollary;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #a1314f
+    border-left-color: #a1314f;
+    /* 例: 赤紫系 */
 }
 
 .corollary::before {
-    content: "Corollary " counter(corollary);
+    content: "Corollary " counter(corollary) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.corollary p:last-child {
-    margin-bottom: 0;
-}
-
-.corollary p {
-    margin-bottom: 1rem;
-}
-
-.corollary p:first-child {
-    font-weight: bold;
-}
-
+/* Proposition */
 .proposition {
     counter-increment: proposition;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #c1a131
+    border-left-color: #c1a131;
+    /* 例: 黄土色系 */
 }
 
 .proposition::before {
-    content: "Proposition " counter(proposition);
+    content: "Proposition " counter(proposition) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.proposition p:last-child {
-    margin-bottom: 0;
-}
-
-.proposition p {
-    margin-bottom: 1rem;
-}
-
-.proposition p:first-child {
-    font-weight: bold;
-}
-
+/* Definition */
 .definition {
     counter-increment: definition;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #addef4
+    border-left-color: #addef4;
+    /* 例: 水色系 */
 }
 
 .definition::before {
-    content: "Definition " counter(definition);
+    content: "Definition " counter(definition) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
-.definition p:last-child {
-    margin-bottom: 0;
-}
-
-.definition p {
-    margin-bottom: 1rem;
-}
-
-.definition p:first-child {
-    font-weight: bold;
-}
-
+/* Proof */
 .proof {
     counter-increment: proof;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-left: 5px solid #c6e6e5
+    border-left-color: #c6e6e5;
+    /* 例: 淡いエメラルドグリーン */
 }
 
 .proof::before {
-    content: "Proof" counter(proof);
+    content: "Proof " counter(proof) " ";
     font-weight: bold;
     color: #333;
-    margin-right: 1rem;
 }
 
+/* 最後の段落が余計な下余白を取らないための調整 */
+.theorem p:last-child,
+.lemma p:last-child,
+.corollary p:last-child,
+.proposition p:last-child,
+.definition p:last-child,
 .proof p:last-child {
     margin-bottom: 0;
-}
-
-.proof p {
-    margin-bottom: 1rem;
-}
-
-.proof p:first-child {
-    font-weight: bold;
 }</style>
 
+    <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
-        page_contents = []
+        page_contents = [];
     </script>
 
     <!-- Runner is not required. Skip this. -->
-
-
 </head>
-
 
 <body>
 
+    <!-- 1) 新たに追加する固定ヘッダー -->
+    <header class="global-header">
+        <div class="header-inner">
+            <!-- ここをクリックすると abap34.com/blog に戻る -->
+            <a href="https://abap34.com/blog" class="header-link">abap34.com/blog</a>
+        </div>
+    </header>
+
+    <!-- 2) 従来のヘッダー（タイトル・日付・タグなど） -->
     <div class="article-header">
-
-        <div class="title">
-            作問ハッカソン 002で作問しました 
-        </div>
-
-        <script>
-            title = document.querySelector(".title").innerHTML;
-        </script>
-
+        <div class="title">作問ハッカソン 002で作問しました </div>
+        <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">
-            2024/02/17
-        </div>
+        <div class="date">2024/02/17</div>
         <br>
-        <div class="tag-placeholder">
-            [競プロ, traP, 日記]
-        </div>
-
+        <div class="tag-placeholder">[競プロ, traP, 日記]</div>
     </div>
 
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
     <div class="article-body">
+
+        <!-- サイドバー (TOC) -->
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- メイン本文 -->
         <div class="content">
             <br><script>page_contents.push({
     "type":"H2",
@@ -572,70 +516,24 @@ footer {
 });
 </script>
 <h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、 今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、このあたりに着想を得て作りました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので <span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、 そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、 今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください！<br>また、解説を頑張って書いたのでここにも掲載しておきます。<br><br><details style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;"> <summary>解説(ネタバレ注意)</summary><br><span class="math-inline"> \( P(T) \) </span> は、<span class="math-inline"> \( T \) </span> に含まれる最も <span class="math-inline"> \( p_e \) </span> の大きい辺の <span class="math-inline"> \( p_e \) </span> のみによって決まります。<br>そのため、 条件を満たすように<span class="math-inline"> \( P(T) \) </span> を最大化するには、なるべく大きい <span class="math-inline"> \( p_e \) </span> を持つ辺を一つ採用し、あとはコストが最も小さくなるような全域木を作れば良いです。<br>つまり、<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法で今回の問題を解くことができます。<br>これを行う最も素直な方法は、辺を一つ選んだのちに、その辺が結ぶ二つの頂点をまとめて新しく得たグラフの最小全域木を得て、条件を満たすか確認することです。<br>しかし、最小全域木を作る際には <span class="math-inline"> \( N-2 \) </span> 本の辺を選ぶ必要があるので、 毎回 <span class="math-inline"> \( \Omega(N) \) </span> の計算量がかかってしまいます。<br>そして、あらかじめ選ぶ辺の候補は <span class="math-inline"> \( K \) </span> 本あるので、今回の制約でこのアルゴリズムを時間内に実行することは難しいです。<br>そこで、これを高速化することを考えます。<br><br>実は、毎回最小全域木を求め直すのではなく、与えられたグラフ <span class="math-inline"> \( G \) </span> に対する最小全域木をあらかじめ求めておくと、<br>ある辺が含まれるような全域木の最小コストを高速に求めることができます。<br><br><br><span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T = (V, E) \) </span> をあらかじめ求めたとします。<br>これに操作を加えることで、辺 <span class="math-inline"> \( e \notin E \) </span> が含まれるような全域木のうち最もコストが小さくなるようなものを得たいです。<br>まず、<span class="math-inline"> \( e \) </span> を <span class="math-inline"> \( T \) </span> に加えると、 <span class="math-inline"> \( T \) </span> にあらたに閉路がただひとつできます。<br>したがって、この閉路の辺をどれかひとつ削除すれば全域木となります。<br>そしてこのとき、この閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストの大きい辺を削除することで <span class="math-inline"> \( e \) </span> を含む最もコストの小さい全域木を得ることができます。<br>これは、あらかじめ <span class="math-inline"> \( e \) </span> を採用した状態でクラスカル法を適用することを考えればわかります。<br>この閉路を構成する辺のうち、最後に選ばれる辺である最もコストの大きい辺を追加すると、 <span class="math-inline"> \( e \) </span> がすでにあることから閉路ができるため、採用されなくなるためです。<br><br><br>したがって、 <span class="math-inline"> \( e \) </span> が含まれる最もコストの小さい全域木は、<br><br>木 <span class="math-inline"> \( T \) </span> があったとき、<br><br><strong>「 <span class="math-inline"> \( T \) </span> に 辺 <span class="math-inline"> \( e \) </span> を追加したとき、できる閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストが高いものはいくつか？」</strong><br><br>というクエリに高速で答えられるようになれば、高速に求まることになります。<br>ここからは、これについて考えます。<br><br><h3>削除する辺の高速な求め方</h3><br>ここで、できる閉路は、 <span class="math-inline"> \( u, v \) </span> の最小共通祖先を <span class="math-inline"> \( r \) </span> としたときに<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路と <span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路という二つの経路が合わさったものである」ということに注目します。<br>すると、<span class="math-inline"> \( u, v \) </span> を繋いだことでできる閉路の辺のコストの最大値は、<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 と 「<span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 の大きい方になります。<br><br>つまり、先ほどのクエリは 「<span class="math-inline"> \( T \) </span> の <span class="math-inline"> \( u, v \) </span> の最小共通祖先までの経路上のうち最もコストが高いものはいくつか？」<br>と言い換えられ、これにはダブリングと呼ばれるテクニックを用いると高速に答えることができます。<br><br><br><br>ダブリングを用いると、頂点数 <span class="math-inline"> \( V \) </span> の木の二つの頂点 <span class="math-inline"> \( u, v \) </span> の最小共通祖先は <span class="math-inline"> \( O(\log V) \) </span> で求めることができます。<br><br><br>さらに、これを求める際に、各頂点からの親への遷移の情報と共に、親への遷移の経路上の辺のコストの最大値を管理することで、<br><br><br><span class="math-inline"> \( u, v \) </span> それぞれからの最小共通祖先への経路上の最大コストを同時に求められます。<br><br>したがって、この方法で <span class="math-inline"> \( O(\log N) \) </span> の時間計算量で目的の辺を特定することができます。<br><br><h3>最終的なアルゴリズム</h3><br>ここまでの議論から、最初に登場した<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法は、<br>クラスカル法などで、<span class="math-inline"> \( O(K \log K  + K \alpha(N)) \) </span> の時間計算量であらかじめ <span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T \) </span> を求めておくことで、<br><br>\1. の時間計算量が 毎回 <span class="math-inline"> \( O (\log N) \) </span>となり、<br>試す辺の数は高々 <span class="math-inline"> \( K \) </span> 本なので、全体としては <span class="math-inline"> \( O(K \log K + K \log N) \) </span> の時間計算量となります。<br>今回の問題では、このアルゴリズムを時間制限に十分間に合うように動作させることが可能です。<br></details><br><br>また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、 大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><div class="footnote"></div>
-
             <hr>
-
-            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
-                label="comment" theme="github-light" crossorigin="anonymous" async>
-                </script>
-
+            <!-- コメント欄 (Utterances) -->
+            <script src="https://utteranc.es/client.js"
+                    repo="abap34/abap34com-comment"
+                    issue-term="og:title"
+                    label="comment"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
         </div>
 
-        <div class="side">
-            <div class="side-sticky">
-                <div class="sidebar">
-                    <ul id="toc"></ul>
-                </div>
-
-                <div class="links">
-
-
-                    <div class="to-links">
-                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                        <br>
-
-
-                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                    </div>
-                    <br>
-                    <br>
-
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/abap34"
-                            class="tolink"> @abap34</a>
-                    </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/abap34"
-                            class="tolink"> @abap34</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:abap0002@gmail.com" class="tolink">
-                            abap0002@gmail.com</a>
-                    </p>
-
-
-
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                        data-show-count="false" data-via="abap34">Tweet</a>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                    <footer>
-                        <p>&copy; abap34 </p>
-                    </footer>
-
-                </div>
-            </div>
-
-
-
-        </div>
-
+        <footer>
+            <p>&copy; abap34</p>
+        </footer>
     </div>
 
+    <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
         const tocContainer = document.querySelector("#toc");
         const tocTitle = document.createElement("div");
@@ -643,8 +541,7 @@ footer {
         tocTitle.classList.add("toc_title");
         tocContainer.appendChild(tocTitle);
 
-
-
+        // TOC 要素生成
         page_contents.forEach(item => {
             if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
                 const listItem = document.createElement("li");
@@ -654,26 +551,22 @@ footer {
             }
         });
 
+        // IntersectionObserver でスクロール時に active 更新
         const options = {
             root: null,
             rootMargin: "-50% 0px",
             threshold: 0
         };
-
         const observer = new IntersectionObserver(onIntersection, options);
 
         page_contents.forEach(item => {
             const element = document.getElementById(item.id);
-            if (element) {
-                observer.observe(element);
-            }
+            if (element) observer.observe(element);
         });
 
-        // page_contensts の先頭を active にしておく
         const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
         first_item.classList.add("active");
-
-        prev_item = first_item;
+        let prev_item = first_item;
 
         function onIntersection(entries) {
             entries.forEach(entry => {
@@ -689,25 +582,18 @@ footer {
             });
         }
 
-
-
-        tag = document.querySelector(".tag-placeholder").innerHTML;
+        // タグ装飾
+        let tag = document.querySelector(".tag-placeholder").innerHTML;
         document.querySelector(".tag-placeholder").innerHTML = "";
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(t => t.trim());
 
-        tag = tag.replace("[", "").replace("]", "").split(", ").map(tag => tag.trim());
-
-        tag.forEach(tag => {
+        tag.forEach(t => {
             const each_tag = document.createElement("span");
             each_tag.classList.add("tag");
-            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + tag + "'> # " + tag + "</a>";
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
     </script>
 
-
-
-
 </body>
-
-
 </html>
