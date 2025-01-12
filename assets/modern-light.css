@@ -15,10 +15,14 @@ body {
     height: 100%;
     background-color: #fff;
     color: #333;
-    font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+    font-family: monospace;
     line-height: 1.5;
+    /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
     padding-top: 3.5rem;
+    
+    /* 長い単語も強制的に改行 */
+    word-wrap: break-word;
 }
 
 /* ===============================================
@@ -30,7 +34,6 @@ body {
     margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
-
 }
 
 .side {
@@ -77,17 +80,11 @@ body {
 
 }
 
-/* スマホでは出さない */
-@media (max-width: 768px) {
-    .global-header {
-        display: none;
-    }
-}
-
-
 .article-header {
     padding: 1rem;
     margin-bottom: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .title {
@@ -272,6 +269,12 @@ table tbody tr:hover {
     /* ホバー時の強調 */
 }
 
+content a {
+    color: #007bff;
+    text-decoration: none;
+    word-break: break-all;
+}
+
 /* ===============================================
       Footer
       =============================================== */
@@ -444,3 +447,49 @@ footer {
 .proof p:last-child {
     margin-bottom: 0;
 }
+
+
+/* ===============================================
+      Footnotes
+        =============================================== */
+
+/* 脚注リンクのスタイル */
+
+
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    color: #777;
+}
+
+.footnote-ref a {
+    color: #777;
+    text-decoration: none;
+}
+
+.footnote-ref a:hover {
+    text-decoration: underline;
+}
+
+/* 脚注本体のスタイル */
+.footnotes {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+.footnote-def {
+    margin-bottom: 0.5rem;
+    /* 改行 */
+    padding: 0.2rem 0.5rem;
+    border-left: 3px solid #ddd;
+    display: block;
+}
+
+.footnote-def p {
+    margin-bottom: 0;
+}
+
+
+
