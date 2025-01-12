@@ -489,10 +489,18 @@ footer {
 }
 
 /* mathjax の要素を少し小さめに表示 */
-.math-inline {
-    font-size: 0.8em;
+
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
+.math-inline {
+    display: inline-grid;
+    overflow: hidden !important;
+    font-size: 0.8em;
+}
 
 /* ===============================================
       Footnotes
