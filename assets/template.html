@@ -5,11 +5,13 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+        if (location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
 
-        gtag('config', 'G-10Y7GMS7GV');
+            gtag('config', 'G-10Y7GMS7GV');
+        }
     </script>
 
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
@@ -30,19 +32,18 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/{{syntax_theme}}.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/{{syntax_theme}}.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/julia-repl.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/scheme.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
 
 
 
@@ -70,7 +71,6 @@
 
 
 <body>
-
     <div class="article-header">
 
         <div class="title">
@@ -93,6 +93,15 @@
     </div>
 
     <div class="article-body">
+
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+            </div>
+        </div>
+
         <div class="content">
             {{contents}}
 
@@ -104,58 +113,11 @@
 
         </div>
 
-        <div class="side">
-            <div class="side-sticky">
-                <div class="sidebar">
-                    <ul id="toc"></ul>
-                </div>
-
-                <div class="links">
 
 
-                    <div class="to-links">
-                        <a href="https://abap34.com/blog"> <i class="fas fa-book-open" id="toposts"></i> 記事一覧 </a>
-
-                        <br>
-
-
-                        <a href="https://abap34.com"> <i class="fas fa-home" id="tohome"></i> ホーム </a>
-
-                        <br>
-                        <br>
-                        <br>
-
-                        <a href="https://www.abap34.com/rss.xml"> <i class="fas fa-rss" id="torss"></i> RSS </a>
-                    </div>
-                    <br>
-                    <br>
-
-                    <p><i class="icon fab fa-twitter" id="twitter"></i><a href="https://twitter.com/{{twitter_id}}"
-                            class="tolink"> @{{twitter_id}}</a>
-                    </p>
-                    <p><i class="icon fab fa-github" id="github"></i><a href="https://github.com/{{github_id}}"
-                            class="tolink"> @{{github_id}}</a></p>
-                    <p><i class="icon fas fa-envelope" id="mail"></i><a href="mailto:{{mail}}" class="tolink">
-                            {{mail}}</a>
-                    </p>
-
-
-
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                        data-show-count="false" data-via="abap34">Tweet</a>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-                    <footer>
-                        <p>&copy; {{author}} </p>
-                    </footer>
-
-                </div>
-            </div>
-
-
-
-        </div>
+        <footer>
+            <p>&copy; {{author}} </p>
+        </footer>
 
     </div>
 
