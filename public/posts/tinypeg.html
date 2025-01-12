@@ -67,10 +67,14 @@ body {
     height: 100%;
     background-color: #fff;
     color: #333;
-    font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+    font-family: monospace;
     line-height: 1.5;
+    /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
     padding-top: 3.5rem;
+    
+    /* 長い単語も強制的に改行 */
+    word-wrap: break-word;
 }
 
 /* ===============================================
@@ -82,7 +86,6 @@ body {
     margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
-
 }
 
 .side {
@@ -129,17 +132,11 @@ body {
 
 }
 
-/* スマホでは出さない */
-@media (max-width: 768px) {
-    .global-header {
-        display: none;
-    }
-}
-
-
 .article-header {
     padding: 1rem;
     margin-bottom: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .title {
@@ -324,6 +321,12 @@ table tbody tr:hover {
     /* ホバー時の強調 */
 }
 
+content a {
+    color: #007bff;
+    text-decoration: none;
+    word-break: break-all;
+}
+
 /* ===============================================
       Footer
       =============================================== */
@@ -495,7 +498,53 @@ footer {
 .definition p:last-child,
 .proof p:last-child {
     margin-bottom: 0;
-}</style>
+}
+
+
+/* ===============================================
+      Footnotes
+        =============================================== */
+
+/* 脚注リンクのスタイル */
+
+
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    color: #777;
+}
+
+.footnote-ref a {
+    color: #777;
+    text-decoration: none;
+}
+
+.footnote-ref a:hover {
+    text-decoration: underline;
+}
+
+/* 脚注本体のスタイル */
+.footnotes {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+.footnote-def {
+    margin-bottom: 0.5rem;
+    /* 改行 */
+    padding: 0.2rem 0.5rem;
+    border-left: 3px solid #ddd;
+    display: block;
+}
+
+.footnote-def p {
+    margin-bottom: 0;
+}
+
+
+</style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
@@ -506,16 +555,19 @@ footer {
 </head>
 
 <body>
-
-    <!-- 1) 新たに追加する固定ヘッダー -->
     <header class="global-header">
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
-            <a href="https://abap34.com" class="header-logo">abap34.com</a> > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/tinypeg.html">(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</a>
+            <a href="https://abap34.com" class="header-logo">abap34.com</a> > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/tinypeg.html">/(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</a>
+        </div>
+
+        <div class="tweet-button">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+               data-text="(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]" data-url="https://abap34.com/posts/tinypeg.html" data-via=""> Tweet </a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
         </div>
     </header>
 
-    <!-- 2) 従来のヘッダー（タイトル・日付・タグなど） -->
     <div class="article-header">
         <div class="title">(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</div>
         <script>title = document.querySelector(".title").innerHTML;</script>
