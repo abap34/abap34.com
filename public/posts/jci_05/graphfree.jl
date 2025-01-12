@@ -82,7 +82,7 @@ end
 
 
 
-function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState, ∇::Function)::Vector{AbstractState}
+function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
     n = length(I)
     inputs = [copy(a₀) for _ in 1:n]
     outputs = [copy(a₀) for _ in 1:n]
@@ -99,7 +99,7 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
             new_output = abstract_semantics(I[i])(new_input)
 
             inputs[i] = new_input
-            outputs[i] = ∇(new_output, current_output)
+            outputs[i] = new_output
             
             if (current_input != new_input) || (current_output != new_output)
                 change = true
