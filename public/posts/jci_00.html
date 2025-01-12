@@ -69,6 +69,8 @@ body {
     color: #333;
     font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
     line-height: 1.5;
+    /*  global-header のぶんを押し下げる */
+    padding-top: 3.5rem;
 }
 
 /* ===============================================
@@ -80,6 +82,7 @@ body {
     margin: 2rem auto;
     padding: 0 1rem;
     gap: 2rem;
+
 }
 
 .side {
@@ -89,7 +92,7 @@ body {
 
 .side-sticky {
     position: sticky;
-    top: 1rem;
+    top: 3.5rem;
 }
 
 .sidebar {
@@ -108,6 +111,32 @@ body {
 /* ===============================================
       Header
       =============================================== */
+/* 一番上に常に固定するヘッダ */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+
+    /* 要素は横に並べる */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+/* スマホでは出さない */
+@media (max-width: 768px) {
+    .global-header {
+        display: none;
+    }
+}
+
+
 .article-header {
     padding: 1rem;
     margin-bottom: 1rem;
@@ -152,10 +181,7 @@ body {
       TOC 
       =============================================== */
 .toc_title {
-    font-size: 0.95rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #555;
+    display: none;
 }
 
 #toc {
@@ -480,8 +506,8 @@ footer {
     <!-- 1) 新たに追加する固定ヘッダー -->
     <header class="global-header">
         <div class="header-inner">
-            <!-- ここをクリックすると abap34.com/blog に戻る -->
-            <a href="https://abap34.com/blog" class="header-link">abap34.com/blog</a>
+            <!-- クリックすると sidebar を表示/非表示 -->
+            <a href="https://abap34.com" class="header-logo">abap34.com</a> > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/jci_00.html">Julia Compiler Internals (00) - Introduction</a>
         </div>
     </header>
 
