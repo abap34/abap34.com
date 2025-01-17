@@ -691,19 +691,19 @@ true
 
 \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \}
 
- \] </div><br>などは鎖で、長さは 3 です。<br>また、先ほど挙げた論理関数全体の集合がなす束の高さは 2 です。<br><br>今の自分の理解では Julia の型の階層構造の高さは有限です。<br>(※ 仕様を読んだり示したりしたわけではなく、そう思っているだけなのでご存じの方がいたら教えてください)<br><br><hr><br>さて、このように束は割といろんなところに現れる構造っぽいです。<br>そして、実はプログラムのさまざまな要素・状態を束で表現することでいろいろな性質の解析ができます。<br>ここからはそれを具体的に見ていきます。<br><script>page_contents.push({
+ \] </div><br>などは鎖で、長さは 3 です。<br>また、先ほど挙げた論理関数全体の集合がなす束の高さは 2 です。<br><br>では Julia の型 (に親子関係を入れたもの) は有限性条件を満たすでしょうか？<br><span class="strong"> <strong>実は満たしません。無限上昇鎖を作ることができます。</strong> </span><br>これについては今後見ていきたいと思います。<br><br><hr><br>さて、このように束は割といろんなところに現れる構造っぽいです。<br>そして、実はプログラムのさまざまな要素・状態を束で表現することでいろいろな性質の解析ができます。<br>ここからはそれを具体的に見ていきます。<br><script>page_contents.push({
     "type":"H2",
-    "id":"411",
+    "id":"414",
     "title":"抽象解釈"
 });
 </script>
-<h2 id="411">抽象解釈</h2><br>Julia の型推論アルゴリズムは抽象解釈と呼ばれる手法を使っています。<br>そこで、まずは 一旦 Julia の型推論のことは忘れて一般の抽象解釈についての話をしましょう。<br><br>まず前提として、プログラムの調べたい性質は大抵の場合 Undecidable で、静的解析をするには常に諦めもしくはある程度の抽象化が必要になります。<br><br>そこで、抽象解釈は読んで字の如し、プログラムをある程度抽象化して仮想的に実行することで、プログラムの性質を解析します。 つまり、抽象解釈という言葉は具体的なアルゴリズムというより、ある種のアプローチというかフレームワークというかを指す言葉です。<br>この抽象化の程度や方向性によって色々な解析をやっていくわけです。 例えば (役に立つのかはともかく、) 変数の偶奇だけに着目して「偶奇だけがわかるレベルで」プログラムを解釈して静的に偶奇の情報を得る、などができます。<br><br>元記事では定数畳み込みを抽象解釈を使って行っています。この記事でもまずはこの例を検討してみます。<br><script>page_contents.push({
+<h2 id="414">抽象解釈</h2><br>Julia の型推論アルゴリズムは抽象解釈と呼ばれる手法を使っています。<br>そこで、まずは 一旦 Julia の型推論のことは忘れて一般の抽象解釈についての話をしましょう。<br><br>まず前提として、プログラムの調べたい性質は大抵の場合 Undecidable で、静的解析をするには常に諦めもしくはある程度の抽象化が必要になります。<br><br>そこで、抽象解釈は読んで字の如し、プログラムをある程度抽象化して仮想的に実行することで、プログラムの性質を解析します。 つまり、抽象解釈という言葉は具体的なアルゴリズムというより、ある種のアプローチというかフレームワークというかを指す言葉です。<br>この抽象化の程度や方向性によって色々な解析をやっていくわけです。 例えば (役に立つのかはともかく、) 変数の偶奇だけに着目して「偶奇だけがわかるレベルで」プログラムを解釈して静的に偶奇の情報を得る、などができます。<br><br>元記事では定数畳み込みを抽象解釈を使って行っています。この記事でもまずはこの例を検討してみます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"429",
+    "id":"432",
     "title":"抽象解釈による定数畳み込み: 問題設定"
 });
 </script>
-<h3 id="429">抽象解釈による定数畳み込み: 問題設定</h3><br>以下のような機能を持つ簡単な言語を考えます。<br><br><ul><li>代入: <span class="inline-code"> <code>x := 1</code> </span>, <span class="inline-code"> <code>r := y + z</code> </span></li><li>goto: <span class="inline-code"> <code>goto line</code> </span></li><li>条件つき goto: <span class="inline-code"> <code>if x &lt; 10 goto inst</code> </span>, <span class="inline-code"> <code>if x ≤ z goto inst</code> </span></li></ul><br>簡単のために、代入の右辺は定数か変数またはそれらの二項演算のみで、値は全て整数とします。<br>例えば以下のような感じです。 <br><div class="code-block"> <pre><code class="language-plaintext">0 ─ I₀ = x := 1
+<h3 id="432">抽象解釈による定数畳み込み: 問題設定</h3><br>以下のような機能を持つ簡単な言語を考えます。<br><br><ul><li>代入: <span class="inline-code"> <code>x := 1</code> </span>, <span class="inline-code"> <code>r := y + z</code> </span></li><li>goto: <span class="inline-code"> <code>goto line</code> </span></li><li>条件つき goto: <span class="inline-code"> <code>if x &lt; 10 goto inst</code> </span>, <span class="inline-code"> <code>if x ≤ z goto inst</code> </span></li></ul><br>簡単のために、代入の右辺は定数か変数またはそれらの二項演算のみで、値は全て整数とします。<br>例えば以下のような感じです。 <br><div class="code-block"> <pre><code class="language-plaintext">0 ─ I₀ = x := 1
 │   I₁ = y := 2
 │   I₂ = z := 3
 └── I₃ = goto I₈
@@ -994,11 +994,11 @@ end
 </table>
 <br><br><span class="inline-code"> <code>x</code> </span> をループカウンタとして使いつつ、最後の <span class="inline-code"> <code>10 - z</code> </span> 回は <span class="inline-code"> <code>r = z + y</code> </span> もする、みたいなコードです (これは何？)<br><br>さて、ここから以下の事実を静的解析によって見つけることが目標です:<br><br><div style="text-align: center;"><br><span class="strong"> <strong><span class="inline-code"> <code>y</code> </span>, <span class="inline-code"> <code>z</code> </span>, <span class="inline-code"> <code>r</code> </span> は定数である</strong> </span><br></div><br><script>page_contents.push({
     "type":"H3",
-    "id":"1009",
+    "id":"1012",
     "title":"データフロー解析の形式的定義"
 });
 </script>
-<h3 id="1009">データフロー解析の形式的定義</h3><br>このあと具体的なアルゴリズムに入る前に、もう少し解こうとしている問題をもう少し一般化して定式化してみます。<br>今回解きたい問題は、以下のように定義される 「データフロー解析」 と呼ばれる抽象解釈によって解ける問題の一つとして捉えることができます。<br><br>データフロー解析は、簡単に言えば次のような問題を解くことです。<br><ul><li><span class="strong"> <strong>命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ。</strong> </span></li></ul><br>実際に計算機上で解くために、形式的に定義してみましょう。<br><br><div class="definition"><span class="strong"> <strong>データフロー解析 (Data Flow Analysis)</strong> </span><br><br>命令全体の集合を <span class="math-inline"> \( \text{Instr} \) </span> 、プログラムの状態全体の集合を <span class="math-inline"> \( A \) </span> とする。<br><span class="math-inline"> \( \text{Instr} \) </span> は <br><ul><li>代入 </li><li>goto</li><li>条件つき goto</li></ul><br>のいずれかに属する命令の集合。<br><br>ここで、以下のような四つ組 <span class="math-inline"> \( (P, L, ![.!], a_0) \) </span> を考える:<br><ul><li><span class="math-inline"> \( P = I_1, I_2, \cdots, I_n \in \text{Instr} \) </span>: プログラム (命令の有限列)</li><li><span class="math-inline"> \( L = (A, \leq) \) </span>: 高さが有限の束</li><li><span class="math-inline"> \( ![.!] \in \text{Instr} \to (A \to A) \) </span>: 各命令の作用を表す単調関数を返す関数 </li><li><span class="math-inline"> \( a_0 \in A \) </span>: 初期状態</li></ul><br>このとき、データフロー解析は以下のような問題を解くことである:<br><span class="math-inline"> \( \text{Pred}_P: \{1, 2, \cdots, n\} \to 2^{\{1, 2, \cdots, n\}} \) </span> を<br><div class="math-block"> \[ 
+<h3 id="1012">データフロー解析の形式的定義</h3><br>このあと具体的なアルゴリズムに入る前に、もう少し解こうとしている問題をもう少し一般化して定式化してみます。<br>今回解きたい問題は、以下のように定義される 「データフロー解析」 と呼ばれる抽象解釈によって解ける問題の一つとして捉えることができます。<br><br>データフロー解析は、簡単に言えば次のような問題を解くことです。<br><ul><li><span class="strong"> <strong>命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ。</strong> </span></li></ul><br>実際に計算機上で解くために、形式的に定義してみましょう。<br><br><div class="definition"><span class="strong"> <strong>データフロー解析 (Data Flow Analysis)</strong> </span><br><br>命令全体の集合を <span class="math-inline"> \( \text{Instr} \) </span> 、プログラムの状態全体の集合を <span class="math-inline"> \( A \) </span> とする。<br><span class="math-inline"> \( \text{Instr} \) </span> は <br><ul><li>代入 </li><li>goto</li><li>条件つき goto</li></ul><br>のいずれかに属する命令の集合。<br><br>ここで、以下のような四つ組 <span class="math-inline"> \( (P, L, ![.!], a_0) \) </span> を考える:<br><ul><li><span class="math-inline"> \( P = I_1, I_2, \cdots, I_n \in \text{Instr} \) </span>: プログラム (命令の有限列)</li><li><span class="math-inline"> \( L = (A, \leq) \) </span>: 高さが有限の束</li><li><span class="math-inline"> \( ![.!] \in \text{Instr} \to (A \to A) \) </span>: 各命令の作用を表す単調関数を返す関数 </li><li><span class="math-inline"> \( a_0 \in A \) </span>: 初期状態</li></ul><br>このとき、データフロー解析は以下のような問題を解くことである:<br><span class="math-inline"> \( \text{Pred}_P: \{1, 2, \cdots, n\} \to 2^{\{1, 2, \cdots, n\}} \) </span> を<br><div class="math-block"> \[ 
 
 j \in \text{Pred}_P(i) \Leftrightarrow 
 I_j \in \{ \text{goto i}, \text{条件つき goto i} \} \text{ または } j = i - 1  \ かつ\  I_i \neq \text{goto}
@@ -1009,17 +1009,17 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n)
 
  \] </div><br>を満たす最大の解 <span class="math-inline"> \( s_1, s_2, \cdots, s_n \) </span> を求めよ<br></div><br>少し補足をします。<br><ul><li>状態 <span class="math-inline"> \( s \in A \) </span> のときに 命令 <span class="math-inline"> \( I \) </span> を実行したときの状態は <span class="math-inline"> \( ![I!](s) \) </span> です (記法の確認です)</li><li><span class="inline-code"> <code>\bigsqcap</code> </span> が MathJax で使えなかったので <span class="math-inline"> \( \prod \) </span> で代用しています。交わりの意味です。</li><li>つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。</li><li><span class="math-inline"> \( \text{Pred}_P(i) \) </span> はややこしくなっていますが、要は命令 <span class="math-inline"> \( I_i \) </span> の直前になりうる命令のインデックスの集合になります。</li><ul><li>果たしてこれは最初に書いた「命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ」に対応する妥当な定義でしょうか？実はとても議論の余地、というか抜けがあります。次回の記事で議論するので、一旦ここは置いておいてください。</li></ul><li>元記事や <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">元論文</a> </url> では <span class="math-inline"> \( L \) </span> を その交わりと結びで定義していますが、ここでは準備に合わせて <span class="math-inline"> \( (A, \leq) \) </span> としています。</li><li>順序関係が <span class="math-inline"> \( A \) </span> 上で定まっていることに注意しましょう。 (後述します)</li></ul><br><br><script>page_contents.push({
     "type":"H3",
-    "id":"1131",
+    "id":"1134",
     "title":"定数畳み込みの形式的定義"
 });
 </script>
-<h3 id="1131">定数畳み込みの形式的定義</h3><br>実際に今回の問題をこの定義に落とし込みます。<br><br>上から行きましょう。<br><script>page_contents.push({
+<h3 id="1134">定数畳み込みの形式的定義</h3><br>実際に今回の問題をこの定義に落とし込みます。<br><br>上から行きましょう。<br><script>page_contents.push({
     "type":"H4",
-    "id":"1139",
+    "id":"1142",
     "title":"1. <span class="math-inline"> \( \text{Instr} \) </span>"
 });
 </script>
-<h4 id="1139">1. <span class="math-inline"> \( \text{Instr} \) </span></h4><br>ちゃんと定義したければ BNF とかを書けばいいと思いますがいったんふわっと書くと<br><div class="math-block"> \[ 
+<h4 id="1142">1. <span class="math-inline"> \( \text{Instr} \) </span></h4><br>ちゃんと定義したければ BNF とかを書けばいいと思いますがいったんふわっと書くと<br><div class="math-block"> \[ 
 
 \begin{align*}
 \text{Instr} =\  &\{ \\
@@ -1033,11 +1033,11 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n)
 
  \] </div><br>みたいな集合です。全ての要素はそれぞれ 代入, goto, 条件つき goto のどれかただ一つに属することに注意してください。<br>代入文の右辺には定数、変数またはそれらの二項演算がきます。(<span class="math-inline"> \( n \) </span> 項演算に拡張するのは容易ですが説明のために簡単にしています)<br><script>page_contents.push({
     "type":"H4",
-    "id":"1153",
+    "id":"1156",
     "title":"2. <span class="math-inline"> \( A, \leq \) </span>"
 });
 </script>
-<h4 id="1153">2. <span class="math-inline"> \( A, \leq \) </span></h4><br>次はプログラムの状態 <span class="math-inline"> \( A \) </span> とその順序関係 <span class="math-inline"> \( \leq \) </span> です。<br>今回の設定では変数の状態以外に特に状態はありませんから、<br><span class="math-inline"> \( X \) </span> を変数の集合、 <span class="math-inline"> \( C \) </span> を変数の状態の集合として<br><span class="math-inline"> \( A = X \to C \) </span> とすればいいでしょう。<br><br>今さらっと <span class="math-inline"> \( C \) </span> を導入しましたが、ここが (多分自分が思うに) キモです。 これの中身をどうするかが抽象解釈の設計の本質パート (ではないかとと素人ながら) 思います.<br><br>というのもこの部分こそが調べたい性質のためにプログラムを抽象化するパートだからです。<br><br>例えば今回の場合、次のような集合と順序関係を考えることによって抽象化します。<br><br><span class="math-inline"> \( L = \{ \bot, 1, 2, 3, \cdots, \top \} \) </span> として、 <span class="math-inline"> \( L \) </span> 上の順序関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><div class="math-block"> \[ 
+<h4 id="1156">2. <span class="math-inline"> \( A, \leq \) </span></h4><br>次はプログラムの状態 <span class="math-inline"> \( A \) </span> とその順序関係 <span class="math-inline"> \( \leq \) </span> です。<br>今回の設定では変数の状態以外に特に状態はありませんから、<br><span class="math-inline"> \( X \) </span> を変数の集合、 <span class="math-inline"> \( C \) </span> を変数の状態の集合として<br><span class="math-inline"> \( A = X \to C \) </span> とすればいいでしょう。<br><br>今さらっと <span class="math-inline"> \( C \) </span> を導入しましたが、ここが (多分自分が思うに) キモです。 これの中身をどうするかが抽象解釈の設計の本質パート (ではないかとと素人ながら) 思います.<br><br>というのもこの部分こそが調べたい性質のためにプログラムを抽象化するパートだからです。<br><br>例えば今回の場合、次のような集合と順序関係を考えることによって抽象化します。<br><br><span class="math-inline"> \( L = \{ \bot, 1, 2, 3, \cdots, \top \} \) </span> として、 <span class="math-inline"> \( L \) </span> 上の順序関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><div class="math-block"> \[ 
 
 l_i \leq l_j \Leftrightarrow l_i = l_j \text{ または } l_i = \bot \text{ または } l_j = \top
 
@@ -1047,11 +1047,11 @@ a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
 
  \] </div><br>これが束をなすのは論理関数のときと同じような感じでわかります！　(一般に、束の直積は上のように順序関係を定義することで束になります)<br>なお、次の記事で使うのでここでいくつかメモ書きをしておきます。 (また、これ以降では記法の煩雑さ回避のために全ての変数が共通の状態 <span class="math-inline"> \( l \) </span> である抽象状態 <span class="math-inline"> \( C: X \mapsto l \) </span> を単に <span class="math-inline"> \( l \) </span> と書きます.)<br><ol><li>meet の単位元は <span class="math-inline"> \( \bot \) </span> です</li><li>join の単位元は <span class="math-inline"> \( \top \) </span> です</li><li><span class="math-inline"> \( C \) </span> は有限性条件を満たします. (長さが最大の鎖は <span class="math-inline"> \( \bot \leq c \leq \top \) </span> です)</li></ol><br><script>page_contents.push({
     "type":"H4",
-    "id":"1272",
+    "id":"1275",
     "title":"3. <span class="math-inline"> \( ![.!] \) </span>"
 });
 </script>
-<h4 id="1272">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
+<h4 id="1275">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
 
 a = 
 \begin{cases}
@@ -1068,23 +1068,23 @@ s(x) & \text{otherwise}
 
  \] </div><br><br>[goto]<br>何も変わらないです。<br><br>[条件つき goto]<br>何も変わらないです。<br><br><script>page_contents.push({
     "type":"H4",
-    "id":"1311",
+    "id":"1314",
     "title":"4. <span class="math-inline"> \( a_0 \) </span>"
 });
 </script>
-<h4 id="1311">4. <span class="math-inline"> \( a_0 \) </span></h4><br>初期状態は全ての変数が <span class="math-inline"> \( \top \) </span> です。 元記事によれば元論文が間違っているとのことです。自分が一から読んでいたら気がつけないだろうことなので、ありがたいです。。。<br><br><script>page_contents.push({
+<h4 id="1314">4. <span class="math-inline"> \( a_0 \) </span></h4><br>初期状態は全ての変数が <span class="math-inline"> \( \top \) </span> です。 元記事によれば元論文が間違っているとのことです。自分が一から読んでいたら気がつけないだろうことなので、ありがたいです。。。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1320",
+    "id":"1323",
     "title":"まとめ ！？"
 });
 </script>
-<h2 id="1320">まとめ ！？</h2><br>こうして今回の問題設定をデータフロー解析の形式的定義に落とし込むことができました。<br><br>次回は実際にこれを解くアルゴリズムを紹介します。<br><br><script>page_contents.push({
+<h2 id="1323">まとめ ！？</h2><br>こうして今回の問題設定をデータフロー解析の形式的定義に落とし込むことができました。<br><br>次回は実際にこれを解くアルゴリズムを紹介します。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1329",
+    "id":"1332",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="1329">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
+<h2 id="1332">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js"
