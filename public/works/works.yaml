@@ -2,7 +2,7 @@ lapisla:
   title: lapisla
   img: /works/img/lapisla.png
   repo: lapisla-prover/lapisla-prover
-  short_desc: 定理証明支援系のカーネル・エディタ・レジストリなど
+  short_desc: 定理証明支援系のカーネル・エディタ・レジストリ
   desc: |
     lapisla は定理証明支援系です。 成果を簡単に利用・共有できることをコンセプトに、独自のカーネル・エディタ・レジストリなどを提供しています。
     ハッカソンで開発したもので、プロジェクト全体のリーダーとカーネルの一部、エディタの実装を担当しました。
