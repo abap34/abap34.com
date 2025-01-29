@@ -98,9 +98,6 @@ const Modal = ({ work, onClose }) => {
 export default function Works({ title, path, defaultVisibleCount }) {
     const [myworks, setWorks] = useState([]);
     const [selectedWork, setSelectedWork] = useState(null);
-    const [visibleCount, setVisibleCount] = useState(defaultVisibleCount);
-    const [showAll, setShowAll] = useState(false); 
-
     useEffect(() => {
         fetch(path)
             .then((response) => response.text())
@@ -117,21 +114,12 @@ export default function Works({ title, path, defaultVisibleCount }) {
         setSelectedWork(null);
     };
 
-    const loadMoreWorks = () => {
-        setVisibleCount(myworks.length);
-        setShowAll(true);
-    };
-
-    const closeMoreWorks = () => {
-        setVisibleCount(defaultVisibleCount);
-        setShowAll(false);
-    };
 
     return (
         <main className="container mx-auto px-4 py-8 break-all">
             <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400 dark:text-opacity-80 dark:font-bold"> {title} </h1>
             <h2 className="text-2xl font-bold"> (クリックで詳細表示) </h2>
-            {Object.entries(myworks).slice(0, visibleCount).map(([index, work]) => (
+            {Object.entries(myworks).map(([index, work]) => (
                 <div
                     key={index}
                     className="m-4 border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-gray-100 transition duration-300 dark:border-gray-800 dark:hover:bg-gray-800 dark:border-4"
@@ -149,24 +137,6 @@ export default function Works({ title, path, defaultVisibleCount }) {
                     </div>
                 </div>
             ))}
-
-            {!showAll ? (
-                <button
-                    onClick={loadMoreWorks}
-                    className="w-full mt-4 px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-600 transition"
-                >
-                    もっと見る
-                    <IoIosArrowDown className="text-xl inline" />
-                </button>
-            ) : (
-                <button
-                    onClick={closeMoreWorks}
-                    className="w-full mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                >
-                    閉じる
-                    <IoIosArrowUp className="text-xl inline" />
-                </button>
-            )}
 
             {selectedWork && <Modal work={selectedWork} onClose={handleCloseModal} />}
         </main>
