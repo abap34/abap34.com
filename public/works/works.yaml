@@ -1,3 +1,41 @@
+lapisla:
+  title: lapisla
+  img: /works/img/lapisla.png
+  repo: lapisla-prover/lapisla-prover
+  short_desc: 定理証明支援系のカーネル・エディタ・レジストリなど
+  desc: |
+    lapisla は定理証明支援系です。 成果を簡単に利用・共有できることをコンセプトに、独自のカーネル・エディタ・レジストリなどを提供しています。
+    ハッカソンで開発したもので、プロジェクト全体のリーダーとカーネルの一部、エディタの実装を担当しました。
+  lang:
+    - TypeScript
+  tags:
+    - 定理証明支援系
+    - 言語処理系
+    - Web
+    - TypeScript
+  period: 2025
+  relatedlinks:
+    - trap.jp/post/2478/
+
+mu:
+  title: mu
+  img: /works/img/mu.png
+  repo: abap34/mu
+  short_desc: 型解析に基づく最適化を実装した言語処理系
+  desc: |
+    mu は Julia言語製の言語処理系です。
+    抽象解釈ベースの型解析と、それに基づくディスパッチのパフォーマンス最適化が実装されています。
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - 言語処理系
+    - 型推論
+    - OSS
+  period: 2024
+
+
+
 JITrench.jl: 
   title: JITrench.jl
   img: /works/img/jitrench.png
