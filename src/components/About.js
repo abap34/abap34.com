@@ -38,7 +38,7 @@ export default function About() {
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <div className="space-y-2 justify-center">
                         <p>
-                            主には、Python / Julia / C++ あたりの言語が第一の選択肢になることが多いです。
+                            主には、Python / Julia / C++ / TypeScript あたりの言語が第一の選択肢になることが多いです。
                             <br></br>
                             ただ、どのプログラミング言語・技術も適している場面があると思っているので、
                             使う言語やライブラリにはあまりこだわりはなく、必要ならその場で使う勉強して使うタイプです。
@@ -52,7 +52,7 @@ export default function About() {
                             className="mx-auto"
                         />
                         <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-                            (※ GitHub で公開しているソースコードの割合)
+                            (※ GitHub の自身のレポジトリの言語割合.)
                         </p>
                     </div>
                 </div>
@@ -67,12 +67,12 @@ export default function About() {
                 </div>
                 <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
                     <p>
-                        最近は、 (最終更新: 2024年12月31日)
+                        最近は、 (最終更新: 2024年1月31日)
                     </p>
 
 
                     <ul className="list-disc list-inside space-y-2 p-2">
-                        <li> コンパイラの最適化技術</li>
+                        <li> コンパイラの最適化技術 </li>
                         <li> プログラミング言語の理論 </li>
                     </ul>
 
