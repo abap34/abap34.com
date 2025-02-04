@@ -2,10 +2,11 @@ lapisla:
   title: lapisla
   img: /works/img/lapisla.png
   repo: lapisla-prover/lapisla-prover
-  short_desc: 定理証明支援系のカーネル・エディタ・レジストリ
+  short_desc: 定理証明支援系
   desc: |
-    lapisla は定理証明支援系です。 成果を簡単に利用・共有できることをコンセプトに、独自のカーネル・エディタ・レジストリなどを提供しています。
-    ハッカソンで開発したもので、プロジェクト全体のリーダーとカーネルの一部、エディタの実装を担当しました。
+    lapisla は定理証明支援系です。 
+    成果を簡単に利用・共有できることをコンセプトに、独自のカーネル・エディタ・レジストリなどを提供しています。
+    プロジェクト全体のリーダーとカーネル、エディタの実装を担当しています。
   lang:
     - TypeScript
   tags:
@@ -32,7 +33,7 @@ mu:
     - 言語処理系
     - 型推論
     - OSS
-  period: 2024
+  period: 2025
 
 
 
@@ -40,7 +41,7 @@ JITrench.jl:
   title: JITrench.jl
   img: /works/img/jitrench.png
   repo: abap34/JITrench.jl
-  short_desc: Julia言語製の自動微分ライブラリ・深層学習フレームワーク
+  short_desc: 自動微分ライブラリ・深層学習フレームワーク
   desc: |
     JITrench.jl は Julia言語製の自動微分ライブラリ・深層学習フレームワークです。
 
@@ -68,7 +69,7 @@ almo:
     - Python
   relatedlinks:
     - https://www.abap34.com/posts/footnote_implement.html
-  short_desc: C++・Python製の拡張 Markdownパーサ・静的サイトジェネレータ
+  short_desc: 拡張 Markdownパーサ・静的サイトジェネレータ
   desc: |
     almo は 拡張 Markdownパーサ・静的サイトジェネレータです。
     
@@ -87,7 +88,22 @@ almo:
     - OSS
   period: 2023 ~
 
-    
+server.abap34.com:
+  title: server.abap34.com
+  img: /works/img/serverabap34com.png
+  repo: abap34/server.abap34.com
+  short_desc: マルチユーザーSSHチャットサーバー
+  desc: |
+    Go 言語製のチャットサーバです.
+    GitHub OAuth認証と公開鍵認証でログインできます。
+    身内のチャットサーバのために開発しました。 ssh コマンド一発でチャットに参加できるのがおもしろポイントです。
+  lang:
+    - Go
+  tags:
+    - Go
+    - TUI 
+  period: 2025
+
 
 Q_Q:
   title: Q_Q
