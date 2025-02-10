@@ -16,16 +16,18 @@ lapisla:
     - TypeScript
   period: 2025
   relatedlinks:
-    - trap.jp/post/2478/
+    - https://trap.jp/post/2478/
+    - https://lapisla.net
+    - https://docs.lapisla.net
 
 mu:
   title: mu
   img: /works/img/mu.png
   repo: abap34/mu
-  short_desc: 型解析に基づく最適化を実装した言語処理系
+  short_desc: 多重ディスパッチと型解析に基づくパフォーマンス最適化を実装した言語処理系
   desc: |
     mu は Julia言語製の言語処理系です。
-    抽象解釈ベースの型解析と、それに基づくディスパッチのパフォーマンス最適化が実装されています。
+    抽象解釈ベースの型解析と、それに基づく多重ディスパッチのパフォーマンス最適化が実装されています。
   lang:
     - Julia
   tags:
