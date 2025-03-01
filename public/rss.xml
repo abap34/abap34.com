@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>ROC-AUC の解釈</id>
+<title>ROC-AUC の解釈</title>
+<link>https://abap34.com/posts/auc.html</link>
+<pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>開発環境を紹介しますアドベントカレンダー @abap34</id>
 <title>開発環境を紹介しますアドベントカレンダー @abap34</title>
 <link>https://abap34.com/posts/devenv_advent.html</link>
@@ -278,17 +286,17 @@
 </item>
 
 <item>
-<id>Juliaで実行時間を制限する用のタイマー</id>
-<title>Juliaで実行時間を制限する用のタイマー</title>
-<link>https://abap34.com/posts/julia_timer.html</link>
+<id>Scheme入門した m1macでのScheme環境構築</id>
+<title>Scheme入門した m1macでのScheme環境構築</title>
+<link>https://abap34.com/posts/hello_scheme.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>Scheme入門した m1macでのScheme環境構築</id>
-<title>Scheme入門した m1macでのScheme環境構築</title>
-<link>https://abap34.com/posts/hello_scheme.html</link>
+<id>Juliaで実行時間を制限する用のタイマー</id>
+<title>Juliaで実行時間を制限する用のタイマー</title>
+<link>https://abap34.com/posts/julia_timer.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
