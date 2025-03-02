@@ -598,7 +598,7 @@ footer {
     "title":"結論だけ: ROC-AUC とは?"
 });
 </script>
-<h2 id="5">結論だけ: ROC-AUC とは?</h2><br>ROC-AUC は二値分類の評価指標で、 モデル <span class="math-inline"> \( f \) </span> が 正例と負例からそれぞれ一様に選んだ <span class="math-inline"> \( x^{+} \) </span> と <span class="math-inline"> \( x^{-} \) </span> について <span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のことです。 <br><br>つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。<br><br>計算したいときは、scikit-learn の <span class="inline-code"> <code>roc_auc_score</code> </span> を使うと便利です！<br><div class="code-block"> <pre><code class="language-python">&gt;&gt;&gt; from sklearn.metrics import roc_auc_score
+<h2 id="5">結論だけ: ROC-AUC とは?</h2><br>ROC-AUC は二値分類の評価指標で、 予測モデル <span class="math-inline"> \( f \) </span> が 正例と負例からそれぞれ一様に選んだ <span class="math-inline"> \( x^{+} \) </span> と <span class="math-inline"> \( x^{-} \) </span> について <span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のことです。 <br><br>つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。<br><br>計算したいときは、scikit-learn の <span class="inline-code"> <code>roc_auc_score</code> </span> を使うと便利です！<br><div class="code-block"> <pre><code class="language-python">&gt;&gt;&gt; from sklearn.metrics import roc_auc_score
 &gt;&gt;&gt; roc_auc_score([0, 1, 1, 0], [0.4, 0.2, 0.9, 0.1]) 
 np.float64(0.75)
 </code></pre> </div><br><br><script>page_contents.push({
