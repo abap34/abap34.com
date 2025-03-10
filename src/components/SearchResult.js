@@ -205,7 +205,7 @@ export default function SearchResult() {
             });
             return acc;
         }, {});
-        setAllTags(Object.entries(tags));
+        setAllTags(Object.entries(tags).sort((a, b) => b[1] - a[1]));
     }, [posts]);
 
 
@@ -214,13 +214,13 @@ export default function SearchResult() {
 
     const searchedPosts = searchPostsByQueries(searchPostsByTags(posts, tags), queries);
     return (
-        <main className="grid grid-cols-1 lg:grid-cols-[4fr,1fr] gap-4 container mx-auto px-4 py-8 space-y-8">
+        <main className="grid grid-cols-1 lg:grid-cols-[4fr,1fr] gap-4 container mx-auto px-2 py-8 space-y-8">
             <div className="space-y-8 py-4">
                 <div className="flex items-center space-x-2">
                     <SearchCheck className="w-8 h-8 text-purple-500" />
-                    <h1 className="text-4xl font-bold">Search Results</h1>
+                    <h1 className="text-4xl font-bold">Search </h1>
                 </div>
-                <SeachBar placeholder="Search Again" />
+                <SeachBar placeholder="To add a search query, type and press Enter" />
                 <div className="text-gray-600 flex items-center space-x-2">
                     <span>Search for:</span>
                     {queries.map((query, index) => (
@@ -239,7 +239,7 @@ export default function SearchResult() {
                     ))}
                 </div></div>
 
-            <TagList allTags={allTags} header='Found Tags' />
+            <TagList allTags={allTags} header='Found Tags' className="sticky top-0" />
         </main >
 
     );
