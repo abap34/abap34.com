@@ -20,7 +20,7 @@ body {
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
     padding-top: 3.5rem;
-    
+
     /* 長い単語も強制的に改行 */
     word-wrap: break-word;
 }
@@ -208,8 +208,9 @@ body {
 
 /* 箇条書きの字下げ */
 .content ul,
-.content ol {
-    margin-left: 1.5rem;
+.content ol,
+.content dl {
+    margin-left: 1.5rem !important;
 }
 
 /* 画像や動画のはみ出し対策 (特に縦長画像) */
@@ -394,7 +395,6 @@ footer {
 /* Corollary */
 .corollary {
     counter-increment: corollary
-    
 }
 
 .corollary::before {
@@ -501,6 +501,3 @@ footer {
 .footnote-def p {
     margin-bottom: 0;
 }
-
-
-
