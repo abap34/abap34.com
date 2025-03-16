@@ -81,6 +81,11 @@ function build_succ(I::Program)::Vector{Vector{Int}}
 end
 
 
+function ∇(yᵢ, xᵢ₊₁)
+    return xᵢ₊₁
+end
+
+
 
 function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState, ∇::Function)::Vector{AbstractState}
     n = length(I)
@@ -88,20 +93,23 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
     outputs = [copy(a₀) for _ in 1:n]
     pred = build_pred(I) 
 
+
     while true
         change = false
 
         for i in 1:n
             current_input = inputs[i]
             current_output = outputs[i]
-
-            new_input = reduce(⊓, outputs[j] for j in pred[i]; init=copy(a₀))
-            new_output = abstract_semantics(I[i])(new_input)
-
-            inputs[i] = new_input
-            outputs[i] = ∇(new_output, current_output)
             
-            if (current_input != new_input) || (current_output != new_output)
+            inputs[i] = reduce(
+                            ⊓, 
+                            outputs[j] for j in pred[i]; 
+                            init=copy(a₀)
+                        ) 
+
+            outputs[i] = ∇(outputs[i], abstract_semantics(I[i])(inputs[i]))
+
+            if (current_input != inputs[i]) || (current_output != outputs[i])
                 change = true
             end
         end

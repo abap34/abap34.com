@@ -127,7 +127,7 @@ unwrap_val(x::Const) = x.val
 # Part 4: initial state a₀
 # ------------------------
 
-a₀ = AbstractState(:x => ⊤, :y => ⊤, :z => ⊤, :r => ⊤)
+a₀ = AbstractState(:x => ⊤, :y => ⊤, :z => ⊤)
 
 # algorithm
 # ---------
@@ -275,16 +275,38 @@ end
 islnn(@nospecialize(_)) = false
 islnn(::LineNumberNode) = true
 
-prog0  = @prog begin
-    x = 1       # I₁
-    y = 2       # I₂
-    z = 3       # I₃
-    @goto      # I₄
-    x = 4 + y   # I₅
-    y = 5       # I₆
-    z = 6       # I₇
+# prog0 = @prog begin
+#     x = 1             # I₀
+#     y = 2             # I₁
+#     z = 3             # I₂
+#     @goto 8           # I₃
+#     r = y + z         # I₄
+#     x ≤ z && @goto 7  # I₅
+#     r = z + y         # I₆
+#     x = x + 1         # I₇
+#     x < 10 && @goto 4 # I₈
+# end
+
+prog0 = @prog begin
+    p && @goto 2      # I₀: 条件 p を評価し、真なら I₂ にジャンプ
+    @goto 3           # I₁: p が偽の場合、次の命令へ
+    x = 1             # I₂: p が真の場合の処理 (x = 1)
+    q && @goto 5      # I₃: 条件 q を評価し、真なら I₅ にジャンプ
+    @goto 6           # I₄: q が偽の場合、次の命令へ
+    y = x + 10        # I₅: q が真の場合の処理 (y = x + 10)
+    z = y + 5         # I₆: z = y + 5
 end
-result = max_fixed_point(prog0, a₀, abstract_eval) # The solution contains the `:r => Const(5)`, which is not found in the program
+
+prog3 = @prog begin
+    x = 0
+    x = 1 + x - 1
+    no_idea_function() && @goto 1
+    y = x
+end
+
+
+
+result = max_fixed_point(prog3, a₀, abstract_eval) # The solution contains the `:r => Const(5)`, which is not found in the program
 
 for (i, s) in enumerate(result)
     println("State at I$i: $s")
