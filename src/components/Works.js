@@ -34,7 +34,7 @@ const ExternalLinkComponent = ({ url }) => (
 
 const Tags = ({ tags }) => (
     <div className="flex flex-wrap gap-2 mt-3">
-        {tags.map((tag, index) => (
+        {tags && tags.map((tag, index) => (
             // <span
             //     key={index}
             //     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
@@ -155,7 +155,7 @@ const WorkModal = ({ work, open, onClose }) => {
                             {work.relatedlinks && work.relatedlinks.length > 0 && (
                                 <div className="space-y-2">
                                     <h4 className="text-sm font-medium text-gray-900 dark:text-white">Related Links</h4>
-                                    {work.relatedlinks.map((link, index) => (
+                                    {work.relatedlinks && work.relatedlinks.map((link, index) => (
                                         <ExternalLinkComponent key={index} url={link} />
                                     ))}
                                 </div>

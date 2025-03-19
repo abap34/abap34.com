@@ -1,3 +1,7 @@
+import LanguageContext from "../context/LanguageContext";
+import { useContext } from "react";
+
+
 function EachEducation(props) {
     return (
         <div className="border-l-2 border-gray-200 p-4">
@@ -24,15 +28,37 @@ function EachWork(props) {
 
 
 export default function Background() {
+        const { language, toggleLanguage } = useContext(LanguageContext);
+
+        let educations = language === "ja" ? [
+            { school: "東京工業大学 情報理工学院", period: "2022/04 ~" },
+            { school: "東京工業大学 情報理工学院 情報工学系", period: "2023/04 ~" }
+        ] : [
+            { school: "Tokyo Institute of Technology School of Computing", period: "2022/04 ~" },
+            { school: "Tokyo Institute of Technology School of Computing Information Engineering", period: "2023/04 ~" }
+        ];
+
+        let works = language === "ja" ? [
+            { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "深層学習を使った研究の実装・評価をしていました。" },
+            { company: "株式会社サイカ", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Python 製の既存の分析基盤を Julia で書き直して高速化するプロジェクトをしていました。" }
+        ] : [
+            { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "Implemented and evaluated research using deep learning." },
+            { company: "Xica Inc.", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Rewriting the existing analysis infrastructure written in Python in Julia to get faster and more efficient." }
+        ]
+
+        
     return (
         <main className="container mx-auto px-4">
             <h2 className="text-2xl font-bold my-4"> Education </h2>
-            <EachEducation school="東京工業大学 情報理工学院" period="2022/04 ~" />
-            <EachEducation school="東京工業大学 情報理工学院 情報工学系" period="2023/04 ~" />
+            {educations.map((education, index) => (
+                <EachEducation key={index} school={education.school} period={education.period} />
+            ))}
 
             <h2 className="text-2xl font-bold my-4">Work Experience</h2>
-            <EachWork company="DENSO IT Laboratory" url="https://www.d-itlab.co.jp/" period="2022" worktype="Reserch Internship" project="深層学習を使った研究の実装・評価をしていました。" />
-            <EachWork company="株式会社サイカ" url="https://xica.net/" period="2023" worktype="SWE Internship" project="Python 製の既存の分析基盤を Julia で書き直して高速化するプロジェクトをしていました。" />
+            {works.map((work, index) => (
+                <EachWork key={index} company={work.company} url={work.url} period={work.period} worktype={work.worktype} project={work.project} />
+            ))}
+
         </main>
     );
 }

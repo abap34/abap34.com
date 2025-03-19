@@ -1,0 +1,304 @@
+lapisla:
+  title: lapisla
+  img: /works/img/lapisla.png
+  repo: lapisla-prover/lapisla-prover
+  short_desc: Theorem Proving Assistant
+  desc: |
+    lapisla is a theorem proving assistant.
+    It provides a unique kernel, editor, and registry with the concept of making results easy to use and share.
+    I am responsible for leading the entire project and implementing the kernel and editor.
+  lang:
+    - TypeScript
+  tags:
+    - Theorem Proving Assistant
+    - Language Processing System
+    - Web
+    - TypeScript
+  period: 2025
+  relatedlinks:
+    - https://trap.jp/post/2478/
+    - https://lapisla.net
+    - https://docs.lapisla.net
+
+mu:
+  title: mu
+  img: /works/img/mu.png
+  repo: abap34/mu
+  short_desc: A language processing system with performance optimization based on multiple dispatch and type analysis
+  desc: |
+    mu is a language processing system written in Julia.
+    It implements abstract interpretation-based type analysis and performance optimization using multiple dispatch.
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - Language Processing System
+    - Type Inference
+    - OSS
+  period: 2025
+  relatedlinks:
+    - https://qiita.com/abap34/items/8344a73853ff0efc252f
+
+JITrench.jl: 
+  title: JITrench.jl
+  img: /works/img/jitrench.png
+  repo: abap34/JITrench.jl
+  short_desc: Automatic Differentiation Library & Deep Learning Framework
+  desc: |
+    JITrench.jl is an automatic differentiation library and deep learning framework written in Julia.
+
+    I became interested in the principles behind deep learning frameworks and implemented it from scratch.
+    It features modern deep learning framework characteristics such as Define-by-Run and explicit parameter management.
+
+    Additionally, it implements various algorithms such as quantization and computation graph optimization.
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - Machine Learning
+    - Deep Learning
+    - OSS
+  period: 2021 ~ 2023
+  relatedlinks:
+    - https://www.abap34.com/posts/jitrench.html
+
+almo: 
+  title: almo
+  img: /works/img/almo.png
+  repo: abap34/almo
+  lang: 
+    - C++
+    - Python
+  relatedlinks:
+    - https://www.abap34.com/posts/footnote_implement.html
+  short_desc: Extended Markdown Parser & Static Site Generator
+  desc: |
+    almo is an extended Markdown parser and static site generator.
+
+    The core parser is implemented in C++ with a focus on performance, but it also provides Python bindings, making it accessible and extensible in Python.
+    One of almo’s most unique features is the ability to execute Python files and generate plots in the browser using WebAssembly.
+
+    Ultimately, the goal is to provide a useful writing environment for those interested in machine learning, numerical computing, and algorithms.
+    Features such as VSCode integration and Jupyter Notebook conversion have also been implemented.
+
+    This blog site is also built using almo.
+
+    I am part of the development team, primarily responsible for the overall project design and implementation.
+  tags:
+    - C++
+    - Python
+    - Parser
+    - OSS
+  period: 2023 ~
+
+server.abap34.com:
+  title: server.abap34.com
+  img: /works/img/serverabap34com.png
+  repo: abap34/server.abap34.com
+  short_desc: Multi-User SSH Chat Server
+  desc: |
+    A chat server written in Go.
+    Users can log in using GitHub OAuth authentication or public key authentication.
+    Developed for a private chat server, with the interesting feature of allowing participation in chat with a single SSH command.
+  lang:
+    - Go
+  tags:
+    - Go
+    - TUI 
+  period: 2025
+
+Q_Q:
+  title: Q_Q
+  img: /works/img/q_q.png
+  short_desc: Question Collection and Answering System for SNS
+  desc: |
+    Q_Q is a question collection and answering system.
+    It aggregates questions and answers occurring on SNS and creates a page for them, reducing the burden on responders by suggesting similar questions.
+    Developed in a hackathon with circle members, I was mainly responsible for implementing the similar question suggestion feature.
+  lang:
+    - Python
+    - Streamlit
+  tags:
+    - Python
+    - Streamlit
+    - Web
+    - Machine Learning
+    - Natural Language Processing
+  period: 2024
+  relatedlinks:
+    - https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit
+
+Minia.jl:
+  title: Minia.jl
+  img: /works/img/minia.png
+  repo: abap34/Minia.jl
+  short_desc: A Language Processing System in Julia
+  desc: |
+    Minia.jl is a language processing system written in Julia.
+    It defines and parses grammar using PEG and transpiles it to Julia AST for execution.
+  lang: 
+    - Julia
+  relatedlinks:
+    - https://www.abap34.com/posts/mini-lang.html
+    - https://www.abap34.com/posts/tinypeg.html
+  tags:
+    - Julia
+    - Parser
+    - Language Processing System
+    - OSS
+  period: 2023
+
+abap34.com:
+  title: abap34.com
+  img: /works/img/abap34com.png
+  repo: abap34/abap34.com
+  short_desc: This Website
+  desc: |
+    This is my website. The blog is implemented using almo, while everything else is built with React.
+  lang:
+    - HTML
+    - CSS
+    - JavaScript
+  tags:
+    - React
+    - Web
+  relatedlinks:
+    - https://www.abap34.com/blog
+  period: 2022
+
+DacQ-v2:  
+  title: DacQ-v2
+  img: /works/img/dacq.png
+  repo: abap34/DacQ-v2
+  short_desc: Data Analysis Competition Platform built with Streamlit
+  desc: |
+    DacQ-v2 is a data analysis competition platform developed for hosting data analysis competitions within my circle.
+
+    It includes basic features of a data analysis competition, such as team-based participation and Jupyter Notebook-based discussion functionalities.
+  lang:
+    - Python
+    - Streamlit
+    - mariaDB
+  tags:
+    - Python
+    - Streamlit
+    - Web
+    - mariaDB
+    - Machine Learning
+  period: 2024
+  relatedlinks:
+    - https://www.abap34.com/posts/dacq.html
+
+ml-lecture-judge:
+  title: ml-lecture-judge
+  img: /works/img/ml-lecture-judge.png
+  repo: abap34/ml-lecture-judge
+  short_desc: Online Judge System built with React + FastAPI
+  desc: |
+    An online judge system developed for use within my circle.
+
+    The frontend is implemented in React, and the backend is built with FastAPI.
+    It uses Celery to manage the judge queue properly, ensuring stable execution.
+  lang:
+    - Python
+    - JavaScript
+  tags:
+    - Web
+    - React
+    - FastAPI
+    - Celery
+    - SQLite
+  period: 2024
+
+juliatokyo11: 
+  title: "JuliaTokyo #11 Talk: Automatic Differentiation with Julia"
+  img: /works/img/juliatokyo11.png
+  short_desc: "A presentation on automatic differentiation at JuliaTokyo #11 in February 2024"
+  desc: |
+    Automatic differentiation is a foundational technology in machine learning and continuous optimization.
+
+    Julia, widely used for scientific computing, has numerous automatic differentiation libraries deeply integrated with its compiler.
+
+    This talk provides an in-depth explanation of the algorithms behind automatic differentiation and introduces various Julia-based automatic differentiation libraries.
+  tags:
+    - Julia
+    - Automatic Differentiation
+    - Machine Learning
+    - LLVM
+    - Numerical Computing
+    - Language Processing System
+  period: 2024
+  relatedlinks:
+    - https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen
+
+medCon:
+  title: medCon2021-1st-place-solution
+  img: /works/img/medcon.png
+  repo: abap34/medCon2021-1st-place-solution
+  short_desc: Winner of the 2021 National Medical AI Contest
+  desc: | 
+    This is the solution that won the 2021 National Medical AI Contest.
+
+    The competition was held at the 85th Annual Meeting of the Japanese Circulation Society, where participants aimed to detect myocardial infarction based on ECG and patient data.
+
+    The winning approach leveraged carefully designed cross-validation and powerful models to outperform other participants.
+  tags:
+    - Machine Learning
+    - Deep Learning
+    - Kaggle
+  period: 2021
+  relatedlinks:
+    - https://docs.google.com/presentation/d/1zEko7m5alvMbFL09ImxFmKA8heCwzVzMXy1fQay__lM/edit#slide=id.gcadca11317_4_47
+
+parallelprng:
+  title: "Pseudo-Random Number Generation in the Era of Parallel Computing"
+  img: /works/img/parallelprng.png
+  short_desc: A presentation on pseudo-random number generation and parallel computing
+  desc: |
+    Pseudo-random number generation is essential in numerical computing and machine learning.
+    At the same time, parallelization is critical for accelerating computations.
+
+    However, naive parallelization can compromise the reproducibility of pseudo-random number generation.
+
+    This presentation begins with the basics of pseudo-random numbers and parallel processing and then explores techniques for maintaining reproducibility in parallel execution.
+
+    As a concrete example, it introduces how Julia manages the state of pseudo-random number generators in multi-process and multi-threaded environments.
+  tags:
+    - Julia
+    - Numerical Computing
+    - Machine Learning
+    - OS
+    - Parallel Computing
+  period: 2024
+  relatedlinks:
+    - https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng
+
+mllecture:
+  title: "Machine Learning Workshop"
+  img: /works/img/ml-lec.png
+  repo: abap34/ml-lecture
+  short_desc: ""
+  desc: |
+    An introductory machine learning material created for educating new members in my university’s student circle.
+  tags:
+    - Machine Learning
+  period: 2023 
+  relatedlinks:
+    - https://abap34.github.io/ml-lecture/
+
+blog:
+  title: "abap34.com/blog"
+  img: /works/img/blog.png
+  repo: abap34/my-site
+  short_desc: "The blog of this website"
+  desc: |
+    Many technical articles are posted on [this website's blog](https://www.abap34.com/blog).
+
+    The content mainly focuses on programming and mathematics-related topics.
+  tags:
+    - Compiler
+    - Mathematics
+    - Machine Learning
+  period: 2023 ~
+  relatedlinks:
+    - https://www.abap34.com/blog

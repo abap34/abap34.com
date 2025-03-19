@@ -2,8 +2,13 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLink, FaTwitter } from "react-icons/fa";
 import { FaSpeakerDeck } from "react-icons/fa6";
 import { TypeAnimation } from 'react-type-animation';
+import LanguageContext from "../context/LanguageContext";
+import { useContext } from "react";
+
 
 export default function Component() {
+    const { language, toggleLanguage } = useContext(LanguageContext);
+    
     return (
         <div className="flex items-center justify-center p-4 transition-colors duration-300">
             <motion.div
@@ -79,7 +84,9 @@ export default function Component() {
                             transition={{ delay: 1, duration: 0.5 }}
                             className="text-gray-700 dark:text-gray-300"
                         >
-                            犬と野球と音楽と計算機が好きです。
+                            {/* 犬と野球と音楽と計算機が好きです。 */}
+
+                            {language === "ja" ? "犬と野球と音楽と計算機が好きです。" : "I like dogs, baseball, music, and computers."}
                         </motion.p>
 
                         <motion.p
