@@ -18,10 +18,10 @@ function App() {
 
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
-  const [filename, setFilename] = useState("works/works.yaml");
+  const [filename, setFilename] = useState("/public/works/works.yaml");
 
   useEffect(() => {
-    setFilename(language === "ja" ? "works/works.yaml" : "works/works_en.yaml");
+    setFilename(language === "ja" ? "/public/works/works.yaml" : "/public/works/works_en.yaml");
   }, [language]);
 
   return (
