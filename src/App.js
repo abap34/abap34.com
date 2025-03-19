@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Background from './components/Background';
 import Footer from './components/Footer';
@@ -6,7 +6,7 @@ import Header from './components/Header';
 import SearchResult from './components/SearchResult';
 import TopPage from './components/TopPage';
 import Works from './components/Works';
-import { LanguageProvider, LanguageContext } from "./context/LanguageContext";
+import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
 
 function App() {
   return (
@@ -18,10 +18,10 @@ function App() {
 
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
-  const [filename, setFilename] = useState("/public/works/works.yaml");
+  const [filename, setFilename] = useState("//works/works.yaml");
 
   useEffect(() => {
-    setFilename(language === "ja" ? "/public/works/works.yaml" : "/public/works/works_en.yaml");
+    setFilename(language === "ja" ? "//works/works.yaml" : "//works/works_en.yaml");
   }, [language]);
 
   return (
