@@ -11,7 +11,7 @@ export default function About() {
 
     useEffect(() => {
         let filename = language === "ja" ? "/works/aboutme.yaml" : "/works/aboutme_en.yaml";
-        fetch(`/works/${filename}`)
+        fetch(filename)
             .then((res) => res.text())
             .then((text) => setData(yaml.parse(text)));
     }, [language]);
