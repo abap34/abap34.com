@@ -25,7 +25,7 @@ export default function About() {
             </h1>
 
             <Section icon={<GraduationCap className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />} title="Affiliation">
-                <p className="text-gray-700 dark:text-gray-300 ml-10 leading-relaxed">{data.belong}</p>
+                <p className="text-gray-700 dark:text-gray-300 ml-4 leading-relaxed">{data.belong}</p>
             </Section>
 
             <Section icon={<Lightbulb className="w-7 h-7 text-amber-500 dark:text-amber-400" />} title="About Me">
@@ -70,7 +70,7 @@ export default function About() {
             </Section>
 
             <section className="space-y-5 transition-all duration-300">
-                <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
                     {/* Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。 */}
                     {language === "ja" ? "Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。" : "In addition to what is in Works, I have published various software and implementations on GitHub, so please check it out!"}
                 </div>
@@ -90,14 +90,14 @@ function Section({ icon, title, children }) {
                 {icon}
                 <h2 className="border-b pb-1">{title}</h2>
             </div>
-            <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">{children}</div>
+            <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">{children}</div>
         </section>
     );
 }
 
 function MarkdownText({ text }) {
     return (
-        <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
             <ReactMarkdown>{text}</ReactMarkdown>
         </div>
     );
