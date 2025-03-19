@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, ExternalLink, Tag, X } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink, Tag  } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
@@ -118,7 +118,6 @@ const WorkModal = ({ work, open, onClose }) => {
                         onClick={onClose}
                         className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                     >
-                        <X className="h-5 w-5" />
                     </button>
                 </div>
 
