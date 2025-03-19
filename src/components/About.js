@@ -3,7 +3,9 @@ import { Book, Code, Cpu, GraduationCap, Lightbulb, Mail, Pen } from 'lucide-rea
 export default function About() {
     return (
         <div className="space-y-8 p-6 m-4">
-            <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400 dark:text-opacity-80 dark:font-bold"> About Me </h1>
+            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-200">
+                About Me
+            </h1>
             <section className="space-y-4">
                 <div className="flex items-center space-x-2 text-xl font-semibold">
                     <GraduationCap className="w-6 h-6 text-blue-500" />

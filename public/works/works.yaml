@@ -299,7 +299,7 @@ mllecture:
     - https://abap34.github.io/ml-lecture/
 
 blog:
-  title: "ブログ"
+  title: "abap34.com/blog"
   img: /works/img/blog.png
   repo: abap34/my-site
   short_desc: "このサイトのブログ"
@@ -309,22 +309,10 @@ blog:
     
     プログラム・数学関連の記事を中心に書いています。
   tags:
-   - 数学
+    - コンパイラ
+    - 数学
+    - 機械学習
+
   period: 2023 ~
   relatedlinks:
     - https://www.abap34.com/blog
-
-blog2:
-  title: ブログ (サークル)
-  img: /works/img/mllec.png
-  repo:
-  short_desc: "大学のサークルのブログ"
-  desc: |
-    [東京工業大学デジタル創作同好会 traP](https://trap.jp) のブログに、いくつかの記事を投稿しています。
-
-    機械学習に取り組むチームとアルゴリズムに取り組むチームに所属しているため、それに関連する記事を中心に書いています。
-  relatedlinks:
-    - https://trap.jp/author/abap34/
-  tags:
-    - Kaggle
-    - アルゴリズム
