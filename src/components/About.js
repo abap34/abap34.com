@@ -55,7 +55,7 @@ export default function About() {
 
                 {/* コードブロックの中のリストにする */}
                 <ul className="ml-8 list-disc list-inside space-y-3 bg-gray-50 dark:bg-gray-800 p-3 rounded">
-                    {data.detailed.map((item, index) => (
+                    {data.detailed && data.detailed.map((item, index) => (
                         <li key={index}>{item}</li>
                     ))}
 
