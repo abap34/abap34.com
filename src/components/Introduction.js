@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLink, FaTwitter } from "react-icons/fa";
+import { FaSpeakerDeck } from "react-icons/fa6";
 import { TypeAnimation } from 'react-type-animation';
 
 export default function Component() {
@@ -19,8 +20,8 @@ export default function Component() {
                         <div className="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
 
-                    <p className="text-gray-700 dark:text-gray-300 px-4">
-                        abap34's Portfolio
+                    <p className="text-gray-700 dark:text-gray-300 font-mono">
+                        ~/Desktop/abap34.com
                     </p>
 
                     <div className="px-4">
@@ -106,10 +107,16 @@ export default function Component() {
                                 @abap34
                             </a>
 
+                            <a href="https://speakerdeck.com/abap34" target="_blank" rel="noreferrer" className="text-white px-4 py-2 rounded bg-green-500 hover:bg-green-600 flex items-center transition duration-300 shadow-sm dark:hover:bg-green-400">
+                                <FaSpeakerDeck className="mr-2" />
+                                abap34's slides
+                            </a>
+
                             <a href="https://abap34.com/blog" target="_blank" rel="noreferrer" className="text-white px-4 py-2 rounded bg-orange-500 hover:bg-orange-600 flex items-center transition duration-300 shadow-sm dark:hover:bg-orange-400">
                                 <FaLink className="mr-2" />
                                 abap34's blog
                             </a>
+
                         </motion.div>
                     </motion.div>
 
