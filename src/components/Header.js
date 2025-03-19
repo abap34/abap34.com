@@ -49,7 +49,7 @@ export default function Header() {
           <Link to="/"> About </Link>
           <Link to="/background"> Background </Link>
           <Link to="/works"> Works </Link>
-          <Link to="/articles"> Articles </Link>
+          {/* <Link to="/articles"> Articles </Link> */}
           <Link to="/blog"> Blog </Link>
         </nav>
 
@@ -91,7 +91,7 @@ export default function Header() {
                   </Link>
                 )}
               </MenuItem>
-              <MenuItem>
+              {/* <MenuItem>
                 {({ active }) => (
                   <Link
                     to="/articles"
@@ -100,7 +100,7 @@ export default function Header() {
                     Articles
                   </Link>
                 )}
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem>
                 {({ active }) => (
                   <Link
