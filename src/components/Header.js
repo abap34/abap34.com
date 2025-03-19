@@ -1,8 +1,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
 import { FaArrowsRotate } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import LanguageContext from '../context/LanguageContext';
 
 export default function Header() {
   const BIG_ICON_SIZE = 24;
@@ -10,6 +11,7 @@ export default function Header() {
   const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   const [isDark, setIsDark] = useState(isDarkOS);
+  const { language, toggleLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     if (isDark) {
@@ -19,10 +21,22 @@ export default function Header() {
     }
   }, [isDark]);
 
+
   return (
     <header className="border-b border-gray-200 py-4 dark:border-gray-800 sticky  bg-white dark:bg-gray-900 dark:text-gray-200 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center">
-
+        <div>
+          <select
+            value={language}
+            onChange={(e) => {
+              toggleLanguage(e.target.value);
+            }}
+            className="text-gray-600 dark:text-gray-400"
+          >
+            <option value="ja">Japanese</option>
+            <option value="en">English</option>
+          </select>
+        </div>
         <div>
           <button onClick={() => setIsDark(!isDark)}>
             {isDark ? (

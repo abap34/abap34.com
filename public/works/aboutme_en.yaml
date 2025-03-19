@@ -1,0 +1,21 @@
+belong: Department of Computer Science, School of Computing, Tokyo Institute of Technology, B3
+aboutme: |
+  I love using computers to achieve:
+  - Things that only humans could do
+  - Things that humans could never do
+
+  As a means to realize this, I am particularly interested in machine learning and programming language processing systems.
+
+  My goal is to become a researcher and engineer who can handle both theory and implementation.
+
+stack: |
+  My primary choices of programming languages are Python, Julia, C++, and TypeScript.
+  I also write Go and Scheme.
+
+  However, I believe that each programming language and technology has its suitable use case.
+  I don't have strong preferences for specific languages or libraries; I learn and use whatever is necessary for the situation.
+
+detailed: 
+ - Theorem Proving Systems
+ - Automated Proof Generation
+ - Implementation of Language Servers

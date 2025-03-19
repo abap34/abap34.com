@@ -1,117 +1,104 @@
-import { Book, Code, Cpu, GraduationCap, Lightbulb, Mail, Pen } from 'lucide-react';
+import { Code, Cpu, GraduationCap, Lightbulb, Mail } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import yaml from "yaml";
+import LanguageContext from "../context/LanguageContext";
 
 export default function About() {
+    const [data, setData] = useState(null);
+    const { language, toggleLanguage } = useContext(LanguageContext);
+
+
+    useEffect(() => {
+        let filename = language === "ja" ? "aboutme.yaml" : "aboutme_en.yaml";
+        fetch(`/works/${filename}`)
+            .then((res) => res.text())
+            .then((text) => setData(yaml.parse(text)));
+    }, [language]);
+
+    if (!data) return <p>Loading...</p>;
+
     return (
-        <div className="space-y-8 p-6 m-4">
-            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-200">
+        <div className="max-w-4xl mx-auto py-12 px-6 space-y-12 bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
+            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 border-b pb-4 border-gray-200 dark:border-gray-700">
                 About Me
             </h1>
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <GraduationCap className="w-6 h-6 text-blue-500" />
-                    <h2>所属</h2>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 ml-8">東京工業大学情報理工学院 情報工学系 B3</p>
-            </section>
 
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                <Lightbulb className="w-6 h-6 text-purple-500" />
-                    <h2> About Me </h2>
-                </div>
-                <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
-                    <p>計算機を使うことで、</p>
-                    <ul className="list-disc list-inside space-y-2">
-                        <li>人間しかできなかったこと</li>
-                        <li>人間にはできなかったこと</li>
-                    </ul>
-                    <p>ができるようになることが好きです。</p>
-                    <p>それを実現するための技術として、機械学習やプログラミング言語処理系に興味があります。</p>
-                    <p>理論も実装も両方できるエンジニア・研究者が目標です。</p>
-                </div>
-            </section>
+            <Section icon={<GraduationCap className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />} title="Affiliation">
+                <p className="text-gray-700 dark:text-gray-300 ml-10 leading-relaxed">{data.belong}</p>
+            </Section>
 
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Code className="w-6 h-6 text-green-500" />
-                    <h2>技術スタック</h2>
-                </div>
+            <Section icon={<Lightbulb className="w-7 h-7 text-amber-500 dark:text-amber-400" />} title="About Me">
+                <MarkdownText text={data.aboutme} />
+            </Section>
 
-                <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
-                    <div className="space-y-2 justify-center">
-                        <p>
-                            主には、Python / Julia / C++ / TypeScript あたりの言語が第一の選択肢になることが多いです。
-                            <br></br>
-                            ただ、どのプログラミング言語・技術も適している場面があると思っているので、
-                            使う言語やライブラリにはあまりこだわりはなく、必要ならその場で使う勉強して使うタイプです。
-                        </p>
-                    </div>
+            <Section icon={<Code className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />} title="Skills">
 
-                    <div className="space-y-2 ">
-                        <img
-                            src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=400"
-                            alt="Most Used Languages"
-                            className="mx-auto"
-                        />
-                        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-                            (※ GitHub の自身のレポジトリの言語割合.)
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-
-
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Cpu className="w-6 h-6 text-red-500" />
-                    <h2>より細かい興味</h2>
-                </div>
-                <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
-                    <p>
-                        最近は、 (最終更新: 2024年1月31日)
-                    </p>
-
-
-                    <ul className="list-disc list-inside space-y-2 p-2">
-                        <li> コンパイラの最適化技術 </li>
-                        <li> プログラミング言語の理論 </li>
-                    </ul>
-
-                    <p>
-                        にとくに興味を持って勉強中です。
-                    </p>
-
-                </div>
-            </section>
-
-
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Pen className="w-6 h-6 text-blue-500" />
-                    <h2>その他</h2>
-                </div>
-
-                <div className="ml-8 space-y-4 text-gray-700 dark:text-gray-300">
-                    <p>
-                        <ul className="list-disc list-inside space-y-2 p-2">
-                            <li> Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。</li>
-                        </ul>
+                <div className="space-y-2 ">
+                    <img
+                        src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=400"
+                        alt="Most Used Languages"
+                        className="mx-auto"
+                    />
+                    <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+                        {/* (※ GitHub の自身のレポジトリの言語割合.) */}
+                        {language === "ja" ? "(※ GitHub の自身のレポジトリの言語割合.)" : "(※ The language ratio of my GitHub repositories.)"}
                     </p>
                 </div>
-            </section>
+            </Section>
 
-            <section className="space-y-4">
-                <div className="flex items-center space-x-2 text-xl font-semibold">
-                    <Mail className="w-6 h-6 text-blue-500" />
-                    <h2> Contact </h2>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 ml-8">
-                    <p>
-                        abap0002 [at] gmail.com
-                    </p>
+            <Section icon={<Cpu className="w-7 h-7 text-rose-600 dark:text-rose-400" />} title="Particular Interest">
+                <p>
+                    {/* 最近は、 (最終更新: 2024年1月31日) */}
+                    {language === "ja" ? "最近は、" : "Recently, "}
                 </p>
+
+                {/* コードブロックの中のリストにする */}
+                <ul className="ml-8 list-disc list-inside space-y-3 bg-gray-50 dark:bg-gray-800 p-3 rounded">
+                    {data.detailed.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+
+                </ul>
+
+                <p>
+                    {/* に特に興味を持って勉強しています。 */}
+
+                    {language === "ja" ? "に特に興味を持って勉強しています。" : "... are what I am particularly interested and studying."}
+
+                </p>
+            </Section>
+
+            <section className="space-y-5 transition-all duration-300">
+                <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {/* Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。 */}
+                    {language === "ja" ? "Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。" : "In addition to what is in Works, I have published various software and implementations on GitHub, so please check it out!"}
+                </div>
             </section>
+
+            <Section icon={<Mail className="w-7 h-7 text-blue-600 dark:text-blue-400" />} title="Contact">
+                <p className="font-mono bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded inline-block">abap0002 [at] gmail.com</p>
+            </Section>
         </div>
-    )
+    );
+}
+
+function Section({ icon, title, children }) {
+    return (
+        <section className="space-y-5 transition-all duration-300">
+            <div className="flex items-center gap-3 text-2xl font-medium">
+                {icon}
+                <h2 className="border-b pb-1">{title}</h2>
+            </div>
+            <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">{children}</div>
+        </section>
+    );
+}
+
+function MarkdownText({ text }) {
+    return (
+        <div className="ml-10 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+            <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
+    );
 }
