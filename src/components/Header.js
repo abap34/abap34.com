@@ -34,7 +34,7 @@ export default function Header() {
             className="text-gray-600 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-700 border border-gray-200 rounded-md px-2 py-1"
           >
             <option value="ja">Japanese</option>
-            <option value="en">English (beta)</option>
+            <option value="en">English (β)</option>
           </select>
         </div>
         <div>
