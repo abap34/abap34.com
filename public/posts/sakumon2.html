@@ -32,7 +32,7 @@
 
     <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
@@ -46,8 +46,8 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
-    <script type="text/javascript" id="MathJax-script"
-            async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <!-- 外部CSSを読み込む (以下が後述の style.css) -->
     <style>/* ===============================================
@@ -552,7 +552,87 @@ footer {
 
 .footnote-def p {
     margin-bottom: 0;
-}</style>
+}
+
+
+
+/* ========================== */
+/* ここからダークモードのスタイル */
+/* ========================== */
+
+/* --------------------------
+   ダークモード用スタイル
+   -------------------------- */
+   @media (prefers-color-scheme: dark) {
+    /* OS 設定に基づくダークモード（初期状態） */
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .global-header {
+        background-color: #1f1f1f;
+        border-bottom-color: #444;
+    }
+    .article-header, .content {
+        background-color: #1e1e1e;
+    }
+    .content a {
+        color: #8ab4f8;
+    }
+    pre code {
+        background-color: #2d2d2d;
+    }
+    table thead th {
+        background-color: #333;
+        border-bottom: 2px solid #555;
+    }
+    table th,
+    table td {
+        border: 1px solid #555;
+    }
+}
+
+/* 手動トグル用 (.dark-mode クラスを付与した場合の上書き) */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .global-header {
+    background-color: #1f1f1f;
+    border-bottom-color: #444;
+}
+body.dark-mode .article-header,
+body.dark-mode .content {
+    background-color: #1e1e1e;
+}
+body.dark-mode .content a {
+    color: #8ab4f8;
+}
+body.dark-mode pre code {
+    background-color: #2d2d2d;
+}
+body.dark-mode table thead th {
+    background-color: #333;
+    border-bottom: 2px solid #555;
+}
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #555;
+}
+
+/* ヘッダーのトグルボタン用の簡単なスタイル例 */
+.header-controls {
+    display: flex;
+    align-items: center;
+}
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+</style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
@@ -566,15 +646,23 @@ footer {
     <header class="global-header">
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
-            <a href="https://abap34.com" class="header-logo">abap34.com</a> > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/sakumon2.html">/作問ハッカソン 002で作問しました </a>
+            <a href="https://abap34.com" class="header-logo">abap34.com</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/sakumon2.html">/作問ハッカソン 002で作問しました </a>
         </div>
 
-        <div class="tweet-button">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-               data-text="作問ハッカソン 002で作問しました " data-url="https://abap34.com/posts/sakumon2.html" data-via="@abap34"> Tweet </a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <!-- トグルボタンとツイートボタンをグループ化 -->
+        <div class="header-controls">
+            <!-- ダークモードトグルボタン -->
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <!-- ツイートボタン -->
+            <div class="tweet-button">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-text="作問ハッカソン 002で作問しました " data-url="https://abap34.com/posts/sakumon2.html" data-via="@abap34"> Tweet </a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
         </div>
     </header>
+
 
     <div class="article-header">
         <div class="title">作問ハッカソン 002で作問しました </div>
@@ -608,14 +696,9 @@ footer {
 <h2 id="2">Don't cut line!</h2><br><br><url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> が運営してくれている traPのアルゴ班作問部で2回目の作問ハッカソンが開催されました。<br><br>実は一回目も参加していて、こんな問題: <url> <a href="https://yukicoder.me/problems/no/2438">Double Lease Squares</a> </url> を作ったのですが、 今回も参加して問題を出しました！ <br><span class="strong"> <strong><url> <a href="https://yukicoder.me/problems/10681">Don't cut line!</a> </url></strong> </span>  <br><figure><img src="sakumon2/image.png" ><figcaption></figcaption></figure><br><br>題材としては、最近クラスカル法やプリム法の最適性の証明とかを勉強したので、このあたりに着想を得て作りました。<br>実は、元の問題は <span class="math-inline"> \( P(T) = \sum_{i \in I}p_i \) </span> と定義されていたのですが、これのいい感じの解法がわからなかったので <span class="math-inline"> \( P(T) = \max_{i \in I} p_i \) </span> として出題しました。(調査の結果、元のやつは NP-hard で、色々となんか手法の提案はみたのですがいまいちわからずでした.)<br><br><br>感想としては、テストケースを作るのがとても難しかったです.<br>問題の性質上、 <span class="math-inline"> \( n \) </span> 番目の(?) 最小全域木からがコストの制約を満たす...みたいな感じにしなくてはいけない上、 そもそも入力は連結で単純にしないといけないので、脳死でランダムに作るみたいなことは当然ダメで、解法からいい感じに逆算して作る必要があったので色々と勉強になりました。<br>コンテスト中の提出を見ていると、この辺頑張って作ったテストケースがかなり撃墜してくれていたのでとてもよかったです。<br><br>前回のコンテストではかなり後ろの方の問題だったのでそこまで大量の提出が飛んでこなくて暇だな〜と思っていたのですが、 今回は70以上の提出があり、30人以上の方に解いていただけてとても嬉しかったです、ぜひ解いてみてください！<br>また、解説を頑張って書いたのでここにも掲載しておきます。<br><br><details style="border: 1px solid #ccc; border-radius: 4px; padding: 10px;"> <summary>解説(ネタバレ注意)</summary><br><span class="math-inline"> \( P(T) \) </span> は、<span class="math-inline"> \( T \) </span> に含まれる最も <span class="math-inline"> \( p_e \) </span> の大きい辺の <span class="math-inline"> \( p_e \) </span> のみによって決まります。<br>そのため、 条件を満たすように<span class="math-inline"> \( P(T) \) </span> を最大化するには、なるべく大きい <span class="math-inline"> \( p_e \) </span> を持つ辺を一つ採用し、あとはコストが最も小さくなるような全域木を作れば良いです。<br>つまり、<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法で今回の問題を解くことができます。<br>これを行う最も素直な方法は、辺を一つ選んだのちに、その辺が結ぶ二つの頂点をまとめて新しく得たグラフの最小全域木を得て、条件を満たすか確認することです。<br>しかし、最小全域木を作る際には <span class="math-inline"> \( N-2 \) </span> 本の辺を選ぶ必要があるので、 毎回 <span class="math-inline"> \( \Omega(N) \) </span> の計算量がかかってしまいます。<br>そして、あらかじめ選ぶ辺の候補は <span class="math-inline"> \( K \) </span> 本あるので、今回の制約でこのアルゴリズムを時間内に実行することは難しいです。<br>そこで、これを高速化することを考えます。<br><br>実は、毎回最小全域木を求め直すのではなく、与えられたグラフ <span class="math-inline"> \( G \) </span> に対する最小全域木をあらかじめ求めておくと、<br>ある辺が含まれるような全域木の最小コストを高速に求めることができます。<br><br><br><span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T = (V, E) \) </span> をあらかじめ求めたとします。<br>これに操作を加えることで、辺 <span class="math-inline"> \( e \notin E \) </span> が含まれるような全域木のうち最もコストが小さくなるようなものを得たいです。<br>まず、<span class="math-inline"> \( e \) </span> を <span class="math-inline"> \( T \) </span> に加えると、 <span class="math-inline"> \( T \) </span> にあらたに閉路がただひとつできます。<br>したがって、この閉路の辺をどれかひとつ削除すれば全域木となります。<br>そしてこのとき、この閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストの大きい辺を削除することで <span class="math-inline"> \( e \) </span> を含む最もコストの小さい全域木を得ることができます。<br>これは、あらかじめ <span class="math-inline"> \( e \) </span> を採用した状態でクラスカル法を適用することを考えればわかります。<br>この閉路を構成する辺のうち、最後に選ばれる辺である最もコストの大きい辺を追加すると、 <span class="math-inline"> \( e \) </span> がすでにあることから閉路ができるため、採用されなくなるためです。<br><br><br>したがって、 <span class="math-inline"> \( e \) </span> が含まれる最もコストの小さい全域木は、<br><br>木 <span class="math-inline"> \( T \) </span> があったとき、<br><br><strong>「 <span class="math-inline"> \( T \) </span> に 辺 <span class="math-inline"> \( e \) </span> を追加したとき、できる閉路の辺のうち <span class="math-inline"> \( e \) </span> 以外で最もコストが高いものはいくつか？」</strong><br><br>というクエリに高速で答えられるようになれば、高速に求まることになります。<br>ここからは、これについて考えます。<br><br><h3>削除する辺の高速な求め方</h3><br>ここで、できる閉路は、 <span class="math-inline"> \( u, v \) </span> の最小共通祖先を <span class="math-inline"> \( r \) </span> としたときに<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路と <span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> を繋ぐ経路という二つの経路が合わさったものである」ということに注目します。<br>すると、<span class="math-inline"> \( u, v \) </span> を繋いだことでできる閉路の辺のコストの最大値は、<br>「<span class="math-inline"> \( u \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 と 「<span class="math-inline"> \( v \) </span> から <span class="math-inline"> \( r \) </span> への経路の最大値」 の大きい方になります。<br><br>つまり、先ほどのクエリは 「<span class="math-inline"> \( T \) </span> の <span class="math-inline"> \( u, v \) </span> の最小共通祖先までの経路上のうち最もコストが高いものはいくつか？」<br>と言い換えられ、これにはダブリングと呼ばれるテクニックを用いると高速に答えることができます。<br><br><br><br>ダブリングを用いると、頂点数 <span class="math-inline"> \( V \) </span> の木の二つの頂点 <span class="math-inline"> \( u, v \) </span> の最小共通祖先は <span class="math-inline"> \( O(\log V) \) </span> で求めることができます。<br><br><br>さらに、これを求める際に、各頂点からの親への遷移の情報と共に、親への遷移の経路上の辺のコストの最大値を管理することで、<br><br><br><span class="math-inline"> \( u, v \) </span> それぞれからの最小共通祖先への経路上の最大コストを同時に求められます。<br><br>したがって、この方法で <span class="math-inline"> \( O(\log N) \) </span> の時間計算量で目的の辺を特定することができます。<br><br><h3>最終的なアルゴリズム</h3><br>ここまでの議論から、最初に登場した<br><ol>     <li>利益の大きい順に辺を選び、これを含むようなコストの最も小さい全域木 <span class="math-inline"> \( T' \) </span> を求める　</li>         <ul>             <li>                 <span class="math-inline"> \( W(T') \leq C \) </span> なら選んだ辺の利益を出力して終了             </li>             <li>                 満たさないなら次に大きい辺を選ぶ             </li>         </ul>     <li>         最後まで満たさなかったら <span class="math-inline"> \( -1 \) </span> を出力して終了     </li> </ol><br>という方法は、<br>クラスカル法などで、<span class="math-inline"> \( O(K \log K  + K \alpha(N)) \) </span> の時間計算量であらかじめ <span class="math-inline"> \( G \) </span> の最小全域木 <span class="math-inline"> \( T \) </span> を求めておくことで、<br><br>\1. の時間計算量が 毎回 <span class="math-inline"> \( O (\log N) \) </span>となり、<br>試す辺の数は高々 <span class="math-inline"> \( K \) </span> 本なので、全体としては <span class="math-inline"> \( O(K \log K + K \log N) \) </span> の時間計算量となります。<br>今回の問題では、このアルゴリズムを時間制限に十分間に合うように動作させることが可能です。<br></details><br><br>また、準備でいろいろと　<url> <a href="https://twitter.com/noya2ruler">@noya2</a> </url> と <url> <a href="https://twitter.com/PonponJuice0">@ponjuice</a> </url> くんにめちゃくちゃ助けてもらいました、 大変ありがとうございました(土下座)　🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️🙇‍♂️ <br><div class="footnote"></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
-            <script src="https://utteranc.es/client.js"
-                    repo="abap34/abap34com-comment"
-                    issue-term="og:title"
-                    label="comment"
-                    theme="github-light"
-                    crossorigin="anonymous"
-                    async>
-            </script>
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
         </div>
 
         <footer>
@@ -683,7 +766,44 @@ footer {
             each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-toggle').textContent = '🌙';
+            }
+        }
+
+        // 初期表示時: localStorage に設定があればそれを、なければ OS の設定に従う
+        let storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else {
+            // OS のダークモード設定に従う
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+            }
+        }
+
+        // トグルボタンのイベント設定
+        const toggleButton = document.getElementById('theme-toggle');
+        toggleButton.addEventListener('click', function () {
+            let newTheme;
+            if (document.body.classList.contains('dark-mode')) {
+                newTheme = 'light';
+            } else {
+                newTheme = 'dark';
+            }
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+
     </script>
 
 </body>
+
 </html>

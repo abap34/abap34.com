@@ -32,7 +32,7 @@
 
     <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
@@ -46,8 +46,8 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
-    <script type="text/javascript" id="MathJax-script"
-            async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <!-- 外部CSSを読み込む (以下が後述の style.css) -->
     <style>/* ===============================================
@@ -552,7 +552,87 @@ footer {
 
 .footnote-def p {
     margin-bottom: 0;
-}</style>
+}
+
+
+
+/* ========================== */
+/* ここからダークモードのスタイル */
+/* ========================== */
+
+/* --------------------------
+   ダークモード用スタイル
+   -------------------------- */
+   @media (prefers-color-scheme: dark) {
+    /* OS 設定に基づくダークモード（初期状態） */
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .global-header {
+        background-color: #1f1f1f;
+        border-bottom-color: #444;
+    }
+    .article-header, .content {
+        background-color: #1e1e1e;
+    }
+    .content a {
+        color: #8ab4f8;
+    }
+    pre code {
+        background-color: #2d2d2d;
+    }
+    table thead th {
+        background-color: #333;
+        border-bottom: 2px solid #555;
+    }
+    table th,
+    table td {
+        border: 1px solid #555;
+    }
+}
+
+/* 手動トグル用 (.dark-mode クラスを付与した場合の上書き) */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .global-header {
+    background-color: #1f1f1f;
+    border-bottom-color: #444;
+}
+body.dark-mode .article-header,
+body.dark-mode .content {
+    background-color: #1e1e1e;
+}
+body.dark-mode .content a {
+    color: #8ab4f8;
+}
+body.dark-mode pre code {
+    background-color: #2d2d2d;
+}
+body.dark-mode table thead th {
+    background-color: #333;
+    border-bottom: 2px solid #555;
+}
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #555;
+}
+
+/* ヘッダーのトグルボタン用の簡単なスタイル例 */
+.header-controls {
+    display: flex;
+    align-items: center;
+}
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+</style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
@@ -566,15 +646,23 @@ footer {
     <header class="global-header">
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
-            <a href="https://abap34.com" class="header-logo">abap34.com</a> > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/oj_abap34.html">/オンラインジャッジを作った</a>
+            <a href="https://abap34.com" class="header-logo">abap34.com</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/oj_abap34.html">/オンラインジャッジを作った</a>
         </div>
 
-        <div class="tweet-button">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-               data-text="オンラインジャッジを作った" data-url="https://abap34.com/posts/oj_abap34.html" data-via="@abap34"> Tweet </a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <!-- トグルボタンとツイートボタンをグループ化 -->
+        <div class="header-controls">
+            <!-- ダークモードトグルボタン -->
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <!-- ツイートボタン -->
+            <div class="tweet-button">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-text="オンラインジャッジを作った" data-url="https://abap34.com/posts/oj_abap34.html" data-via="@abap34"> Tweet </a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
         </div>
     </header>
+
 
     <div class="article-header">
         <div class="title">オンラインジャッジを作った</div>
@@ -656,14 +744,9 @@ footer {
 <h2 id="77">今日の一曲</h2><br>昨日シブツタでCD買いました。<br>渋谷より東に進出できるようになりたい。<br><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/KYvq8-xY1Gg?si=xbxsze8kJfULjrbI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
-            <script src="https://utteranc.es/client.js"
-                    repo="abap34/abap34com-comment"
-                    issue-term="og:title"
-                    label="comment"
-                    theme="github-light"
-                    crossorigin="anonymous"
-                    async>
-            </script>
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
         </div>
 
         <footer>
@@ -731,7 +814,44 @@ footer {
             each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
             document.querySelector(".tag-placeholder").appendChild(each_tag);
         });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-toggle').textContent = '🌙';
+            }
+        }
+
+        // 初期表示時: localStorage に設定があればそれを、なければ OS の設定に従う
+        let storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else {
+            // OS のダークモード設定に従う
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+            }
+        }
+
+        // トグルボタンのイベント設定
+        const toggleButton = document.getElementById('theme-toggle');
+        toggleButton.addEventListener('click', function () {
+            let newTheme;
+            if (document.body.classList.contains('dark-mode')) {
+                newTheme = 'light';
+            } else {
+                newTheme = 'dark';
+            }
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+
     </script>
 
 </body>
+
 </html>
