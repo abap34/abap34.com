@@ -189,30 +189,27 @@
             }
         }
 
-        // 初期表示時: localStorage に設定があればそれを、なければ OS の設定に従う
+        // 初期表示：localStorage に保存されたテーマがあればそれを適用し、なければ OS の設定に従う
         let storedTheme = localStorage.getItem('theme');
         if (storedTheme) {
             applyTheme(storedTheme);
         } else {
-            // OS のダークモード設定に従う
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 applyTheme('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                applyTheme('light');
+                localStorage.setItem('theme', 'light');
             }
         }
 
-        // トグルボタンのイベント設定
-        const toggleButton = document.getElementById('theme-toggle');
-        toggleButton.addEventListener('click', function () {
-            let newTheme;
-            if (document.body.classList.contains('dark-mode')) {
-                newTheme = 'light';
-            } else {
-                newTheme = 'dark';
-            }
+        // トグルボタンのクリックイベント
+        themeToggleButton.addEventListener('click', function () {
+            let newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
             applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
-
+    </script>
 
     </script>
 
