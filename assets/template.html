@@ -203,6 +203,8 @@
             }
         }
 
+        const themeToggleButton = document.getElementById('theme-toggle');
+
         // トグルボタンのクリックイベント
         themeToggleButton.addEventListener('click', function () {
             let newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
