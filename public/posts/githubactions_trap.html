@@ -64,7 +64,8 @@
 html,
 body {
     width: 100%;
-    min-height: 100vh; /* 画面全体に背景が伸びるようにする */
+    min-height: 100vh;
+    /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
     font-family: monospace;
@@ -83,7 +84,7 @@ body {
 .article-body {
     display: flex;
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 0 1rem;
     gap: 2rem;
 }
@@ -561,7 +562,7 @@ footer {
 /* ========================== */
 /* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
-    background-color: #121212 !important;
+    background-color: #1f1f1f !important;
     color: #e0e0e0 !important;
 }
 
