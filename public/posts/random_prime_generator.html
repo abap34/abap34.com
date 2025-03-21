@@ -64,7 +64,7 @@
 html,
 body {
     width: 100%;
-    height: 100%;
+    min-height: 100vh; /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
     font-family: monospace;
@@ -700,6 +700,15 @@ body.dark-mode .footnote-def {
     color: #e0e0e0 !important;
 }
 
+body.dark-mode a {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode a:hover {
+    color: #8ab4f8 !important;
+}
+
+
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
 body.light-mode {
     background-color: #fff !important;
@@ -1012,7 +1021,7 @@ const runBlock = async (objectid) => {
         </div>
 
         <!-- トグルボタンとツイートボタンをグループ化 -->
-        <div class="header-controls">
+        <div class="header-controls" style="display: flex;">
             <!-- ダークモードトグルボタン -->
             <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
             <!-- ツイートボタン -->
