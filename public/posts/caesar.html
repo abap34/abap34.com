@@ -557,82 +557,224 @@ footer {
 
 
 /* ========================== */
-/* ここからダークモードのスタイル */
+/* ここからテーマ切り替え用のスタイル */
 /* ========================== */
-
-/* --------------------------
-   ダークモード用スタイル
-   -------------------------- */
-   @media (prefers-color-scheme: dark) {
-    /* OS 設定に基づくダークモード（初期状態） */
-    body {
-        background-color: #121212;
-        color: #e0e0e0;
-    }
-    .global-header {
-        background-color: #1f1f1f;
-        border-bottom-color: #444;
-    }
-    .article-header, .content {
-        background-color: #1e1e1e;
-    }
-    .content a {
-        color: #8ab4f8;
-    }
-    pre code {
-        background-color: #2d2d2d;
-    }
-    table thead th {
-        background-color: #333;
-        border-bottom: 2px solid #555;
-    }
-    table th,
-    table td {
-        border: 1px solid #555;
-    }
-}
-
-/* 手動トグル用 (.dark-mode クラスを付与した場合の上書き) */
+/* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-body.dark-mode .global-header {
-    background-color: #1f1f1f;
-    border-bottom-color: #444;
-}
-body.dark-mode .article-header,
-body.dark-mode .content {
-    background-color: #1e1e1e;
-}
-body.dark-mode .content a {
-    color: #8ab4f8;
-}
-body.dark-mode pre code {
-    background-color: #2d2d2d;
-}
-body.dark-mode table thead th {
-    background-color: #333;
-    border-bottom: 2px solid #555;
-}
-body.dark-mode table th,
-body.dark-mode table td {
-    border: 1px solid #555;
-}
-
-/* ヘッダーのトグルボタン用の簡単なスタイル例 */
-.header-controls {
-    display: flex;
-    align-items: center;
-}
-#theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    margin-right: 1rem;
-}
-</style>
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .global-header {
+    background-color: #1f1f1f !important;
+    border-bottom: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .article-header {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .content {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .content h1,
+  body.dark-mode .content h2,
+  body.dark-mode .content h3,
+  body.dark-mode .content h4,
+  body.dark-mode .content h5,
+  body.dark-mode .content h6 {
+    color: #e0e0e0 !important;
+    border-bottom: 1px solid #555 !important;
+  }
+  body.dark-mode .content code {
+    background-color: #2d2d2d !important;
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode pre code {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .content a {
+    color: #8ab4f8 !important;
+  }
+  body.dark-mode table thead th {
+    background-color: #333 !important;
+    border-bottom: 2px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode table th,
+  body.dark-mode table td {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode table tbody tr:nth-child(even) {
+    background-color: #1e1e1e !important;
+  }
+  body.dark-mode table tbody tr:hover {
+    background-color: #2a2a2a !important;
+  }
+  body.dark-mode .tag {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .tag:hover {
+    background-color: #444 !important;
+  }
+  body.dark-mode #toc {
+    color: #bbb !important;
+  }
+  body.dark-mode #toc a {
+    color: #bbb !important;
+  }
+  body.dark-mode #toc a.active {
+    background-color: #555 !important;
+    color: #fff !important;
+  }
+  body.dark-mode footer {
+    color: #aaa !important;
+  }
+  body.dark-mode .info {
+    background-color: #2a2a2a !important;
+    border-left: 5px solid #666 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .warn {
+    background-color: #3a2a1a !important;
+    border-left: 5px solid #ffb74d !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .danger {
+    background-color: #4a1a1a !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .theorem,
+  body.dark-mode .lemma,
+  body.dark-mode .corollary,
+  body.dark-mode .proposition,
+  body.dark-mode .definition,
+  body.dark-mode .proof {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .footnotes {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  body.dark-mode .footnote-def {
+    border-left: 3px solid #555 !important;
+    color: #e0e0e0 !important;
+  }
+  
+  /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
+  body.light-mode {
+    background-color: #fff !important;
+    color: #333 !important;
+  }
+  body.light-mode .global-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+  }
+  body.light-mode .article-header {
+    background-color: #fff !important;
+    color: #333 !important;
+  }
+  body.light-mode .content {
+    background-color: #fff !important;
+    color: #333 !important;
+  }
+  body.light-mode .content h1,
+  body.light-mode .content h2,
+  body.light-mode .content h3,
+  body.light-mode .content h4,
+  body.light-mode .content h5,
+  body.light-mode .content h6 {
+    color: #333 !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+  body.light-mode .content code {
+    background-color: #f6f8fa !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+  }
+  body.light-mode pre code {
+    background-color: #f6f8fa !important;
+    color: #333 !important;
+  }
+  body.light-mode .content a {
+    color: #80bdff !important;
+  }
+  body.light-mode table thead th {
+    background-color: #f6f8fa !important;
+    border-bottom: 2px solid #ccc !important;
+    color: #333 !important;
+  }
+  body.light-mode table th,
+  body.light-mode table td {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+  }
+  body.light-mode table tbody tr:nth-child(even) {
+    background-color: #f9f9f9 !important;
+  }
+  body.light-mode table tbody tr:hover {
+    background-color: #f0f0f0 !important;
+  }
+  body.light-mode .tag {
+    background-color: #eee !important;
+    color: #333 !important;
+  }
+  body.light-mode .tag:hover {
+    background-color: #ddd !important;
+  }
+  body.light-mode #toc {
+    color: #555 !important;
+  }
+  body.light-mode #toc a {
+    color: #555 !important;
+  }
+  body.light-mode #toc a.active {
+    background-color: #777 !important;
+    color: #fff !important;
+  }
+  body.light-mode footer {
+    color: #666 !important;
+  }
+  body.light-mode .info {
+    background-color: #f0f0f0 !important;
+    border-left: 5px solid #333 !important;
+    color: #333 !important;
+  }
+  body.light-mode .warn {
+    background-color: #fff3e0 !important;
+    border-left: 5px solid #ffa500 !important;
+    color: #333 !important;
+  }
+  body.light-mode .danger {
+    background-color: #ffe7e7 !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #333 !important;
+  }
+  body.light-mode .theorem,
+  body.light-mode .lemma,
+  body.light-mode .corollary,
+  body.light-mode .proposition,
+  body.light-mode .definition,
+  body.light-mode .proof {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+  }
+  body.light-mode .footnotes {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+  }
+  body.light-mode .footnote-def {
+    border-left: 3px solid #ddd !important;
+    color: #333 !important;
+  }
+  </style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
@@ -777,30 +919,27 @@ body.dark-mode table td {
             }
         }
 
-        // 初期表示時: localStorage に設定があればそれを、なければ OS の設定に従う
+        // 初期表示：localStorage に保存されたテーマがあればそれを適用し、なければ OS の設定に従う
         let storedTheme = localStorage.getItem('theme');
         if (storedTheme) {
             applyTheme(storedTheme);
         } else {
-            // OS のダークモード設定に従う
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 applyTheme('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                applyTheme('light');
+                localStorage.setItem('theme', 'light');
             }
         }
 
-        // トグルボタンのイベント設定
-        const toggleButton = document.getElementById('theme-toggle');
-        toggleButton.addEventListener('click', function () {
-            let newTheme;
-            if (document.body.classList.contains('dark-mode')) {
-                newTheme = 'light';
-            } else {
-                newTheme = 'dark';
-            }
+        // トグルボタンのクリックイベント
+        themeToggleButton.addEventListener('click', function () {
+            let newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
             applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
-
+    </script>
 
     </script>
 
