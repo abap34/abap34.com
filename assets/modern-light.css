@@ -501,3 +501,83 @@ footer {
 .footnote-def p {
     margin-bottom: 0;
 }
+
+
+
+/* ========================== */
+/* ここからダークモードのスタイル */
+/* ========================== */
+
+/* --------------------------
+   ダークモード用スタイル
+   -------------------------- */
+   @media (prefers-color-scheme: dark) {
+    /* OS 設定に基づくダークモード（初期状態） */
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .global-header {
+        background-color: #1f1f1f;
+        border-bottom-color: #444;
+    }
+    .article-header, .content {
+        background-color: #1e1e1e;
+    }
+    .content a {
+        color: #8ab4f8;
+    }
+    pre code {
+        background-color: #2d2d2d;
+    }
+    table thead th {
+        background-color: #333;
+        border-bottom: 2px solid #555;
+    }
+    table th,
+    table td {
+        border: 1px solid #555;
+    }
+}
+
+/* 手動トグル用 (.dark-mode クラスを付与した場合の上書き) */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+body.dark-mode .global-header {
+    background-color: #1f1f1f;
+    border-bottom-color: #444;
+}
+body.dark-mode .article-header,
+body.dark-mode .content {
+    background-color: #1e1e1e;
+}
+body.dark-mode .content a {
+    color: #8ab4f8;
+}
+body.dark-mode pre code {
+    background-color: #2d2d2d;
+}
+body.dark-mode table thead th {
+    background-color: #333;
+    border-bottom: 2px solid #555;
+}
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #555;
+}
+
+/* ヘッダーのトグルボタン用の簡単なスタイル例 */
+.header-controls {
+    display: flex;
+    align-items: center;
+}
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
