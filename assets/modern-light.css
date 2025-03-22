@@ -513,22 +513,22 @@ footer {
 /* ========================== */
 /* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
-    background-color: #404248 !important;
+    background-color: #1f2022 !important;
     color: #e0e0e0 !important;
 }
 
 body.side.dark-mode {
-    background-color: #404248 !important;
+    background-color: #1f2022 !important;
 }
 
 body.dark-mode .article-body {
-    background-color: #404248 !important;
+    background-color: #1f2022 !important;
     color: #e0e0e0 !important;
 }
 
 
 body.dark-mode .global-header {
-    background-color: #4042489a !important;
+    background-color: #1f20229a !important;
     border-bottom: 1px solid #444 !important;
     color: #e0e0e0 !important;
 }
