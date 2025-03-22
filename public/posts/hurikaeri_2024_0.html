@@ -564,22 +564,22 @@ footer {
 /* ========================== */
 /* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
-    background-color: #2a2b2fba !important;
+    background-color: #404248 !important;
     color: #e0e0e0 !important;
 }
 
 body.side.dark-mode {
-    background-color: #2a2b2fba !important;
+    background-color: #404248 !important;
 }
 
 body.dark-mode .article-body {
-    background-color: #2a2b2fba !important;
+    background-color: #404248 !important;
     color: #e0e0e0 !important;
 }
 
 
 body.dark-mode .global-header {
-    background-color: #2a2b2fba !important;
+    background-color: #4042489a !important;
     border-bottom: 1px solid #444 !important;
     color: #e0e0e0 !important;
 }
@@ -596,7 +596,6 @@ body.dark-mode .article-header {
 }
 
 body.dark-mode .content {
-    background-color: #1e1e1e !important;
     color: #e0e0e0 !important;
 }
 
@@ -717,15 +716,24 @@ body.dark-mode a:hover {
     color: #8ab4f8 !important;
 }
 
-body.dark-mode .timeline-comment {
+body.dark-mode .timeline {
     background-color: #2a2b2f !important;
     border: 1px solid #444 !important;
     color: #e0e0e0 !important;
 }
 
-body.dark-mode .timeline-comment .timeline-comment-header {
-    background-color: #1e1e1e !important;
-    border-bottom: 1px solid #444 !important;
+
+body.dark-mode .theorem::before,
+body.dark-mode .lemma::before,
+body.dark-mode .corollary::before,
+body.dark-mode .proposition::before,
+body.dark-mode .definition::before,
+body.dark-mode .proof::before {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode button {
+    background-color: #333 !important;
     color: #e0e0e0 !important;
 }
 
@@ -858,6 +866,41 @@ body.light-mode .footnotes {
 
 body.light-mode .footnote-def {
     border-left: 3px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode a {
+    color: #80bdff !important;
+}
+
+body.light-mode a:hover {
+    color: #80bdff !important;
+}
+
+body.light-mode .timeline-comment {
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .timeline-comment .timeline-comment-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem::before,
+body.light-mode .lemma::before,
+body.light-mode .corollary::before,
+body.light-mode .proposition::before,
+body.light-mode .definition::before,
+body.light-mode .proof::before {
+    color: #333 !important;
+}
+
+
+body.light-mode button {
+    background-color: #fff !important;
     color: #333 !important;
 }</style>
 
