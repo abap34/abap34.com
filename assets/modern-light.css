@@ -20,7 +20,7 @@ body {
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
-    padding-top: 3.5rem;
+    padding-top: 3.0rem;
 
     /* 長い単語も強制的に改行 */
     word-wrap: break-word;
