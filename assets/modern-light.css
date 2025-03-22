@@ -677,6 +677,16 @@ body.dark-mode .timeline-comment .timeline-comment-header {
     color: #e0e0e0 !important;
 }
 
+body.dark-mode .theorem::before,
+body.dark-mode .lemma::before,
+body.dark-mode .corollary::before,
+body.dark-mode .proposition::before,
+body.dark-mode .definition::before,
+body.dark-mode .proof::before {
+    color: #e0e0e0 !important;
+}
+
+
 
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
 body.light-mode {
@@ -806,5 +816,34 @@ body.light-mode .footnotes {
 
 body.light-mode .footnote-def {
     border-left: 3px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode a {
+    color: #80bdff !important;
+}
+
+body.light-mode a:hover {
+    color: #80bdff !important;
+}
+
+body.light-mode .timeline-comment {
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .timeline-comment .timeline-comment-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem::before,
+body.light-mode .lemma::before,
+body.light-mode .corollary::before,
+body.light-mode .proposition::before,
+body.light-mode .definition::before,
+body.light-mode .proof::before {
     color: #333 !important;
 }
