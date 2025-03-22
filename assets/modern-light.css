@@ -458,7 +458,9 @@ footer {
 .math-inline {
     display: inline-grid;
     overflow: hidden !important;
-    font-size: 0.8em;
+    font-size: 0.9em;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 /* ===============================================
