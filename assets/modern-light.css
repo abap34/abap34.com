@@ -663,6 +663,18 @@ body.dark-mode a:hover {
     color: #8ab4f8 !important;
 }
 
+body.dark-mode .timeline-comment {
+    background-color: #2a2b2f !important;
+    border: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .timeline-comment .timeline-comment-header {
+    background-color: #1e1e1e !important;
+    border-bottom: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
 
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
 body.light-mode {
