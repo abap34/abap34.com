@@ -72,7 +72,8 @@ body {
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
-    padding-top: 3.0rem;
+    /* padding-top: 3.0rem; */
+    /* ↑ global-header側下げた */
 
     /* 長い単語も強制的に改行 */
     word-wrap: break-word;
@@ -135,7 +136,8 @@ body {
 
 .article-header {
     padding: 1rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
+    padding-top: 6rem;
     max-width: 800px;
     margin: 0 auto;
 }
@@ -591,7 +593,6 @@ body.dark-mode .code {
 }
 
 body.dark-mode .article-header {
-    background-color: #1e1e1e !important;
     color: #e0e0e0 !important;
 }
 
@@ -735,6 +736,10 @@ body.dark-mode .proof::before {
 body.dark-mode button {
     background-color: #333 !important;
     color: #e0e0e0 !important;
+    /* 装飾なし */
+    border: none;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
 }
 
 
@@ -902,6 +907,10 @@ body.light-mode .proof::before {
 body.light-mode button {
     background-color: #fff !important;
     color: #333 !important;
+    /* マウスオーバー時の色 */
+    border: 1px solid #ddd !important;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
 }</style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
