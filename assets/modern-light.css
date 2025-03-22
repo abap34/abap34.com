@@ -664,17 +664,12 @@ body.dark-mode a:hover {
     color: #8ab4f8 !important;
 }
 
-body.dark-mode .timeline-comment {
+body.dark-mode .timeline {
     background-color: #2a2b2f !important;
     border: 1px solid #444 !important;
     color: #e0e0e0 !important;
 }
 
-body.dark-mode .timeline-comment .timeline-comment-header {
-    background-color: #1e1e1e !important;
-    border-bottom: 1px solid #444 !important;
-    color: #e0e0e0 !important;
-}
 
 body.dark-mode .theorem::before,
 body.dark-mode .lemma::before,
@@ -685,6 +680,10 @@ body.dark-mode .proof::before {
     color: #e0e0e0 !important;
 }
 
+body.dark-mode button {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+}
 
 
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
@@ -844,5 +843,11 @@ body.light-mode .corollary::before,
 body.light-mode .proposition::before,
 body.light-mode .definition::before,
 body.light-mode .proof::before {
+    color: #333 !important;
+}
+
+
+body.light-mode button {
+    background-color: #fff !important;
     color: #333 !important;
 }
