@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        if (location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-10Y7GMS7GV');
+        }
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title>Julia Compiler Internals (06) - Implementing Small Julia Compiler</title>
+
+    <!-- OGP / Twitter 用のメタタグ -->
+    <meta property="og:title" content="Julia Compiler Internals (06) - Implementing Small Julia Compiler">
+    <meta property="og:image" content="https://abap34.com/posts/jci_06/image.png">
+    <meta property="og:description" content="多重ディスパッチと抽象解釈に基づく型推論が載った処理系を作ります。">
+    <meta property="og:url" content="https://abap34.com/posts/jci_06.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="abap34" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- ハイライトJS / FontAwesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <!-- その他ライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
+    <style>/* ===============================================
+   Reset / Base
+   =============================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    /* 画面全体に背景が伸びるようにする */
+    background-color: #fff;
+    color: #333;
+    font-family: monospace;
+    line-height: 1.5;
+    /* 文字ちょっと */
+    /*  global-header のぶんを押し下げる */
+    /* padding-top: 3.0rem; */
+    /* ↑ global-header側下げた */
+
+    /* 長い単語も強制的に改行 */
+    word-wrap: break-word;
+}
+
+/* ===============================================
+      Layout
+      =============================================== */
+.article-body {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    gap: 2rem;
+}
+
+.side {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 3.5rem;
+}
+
+.sidebar {
+    padding: 0.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.content {
+    flex: 1;
+    padding: 0.5rem;
+    min-width: 0;
+    /* 内容があふれにくいように */
+}
+
+/* ===============================================
+      Header
+      =============================================== */
+/* 一番上に常に固定するヘッダ */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+
+    /* 要素は横に並べる */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.article-header {
+    padding: 1rem;
+    /* margin-bottom: 1rem; */
+    padding-top: 6rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+
+.tag-placeholder {
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background-color: #eee;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.tag:hover {
+    background-color: #ddd;
+}
+
+.tag a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===============================================
+      TOC 
+      =============================================== */
+.toc_title {
+    display: none;
+}
+
+#toc {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+#toc li {
+    margin: 0.4rem 0;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #555;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    transition: background-color 0.1s, opacity 0.1s;
+    opacity: 1;
+}
+
+#toc a:hover {
+    background-color: #f0f0f0;
+    opacity: 1;
+}
+
+#toc a.active {
+    background-color: #777;
+    color: #fff;
+    opacity: 1 !important;
+}
+
+/* 階層によるインデント */
+.toc_H1 {
+    margin-left: 0;
+}
+
+.toc_H2 {
+    margin-left: 1rem;
+}
+
+.toc_H3 {
+    padding-left: 1.5rem;
+}
+
+/* ===============================================
+      Content
+      =============================================== */
+
+/* 見出しの見た目を少し改善し、下線とパディングを追加 */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+    color: #333;
+}
+
+h5 {
+    font-size: 1.1rem;
+}
+
+.content p {
+    margin-bottom: 1rem;
+}
+
+/* インラインコードを本文と区別しやすく */
+.content code {
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.95em;
+}
+
+/* 箇条書きの字下げ */
+.content ul,
+.content ol,
+.content dl {
+    margin-left: 1.5rem !important;
+}
+
+/* 画像や動画のはみ出し対策 (特に縦長画像) */
+.content img,
+.content video {
+    max-width: 80%;
+    max-height: 80vh;
+    /* ビューポートの80%を上限に */
+    height: auto;
+    display: block;
+    border: 1px solid #ddd;
+    /* 真ん中に置く */
+    margin: 1rem auto;
+}
+
+
+/* コードブロック内の行間を広げ可読性を向上 */
+pre code {
+    display: block;
+    white-space: pre;
+    border: none;
+    background: none;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+/* テーブルのデザイン (シンプル＆見やすい) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* 余分な隙間を除去 */
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+table thead th {
+    background-color: #f6f8fa;
+    border-bottom: 2px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.8rem;
+    vertical-align: top;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* 偶数行に薄い背景 */
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* ホバー時の強調 */
+}
+
+content a {
+    word-break: break-all;
+    color: #80bdff;
+    text-decoration: none;
+}
+
+iframe {
+    width: 100%;
+}
+
+figure {
+    margin: 1rem 0;
+}
+
+figcaption {
+    color: #777;
+    /* 真ん中に置く */
+    display: block;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* ===============================================
+      Footer
+      =============================================== */
+footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* ===============================================
+      Responsive
+      =============================================== */
+@media (max-width: 768px) {
+    .article-body {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .side {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        /* height: 100vh; を削除、autoに */
+        height: auto;
+    }
+
+    .content {
+        width: 100%;
+    }
+}
+
+/* ===============================================
+      Note / Warn / Danger blocks
+      =============================================== */
+.info {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #80bdff;
+    margin: 1rem;
+
+}
+
+/* Warn: ちょっと強めの注意喚起 (オレンジ系) */
+.warn {
+    background-color: #fff3e0;
+    /* 薄いオレンジ */
+    padding: 1rem;
+    border-left: 5px solid #ffa500;
+    /* オレンジ */
+    margin: 1rem;
+}
+
+/* Danger: 重大な警告 (赤系) */
+.danger {
+    background-color: #ffe7e7;
+    /* 薄い赤 */
+    padding: 1rem;
+    border-left: 5px solid #ff4d4f;
+    /* 赤 */
+    margin: 1rem;
+}
+
+/* ===============================================
+      Math Blocks (theorem / lemma / corollary / etc.)
+      =============================================== */
+
+/* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
+/* ベース: 背景は透明、左に太線のみ */
+.theorem,
+.lemma,
+.corollary,
+.proposition,
+.definition,
+.proof {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: none;
+    border: 1px solid #ddd;
+}
+
+/* Theorem */
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Lemma */
+.lemma {
+    counter-increment: lemma;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Corollary */
+.corollary {
+    counter-increment: corollary
+}
+
+.corollary::before {
+    content: "Corollary " counter(corollary) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proposition */
+.proposition {
+    counter-increment: proposition;
+}
+
+.proposition::before {
+    content: "Proposition " counter(proposition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Definition */
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proof */
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* 最後の段落が余計な下余白を取らないための調整 */
+.theorem p:last-child,
+.lemma p:last-child,
+.corollary p:last-child,
+.proposition p:last-child,
+.definition p:last-child,
+.proof p:last-child {
+    margin-bottom: 0;
+}
+
+/* mathjax の要素を少し小さめに表示 */
+
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow: hidden !important;
+    font-size: 0.9em;
+    max-width: 100%;
+}
+
+/* ===============================================
+      Footnotes
+        =============================================== */
+
+/* 脚注リンクのスタイル */
+
+
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    color: #777;
+}
+
+.footnote-ref a {
+    color: #777;
+    text-decoration: none;
+}
+
+.footnote-ref a:hover {
+    text-decoration: underline;
+}
+
+/* 脚注本体のスタイル */
+.footnotes {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+.footnote-def {
+    margin-bottom: 0.5rem;
+    /* 改行 */
+    padding: 0.2rem 0.5rem;
+    border-left: 3px solid #ddd;
+    display: block;
+}
+
+.footnote-def p {
+    margin-bottom: 0;
+}
+
+
+
+/* ========================== */
+/* ここからテーマ切り替え用のスタイル */
+/* ========================== */
+/* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
+body.dark-mode {
+    background-color: #1f2022 !important;
+    color: #e0e0e0 !important;
+}
+
+body.side.dark-mode {
+    background-color: #1f2022 !important;
+}
+
+body.dark-mode .article-body {
+    background-color: #1f2022 !important;
+    color: #e0e0e0 !important;
+}
+
+
+body.dark-mode .global-header {
+    background-color: #1f20229a !important;
+    border-bottom: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .code {
+    background-color: #595959 !important;
+}
+
+body.dark-mode .article-header {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content h1,
+body.dark-mode .content h2,
+body.dark-mode .content h3,
+body.dark-mode .content h4,
+body.dark-mode .content h5,
+body.dark-mode .content h6 {
+    color: #e0e0e0 !important;
+    border-bottom: 1px solid #555 !important;
+}
+
+body.dark-mode .content code {
+    background-color: #2d2d2d !important;
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode pre code {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content a {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode table thead th {
+    background-color: #333 !important;
+    border-bottom: 2px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode table tbody tr:nth-child(even) {
+    background-color: #1e1e1e !important;
+}
+
+body.dark-mode table tbody tr:hover {
+    background-color: #2a2a2a !important;
+}
+
+body.dark-mode .tag {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .tag:hover {
+    background-color: #444 !important;
+}
+
+body.dark-mode #toc {
+    color: #bbb !important;
+}
+
+body.dark-mode #toc a {
+    color: #bbb !important;
+}
+
+body.dark-mode #toc a.active {
+    background-color: #555 !important;
+    color: #fff !important;
+}
+
+body.dark-mode footer {
+    color: #aaa !important;
+}
+
+
+body.dark-mode .info {
+    background-color: #2a2a2a !important;
+    border-left: 5px solid #80bdff !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .warn {
+    background-color: #3a2a1a !important;
+    border-left: 5px solid #ffb74d !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .danger {
+    background-color: #4a1a1a !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .theorem,
+body.dark-mode .lemma,
+body.dark-mode .corollary,
+body.dark-mode .proposition,
+body.dark-mode .definition,
+body.dark-mode .proof {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .footnotes {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .footnote-def {
+    border-left: 3px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode a {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode a:hover {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode .timeline {
+    background-color: #2a2b2f !important;
+    border: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+
+body.dark-mode .theorem::before,
+body.dark-mode .lemma::before,
+body.dark-mode .corollary::before,
+body.dark-mode .proposition::before,
+body.dark-mode .definition::before,
+body.dark-mode .proof::before {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode button {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+    /* 装飾なし */
+    border: none;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
+}
+
+
+/* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
+body.light-mode {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .global-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .article-header {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .content {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .content h1,
+body.light-mode .content h2,
+body.light-mode .content h3,
+body.light-mode .content h4,
+body.light-mode .content h5,
+body.light-mode .content h6 {
+    color: #333 !important;
+    border-bottom: 1px solid #ccc !important;
+}
+
+body.light-mode .content code {
+    background-color: #f6f8fa !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode pre code {
+    background-color: #f6f8fa !important;
+    color: #333 !important;
+}
+
+body.light-mode .content a {
+    color: #80bdff !important;
+}
+
+body.light-mode table thead th {
+    background-color: #f6f8fa !important;
+    border-bottom: 2px solid #ccc !important;
+    color: #333 !important;
+}
+
+body.light-mode table th,
+body.light-mode table td {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode table tbody tr:nth-child(even) {
+    background-color: #f9f9f9 !important;
+}
+
+body.light-mode table tbody tr:hover {
+    background-color: #f0f0f0 !important;
+}
+
+body.light-mode .tag {
+    background-color: #eee !important;
+    color: #333 !important;
+}
+
+body.light-mode .tag:hover {
+    background-color: #ddd !important;
+}
+
+body.light-mode #toc {
+    color: #555 !important;
+}
+
+body.light-mode #toc a {
+    color: #555 !important;
+}
+
+body.light-mode #toc a.active {
+    background-color: #777 !important;
+    color: #fff !important;
+}
+
+body.light-mode footer {
+    color: #666 !important;
+}
+
+/* 薄青 */
+body.light-mode .info {
+    background-color: #f0f0f0 !important;
+    border-left: 5px solid #80bdff !important;
+    color: #333 !important;
+}
+
+body.light-mode .warn {
+    background-color: #fff3e0 !important;
+    border-left: 5px solid #ffa500 !important;
+    color: #333 !important;
+}
+
+body.light-mode .danger {
+    background-color: #ffe7e7 !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem,
+body.light-mode .lemma,
+body.light-mode .corollary,
+body.light-mode .proposition,
+body.light-mode .definition,
+body.light-mode .proof {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .footnotes {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .footnote-def {
+    border-left: 3px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode a {
+    color: #80bdff !important;
+}
+
+body.light-mode a:hover {
+    color: #80bdff !important;
+}
+
+body.light-mode .timeline-comment {
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .timeline-comment .timeline-comment-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem::before,
+body.light-mode .lemma::before,
+body.light-mode .corollary::before,
+body.light-mode .proposition::before,
+body.light-mode .definition::before,
+body.light-mode .proof::before {
+    color: #333 !important;
+}
+
+
+body.light-mode button {
+    background-color: #fff !important;
+    color: #333 !important;
+    /* マウスオーバー時の色 */
+    border: 1px solid #ddd !important;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
+}</style>
+
+    <!-- テンプレート置換用のスクリプト変数等 -->
+    <script>
+        page_contents = [];
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+</head>
+
+<body>
+    <header class="global-header">
+        <div class="header-inner">
+            <!-- クリックすると sidebar を表示/非表示 -->
+            <a href="https://abap34.com" class="header-logo">abap34.com</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/jci_06.html">/Julia Compiler Internals (06) - Implementing Small Julia Compiler</a>
+        </div>
+
+        <!-- トグルボタンとツイートボタンをグループ化 -->
+        <div class="header-controls" style="display: flex;">
+            <!-- ダークモードトグルボタン -->
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <!-- ツイートボタン -->
+            <div class="tweet-button">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-text="Julia Compiler Internals (06) - Implementing Small Julia Compiler" data-url="https://abap34.com/posts/jci_06.html" data-via="abap34"> Tweet </a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="article-header">
+        <div class="title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+        <script>title = document.querySelector(".title").innerHTML;</script>
+        <br>
+        <div class="date">2024/11/22</div>
+        <br>
+        <div class="tag-placeholder">[JuliaCompilerInternals, Julia, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]</div>
+    </div>
+
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
+    <div class="article-body">
+
+        <!-- サイドバー (TOC) -->
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- メイン本文 -->
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"あらすじ"
+});
+</script>
+<h2 id="2">あらすじ</h2><br>以前まで続けていた Julia コンパイラの内部構造についての記事について、一旦これまでの知見を使って簡略化した Julia のコンパイルプロセスを実装します。<br>そのほかの Juia コンパイラに関連する記事は <url> <a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">→ こちら</a> </url><br><br><hr><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"14",
+    "title":"Julia と 型推論"
+});
+</script>
+<h2 id="14">Julia と 型推論</h2><br>まず最初に、(みんなが思い浮かべるものという意味で) 一般的な型推論と少し違うのもあるので、Julia における型推論の利用のされ方について少し書きます。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"19",
+    "title":"型推論 ?"
+});
+</script>
+<h3 id="19">型推論 ?</h3><br>とくに意識して記述せずとも、特定の式が実行時にとりうる値の型についていくらかの非自明な事実が常に成り立っていることはよくあります。<br><br><div class="code-block"> <pre><code class="language-julia">x = 1  
+x + 1 # &lt;- 絶対 `Int`
+</code></pre> </div><br>のように書けば、<span class="inline-code"> <code>x + 1</code> </span> の値は <span class="inline-code"> <code>Int</code> </span> です。 <br>リテラルがなくとも、<br><div class="code-block"> <pre><code class="language-julia">name = readline()         # &lt;- String
+msg  = &quot;Hello, $(name)!&quot;  # &lt;- String
+</code></pre> </div><br>では、<span class="inline-code"> <code>name</code> </span> も <span class="inline-code"> <code>msg</code> </span> もつねに <span class="inline-code"> <code>String</code> </span> になるでしょう。 <br>さらに、<br><br><div class="code-block"> <pre><code class="language-julia">if x isa Number              # &lt;- `x` の値の型は `Number` 型の子か?
+    println(&quot;数字:&quot;, x)     
+elseif x isa AbstractString  # &lt;- `x` の値の型は `AbstractString` 型の子か?
+    println(&quot;文字列:&quot;, x)  
+end 
+</code></pre> </div><br>という条件分岐を考えると、それぞれの条件分岐の中では　<ul><li><span class="inline-code"> <code>x</code> </span> は <span class="inline-code"> <code>Number</code> </span>  (<span class="inline-code"> <code>Int64</code> </span>, <span class="inline-code"> <code>Int32</code> </span>, <span class="inline-code"> <code>Float64</code> </span> などの親)</li><li><span class="inline-code"> <code>x</code> </span> は <span class="inline-code"> <code>AbstractString</code> </span> (<span class="inline-code"> <code>String</code> </span>, <span class="inline-code"> <code>LazyString</code> </span> などの親)</li></ul><br>という事実が常に成り立ちます。<br><br><br>この記事では <span class="strong"> <strong>Julia の Docs にならい</strong> </span>、このような事実の導出─ 「あるコントロールフローにおいてある式が取りうる値の型情報を静的に導くこと」を <span class="strong"> <strong>型推論 (Type Inference)</strong> </span> と呼ぶことにします。<br>Julia の処理系の特徴の一つは、この意味での型推論を行なうことです。 そしてさらに特徴的な点は、得た情報をもっぱらパフォーマンス向上のために使うことです。<br>まずは型推論によってパフォーマンスを向上させることができる例を見てみます。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"89",
+    "title":"パフォーマンス向上例: ディスパッチの静的な解決"
+});
+</script>
+<h4 id="89">パフォーマンス向上例: ディスパッチの静的な解決</h4><br>二つの整数を受け取って、その総和を計算する関数を考えます。<br><div class="code-block"> <pre><code class="language-julia">add(a::Int, b::Int) = a + b
+</code></pre> </div><br>これを、ユーザ定義型 <span class="inline-code"> <code>MyInt</code> </span> の組にも使えるようにしてみます。 この <span class="inline-code"> <code>MyInt</code> </span> は加算するとついでに 100倍されます。 <span class="footnote-ref"><sup id="ref_scitokyo"><a href="#label_scitokyo">[scitokyo]</a></sup></span><br><br><br><div class="code-block"> <pre><code class="language-julia">struct MyInt
+    v::Int
+end
+
+
+add(a::MyInt, b::MyInt) = MyInt((a.v + b.v) * 100)
+</code></pre> </div>Julia ではこれら各実装のことをメソッドと呼びます。<br>つまり、<span class="inline-code"> <code>add</code> </span> という generic function (総称関数) があって、<br><ul><li><span class="inline-code"> <code>Int</code> </span> を普通に足すもの</li><li><span class="inline-code"> <code>MyInt</code> </span> を100倍されて足すもの</li></ul><br>という 2つのメソッドが存在することになります。<br>このとき、Julia の処理系は<br><div class="code-block"> <pre><code class="language-julia">a = MyInt(1)
+b = MyInt(1)
+add(a, b)　# =&gt; MyInt(200)
+</code></pre> </div><br>のような関数呼び出しを行う際に、すべての引数の実行時の値の型に基づいて <span class="inline-code"> <code>add(a::MyInt, b::MyInt) = MyInt((a.v + b.v) * 100)</code> </span> という実装を選択して実行してくれます。(多重ディスパッチといいます)<br>複数のマッチする実装があるときは、そのうちもっとも「特化したもの」が選ばれます。 例えば<br><div class="code-block"> <pre><code class="language-julia">f(x::Real, y::Real) = add_with_error_handle(x, y)
+f(x::Int, y::Int) = x + y
+</code></pre> </div><br>という <span class="inline-code"> <code>f</code> </span> があったときは <span class="inline-code"> <code>f(1, 2)</code> </span> という呼び出しは下のメソッドが呼び出されます。 <span class="inline-code"> <code>(Real, Real)</code> </span> という型の組より <span class="inline-code"> <code>(Int, Int)</code> </span> のほうが「特化している実装」だからです。<br><br>多重ディスパッチを行うためには 引数 <span class="inline-code"> <code>a</code> </span>, <span class="inline-code"> <code>b</code> </span> の型が判明していないといけないわけですが、Julia の処理系は実装の選択を実行時に行うことでこれを常に可能にしています。<br><div class="warn">しばしば混同される機能として、例えば C++ などにあるオーバーロードがありますが、オーバーロードは多重ディスパッチと異なり静的に実装を選択します。<br>また Python や Java の標準的な Class のように引数のうち一つを特別視して実装を選択 (シングルディスパッチ) せずに、全ての引数から実装を選択するのも多重ディスパッチの特徴です。</div><br><br>さて、多重ディスパッチによる実装の選択は、ものすごくざっくり書けば、<br><div class="code-block"> <pre><code class="language-julia">function call_generic(fname, args)
+    argtypes = typeof.(args)                         # (1) 引数の値の型チェック
+    matched = lookup(methodtable, fname, argtypes)   # (2) マッチするメソッドを検索
+    invoke(matched, args)                            # (3) 実行
+end 
+</code></pre> </div><br>のようなことをしているわけです。<br><br>しかし、これを実行時に行うと 毎回 <span class="inline-code"> <code>typeof.(args)</code> </span> を呼び出し、メソッドテーブルに検索をかけるコストがかかります。<br>ところがどっこい、型推論によって例えば 「引数は全て つねに <span class="inline-code"> <code>MyInt</code> </span> である」ことなどが導ける場合、この型チェックと検索をスキップして、直接特定のメソッド呼び出し (この場合は <span class="inline-code"> <code>(a.v + b.v) * 100</code> </span>) にすることができます！<br>これは型推論によってパフォーマンスを改善できる代表的な例です。<br>実際に Julia コンパイラがそのような最適化を行なっていることを確認してみましょう。<br>下のような二つの関数 <span class="inline-code"> <code>f</code> </span>, <span class="inline-code"> <code>g</code> </span> を考えます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; a = [1, 2, 3]
+3-element Vector{Int64}:
+ 1
+ 2
+ 3
+
+julia&gt; const b = [1, 2, 3]
+3-element Vector{Int64}:
+ 1
+ 2
+ 3
+
+julia&gt; function f(c)
+           d = c * a
+           return sum(d)
+       end
+f (generic function with 1 method)
+
+julia&gt; function g(c)
+           d = c * b
+           return sum(d)
+       end
+g (generic function with 1 method)
+</code></pre> </div><br>どちらも <span class="inline-code"> <code>c * [1, 2, 3]</code> </span> の総和を計算する関数ですが、<span class="inline-code"> <code>[1, 2, 3]</code> </span> の出どころが <ul><li><span class="inline-code"> <code>f</code> </span> : ただのグローバル変数 </li><li><span class="inline-code"> <code>g</code> </span> : <span class="inline-code"> <code>const</code> </span> 宣言したグローバル変数</li></ul><br>という違いがあります。実は、このことは型推論をする上で大きな差を生みます。<br>というのも、<span class="inline-code"> <code>const</code> </span> 宣言されていないグローバル変数は常に任意の型の値に書き換えれられる可能性があるので、Julia コンパイラはその型を <span class="inline-code"> <code>Any</code> </span> と推論するからです。<br>確認してみましょう。<br>Julia にはコンパイラが何を考えているのかを調べる手段がたくさん備わっており、例えば <span class="inline-code"> <code>@code_typed</code> </span> マクロを使うと型推論の結果やそれに基づく最適化を施した結果を見ることができます。<br><br>まず <span class="inline-code"> <code>f(1)</code> </span> は以下のようになります。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @code_typed f(1)
+# CodeInfo(
+# 1 ─ %1 = Main.a::Any         # &lt;- Any と推論されている
+# │   %2 = (c * %1)::Any       # &lt;- それとの積は `Any` 
+# │   %3 = Main.sum(%2)::Any   # &lt;- `sum` という generics 呼び出しのまま
+# └──      return %3
+# ) =&gt; Any                     # &lt;- `f(1)` 自体も `Any` と推論
+</code></pre> </div><br>計算過程の式は全て <span class="inline-code"> <code>Any</code> </span> と推論されていて、返り値も <span class="inline-code"> <code>Any</code> </span> となっています。 さらに、<span class="inline-code"> <code>sum</code> </span> という generic function の呼び出しがそのまま残っていますね。<br>一方 <span class="inline-code"> <code>g(1)</code> </span> は (長いので出力をかなり省略しています。ぜひ手元で試してみてください)<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @code_typed g(1)
+# CodeInfo(
+# 1 ── %1   = invoke Main.:*(c::Int64, Main.b::Vector{Int64})::Vector{Int64}
+#                ...
+# 9 ┄─ %28  = Base.getfield(%1, :ref)::MemoryRef{Int64}
+# │    %29  = Base.memoryrefnew(%28, 1, false)::MemoryRef{Int64}
+# │    %30  = Base.memoryrefget(%29, :not_atomic, false)::Int64
+# └───        goto #10
+# 10 ─        goto #32
+# 11 ─ %33  = Base.slt_int(%8, 16)::Bool
+# └───        goto #31 if not %33
+#               ...
+# 31 ─ %98  = invoke Base.mapreduce_impl(%4::typeof(identity),  %5::typeof(Base.add_sum), %1::Vector{Int64}, 1::Int64, %8::Int64, 1024::Int64)::Int64
+# └───        goto #32
+# 32 ┄ %100 = φ (#3 =&gt; 0, #10 =&gt; %30, #30 =&gt; %72, #31 =&gt; %98)::Int64
+#                ...
+# │    %118 = Base.not_int(%117)::Bool
+# └───        goto #46 if not %118
+# 45 ─        goto #2
+# 46 ─        return %110
+# ) =&gt; Int64
+</code></pre> </div><br>返り値は <span class="inline-code"> <code>Int64</code> </span> と推論されていること、そして <span class="inline-code"> <code>sum</code> </span> の呼び出しは消えて具体的な実装に置き換えられていることがわかります。さらによく見ると、<span class="inline-code"> <code>slt_int</code> </span> のような <span class="inline-code"> <code>Int</code> </span> 向けの特化した関数が使われているのがわかると思います。<br><br>実行速度を調べると<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @benchmark f(1)
+BenchmarkTools.Trial: 10000 samples with 994 evaluations per sample.
+ Range (min … max):  30.978 ns …  2.146 μs  ┊ GC (min … max): 0.00% … 97.90%
+ Time  (median):     33.284 ns              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   36.100 ns ± 46.637 ns  ┊ GC (mean ± σ):  7.44% ±  6.10%
+
+  ▁▂▁▁▇▇▅▃▂▅██▄▃▅▃▂▁ ▁▃▃▁                                     ▂
+  ███████████████████████▇▇▇▇▆▇▇▆▆▅▅▆▅▆▆▂▅▅▅▅▆▇▄▅▆▅▅▅▄▅▅▄▅▅▅▆ █
+  31 ns        Histogram: log(frequency) by time        44 ns &lt;
+
+ Memory estimate: 80 bytes, allocs estimate: 2.
+
+julia&gt; @benchmark g(1)
+BenchmarkTools.Trial: 10000 samples with 998 evaluations per sample.
+ Range (min … max):  15.281 ns …  1.825 μs  ┊ GC (min … max):  0.00% … 98.33%
+ Time  (median):     15.949 ns              ┊ GC (median):     0.00%
+ Time  (mean ± σ):   18.962 ns ± 52.555 ns  ┊ GC (mean ± σ):  13.34% ±  4.96%
+
+   ▄▆▆██▇▆▅▄▄▂▃▃▃▂▂▂▁ ▁ ▁▁▂▁▁ ▁    ▁▂▁▁                       ▂
+  ███████████████████████████████▇██████▇▆▇▇▆▅▅▆▅▆▆▆▅▅▆▅▆▃▆▇▇ █
+  15.3 ns      Histogram: log(frequency) by time        22 ns &lt;
+
+ Memory estimate: 80 bytes, allocs estimate: 2.
+
+</code></pre> </div><br>と、<span class="inline-code"> <code>g(1)</code> </span> の方が 2 倍近く高速です！<br>こうして Julia 言語は型推論に基づく最適化で良好なパフォーマンスを得ていることがわかりました。<br>このような例を出すと「Julia ではパフォーマンスを出すにはコンパイラの気持ちを理解しなければいけないのか」となるかも知れませんが、Julia コンパイラは大変賢く、パフォーマンスのために気をつける必要があることは (少なくとも同じような「簡潔だけど高速」という売り込みの言語に比べれば) かなり少ないというのが私の印象です。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"262",
+    "title":"そのほかの特徴"
+});
+</script>
+<h4 id="262">そのほかの特徴</h4><br>Julia の型推論プロセスが持つ特徴としては、以下のようなものがあります。<br><script>page_contents.push({
+    "type":"H5",
+    "id":"267",
+    "title":"1 推論は <span class="strong"> <strong>できる限り</strong> </span> 行われる"
+});
+</script>
+<h5 id="267">1 推論は <span class="strong"> <strong>できる限り</strong> </span> 行われる</h5><br>Julia の処理系は推論精度 (による実行時間の短縮) とコンパイル時間とのトレードオフに気を使って実装されています。<br>インタラクティブに行いたい科学技術計算ではコンパイル時間がいたずらに長くなるような処理系の体験はとても悪くなるからです。<br>理論的に達成できる限界まで精度よく推論できなくても実行自体はできるので、実は導出可能であってもコンパイル時間の短縮のため推論を行わないこともあります。<br><br><script>page_contents.push({
+    "type":"H5",
+    "id":"280",
+    "title":"2 推論のエントリポイントは関数呼び出し"
+});
+</script>
+<h5 id="280">2 推論のエントリポイントは関数呼び出し</h5><br>Julia の関数はあたらしい引数の型の組で呼び出されたまさにそのときにコンパイルされ、実行されます。 そのため、Julia の型推論プロセスは、渡された具体的な値の型から出発します。<br><script>page_contents.push({
+    "type":"H5",
+    "id":"285",
+    "title":"3 推論は inter-procedural に行われる"
+});
+</script>
+<h5 id="285">3 推論は inter-procedural に行われる</h5><br><br>Julia の型推論は関数境界を跨いで行われます。つまり、ビルトイン関数とは限らない (= 返り値の型が明らかでない) <span class="inline-code"> <code>g</code> </span> の呼び出しを含む <span class="inline-code"> <code>f</code> </span> をコンパイルする際、<span class="inline-code"> <code>g</code> </span> に対する推論も行われます。<br>まとめると、以下のようになります。<br><div class="info"><span class="strong"> <strong>Julia の型推論プロセスのまとめ</strong> </span><br><br>Julia の型推論プロセスは<br><ol><li>関数の実際の実行を始めようとする <span class="strong"> <strong>まさにそのときに</strong> </span></li><li>その引数の <span class="strong"> <strong>値の型</strong> </span> から</li><li>ある箇所での変数の型の情報を </li><li><span class="strong"> <strong>関数境界を跨いで</strong> </span> 再帰的に</li><li><span class="strong"> <strong>できる限り</strong> </span>推論する こと</li><li>(でパフォーマンスを向上させる)</li></ol><br>プロセス。</div><br>また、得られる型情報の利用のされ方も一般的な静的型付け言語とはかなり異なります。<br>Julia は JIT コンパイル<span class="footnote-ref"><sup id="ref_jitcompile"><a href="#label_jitcompile">[jitcompile]</a></sup></span> で動作する動的型付けの言語です。コンパイル時に型検査は行われず、例えばメソッドが存在しないことがコンパイル時にわかってもコンパイルエラーなどとはせず、実行時例外になります。<br><br><div class="code-block"> <pre><code class="language-no_method.jl">myadd(a::Int, b::Int) = a + b
+
+function main()
+    println(&quot;Start to execute main~~&quot;)
+    myadd(0.2, 0.3)  # &lt;- `myadd` は (Float64, Float64) に対しては実装がない
+end
+
+main()
+
+# ↓
+# ↓
+# julia&gt; include(&quot;no_method.jl&quot;)
+# Start to execute main~~
+# ERROR: LoadError: MethodError: no method matching myadd(::Float64, ::Float64)
+# The function `myadd` exists, but no method is defined for this combination of argument types.
+# 
+# Closest candidates are:
+#   myadd(::Int64, ::Int64)
+#    @ Main ~/Desktop/mu/no_method.jl:1
+</code></pre> </div><br><br>その意味で、こと Julia コンパイラ本体においては型推論はほとんどパフォーマンスのためのいち情報に過ぎないわけですが、本体にないだけで Julia の型推論を使って静的にエラーチェックをしたり、rutime-dispatch などを検知するパッケージなどもあります。<br>ここでは JET.jl を紹介します。<br>https://github.com/aviatesk/JET.jl<br><div class="code-block"> <pre><code class="language-julia">julia&gt; using JET
+
+julia&gt; myadd(a::Int, b::Int) = a + b
+myadd (generic function with 1 method)
+
+julia&gt; function main()
+           println(&quot;Start to execute main~~&quot;)
+           myadd(0.2, 0.3)  
+       end
+main (generic function with 1 method)
+
+julia&gt; @report_call main()
+═════ 1 possible error found ═════         # &lt;-  no method を発見
+┌ main() @ Main ./REPL[3]:3
+│ no matching method found `myadd(::Float64, ::Float64)`: myadd(0.2, 0.3)
+└────────────────────
+</code></pre> </div><br>JET.jl は、Julia コンパイラの型推論プロセスを利用して、上のように <span class="inline-code"> <code>main</code> </span> の呼び出しで <span class="inline-code"> <code>(Float64, Float64)</code> </span> に対する <span class="inline-code"> <code>myadd</code> </span> の実装があるかを静的に検査してくれます。<br>また、このようなツールの組み込みはまだ発展途上ですというのが正直な答えになってしまうものの、Language Server も一応あります。<br>https://github.com/julia-vscode/LanguageServer.jl<br><br>Julia の型システムそのものについての詳しい解説は (30 記事くらいになってしまうので) ここでは深くは触れません。<br><url> <a href="https://docs.julialang.org/en/v1/manual/types/">公式ドキュメント─ types</a> </url> か、あるいは日本語の書籍もいくつかあってその中である程度解説されているのでそちらを参照してみてください。 型システム関連だととくに実践 Julia入門は相当詳しく書かれています。<br><ul><li><url> <a href="https://amzn.asia/d/2TAXhJK">実践 Julia入門</a> </url></li><li><url> <a href="https://amzn.asia/d/4JX6MR2">Julia プログラミング大全</a> </url></li><li><url> <a href="https://amzn.asia/d/cqUjZ7p">1から始める Juliaプログラミング</a> </url></li></ul><br><script>page_contents.push({
+    "type":"H3",
+    "id":"378",
+    "title":"Julia の型推論までのプロセス"
+});
+</script>
+<h3 id="378">Julia の型推論までのプロセス</h3><br>さて、ここからはこの型推論プロセスを作っていきます。<br>まずは実装を始める前に、型推論プロセスの入出力を明確にしておきましょう。<br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/56511b86-333b-c441-f8b4-36b4704a3cd1.png" ><figcaption>image.png</figcaption></figure><br>まず、Julia の処理系はソースコードをパースして (surface-) AST を作ります。<br>しかし、AST はそのままだと最適化が実装しにくいので、Julia の型推論は AST を最適化しやすいよう変形した IR に対して行われます。(この処理は lowering と呼ばれます)<br>実際にはさまざまなコンパイラへのヒントなども含みますが、使われる IR はざっくり言ってしまえば<br><ul><li>マクロが全て展開されて</li><li>全ての糖衣構文 (for, 三項演算子など) が解体されて</li><li>GOTO を使った直列の命令列への書き直し (linearize) が行われた</li></ul><br>形式です。<br><span class="inline-code"> <code>Meta.lower</code> </span> によって実際に AST から IR に変換した結果を見ることができるのですが、<br><div class="code-block"> <pre><code class="language-julia">julia&gt; lowered_ir = Meta.lower(Main, 
+                  quote
+                      for i in 1:10
+                          println(i)
+                      end
+                  end
+              )
+              
+# :($(Expr(:thunk, CodeInfo(
+#    @ REPL[23]:3 within `top-level scope`
+# 1 ─ %1  = :
+# │   %2  = (%1)(1, 10)
+# │         #s2 = Base.iterate(%2)         
+# │   %4  = #s2
+# │   %5  = %4 === nothing
+# │   %6  = Base.not_int(%5)
+# └──       goto #4 if not %6                # &lt;- goto が生えてる
+# 2 ┄ %8  = #s2
+# │         i = Core.getfield(%8, 1)
+# │   %10 = Core.getfield(%8, 2)
+# │   @ REPL[23]:4 within `top-level scope`
+# │   %11 = i
+# │         println(%11)
+# │   @ REPL[23]:5 within `top-level scope`
+# │         #s2 = Base.iterate(%2, %10)
+# │   %14 = #s2
+# │   %15 = %14 === nothing
+# │   %16 = Base.not_int(%15)
+# └──       goto #4 if not %16                # &lt;- goto が生えてる
+# 3 ─       goto #2                           # &lt;- goto が生えてる
+# 4 ┄       return nothing
+# ))))
+</code></pre> </div><br>なんだかごちゃごちゃしているように見えるかもしれませんが、for 文が解体されて条件付き goto を使った直列の命令列への書き換えがされていることがわかります。<br><br>このような IR も Julia 自体での表現 (<span class="inline-code"> <code>CodeInfo</code> </span> 型) を持つので、触って遊ぶことができます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; lowered_ir.args[1].code[1:10]
+10-element Vector{Any}:
+ :(Core.get_binding_type(Main, :i))
+ :(_1 = 0)
+ :(_1)
+ :(%3 isa %1)
+ :(goto %7 if not %4)
+ :(goto %9)
+ :(_1)
+ :(_1 = Base.convert(%1, %7))
+ :(_1)
+ :(i = %9)
+</code></pre> </div><br>一方で lowering の処理それ自体は現在は C や Scheme で実装されているのですが、最近は Julia によって書き直すプロジェクトが進んでおり、いずれは Julia で完結するかもしれません。(パーサもかつては Scheme 製でしたが今は Julia製のものが動いています。https://github.com/JuliaLang/JuliaSyntax.jl)<br>https://github.com/c42f/JuliaLowering.jl<br>この lowerd IR を受け取り、型情報を付加したものを出力するのが目標です。<br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d8118ab4-c178-42f4-a5e4-96314a86dac5.png" ><figcaption>image.png</figcaption></figure><br><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"427",
+    "title":"Julia の型推論アルゴリズム　─ 抽象解釈"
+});
+</script>
+<h3 id="427">Julia の型推論アルゴリズム　─ 抽象解釈</h3><br>Julia の型推論は、抽象解釈という枠組みのもと構築されています。<br>最初にも書きましたが、これを正確に説明することにすると大変なボリュームになってしまうので、詳しい話は <url> <a href="https://www.abap34.com/search?tag=%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AD%E3%83%BC%E8%A7%A3%E6%9E%90">abap34.com/search?tag=データフロー解析</a> </url> に譲り、ここではかなり簡単な内容に留めます。<br>抽象解釈は、簡単に言えば<br><span class="strong"> <strong>プログラムの具体的な値を少し抽象化して「評価」する枠組み</strong> </span><br><br>のことです。例えば <br><ul><li>現れるのはすべて自然数</li><li>演算は掛け算だけ</li></ul><br>という言語で、<br><div class="code-block"> <pre><code class="language-julia">if cond
+    x = 1
+else
+    x = 2
+end
+
+y = 2 * x
+
+y 
+</code></pre> </div><br>というプログラムがあったとします。 このとき、ある変数がある命令の実行直前,直後に 偶数であるか？ 奇数であるか？というのを解析することを考えてみます。<br>抽象解釈は、元のプログラムの変数を例えば 「偶数か奇数」「偶数」「奇数」「未定義」というような抽象状態に割り当てることによって行います。<br>つまり上のプログラムを<br><div class="code-block"> <pre><code class="language-julia">x? &lt;= 未定義
+y? &lt;= 未定義
+
+if cond
+    x = 奇数
+else
+    x = 偶数
+end
+
+x? &lt;= (奇数 または 偶数)
+
+y = 偶数 * (奇数 または 偶数)
+
+y? &lt;=  偶数
+</code></pre> </div><br>というように評価するわけです。 (ここで、「実行」という言葉を使わなかったのは、もとのプログラムと同じ順序で制御フローを辿って評価するとは限らないからです)<br>そして、この評価は<br><ol><li>リテラルの代入は (元のプログラムの) 右辺の値の偶奇が入る</li><li>掛け算の代入は (奇数) <span class="italic"> <i> (奇数) は奇数, (奇数) </i> </span> (偶数) は偶数, ...</li></ol><br>という抽象化したもとでの意味関数を定めることによってできます。<br><br>さらに、抽象状態の間には取りうる値の包含関係、つまり「具体度」「情報量」と捉えられる順序が定められます。<br>今回は 「未定義」 <span class="math-inline"> \( \leq \) </span> 「偶数」 <span class="math-inline"> \( = \) </span> 「奇数」 <span class="math-inline"> \( \leq \) </span>「偶数または奇数」 という感じでしょうか。<br><br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/819ab0a4-5d78-4f22-8caa-df8a0536ea40.png" ><figcaption>image.png</figcaption></figure><br><br><br><br><br>このもとで、なるべく具体的なものを求めましょう. という形に定式化することで、できる範囲で正確な静的解析を行うようなアルゴリズムを考えることができます。<br><br>さて、この 偶数 or 奇数? というのを型っぽいものに置き換えれば型の静的な解析ができそうなのは何となく理解できるかと思います。<br>なので問題は<br><ul><li>このような抽象的な評価はどのくらいまでなら詳しくできるのか ?</li><li>型レベルに抽象化した評価、というものは出来るものに含まれるのか ？</li></ul><br>になります。<br>(例えば具体的な値と完全に対応させればそれはただの具体的な実行ですが、これは当然停止しないこともあります)<br><br>そこでこのくらいなら解けますよ. というのが考えられています。<br>先ほども書いたようにここでその話を展開すると同人誌になってしまうので、気になる方は上のリンクを踏んでもらえればと思います。<br>ここでは今回利用する結果だけを簡単に述べます。<br>抽象解釈の枠組みで、「ある命令の実行前後でプログラムの抽象状態のうちなるべく具体的なものを求める」という問題である「データフロー解析問題」を解くことができます。<br>データフロー解析問題に対しては、抽象状態とその順序, そして意味関数が<br><ol><li>意味関数が単調</li><li>抽象状態と順序関係が無限上昇鎖を持たない束をなす</li></ol><br>という条件を満たすときに停止する求解アルゴリズムが知られています。<br>一つ目の条件は、順序が具体度を表すことにすると<br>「より具体的な状況で関数を実行した結果は、より具体的になる」<br>と表現できるわけで、これは自然な条件です。<br>二つ目の条件についてここで説明するのはやや大変です。投げやりで申し訳ないですが、やはり先ほどのリンクを見てください。<br><br>今回もこれを使って型推論を行います。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"542",
+    "title":"作るもの 〜 理論編 〜"
+});
+</script>
+<h2 id="542">作るもの 〜 理論編 〜</h2><br>では、実際に Julia の処理系を模倣した簡易的な処理系を作っていきます。 (mu という名前をつけました。)<br>実装はすべて<br>https://github.com/abap34/mu<br>に置いておきます。(良かったら star つけてください)<br><br>今回作る言語は多重ディスパッチをサポートします。つまり、<br><div class="code-block"> <pre><code class="language-julia">function f(x::Int, y::Int){
+    return complex_function(x, y)
+}
+
+function f(x::Real, y::Real){
+    _check_calcuable(x, y)
+    return complex_function(x, y)
+}
+
+function main(){
+    f(1, 2) # =&gt; complex_function(1, 2)
+    f(1.0, 2.0) # =&gt; _check_calcuable(1.0, 2.0); complex_function(1.0, 2.0)
+}
+</code></pre> </div><br>のような結果を得ることができます。<br>さらに、このディスパッチを静的に解決ができる場合は解決することにします。 つまり、<span class="inline-code"> <code>f(x, y)</code> </span> という呼び出しにおいて <span class="inline-code"> <code>x</code> </span>, <span class="inline-code"> <code>y</code> </span> は <span class="inline-code"> <code>Int</code> </span> だ、などという事実が導けた場合にはディスパッチを実行時にはノーコストで行えるようにします。 (つまりチェックがノーコストでスキップされます)<br><script>page_contents.push({
+    "type":"H3",
+    "id":"570",
+    "title":"型"
+});
+</script>
+<h3 id="570">型</h3><br>簡単のために、ユーザ定義型は作れないことにして、この言語に現れる型は以下で固定されているとします。<br><ul><li><span class="inline-code"> <code>Any</code> </span></li><li><span class="inline-code"> <code>Bottom</code> </span></li><li><span class="inline-code"> <code>Number</code> </span></li><li><span class="inline-code"> <code>Real</code> </span></li><li><span class="inline-code"> <code>Int</code> </span></li><li><span class="inline-code"> <code>Float</code> </span></li><li><span class="inline-code"> <code>Bool</code> </span> </li><li><span class="inline-code"> <code>AbstractString</code> </span></li><li><span class="inline-code"> <code>String</code> </span></li><li><span class="inline-code"> <code>Union{T, U ...}</code> </span></li><li><span class="inline-code"> <code>Tuple{T, U ...}</code> </span></li><li><span class="inline-code"> <code>AbstractArray</code> </span></li><li><span class="inline-code"> <code>Array{T, n}</code> </span> </li></ul><br>まずは一部の見慣れない型の説明を含めて、この言語がとる型システムについて少し書きます。<br>また、このシステムは Julia の型システムを模倣したものになっています。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"609",
+    "title":"型の階層構造"
+});
+</script>
+<h4 id="609">型の階層構造</h4><br>この言語の型の集合は以下のような親子関係で半順序集合をなします。<br>型 <span class="inline-code"> <code>B</code> </span> が <span class="inline-code"> <code>A</code> </span> の 親であることを <span class="inline-code"> <code>A &lt;: B</code> </span> とかくことにして、<br><div class="info"><span class="strong"> <strong>親子関係</strong> </span> <span class="inline-code"> <code>A</code> </span> である値の集合が <span class="inline-code"> <code>B</code> </span> である値の集合の部分集合であるとき、またそのときに限り <span class="inline-code"> <code>A &lt;: B</code> </span></div><br>この考え方にそって、今回登場する型に以下のようなグラフで表されされるような親子関係を定めます。<br>このグラフに現れる型の組については、<span class="inline-code"> <code>A</code> </span> と<span class="inline-code"> <code>B</code> </span>が同じか、このグラフの <span class="inline-code"> <code>Any</code> </span> から <span class="inline-code"> <code>Bottom</code> </span> への経路であって、<span class="inline-code"> <code>B</code> </span> が <span class="inline-code"> <code>A</code> </span> よりも先に出てくるものがあるとき、またそのときに限り <span class="inline-code"> <code>B</code> </span> は <span class="inline-code"> <code>A</code> </span> の親です。<br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/78c32648-ce21-41e0-bde0-f564a65a4b23.png" ><figcaption>image.png</figcaption></figure><br><br>例えば <span class="inline-code"> <code>Int &lt;: Real</code> </span>, <span class="inline-code"> <code>Int &lt;: Int</code> </span>, <span class="inline-code"> <code>Float &lt;: Number</code> </span> です。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"665",
+    "title":"具象型と抽象型"
+});
+</script>
+<h3 id="665">具象型と抽象型</h3><br>ここで、上のグラフで、頂点がオレンジと水色で塗り分けられていましたが、<br>これは、今回の言語の型システムにおける <span class="strong"> <strong>具象型 (Concreate Type)</strong> </span> と <span class="strong"> <strong>抽象型 (Abstract Type)</strong> </span> を表しています。<br>具象型はインスタンスが作れる型のことです。<br>つまり、<span class="inline-code"> <code>x</code> </span> の値の型を取得する関数 <span class="inline-code"> <code>typeof(x)</code> </span> のような関数があったとき、これの返り値は必ず具象型になります。抽象型である <span class="inline-code"> <code>Any</code> </span>, <span class="inline-code"> <code>Number</code> </span> などが返ることは決してありません。<br>今回の場合 <span class="inline-code"> <code>Int</code> </span>, <span class="inline-code"> <code>Float</code> </span>, <span class="inline-code"> <code>Bool</code> </span>, <span class="inline-code"> <code>String</code> </span> などが具象型にあたります。<br>抽象型は具象型をまとめて構造化して、多重ディスパッチの制御をしやすくすることがその役割です。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"702",
+    "title":"<span class="inline-code"> <code>Array{T, n}</code> </span> 型"
+});
+</script>
+<h4 id="702"><span class="inline-code"> <code>Array{T, n}</code> </span> 型</h4><br><span class="inline-code"> <code>Array{T, n}</code> </span> 型の説明をしましょう。<br>これは、全ての要素の型が全て <span class="inline-code"> <code>T</code> </span> の子である <span class="inline-code"> <code>n</code> </span> 次元配列です。<span class="footnote-ref"><sup id="ref_arrayattent"><a href="#label_arrayattent">[arrayattent]</a></sup></span><br><br><span class="inline-code"> <code>{T, n}</code> </span> は型パラメータと呼ばれるもので、例えば <span class="inline-code"> <code>Array{String, 1}</code> </span> として文字列からなる 1次元配列を、 <span class="inline-code"> <code>Array{Real, 2}</code> </span> で実数 (今回は <span class="inline-code"> <code>Int</code> </span> または <span class="inline-code"> <code>Float</code> </span>) からなる 2次元配列などを表現できます。<br>型パラメータを導入したときに考える必要があるのが次のような問いです。<br><div class="warn"><span class="inline-code"> <code>Array{Real, 1}</code> </span> は <span class="inline-code"> <code>Array{Int, 1}</code> </span> の親か？</div><br>今回の型システムは、<span class="inline-code"> <code>Array</code> </span> について以下のような規則を採用することにします。<br><div class="info"><span class="strong"> <strong>不変性 (Invariance)</strong> </span><br><span class="inline-code"> <code>Array{T}</code> </span> は <span class="inline-code"> <code>B</code> </span> <span class="math-inline"> \( \neq \) </span> <span class="inline-code"> <code>C</code> </span>  なる 任意のパラメータ <span class="inline-code"> <code>B</code> </span>, <span class="inline-code"> <code>C</code> </span> について <span class="inline-code"> <code>Array{B}</code> </span> と <span class="inline-code"> <code>Array{C}</code> </span> は親子関係でない。</div><br>つまり、<span class="strong"> <strong><span class="inline-code"> <code>Array{Real, 1}</code> </span> は <span class="inline-code"> <code>Array{Int, 1}</code> </span> の親ではないことにします。</strong> </span><br>このような性質─<br><ul><li>型パラメータ <span class="inline-code"> <code>T</code> </span> を持つ型 <span class="inline-code"> <code>A{T}</code> </span> が 任意の相異なる型パラメータ<span class="inline-code"> <code>S</code> </span>, <span class="inline-code"> <code>T</code> </span> に対して (たとえ <span class="inline-code"> <code>S &lt;: T</code> </span> であっても)  <span class="inline-code"> <code>A{S} &lt;: A{T}</code> </span> でない</li></ul><br><br>のことを <span class="strong"> <strong>不変性 (Invariance)</strong> </span> といいます。<br>不変性を採用することが仕様として絶対の正解かというと全然そんなことはなく、 そもそも Julia の型システムにおいても例外が存在しますし(後述します)、色々な言語でいろいろなシステムが採用されています。逆に <span class="inline-code"> <code>B &lt;: C</code> </span> ならば <span class="inline-code"> <code>A{B} &lt;: A{C}</code> </span> という性質を <span class="strong"> <strong>共変性 (Covariance)</strong> </span> といいます。<br>これらの説明も長くなってしまうので気になるかたはこれらのワードで検索してください。<br>とにかく、こっちを採用したことによって先ほどの親子関係がなす階層構造はこんな感じになります。<br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/c5cdd4ec-3b38-f5ed-8503-a60965099166.png" ><figcaption>image.png</figcaption></figure><br>型パラメータとして <span class="inline-code"> <code>n</code> </span> が追加されたことで、型の数が有限でなくなりました。<br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"822",
+    "title":"<span class="inline-code"> <code>Any</code> </span> 型"
+});
+</script>
+<h4 id="822"><span class="inline-code"> <code>Any</code> </span> 型</h4><br><span class="inline-code"> <code>Any</code> </span> 型は簡単にいうと任意の値を表す抽象型です。 取りうる値がこの言語に存在するすべての値であることを表します。<br>今回はこれが親子関係における最大元、つまり任意の型 <span class="inline-code"> <code>T</code> </span> に対して <span class="inline-code"> <code>T &lt;: Any</code> </span> な型になります。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"835",
+    "title":"<span class="inline-code"> <code>Bottom</code> </span> 型"
+});
+</script>
+<h4 id="835"><span class="inline-code"> <code>Bottom</code> </span> 型</h4><br>となると、逆に取りうる値が存在しないことを表す型が最小元となります。<br>今回はこれを <span class="inline-code"> <code>Bottom</code> </span> という名前にすることにします。<br>つまり 任意の型 <span class="inline-code"> <code>T</code> </span> に対して <span class="inline-code"> <code>Bottom &lt;: T</code> </span> です。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"851",
+    "title":"<span class="inline-code"> <code>Tuple</code> </span> 型"
+});
+</script>
+<h4 id="851"><span class="inline-code"> <code>Tuple</code> </span> 型</h4><br>Tuple は値の組を表す型で、型パラメータとして型の組を取ります。<br>例えば <span class="inline-code"> <code>(1, 2.0, 3)</code> </span> は <span class="inline-code"> <code>Tuple{Int, Float, Int}</code> </span>　の値です。<br>ここで注意点として、<span class="strong"> <strong><span class="inline-code"> <code>Tuple</code> </span> 型は共変性を持つことにします。</strong> </span> 例えば <span class="inline-code"> <code>Tuple{Int, Float, Int} &lt;: Tuple{Int, Real, Real}</code> </span> です。<br>というのも、<span class="inline-code"> <code>Tuple</code> </span>型 がシグネチャを表現するために用いられるからです。<br>多重ディスパッチの説明で書いたように、メソッドを選択する際には引数の型のうちどれがもっとも特化されているかを調べる必要があります。この比較を成り立たせるには共変性を持たせるのが自然です。<br><span class="inline-code"> <code>Tuple</code> </span> 型も型パラメータとして任意個の型を取りますから、これを導入するとやはり型の集合が無限個になってしまいます。<br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"881",
+    "title":"<span class="inline-code"> <code>Union</code> </span> 型"
+});
+</script>
+<h4 id="881"><span class="inline-code"> <code>Union</code> </span> 型</h4><br><span class="inline-code"> <code>Union</code> </span> 型は、型パラメータとして非空の <span class="footnote-ref"><sup id="ref_bottom"><a href="#label_bottom">[bottom]</a></sup></span> 型の集合を取ります。<br>これは名前の通り和集合の表現に近く、 <span class="inline-code"> <code>S &lt;: Union{S, T, U}</code> </span>, <span class="inline-code"> <code>T &lt;: Union{S, T, U}</code> </span>, <span class="inline-code"> <code>U &lt;: Union{S, T, U}</code> </span> です。<br><br><span class="inline-code"> <code>Union</code> </span> 型を含む親子関係は Julia の仕様に沿って以下のように定めます。<span class="footnote-ref"><sup id="ref_juliasubtyping"><a href="#label_juliasubtyping">[juliasubtyping]</a></sup></span><br><br><br><div class="info"><span class="strong"> <strong><span class="inline-code"> <code>Union</code> </span> 型 <span class="inline-code"> <code>U</code> </span> (型パラメータ <span class="inline-code"> <code>T</code> </span>) と 型<span class="inline-code"> <code>S</code> </span>の親子関係</strong> </span><br><span class="inline-code"> <code>T</code> </span> の全ての要素が <span class="inline-code"> <code>S</code> </span> の子であるとき、またそのときに限り <span class="inline-code"> <code>U &lt;: S</code> </span> ある <span class="inline-code"> <code>T</code> </span> の要素が存在して <span class="inline-code"> <code>S</code> </span> の親であるとき、またそのときに限り <span class="inline-code"> <code>S &lt;: U</code> </span><br></div><br><details> <summary> Tuple型も含む親子関係 </summary><br><hr><br><br><span class="inline-code"> <code>Union</code> </span> 型の親子関係は <span class="inline-code"> <code>Tuple</code> </span> も絡むとよりややこしくなります。<br>というのも、同じ集合を表す複数の表現が存在するからです。例えば <span class="inline-code"> <code>Tuple{Int, Union{Int, Float}}</code> </span> は <span class="inline-code"> <code>Union{Tuple{Int, Int}, Tuple{Int, Float}}</code> </span> と等価です。<br>簡単な実装の仕方としては、適当な標準形に変換してしまって比較するという方法があります。 例えば <span class="inline-code"> <code>Union</code> </span> はトップレベルにのみ存在するように変換するのは容易です。<br>この方法は実装は容易ですが型パラメータのネストの深さに対して指数時間かかります。 なので Julia の処理系ではより高速な方法が用いられています。<span class="footnote-ref"><sup id="ref_fastsubtyping"><a href="#label_fastsubtyping">[fastsubtyping]</a></sup></span><br><br>このように親子関係の判定は実は少しややこしく、進んだ面白い結果として、少し前までは Julia の親子関係の判定は決定不能であったというものがあります。<span class="footnote-ref"><sup id="ref_juliasubtypingdecide"><a href="#label_juliasubtypingdecide">[juliasubtypingdecide]</a></sup></span><br><br><br><br><br><hr><br><br><br></details><br><br><br><br><br><br>さて、こと型推論のことを考えると、if文の分岐でそれぞれ <span class="inline-code"> <code>Int</code> </span>, <span class="inline-code"> <code>Float</code> </span> が返るようなケースでは <span class="inline-code"> <code>Union{Int, Float}</code> </span> のように表現できそうですから、これを導入することによって強い表現力が得られそうな感じがします。<br><br><div class="code-block"> <pre><code class="language-julia">function f(x)
+    if x &gt; 0
+        return 1
+    else 
+      return 1.0    
+    end
+end   # =&gt; Union{Int, Float64}
+</code></pre> </div><br><br><br>しかし、強いものの計算が大変なのは世の常です。<br><span class="inline-code"> <code>Union</code> </span> 型は強力ですが型システムの取り扱いをとてもややこしくします。<br>ここからはそのことを見ていきます。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1010",
+    "title":"束としての性質　─ 有限性条件の反例"
+});
+</script>
+<h4 id="1010">束としての性質　─ 有限性条件の反例</h4><br>今回考える　(型の集合, 親子関係)  は実は束になっています。<br><br>では型推論はデータフロー解析問題に落としこめばスッと解けるでしょうか？<br>実はこのままだとうまくいきません。 データフロー解析問題の反復解法はその停止性のために<br><ul><li>意味関数の単調性</li><li>抽象状態の束の高さの有限性</li></ul><br><br>を要求していました。しかし、今回は以下のような無限長の上昇鎖が構成できてしまいます。<br><div class="code-block"> <pre><code class="language-julia">Union{Vector{Int, 1}} 
+&lt;: Union{Array{Int, 1}, Array{Int, 2}} 
+&lt;: Union{Array{Int, 1}, Array{Int, 2}, Array{Int, 3}} 
+&lt;: Union{Array{Int, 1}, Array{Int, 2}, Array{Int, 3}, Array{Int, 4}} 
+...
+</code></pre> </div><br>型集合が無限にあること、<span class="inline-code"> <code>Union</code> </span> 型が存在することによってこのような問題が発生してしまったわけです。<br>なので、単純に前回のアルゴリズムを適用するだけでは収束性が保証されません。<br>プログラムの具体的な実行が停止する保証は当然しなくていいわけですが、 コンパイルプロセスは、それがたとえ不正なプログラムであったとしても必ず停止させなければいけません。<br>そこで <span class="strong"> <strong>Widening</strong> </span> と呼ばれる抽象解釈で一般的なテクニックを使うことでその停止性を復活 (?) させます。<br>一旦、いろいろ忘れて Widening についてみていくことにします。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"1046",
+    "title":"Widening"
+});
+</script>
+<h2 id="1046">Widening</h2><br>Widening は、(今の状態, 更新したい状態) から次の状態を出力する <span class="math-inline"> \( \nabla \) </span> に望ましい性質を持たせることで無限長の鎖を有限回で登り切れるようにスキップするテクニックです。<br>まずは定義と例を紹介します。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1055",
+    "title":"Widening Operator"
+});
+</script>
+<h3 id="1055">Widening Operator</h3><br><span class="math-inline"> \( (P, \leq) \) </span> が半順序集合であるとする。<br><span class="math-inline"> \( \nabla: P \times P \rightarrow P \) </span> が次のような性質を満たすとき、  <span class="math-inline"> \( \nabla \) </span> が <span class="strong"> <strong>(pair-) Widening Operator である</strong> </span> という. <span class="footnote-ref"><sup id="ref_setwidening"><a href="#label_setwidening">[setwidening]</a></sup></span><br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1073",
+    "title":"性質1 (被覆性)"
+});
+</script>
+<h4 id="1073">性質1 (被覆性)</h4><br>任意の <span class="math-inline"> \( x, y \in P \) </span> で <span class="math-inline"> \( x \leq x \nabla y \) </span> かつ <span class="math-inline"> \( y \leq x \nabla y \) </span> <br><script>page_contents.push({
+    "type":"H4",
+    "id":"1084",
+    "title":"性質2 (停止性)"
+});
+</script>
+<h4 id="1084">性質2 (停止性)</h4><br>鎖 <span class="math-inline"> \( x_0 \leq x_1 \leq x_2 \leq \cdots \) </span> に対して、<br><span class="math-inline"> \( y_0 = x_0, \\ y_{i+1} = y_i \nabla x_{i+1} \) </span> と定める。このとき <span class="math-inline"> \( \\{ y_i \\}_{i \in \mathbb{N}} \) </span> は次の性質を満たす。<br><span class="strong"> <strong>[性質]</strong> </span> ある <span class="math-inline"> \( k \) </span> が存在して <span class="math-inline"> \( y_k = y_{k+1} = y_{k+2} = \cdots \) </span> <br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"1105",
+    "title":"具体例"
+});
+</script>
+<h3 id="1105">具体例</h3><br><span class="math-inline"> \( P \) </span> を、すべての整数区間の集合と最小元のための特別な要素を加えた集合、つまり<br><span class="math-inline"> \( P = \\{ \bot \\} \cup \\{ [l, u] \mid l \in \mathbb{Z} \cup \\{ -\infty \\}, u \in   \mathbb{Z} \cup \\{ \infty \\}, l < u \\} \) </span><br>として、区間の包含関係で <span class="math-inline"> \( \leq \) </span> を定義します。 (ここで <span class="math-inline"> \( \bot \) </span> は任意の区間 <span class="math-inline"> \( x \) </span> について <span class="math-inline"> \( \bot \subseteq x \) </span> なるとします)<br>そして、次のように <span class="math-inline"> \( \nabla \) </span> を定めます.<br><div class="math-block"> \[ 
+
+\begin{array}{ll}
+\bot \nabla x = & x \\
+x \nabla \bot = & x \\
+{[l_0, u_0] \nabla [l_1, u_1] =} & \left[
+  \begin{array}{l}
+    \text{if } l_0 > l_1 \text{ then } -\infty \text{ else } l_0, \\
+    \text{if } u_0 < u_1 \text{ then } +\infty \text{ else } u_0
+  \end{array}
+\right]
+\end{array}
+
+ \] </div><br>このとき <span class="math-inline"> \( \nabla \) </span> は <span class="strong"> <strong>Widening Operator</strong> </span> です。<br>被覆性は明らかに成り立ちます。<br>停止性も左端・右端だけが拡大するケースと両方が拡大するケースをそれぞれ考えると、したがうのが簡単にわかります。<br><br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d7f1ba6c-105f-b8a1-c34f-3bc511b25c69.png" ><figcaption>image.png</figcaption></figure><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"1144",
+    "title":"Widening の役割"
+});
+</script>
+<h3 id="1144">Widening の役割</h3><br>更新時に Widening Operator を挟むことで無限に状態が更新されることがなくなるので (<span class="math-inline"> \( \because \) </span> 停止性)、一般の束に対して収束するデータフロー方程式の反復解法が作れます。<br>さらに、Widening には<br><ul><li>近似精度の調節役</li><li>収束を早めるヒューリスティック</li></ul><br>の役割を持たせることができます。<br>上の例ではすぐに諦めて区間を最大まで拡大したわけですが、例えば<br><ul><li>幅 <span class="math-inline"> \( k \) </span> まではそのまま持つ.</li><li>幅 <span class="math-inline"> \( k \) </span> を超えたら <span class="math-inline"> \( [- \infty, + \infty] \) </span>  にする</li></ul><br>ように <span class="math-inline"> \( \nabla \) </span> を定義すれば、<span class="math-inline"> \( k \) </span> を調節することで望ましい程度に近似精度を調節することができます。<br>他にも、たとえ高さが有限であっても非常に高い束は解析が実用的でないことがあります。 (求解アルゴリズムの最悪計算量は束の高さに比例します)<br>そのようなときに適切に「スキップ」してくれる Widening Operator を導入することで、高速に収束させることができます。<br><br>さて、今回実装する型推論においても、Widening によって型推論の収束性を保証します。 どのような Widening を用いるかは実装のセクションで検討することにしましょう。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1188",
+    "title":"Widening を導入したデータフロー方程式の反復解法"
+});
+</script>
+<h3 id="1188">Widening を導入したデータフロー方程式の反復解法</h3><br>前回の記事に載せたプログラムを再掲します。<br>(実は自明な効率化があり、それをすることで実際 Julia で使われているアルゴリズムと一致するのですが、それを書く時間がないのでここでは引き続きこれを使います。気になる方は <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">Monhen, 2002</a> </url> をみてください)<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
+    n = length(I)
+    inputs = [copy(a₀) for _ in 1:n]
+    outputs = [copy(a₀) for _ in 1:n]
+    pred = build_pred(I) 
+
+    while true
+        change = false
+
+        for i in 1:n
+            current_input = inputs[i]
+            current_output = outputs[i]
+
+            new_input = reduce(⊓, outputs[j] for j in pred[i]; init=copy(a₀))
+            new_output = abstract_semantics(I[i])(new_input)
+
+            inputs[i] = new_input
+            outputs[i] = new_output
+            
+            if (current_input != new_input) || (current_output != new_output)
+                change = true
+            end
+        end
+
+
+        if !change
+            break
+        end
+    end           
+
+
+    return [inputs; outputs[end]]
+end
+</code></pre> </div><br>導入は簡単で、<span class="inline-code"> <code>outputs[i]</code> </span> の更新をするときに Widening Operator <span class="inline-code"> <code>∇</code> </span> を挟めば良いです。停止性と元のアルゴリズムの証明と照らし合わせれば、このアルゴリズムの停止性がわかります。<br><br><div class="code-block"> <pre><code class="language-diff">-function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
++function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState, ∇::Function)::Vector{AbstractState}
+     n = length(I)
+     inputs = [copy(a₀) for _ in 1:n]
+     outputs = [copy(a₀) for _ in 1:n]
+@@ -99,7 +99,7 @@ function abstract_interpret(I::Program, abstract_semantics::Function, a₀::Abst
+             new_output = abstract_semantics(I[i])(new_input)
+ 
+             inputs[i] = new_input
+-            outputs[i] = new_output
++            outputs[i] = ∇(new_output, current_output)
+             
+             if (current_input != new_input) || (current_output != new_output)
+                 change = true
+</code></pre> </div><br><br>Widening の被覆性は、順序関係 <span class="math-inline"> \( \leq \) </span> でいうとより大きい方に結果を持っていくことを要求しています。<br>抽象解釈の枠組みにおいては、これはより情報量が少ない側に情報をまとめることに相当します。これによって Widening を導入してもその見積もりが危険になる (導けないはずの事実が導かれる) ことはありません。<br>まとめると、Widening は以下のようなものです。<br><br><div class="info "><br><span class="strong"> <strong>Widening</strong> </span><br>Widening は<br><ul><li>解析の安全のための <span class="strong"> <strong>被覆性</strong> </span></li><li>解析の停止のための<span class="strong"> <strong>停止性</strong> </span></li></ul><br>を満たした <span class="strong"> <strong>Widening Operator</strong> </span> <span class="math-inline"> \( \nabla \) </span> を状態更新の際に適用することで、状態更新を安全な側へ「スキップ」して有限時間でデータフロー解析問題を近似的に解くためのテクニック。</div><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1245",
+    "title":"実装"
+});
+</script>
+<h2 id="1245">実装</h2><br>それでは実際にこの世の全てを実装していこうと思います。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1250",
+    "title":"パース "
+});
+</script>
+<h3 id="1250">パース </h3><br>これに関してはあまり今回の記事で本質パートでないので、少し軽めに説明します。<br>今回は PEG を使って構文を定義しました。お好きな方法でパーサを定義してもらえればと思います。 面倒であれば S式や json を入力にしてしまうという手もあります。<br>パーサのディレクトリ: https://github.com/abap34/mu/tree/main/src/parse<br>AST は Julia の構造を参考に、ノード自体の情報と子ノードを Vector で持つ形式にします。<br><div class="code-block"> <pre><code class="language-julia">@enum ExprHead begin
+    GCALL # Generic function call
+    BCALL # Builtin function call
+    ASSIGN     # Assignment
+
+    IFELSE     # If-else statement
+    IF         # If statement
+    WHILE      # While statement
+
+    PROGRAM    # Special type to represent the whole program
+    BLOCK      # Block to group multiple expressions
+
+    FUNCTION   # For function definition
+    FORMALARGS # |  Formal arguments for function definition
+    TYPEDIDENT # |  Typed identifier. e.g. `a::Array{Int, 2}`
+    TYPE       # |  Type. e.g. `Array{Int, 2}`
+    RETURN     # |  Return statement
+
+    GOTO         #  Goto label without condition        |
+    GOTOIFNOT    #  Goto label if condition is false    | ==&gt; These are for IR.
+    LABEL        #  Label for goto                      |     Result of `parse` function will not have these.
+end
+
+struct Expr &lt;: AbstractSyntaxNode
+    head::ExprHead
+    args::Vector{Any} # It is not avoidable to use `Any` here.
+end
+</code></pre> </div><br><br>例えば<br><div class="code-block"> <pre><code class="language-js">function main(){
+    x = [1, 2, 3]
+    n = 100
+
+    i = 0
+
+    while (i &lt; n){
+        x = expanddims(x)
+        i = i + 1
+    }
+
+    return x
+}
+</code></pre> </div><br>というコードをパースすると、<br><div class="code-block"> <pre><code class="language-julia">julia&gt; mu.MuCore.parse(TESTCASE6) |&gt; dump
+# mu.MuCore.MuAST.Expr
+#  head: mu.MuCore.MuAST.ExprHead mu.MuCore.MuAST.PROGRAM
+#  args: Array{Any}((1,))
+#    1: mu.MuCore.MuAST.Expr
+#      head: mu.MuCore.MuAST.ExprHead mu.MuCore.MuAST.FUNCTION
+#      args: Array{Any}((3,))
+#  ... 長いので省略 ...
+#                2: Int64 0
+#            4: mu.MuCore.MuAST.Expr
+#              head: mu.MuCore.MuAST.ExprHead mu.MuCore.MuAST.WHILE
+#              args: Array{Any}((2,))
+#                1: mu.MuCore.MuAST.Expr
+#                2: mu.MuCore.MuAST.Expr
+#            5: mu.MuCore.MuAST.Expr
+#              head: mu.MuCore.MuAST.ExprHead mu.MuCore.MuAST.RETURN
+#              args: Array{Any}((1,))
+#                1: mu.MuCore.MuAST.Ident
+</code></pre> </div><br>という AST が構築されます。S式っぽい見やすい printing を頑張って書くと  <figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/5ecf6922-90ce-aeeb-0cc7-f6775411944e.png" ><figcaption>image.png</figcaption></figure><br><br>という感じです。<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1278",
+    "title":"lowering"
+});
+</script>
+<h3 id="1278">lowering</h3><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1281",
+    "title":"IR の表現"
+});
+</script>
+<h4 id="1281">IR の表現</h4><br>さて、lowering です。<br>これは <span class="inline-code"> <code>Expr</code> </span> を受け取って直列の命令列に変換するわけですが、今回の処理系では関数単位でこのような処理が行われます。<br><url> <a href="https://github.com/abap34/mu/blob/main/src/lowering/ir.jl">src/lowering/ir.jl</a> </url> にそれら命令列の定義があります。<br>まず、命令は<br><div class="code-block"> <pre><code class="language-julia">@enum InstrType begin
+    ASSIGN           # Assignment
+    GOTO             # Goto label without condition
+    GOTOIFNOT        # Goto label if condition is false.  
+    LABEL            # Label for goto
+    RETURN           # Return statement
+end
+
+struct Instr
+    instrtype::InstrType
+    expr::MuAST.Expr
+end
+</code></pre> </div><br>と定義されて、IR はこれの列 (にいくらかの情報を持たせたもの)  として定義します。<br><div class="code-block"> <pre><code class="language-julia"># Representation of program after lowering.
+struct CodeInfo
+    instrs::Vector{Instr}
+    typed::Bool
+    varnames::Vector{MuAST.Ident}
+    vartypes::Vector{Union{DataType,Nothing}}
+    function CodeInfo()
+        return new(Instr[], false, MuAST.Ident[], Union{DataType,Nothing}[])
+    end
+end
+</code></pre> </div><br>この上で、関数全体の lowering された後の表現を保持する <span class="inline-code"> <code>MethodInfo</code> </span> を定義します。<br>関数名, 引数 (型アノテーションの情報も含みます), そして中身の IR を保持します。<br><div class="code-block"> <pre><code class="language-julia"># Information of each **method**.
+struct MethodInfo
+    id::Int                         # id of the method (unique)
+    name::MuAST.Ident               # Name of the method (not unique) 
+    argname::Vector{MuAST.Ident}    # Argument names (e.g. [`a`, `b`, `c`])
+    signature::MuTypes.Signature    # Signature of the method. All elements must be MuTypes.
+    ci::CodeInfo                    # IR of the method
+end
+</code></pre> </div><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1309",
+    "title":"lowering の実装"
+});
+</script>
+<h4 id="1309">lowering の実装</h4><br>それでは、上に示した表現への変換を実装します。<br>とはいえ、行うことは本当に場合わけを頑張ることのみです。<br>例えば、while 文の lowering の処理を見てみましょう。(https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/lowering/lowering.jl#L157)<br><br><div class="code-block"> <pre><code class="language-julia">        ...
+        
+    elseif expr.head == MuAST.WHILE
+        # while (cond) 
+        #     body
+        #
+        # ↓
+        # label cond_label
+        # goto end_label if not cond
+        # body
+        # goto cond_label
+        # label end_label
+
+        cond, body = expr.args
+
+        cond_label_id = label_gen()
+        end_label_id = label_gen()
+
+        pushlabel!(ir, cond_label_id)
+        pushgotoifnot!(ir, end_label_id, cond)
+        append!(ir, _lowering(body))
+        pushgoto!(ir, cond_label_id)
+        pushlabel!(ir, end_label_id)
+    else
+        ...
+
+</code></pre> </div><br>コメントにもあるように、<br><div class="code-block"> <pre><code class="language-plaintext">while (cond) {
+    body
+}
+</code></pre> </div><br>は<br><div class="code-block"> <pre><code class="language-plaintext">label cond_label
+goto end_label if not cond
+body
+goto cond_label
+label end_label
+</code></pre> </div><br>と変換することができます。なので、ラベルの id を生成して、上と一致するように順番に命令を追加していけば良いです。<br>注意が必要なものとしては、関数呼び出しの中で関数呼び出しが含まれるケースがあります。<br><div class="code-block"> <pre><code class="language-julia">y = 3 * x + 4
+</code></pre> </div><br>を考えてみます。これは、<br><div class="code-block"> <pre><code class="language-julia">julia&gt; mu.MuCore.parse(&quot;y = 3 * x + 4&quot;)
+(PROGRAM
+
+    (ASSIGN y (GCALL add (GCALL mul 3 x) 4))
+)
+</code></pre> </div><br>という AST にパースされますが、中間変数 <span class="inline-code"> <code>%1</code> </span> を導入して<br><div class="code-block"> <pre><code class="language-julia">%1 = (CALL mul 3 x)
+y  = (CALL add %1 4)
+</code></pre> </div><br>と lowering することにします。右辺が単一の関数呼び出ししかしないことにすると後の実装がしやすくなるからです。<br>なので、関数呼び出しに対しては<br><ul><li>引数をチェック→ もし式なら新たに変数名 (e.g. <span class="inline-code"> <code>%1</code> </span>) を生成して、その式を lowering してその結果を生成した変数名に代入→ 定数, 変数ならそのまま</li></ul><br>というのを再帰的に行うことで右辺を単一の変数呼び出しにします。<br><figure><img src="https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/51c5d240-aabd-d41d-78cd-5ff2fd3ae4a2.png" ><figcaption>image.png</figcaption></figure><br>先ほどの関数の lowering 結果は以下のようになります。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; mu.MuCore.lowering(ast)
+# 1-element Vector{mu.MuCore.MuIR.MethodInstance}:
+# function main()
+#
+# | idx |  instrtype | instr
+# | --- | ---------- | ----------------------------------------
+# |   1 |     ASSIGN | x = [1, 2, 3]
+# |   2 |     ASSIGN | n = 100
+# |   3 |     ASSIGN | i = 0
+# |   4 |      LABEL | LABEL #29
+# |   5 |     ASSIGN | %32 = (GCALL lt i n)
+# |   6 |  GOTOIFNOT | GOTO #30 IF NOT %32
+# |   7 |     ASSIGN | x = (GCALL expanddims x)
+# |   8 |     ASSIGN | i = (GCALL add i 1)
+# |   9 |       GOTO | GOTO #29
+# |  10 |      LABEL | LABEL #30
+# |  11 |     ASSIGN | %ret = x
+# |  12 |       GOTO | GOTO RETURN
+# |  13 |      LABEL | LABEL RETURN
+# |  14 |     RETURN | RETURN %ret
+#
+# end
+</code></pre> </div><br>いい感じになってきましたね。ここまできたら簡易的なインタプリタを書いて実行することも簡単です。<br>今回の処理系でも Verify のために具体的な実行を担う <span class="inline-code"> <code>ConcreateInterpreter</code> </span> が実装されています。<br>https://github.com/abap34/mu/blob/main/src/interpreter/concreateinterpreter.jl<br><script>page_contents.push({
+    "type":"H3",
+    "id":"1371",
+    "title":"型推論の実装"
+});
+</script>
+<h3 id="1371">型推論の実装</h3><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1374",
+    "title":"型遷移関数の実装"
+});
+</script>
+<h4 id="1374">型遷移関数の実装</h4><br>それでは、型推論を実装します。<br>そのためには抽象状態 (今回は上で出てきた型たち) とその順序 (今回は親子関係)、そして lowering された後の各命令について、抽象状態がどのように変化するかを表す意味関数を定義する必要があります。<br>上の型の集合を <span class="math-inline"> \( T \) </span>,  命令全体の集合を <span class="math-inline"> \( I \) </span>, 変数の集合を <span class="math-inline"> \( V \) </span> とします。<br>抽象状態は、各変数の型ですから <span class="math-inline"> \( V \) </span> から <span class="math-inline"> \( T \) </span>への関数です。<br>そして、抽象状態上の順序関係を以下のように定めます。<br><span class="math-inline"> \( A_1 \leq A_2 \Leftrightarrow \forall v \in V, A_1(v)  \mathrel{<\colon} A_2(v) \) </span> <br>ここで <span class="math-inline"> \( \mathrel{<\colon} \) </span> は上で定義した親子関係です。<br>そして意味関数 <span class="math-inline"> \( ![.!]: I \to (V \to T) \to (V \to T) \) </span> を以下のように定めます。<br>(実装は <url> <a href="https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/typeinf/abstractsemantics.jl#L73">abstractsemantics.jl の `abstract_semantics`</a> </url> です)<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1412",
+    "title":"1. <span class="inline-code"> <code>InstrType</code> </span> が <span class="inline-code"> <code>ASSIGN</code> </span> 以外のとき"
+});
+</script>
+<h4 id="1412">1. <span class="inline-code"> <code>InstrType</code> </span> が <span class="inline-code"> <code>ASSIGN</code> </span> 以外のとき</h4><br>抽象状態は変化しません.<br><script>page_contents.push({
+    "type":"H4",
+    "id":"1421",
+    "title":"2. <span class="inline-code"> <code>InstrType</code> </span> が <span class="inline-code"> <code>ASSIGN</code> </span> のとき"
+});
+</script>
+<h4 id="1421">2. <span class="inline-code"> <code>InstrType</code> </span> が <span class="inline-code"> <code>ASSIGN</code> </span> のとき</h4><br>このとき抽象状態が変化します。<br><span class="math-inline"> \( I_i \) </span> が <span class="math-inline"> \( \text{var} \in V \) </span> への代入だったとして、 <span class="math-inline"> \( ![I_i !] \) </span> を考えることにしましょう。<br> <span class="inline-code"> <code>InstrType</code> </span> が <span class="inline-code"> <code>ASSIGN</code> </span> のとき、右辺は<br> 1. リテラルまたは変数のとき  2. builtin の呼び出し  3. generic function の呼び出し<br><br>の 3つで尽くされます。<br><script>page_contents.push({
+    "type":"H5",
+    "id":"1448",
+    "title":"1 のとき"
+});
+</script>
+<h5 id="1448">1 のとき</h5><br>単に右辺の値の型を調べてその変数の抽象状態を更新すればいいです。<br>つまり、抽象状態 <span class="math-inline"> \( a \) </span> のときに定数 <span class="math-inline"> \( c \) </span> の代入によって新たに得られる抽象状態 <span class="math-inline"> \( a' \) </span> は<br><div class="math-block"> \[ 
+
+a'(v) = \begin{cases}
+\text{typeof(c)} &\quad v = \text{var} \\\\
+a(v) &\quad  \text{otherwise} \\\\
+\end{cases}
+
+ \] </div><br>になります。(右辺が変数 <span class="math-inline"> \( b \) </span> の場合は上の式で <span class="math-inline"> \( c \leftarrow a(b) \) </span> です.<br>実装は  <url> <a href="https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/typeinf/abstractsemantics.jl#L28-L38">`abstractsemantics.jl` の `abstract_execute.jl`</a> </url> にあります。<br><br><script>page_contents.push({
+    "type":"H5",
+    "id":"1474",
+    "title":"2 のとき"
+});
+</script>
+<h5 id="1474">2 のとき</h5><br>これも簡単で、builtin 関数は少ないのでその型遷移は書き下すことができます。 今回は <url> <a href="https://github.com/abap34/mu/blob/main/src/builtin/tfuncs.jl">builtins/tfuncs.jl</a> </url> に実装があります。<br><br>Julia言語も <url> <a href="https://docs.julialang.org/en/v1/devdocs/builtins/">少ないビルトイン関数</a> </url> があり、Compiler/src/tfuncs.jl　にその型遷移が記述されています。例えば比較演算子は <span class="inline-code"> <code>Bool</code> </span> を返す、などは <url> <a href="https://github.com/JuliaLang/julia/blob/b682f496bc3fa81f8ee488b50245275f24f5e7db/Compiler/src/tfuncs.jl#L278">このように</a> </url> 実装されています。<br><br>このハードコードされた型遷移関数を <span class="math-inline"> \( T_{\text{builtin}} \) </span> と書くことにすると、<span class="math-inline"> \( T_{\text{builtin}} \) </span> は今回の設定ではビルトイン関数の名前と引数の型を受け取って帰り値の型 <span class="math-inline"> \( T \) </span> を返すような関数です。<br>つまり  <span class="math-inline"> \( \text{var} := f(t_{\text{arg}}) \) </span> では<br><div class="math-block"> \[ 
+
+a'(v) = \begin{cases}
+T_{\text{builtin}}(f, t_{\text{arg}}) &\quad v = \text{var} \\\\
+a(v) &\quad  \text{otherwise} \\\\
+\end{cases}
+
+ \] </div><br>となります。<br><script>page_contents.push({
+    "type":"H5",
+    "id":"1507",
+    "title":"3のとき"
+});
+</script>
+<h5 id="1507">3のとき</h5><br>さて、問題は 3. の generic function の呼び出しです。<br>例えば推論のある段階で <span class="inline-code"> <code>x</code> </span> が <span class="inline-code"> <code>Int</code> </span> または <span class="inline-code"> <code>Float</code> </span> であることが判明しているとして、generic function <span class="inline-code"> <code>f</code> </span> が <span class="inline-code"> <code>Int</code> </span> に対する実装も <span class="inline-code"> <code>Float</code> </span> に対する実装も持っている場合があります。<br>このとき <span class="inline-code"> <code>f(x)</code> </span> はどちらのメソッドの呼び出しにもなりえますから、その返り値の集合から、安全であって最も具体的なもの、つまり最小上界を取れば良いです。<br><br><div class="info"><span class="strong"> <strong>関数呼び出しの型遷移</strong> </span><br>generic function <span class="math-inline"> \( f \) </span> を引数 <span class="math-inline"> \( t_{\text{arg}} \) </span> で呼び出したときの型遷移関数 <span class="math-inline"> \( T_{\text{generic}} \) </span> は、メソッドの型遷移を <span class="math-inline"> \( T_{\text{method}} \) </span>,  呼び出しうるシグネチャと実装の組 <span class="math-inline"> \( (s, g) \) </span> の集合を <span class="math-inline"> \( \mathcal{M} \) </span> として<br><br><div class="math-block"> \[ 
+
+T_{\text{generic}}(f, t_{\text{arg}}) = \bigsqcup_{(s, g) \in \mathcal{M}} T_{\text{method}}(g, t_{\text{arg}} \sqcap s)
+
+ \] </div><br></div><br><br>ここで、<span class="math-inline"> \( T_{\text{method}} \) </span> の計算こそが求解アルゴリズムの仕事です。この中でも <span class="math-inline"> \( T_{\text{generic}} \) </span> は使いますが、generic function <span class="math-inline"> \( f \) </span> の呼び出しは最終的には builtin の呼び出しに到達しますから必ず計算可能です！<br><div class="danger">と言いたいところなのですが今回は実装の煩雑さ回避のために誤魔化しをしていて、うまくいかないケースがあります。末尾の 「この記事で誤魔化しているところ」を参照してください。</div><br><br>実装は <url> <a href="https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/typeinf/abstractsemantics.jl#L5">typeinf/abstractsemantics.jl の `_abstract_generis_call`</a> </url> にあります。<br><url> <a href="https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/typeinf/abstractsemantics.jl#L12">12行目からの for文</a> </url> が右辺の計算です。<br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"1576",
+    "title":"widening の実装"
+});
+</script>
+<h4 id="1576">widening の実装</h4><br>続いて widening を実装します。今回は次のような widening を実装することにします。<br><ul><li><span class="inline-code"> <code>Union</code> </span> 型の型パラメータが 10個を超えるまでは更新を続ける.</li><li>10個を超えたら、型パラメータのうち共通の親であって最小の abstract type にする</li></ul><br>今回は無限上昇鎖の構成は <span class="inline-code"> <code>Union</code> </span>型を使ったもののみであること、abstract type が有限であることからこれは Widening Operator です。<br>これを組み込んだ求解アルゴリズムを実装することで、型推論は常に停止します！<br>実装は <url> <a href="https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/typeinf/solver.jl#L53-L61">`typeinf/solver.jl` の `∇`</a> </url>  にあります。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"1598",
+    "title":"実行"
+});
+</script>
+<h2 id="1598">実行</h2><br>ここまでを実装すれば、(多少インターフェースを整える必要はありますが、) 型推論が動くようになります！<br>試してみましょう。<br>次のようなとても単純な例で見てみます。<br><div class="code-block"> <pre><code class="language-julia">function f(){
+    if (true){
+        if (true){
+            return 1
+            } else {
+                return 1.0
+            }
+        } else {
+            return &quot;hello&quot;
+        }
+    }
+}
+</code></pre> </div><br>この関数の返り値の型を推論してみると...<br><div class="code-block"> <pre><code class="language-julia">julia&gt; ast = MuCore.parse(src);   # パース
+
+julia&gt; lowerd = MuCore.lowering(ast);   # lowering
+
+julia&gt; mt = MuBase.load_base(); # 標準ライブラリの入ったメソッドテーブルを用意
+
+julia&gt; MuCore.MuInterpreter.load!(mt, lowerd); # メソッドテーブルに src をロード
+
+julia&gt; MuTypeInf.return_type(lowerd[end], argtypes=[], mt=mt)  # 推論！
+mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Float}, mu.MuCore.MuTypes.String}
+</code></pre> </div><br>🥳🥳🎉 見事！ 返り値は <span class="inline-code"> <code>Int</code> </span> または <span class="inline-code"> <code>Float</code> </span> または <span class="inline-code"> <code>String</code> </span> と推論できています 🎉🥳🥳<br>さらに、色々試せるよう、mu は mu自身で書かれた (とても貧弱で偏った) 標準ライブラリを備えています: <url> <a href="https://github.com/abap34/mu/blob/main/src/base/base.jl">src/base/base.jl</a> </url><br>これを使って、widening の効果を実感してみましょう。<br>標準ライブラリを使うと以下のようなコードが書けます。<br><div class="code-block"> <pre><code class="language-julia">function expanddims(arr::AbstractArray){
+    result_size = append(size(arr), 1)
+    return reshape(arr, result_size)
+}
+
+function main(){
+    x = [1, 2, 3]
+    n = 100
+
+    i = 0
+
+    while (i &lt; n){
+        x = expanddims(x)
+        i = i + 1
+    }
+
+    return x
+}
+</code></pre> </div><br><span class="inline-code"> <code>expanddims</code> </span> は、配列の次元を増やすような操作です。 (もちろんこれはビルトインではなく、標準ライブラリの <span class="inline-code"> <code>size</code> </span> や <span class="inline-code"> <code>reshape</code> </span> などによって書かれた標準ライブラリの関数です。)<br>この <span class="inline-code"> <code>main</code> </span> の返り値の型を推論してみます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; ast  = MuCore.parse(src);
+
+julia&gt; lowerd = MuCore.lowering(ast);
+
+julia&gt; mt = MuBase.load_base();
+
+julia&gt; MuCore.MuInterpreter.load!(mt, lowerd);
+
+julia&gt; MuTypeInf.return_type(lowerd[end], argtypes=[], mt=mt)
+mu.MuCore.MuTypes.AbstractArray
+</code></pre> </div><br>このように <span class="inline-code"> <code>AbstractArray</code> </span> と推論できています！<br><br>これは widening による効果で、while 文の中で <span class="inline-code"> <code>Union{Array{Int, 1}, Array{Int, 2},Array{Int, 3}...}</code> </span> と更新され、これが 10回繰り返された時点で widening によって共通の親である <span class="inline-code"> <code>AbstractArray</code> </span> になり、推論が収束しているわけです！<br><br>ちなみに、どのような推論ができるかは <url> <a href="https://github.com/abap34/mu/blob/main/test/typeinf.jl">型推論のテスト</a> </url> を見ると色々あるので眺めてみても面白いかもしれません。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"1659",
+    "title":"ディスパッチの静的解決"
+});
+</script>
+<h2 id="1659">ディスパッチの静的解決</h2><br>ここまで来ればこっちのもので、型推論によって各命令の実行直前の変数の型がいくらかわかりますから、マッチするメソッドが一つに限られるかを調べて、それによって置き換えれば良いです。<br>(すみません、これはタイトル詐欺で、この置換はまだ未実装です。ここまで来たら LLVM を使ってバイナリを吐けるようになる方が絶対面白いと思うので今後この部分は書きます。)<br>こうして高速な実行が可能になります。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"1668",
+    "title":"この記事で誤魔化しているところ"
+});
+</script>
+<h2 id="1668">この記事で誤魔化しているところ</h2><br>Julia の処理系と比較すると当然大量の簡略化が入っているわけですが、主要な点を挙げると以下のようなものがあります.<br><br><ol><li>型システムの簡略化　─ ユーザ定義型をサポートしていませんしJulia の型システムはもう少し表現力豊かです。</li><li>相互再帰のサポート ─ 実は今回のアルゴリズムだけでは相互再帰で無限ループになるケースがあります。Julia 本体では相互再帰を含む関数呼び出しでも停止します。</li><li>ビルトイン関数がちょっとリッチ ─ Julia のビルトイン関数はもう少し洗練されており、特に配列操作周りは今回は誤魔化してやや高レベルな操作が入っています。</li><li>コンパイル時間の考慮がない ─ 全てを推論しています。</li></ol><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1685",
+    "title":"感想"
+});
+</script>
+<h2 id="1685">感想</h2><br>やはり自分で実装することによって色々と明確になってよかったです。 次は SSA IR の最適化パートを読んでみようかと思います。<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"1691",
+    "title":"参考にした文献"
+});
+</script>
+<h2 id="1691">参考にした文献</h2><br><ul><li>Bezanson, Jeffrey Werner. Abstraction in technical computing. Diss. Massachusetts Institute of Technology, 2015.</li><li>Cortesi, Agostino. "Widening operators for abstract interpretation." 2008 Sixth IEEE International Conference on Software Engineering and Formal Methods. IEEE, 2008.</li><li>https://github.com/aviatesk/grad-thesis</li><li>https://github.com/JuliaLang/julia</li></ul><br><br><div class="footnote"><span class="footnote-def" id="label_scitokyo"><a href="#ref_scitokyo">[scitokyo]</a> https://x.com/Ag_smith/status/1871469153233826192</span><span class="footnote-def" id="label_jitcompile"><a href="#ref_jitcompile">[jitcompile]</a> Julia は関数が初見の型の組の引数で呼び出されたまさにそのときにコンパイルされるという意味で JIT コンパイル方式の言語と位置付けられていますが、 例えば V8 がするようなTracing による最適化は行いません。なので Julia は単にコンパイルのタイミングが遅かったりバイナリを明示的に名前がついたファイルとして出力しないだけで、実装の実態は AoT コンパイルに近いです。</span><span class="footnote-def" id="label_arrayattent"><a href="#ref_arrayattent">[arrayattent]</a> (全ての要素が <span class="inline-code"> <code>T</code> </span> なわけではありません。例えば <span class="inline-code"> <code>typeof(Real[1, 2.5, 3.5][1])</code> </span> は <span class="inline-code"> <code>Int</code> </span> です.)</span><span class="footnote-def" id="label_bottom"><a href="#ref_bottom">[bottom]</a> Julia においては <span class="inline-code"> <code>Union</code> </span> のパラメータは空とすることができます: <span class="inline-code"> <code>Union{}</code> </span>. Julia においてはこの型は <span class="inline-code"> <code>Core.TypeofBottom</code> </span> のエイリアスで、この記事でいうところの <span class="inline-code"> <code>Bottom</code> </span> 型にあたります。</span><span class="footnote-def" id="label_juliasubtyping"><a href="#ref_juliasubtyping">[juliasubtyping]</a> Zappa Nardelli, Francesco, et al. "Julia subtyping: a rational reconstruction." Proceedings of the ACM on Programming Languages 2.OOPSLA (2018): 1-27.</span><span class="footnote-def" id="label_juliasubtypingdecide"><a href="#ref_juliasubtypingdecide">[juliasubtypingdecide]</a> Belyakova, Julia, et al. "Decidable Subtyping of Existential Types for Julia." Proceedings of the ACM on Programming Languages 8.PLDI (2024): 1091-1114.</span><span class="footnote-def" id="label_jlsubtyping_undecidable"><a href="#ref_jlsubtyping_undecidable">[jlsubtyping_undecidable]</a> Belyakova, Julia, et al. "Decidable Subtyping of Existential Types for Julia." Proceedings of the ACM on Programming Languages 8.PLDI (2024): 1091-1114.</span><span class="footnote-def" id="label_fastsubtyping"><a href="#ref_fastsubtyping">[fastsubtyping]</a> Chung, Benjamin, Francesco Zappa Nardelli, and Jan Vitek. "Julia's efficient algorithm for subtyping unions and covariant tuples (Pearl)." ECOOP 2019-33rd European Conference of Object-Oriented Programming. 2019.</span><span class="footnote-def" id="label_setwidening"><a href="#ref_setwidening">[setwidening]</a> より一般に集合に対する演算として Widening Operator を定義する方法もあります。これは set-Widening Operator などと呼ばれます. 詳しくは  Cortesi, 2008 などをみてください (参考文献にあります)</span></div>
+            <hr>
+            <!-- コメント欄 (Utterances) -->
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+        </div>
+
+        <footer>
+            <p>&copy; abap34</p>
+        </footer>
+    </div>
+
+    <!-- 4) TOC 自動生成スクリプトなど -->
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+        // TOC 要素生成
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        // IntersectionObserver でスクロール時に active 更新
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) observer.observe(element);
+        });
+
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+        let prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+        // タグ装飾
+        let tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(t => t.trim());
+
+        tag.forEach(t => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-toggle').textContent = '🌙';
+            }
+        }
+
+        // 初期表示：localStorage に保存されたテーマがあればそれを適用し、なければ OS の設定に従う
+        let storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                applyTheme('light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        // トグルボタンのクリックイベント
+        themeToggleButton.addEventListener('click', function () {
+            let newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+
+    </script>
+
+</body>
+
+</html>
