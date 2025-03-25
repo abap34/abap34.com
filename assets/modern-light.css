@@ -517,6 +517,43 @@ footer {
 }
 
 
+.responsive-card {
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.responsive-card img {
+    width: 90%;
+    max-width: 300px;
+    border: none;
+    margin: 0;
+}
+
+.responsive-card .text-container {
+    margin: 0 10px;
+}
+
+@media (max-width: 600px) {
+    .responsive-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .responsive-card .text-container {
+        margin: 10px 0 0 0;
+    }
+
+    .responsive-card img {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
 
 /* ========================== */
 /* ここからテーマ切り替え用のスタイル */
