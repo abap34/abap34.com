@@ -1,7 +1,7 @@
 ---
 title: Julia Compiler Internals (06) - Implementing Small Julia Compiler
 author: abap34
-date: 2024/11/22
+date: 2024/02/16
 tag: [JuliaCompilerInternals, Julia, コンパイラ, 束論, アルゴリズム, 抽象解釈, データフロー解析]
 twitter_id: abap34
 github_id: abap34
