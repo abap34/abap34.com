@@ -1,8 +1,8 @@
 import json
 import os
 import pathlib
-import subprocess
 import re
+import subprocess
 import requests
 from bs4 import BeautifulSoup
 
@@ -49,30 +49,52 @@ def load_rawtext(ir, result=""):
 def to_outputpath(article_path: pathlib.Path):
     return pathlib.Path("public/posts/" + article_path.stem + ".html")
 
+
 def to_interimpath(article_path: pathlib.Path):
     return pathlib.Path("public/posts/" + article_path.stem + ".md")
 
 
 OGP_TEMPLATE = """
-<div class="center" style="border: 1px solid #ccc; padding: 5px; display: flex; flex-direction: row; align-items: center; max-width: 600px; margin: 10px auto;">
-    <img src="{img_url}" style="width: 90%; max-width: 300px; border: none; margin: 0;">
+<div class="responsive-card">
+    <img src="{img_url}">
     <div style="margin: 0 10px 0 10px;">
-         <a href="{url}" style="font-size: 1.2em; color: #333;">{title}</a>
+         <a href="{url}"">{title}</a>
     </div>
 </div>
 """
 
 
-def replace_ogp_url(content: str):
-    ogp_urls = re.findall(r"{@ogp\s+(.*?)\s*}", content)
-    for ogp_url in ogp_urls:
-        print(f"└ fetching ogp: {ogp_url}", end="")
+def replace_ogp_url(content: str, ignore_petterns: list[re.Pattern] = []):
+    excluded_spans = []
+    for pattern in ignore_petterns:
+        for match in pattern.finditer(content):
+            excluded_spans.append((match.start(), match.end()))
+    excluded_spans.sort(key=lambda x: x[0])
+
+    def is_excluded(start, end):
+        for span_start, span_end in excluded_spans:
+            if start >= span_start and end <= span_end:
+                return True
+        return False
+
+    ogp_pattern = re.compile(r"{@ogp\s+(.*?)\s*}")
+
+    def replacement(match):
+        start, end = match.span()
+        if is_excluded(start, end):
+            return match.group(0)
+        ogp_url = match.group(1)
         url, title = fetch_ogp(ogp_url)
-        print(f" -> {url[:10]}..., {title[:10]}...")
-        content = content.replace(
-            f"{{@ogp {ogp_url}}}", OGP_TEMPLATE.format(img_url=url, url=ogp_url, title=title)
-        )
-    return content
+        return OGP_TEMPLATE.format(img_url=url, url=ogp_url, title=title)
+
+    return ogp_pattern.sub(replacement, content)
+
+
+IGNORE_PATTERNS = [
+    re.compile(r"```.*?```", re.DOTALL),
+    re.compile(r"`.*?`"),
+    re.compile(r"<!--.*?-->"),
+]
 
 
 def build_article(config: dict, article_path: pathlib.Path):
@@ -85,13 +107,11 @@ def build_article(config: dict, article_path: pathlib.Path):
 
     subprocess.run("cp -r posts/{} public/posts/".format(article_path.stem), shell=True)
 
-
     content = article_path.read_text()
     print("replace_ogp_url...")
-    content = replace_ogp_url(content)
+    content = replace_ogp_url(content, IGNORE_PATTERNS)
     print("replace_ogp_url done.")
     interimpath.write_text(content)
-
 
     cmd = "almo/build/almo {} -o {} -d".format(interimpath, outputpath)
 
