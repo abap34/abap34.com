@@ -75,6 +75,10 @@ jobs:
       - name: Output need rebuild
         if:  ${{ steps.check.outputs.all_changed_files }} != ""
         run: echo "REBUILD=true" >> $GITHUB_ENV
+
+      - name: Add required packages
+        run: |
+          python3 -m pip install beautifulsoup4
       
       - name: Generate HTML
         run: |
