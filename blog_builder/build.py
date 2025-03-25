@@ -2,6 +2,22 @@ import json
 import os
 import pathlib
 import subprocess
+import re
+import requests
+from bs4 import BeautifulSoup
+
+
+def fetch_ogp(url: str) -> tuple[str, str]:
+    res = requests.get(url)
+    soup = BeautifulSoup(res.text, "html.parser")
+
+    ogp = soup.find("meta", attrs={"property": "og:image"})
+    ogp_url = ogp["content"]
+
+    title = soup.find("title").text
+
+    return ogp_url, title
+
 
 CONFIG_CORRESPONDING = {
     "overall_theme": "-t",
@@ -33,13 +49,51 @@ def load_rawtext(ir, result=""):
 def to_outputpath(article_path: pathlib.Path):
     return pathlib.Path("public/posts/" + article_path.stem + ".html")
 
+def to_interimpath(article_path: pathlib.Path):
+    return pathlib.Path("public/posts/" + article_path.stem + ".md")
+
+
+OGP_TEMPLATE = """
+<div class="center" style="border: 1px solid #ccc; padding: 5px; display: flex; flex-direction: row; align-items: center; max-width: 600px; margin: 10px auto;">
+    <img src="{img_url}" style="width: 90%; max-width: 300px; border: none; margin: 0;">
+    <div style="margin: 0 10px 0 10px;">
+         <a href="{url}" style="font-size: 1.2em; color: #333;">{title}</a>
+    </div>
+</div>
+"""
+
+
+def replace_ogp_url(content: str):
+    ogp_urls = re.findall(r"{@ogp\s+(.*?)\s*}", content)
+    for ogp_url in ogp_urls:
+        print(f"└ fetching ogp: {ogp_url}", end="")
+        url, title = fetch_ogp(ogp_url)
+        print(f" -> {url[:10]}..., {title[:10]}...")
+        content = content.replace(
+            f"{{@ogp {ogp_url}}}", OGP_TEMPLATE.format(img_url=url, url=ogp_url, title=title)
+        )
+    return content
+
 
 def build_article(config: dict, article_path: pathlib.Path):
     outputpath = to_outputpath(article_path)
+    interimpath = to_interimpath(article_path)
+
+    print("Building article: " + article_path.stem)
+    print(f"outputpath: {outputpath}")
+    print(f"interimpath: {interimpath}")
 
     subprocess.run("cp -r posts/{} public/posts/".format(article_path.stem), shell=True)
 
-    cmd = "almo/build/almo {} -o {} -d".format(article_path, outputpath)
+
+    content = article_path.read_text()
+    print("replace_ogp_url...")
+    content = replace_ogp_url(content)
+    print("replace_ogp_url done.")
+    interimpath.write_text(content)
+
+
+    cmd = "almo/build/almo {} -o {} -d".format(interimpath, outputpath)
 
     for key, value in CONFIG_CORRESPONDING.items():
         if key in config:
