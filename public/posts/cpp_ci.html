@@ -226,7 +226,7 @@ body {
 }
 
 .toc_H3 {
-    margin-left: 2rem;
+    padding-left: 1.5rem;
 }
 
 /* ===============================================
@@ -246,6 +246,10 @@ body {
     border-bottom: 1px solid #ccc;
     padding-bottom: 0.3rem;
     color: #333;
+}
+
+h5 {
+    font-size: 1.1rem;
 }
 
 .content p {
@@ -271,11 +275,14 @@ body {
 /* 画像や動画のはみ出し対策 (特に縦長画像) */
 .content img,
 .content video {
-    max-width: 100%;
+    max-width: 80%;
     max-height: 80vh;
     /* ビューポートの80%を上限に */
     height: auto;
     display: block;
+    border: 1px solid #ddd;
+    /* 真ん中に置く */
+    margin: 1rem auto;
 }
 
 
@@ -340,8 +347,10 @@ figure {
 }
 
 figcaption {
-    font-size: 0.8rem;
     color: #777;
+    /* 真ん中に置く */
+    display: block;
+    margin-top: 0.5rem;
     text-align: center;
 }
 
@@ -382,8 +391,9 @@ footer {
 .info {
     background-color: #f0f0f0;
     padding: 1rem;
-    border-left: 5px solid #333;
-    margin-bottom: 1rem;
+    border-left: 5px solid #80bdff;
+    margin: 1rem;
+
 }
 
 /* Warn: ちょっと強めの注意喚起 (オレンジ系) */
@@ -393,7 +403,7 @@ footer {
     padding: 1rem;
     border-left: 5px solid #ffa500;
     /* オレンジ */
-    margin-bottom: 1rem;
+    margin: 1rem;
 }
 
 /* Danger: 重大な警告 (赤系) */
@@ -403,7 +413,7 @@ footer {
     padding: 1rem;
     border-left: 5px solid #ff4d4f;
     /* 赤 */
-    margin-bottom: 1rem;
+    margin: 1rem;
 }
 
 /* ===============================================
@@ -668,9 +678,10 @@ body.dark-mode footer {
     color: #aaa !important;
 }
 
+
 body.dark-mode .info {
     background-color: #2a2a2a !important;
-    border-left: 5px solid #666 !important;
+    border-left: 5px solid #80bdff !important;
     color: #e0e0e0 !important;
 }
 
@@ -833,9 +844,10 @@ body.light-mode footer {
     color: #666 !important;
 }
 
+/* 薄青 */
 body.light-mode .info {
     background-color: #f0f0f0 !important;
-    border-left: 5px solid #333 !important;
+    border-left: 5px solid #80bdff !important;
     color: #333 !important;
 }
 
