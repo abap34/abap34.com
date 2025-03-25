@@ -38,14 +38,6 @@
 </item>
 
 <item>
-<id>Julia Compiler Internals (06) - Implementing Small Julia Compiler</id>
-<title>Julia Compiler Internals (06) - Implementing Small Julia Compiler</title>
-<link>https://abap34.com/posts/jci_06.html</link>
-<pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
 <id>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</id>
 <title>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</title>
 <link>https://abap34.com/posts/jci_04.html</link>
@@ -218,6 +210,14 @@
 <title>作問ハッカソン 002で作問しました </title>
 <link>https://abap34.com/posts/sakumon2.html</link>
 <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
+<id>Julia Compiler Internals (06) - Implementing Small Julia Compiler</id>
+<title>Julia Compiler Internals (06) - Implementing Small Julia Compiler</title>
+<link>https://abap34.com/posts/jci_06.html</link>
+<pubDate>Fri, 16 Feb 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
