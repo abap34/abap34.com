@@ -13,10 +13,13 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
+## Juliaで実行時間を制限する用のタイマー
+
+
 ヒューリスティックな手法などで、 適当に定めた時間だけ探索して打ち切りたいという場合があります。
 
-
 競プロなどでも使える簡単めでシンプルめなJuliaでの実装を書きました。
+
 
 ```julia
 mutable struct Timer
@@ -28,22 +31,26 @@ function Timer(timeout_ms::Int)
     return Timer(Millisecond(timeout_ms), Dates.now())
 end
 
+
 function is_timeout(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
     return elapsed_time >= x.timeout
 end
 
+ 
 function reset!(x::Timer)
     x.created = Dates.now()
 end
 
+ 
 function rate(x::Timer)
     now_time = Dates.now()
     elapsed_time = now_time - x.created
     return x.timeout / elapsed_time
 end
 ```
+
 
 使い方は、
 
@@ -63,5 +70,6 @@ end
 `reset!` で計測のリセット、 `rate` で経過時間の割合を取得できます。 (焼きなまし法などで使う用です。)
 
 
- 
- 
+
+
+         

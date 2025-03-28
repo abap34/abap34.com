@@ -13,12 +13,12 @@ site_name: abap34.com
 twitter_site: @abap34
 ---
 
-## 推論を goでやりたい 人がいる
-自分は[東工大デジタル創作同好会traP](https://trap.jp/)というところに入っていて、日々機械学習の普及に努めていますが、
-部内ではWeb開発が盛んで ml x web みたいなのに興味がある人がたくさんいます。
+ 　
+## 推論を goでやりたい人がいる
 
+世の中ではGoを使っている人が割と多く、
+機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。
 
-ところで、traPではGoを使っている人が割と多く、一緒に何かやろうと思うとGoを使う必要が割とあります。
 
 
 となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。
@@ -34,13 +34,10 @@ twitter_site: @abap34
 なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。
 
 
-この記事は当初気合いでGoのみで学習済みモデルを呼び出す記事にしようと思っていたのですが、思ってるよりもとってもしんどいことが判明したので急遽ネタを変更しました。
-
-
 
 ## 実装
 [こちらの記事](https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro) をとても参考にさせていただきました。ありがとうございます。
-
+ 
 こういうファイル構造にします。
 
 ```text
@@ -52,7 +49,6 @@ twitter_site: @abap34
 └── pkg
     └── grpc
 ```
-
 
 で、`pred.proto`はこんな感じです。
 
@@ -223,7 +219,7 @@ func main() {
 
 これで `main.go` を実行させて、 csvファイルを投げ込むと.....
 
-![](go_ml/req.png)
+![](grpc_ml/req.png)
 
 推論結果が返ってきました。笑顔に。
 
@@ -239,3 +235,5 @@ func main() {
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 
+
+         
