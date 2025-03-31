@@ -40,7 +40,7 @@ Juilaの対面のイベントに参加するのは5年前、高校1年生の時�
 
 自分も Juliaのコミュニティに育てられたので、色々と還元できるように頑張ります。
 
-### atmaCut #16
+### atmaCup #16
 
 [atmaCup #16 in collaboration with RECRUIT](https://www.guruguru.science/competitions/22) に参加しました。
 
