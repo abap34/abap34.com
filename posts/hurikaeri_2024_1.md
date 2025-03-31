@@ -1,7 +1,7 @@
 ---
 title: 2024年度後期振り返り
 author: abap34
-date: 2024/03/31
+date: 2025/03/31
 tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
@@ -67,7 +67,7 @@ $ ssh {ここに GitHub のユーザ名}@server.abap34.com -p 39001
 
 が載った処理系です。
 
-[src/ を見たらわかるかもしれませんが](https://github.com/abap34/mu/tree/main/src)　、意外とちゃんとしています。
+[src/ を見たらわかるかもしれませんが](https://github.com/abap34/mu/tree/main/src)、 意外とちゃんとしています。
 
 例えば
 
@@ -184,15 +184,10 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 {@ogp https://github.com/abap34/almo/pull/167}
 
-前書いた
+前書いた　[C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する](https://www.abap34.com/posts/cpp_ci.html) くらいのことはするつもりでいますが、もう少しかかりそうです。
 
-{@ogp https://www.abap34.com/posts/cpp_ci.html}
+進捗としては謎の Contributor が現れて [nixpkgs に入っているらしいです](https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20almo&type=code) なぜ？
 
-くらいのことはするつもりでいますが、もう少しかかりそうです。
-
-進捗としては謎の Contributor が現れて Nix で入るようになったらしいです。なぜ？
-
-{@ogp https://github.com/abap34/almo/pull/162}
 
 ### ??? (こうご期待！)
 
@@ -256,6 +251,4 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 ## 今日の一曲
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=E2laXGMEZulcq35X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=tlb9DV7eFHif1w6K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
