@@ -20,7 +20,7 @@
 
     <!-- OGP / Twitter 用のメタタグ -->
     <meta property="og:title" content="2024年度後期振り返り">
-    <meta property="og:image" content="https://trap.jp/content/images/2025/01/img_5128.png">
+    <meta property="og:image" content="https://abap34.com/posts/hurikaeri_2024_1/thumbnail.png">
     <meta property="og:description" content="2024年度前期の振り返りです。">
     <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2024_1.html">
     <meta property="og:type" content="article">
@@ -1015,26 +1015,26 @@ body.light-mode button {
 
         <!-- メイン本文 -->
         <div class="content">
-            <br>2024年度後期の振り返りです。<br>今年の前期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2024_0.html">→ こちら</a> </url><br><br>過去の振り返り記事は <url> <a href="https://www.abap34.com/search?tag=%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A">→ こちら</a> </url><br><br><script>page_contents.push({
+            <br><br><br>2024年度後期の振り返りです。<br>今年の前期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2024_0.html">→ こちら</a> </url><br><br>過去の振り返り記事は <url> <a href="https://www.abap34.com/search?tag=%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A">→ こちら</a> </url><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"12",
+    "id":"14",
     "title":"作った・作っているもの"
 });
 </script>
-<h2 id="12">作った・作っているもの</h2><br><script>page_contents.push({
+<h2 id="14">作った・作っているもの</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"15",
+    "id":"17",
     "title":"server.abap34.com (ssh チャットサーバ)"
 });
 </script>
-<h3 id="15">server.abap34.com (ssh チャットサーバ)</h3><br>まずは一発ギャグです。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/server.abap34.com"">GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ <span class="inline-code"> <code>ssh abap34@server.abap34.com  -p 39001</code> </span></a>     </div> </div><br><br>これは Go で書いた ssh サーバなのですが、 ssh すると ↓<br><div class="code-block"> <pre><code class="language-bash">$ ssh {ここに GitHub のユーザ名}@server.abap34.com -p 39001
+<h3 id="17">server.abap34.com (ssh チャットサーバ)</h3><br>まずは一発ギャグです。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/server.abap34.com"">GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ <span class="inline-code"> <code>ssh abap34@server.abap34.com  -p 39001</code> </span></a>     </div> </div><br><br>これは Go で書いた ssh サーバなのですが、 ssh すると ↓<br><div class="code-block"> <pre><code class="language-bash">$ ssh {ここに GitHub のユーザ名}@server.abap34.com -p 39001
 </code></pre> </div><br><figure><img src="hurikaeri_2024_1/image-2.png" ><figcaption></figcaption></figure><br><br>認証が始まり、<br><figure><img src="hurikaeri_2024_1/image-3.png" ><figcaption></figcaption></figure><br><br>チャットが始まります。爆笑。<br><br>もちろんリアルタイムで更新されるので他の人と会話できます。<br>周りに Discord で身内サーバを作っている人がいたのですが、エンジニアたるもの身内サーバくらい自分で書かんかいということで作りました。<br><br>珍しく Go で書きましたが <url> <a href="https://github.com/golang/go/issues/68880">x/term がバグっていて</a> </url> 日本語入力の削除がうまく行かないようで、 かなり嫌な気持ちになっているので他に乗り換えてちゃんとした TUI もついでに作りつつ乗り換えが濃厚です。 👆 fix するほどの気力はなく...<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"51",
+    "id":"53",
     "title":"mu (型推論付きの処理系)"
 });
 </script>
-<h3 id="51">mu (型推論付きの処理系)</h3><br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/9e3336449fd642ef5f9ea2bef6810074e85037a214c8b53b78f7db75987068db/abap34/mu">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/mu"">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type analysis</a>     </div> </div><br><br><br>これはそこそこ時間を使ったもので、 desciption にもあるように<br><ul><li>多重ディスパッチ</li><li>抽象解釈ベースの型解析</li></ul><br>が載った処理系です。<br><url> <a href="https://github.com/abap34/mu/tree/main/src">src/ を見たらわかるかもしれませんが</a> </url>、 意外とちゃんとしています。<br>例えば<br><div class="code-block"> <pre><code class="language-js">function binarysearch(arr::AbstractArray, target::Int){
+<h3 id="53">mu (型推論付きの処理系)</h3><br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/9e3336449fd642ef5f9ea2bef6810074e85037a214c8b53b78f7db75987068db/abap34/mu">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/mu"">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type analysis</a>     </div> </div><br><br><br>これはそこそこ時間を使ったもので、 desciption にもあるように<br><ul><li>多重ディスパッチ</li><li>抽象解釈ベースの型解析</li></ul><br>が載った処理系です。<br><url> <a href="https://github.com/abap34/mu/tree/main/src">src/ を見たらわかるかもしれませんが</a> </url>、 意外とちゃんとしています。<br>例えば<br><div class="code-block"> <pre><code class="language-js">function binarysearch(arr::AbstractArray, target::Int){
     low = 1
     high = length(arr)
     while (low &lt;= high){
@@ -1070,71 +1070,71 @@ julia&gt; MuCore.MuTypeInf.return_type(
 mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 </code></pre> </div><br>ちょっと最後ごちゃごちゃしてますが、この関数が <br><span class="inline-code"> <code>Array{Int, 1}, Int</code> </span> に対して呼び出された場合は <span class="inline-code"> <code>Int</code> </span> または <span class="inline-code"> <code>Bool</code> </span> を返す、が推論できます。<br><br>これは実装などブログにしました。 qiita に載せたのですが、同じものをこっちにも最近動かしました。<br><br><div class="responsive-card">     <img src="https://abap34.com/posts/jci_06/image.png">     <div style="margin: 0 10px 0 10px;">          <a href="https://abap34.com/posts/jci_06.html"">Julia Compiler Internals (06) - Implementing Small Julia Compiler</a>     </div> </div><br><br>全体作ることで細部まで色々と知れてよかったです。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"100",
+    "id":"102",
     "title":"lapisla (定理証明支援系)"
 });
 </script>
-<h3 id="100">lapisla (定理証明支援系)</h3><br><br>多分これが一番時間を使った気がします。定理証明支援系  (とそのエディタ、そのレジストリ、そのほか色々全部のプラットフォームです。)<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/5836a85cca8e39c14fc891f0402fce712169d040889338cb7a83d53b594e272c/lapisla-prover/lapisla-prover">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a <span class="italic"> <i>battery-pluggable</i> </span> theorem prover and ecosystem designed for everyone. Greetings! 👋</a>     </div> </div><br><br><br><div class="responsive-card">     <img src="https://trap.jp/content/images/2025/01/img_5128.png">     <div style="margin: 0 10px 0 10px;">          <a href="https://trap.jp/post/2478/""> 			冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！ | 東京科学大学デジタル創作同好会traP 	</a>     </div> </div><br><br>秋くらいに大学の授業で定理証明支援系を触ったときに色々と可能性と課題を感じ、それに一旦アプローチしてみました。<br>最近は LLM-based の自動証明を色々調べていて、実際手を動かすフェーズになりつつあり、最終的には lapisla で賢い自動証明を提供したいですね。<br><br>個人的には結構いい出来のソフトウェアだなぁと思っています。チームに感謝！<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Lapispla で左単位元と右単位元が同じであることも言えた<a href="https://t.co/JShgd83G0F">https://t.co/JShgd83G0F</a> <a href="https://t.co/3zvfTrQSK0">https://t.co/3zvfTrQSK0</a></p>&mdash; ひゅ〜Men (@men_cotton) <a href="https://twitter.com/men_cotton/status/1889186482352767214?ref_src=twsrc%5Etfw">February 11, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>すごいぜ<br><script>page_contents.push({
+<h3 id="102">lapisla (定理証明支援系)</h3><br><br>多分これが一番時間を使った気がします。定理証明支援系  (とそのエディタ、そのレジストリ、そのほか色々全部のプラットフォームです。)<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/5836a85cca8e39c14fc891f0402fce712169d040889338cb7a83d53b594e272c/lapisla-prover/lapisla-prover">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a <span class="italic"> <i>battery-pluggable</i> </span> theorem prover and ecosystem designed for everyone. Greetings! 👋</a>     </div> </div><br><br><br><div class="responsive-card">     <img src="https://trap.jp/content/images/2025/01/img_5128.png">     <div style="margin: 0 10px 0 10px;">          <a href="https://trap.jp/post/2478/""> 			冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！ | 東京科学大学デジタル創作同好会traP 	</a>     </div> </div><br><br>秋くらいに大学の授業で定理証明支援系を触ったときに色々と可能性と課題を感じ、それに一旦アプローチしてみました。<br>最近は LLM-based の自動証明を色々調べていて、実際手を動かすフェーズになりつつあり、最終的には lapisla で賢い自動証明を提供したいですね。<br><br>個人的には結構いい出来のソフトウェアだなぁと思っています。チームに感謝！<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Lapispla で左単位元と右単位元が同じであることも言えた<a href="https://t.co/JShgd83G0F">https://t.co/JShgd83G0F</a> <a href="https://t.co/3zvfTrQSK0">https://t.co/3zvfTrQSK0</a></p>&mdash; ひゅ〜Men (@men_cotton) <a href="https://twitter.com/men_cotton/status/1889186482352767214?ref_src=twsrc%5Etfw">February 11, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>すごいぜ<br><script>page_contents.push({
     "type":"H3",
-    "id":"128",
+    "id":"130",
     "title":"コンペ開催"
 });
 </script>
-<h3 id="128">コンペ開催</h3><br>またコンペをやりました。<br><br><div class="responsive-card">     <img src="https://trap.jp/content/images/2025/03/mosaic_20250315035433-1.png">     <div style="margin: 0 10px 0 10px;">          <a href="https://trap.jp/post/2518/""> 			traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP 	</a>     </div> </div><br><br><br>今回は作問にかなり力を入れていて、 BigQuery を回しまくるくらいの規模のデータを触れて楽しかったです。<br>詳しいことは上のブログを読んでください。<br><br><script>page_contents.push({
+<h3 id="130">コンペ開催</h3><br>またコンペをやりました。<br><br><div class="responsive-card">     <img src="https://trap.jp/content/images/2025/03/mosaic_20250315035433-1.png">     <div style="margin: 0 10px 0 10px;">          <a href="https://trap.jp/post/2518/""> 			traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP 	</a>     </div> </div><br><br><br>今回は作問にかなり力を入れていて、 BigQuery を回しまくるくらいの規模のデータを触れて楽しかったです。<br>詳しいことは上のブログを読んでください。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"143",
+    "id":"145",
     "title":"abap34.com"
 });
 </script>
-<h3 id="143">abap34.com</h3><br>このサイトも相変わらず色々新しくなりました。<br>例えば <url> <a href="https://www.abap34.com/works">/works</a> </url> や <url> <a href="https://www.abap34.com/blog">/blog</a> </url>、　そして何よりブログの記事のデザインが大幅に見直されてちょっとマシな見た目になりました。<br>また <span class="inline-code"> <code>{@ogp ...}</code> </span> という構文でリンクカードが自動生成されるようになり、まさにこの記事のようなものが書きやすくなりました。 (ビルド時に ogp image などを取得して埋め込んでいます)<br><br>デザインはちょっとダサいと思っているのでそのうち直します。<br><br>あとしれっとダークモードと英語に対応しました。 (翻訳はすべてチャッピーに投げていて全然正確でないので、暇を見つけて直そうと思っています。)<br><script>page_contents.push({
+<h3 id="145">abap34.com</h3><br>このサイトも相変わらず色々新しくなりました。<br>例えば <url> <a href="https://www.abap34.com/works">/works</a> </url> や <url> <a href="https://www.abap34.com/blog">/blog</a> </url>、　そして何よりブログの記事のデザインが大幅に見直されてちょっとマシな見た目になりました。<br>また <span class="inline-code"> <code>{@ogp ...}</code> </span> という構文でリンクカードが自動生成されるようになり、まさにこの記事のようなものが書きやすくなりました。 (ビルド時に ogp image などを取得して埋め込んでいます)<br><br>デザインはちょっとダサいと思っているのでそのうち直します。<br><br>あとしれっとダークモードと英語に対応しました。 (翻訳はすべてチャッピーに投げていて全然正確でないので、暇を見つけて直そうと思っています。)<br><script>page_contents.push({
     "type":"H3",
-    "id":"164",
+    "id":"166",
     "title":"almo (拡張 Markdown パーサ)"
 });
 </script>
-<h3 id="164">almo (拡張 Markdown パーサ)</h3><br>このブログを動かしているやつです。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/eb4f1592e195e54bb9378c786b5a8b11b5d5309b4521535714aa91fb15f28b9c/abap34/almo">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバ無しでのサンプルコードの実行やジャッジシステムの構築を可能にします。</a>     </div> </div><br><br>本格的にビルドシステムの書き換え (ついでにユーザが触る部分は全部 Python に) をやろうとしているのですがシングルバイナリで配るために Hacky なビルドをしているせいで前途多難です。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/4b89e1f706aeedccddc125184b249c900ed5b1b2200794ecefa2d94bb20cdec9/abap34/almo/pull/167">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/almo/pull/167"">meson によるビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo · GitHub</a>     </div> </div><br><br>前書いた　<url> <a href="https://www.abap34.com/posts/cpp_ci.html">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</a> </url> くらいのことはするつもりでいますが、もう少しかかりそうです。<br>進捗としては謎の Contributor が現れて <url> <a href="https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20almo&type=code">nixpkgs に入っているらしいです</a> </url> なぜ？<br><br><script>page_contents.push({
+<h3 id="166">almo (拡張 Markdown パーサ)</h3><br>このブログを動かしているやつです。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/eb4f1592e195e54bb9378c786b5a8b11b5d5309b4521535714aa91fb15f28b9c/abap34/almo">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバ無しでのサンプルコードの実行やジャッジシステムの構築を可能にします。</a>     </div> </div><br><br>本格的にビルドシステムの書き換え (ついでにユーザが触る部分は全部 Python に) をやろうとしているのですがシングルバイナリで配るために Hacky なビルドをしているせいで前途多難です。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/4b89e1f706aeedccddc125184b249c900ed5b1b2200794ecefa2d94bb20cdec9/abap34/almo/pull/167">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/abap34/almo/pull/167"">meson によるビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo · GitHub</a>     </div> </div><br><br>前書いた　<url> <a href="https://www.abap34.com/posts/cpp_ci.html">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</a> </url> くらいのことはするつもりでいますが、もう少しかかりそうです。<br>進捗としては謎の Contributor が現れて <url> <a href="https://github.com/search?q=repo%3ANixOS%2Fnixpkgs%20almo&type=code">nixpkgs に入っているらしいです</a> </url> なぜ？<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"188",
+    "id":"190",
     "title":"??? (こうご期待！)"
 });
 </script>
-<h3 id="188">??? (こうご期待！)</h3><br>これは近いうちにまともな文章が出るのでここでは何も書かないんですが、 来年度前期はこれに集中することになりそうな面白いものに手を出しています、楽しみ！<br><script>page_contents.push({
+<h3 id="190">??? (こうご期待！)</h3><br>これは近いうちにまともな文章が出るのでここでは何も書かないんですが、 来年度前期はこれに集中することになりそうな面白いものに手を出しています、楽しみ！<br><script>page_contents.push({
     "type":"H2",
-    "id":"193",
+    "id":"195",
     "title":"書いたもの"
 });
 </script>
-<h2 id="193">書いたもの</h2><br><script>page_contents.push({
+<h2 id="195">書いたもの</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"196",
+    "id":"198",
     "title":"JuliaCompilerInternals"
 });
 </script>
-<h3 id="196">JuliaCompilerInternals</h3><br>完全にブロガー化していますが、とくに <url> <a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">JuliaCompilerInternals シリーズ</a> </url> はこれの執筆駆動によって かなり Julia コンパイラについて詳しくなれたのでよかったです。<br><br>とくにデータフロー解析のいろんな性質を頑張って導出した <url> <a href="https://www.abap34.com/posts/jci_05.html">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</a> </url> とかなり実践的な <url> <a href="https://www.abap34.com/posts/jci_06.html">Julia Compiler Internals (06) - Implementing Small Julia Compiler</a> </url> は書いてる過程でだいぶ思考が深まりました。<br><br><script>page_contents.push({
+<h3 id="198">JuliaCompilerInternals</h3><br>完全にブロガー化していますが、とくに <url> <a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">JuliaCompilerInternals シリーズ</a> </url> はこれの執筆駆動によって かなり Julia コンパイラについて詳しくなれたのでよかったです。<br><br>とくにデータフロー解析のいろんな性質を頑張って導出した <url> <a href="https://www.abap34.com/posts/jci_05.html">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</a> </url> とかなり実践的な <url> <a href="https://www.abap34.com/posts/jci_06.html">Julia Compiler Internals (06) - Implementing Small Julia Compiler</a> </url> は書いてる過程でだいぶ思考が深まりました。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"211",
+    "id":"213",
     "title":"その他ブログなど"
 });
 </script>
-<h3 id="211">その他ブログなど</h3><br><ul><li><url> <a href="https://www.abap34.com/posts/auc.html">ROC-AUC の解釈</a> </url></li><ul><li>これ結構面白くないですか？ こっちの解釈が広まってないのは個人的には変な話だと思っています。</li></ul><li><url> <a href="https://www.abap34.com/posts/devenv_advent.html}">開発環境を紹介しますアドベントカレンダー @abap34</a> </url></li><ul><li>結構 Helix の操作に慣れてきました。</li></ul><li><url> <a href="https://speakerdeck.com/abap34/kaggle-ban-gadekirumade">Kaggle 班ができるまで</a> </url></li><ul><li>上に書いたコンペでサークル完全引退おじいさんになったのですが、それより少し前にすでに Kaggle コミュニティの長は後輩に譲っており、そのときちょうど部内 + OB・OG の人の前で話す機会があったのでスライドにしました。数年後ノスタルジーを提供してくれそう</li></ul></ul><br><br><script>page_contents.push({
+<h3 id="213">その他ブログなど</h3><br><ul><li><url> <a href="https://www.abap34.com/posts/auc.html">ROC-AUC の解釈</a> </url></li><ul><li>これ結構面白くないですか？ こっちの解釈が広まってないのは個人的には変な話だと思っています。</li></ul><li><url> <a href="https://www.abap34.com/posts/devenv_advent.html}">開発環境を紹介しますアドベントカレンダー @abap34</a> </url></li><ul><li>結構 Helix の操作に慣れてきました。</li></ul><li><url> <a href="https://speakerdeck.com/abap34/kaggle-ban-gadekirumade">Kaggle 班ができるまで</a> </url></li><ul><li>上に書いたコンペでサークル完全引退おじいさんになったのですが、それより少し前にすでに Kaggle コミュニティの長は後輩に譲っており、そのときちょうど部内 + OB・OG の人の前で話す機会があったのでスライドにしました。数年後ノスタルジーを提供してくれそう</li></ul></ul><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"232",
+    "id":"234",
     "title":"その他・大学など"
 });
 </script>
-<h2 id="232">その他・大学など</h2><br><ul><li>卒業研究を除く必要単位を無事取り切りました ハッピー</li><li>研究室配属があり、無事第一志望の研究室に配属されました！ﾔｯﾀｰ</li><ul><li>プログラミング言語をやります。</li><li>長いのでやりたいことは最後の 抱負 のとこに書いておきます</li></ul><li>観念してもろもろの所属を Science Tokyo に更新しました</li><li>後期の Contribution 数は 1035 でした。 (<span class="inline-code"> <code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2024-10-01&quot;) | .contributionCount] | add&#39;</code> </span>)</li><li>今年のセリーグ順位予想は 1-ヤ巨神横中広-6 でいきます。</li><ul><li>ところでセリーグに開幕三連敗しているチームがいるのですが...?</li></ul></ul><br><br><script>page_contents.push({
+<h2 id="234">その他・大学など</h2><br><ul><li>卒業研究を除く必要単位を無事取り切りました ハッピー</li><li>研究室配属があり、無事第一志望の研究室に配属されました！ﾔｯﾀｰ</li><ul><li>プログラミング言語をやります。</li><li>長いのでやりたいことは最後の 抱負 のとこに書いておきます</li></ul><li>観念してもろもろの所属を Science Tokyo に更新しました</li><li>後期の Contribution 数は 1035 でした。 (<span class="inline-code"> <code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2024-10-01&quot;) | .contributionCount] | add&#39;</code> </span>)</li><li>今年のセリーグ順位予想は 1-ヤ巨神横中広-6 でいきます。</li><ul><li>ところでセリーグに開幕三連敗しているチームがいるのですが...?</li></ul></ul><br><script>page_contents.push({
     "type":"H2",
-    "id":"258",
+    "id":"259",
     "title":"ふりかえりと抱負"
 });
 </script>
-<h2 id="258">ふりかえりと抱負</h2><br>プ言語をやる研究室に配属されたわけですが、別に ml を辞める (?) わけではなく、いい感じに両方やっていきたい (大谷翔平) と思っています。<br><br>ここ数ヶ月は、どうするか割とちゃんと悩んでいて何人かの人に相談してみたりしていたのですが、やはり参入障壁というところを考えると ml <<< プ だろうから、大学では後者に取り組んだほうがいいのでは、 というアドバイスをいくらかもらったので、そういう選択をしました。<br><br>実際 TL をみていると大学で CS をやっていなくても ml バリバリやっている人を本当にたくさん見かける一方で、逆に CS専攻でなくプログラミング言語をやっている  (ここでいう「やる」は論文を書き、発表し ... を指しています)　人はあまり見かけないので、自分としてもまぁそうだろうなとは思っています。　<br><br>最近は自動証明のようなところに結構興味を持っていますし、 (LLM が書いたコードに全部ちゃんと証明がついていたらめちゃくちゃ面白くないですか?)、<br>一応へなちょこ データ分析・数値計算あたりのプレーヤーでもあるので、そういうのを簡単に 安全・パフォーマンスよく実行できるために色々やっていきたいですね。 (例えば <span class="inline-code"> <code>torch.compile</code> </span> に大衝撃を受けたのを今でも覚えてます！ こういう仕事ができたら楽しいだろうな〜 と思います)<br><br><br>ともかく、 相互に絶対役に立つと思っているので、どちらもちゃんと勝負できるレベルまで勉強できたらと思います！ とりあえず短期的にはプログラミング言語の勉強をがんばります.<br><script>page_contents.push({
+<h2 id="259">ふりかえりと抱負</h2><br>プ言語をやる研究室に配属されたわけですが、別に ml を辞める (?) わけではなく、いい感じに両方やっていきたい (大谷翔平) と思っています。<br><br>ここ数ヶ月は、どうするか割とちゃんと悩んでいて何人かの人に相談してみたりしていたのですが、やはり参入障壁というところを考えると ml <<< プ だろうから、大学では後者に取り組んだほうがいいのでは、 というアドバイスをいくらかもらったので、そういう選択をしました。<br><br>実際 TL では大学で CS をやっていなくても ml バリバリやっている人を本当にたくさん見かける一方で、 CS専攻でなくプログラミング言語をやっている  (ここでいう「やる」は論文を書き、発表し ... を指しています)　人はあまり見かけないので、自分としてもまぁそうだろうなとは思っています。　<br><br>最近は自動証明のようなところに結構興味を持っていますし、 (LLM が書いたコードに全部ちゃんと証明がついていたらめちゃくちゃ面白くないですか?)、<br><br>一応へなちょこ データ分析・数値計算etc のプレーヤーでもあるので、そういうのを簡単に 安全・パフォーマンスよく実行できるために色々やっていきたいですね。 (例えば <span class="inline-code"> <code>torch.compile</code> </span> に大衝撃を受けたのを今でも覚えてます！ こういう仕事ができたら楽しいだろうな〜 と思います)<br><br><br>ともかく、 相互に絶対役に立つと思っているので、どちらもちゃんと勝負できるレベルまで勉強できたらと思います！ とりあえず短期的にはプログラミング言語の勉強をがんばります.<br><script>page_contents.push({
     "type":"H2",
-    "id":"280",
+    "id":"282",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="280">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=tlb9DV7eFHif1w6K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
+<h2 id="282">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=tlb9DV7eFHif1w6K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
