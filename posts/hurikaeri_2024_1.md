@@ -6,7 +6,7 @@ tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://abap34.com/posts/hurikaeri_2024_1/image.png
+ogp_url: https://trap.jp/content/images/2025/01/img_5128.png
 description: 2024年度前期の振り返りです。
 url: https://abap34.com/posts/hurikaeri_2024_1.html
 site_name: abap34's blog
