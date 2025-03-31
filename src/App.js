@@ -16,6 +16,21 @@ function App() {
   );
 }
 
+function NotFound() {
+  return (
+      // 画像つき404ページ.
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-6xl font-bold">404</h1>
+        <p className="text-2xl">Page not found</p>
+        <img src="/img/404.png" alt="404" className="w-1/4" />
+        <a href="/" className="text-blue-500 hover:underline">▶︎ Back to home</a>
+      </div>
+ 
+  );
+
+}
+
+
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
   const [filename, setFilename] = useState("/works/works.yaml");
@@ -36,6 +51,7 @@ function Abap34Com() {
             {/* <Route path="/articles" element={<Works title="Articles" path="/works/articles.yaml" defaultVisibleCount={6} />} /> */}
             <Route path="/blog" element={<SearchResult />} />
             <Route path="/search" element={<SearchResult />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer />
