@@ -35,12 +35,15 @@ export default function About() {
             <Section icon={<Code className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />} title="Skills">
 
                 <div className="space-y-2 ">
+                    <MarkdownText text={data.stack} />
                     <img
                         src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=400"
                         alt="Most Used Languages"
                         className="mx-auto"
                     />
+
                     <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+
                         {/* (※ GitHub の自身のレポジトリの言語割合.) */}
                         {language === "ja" ? "(※ GitHub の自身のレポジトリの言語割合.)" : "(※ The language ratio of my GitHub repositories.)"}
                     </p>
