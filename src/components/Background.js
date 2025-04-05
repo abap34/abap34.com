@@ -1,5 +1,5 @@
-import LanguageContext from "../context/LanguageContext";
 import { useContext } from "react";
+import LanguageContext from "../context/LanguageContext";
 
 
 function EachEducation(props) {
@@ -28,25 +28,29 @@ function EachWork(props) {
 
 
 export default function Background() {
-        const { language, toggleLanguage } = useContext(LanguageContext);
+    const { language, toggleLanguage } = useContext(LanguageContext);
 
-        let educations = language === "ja" ? [
-            { school: "東京工業大学 情報理工学院", period: "2022/04 ~" },
-            { school: "東京工業大学 情報理工学院 情報工学系", period: "2023/04 ~" }
-        ] : [
-            { school: "Tokyo Institute of Technology School of Computing", period: "2022/04 ~" },
-            { school: "Tokyo Institute of Technology School of Computing Information Engineering", period: "2023/04 ~" }
-        ];
+    let educations = language === "ja" ? [
+        { school: "東京工業大学 情報理工学院", period: "2022/04 ~" },
+        { school: "東京工業大学 情報理工学院 情報工学系", period: "2023/04 ~" },
+        { school: "東京工業大学 情報理工学院 情報工学系 Programming Systems Group (渡部研究室)", period: "2025/04 ~" }
+    ] : [
+        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing ", period: "2022/04 ~" },
+        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing ", period: "2023/04 ~" },
+        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing,  Programming Systems Group", period: "2025/04 ~" }
+    ];
 
-        let works = language === "ja" ? [
-            { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "深層学習を使った研究の実装・評価をしていました。" },
-            { company: "株式会社サイカ", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Python 製の既存の分析基盤を Julia で書き直して高速化するプロジェクトをしていました。" }
-        ] : [
-            { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "Implemented and evaluated research using deep learning." },
-            { company: "Xica Inc.", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Rewriting the existing analysis infrastructure written in Python in Julia to get faster and more efficient." }
-        ]
+    let works = language === "ja" ? [
+        { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "深層学習を使った研究の実装・評価をしていました。" },
+        { company: "株式会社サイカ", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Python 製の既存の分析基盤を Julia で書き直して高速化するプロジェクトをしていました。" },
+        { company: "日本経済新聞社", url: "https://hack.nikkei.com/", period: "2024", worktype: "SWE Internship", project: "" },
+    ] : [
+        { company: "DENSO IT Laboratory", url: "https://www.d-itlab.co.jp/", period: "2022", worktype: "Reserch Internship", project: "Implemented and evaluated research using deep learning." },
+        { company: "Xica Inc.", url: "https://xica.net/", period: "2023", worktype: "SWE Internship", project: "Rewriting the existing analysis infrastructure written in Python in Julia to get faster and more efficient." },
+        { company: "Nikkei Inc.", url: "https://hack.nikkei.com/", period: "2024", worktype: "SWE Internship", project: "" },
+    ]
 
-        
+
     return (
         <main className="container mx-auto px-4">
             <h2 className="text-2xl font-bold my-4"> Education </h2>
