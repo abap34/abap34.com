@@ -9,11 +9,15 @@ aboutme: |
   My goal is to become a researcher and engineer who can handle both theory and implementation.
 
 stack: |
-  My primary choices of programming languages are Python, Julia, C++, and TypeScript.
-  I also write Go and Scheme.
+  I tend to have relatively good knowledge and motivation in areas related to machine learning and programming language processing systems.
 
-  However, I believe that each programming language and technology has its suitable use case.
-  I don't have strong preferences for specific languages or libraries; I learn and use whatever is necessary for the situation.
+  I also do web development as needed (often using React and FastAPI).
+
+  The languages I usually choose are Python, Julia, C++, and TypeScript.
+  I also write in Go, C, and Scheme.
+
+  However, I believe that there is a suitable programming language or technology for every situation,
+  so I am not particularly attached to the languages or libraries I use, and I am the type who learns and uses them on the spot if necessary.
 
 detailed: 
  - Theorem Proving Systems
