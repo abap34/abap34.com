@@ -35,9 +35,9 @@ export default function Background() {
         { school: "東京工業大学 情報理工学院 情報工学系", period: "2023/04 ~" },
         { school: "東京工業大学 情報理工学院 情報工学系 Programming Systems Group (渡部研究室)", period: "2025/04 ~" }
     ] : [
-        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing ", period: "2022/04 ~" },
-        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing ", period: "2023/04 ~" },
-        { school: "Tokyo Institute of Technology, Department of Computer Science, Science, School of Computing,  Programming Systems Group", period: "2025/04 ~" }
+        { school: "Tokyo Institute of Technology, Department of Computer Science, School of Computing ", period: "2022/04 ~" },
+        { school: "Tokyo Institute of Technology, Department of Computer Science, School of Computing ", period: "2023/04 ~" },
+        { school: "Tokyo Institute of Technology, Department of Computer Science, School of Computing,  Programming Systems Group", period: "2025/04 ~" }
     ];
 
     let works = language === "ja" ? [
