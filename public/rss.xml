@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>定数伝播の MOP 解の決定不能性の証明</id>
+<title>定数伝播の MOP 解の決定不能性の証明</title>
+<link>https://abap34.com/posts/mop_undeciable.html</link>
+<pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>2024年度後期振り返り</id>
 <title>2024年度後期振り返り</title>
 <link>https://abap34.com/posts/hurikaeri_2024_1.html</link>
