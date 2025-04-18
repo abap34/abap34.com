@@ -18,6 +18,7 @@ export default function About() {
 
     if (!data) return <p>Loading...</p>;
 
+
     return (
         <div className="max-w-4xl mx-auto py-12 px-6 space-y-12 bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
             <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 border-b pb-4 border-gray-200 dark:border-gray-700">
@@ -37,7 +38,7 @@ export default function About() {
                 <div className="space-y-2 ">
                     <MarkdownText text={data.stack} />
                     <img
-                        src="https://github-readme-stats-git-featuredisplayb-a97b36-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes_long&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=400"
+                        src="https://github-readme-stats-git-self-host-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes&langs_count=20&count_private=true&layout=compact&disable_animations=true&card_width=300&cache_seconds=60"
                         alt="Most Used Languages"
                         className="mx-auto"
                     />
@@ -73,8 +74,8 @@ export default function About() {
             </Section>
 
             <section className="space-y-5 transition-all duration-300">
+                
                 <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {/* Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。 */}
                     {language === "ja" ? "Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。" : "In addition to what is in Works, I have published various software and implementations on GitHub, so please check it out!"}
                 </div>
             </section>
