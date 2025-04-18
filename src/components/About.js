@@ -38,7 +38,7 @@ export default function About() {
                 <div className="space-y-2 ">
                     <MarkdownText text={data.stack} />
                     <img
-                        src="https://github-readme-stats-git-self-host-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes&langs_count=20&count_private=true&layout=compact&disable_animations=true&card_width=300&cache_seconds=60"
+                        src="https://github-readme-stats-git-self-host-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=300&cache_seconds=60"
                         alt="Most Used Languages"
                         className="mx-auto"
                     />
