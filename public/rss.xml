@@ -166,18 +166,6 @@
 </item>
 
 <item>
-<id>
-			Kaggle班で機械学習講習会と部内データ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
-	</id>
-<title>
-			Kaggle班で機械学習講習会と部内データ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
-	</title>
-<link>https://trap.jp/post/2289/</link>
-<pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
 <id>オンラインジャッジを作った</id>
 <title>オンラインジャッジを作った</title>
 <link>https://abap34.com/posts/oj_abap34.html</link>
@@ -354,17 +342,17 @@
 </item>
 
 <item>
-<id>Scheme入門した m1macでのScheme環境構築</id>
-<title>Scheme入門した m1macでのScheme環境構築</title>
-<link>https://abap34.com/posts/hello_scheme.html</link>
+<id>Juliaで実行時間を制限する用のタイマー</id>
+<title>Juliaで実行時間を制限する用のタイマー</title>
+<link>https://abap34.com/posts/julia_timer.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>Juliaで実行時間を制限する用のタイマー</id>
-<title>Juliaで実行時間を制限する用のタイマー</title>
-<link>https://abap34.com/posts/julia_timer.html</link>
+<id>Scheme入門した m1macでのScheme環境構築</id>
+<title>Scheme入門した m1macでのScheme環境構築</title>
+<link>https://abap34.com/posts/hello_scheme.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
