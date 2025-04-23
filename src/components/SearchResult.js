@@ -1,4 +1,4 @@
-import { SearchCheck, X } from 'lucide-react';
+import { ExternalLink, SearchCheck, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { FaTag } from 'react-icons/fa';
 import SeachBar from './SearchBar';
@@ -6,7 +6,7 @@ import TagList from './TagList';
 
 async function fetchPosts() {
     try {
-        const response = await fetch('https://www.abap34.com/posts.json');
+        const response = await fetch('/posts.json');
         if (!response.ok) {
             throw new Error('Failed to fetch posts');
         }
@@ -17,8 +17,6 @@ async function fetchPosts() {
         return [];
     }
 };
-
-
 
 function deleteSearchQuery(query) {
     const params = new URLSearchParams(window.location.search);
@@ -49,12 +47,10 @@ function deleteSearchTag(tag) {
     window.location.href = `/search?${params.toString()}`;
 }
 
-
 function getSearchQueries() {
     const params = new URLSearchParams(window.location.search);
     return params.getAll('q');
 }
-
 
 function getSearchTags() {
     const params = new URLSearchParams(window.location.search);
@@ -79,7 +75,6 @@ function searchPostsByQueries(posts, queries) {
         return searchPostsbyQuery(acc, query);
     }, posts);
 }
-
 
 function searchPostsByTag(posts, tag) {
     if (!tag) {
@@ -114,6 +109,15 @@ function findHighlightedText(content, query) {
     return { isMatch, before, match, after };
 }
 
+// ドメイン名を抽出する関数
+function extractDomain(url) {
+    try {
+        const domain = new URL(url).hostname;
+        return domain.replace(/^www\./, ''); // www. がある場合は削除
+    } catch (e) {
+        return '';
+    }
+}
 
 export function Post({ index, post, queries }) {
 
@@ -123,7 +127,17 @@ export function Post({ index, post, queries }) {
             return (
                 <a key={index} href={post.url} target="_blank" rel="noreferrer" className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300">
                     <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg" />
-                    <h3 className="text-lg font-semibold mt-2">{post.title}</h3>
+                    <h3 className="text-lg font-semibold mt-2">
+                        {post.title}
+                        {post.external && (
+                            <span className="inline-flex items-center ml-2">
+                                <ExternalLink className="w-4 h-4 text-gray-500" />
+                                <span className="ml-1 text-sm text-gray-500">
+                                    {extractDomain(post.url)}
+                                </span>
+                            </span>
+                        )}
+                    </h3>
                     <p className="text-sm text-gray-600">{post.post_date}</p>
                     <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">
                         {highlighted.before}
@@ -131,7 +145,6 @@ export function Post({ index, post, queries }) {
                         {highlighted.after}
                         <span className="text-gray-100 dark:text-gray-600 ml-1">...</span>
                     </p>
-
                 </a>
             );
         }
@@ -146,14 +159,23 @@ export function Post({ index, post, queries }) {
             className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300"
         >
             <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg" />
-            <h3 className="text-lg font-semibold mt-2">{post.title}</h3>
+            <h3 className="text-lg font-semibold mt-2">
+                {post.title}
+                {post.external && (
+                    <span className="inline-flex items-center ml-2">
+                        <ExternalLink className="w-4 h-4 text-gray-500" />
+                        <span className="ml-1 text-sm text-gray-500">
+                            {extractDomain(post.url)}
+                        </span>
+                    </span>
+                )}
+            </h3>
             <p className="text-sm text-gray-600">{post.post_date}</p>
             <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">{post.content}</p>
         </a>
     );
 
 }
-
 
 // 削除可能なタグ.
 // 押すと、クエリパラメータの `tag=` にタグの配列があるので、そこから `name` のタグを削除して、ページをリロードする.
@@ -207,7 +229,6 @@ export default function SearchResult() {
         }, {});
         setAllTags(Object.entries(tags).sort((a, b) => b[1] - a[1]));
     }, [posts]);
-
 
     const tags = getSearchTags();
     const queries = getSearchQueries();
