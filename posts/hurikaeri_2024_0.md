@@ -11,6 +11,7 @@ description: 2024年度前期の振り返りです。
 url: https://abap34.com/posts/hurikaeri_2024_0.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 ## 2024年度前期の振り返り

@@ -11,6 +11,7 @@ description: C++ のプロジェクトの CI 環境を構築する手順をま�
 url: https://abap34.com/posts/cpp_ci.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 ## できるもの

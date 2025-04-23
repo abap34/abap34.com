@@ -11,6 +11,7 @@ description: 多重ディスパッチと抽象解釈に基づく型推論が載�
 url: https://abap34.com/posts/jci_06.html
 site_name: abap34's blog
 twitter_site: abap34
+featured: true
 ---
 
 ## あらすじ
