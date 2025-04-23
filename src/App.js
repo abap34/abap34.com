@@ -48,9 +48,7 @@ function Abap34Com() {
             <Route path="/" element={<TopPage />} />
             <Route path="/background" element={<Background />} />
             <Route path="/works" element={<Works title="Projects" path={filename} defaultVisibleCount={6} />} />
-            {/* <Route path="/articles" element={<Works title="Articles" path="/works/articles.yaml" defaultVisibleCount={6} />} /> */}
             <Route path="/blog" element={<SearchResult />} />
-            <Route path="/search" element={<SearchResult />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
