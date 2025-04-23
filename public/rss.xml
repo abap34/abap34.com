@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</id>
+<title>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</title>
+<link>https://hack.nikkei.com/blog/trap_kaggle_competition_2025/</link>
+<pubDate>Wed, 23 Apr 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>定数伝播の MOP 解の決定不能性の証明</id>
 <title>定数伝播の MOP 解の決定不能性の証明</title>
 <link>https://abap34.com/posts/mop_undeciable.html</link>
@@ -22,6 +30,18 @@
 </item>
 
 <item>
+<id>
+			traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
+	</id>
+<title>
+			traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
+	</title>
+<link>https://trap.jp/post/2518/</link>
+<pubDate>Mon, 17 Mar 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>ROC-AUC の解釈</id>
 <title>ROC-AUC の解釈</title>
 <link>https://abap34.com/posts/auc.html</link>
@@ -34,6 +54,18 @@
 <title>Julia Compiler Internals (06) - Implementing Small Julia Compiler</title>
 <link>https://abap34.com/posts/jci_06.html</link>
 <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
+<id>
+			冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！ | 東京科学大学デジタル創作同好会traP
+	</id>
+<title>
+			冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！ | 東京科学大学デジタル創作同好会traP
+	</title>
+<link>https://trap.jp/post/2478/</link>
+<pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
@@ -130,6 +162,18 @@
 <title>脚注機能の実装に関するメモ</title>
 <link>https://abap34.com/posts/footnote_implement.html</link>
 <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
+<id>
+			Kaggle班で機械学習講習会と部内データ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
+	</id>
+<title>
+			Kaggle班で機械学習講習会と部内データ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
+	</title>
+<link>https://trap.jp/post/2289/</link>
+<pubDate>Sat, 27 Jul 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 

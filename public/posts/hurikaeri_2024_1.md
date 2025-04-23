@@ -68,7 +68,7 @@ $ ssh {ここに GitHub のユーザ名}@server.abap34.com -p 39001
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/9e3336449fd642ef5f9ea2bef6810074e85037a214c8b53b78f7db75987068db/abap34/mu">
+    <img src="https://opengraph.githubassets.com/56a834218c95be64b39ec1c9824387c9221e36ba05b39dec8d93a9a05de16f34/abap34/mu">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/abap34/mu"">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type analysis</a>
     </div>
@@ -156,7 +156,7 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/5836a85cca8e39c14fc891f0402fce712169d040889338cb7a83d53b594e272c/lapisla-prover/lapisla-prover">
+    <img src="https://opengraph.githubassets.com/2cb81a87e5cd097925c6b0b60b1673bba225450cc62e9aaaabdc6ef0d17267c0/lapisla-prover/lapisla-prover">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosystem designed for everyone. Greetings! 👋</a>
     </div>
