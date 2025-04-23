@@ -3,6 +3,7 @@ import os
 import pathlib
 import re
 import subprocess
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,9 +13,9 @@ def fetch_ogp(url: str) -> tuple[str, str]:
     soup = BeautifulSoup(res.text, "html.parser")
 
     ogp = soup.find("meta", attrs={"property": "og:image"})
-    ogp_url = ogp["content"]
+    ogp_url = ogp["content"] if ogp and "content" in ogp.attrs else ""
 
-    title = soup.find("title").text
+    title = soup.find("title").text if soup.find("title") else url
 
     return ogp_url, title
 
@@ -181,9 +182,92 @@ def build_article(config: dict, article_path: pathlib.Path):
         json.dump(posts, f)
 
 
+def process_external_articles(config: dict):
+    """external_articles.jsonから記事を読み込み、posts.jsonに追加する関数"""
+    external_path = pathlib.Path("config/external_articles.json")
+
+    if not external_path.exists():
+        print(f":( the file {external_path} does not exist.")
+        return
+
+    try:
+        with open(external_path, "r") as f:
+            external_articles = json.load(f)
+    except Exception as e:
+        print(f"Error loading external_articles.json: {str(e)}")
+        return
+
+    with open("public/posts.json", "r") as f:
+        posts = json.load(f)
+
+    existing_urls = [post.get("url", "") for post in posts]
+
+    added_count = 0
+    updated_count = 0
+
+    for article in external_articles:
+        url = article["url"]
+
+        print(f"Processing external article: {url}")
+
+        title = article.get("title")
+        thumbnail_url = article.get("thumbnail_url")
+
+        if title is None or thumbnail_url is None:
+            try:
+                ogp_url, ogp_title = fetch_ogp(url)
+
+                if title is None:
+                    title = ogp_title
+                if thumbnail_url is None:
+                    thumbnail_url = ogp_url
+            except Exception as e:
+                print(f"Error fetching OGP for {url}: {str(e)}")
+                if title is None:
+                    title = url
+                if thumbnail_url is None:
+                    thumbnail_url = ""
+
+        post_data = {
+            "title": title,
+            "post_date": article["post_date"],
+            "url": url,
+            "thumbnail_url": thumbnail_url,
+            "content": "",
+            "tags": article.get("tags", []),
+            "featured": article.get("featured", False),
+            "external": True,
+        }
+
+        is_updated = False
+        for i, post in enumerate(posts):
+            if post.get("url") == url:
+                posts[i] = post_data
+                print(f"Updated external article: {post_data['title']}")
+                updated_count += 1
+                is_updated = True
+                break
+
+        if not is_updated:
+            posts.append(post_data)
+            print(f"Added external article: {post_data['title']}")
+            added_count += 1
+
+    posts = sorted(posts, key=lambda x: x["post_date"], reverse=True)
+
+    with open("public/posts.json", "w") as f:
+        json.dump(posts, f)
+
+    print(
+        f"External articles processing complete: {added_count} added, {updated_count} updated."
+    )
+
+
 def build(config: dict, article_paths: list[pathlib.Path]):
     for article_path in article_paths:
         build_article(config, article_path)
+
+    process_external_articles(config)
 
 
 if __name__ == "__main__":
@@ -202,3 +286,5 @@ if __name__ == "__main__":
 
         for article_path in change:
             build_article(config, pathlib.Path(article_path))
+
+        process_external_articles(config)

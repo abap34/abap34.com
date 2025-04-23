@@ -84,7 +84,6 @@ export default function Component() {
                             transition={{ delay: 1, duration: 0.5 }}
                             className="text-gray-700 dark:text-gray-300"
                         >
-                            {/* 犬と野球と音楽と計算機が好きです。 */}
 
                             {language === "ja" ? "犬と野球と音楽と計算機が好きです。" : "I like dogs, baseball, music, and computers."}
                         </motion.p>
