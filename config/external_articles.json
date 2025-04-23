@@ -12,12 +12,6 @@
     "featured": true
   },
   {
-    "url": "https://trap.jp/post/2289/",
-    "post_date": "2024/07/27",
-    "tags": ["機械学習", "データ分析コンペ", "kaggle"],
-    "featured": false
-  },
-  {
     "title": "東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！",
     "url": "https://hack.nikkei.com/blog/trap_kaggle_competition_2025/",
     "post_date": "2025/04/23",
