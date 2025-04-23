@@ -11,6 +11,7 @@ description: 主にオープンなデータセットを使ってコミュニテ�
 url: https://abap34.com/posts/community_competetion_tips.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 ## あらすじ

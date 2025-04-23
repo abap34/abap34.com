@@ -302,9 +302,6 @@ plt.show()
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/YJRFD1AdaUE?si=as37IuuxoUS9LP5U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
  
- 
-MV良すぎてめちゃくちゃ好きです。
-
 
 
          
