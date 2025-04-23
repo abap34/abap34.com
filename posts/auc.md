@@ -11,6 +11,7 @@ description: ROC-AUC の定義と計算法, その解釈について説明しま
 url: https://abap34.com/posts/auc.html
 site_name: abap34's blog
 twitter_site: @abap34
+featured: true
 ---
 
 
