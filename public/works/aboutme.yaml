@@ -12,7 +12,7 @@ aboutme: |
 stack: |
   機械学習・プログラミング言語処理系に関連する領域が比較的知識と意欲がありがちです。
 
-  Web開発も必要に応じてやります (React, FastAPI を使うことが多いです)。
+  Web開発も必要に応じてやります。 (React, FastAPI を使うことが多いです)
 
   使う言語自体は Python, Julia, C++, TypeScript などが第一の選択肢になることが多いです。
   Go や C, Scheme を書くこともあります。
