@@ -6,6 +6,14 @@
 <description> abap34's blog </description>
 
 <item>
+<id>Google Summer of Code に Proposal が採択されました！</id>
+<title>Google Summer of Code に Proposal が採択されました！</title>
+<link>https://abap34.com/posts/gsoc2025.html</link>
+<pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+</item>
+
+<item>
 <id>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</id>
 <title>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</title>
 <link>https://hack.nikkei.com/blog/trap_kaggle_competition_2025/</link>
@@ -326,17 +334,17 @@
 </item>
 
 <item>
-<id>Juliaで実行時間を制限する用のタイマー</id>
-<title>Juliaで実行時間を制限する用のタイマー</title>
-<link>https://abap34.com/posts/julia_timer.html</link>
+<id>Scheme入門した m1macでのScheme環境構築</id>
+<title>Scheme入門した m1macでのScheme環境構築</title>
+<link>https://abap34.com/posts/hello_scheme.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>
 
 <item>
-<id>Scheme入門した m1macでのScheme環境構築</id>
-<title>Scheme入門した m1macでのScheme環境構築</title>
-<link>https://abap34.com/posts/hello_scheme.html</link>
+<id>Juliaで実行時間を制限する用のタイマー</id>
+<title>Juliaで実行時間を制限する用のタイマー</title>
+<link>https://abap34.com/posts/julia_timer.html</link>
 <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 </item>

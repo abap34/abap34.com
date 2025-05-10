@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ja" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-10Y7GMS7GV"></script>
+    <script>
+        if (location.hostname !== "localhost") {
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-10Y7GMS7GV');
+        }
+    </script>
+
+    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
+        charset="utf-8"></script>
+
+    <title>Google Summer of Code に Proposal が採択されました！</title>
+
+    <!-- OGP / Twitter 用のメタタグ -->
+    <meta property="og:title" content="Google Summer of Code に Proposal が採択されました！">
+    <meta property="og:image" content="https://abap34.com/posts/gsoc2025/image-1.png">
+    <meta property="og:description" content="Google Summer of Code 2025 に参加します！ やりたいことや準備について書きます。">
+    <meta property="og:url" content="https://abap34.com/posts/gsoc2025.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="abap34's blog">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@abap34" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- ハイライトJS / FontAwesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <!-- その他ライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
+    <style>/* ===============================================
+   Reset / Base
+   =============================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    /* 画面全体に背景が伸びるようにする */
+    background-color: #fff;
+    color: #333;
+    font-family: monospace;
+    line-height: 1.5;
+    /* 文字ちょっと */
+    /*  global-header のぶんを押し下げる */
+    /* padding-top: 3.0rem; */
+    /* ↑ global-header側下げた */
+
+    /* 長い単語も強制的に改行 */
+    word-wrap: break-word;
+}
+
+/* ===============================================
+      Layout
+      =============================================== */
+.article-body {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    gap: 2rem;
+}
+
+.side {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.side-sticky {
+    position: sticky;
+    top: 3.5rem;
+}
+
+.sidebar {
+    padding: 0.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.content {
+    flex: 1;
+    padding: 0.5rem;
+    min-width: 0;
+    /* 内容があふれにくいように */
+}
+
+/* ===============================================
+      Header
+      =============================================== */
+/* 一番上に常に固定するヘッダ */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+
+    /* 要素は横に並べる */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.article-header {
+    padding: 1rem;
+    /* margin-bottom: 1rem; */
+    padding-top: 6rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+
+.tag-placeholder {
+    margin-top: 0.5rem;
+}
+
+.tag {
+    display: inline-block;
+    margin-right: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    background-color: #eee;
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.tag:hover {
+    background-color: #ddd;
+}
+
+.tag a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===============================================
+      TOC 
+      =============================================== */
+.toc_title {
+    display: none;
+}
+
+#toc {
+    list-style: none;
+    padding-left: 0;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+#toc li {
+    margin: 0.4rem 0;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #555;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    transition: background-color 0.1s, opacity 0.1s;
+    opacity: 1;
+}
+
+#toc a:hover {
+    background-color: #f0f0f0;
+    opacity: 1;
+}
+
+#toc a.active {
+    background-color: #777;
+    color: #fff;
+    opacity: 1 !important;
+}
+
+/* 階層によるインデント */
+.toc_H1 {
+    margin-left: 0;
+}
+
+.toc_H2 {
+    margin-left: 1rem;
+}
+
+.toc_H3 {
+    padding-left: 1.5rem;
+}
+
+/* ===============================================
+      Content
+      =============================================== */
+
+/* 見出しの見た目を少し改善し、下線とパディングを追加 */
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+    color: #333;
+}
+
+h5 {
+    font-size: 1.1rem;
+}
+
+.content p {
+    margin-bottom: 1rem;
+}
+
+/* インラインコードを本文と区別しやすく */
+.content code {
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+    font-size: 0.95em;
+    overflow: scroll;
+}
+
+/* 箇条書きの字下げ */
+.content ul,
+.content ol,
+.content dl {
+    margin-left: 1.5rem !important;
+}
+
+/* 画像や動画のはみ出し対策 (特に縦長画像) */
+.content img,
+.content video {
+    max-width: 80%;
+    max-height: 80vh;
+    /* ビューポートの80%を上限に */
+    height: auto;
+    display: block;
+    border: 1px solid #ddd;
+    /* 真ん中に置く */
+    margin: 1rem auto;
+}
+
+
+/* コードブロック内の行間を広げ可読性を向上 */
+pre code {
+    display: block;
+    white-space: pre;
+    border: none;
+    background: none;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+/* テーブルのデザイン (シンプル＆見やすい) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* 余分な隙間を除去 */
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    margin: 1rem;
+}
+
+table thead th {
+    background-color: #f6f8fa;
+    border-bottom: 2px solid #ccc;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem 0.8rem;
+    vertical-align: top;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+    /* 偶数行に薄い背景 */
+}
+
+table tbody tr:hover {
+    background-color: #f0f0f0;
+    /* ホバー時の強調 */
+}
+
+content a {
+    word-break: break-all;
+    color: #80bdff;
+    text-decoration: none;
+}
+
+iframe {
+    width: 100%;
+}
+
+figure {
+    margin: 1rem 0;
+}
+
+figcaption {
+    color: #777;
+    /* 真ん中に置く */
+    display: block;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+/* ===============================================
+      Footer
+      =============================================== */
+footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* ===============================================
+      Responsive
+      =============================================== */
+@media (max-width: 768px) {
+    .article-body {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .side {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        /* height: 100vh; を削除、autoに */
+        height: auto;
+    }
+
+    .content {
+        width: 100%;
+    }
+}
+
+/* ===============================================
+      Note / Warn / Danger blocks
+      =============================================== */
+.info {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-left: 5px solid #80bdff;
+    margin: 1rem;
+
+}
+
+/* Warn: ちょっと強めの注意喚起 (オレンジ系) */
+.warn {
+    background-color: #fff3e0;
+    /* 薄いオレンジ */
+    padding: 1rem;
+    border-left: 5px solid #ffa500;
+    /* オレンジ */
+    margin: 1rem;
+}
+
+/* Danger: 重大な警告 (赤系) */
+.danger {
+    background-color: #ffe7e7;
+    /* 薄い赤 */
+    padding: 1rem;
+    border-left: 5px solid #ff4d4f;
+    /* 赤 */
+    margin: 1rem;
+}
+
+/* ===============================================
+      Math Blocks (theorem / lemma / corollary / etc.)
+      =============================================== */
+
+/* Theorem / Lemma / Corollary / Proposition / Definition / Proof それぞれに共通するベース */
+/* ベース: 背景は透明、左に太線のみ */
+.theorem,
+.lemma,
+.corollary,
+.proposition,
+.definition,
+.proof {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: none;
+    border: 1px solid #ddd;
+}
+
+/* Theorem */
+.theorem {
+    counter-increment: theorem;
+}
+
+.theorem::before {
+    content: "Theorem " counter(theorem) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Lemma */
+.lemma {
+    counter-increment: lemma;
+}
+
+.lemma::before {
+    content: "Lemma " counter(lemma) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Corollary */
+.corollary {
+    counter-increment: corollary
+}
+
+.corollary::before {
+    content: "Corollary " counter(corollary) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proposition */
+.proposition {
+    counter-increment: proposition;
+}
+
+.proposition::before {
+    content: "Proposition " counter(proposition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Definition */
+.definition {
+    counter-increment: definition;
+}
+
+.definition::before {
+    content: "Definition " counter(definition) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* Proof */
+.proof {
+    counter-increment: proof;
+}
+
+.proof::before {
+    content: "Proof " counter(proof) " ";
+    font-weight: bold;
+    color: #333;
+}
+
+/* 最後の段落が余計な下余白を取らないための調整 */
+.theorem p:last-child,
+.lemma p:last-child,
+.corollary p:last-child,
+.proposition p:last-child,
+.definition p:last-child,
+.proof p:last-child {
+    margin-bottom: 0;
+}
+
+/* mathjax の要素を少し小さめに表示 */
+
+
+.math-block {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.math-inline {
+    display: inline-grid;
+    overflow: hidden !important;
+    font-size: 0.9em;
+    max-width: 100%;
+}
+
+/* ===============================================
+      Footnotes
+        =============================================== */
+
+/* 脚注リンクのスタイル */
+
+
+.footnote-ref {
+    font-size: 0.8em;
+    vertical-align: super;
+    color: #777;
+}
+
+.footnote-ref a {
+    color: #777;
+    text-decoration: none;
+}
+
+.footnote-ref a:hover {
+    text-decoration: underline;
+}
+
+/* 脚注本体のスタイル */
+.footnotes {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+.footnote-def {
+    margin-bottom: 0.5rem;
+    /* 改行 */
+    padding: 0.2rem 0.5rem;
+    border-left: 3px solid #ddd;
+    display: block;
+}
+
+.footnote-def p {
+    margin-bottom: 0;
+}
+
+
+.responsive-card {
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.responsive-card img {
+    width: 90%;
+    max-width: 300px;
+    border: none;
+    margin: 0;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.responsive-card .text-container {
+    margin: 0 10px;
+}
+
+@media (max-width: 600px) {
+    .responsive-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .responsive-card .text-container {
+        margin: 10px 0 0 0;
+    }
+
+    .responsive-card img {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* ========================== */
+/* ここからテーマ切り替え用のスタイル */
+/* ========================== */
+/* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
+body.dark-mode {
+    background-color: #1f2022 !important;
+    color: #e0e0e0 !important;
+}
+
+body.side.dark-mode {
+    background-color: #1f2022 !important;
+}
+
+body.dark-mode .article-body {
+    background-color: #1f2022 !important;
+    color: #e0e0e0 !important;
+}
+
+
+body.dark-mode .global-header {
+    background-color: #1f20229a !important;
+    border-bottom: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .code {
+    background-color: #595959 !important;
+}
+
+body.dark-mode .article-header {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content h1,
+body.dark-mode .content h2,
+body.dark-mode .content h3,
+body.dark-mode .content h4,
+body.dark-mode .content h5,
+body.dark-mode .content h6 {
+    color: #e0e0e0 !important;
+    border-bottom: 1px solid #555 !important;
+}
+
+body.dark-mode .content code {
+    background-color: #2d2d2d !important;
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode pre code {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .content a {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode table thead th {
+    background-color: #333 !important;
+    border-bottom: 2px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode table th,
+body.dark-mode table td {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode table tbody tr:nth-child(even) {
+    background-color: #1e1e1e !important;
+}
+
+body.dark-mode table tbody tr:hover {
+    background-color: #2a2a2a !important;
+}
+
+body.dark-mode .tag {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .tag:hover {
+    background-color: #444 !important;
+}
+
+body.dark-mode #toc {
+    color: #bbb !important;
+}
+
+body.dark-mode #toc a {
+    color: #bbb !important;
+}
+
+body.dark-mode #toc a.active {
+    background-color: #555 !important;
+    color: #fff !important;
+}
+
+body.dark-mode footer {
+    color: #aaa !important;
+}
+
+
+body.dark-mode .info {
+    background-color: #2a2a2a !important;
+    border-left: 5px solid #80bdff !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .warn {
+    background-color: #3a2a1a !important;
+    border-left: 5px solid #ffb74d !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .danger {
+    background-color: #4a1a1a !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .theorem,
+body.dark-mode .lemma,
+body.dark-mode .corollary,
+body.dark-mode .proposition,
+body.dark-mode .definition,
+body.dark-mode .proof {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .footnotes {
+    border: 1px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .footnote-def {
+    border-left: 3px solid #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode a {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode a:hover {
+    color: #8ab4f8 !important;
+}
+
+body.dark-mode .timeline {
+    background-color: #2a2b2f !important;
+    border: 1px solid #444 !important;
+    color: #e0e0e0 !important;
+}
+
+
+body.dark-mode .theorem::before,
+body.dark-mode .lemma::before,
+body.dark-mode .corollary::before,
+body.dark-mode .proposition::before,
+body.dark-mode .definition::before,
+body.dark-mode .proof::before {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode button {
+    background-color: #333 !important;
+    color: #e0e0e0 !important;
+    /* 装飾なし */
+    border: none;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
+}
+
+
+/* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
+body.light-mode {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .global-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .article-header {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .content {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+body.light-mode .content h1,
+body.light-mode .content h2,
+body.light-mode .content h3,
+body.light-mode .content h4,
+body.light-mode .content h5,
+body.light-mode .content h6 {
+    color: #333 !important;
+    border-bottom: 1px solid #ccc !important;
+}
+
+body.light-mode .content code {
+    background-color: #f6f8fa !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode pre code {
+    background-color: #f6f8fa !important;
+    color: #333 !important;
+}
+
+body.light-mode .content a {
+    color: #80bdff !important;
+}
+
+body.light-mode table thead th {
+    background-color: #f6f8fa !important;
+    border-bottom: 2px solid #ccc !important;
+    color: #333 !important;
+}
+
+body.light-mode table th,
+body.light-mode table td {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode table tbody tr:nth-child(even) {
+    background-color: #f9f9f9 !important;
+}
+
+body.light-mode table tbody tr:hover {
+    background-color: #f0f0f0 !important;
+}
+
+body.light-mode .tag {
+    background-color: #eee !important;
+    color: #333 !important;
+}
+
+body.light-mode .tag:hover {
+    background-color: #ddd !important;
+}
+
+body.light-mode #toc {
+    color: #555 !important;
+}
+
+body.light-mode #toc a {
+    color: #555 !important;
+}
+
+body.light-mode #toc a.active {
+    background-color: #777 !important;
+    color: #fff !important;
+}
+
+body.light-mode footer {
+    color: #666 !important;
+}
+
+/* 薄青 */
+body.light-mode .info {
+    background-color: #f0f0f0 !important;
+    border-left: 5px solid #80bdff !important;
+    color: #333 !important;
+}
+
+body.light-mode .warn {
+    background-color: #fff3e0 !important;
+    border-left: 5px solid #ffa500 !important;
+    color: #333 !important;
+}
+
+body.light-mode .danger {
+    background-color: #ffe7e7 !important;
+    border-left: 5px solid #ff4d4f !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem,
+body.light-mode .lemma,
+body.light-mode .corollary,
+body.light-mode .proposition,
+body.light-mode .definition,
+body.light-mode .proof {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .footnotes {
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .footnote-def {
+    border-left: 3px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode a {
+    color: #80bdff !important;
+}
+
+body.light-mode a:hover {
+    color: #80bdff !important;
+}
+
+body.light-mode .timeline-comment {
+    background-color: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .timeline-comment .timeline-comment-header {
+    background-color: #fff !important;
+    border-bottom: 1px solid #ddd !important;
+    color: #333 !important;
+}
+
+body.light-mode .theorem::before,
+body.light-mode .lemma::before,
+body.light-mode .corollary::before,
+body.light-mode .proposition::before,
+body.light-mode .definition::before,
+body.light-mode .proof::before {
+    color: #333 !important;
+}
+
+
+body.light-mode button {
+    background-color: #fff !important;
+    color: #333 !important;
+    /* マウスオーバー時の色 */
+    border: 1px solid #ddd !important;
+    /* マウスオーバー時のカーソル */
+    cursor: pointer;
+}</style>
+
+    <!-- テンプレート置換用のスクリプト変数等 -->
+    <script>
+        page_contents = [];
+    </script>
+
+    <!-- Runner is not required. Skip this. -->
+</head>
+
+<body>
+    <header class="global-header">
+        <div class="header-inner">
+            <!-- クリックすると sidebar を表示/非表示 -->
+            <a href="https://abap34.com" class="header-logo">abap34.com</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/gsoc2025.html">/Google Summer of Code に Proposal が採択されました！</a>
+        </div>
+
+        <!-- トグルボタンとツイートボタンをグループ化 -->
+        <div class="header-controls" style="display: flex;">
+            <!-- ダークモードトグルボタン -->
+            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <!-- ツイートボタン -->
+            <div class="tweet-button">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                    data-text="Google Summer of Code に Proposal が採択されました！" data-url="https://abap34.com/posts/gsoc2025.html" data-via="@abap34"> Tweet </a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="article-header">
+        <div class="title">Google Summer of Code に Proposal が採択されました！</div>
+        <script>title = document.querySelector(".title").innerHTML;</script>
+        <br>
+        <div class="date">2025/05/09</div>
+        <br>
+        <div class="tag-placeholder">[Julia, コンパイラ, GSoC, 日記]</div>
+    </div>
+
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
+    <div class="article-body">
+
+        <!-- サイドバー (TOC) -->
+        <div class="side">
+            <div class="side-sticky">
+                <div class="sidebar">
+                    <ul id="toc"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- メイン本文 -->
+        <div class="content">
+            <br><script>page_contents.push({
+    "type":"H2",
+    "id":"2",
+    "title":"あらすじ"
+});
+</script>
+<h2 id="2">あらすじ</h2><br>Google Summer of Code に Proposal が採択されました！<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Google Summer of Code で Julia に出していた Proposal が採択されました！ 🎉🥳<br><br>Julia の最新のコンパイラインフラを利用して、強力な静的解析を備えた新しい Language Server の機能開発をガシガシやっていきます！✊ <a href="https://t.co/aEBHcSAnXa">pic.twitter.com/aEBHcSAnXa</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1920609443131412630?ref_src=twsrc%5Etfw">May 8, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>Julia の新しい Language Server の開発をやっていく予定です。<br>プロジェクトページ: <url> <a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m</a> </url><br><br>この記事には具体的にやりたいことや準備の記録などを書いておきます。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"18",
+    "title":"先行研究"
+});
+</script>
+<h3 id="18">先行研究</h3><br><ul><li><url> <a href="https://saza.hatenadiary.jp/entry/2022/12/24/011018">Google Summer of Code に参加した話 ─ Saza's blog</a> </url></li><li><url> <a href="https://momoka0122y.hatenablog.com/entry/2022/05/26/232604">GSoC (Google Summer of Code)で chromiumに採択された。 ─ momokaのブログ</a> </url></li><li><url> <a href="https://www.shanpu.info/blogs/20211225_gsoc2021/">GSoC 2021 参加記 ─ shanpu-portal</a> </url></li><li><url> <a href="https://sanposhiho.com/posts/gsoc2020/">Google Summer of Code2020に申し込んでみた ─ さんぽしの散歩記</a> </url></li></ul><br>などなど (GSoC 参加記 などで検索すればたくさん出てきます)<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"34",
+    "title":"GSoC とは"
+});
+</script>
+<h2 id="34">GSoC とは</h2><br>他のブログに詳しい説明がたくさんあるので簡潔にまとめると、<br><br><ul><li>Google が主催するオープンソースプロジェクトへの参加を支援するプログラム</li><li>学生は開発したいものの Proposal を書いて参加組織に送る</li><li>参加組織は Proposal を審査して、採択の可否を決める <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span></li><li>学生がオープンソースプロジェクトに参加して、開発を行う</li><li>Google から報酬がもらえる (国とプロジェクト規模に応じて変わる. 日本で大規模プロジェクトだと今年は $.5400)</li><li>採択率は 8% くらい? <url> <a href="https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html">https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html</a> </url></li><ul><li>ただ、おそらく大量のインド人が応募しているために実態より競争率が高く見えていると思います。</li></ul></ul><br><br>というやつです。<br>開発したいもの、と書きましたが大抵の組織では Idea List が公開されていて、そこから選んで書くのが一般的です。<br><script>page_contents.push({
+    "type":"H2",
+    "id":"66",
+    "title":"参加まで"
+});
+</script>
+<h2 id="66">参加まで</h2><br>昨年ごろから Julia の Language Server を作り直したいな〜 と漠然と考えていたのですが、 そのときたまたま Julia の Co-Founder である Jeff Bezanson さんとご飯を食べる機会がありました。<br><br>そこで Language Server の話になり、同席していた  JET.jl の作者で Julia Hub の <url> <a href="https://github.com/aviatesk">aviatesk</a> </url> さんにメンターを快諾していただいて、 最終的に aviatesk さんがかつて進めていた JET.jl を利用した Language Server の開発をやることになりました。<br><br>その後応募が始まった頃に Language Server の開発を GSoC の Idea List に載せてもらい、 Proposal の執筆を開始しました。<br>目次は以下のような感じです。<br><div class="code-block"> <pre><code class="language-plaintext">Abstract                                               
+Technical Description	                                  
+ [1] Analyzing required information from the codebase	 
+ [2] Presenting information clearly and effectively	   
+ [3] Achieving good performance	                             
+Current State of Project	                             
+Implementation Plan	                                   
+Background and Relevant Experience	                   
+Related Software Projects	                             
+Availability	                                        
+</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyKJ4qH46pnXHIK8ztNVrmXcc4vBSNbQ8n-HTgsRlcG9FL4P7wMIWjGA_aGPHiAiY11xtErUfIQ2aRpUe85C5KjitDSJU6SJK-HcP35ih_mPTImxAm60=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"91",
+    "title":"具体的にやりたいこと"
+});
+</script>
+<h2 id="91">具体的にやりたいこと</h2><br>Proposal に詳しく書いてありますが、せっかくなので日本語でいくらかまとめておこうと思います！<br>(細かい話は Proposal を見てください)<br><script>page_contents.push({
+    "type":"H3",
+    "id":"98",
+    "title":"LanguageServer.jl の課題"
+});
+</script>
+<h3 id="98">LanguageServer.jl の課題</h3><br>今、 Julia では <url> <a href="https://github.com/julia-vscode/LanguageServer.jl">LanguageServer.jl</a> </url> がメジャーですが、 LanguageServer.jl はいくらか課題を抱えていました。 <br>主要なものを挙げるとしたら以下のような感じでしょうか。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"107",
+    "title":"Missing References が頻発する"
+});
+</script>
+<h4 id="107">Missing References が頻発する</h4><br>Language Server の主要な機能として、 Go To Definition や Find References などがあります。<br><br>これは実装箇所や仕様箇所に飛べる便利な機能ですが、 LanguageServer.jl ではこれらがうまく働かないことが非常に多いです。<br>("Missing" で Issues を検索した結果: <url> <a href="https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing">https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing</a> </url>) <br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"120",
+    "title":"コードベースが複雑化してメンテナンスが難しくなっている"
+});
+</script>
+<h4 id="120">コードベースが複雑化してメンテナンスが難しくなっている</h4><br>Language Sever Protocol 自体が多くのことを要求するという事情もありますが、コードベースが複雑になってしまっていて、 全体を把握しているメンテナーの方がほとんどいなくなってしまいました。 <url> <a href="https://github.com/julia-vscode/LanguageServer.jl/commits/main/">ref: コミット列</a> </url><br><script>page_contents.push({
+    "type":"H4",
+    "id":"126",
+    "title":"(課題?) 型エラーなどの高度な解析が行われない"
+});
+</script>
+<h4 id="126">(課題?) 型エラーなどの高度な解析が行われない</h4><br>これは課題というよりかは設計思想とかの範疇だと思いますが、 LanguageServer.jl はそこまで高度な解析を行いません。<br>例えば<br><div class="code-block"> <pre><code class="language-julia">function foo(x::Int)
+    return x + 1
+end
+
+foo(2.0)
+</code></pre> </div><br>はもちろんエラー (実行時例外ですが！)　になります。 が、LanguageServer.jl は基本的に赤線は引いてくれません。<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"138",
+    "title":"🆕 Language Server"
+});
+</script>
+<h3 id="138">🆕 Language Server</h3><br>新しい Language Server は以下のような特徴を持っています (もしくは持つ予定です)<br><br><ol><li>JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</li><li>Julia の最新のコンパイラインフラを利用して、メンテナンス性と開発効率を向上させる</li></ol><br><script>page_contents.push({
+    "type":"H4",
+    "id":"150",
+    "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
+});
+</script>
+<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/d8988b68ec7b92a77af0b42b3368ae09d6e363c2b262084e357658092b29d701/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
+</code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
+═════ 1 possible error found ═════
+┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
+│┌ sum(a::Vector{Any}; dims::Colon, kw::@Kwargs{}) @ Base ./reducedim.jl:982
+
+     (中略)
+    
+    ││┌ zero(::Type{Any}) @ Base ./missing.jl:106
+    │││ MethodError: no method matching zero(::Type{Any}): Base.throw(Base.MethodError(zero, tuple(Base.Any)::Tuple{DataType})::MethodError)
+</code></pre> </div><br>このようなエラーを検出して Diagnostics として提供します。<br><br><figure><img src="gsoc2025/image-5.png" ><figcaption>高度な型解析結果の表示</figcaption></figure><br>他にも型不安定性の表示や、そもそもの型推論結果の表示 (Types on Hover) などに取り組みたいと思っています。<br><script>page_contents.push({
+    "type":"H4",
+    "id":"180",
+    "title":"Julia の最新のコンパイラインフラを利用して、メンテナンス性と開発効率を向上させる"
+});
+</script>
+<h4 id="180">Julia の最新のコンパイラインフラを利用して、メンテナンス性と開発効率を向上させる</h4><br>Julia の パース・lowering <span class="footnote-ref"><sup id="ref_2"><a href="#label_2">[2]</a></sup></span> は FemtoLisp で書かれたものが長く稼働していたのですが、現在パーサは Julia自体で書かれたものが使われていて、 lowering も Julia で書かれたものの開発が進んでいます。<br><br>Julia 製のものに変わることで、以前と比べると Julia コンパイラ以外のソフトウェアからも比較的利用しやすくなります。 これらを利用することで、 Lanuage Server 側で Julia コンパイラの最新の機能に追従するコストが下がることが期待されています。<br><br>また、これらの新しいツールチェインは位置情報をよく保存するようにできていて、 他の現代的なプログラミング言語のような「バイトレベル」のエラーを出せるようになると思います。<br><figure><img src="gsoc2025/image-4.png" ><figcaption>Python は「printt」のところにエラーが出るが、Juliaは行番号のみ</figcaption></figure><br><script>page_contents.push({
+    "type":"H4",
+    "id":"195",
+    "title":"他にもあるよ"
+});
+</script>
+<h4 id="195">他にもあるよ</h4><br>他にもいろいろな機能について議論していますが、長くなるので Proposal を見てください 🤲<br><script>page_contents.push({
+    "type":"H2",
+    "id":"200",
+    "title":"がんばります"
+});
+</script>
+<h2 id="200">がんばります</h2><br>自分の周りでも最近は Rust を書いている人がずいぶんたくさんいるのですが、その理由の一つには rust-analyzer などの強力なエディタ支援があると思います。 Julia でも同じようなことができるように頑張っていきたいと思います。<br>自分より遥かにできる方たちにメンターしてもらいながらチャレンジングなソフトウェアが書けるのは本当に楽しみです！ 楽しい夏にしていきたいと思います！<br>(生活費をくださる Google 様に圧倒的感謝🙏🙏🙏)<br><script>page_contents.push({
+    "type":"H2",
+    "id":"209",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="209">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/LZ4PJky8agg?si=Ac94NmO-V6Bw6FaH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 実際には参加組織は Proposal への順位づけのみをして、 Google がその組織に割り当てた枠の数より小さければ採択ということらしい (?) ですがあまりよくわかっていません。</span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> surface-AST を最適化などのために適した IR に変換する処理のことです</span></div>
+            <hr>
+            <!-- コメント欄 (Utterances) -->
+            <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
+                label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+        </div>
+
+        <footer>
+            <p>&copy; abap34</p>
+        </footer>
+    </div>
+
+    <!-- 4) TOC 自動生成スクリプトなど -->
+    <script>
+        const tocContainer = document.querySelector("#toc");
+        const tocTitle = document.createElement("div");
+        tocTitle.innerHTML = title;
+        tocTitle.classList.add("toc_title");
+        tocContainer.appendChild(tocTitle);
+
+        // TOC 要素生成
+        page_contents.forEach(item => {
+            if (item.type == "H1" || item.type === "H2" || item.type === "H3") {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="#${item.id}">${item.title}</a>`;
+                listItem.classList.add("toc_" + item.type);
+                tocContainer.appendChild(listItem);
+            }
+        });
+
+        // IntersectionObserver でスクロール時に active 更新
+        const options = {
+            root: null,
+            rootMargin: "-50% 0px",
+            threshold: 0
+        };
+        const observer = new IntersectionObserver(onIntersection, options);
+
+        page_contents.forEach(item => {
+            const element = document.getElementById(item.id);
+            if (element) observer.observe(element);
+        });
+
+        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
+        first_item.classList.add("active");
+        let prev_item = first_item;
+
+        function onIntersection(entries) {
+            entries.forEach(entry => {
+                const id = entry.target.id;
+                const tocItem = document.querySelector(`#toc a[href="#${id}"]`);
+                if (tocItem) {
+                    if (entry.isIntersecting) {
+                        tocItem.classList.add("active");
+                        prev_item.classList.remove("active");
+                        prev_item = tocItem;
+                    }
+                }
+            });
+        }
+
+        // タグ装飾
+        let tag = document.querySelector(".tag-placeholder").innerHTML;
+        document.querySelector(".tag-placeholder").innerHTML = "";
+        tag = tag.replace("[", "").replace("]", "").split(", ").map(t => t.trim());
+
+        tag.forEach(t => {
+            const each_tag = document.createElement("span");
+            each_tag.classList.add("tag");
+            each_tag.innerHTML = "<a href='https://abap34.com/search?tag=" + t + "'> # " + t + "</a>";
+            document.querySelector(".tag-placeholder").appendChild(each_tag);
+        });
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-toggle').textContent = '🌙';
+            }
+        }
+
+        // 初期表示：localStorage に保存されたテーマがあればそれを適用し、なければ OS の設定に従う
+        let storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            applyTheme(storedTheme);
+        } else {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                applyTheme('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                applyTheme('light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        const themeToggleButton = document.getElementById('theme-toggle');
+
+        // トグルボタンのクリックイベント
+        themeToggleButton.addEventListener('click', function () {
+            let newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    </script>
+
+    </script>
+
+</body>
+
+</html>
