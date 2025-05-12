@@ -28,3 +28,7 @@ posts/autodiff/note/diff-zoo/
 posts/autodiff/note/FiniteDifferences.jl/
 /_almo_output
 tmp.html
+public/cv/fontawesome.sty
+public/cv/main.aux
+public/cv/main.fdb_latexmk
+public/cv/main.fls
