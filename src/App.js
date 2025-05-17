@@ -33,10 +33,10 @@ function NotFound() {
 
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
-  const [filename, setFilename] = useState("/works/works.yaml");
+  const [filename, setFilename] = useState("/works.yaml");
 
   useEffect(() => {
-    setFilename(language === "ja" ? "/works/works.yaml" : "/works/works_en.yaml");
+    setFilename(language === "ja" ? "/works.yaml" : "/works_en.yaml");
   }, [language]);
 
   return (
