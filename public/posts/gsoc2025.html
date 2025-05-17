@@ -1049,7 +1049,7 @@ Implementation Plan
 Background and Relevant Experience	                   
 Related Software Projects	                             
 Availability	                                        
-</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyKJ4qH46pnXHIK8ztNVrmXcc4vBSNbQ8n-HTgsRlcG9FL4P7wMIWjGA_aGPHiAiY11xtErUfIQ2aRpUe85C5KjitDSJU6SJK-HcP35ih_mPTImxAm60=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
+</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLPvFGBGPazxv_R0qcw53mw1HcBpVdt5LCVtRrhsEI5jkmoZ0Em_8O7O6LBlen8eWYMfjUxq1lb_ButLAtLisQbQRd_J6RfaEzfVAF6n1cxeG-3LkVD=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"91",
     "title":"具体的にやりたいこと"
@@ -1096,7 +1096,7 @@ foo(2.0)
     "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
 });
 </script>
-<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/d8988b68ec7b92a77af0b42b3368ae09d6e363c2b262084e357658092b29d701/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
+<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/8a67357da0db87959174927c6880a5b95c6734406007b8b854b0715e136322d6/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
 </code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
 ═════ 1 possible error found ═════
 ┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
