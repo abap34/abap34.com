@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
 import { FaArrowsRotate } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
@@ -25,7 +25,24 @@ export default function Header() {
   return (
     <header className="border-b border-gray-200 py-4 dark:border-gray-800 sticky  bg-white dark:bg-gray-900 dark:text-gray-200 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div>
+        <div className="flex items-center space-x-4">
+          <div>
+            <button onClick={() => setIsDark(!isDark)}>
+              {isDark ? (
+                <div className="flex">
+                  <FaSun size={BIG_ICON_SIZE} />
+                  <FaArrowsRotate size={SMALL_ICON_SIZE} />
+                  <FaMoon size={SMALL_ICON_SIZE} />
+                </div>
+              ) : (
+                <div className="flex">
+                  <FaMoon size={BIG_ICON_SIZE} />
+                  <FaArrowsRotate size={SMALL_ICON_SIZE} />
+                  <FaSun size={SMALL_ICON_SIZE} />
+                </div>
+              )}
+            </button>
+          </div>
           <select
             value={language}
             onChange={(e) => {
@@ -37,23 +54,7 @@ export default function Header() {
             <option value="en">English (β)</option>
           </select>
         </div>
-        <div>
-          <button onClick={() => setIsDark(!isDark)}>
-            {isDark ? (
-              <div className="flex">
-                <FaSun size={BIG_ICON_SIZE} />
-                <FaArrowsRotate size={SMALL_ICON_SIZE} />
-                <FaMoon size={SMALL_ICON_SIZE} />
-              </div>
-            ) : (
-              <div className="flex">
-                <FaMoon size={BIG_ICON_SIZE} />
-                <FaArrowsRotate size={SMALL_ICON_SIZE} />
-                <FaSun size={SMALL_ICON_SIZE} />
-              </div>
-            )}
-          </button>
-        </div>
+
 
         <nav className="hidden lg:flex space-x-4 items-center text-gray-600 dark:text-gray-400 md:space-x-8">
           <Link to="/"> About </Link>
