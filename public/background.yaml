@@ -1,0 +1,30 @@
+education:
+  - school: "東京工業大学 情報理工学院"
+    period: "2022/04 ~"
+  - school: "東京工業大学 情報理工学院 情報工学系"
+    period: "2023/04 ~"
+  - school: "東京工業大学 情報理工学院 情報工学系 Programming Systems Group (渡部研究室)"
+    period: "2025/04 ~"
+
+careers:
+  - company: "DENSO IT Laboratory"
+    url: "https://www.d-itlab.co.jp/"
+    period: "2022"
+    worktype: "Reserch Internship"
+    project: "深層学習を使った研究の実装・評価をしていました。"
+  - company: "株式会社サイカ"
+    url: "https://xica.net/"
+    period: "2023"
+    worktype: "SWE Internship"
+    project: "Python 製の既存の分析基盤を Julia で書き直して高速化するプロジェクトをしていました。"
+  - company: "日本経済新聞社"
+    url: "https://hack.nikkei.com/"
+    period: "2024"
+    worktype: "SWE Internship"
+    project: ""
+
+others:
+  - title: "Google Summer of Code 2025"
+    url: "https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m"
+    description: "「Development of a New Language Server for Julia」 というプロポーザルが Julia に採択されました。 Julia の新しい Language Server の開発に取り組む予定です。"
+    period: "2025"

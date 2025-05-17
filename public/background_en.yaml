@@ -1,0 +1,30 @@
+education:
+  - school: "School of Computing, Tokyo Institute of Technology"
+    period: "2022/04 ~"
+  - school: "Department of Computer Science, School of Computing, Tokyo Institute of Technology"
+    period: "2023/04 ~"
+  - school: "Programming Systems Group, Department of Computer Science, School of Computing, Tokyo Institute of Technology"
+    period: "2025/04 ~"
+
+careers:
+  - company: "DENSO IT Laboratory"
+    url: "https://www.d-itlab.co.jp/"
+    period: "2022"
+    worktype: "Reserch Internship"
+    project: "Implemented and evaluated research using deep learning."
+  - company: "Xica Inc."
+    url: "https://xica.net/"
+    period: "2023"
+    worktype: "SWE Internship"
+    project: "Rewriting the existing analysis infrastructure written in Python in Julia to get faster and more efficient."
+  - company: "Nikkei Inc."
+    url: "https://hack.nikkei.com/"
+    period: "2024"
+    worktype: "SWE Internship"
+    project: ""
+
+others:
+  - title: "Google Summer of Code 2025"
+    url: "https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m"
+    description: "A proposal titled 'Development of a New Language Server for Julia' was accepted by Julia. I will be developing a new Language Server for Julia."
+    period: "2025"
