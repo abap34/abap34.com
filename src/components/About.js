@@ -1,13 +1,31 @@
-import { Code, Cpu, GraduationCap, Lightbulb, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
+import { Link } from "react-router-dom";
 import yaml from "yaml";
 import LanguageContext from "../context/LanguageContext";
 
+async function fetchPosts() {
+    try {
+        const response = await fetch('https://www.abap34.com/posts.json');
+        if (!response.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        return [];
+    }
+}
+
+
 export default function About() {
     const [data, setData] = useState(null);
+    const [posts, setPosts] = useState([]);
+    const [works, setWorks] = useState({});
     const { language, toggleLanguage } = useContext(LanguageContext);
-
 
     useEffect(() => {
         let filename = language === "ja" ? "/aboutme.yaml" : "/aboutme_en.yaml";
@@ -16,69 +34,61 @@ export default function About() {
             .then((text) => setData(yaml.parse(text)));
     }, [language]);
 
+    useEffect(() => {
+        fetchPosts().then((posts) => {
+            setPosts(posts.slice(0, 4));
+        });
+
+        // ワークスを取得
+        const path = language === "ja" ? "/works.yaml" : "/works_en.yaml";
+        fetch(path)
+            .then((response) => response.text())
+            .then((text) => yaml.parse(text))
+            .then((data) => {
+                setWorks(data);
+            })
+            .catch((error) => {
+                console.error("Error loading works:", error);
+            });
+    }, [language]);
+
     if (!data) return <p>Loading...</p>;
 
 
     return (
-        <div className="max-w-4xl mx-auto py-12 px-6 space-y-12 bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 border-b pb-4 border-gray-200 dark:border-gray-700">
-                About Me
-            </h1>
-
-            <Section icon={<GraduationCap className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />} title="Affiliation">
-                <p className="text-gray-700 dark:text-gray-300 ml-4 leading-relaxed">{data.belong}</p>
-            </Section>
-
-            <Section icon={<Lightbulb className="w-7 h-7 text-amber-500 dark:text-amber-400" />} title="About Me">
-                <MarkdownText text={data.aboutme} />
-            </Section>
-
-            <Section icon={<Code className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />} title="Skills">
-
-                <div className="space-y-2 ">
-                    <MarkdownText text={data.stack} />
-                    <img
-                        src="https://github-readme-stats-git-self-host-abap34s-projects.vercel.app/api/top-langs?username=abap34&hide=jupyter%20notebook,HTML,Rich%20Text%20Format,CSS,SCSS&stats_format=bytes&langs_count=10&count_private=true&layout=compact&disable_animations=true&card_width=300&cache_seconds=60"
-                        alt="Most Used Languages"
-                        className="mx-auto"
-                    />
-
-                    <p className="text-center text-sm text-gray-600 dark:text-gray-400">
-
-                        {/* (※ GitHub の自身のレポジトリの言語割合.) */}
-                        {language === "ja" ? "(※ GitHub の自身のレポジトリの言語割合.)" : "(※ The language ratio of my GitHub repositories.)"}
-                    </p>
+        <div className="max-w-4xl mx-auto py-8 px-6 space-y-8 bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
+            <Section title="Recent Blog Posts">
+                <div className="space-y-4">
+                    {posts.length > 0 ? (
+                        <>
+                            {posts.map((post, index) => (
+                                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-1 font-mono">{post.post_date}</p>
+                                    <a href={post.url} target="_blank" rel="noreferrer" className="text-lg font-medium hover:text-blue-600 transition-colors duration-300">
+                                        {post.title}
+                                    </a>
+                                    <div className="mt-2 flex flex-wrap gap-1">
+                                        {post.tags.slice(0, 3).map((tag, i) => (
+                                            <span key={i} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full font-mono">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                            <Link to="/blog" className="text-blue-600 hover:underline flex items-center mt-4 font-medium">
+                                <span>{language === "ja" ? "すべての投稿を見る" : "View all publications"}</span>
+                                <ArrowRight className="ml-1 h-4 w-4" />
+                            </Link>
+                        </>
+                    ) : (
+                        <p>{language === "ja" ? "投稿を読み込んでいます..." : "Loading publications..."}</p>
+                    )}
                 </div>
             </Section>
 
-            <Section icon={<Cpu className="w-7 h-7 text-rose-600 dark:text-rose-400" />} title="Particular Interest">
-                <p>
-                    {/* 最近は、 (最終更新: 2024年1月31日) */}
-                    {language === "ja" ? "最近は、" : "Recently, "}
-                </p>
+    
 
-                {/* コードブロックの中のリストにする */}
-                <ul className="ml-8 list-disc list-inside space-y-3 bg-gray-50 dark:bg-gray-800 p-3 rounded">
-                    {data.detailed && data.detailed.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-
-                </ul>
-
-                <p>
-                    {/* に特に興味を持って勉強しています。 */}
-
-                    {language === "ja" ? "に特に興味を持って勉強しています。" : "... are what I am particularly interested and studying."}
-
-                </p>
-            </Section>
-
-            <section className="space-y-5 transition-all duration-300">
-                
-                <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {language === "ja" ? "Works にあるもの以外にも、さまざまなソフトウェア・実装を GitHub で公開しているので、ぜひ見てみてください。" : "In addition to what is in Works, I have published various software and implementations on GitHub, so please check it out!"}
-                </div>
-            </section>
 
             <Section icon={<Mail className="w-7 h-7 text-blue-600 dark:text-blue-400" />} title="Contact">
                 <p className="font-mono bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded inline-block">abap0002 [at] gmail.com</p>
@@ -92,7 +102,7 @@ function Section({ icon, title, children }) {
         <section className="space-y-5 transition-all duration-300">
             <div className="flex items-center gap-3 text-2xl font-medium">
                 {icon}
-                <h2 className="border-b pb-1">{title}</h2>
+                <h2 className="border-l-2 border-gray-200 dark:border-gray-700 pl-3">{title}</h2>
             </div>
             <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">{children}</div>
         </section>
@@ -101,7 +111,7 @@ function Section({ icon, title, children }) {
 
 function MarkdownText({ text }) {
     return (
-        <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+        <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed prose prose-sm dark:prose-invert max-w-none">
             <ReactMarkdown>{text}</ReactMarkdown>
         </div>
     );
