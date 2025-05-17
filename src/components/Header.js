@@ -55,10 +55,6 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="hidden lg:flex items-center space-x-2">
-          <span className="text-2xl font-bold text-blue-600 dark:text-blue-400 dark:text-opacity-80 dark:font-bold md:text-lg">abap34</span>.com
-        </div>
-
         <nav className="hidden lg:flex space-x-4 items-center text-gray-600 dark:text-gray-400 md:space-x-8">
           <Link to="/"> About </Link>
           <Link to="/background"> Background </Link>
