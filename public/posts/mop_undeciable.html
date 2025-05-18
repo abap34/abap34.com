@@ -1041,25 +1041,25 @@ u_{1} u_{i_1} u_{i_2} \ldots u_{i_k} = v_{1} v_{i_1} v_{i_2} \ldots v_{i_k}
     "title":"証明"
 });
 </script>
-<h2 id="59">証明</h2><br>次のことを示します。<br><div class="theorem"><br><span class="strong"> <strong>定数伝播の MOP 解は一般には決定不能である。</strong> </span><br></div><br><br>以下のようなプログラムを考えます。<br><span class="inline-code"> <code>u1</code> </span>, <span class="inline-code"> <code>u2</code> </span> を　<span class="inline-code"> <code>n</code> </span> 個のドミノの上下として、<br><div class="code-block"> <pre><code class="language-julia">x = u1[1]
-y = u2[1]
+<h2 id="59">証明</h2><br>次のことを示します。<br><div class="theorem"><br><span class="strong"> <strong>定数伝播の MOP 解は一般には決定不能である。</strong> </span><br></div><br><br>以下のようなプログラムを考えます。<br><span class="inline-code"> <code>u</code> </span>, <span class="inline-code"> <code>v</code> </span> を　<span class="inline-code"> <code>n</code> </span> 個のドミノの上下として、<br><div class="code-block"> <pre><code class="language-julia">x = u[1]
+y = v[1]
 
 while (cond) 
     if (cond1)
-        x = append(x, u1[1])  # x の末尾に u1[1] を追加
-        y = append(y, u2[1])
+        x = append(x, u[1])  # x の末尾に u[1] を追加
+        y = append(y, v[1])
     end
 
     if (cond2)
-        x = append(x, u1[2])
-        y = append(y, u2[2])
+        x = append(x, u[2])
+        y = append(y, v[2])
     end
 
     ...
 
     if (condn)
-        x = append(x, u1[n])
-        y = append(y, u2[n])
+        x = append(x, u[n])
+        y = append(y, v[n])
     end
 end
 
