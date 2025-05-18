@@ -75,14 +75,8 @@ export default function Introduction() {
                                 <br />
                                 <br />
                                 {language === "ja"
-                                    ? "その他, 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります."
+                                    ? "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります."
                                     : "Other interests include mathematical optimization (especially continuous optimization) and mathematical statistics, as well as related fields."}
-                            </p>
-                            <p className="font-medium mt-2 mb-1">Skills:</p>
-                            <p className="text-gray-600 dark:text-gray-400">
-                                {language === "ja"
-                                    ? "Python, Julia, C++, TypeScript, Scheme, Rocq"
-                                    : "Python, Julia, C++, TypeScript, Scheme, Rocq"}
                             </p>
                         </div>
                     </div>
