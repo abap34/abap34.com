@@ -14,7 +14,7 @@ export default function Introduction() {
                 <img
                     src="/icon.png"
                     alt="abap34"
-                    className="w-32 h-32 rounded-full border-2 border-gray-300 dark:border-gray-700 shadow-md dark:shadow-gray-800 self-center"
+                    className="max-w-[128px] max-h-[128px] w-auto h-auto rounded-full border-2 border-gray-300 dark:border-gray-700 shadow-md dark:shadow-gray-800 self-center"
                 />
 
 
