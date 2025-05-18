@@ -1,6 +1,5 @@
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import yaml from "yaml";
@@ -87,11 +86,8 @@ export default function About() {
                 </div>
             </Section>
 
-    
-
-
-            <Section icon={<Mail className="w-7 h-7 text-blue-600 dark:text-blue-400" />} title="Contact">
-                <p className="font-mono bg-gray-50 dark:bg-gray-800 px-3 py-2 rounded inline-block">abap0002 [at] gmail.com</p>
+            <Section title="Contact">
+                abap0002 [at] gmail.com or Send me a message on <a href="https://twitter.com/abap34" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Twitter</a>
             </Section>
         </div>
     );
