@@ -77,28 +77,28 @@ PCP の最初のドミノが固定されたバージョンです。　
 
 以下のようなプログラムを考えます。
 
-`u1`, `u2` を　`n` 個のドミノの上下として、
+`u`, `v` を　`n` 個のドミノの上下として、
 
 ```julia
-x = u1[1]
-y = u2[1]
+x = u[1]
+y = v[1]
 
 while (cond) 
     if (cond1)
-        x = append(x, u1[1])  # x の末尾に u1[1] を追加
-        y = append(y, u2[1])
+        x = append(x, u[1])  # x の末尾に u[1] を追加
+        y = append(y, v[1])
     end
 
     if (cond2)
-        x = append(x, u1[2])
-        y = append(y, u2[2])
+        x = append(x, u[2])
+        y = append(y, v[2])
     end
 
     ...
 
     if (condn)
-        x = append(x, u1[n])
-        y = append(y, u2[n])
+        x = append(x, u[n])
+        y = append(y, v[n])
     end
 end
 
