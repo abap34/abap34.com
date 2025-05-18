@@ -1035,13 +1035,13 @@ u_{i_1} u_{i_2} \ldots u_{i_k} = v_{i_1} v_{i_2} \ldots v_{i_k}
 
 u_{1} u_{i_1} u_{i_2} \ldots u_{i_k} = v_{1} v_{i_1} v_{i_2} \ldots v_{i_k}
 
- \] </div><br></div><br><br>つまり、最初のドミノが固定されたバージョンです。　が、これも決定不能であることが知られています。今回はこれを使います。<br><script>page_contents.push({
+ \] </div><br></div><br><br>PCP の最初のドミノが固定されたバージョンです。　<br>が、これも決定不能であることが知られています。<br>今回はこれを使います。<br><script>page_contents.push({
     "type":"H2",
-    "id":"55",
+    "id":"59",
     "title":"証明"
 });
 </script>
-<h2 id="55">証明</h2><br>次のことを示します。<br><div class="theorem"><br><span class="strong"> <strong>定数伝播の MOP 解は一般には決定不能である。</strong> </span><br></div><br><br>以下のようなプログラムを考えます。<br><span class="inline-code"> <code>u1</code> </span>, <span class="inline-code"> <code>u2</code> </span> を　<span class="inline-code"> <code>n</code> </span> 個のドミノの上下として、<br><div class="code-block"> <pre><code class="language-julia">x = u1[1]
+<h2 id="59">証明</h2><br>次のことを示します。<br><div class="theorem"><br><span class="strong"> <strong>定数伝播の MOP 解は一般には決定不能である。</strong> </span><br></div><br><br>以下のようなプログラムを考えます。<br><span class="inline-code"> <code>u1</code> </span>, <span class="inline-code"> <code>u2</code> </span> を　<span class="inline-code"> <code>n</code> </span> 個のドミノの上下として、<br><div class="code-block"> <pre><code class="language-julia">x = u1[1]
 y = u2[1]
 
 while (cond) 
@@ -1065,19 +1065,19 @@ end
 
 z = (x == y) 
 
-</code></pre> </div><br>このプログラムの最後の <span class="inline-code"> <code>z</code> </span> の定数伝播の結果を考えましょう。<br><span class="inline-code"> <code>z = (x == y)</code> </span> に至る CFG 上のパスはドミノの並べ方に 1対1 で対応していることから、 <span class="math-inline"> \( \text{MOP} \) </span> 解 における <span class="inline-code"> <code>z</code> </span> の値は <span class="inline-code"> <code>u1</code> </span>, <span class="inline-code"> <code>u2</code> </span> が MPCP の解をもたないとき、またそのときに限り <span class="inline-code"> <code>false</code> </span> になります。<br><br><br><br>したがって、 <span class="math-inline"> \( \text{MOP} \) </span> 解が求まるとすると MPCP が解けてしまいます。<br>したがって <span class="math-inline"> \( \text{MOP} \) </span> 解の求解は決定不能です。<br><script>page_contents.push({
+</code></pre> </div><br>このプログラムの最後の <span class="inline-code"> <code>z</code> </span> の定数伝播の結果を考えましょう。<br><span class="inline-code"> <code>z = (x == y)</code> </span> に至る CFG 上のパスはドミノの並べ方に 1対1 で対応していることから、 <span class="math-inline"> \( \text{MOP} \) </span> 解 における <span class="inline-code"> <code>z</code> </span> の値は <span class="inline-code"> <code>u1</code> </span>, <span class="inline-code"> <code>u2</code> </span> が MPCP の解をもたないとき、またそのときに限り <span class="inline-code"> <code>false</code> </span> になります。<br><br><br>したがって、 <span class="math-inline"> \( \text{MOP} \) </span> 解が求まるとすると MPCP が解けてしまいます。<br>よって <span class="math-inline"> \( \text{MOP} \) </span> 解の求解は決定不能です。<br><script>page_contents.push({
     "type":"H2",
-    "id":"107",
+    "id":"110",
     "title":"感想"
 });
 </script>
-<h2 id="107">感想</h2><br>任意の選択を任意回させる、みたいなのでポストの対応問題族に帰着させるのができるわけですね。<br>決定不能であることを示すやつで毎回天才証明に唸ってしまうので、同じ作戦で何か証明してみたいところです。<br><script>page_contents.push({
+<h2 id="110">感想</h2><br>任意の選択を任意回させる、みたいなのでポストの対応問題族に帰着させるのができるわけですね。<br>決定不能であることを示すやつで毎回天才証明に唸ってしまうので、同じ作戦で何か証明してみたいところです。<br><script>page_contents.push({
     "type":"H2",
-    "id":"114",
+    "id":"117",
     "title":"参考文献"
 });
 </script>
-<h2 id="114">参考文献</h2><br><ul><li><url> <a href="https://link.springer.com/book/10.1007/978-3-662-03811-6">Principles of Program Analysis</a> </url></li></ul><br><br><br><br><br><br><div class="footnote"></div>
+<h2 id="117">参考文献</h2><br><ul><li><url> <a href="https://link.springer.com/book/10.1007/978-3-662-03811-6">Principles of Program Analysis</a> </url></li></ul><br><br><br><br><br><br><div class="footnote"></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
