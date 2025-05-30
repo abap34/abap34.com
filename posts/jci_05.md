@@ -796,8 +796,9 @@ $\text{MOP}_i \leq \text{IDEAL}_i$ です。
 
 
 では $\text{MOP}$ は計算できるかというと、残念ながらこれも決定不能です。 
-参考文献にした文献の 3つ目に Post の対応問題に帰着させる証明が載っているのですが、少し考えたことを書いてみます。
 
+証明を [https://www.abap34.com/posts/mop_undeciable.html](https://www.abap34.com/posts/mop_undeciable.html) に書きましたが、
+もう少しざっくり議論してみます。
 
 
 何もわかっていない関数 `no_idea_function` によって終了するループを含む、以下のようなプログラムがあるとします。
