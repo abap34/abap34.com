@@ -1593,7 +1593,7 @@ s_6 = ![I_5!](s_5)
 
 \text{MOP}_i = \prod_{P \in \mathcal{P}_{\text{MOP}}}  ![I_P!](s_1)
 
- \] </div><br>とします。<br>このとき、  <span class="math-inline"> \( \mathcal{P}_{\text{IDEAL}} \subseteq \mathcal{P}_{\text{MOP}} \) </span> であり、 <span class="math-inline"> \( x \sqcap y \leq x \) </span>, <span class="math-inline"> \( x \sqcap y \leq y \) </span> なので <span class="math-inline"> \( \text{MOP}_i \leq \text{IDEAL}_i \) </span> です。<br><br>つまり、条件分岐を考慮しないのは理想の解よりも安全な見積もりであることがわかります。 経路を余分に考えても抽象状態はより安全側に倒れるだけということです。<br><br>では <span class="math-inline"> \( \text{MOP} \) </span> は計算できるかというと、残念ながらこれも決定不能です。  参考文献にした文献の 3つ目に Post の対応問題に帰着させる証明が載っているのですが、少し考えたことを書いてみます。<br><br><br>何もわかっていない関数 <span class="inline-code"> <code>no_idea_function</code> </span> によって終了するループを含む、以下のようなプログラムがあるとします。<br><div class="code-block"> <pre><code class="language-plaintext">1. x = 0
+ \] </div><br>とします。<br>このとき、  <span class="math-inline"> \( \mathcal{P}_{\text{IDEAL}} \subseteq \mathcal{P}_{\text{MOP}} \) </span> であり、 <span class="math-inline"> \( x \sqcap y \leq x \) </span>, <span class="math-inline"> \( x \sqcap y \leq y \) </span> なので <span class="math-inline"> \( \text{MOP}_i \leq \text{IDEAL}_i \) </span> です。<br><br>つまり、条件分岐を考慮しないのは理想の解よりも安全な見積もりであることがわかります。 経路を余分に考えても抽象状態はより安全側に倒れるだけということです。<br><br>では <span class="math-inline"> \( \text{MOP} \) </span> は計算できるかというと、残念ながらこれも決定不能です。 <br>証明を <url> <a href="https://www.abap34.com/posts/mop_undeciable.html">https://www.abap34.com/posts/mop_undeciable.html</a> </url> に書きましたが、 もう少しざっくり議論してみます。<br><br>何もわかっていない関数 <span class="inline-code"> <code>no_idea_function</code> </span> によって終了するループを含む、以下のようなプログラムがあるとします。<br><div class="code-block"> <pre><code class="language-plaintext">1. x = 0
  
 2. x = x + 1
 
@@ -1671,17 +1671,17 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j)
 
  \] </div><br>です。<br><script>page_contents.push({
     "type":"H2",
-    "id":"724",
+    "id":"727",
     "title":"求解アルゴリズム"
 });
 </script>
-<h2 id="724">求解アルゴリズム</h2><br><script>page_contents.push({
+<h2 id="727">求解アルゴリズム</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"727",
+    "id":"730",
     "title":"最大不動点を求めるアルゴリズム"
 });
 </script>
-<h3 id="727">最大不動点を求めるアルゴリズム</h3><br>突然結論から述べますが、次のような実装のアルゴリズムで得られる解 <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解です。<br><br>このアルゴリズムは、先行命令からの全てを命令を作用させた交わりをとる、というのを状態が変化するまで繰り返すというものです。<br>言い換えれば、データフロー方程式の右辺を変化するまで繰り返す、つまりデータフロー方程式の不動点の一つを求めるアルゴリズムといえます。<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
+<h3 id="730">最大不動点を求めるアルゴリズム</h3><br>突然結論から述べますが、次のような実装のアルゴリズムで得られる解 <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解です。<br><br>このアルゴリズムは、先行命令からの全てを命令を作用させた交わりをとる、というのを状態が変化するまで繰り返すというものです。<br>言い換えれば、データフロー方程式の右辺を変化するまで繰り返す、つまりデータフロー方程式の不動点の一つを求めるアルゴリズムといえます。<br><br><div class="code-block"> <pre><code class="language-julia">function abstract_interpret(I::Program, abstract_semantics::Function, a₀::AbstractState)::Vector{AbstractState}
     n = length(I)
     inputs = [copy(a₀) for _ in 1:n]
     outputs = [copy(a₀) for _ in 1:n]
@@ -1716,17 +1716,17 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j)
 end
 </code></pre> </div><br>さて、いきなり出てきたからにはこのアルゴリズムはうまく働きます。<br><br>そのことを証明します。<br><script>page_contents.push({
     "type":"H3",
-    "id":"747",
+    "id":"750",
     "title":"解である証明"
 });
 </script>
-<h3 id="747">解である証明</h3><br><div class="theorem"><br><span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解である。<br></div><br><div class="proof"><br>連立方程式の解でないなら、 <span class="math-inline"> \( s_i \neq \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \) </span> なる <span class="math-inline"> \( i \) </span> があるので、 <span class="inline-code"> <code>outputs</code> </span> が更新されて <span class="inline-code"> <code>while</code> </span> が終了しない。<br>なので <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解。<br></div><br><script>page_contents.push({
+<h3 id="750">解である証明</h3><br><div class="theorem"><br><span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解である。<br></div><br><div class="proof"><br>連立方程式の解でないなら、 <span class="math-inline"> \( s_i \neq \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \) </span> なる <span class="math-inline"> \( i \) </span> があるので、 <span class="inline-code"> <code>outputs</code> </span> が更新されて <span class="inline-code"> <code>while</code> </span> が終了しない。<br>なので <span class="math-inline"> \( \text{MFP} \) </span> は連立方程式の解。<br></div><br><script>page_contents.push({
     "type":"H3",
-    "id":"775",
+    "id":"778",
     "title":"停止性の証明"
 });
 </script>
-<h3 id="775">停止性の証明</h3><br><div class="theorem"><br>このアルゴリズムは停止する。<br></div><br><div class="proof"><br><span class="math-inline"> \( \text{In}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{In}_i^{(k)} \) </span>, <span class="math-inline"> \( \text{Out}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{Out}_i^{(k)} \) </span> とかく。<br><br>まず、次の補題を示す。<br><div class="lemma"><br><div class="math-block"> \[ 
+<h3 id="778">停止性の証明</h3><br><div class="theorem"><br>このアルゴリズムは停止する。<br></div><br><div class="proof"><br><span class="math-inline"> \( \text{In}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{In}_i^{(k)} \) </span>, <span class="math-inline"> \( \text{Out}_i \) </span> が <span class="math-inline"> \( k \) </span> 回更新されたときの値を <span class="math-inline"> \( \text{Out}_i^{(k)} \) </span> とかく。<br><br>まず、次の補題を示す。<br><div class="lemma"><br><div class="math-block"> \[ 
 
 \begin{cases}
 \text{In}_i^{(k+1)} \leq \text{In}_i^{(k)}  \\
@@ -1768,11 +1768,11 @@ outputs[i] = abstract_semantics(I[i])(inputs[i])
 
  \] </div><br>が成立する。このアルゴリズムはそのような <span class="inline-code"> <code>k</code> </span> に達すると <span class="inline-code"> <code>while</code> </span> ループが終了するので、アルゴリズムは停止する。<br></div><br>また、証明から、束の高さを <span class="math-inline"> \( h \) </span> として 繰り返し回数は <span class="math-inline"> \( n \times h \) </span> で抑えられることがわかります. なので、変数の数を <span class="math-inline"> \( m \) </span> とすると、このアルゴリズムの計算量は <span class="math-inline"> \( \mathcal{O}(n \times h \times m) \) </span> です。<br><br><script>page_contents.push({
     "type":"H3",
-    "id":"890",
+    "id":"893",
     "title":"最大の解であることの証明"
 });
 </script>
-<h3 id="890">最大の解であることの証明</h3><br><br><div class="theorem  "><br>このアルゴリズムで得られる解は、データフロー方程式の最大の解である。<br>つまり、 <span class="math-inline"> \( s_1, s_2, \dots, s_n \) </span> がデータフロー方程式の解であるとき、 <br><div class="math-block"> \[ 
+<h3 id="893">最大の解であることの証明</h3><br><br><div class="theorem  "><br>このアルゴリズムで得られる解は、データフロー方程式の最大の解である。<br>つまり、 <span class="math-inline"> \( s_1, s_2, \dots, s_n \) </span> がデータフロー方程式の解であるとき、 <br><div class="math-block"> \[ 
 
 s_i \leq \text{MFP}_i
 
@@ -1790,17 +1790,17 @@ s_i \leq \text{MFP}_i
 
  \] </div><br></div><br></div><br>これは、この図を見るともう少し直感的に理解できるかもしれません。<br><figure><img src="jci_05/image-3.png" ><figcaption></figcaption></figure><br>単調なら順序が保存されるので、縦軸を大小関係 <span class="math-inline"> \( \leq \) </span> にして <span class="math-inline"> \( f \) </span> で写した先と結んだときに交差することはありません。<br>ところで 不動点は不動点なので真横にいきます。もし最大の不動点以外に飛ぶとすると、真横に行く線と交わってしまいます。<br>なので、 <span class="math-inline"> \( \top \) </span> から <span class="math-inline"> \( f \) </span> を適用していくと、最大不動点に到達します。<br>したがって、このアルゴリズムによって最大の解が得られることがわかりました。<br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1048",
+    "id":"1051",
     "title":"MFP 解と MOP 解の関係"
 });
 </script>
-<h2 id="1048">MFP 解と MOP 解の関係</h2><br><script>page_contents.push({
+<h2 id="1051">MFP 解と MOP 解の関係</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"1051",
+    "id":"1054",
     "title":"交わりと作用の分配性"
 });
 </script>
-<h3 id="1051">交わりと作用の分配性</h3><br>当然の疑問として、<span class="math-inline"> \( \text{MOP} \) </span> との関係はどうなっているのか、そしてなぜデータフロー方程式なら解けるのか、という疑問が沸きます。<br>まずは、 <span class="math-inline"> \( \text{MFP} \) </span>　と　<span class="math-inline"> \( \text{MOP} \) </span> を比較して、「<span class="math-inline"> \( \text{MFP} \) </span> とは交わりを先にとったものである」ということを強調しようと思います。<br><br><br>例えば、経路が <span class="math-inline"> \( I_1 \to I_2 \to I_4 \to I_5 \) </span> と <span class="math-inline"> \( I_1 \to I_3 \to I_4 \to I_5 \) </span> の二つからなる場合を考えましょう。<br>つまり、<br><div class="code-block"> <pre><code class="language-plaintext">┌──────────┐
+<h3 id="1054">交わりと作用の分配性</h3><br>当然の疑問として、<span class="math-inline"> \( \text{MOP} \) </span> との関係はどうなっているのか、そしてなぜデータフロー方程式なら解けるのか、という疑問が沸きます。<br>まずは、 <span class="math-inline"> \( \text{MFP} \) </span>　と　<span class="math-inline"> \( \text{MOP} \) </span> を比較して、「<span class="math-inline"> \( \text{MFP} \) </span> とは交わりを先にとったものである」ということを強調しようと思います。<br><br><br>例えば、経路が <span class="math-inline"> \( I_1 \to I_2 \to I_4 \to I_5 \) </span> と <span class="math-inline"> \( I_1 \to I_3 \to I_4 \to I_5 \) </span> の二つからなる場合を考えましょう。<br>つまり、<br><div class="code-block"> <pre><code class="language-plaintext">┌──────────┐
 │    I₁    │──────┐
 └──────────┘      │
      │            │
@@ -1848,11 +1848,11 @@ s_5 &= ![I_4!](s_4)
 
  \] </div><br><br>です。つまり、<br><img src="jci_05/image-4.png" height="500px !important"><br>のように、 <span class="math-inline"> \( I_4 \) </span> の適用と交わりをとるタイミングが入れ替わっています。 <br><br>そして、このことから二つの重大な事実が導かれます。<br><ol><li><span class="strong"> <strong><span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> は常には成り立たない</strong> </span></li><li><span class="strong"> <strong>常に <span class="math-inline"> \( \text{MFP} \leq \text{MOP} \) </span> である</strong> </span></li></ol><br><script>page_contents.push({
     "type":"H3",
-    "id":"1120",
+    "id":"1123",
     "title":"MFP != MOP なる例と解の一致条件 "
 });
 </script>
-<h3 id="1120">MFP != MOP なる例と解の一致条件 </h3><br>実際に、 <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> が成り立たない例を示します。<br><div class="code-block"> <pre><code class="language-julia">prog1 = @prog begin
+<h3 id="1123">MFP != MOP なる例と解の一致条件 </h3><br>実際に、 <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> が成り立たない例を示します。<br><div class="code-block"> <pre><code class="language-julia">prog1 = @prog begin
     x = 10             # I₁
     y = 20             # I₂
     p &amp;&amp; @goto 6       # I₃
@@ -1894,11 +1894,11 @@ s_7 &= ![I_6!](s_6) \\
 
  \] </div><br>を満たすときはは明らかに <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> です。　次回の記事でいくつか紹介するつもりですが、データフロー解析として定式化できる問題のうちいくつかはこの条件を満たしていて、 常に <span class="math-inline"> \( \text{MFP} = \text{MOP} \) </span> が保証されます。<br><br>ところが定数伝播などはこの条件を満たさず、今回のような例が出てきます。<br><script>page_contents.push({
     "type":"H3",
-    "id":"1211",
+    "id":"1214",
     "title":"MFP の安全性"
 });
 </script>
-<h3 id="1211">MFP の安全性</h3><br>さて、 <span class="math-inline"> \( \text{MFP} \neq \text{MOP} \) </span> であることもあることがわかりましたが、ここで注意すべきは<br><span class="math-inline"> \( \text{MFP} > \text{MOP} \) </span> となるかどうかということです。この不等式が成り立つと言うことは、例えば定数とわからないはずなのに定数とみなしている、つまり誤った解を得ているこということになるわけで、静的解析としてはあってはならないことです。<br><br>ですが、幸いこのようなことは起きません。<br><br>このことは以下の定理によって保証されます。<br><div class="theorem"><br>束 <span class="math-inline"> \( (L, \leq) \) </span> と、単調な関数 <span class="math-inline"> \( f: L \to L \) </span> は、<br>任意の <span class="math-inline"> \( x, y \in L \) </span> に対して<br><div class="math-block"> \[ 
+<h3 id="1214">MFP の安全性</h3><br>さて、 <span class="math-inline"> \( \text{MFP} \neq \text{MOP} \) </span> であることもあることがわかりましたが、ここで注意すべきは<br><span class="math-inline"> \( \text{MFP} > \text{MOP} \) </span> となるかどうかということです。この不等式が成り立つと言うことは、例えば定数とわからないはずなのに定数とみなしている、つまり誤った解を得ているこということになるわけで、静的解析としてはあってはならないことです。<br><br>ですが、幸いこのようなことは起きません。<br><br>このことは以下の定理によって保証されます。<br><div class="theorem"><br>束 <span class="math-inline"> \( (L, \leq) \) </span> と、単調な関数 <span class="math-inline"> \( f: L \to L \) </span> は、<br>任意の <span class="math-inline"> \( x, y \in L \) </span> に対して<br><div class="math-block"> \[ 
 
 f(x \ \sqcap \  y)  \leq f(x) \ \sqcap \ f(y) 
 
@@ -1922,11 +1922,11 @@ f(x \ \sqcap \ y) \leq f(x) \ \sqcap \ f(y)
 
  \] </div><br><br></div><br>(実は、この逆 (不等式を満たすなら単調) も成り立ちます。)<br><br>この定理は、「先に交わりを取ると、より小さな (<span class="math-inline"> \( \Leftrightarrow \) </span> 安全な) 解が得られる」ことを主張していますから、 <span class="math-inline"> \( \text{MFP} \leq \text{MOP} \) </span> であって、 <span class="math-inline"> \( \text{MFP} \) </span> が安全な解であることがわかりました！<br><br>というわけで <span class="math-inline"> \( \text{MFP} \) </span> 解を少なくとも「使っても被害のない情報」として使うことができます！　<br><br>今回は一旦ここまでです。<br><script>page_contents.push({
     "type":"H3",
-    "id":"1284",
+    "id":"1287",
     "title":"おまけ:　未定義動作と最適化"
 });
 </script>
-<h3 id="1284">おまけ:　未定義動作と最適化</h3><br>次のようなプログラムを考えましょう。<br><div class="code-block"> <pre><code class="language-julia">prog2 = @prog begin
+<h3 id="1287">おまけ:　未定義動作と最適化</h3><br>次のようなプログラムを考えましょう。<br><div class="code-block"> <pre><code class="language-julia">prog2 = @prog begin
     p &amp;&amp; @goto 3      
     @goto 4         
     x = 1             
@@ -1946,23 +1946,23 @@ end
 z = y + 5
 </code></pre> </div><br>というプログラムです。<br>このとき、 <span class="inline-code"> <code>p</code> </span> が偽であって <span class="inline-code"> <code>q</code> </span> が真であるような実行経路では <span class="inline-code"> <code>x</code> </span> は Undefined で、実行時エラーか、言語によってはそもそもコンパイルが通らないでしょう。<br>このような場合どう推論するべきでしょうか？<br>一つの考え方は「プログラムは正しい」という前提に立つことです。<br>この考え方のもとでは <span class="inline-code"> <code>p</code> </span> が偽であって <span class="inline-code"> <code>q</code> </span> が真であるような実行経路を考える必要はなく、 <span class="inline-code"> <code>y = 11</code> </span> という定数伝播ができます。<br><br>このことは 今回の abstract semantics の実装と対応しています。<br><br>実はていていのプログラミング言語では未定義変数はどのような値を取っても良いとみなして最適化することが許されていて、 <url> <a href="https://rsk0315.hatenablog.com/entry/2019/09/10/213859">C++のコンパイラなどが未定義動作を無視して最適化をするみたいな有名な話</a> </url>  はこういうのが (実際この場合どうなるかはともかく、同じ構造の理屈として) 一つの例なんだと思います。たぶん...<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1326",
+    "id":"1329",
     "title":"まとめと次回予告"
 });
 </script>
-<h2 id="1326">まとめと次回予告</h2><br>今回はデータフロー解析の基本的なアルゴリズムの実装とその性質を調べました。<br><br>ところが元記事を読んだ人は、あれ、あのアルゴリズムどこで出てきた？となっているかもしれません。<br><br>本当はそこまで書きたかったのですが、月曜日に期末テスト、水曜日と木曜日に締切のレポートを抱えているのに、このあたりの勉強とに夢中で一向に進んでいないうえに 日曜はライブに参戦するので、このままでは逆転留年を決めかねないため一旦ここまででやめます。<br>次回は、このアルゴリズムを改良していき、元記事で紹介されているようなアルゴリズムへ到達するまでを調べる予定です。<br>また、定数畳み込み以外のデータフロー解析の例も紹介し、それの実装を示すことでこの抽象化の威力を確認しようと思います。<br><br><script>page_contents.push({
+<h2 id="1329">まとめと次回予告</h2><br>今回はデータフロー解析の基本的なアルゴリズムの実装とその性質を調べました。<br><br>ところが元記事を読んだ人は、あれ、あのアルゴリズムどこで出てきた？となっているかもしれません。<br><br>本当はそこまで書きたかったのですが、月曜日に期末テスト、水曜日と木曜日に締切のレポートを抱えているのに、このあたりの勉強とに夢中で一向に進んでいないうえに 日曜はライブに参戦するので、このままでは逆転留年を決めかねないため一旦ここまででやめます。<br>次回は、このアルゴリズムを改良していき、元記事で紹介されているようなアルゴリズムへ到達するまでを調べる予定です。<br>また、定数畳み込み以外のデータフロー解析の例も紹介し、それの実装を示すことでこの抽象化の威力を確認しようと思います。<br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1342",
+    "id":"1345",
     "title":"参考にした資料"
 });
 </script>
-<h2 id="1342">参考にした資料</h2><br>(1) コンパイラ 原理・技法・ツール 第二版 <br><ul><li>9章のデータフロー解析の章を読みました。かなり最初から平易に説明してくれてとてもよかったので、まずこれを読むと良いと思います。</li><li>MFP解 が最大不動点であることも証明が一応書いてあるんですが、証明になっているように見えなくて困っています。もし記述を完全に解釈できている方がいたら教えていただきたいです。</li></ul><br>(2) <url> <a href="https://www.cse.iitb.ac.in/~uday/soft-copies/dfa-theory.pdf">Uday Khedker, Theoretical Abstractions in Data Flow Analysis</a> </url><br><ul><li>異常に詳しく、いくつかの証明はこれを参考にしました。</li><li><url> <a href="https://www.taylorfrancis.com/books/mono/10.1201/9780849332517/data-flow-analysis-uday-khedker-bageshri-sathe-amitabha-sanyal">Data Flow Analysis Theory and Practice</a> </url> という本を書いている先生の資料らしく、この本は目次だけ見れるのですが、めちゃくちゃ詳しくかつ実践的で本当に欲しい 😭　ところがどっこい、お値段なんとびっくり <span class="strong"> <strong>￥26500 のところ今なら ￥22500</strong> </span> らしいです。 もし読者に石油王の方がいらっしゃいましたらぜひ大岡山までご郵送ください。</li></ul><br>(3) <url> <a href="https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf">平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics</a> </url><br>(4) <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.</a> </url><br><br><script>page_contents.push({
+<h2 id="1345">参考にした資料</h2><br>(1) コンパイラ 原理・技法・ツール 第二版 <br><ul><li>9章のデータフロー解析の章を読みました。かなり最初から平易に説明してくれてとてもよかったので、まずこれを読むと良いと思います。</li><li>MFP解 が最大不動点であることも証明が一応書いてあるんですが、証明になっているように見えなくて困っています。もし記述を完全に解釈できている方がいたら教えていただきたいです。</li></ul><br>(2) <url> <a href="https://www.cse.iitb.ac.in/~uday/soft-copies/dfa-theory.pdf">Uday Khedker, Theoretical Abstractions in Data Flow Analysis</a> </url><br><ul><li>異常に詳しく、いくつかの証明はこれを参考にしました。</li><li><url> <a href="https://www.taylorfrancis.com/books/mono/10.1201/9780849332517/data-flow-analysis-uday-khedker-bageshri-sathe-amitabha-sanyal">Data Flow Analysis Theory and Practice</a> </url> という本を書いている先生の資料らしく、この本は目次だけ見れるのですが、めちゃくちゃ詳しくかつ実践的で本当に欲しい 😭　ところがどっこい、お値段なんとびっくり <span class="strong"> <strong>￥26500 のところ今なら ￥22500</strong> </span> らしいです。 もし読者に石油王の方がいらっしゃいましたらぜひ大岡山までご郵送ください。</li></ul><br>(3) <url> <a href="https://www.math.nagoya-u.ac.jp/~hirai.hiroshi/papers/lattice20211108.pdf">平井広志, 数理情報学のための束論 Lattice Theory for Mathematical Informatics</a> </url><br>(4) <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">Mohnen, Markus. "A graph—free approach to data—flow analysis." International Conference on Compiler Construction. Berlin, Heidelberg: Springer Berlin Heidelberg, 2002.</a> </url><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1373",
+    "id":"1376",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="1373">今日の一曲</h2><br>こっちの M.O.P. はギャングの名前由来らしいです。<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/PLT68mI5Pwc?si=recMBvI2DLj4ktty" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
+<h2 id="1376">今日の一曲</h2><br>こっちの M.O.P. はギャングの名前由来らしいです。<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/PLT68mI5Pwc?si=recMBvI2DLj4ktty" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
