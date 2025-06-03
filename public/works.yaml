@@ -20,6 +20,26 @@ lapisla:
     - https://lapisla.net
     - https://docs.lapisla.net
 
+
+eta:
+  title: eta
+  img: /works/img/eta.png
+  repo: abap34/eta
+  short_desc: Scheme製の Scheme 処理系
+  desc: |
+    eta は Scheme 製の Scheme 処理系です。
+    第一級継続 (call/cc), 末尾再帰最適化 などが実装されています。
+  lang:
+    - Scheme
+  tags:
+    - Scheme
+    - 言語処理系
+    - OSS
+  period: 2025
+  relatedlinks:
+    - https://abap34.github.io/eta-presentation
+    - https://github.com/abap34/eta
+
 mu:
   title: mu
   img: /works/img/mu.png

@@ -20,6 +20,27 @@ lapisla:
     - https://lapisla.net
     - https://docs.lapisla.net
 
+eta:
+  title: eta
+  img: /works/img/eta.png
+  repo: abap34/eta
+  short_desc: Scheme-based Scheme Processing System
+  desc: |
+    eta is a Scheme-based Scheme processing system.
+    It implements first-class continuations (call/cc) and tail call optimization.
+  lang:
+    - Scheme
+  tags:
+    - Scheme
+    - Language Processing System
+    - OSS
+  period: 2025
+  relatedlinks:
+    - https://abap34.github.io/eta-presentation
+    - https://github.com/abap34/eta
+
+
+
 mu:
   title: mu
   img: /works/img/mu.png
