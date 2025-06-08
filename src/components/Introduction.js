@@ -77,6 +77,15 @@ export default function Introduction() {
                                 {language === "ja"
                                     ? "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります."
                                     : "Other interests include mathematical optimization (especially continuous optimization) and mathematical statistics, as well as related fields."}
+                                <br />
+                                {language === "ja"
+                                    ? "必要に応じて Web 開発 (React, FastAPI を使うことが多いです) もします。"
+                                    : "I also do web development (often using React and FastAPI) when necessary."}
+                                <br />
+                                {language === "ja"
+                                    ? "よく使うプログラミング言語は Python, Julia, TypeScript, C++, Scheme などです。"
+                                    : "I often use programming languages such as Python, Julia, TypeScript, C++, and Scheme."}
+                                <br />
                             </p>
                         </div>
                     </div>
