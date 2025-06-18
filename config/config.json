@@ -9,5 +9,15 @@
     "custom_css": "assets/modern-light.css",
     "template": "assets/template.html",
     "editor_theme": "ace/theme/monokai",
-    "syntax_theme": "a11y-light"
+    "syntax_theme": "a11y-light",
+    "related_articles_count": 5,
+    "tfidf_config": {
+        "ngram_range": [1, 5],
+        "max_features": 12000,
+        "min_df": 1,
+        "max_df": 0.9,
+        "analyzer": "char",
+        "sublinear_tf": false,
+        "norm": "l2"
+    }
   }

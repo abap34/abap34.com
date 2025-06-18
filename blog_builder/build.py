@@ -313,10 +313,14 @@ class ArticleBuilder:
         )
 
         # 関連記事を取得
-        related_posts = NavigationHelper.find_related_articles(post, all_posts)
-        logger.info(f"Found {len(related_posts)} related articles")
+        max_related = self.config.data.get("related_articles_count", 5)
+        tfidf_config = self.config.data.get("tfidf_config", {})
+        related_posts_with_scores = NavigationHelper.find_related_articles(
+            post, all_posts, max_related, tfidf_config
+        )
+        logger.info(f"Found {len(related_posts_with_scores)} related articles")
         related_data = TemplateDataGenerator.generate_related_articles_data(
-            related_posts
+            related_posts_with_scores
         )
 
         # テンプレートファイルを更新してナビゲーションと関連記事の情報を含める
@@ -339,11 +343,17 @@ class ArticleBuilder:
             # 関連記事用のHTML生成
             related_articles_html = self.generate_related_articles_html(related_data)
 
+            # モバイル用のHTML生成
+            mobile_sidebar_html = self.generate_mobile_sidebar_html()
+            mobile_related_html = self.generate_mobile_related_articles_html(related_data)
+
             # プレースホルダーを置換
             html_content = html_content.replace("{{navigation}}", navigation_html)
             html_content = html_content.replace(
                 "{{related_articles}}", related_articles_html
             )
+            html_content = html_content.replace("{{mobile_sidebar}}", mobile_sidebar_html)
+            html_content = html_content.replace("{{mobile_related_articles}}", mobile_related_html)
 
             # 更新されたHTMLを保存
             output_path.write_text(html_content, encoding="utf-8")
@@ -421,6 +431,48 @@ class ArticleBuilder:
                         <div class="related-item-title">{article['title']}</div>
                         <div class="related-date">{article['date']}</div>
                         <div class="related-tags">{tags_html}</div>
+                        <div class="related-similarity">類似度: {article['similarity']}</div>
+                    </a>
+                </div>"""
+            )
+
+        html.append("</div>")
+        return "\n".join(html)
+
+    def generate_mobile_sidebar_html(self) -> str:
+        """モバイル用サイドバーのHTMLを生成"""
+        html = ['<div class="mobile-sidebar">']
+        html.append('<h3>目次・メニュー</h3>')
+        html.append('<div class="mobile-sidebar-content">')
+        html.append('<!-- サイドバーコンテンツ: TOC, タグクラウド, 最新記事など -->')
+        html.append('<div class="mobile-toc">')
+        html.append('<p>このセクションには記事の目次や関連メニューが表示されます。</p>')
+        html.append('</div>')
+        html.append('</div>')
+        html.append('</div>')
+        return "\n".join(html)
+
+    def generate_mobile_related_articles_html(self, related_data: Dict[str, Any]) -> str:
+        """モバイル用関連記事のHTMLを生成"""
+        if not related_data.get("has_related"):
+            return ""
+
+        html = ['<div class="mobile-related-articles">']
+        html.append('<h3 class="related-title">関連記事</h3>')
+
+        for article in related_data["related_articles"]:
+            tags_html = " ".join(
+                [f'<span class="related-tag">#{tag}</span>' for tag in article["tags"]]
+            )
+
+            html.append(
+                f"""
+                <div class="related-item">
+                    <a href="{article['url']}">
+                        <div class="related-item-title">{article['title']}</div>
+                        <div class="related-date">{article['date']}</div>
+                        <div class="related-tags">{tags_html}</div>
+                        <div class="related-similarity">類似度: {article['similarity']}</div>
                     </a>
                 </div>"""
             )
@@ -607,30 +659,95 @@ class NavigationHelper:
 
     @staticmethod
     def find_related_articles(
+        current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5, tfidf_config: Dict[str, Any] = None
+    ) -> List[Tuple[BlogPost, float]]:
+        """TF-IDFベースで関連記事を取得（類似度付き、フォールバックとしてタグベース）"""
+        try:
+            from .tfidf_similarity import TFIDFSimilarityCalculator
+            
+            # TF-IDFベースの類似度計算を試行
+            tfidf_calc = TFIDFSimilarityCalculator(tfidf_config)
+            
+            # 全記事のコンテンツを収集
+            article_contents = {}
+            for post in all_posts:
+                if not post.external and post.content:
+                    article_contents[post.url] = post.content
+            
+            logger.info(f"Collected {len(article_contents)} articles for TF-IDF (excluding external)")
+            
+            if len(article_contents) < 2:
+                logger.info("Not enough articles for TF-IDF calculation, falling back to tag-based")
+                return NavigationHelper._find_related_articles_by_tags(current_post, all_posts, max_count)
+            
+            # TF-IDF行列を構築
+            tfidf_calc.build_tfidf_matrix(article_contents)
+            
+            # 類似度計算
+            similar_articles = tfidf_calc.calculate_similarity(current_post.url, max_count)
+            
+            # 結果をBlogPostオブジェクトと類似度のタプルに変換
+            related_posts = []
+            for article_url, similarity_score in similar_articles:
+                for post in all_posts:
+                    if post.url == article_url:
+                        related_posts.append((post, similarity_score))
+                        break
+            
+            logger.info(f"TF-IDF found {len(related_posts)} related articles")
+            return related_posts
+            
+        except Exception as e:
+            logger.warning(f"TF-IDF calculation failed: {e}, falling back to tag-based")
+            return NavigationHelper._find_related_articles_by_tags(current_post, all_posts, max_count)
+    
+    @staticmethod
+    def _find_related_articles_by_tags(
         current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5
-    ) -> List[BlogPost]:
-        """タグベースで関連記事を取得"""
-        if not current_post.tags:
-            return []
-
-        # 現在の記事を除外
-        other_posts = [post for post in all_posts if post.url != current_post.url]
-
-        # タグの一致度でスコアリング
+    ) -> List[Tuple[BlogPost, float]]:
+        """タグベースで関連記事を取得（フォールバック用、類似度付き）"""
+        # 現在の記事を除外（外部記事は除く）
+        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
+        
+        logger.info(f"Tag-based fallback: {len(other_posts)} articles available for comparison")
+        
+        # 利用可能な記事数に合わせて調整
+        available_count = min(max_count, len(other_posts))
+        
         scored_posts = []
-        for post in other_posts:
-            if not post.tags:
-                continue
-
-            # 共通タグ数を計算
-            common_tags = set(current_post.tags) & set(post.tags)
-            if common_tags:
-                score = len(common_tags)
-                scored_posts.append((score, post))
-
+        
+        # タグがある場合の処理
+        if current_post.tags:
+            for post in other_posts:
+                if post.tags:
+                    # 共通タグ数を計算
+                    common_tags = set(current_post.tags) & set(post.tags)
+                    if common_tags:
+                        # Jaccard係数で類似度を計算
+                        all_tags = set(current_post.tags) | set(post.tags)
+                        similarity = len(common_tags) / len(all_tags)
+                        scored_posts.append((post, similarity))
+        
+        # タグマッチがない場合やタグがない記事の場合、日付順で補完
+        if len(scored_posts) < available_count:
+            used_urls = {post.url for post, _ in scored_posts}
+            remaining_posts = [post for post in other_posts if post.url not in used_urls]
+            
+            # 日付順で残りを追加（より新しい記事を優先）
+            remaining_posts.sort(key=lambda x: x.post_date, reverse=True)
+            
+            for post in remaining_posts:
+                if len(scored_posts) >= available_count:
+                    break
+                # 日付ベースの類似度（低い値）
+                scored_posts.append((post, 0.01))
+        
         # スコア順にソートして上位を返す
-        scored_posts.sort(key=lambda x: x[0], reverse=True)
-        return [post for _, post in scored_posts[:max_count]]
+        scored_posts.sort(key=lambda x: x[1], reverse=True)
+        result = scored_posts[:available_count]
+        
+        logger.info(f"Tag-based fallback returning {len(result)} articles")
+        return result
 
 
 class TemplateDataGenerator:
@@ -664,10 +781,10 @@ class TemplateDataGenerator:
         }
 
     @staticmethod
-    def generate_related_articles_data(related_posts: List[BlogPost]) -> Dict[str, Any]:
-        """関連記事用データを生成"""
+    def generate_related_articles_data(related_posts_with_scores: List[Tuple[BlogPost, float]]) -> Dict[str, Any]:
+        """関連記事用データを生成（類似度付き）"""
         return {
-            "has_related": len(related_posts) > 0,
+            "has_related": len(related_posts_with_scores) > 0,
             "related_articles": [
                 {
                     "title": post.title,
@@ -675,8 +792,9 @@ class TemplateDataGenerator:
                     "thumbnail": post.thumbnail_url,
                     "date": post.post_date,
                     "tags": post.tags[:3],  # 最大3つのタグまで表示
+                    "similarity": round(similarity_score, 5),  # 類似度を3桁まで表示
                 }
-                for post in related_posts
+                for post, similarity_score in related_posts_with_scores
             ],
         }
 
