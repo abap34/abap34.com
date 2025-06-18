@@ -82,6 +82,12 @@ body {
 /* ===============================================
       Layout
       =============================================== */
+
+/* デスクトップでモバイル専用要素を非表示 */
+.mobile-sidebar,
+.mobile-related-articles {
+    display: none;
+}
 .article-body {
     display: flex;
     max-width: 1400px;
@@ -999,13 +1005,16 @@ body.light-mode button {
 }
 
 .nav-item a {
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     text-decoration: none;
     color: inherit;
     transition: all 0.2s ease;
+    min-height: 80px;
+    justify-content: space-between;
 }
 
 .nav-item a:hover {
@@ -1098,6 +1107,13 @@ body.light-mode button {
     border-radius: 3px;
 }
 
+.related-similarity {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
 /* ===============================================
    ダークモード対応
    =============================================== */
@@ -1153,6 +1169,31 @@ body.dark-mode .related-tag {
     color: #ddd;
 }
 
+/* モバイル専用要素のダークモード対応 */
+body.dark-mode .mobile-sidebar {
+    background-color: #222;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-sidebar h3 {
+    color: #ddd;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-sidebar-content {
+    color: #999;
+}
+
+body.dark-mode .mobile-related-articles {
+    background-color: #222;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-related-articles .related-item {
+    background-color: #333;
+    border-color: #555;
+}
+
 /* ===============================================
    レスポンシブデザイン
    =============================================== */
@@ -1181,6 +1222,7 @@ body.dark-mode .related-tag {
         max-width: 100%;
     }
 
+    /* モバイルでサイドバーは非表示（後で記事内に移動） */
     .side {
         display: none;
     }
@@ -1192,6 +1234,99 @@ body.dark-mode .related-tag {
 
     .content {
         padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* コンテンツ内の要素の表示順序を調整 */
+    .content > h1,
+    .content > .article-header {
+        order: 1;
+    }
+
+    .content .mobile-sidebar {
+        order: 2;
+    }
+
+    .content > .article-content,
+    .content > .post-content {
+        order: 3;
+    }
+
+    .content .article-navigation {
+        order: 4;
+    }
+
+    .content .mobile-related-articles {
+        order: 5;
+    }
+
+    /* モバイル用のサイドバー（記事見出し下に表示） */
+    .mobile-sidebar {
+        display: block;
+        width: 100%;
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mobile-sidebar h3 {
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        color: #495057;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.5rem;
+    }
+
+    .mobile-sidebar-content {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .mobile-toc p {
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+
+    /* モバイル用の関連記事（ナビゲーション下に表示） */
+    .mobile-related-articles {
+        display: block;
+        width: 100%;
+        margin-top: 2rem;
+        order: 10; /* ナビゲーションの後に表示 */
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mobile-related-articles .related-title {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .mobile-related-articles .related-item {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background-color: #fff;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .mobile-related-articles .related-item:last-child {
+        margin-bottom: 0;
+    }
+
+    /* デスクトップの関連記事をモバイルでは非表示 */
+    .content .related-articles {
+        display: none;
+    }
+
+    /* ナビゲーションの順序調整 */
+    .article-navigation {
+        order: 5;
     }
 }</style>
 
@@ -1383,6 +1518,43 @@ Successfully rebased and updated refs/heads/main.
                         <div class="related-item-title">GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</div>
                         <div class="related-date">2023/08/29</div>
                         <div class="related-tags"><span class="related-tag">#GitHub Actions</span> <span class="related-tag">#GitHub</span> <span class="related-tag">#git</span></div>
+                        <div class="related-similarity">類似度: 0.25</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/gsoc2025.html">
+                        <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
+                        <div class="related-date">2025/05/09</div>
+                        <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
+                        <div class="related-similarity">類似度: 0.01</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/mop_undeciable.html">
+                        <div class="related-item-title">定数伝播の MOP 解の決定不能性の証明</div>
+                        <div class="related-date">2025/04/07</div>
+                        <div class="related-tags"><span class="related-tag">#静的解析</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#データフロー解析</span></div>
+                        <div class="related-similarity">類似度: 0.01</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
+                        <div class="related-item-title">2024年度後期振り返り</div>
+                        <div class="related-date">2025/03/31</div>
+                        <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
+                        <div class="related-similarity">類似度: 0.01</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/auc.html">
+                        <div class="related-item-title">ROC-AUC の解釈</div>
+                        <div class="related-date">2025/03/01</div>
+                        <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#評価指標</span> <span class="related-tag">#ROC-AUC</span></div>
+                        <div class="related-similarity">類似度: 0.01</div>
                     </a>
                 </div>
 </div>

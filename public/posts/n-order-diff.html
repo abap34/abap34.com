@@ -82,6 +82,12 @@ body {
 /* ===============================================
       Layout
       =============================================== */
+
+/* デスクトップでモバイル専用要素を非表示 */
+.mobile-sidebar,
+.mobile-related-articles {
+    display: none;
+}
 .article-body {
     display: flex;
     max-width: 1400px;
@@ -999,13 +1005,16 @@ body.light-mode button {
 }
 
 .nav-item a {
-    display: block;
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     text-decoration: none;
     color: inherit;
     transition: all 0.2s ease;
+    min-height: 80px;
+    justify-content: space-between;
 }
 
 .nav-item a:hover {
@@ -1098,6 +1107,13 @@ body.light-mode button {
     border-radius: 3px;
 }
 
+.related-similarity {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
 /* ===============================================
    ダークモード対応
    =============================================== */
@@ -1153,6 +1169,31 @@ body.dark-mode .related-tag {
     color: #ddd;
 }
 
+/* モバイル専用要素のダークモード対応 */
+body.dark-mode .mobile-sidebar {
+    background-color: #222;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-sidebar h3 {
+    color: #ddd;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-sidebar-content {
+    color: #999;
+}
+
+body.dark-mode .mobile-related-articles {
+    background-color: #222;
+    border-color: #555;
+}
+
+body.dark-mode .mobile-related-articles .related-item {
+    background-color: #333;
+    border-color: #555;
+}
+
 /* ===============================================
    レスポンシブデザイン
    =============================================== */
@@ -1181,6 +1222,7 @@ body.dark-mode .related-tag {
         max-width: 100%;
     }
 
+    /* モバイルでサイドバーは非表示（後で記事内に移動） */
     .side {
         display: none;
     }
@@ -1192,6 +1234,99 @@ body.dark-mode .related-tag {
 
     .content {
         padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* コンテンツ内の要素の表示順序を調整 */
+    .content > h1,
+    .content > .article-header {
+        order: 1;
+    }
+
+    .content .mobile-sidebar {
+        order: 2;
+    }
+
+    .content > .article-content,
+    .content > .post-content {
+        order: 3;
+    }
+
+    .content .article-navigation {
+        order: 4;
+    }
+
+    .content .mobile-related-articles {
+        order: 5;
+    }
+
+    /* モバイル用のサイドバー（記事見出し下に表示） */
+    .mobile-sidebar {
+        display: block;
+        width: 100%;
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mobile-sidebar h3 {
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        color: #495057;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.5rem;
+    }
+
+    .mobile-sidebar-content {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    .mobile-toc p {
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+
+    /* モバイル用の関連記事（ナビゲーション下に表示） */
+    .mobile-related-articles {
+        display: block;
+        width: 100%;
+        margin-top: 2rem;
+        order: 10; /* ナビゲーションの後に表示 */
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+    }
+
+    .mobile-related-articles .related-title {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .mobile-related-articles .related-item {
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background-color: #fff;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+    }
+
+    .mobile-related-articles .related-item:last-child {
+        margin-bottom: 0;
+    }
+
+    /* デスクトップの関連記事をモバイルでは非表示 */
+    .content .related-articles {
+        display: none;
+    }
+
+    /* ナビゲーションの順序調整 */
+    .article-navigation {
+        order: 5;
     }
 }</style>
 
@@ -1642,26 +1777,11 @@ plt.show()
 <h3 class="related-title">関連記事</h3>
 
                 <div class="related-item">
-                    <a href="https://abap34.com/posts/gsoc2025.html">
-                        <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
-                        <div class="related-date">2025/05/09</div>
-                        <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
-                    </a>
-                </div>
-
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/footnote_implement.html">
-                        <div class="related-item-title">脚注機能の実装に関するメモ</div>
-                        <div class="related-date">2024/08/07</div>
-                        <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Markdown</span> <span class="related-tag">#ALMO</span></div>
-                    </a>
-                </div>
-
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/livereload.html">
-                        <div class="related-item-title">livereload でホットリロードするCLIツールを作る</div>
-                        <div class="related-date">2024/04/09</div>
-                        <div class="related-tags"><span class="related-tag">#Python</span> <span class="related-tag">#Web</span> <span class="related-tag">#CLI</span></div>
+                    <a href="https://abap34.com/posts/marp-counter.html">
+                        <div class="related-item-title">marp で counter が使えない</div>
+                        <div class="related-date">2024/01/05</div>
+                        <div class="related-tags"><span class="related-tag">#日記</span></div>
+                        <div class="related-similarity">類似度: 0.25</div>
                     </a>
                 </div>
 
@@ -1670,6 +1790,25 @@ plt.show()
                         <div class="related-item-title">2023年度後期振り返り</div>
                         <div class="related-date">2024/03/29</div>
                         <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
+                        <div class="related-similarity">類似度: 0.2</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/juliatokyo11.html">
+                        <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
+                        <div class="related-date">2024/02/07</div>
+                        <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
+                        <div class="related-similarity">類似度: 0.2</div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/livereload.html">
+                        <div class="related-item-title">livereload でホットリロードするCLIツールを作る</div>
+                        <div class="related-date">2024/04/09</div>
+                        <div class="related-tags"><span class="related-tag">#Python</span> <span class="related-tag">#Web</span> <span class="related-tag">#CLI</span></div>
+                        <div class="related-similarity">類似度: 0.16667</div>
                     </a>
                 </div>
 
@@ -1678,6 +1817,7 @@ plt.show()
                         <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
                         <div class="related-date">2024/02/22</div>
                         <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <div class="related-similarity">類似度: 0.16667</div>
                     </a>
                 </div>
 </div>
