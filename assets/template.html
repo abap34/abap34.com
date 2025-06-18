@@ -91,10 +91,10 @@
         <div class="tag-placeholder">{{tag}}</div>
     </div>
 
-    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
 
-        <!-- サイドバー (TOC) -->
+        <!-- 左サイドバー (TOC) -->
         <div class="side">
             <div class="side-sticky">
                 <div class="sidebar">
@@ -106,6 +106,12 @@
         <!-- メイン本文 -->
         <div class="content">
             {{contents}}
+
+            <hr>
+
+            <!-- 記事ナビゲーション -->
+            {{navigation}}
+
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
@@ -113,10 +119,17 @@
                 </script>
         </div>
 
-        <footer>
-            <p>&copy; {{author}}</p>
-        </footer>
+        <!-- 右サイドバー (関連記事) -->
+        <div class="right-sidebar">
+            <div class="right-sidebar-sticky">
+                {{related_articles}}
+            </div>
+        </div>
     </div>
+
+    <footer>
+        <p>&copy; {{author}}</p>
+    </footer>
 
     <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
