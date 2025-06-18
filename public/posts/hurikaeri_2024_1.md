@@ -230,7 +230,7 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/eb4f1592e195e54bb9378c786b5a8b11b5d5309b4521535714aa91fb15f28b9c/abap34/almo">
+    <img src="https://opengraph.githubassets.com/d0f7217fa014955aaefc5eae68ed03306d204048ca371a9bb32725518d09edb8/abap34/almo">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバ無しでのサンプルコードの実行やジャッジシステムの構築を可能にします。</a>
     </div>
@@ -241,9 +241,9 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/4b89e1f706aeedccddc125184b249c900ed5b1b2200794ecefa2d94bb20cdec9/abap34/almo/pull/167">
+    <img src="https://opengraph.githubassets.com/ed1f72e3735bfcdb2d52f009a40d84dcd1526b3e3c094b0ce9f5a28b70661597/abap34/almo/pull/167">
     <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/almo/pull/167"">meson によるビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo · GitHub</a>
+         <a href="https://github.com/abap34/almo/pull/167"">ビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo · GitHub</a>
     </div>
 </div>
 

@@ -84,7 +84,7 @@ body {
       =============================================== */
 .article-body {
     display: flex;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1rem;
     gap: 2rem;
@@ -113,6 +113,20 @@ body {
     /* 内容があふれにくいように */
 }
 
+/* 右サイドバー */
+.right-sidebar {
+    width: 340px;
+    flex-shrink: 0;
+    padding: 0.5rem;
+}
+
+.right-sidebar-sticky {
+    position: sticky;
+    top: 3.5rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
 /* ===============================================
       Header
       =============================================== */
@@ -123,7 +137,7 @@ body {
     left: 0;
     right: 0;
     z-index: 999;
-    background: #fff;
+    background: #ffffffbb;
     border-bottom: 1px solid #ddd;
     padding: 0.5rem 1rem;
 
@@ -131,6 +145,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    /* blur */
+    backdrop-filter: blur(10px);
 
 }
 
@@ -960,6 +977,222 @@ body.light-mode button {
     border: 1px solid #ddd !important;
     /* マウスオーバー時のカーソル */
     cursor: pointer;
+}
+
+/* ===============================================
+   記事ナビゲーション
+   =============================================== */
+.article-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
+    gap: 1rem;
+}
+
+.nav-item {
+    flex: 1;
+    max-width: 45%;
+}
+
+.nav-item:empty {
+    visibility: hidden;
+}
+
+.nav-item a {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+.nav-item a:hover {
+    border-color: #80bdff;
+    background-color: #f8f9fa;
+}
+
+.nav-direction {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.nav-title {
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.nav-next {
+    text-align: right;
+}
+
+/* ===============================================
+   関連記事
+   =============================================== */
+.related-articles {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.related-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+.related-item {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+.related-item:hover {
+    border-color: #80bdff;
+    background-color: #f8f9fa;
+}
+
+.related-item:last-child {
+    margin-bottom: 0;
+}
+
+.related-item a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.related-item-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.related-date {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.related-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.related-tag {
+    font-size: 0.7rem;
+    background-color: #e5e7eb;
+    color: #374151;
+    padding: 0.125rem 0.375rem;
+    border-radius: 3px;
+}
+
+/* ===============================================
+   ダークモード対応
+   =============================================== */
+body.dark-mode .article-navigation {
+    border-color: #555;
+}
+
+body.dark-mode .nav-item a {
+    border-color: #555;
+    background-color: #222;
+    color: #ddd;
+}
+
+body.dark-mode .nav-item a:hover {
+    border-color: #80bdff;
+    background-color: #333;
+}
+
+body.dark-mode .nav-direction {
+    color: #999;
+}
+
+body.dark-mode .related-articles {
+    border-color: #555;
+    background-color: #222;
+}
+
+body.dark-mode .related-title {
+    color: #ddd;
+    border-color: #555;
+}
+
+body.dark-mode .related-item {
+    border-color: #555;
+    background-color: #333;
+}
+
+body.dark-mode .related-item:hover {
+    border-color: #80bdff;
+    background-color: #444;
+}
+
+body.dark-mode .related-item-title {
+    color: #ddd;
+}
+
+body.dark-mode .related-date {
+    color: #999;
+}
+
+body.dark-mode .related-tag {
+    background-color: #555;
+    color: #ddd;
+}
+
+/* ===============================================
+   レスポンシブデザイン
+   =============================================== */
+@media (max-width: 1200px) {
+    .right-sidebar {
+        width: 240px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .right-sidebar {
+        display: none;
+    }
+
+    .article-body {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-navigation {
+        flex-direction: column;
+    }
+
+    .nav-item {
+        max-width: 100%;
+    }
+
+    .side {
+        display: none;
+    }
+
+    .article-body {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .content {
+        padding: 0.25rem;
+    }
 }</style>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
@@ -1001,10 +1234,10 @@ body.light-mode button {
         <div class="tag-placeholder">[日記, go, web, 機械学習, python]</div>
     </div>
 
-    <!-- 3) コンテンツ本体 (サイドバー + メイン本文) -->
+    <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
 
-        <!-- サイドバー (TOC) -->
+        <!-- 左サイドバー (TOC) -->
         <div class="side">
             <div class="side-sticky">
                 <div class="sidebar">
@@ -1186,6 +1419,21 @@ func main() {
 });
 </script>
 <h2 id="92">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><div class="footnote"></div>
+
+            <hr>
+
+            <!-- 記事ナビゲーション -->
+            <div class="article-navigation">
+<div class="nav-item nav-prev"></div>
+
+                <div class="nav-item nav-next">
+                    <a href="https://abap34.com/posts/marp-counter.html">
+                        <div class="nav-direction">次の記事 →</div>
+                        <div class="nav-title">marp で counter が使えない</div>
+                    </a>
+                </div>
+</div>
+
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
@@ -1193,10 +1441,43 @@ func main() {
                 </script>
         </div>
 
-        <footer>
-            <p>&copy; abap34</p>
-        </footer>
+        <!-- 右サイドバー (関連記事) -->
+        <div class="right-sidebar">
+            <div class="right-sidebar-sticky">
+                <div class="related-articles">
+<h3 class="related-title">関連記事</h3>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/footnote_implement.html">
+                        <div class="related-item-title">脚注機能の実装に関するメモ</div>
+                        <div class="related-date">2024/08/07</div>
+                        <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Markdown</span> <span class="related-tag">#ALMO</span></div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/sakumon2.html">
+                        <div class="related-item-title">作問ハッカソン 002で作問しました </div>
+                        <div class="related-date">2024/02/17</div>
+                        <div class="related-tags"><span class="related-tag">#競プロ</span> <span class="related-tag">#traP</span> <span class="related-tag">#日記</span></div>
+                    </a>
+                </div>
+
+                <div class="related-item">
+                    <a href="https://abap34.com/posts/marp-counter.html">
+                        <div class="related-item-title">marp で counter が使えない</div>
+                        <div class="related-date">2024/01/05</div>
+                        <div class="related-tags"><span class="related-tag">#日記</span></div>
+                    </a>
+                </div>
+</div>
+            </div>
+        </div>
     </div>
+
+    <footer>
+        <p>&copy; abap34</p>
+    </footer>
 
     <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
