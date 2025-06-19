@@ -602,7 +602,7 @@ class ArticleBuilder:
             posts.append(new_post)
 
         # 日付順にソート
-        posts.sort(key=lambda x: x.post_date, reverse=True)
+        posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
 
         # 保存
         self.file_manager.save_posts(posts)
@@ -663,7 +663,7 @@ class ExternalArticleProcessor:
                 logger.info(f"Added external article: {post.title}")
 
         # 日付順にソート
-        posts.sort(key=lambda x: x.post_date, reverse=True)
+        posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
 
         # 保存
         self.file_manager.save_posts(posts)
@@ -719,7 +719,7 @@ class NavigationHelper:
         """現在の記事の前後の記事を取得"""
         # 外部記事を除外し、日付順にソート
         internal_posts = [post for post in all_posts if not post.external]
-        internal_posts.sort(key=lambda x: x.post_date, reverse=True)
+        internal_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
 
         # 記事が1つ以下の場合は前後の記事はない
         if len(internal_posts) <= 1:
@@ -740,7 +740,7 @@ class NavigationHelper:
                 )
                 logger.info("Adding current post to list for navigation calculation")
                 internal_posts.append(current_post)
-                internal_posts.sort(key=lambda x: x.post_date, reverse=True)
+                internal_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
 
                 # 再度インデックスを探す
                 for i, post in enumerate(internal_posts):
@@ -774,20 +774,17 @@ class NavigationHelper:
     def find_related_articles(
         current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5, tfidf_config: Dict[str, Any] = None
     ) -> Dict[str, List[Tuple[BlogPost, float, str]]]:
-        """タグベースとTF-IDFベース両方の関連記事を取得して分けて返す"""
+        """シンプルなタグベース3本+TF-IDF 2本の関連記事を取得"""
         result = {
             "tag_based": [],
             "tfidf_based": []
         }
         
-        # タグベースの関連記事を取得（3本）
-        tag_related = NavigationHelper._find_related_articles_by_tags_internal(current_post, all_posts, 3)
+        # シンプルなタグベースの関連記事を取得（3本）
+        tag_related = NavigationHelper._find_related_articles_by_tags_simple(current_post, all_posts, 3)
         result["tag_based"] = [(post, score, "tags") for post, score in tag_related]
         
-        # バリデーション：タグベースで期待される数が取得できているかチェック（利用可能な記事がある場合のみ）
-        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-        if len(result["tag_based"]) < 3 and len(other_posts) >= 3:
-            logger.warning(f"Tag-based articles: expected 3, got {len(result['tag_based'])} (available: {len(other_posts)})")
+        logger.debug(f"Simple tag-based related articles found: {len(result['tag_based'])}")
         
         # TF-IDFベースの関連記事を取得（2本）
         try:
@@ -795,7 +792,6 @@ class NavigationHelper:
                 from .tfidf_similarity import TFIDFSimilarityCalculator
                 from .precompute_vectors import VectorPrecomputer
             except ImportError:
-                # フォールバック：絶対パスでインポート
                 import sys
                 import os
                 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -812,195 +808,108 @@ class NavigationHelper:
                 
                 # 現在の記事がキャッシュに含まれているかチェック
                 if current_post.url in tfidf_calc.article_ids:
-                    # TF-IDFベースで類似記事を取得（重複制限なし）
+                    # TF-IDFベースで類似記事を取得
                     similar_articles = tfidf_calc.calculate_similarity(current_post.url, 2)
                     logger.debug(f"TF-IDF similarity calculation returned {len(similar_articles)} articles")
                     
                     # 結果をBlogPostオブジェクトと類似度のタプルに変換
                     for article_url, similarity_score in similar_articles:
                         for post in all_posts:
-                            if post.url == article_url and not post.external:  # 外部記事のみ除外
+                            if post.url == article_url and not post.external:
                                 result["tfidf_based"].append((post, similarity_score, "tfidf"))
                                 break
-                        if len(result["tfidf_based"]) >= 2:  # 2本取得したら終了
+                        if len(result["tfidf_based"]) >= 2:
                             break
                     
                     logger.debug(f"TF-IDF found {len(result['tfidf_based'])} related articles from cache")
                     
-                    # TF-IDFで不足している場合は、日付順で補完
+                    # TF-IDFで不足している場合は、タグベースに選ばれなかった記事から日付順で補完
                     if len(result["tfidf_based"]) < 2:
                         logger.debug(f"TF-IDF insufficient ({len(result['tfidf_based'])}), supplementing with recent articles")
                         other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
                         
+                        # タグベースで選ばれた記事を除外
+                        used_urls = {post.url for post, _, _ in result["tag_based"]}
+                        remaining_posts = [post for post in other_posts if post.url not in used_urls]
+                        
                         # 日付順でソート
-                        other_posts.sort(key=lambda x: x.post_date, reverse=True)
+                        remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
                         
                         needed = 2 - len(result["tfidf_based"])
-                        for post in other_posts[:needed]:
-                            result["tfidf_based"].append((post, 0.01, "tfidf"))  # 低い類似度で追加
+                        for post in remaining_posts[:needed]:
+                            result["tfidf_based"].append((post, 0.01, "tfidf"))
                 
                 else:
                     logger.debug(f"Current article {current_post.url} not found in TF-IDF cache")
-                    # TF-IDFキャッシュに記事がない場合、日付順で2本取得
+                    # キャッシュに記事がない場合、日付順で2本取得
                     other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-                    other_posts.sort(key=lambda x: x.post_date, reverse=True)
+                    used_urls = {post.url for post, _, _ in result["tag_based"]}
+                    remaining_posts = [post for post in other_posts if post.url not in used_urls]
+                    remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
                     
-                    for post in other_posts[:2]:
+                    for post in remaining_posts[:2]:
                         result["tfidf_based"].append((post, 0.01, "tfidf"))
             else:
                 logger.debug("No valid TF-IDF cache found")
-                # TF-IDFキャッシュがない場合、日付順で2本取得
+                # キャッシュがない場合、日付順で2本取得
                 other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-                other_posts.sort(key=lambda x: x.post_date, reverse=True)
+                used_urls = {post.url for post, _, _ in result["tag_based"]}
+                remaining_posts = [post for post in other_posts if post.url not in used_urls]
+                remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
                 
-                for post in other_posts[:2]:
+                for post in remaining_posts[:2]:
                     result["tfidf_based"].append((post, 0.01, "tfidf"))
                 
         except Exception as e:
             logger.warning(f"TF-IDF calculation failed: {e}")
-            # TF-IDF計算が失敗した場合、フォールバックで2本取得
+            # エラーの場合、日付順で2本取得
             other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-            other_posts.sort(key=lambda x: x.post_date, reverse=True)
+            used_urls = {post.url for post, _, _ in result["tag_based"]}
+            remaining_posts = [post for post in other_posts if post.url not in used_urls]
+            remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
             
-            for post in other_posts[:2]:
+            for post in remaining_posts[:2]:
                 result["tfidf_based"].append((post, 0.01, "tfidf"))
         
-        # 最終確認：TF-IDFが確実に2本になるように補完
-        if len(result["tfidf_based"]) < 2:
-            logger.debug(f"Final TF-IDF check: only {len(result['tfidf_based'])} articles, adding more")
-            other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-            other_posts.sort(key=lambda x: x.post_date, reverse=True)
-            
-            needed = 2 - len(result["tfidf_based"])
-            for post in other_posts[:needed]:
-                result["tfidf_based"].append((post, 0.01, "tfidf"))
-        
-        # 最終バリデーション：合計記事数のチェック（十分な記事がある場合のみ）
-        total_articles = len(result["tag_based"]) + len(result["tfidf_based"])
-        available_posts = len([post for post in all_posts if post.url != current_post.url and not post.external])
-        if total_articles < 5 and available_posts >= 5:
-            logger.warning(f"Total related articles: expected 5, got {total_articles} (tag: {len(result['tag_based'])}, tfidf: {len(result['tfidf_based'])}, available: {available_posts})")
+        logger.debug(f"Final result: {len(result['tag_based'])} tag-based, {len(result['tfidf_based'])} TF-IDF-based")
         
         return result
     
-    @staticmethod
-    def _find_related_articles_by_tags(
-        current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5
-    ) -> List[Tuple[BlogPost, float, str]]:
-        """タグベースで関連記事を取得（フォールバック用、類似度付き）"""
-        tag_results = NavigationHelper._find_related_articles_by_tags_internal(current_post, all_posts, max_count)
-        # ソース情報を追加
-        return [(post, score, "tags") for post, score in tag_results]
-    
-    @staticmethod
-    def _calculate_tag_rarity_scores(all_posts: List[BlogPost]) -> Dict[str, float]:
-        """タグの希少性スコアを計算（珍しいタグほど高スコア）"""
-        # 全記事でのタグの出現頻度を計算
-        tag_counts = {}
-        total_articles = len([post for post in all_posts if not post.external])
-        
-        for post in all_posts:
-            if not post.external and post.tags:
-                for tag in post.tags:
-                    tag_counts[tag] = tag_counts.get(tag, 0) + 1
-        
-        # 希少性スコアを計算：珍しいタグほど高スコア
-        tag_rarity_scores = {}
-        for tag, count in tag_counts.items():
-            # スコア = 1 / 出現記事数（珍しいほど高い）
-            rarity_score = 1.0 / count
-            tag_rarity_scores[tag] = rarity_score
-        
-        return tag_rarity_scores
 
     @staticmethod
-    def _find_related_articles_by_tags_internal(
+    def _find_related_articles_by_tags_simple(
         current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5
     ) -> List[Tuple[BlogPost, float]]:
-        """タグベースで関連記事を取得（珍しいタグの共有を重視）"""
+        """シンプルなタグベース関連記事取得（共通タグがある記事のみ）"""
         # 現在の記事を除外（外部記事は除く）
         other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
         
-        logger.debug(f"Tag-based analysis for '{current_post.title}' with tags: {current_post.tags}")
-        logger.debug(f"Total articles: {len(all_posts)}, External articles: {len([p for p in all_posts if p.external])}")
-        logger.debug(f"Available for comparison: {len(other_posts)}")
+        logger.debug(f"Simple tag-based analysis for '{current_post.title}' with tags: {current_post.tags}")
         
-        # デバッグ: 同じタグを持つ記事をすべて表示
-        if current_post.tags:
-            same_tag_posts = []
-            for post in all_posts:
-                if post.url != current_post.url and post.tags:
-                    common = set(current_post.tags) & set(post.tags)
-                    if common == set(current_post.tags):  # 完全に同じタグ
-                        same_tag_posts.append(f"'{post.title}' (external={post.external}, tags={post.tags})")
-            if same_tag_posts:
-                logger.info(f"Posts with same tags as current: {same_tag_posts}")
-        
-        if not other_posts:
+        if not current_post.tags:
+            logger.debug("Current post has no tags, returning empty list")
             return []
-        
-        # タグの希少性スコアを計算
-        tag_rarity_scores = NavigationHelper._calculate_tag_rarity_scores(all_posts)
-        logger.debug(f"Tag rarity scores: {tag_rarity_scores}")
         
         scored_posts = []
         
-        # タグがある場合の処理
-        if current_post.tags:
-            logger.debug(f"Current post has tags, checking {len(other_posts)} other posts...")
-            for post in other_posts:
-                if post.tags:
-                    # 共通タグを取得
-                    common_tags = set(current_post.tags) & set(post.tags)
-                    logger.debug(f"Comparing with '{post.title}' (tags: {post.tags}) -> common: {common_tags}")
-                    
-                    if common_tags:
-                        # 共通タグの希少性スコアの合計を類似度とする
-                        similarity_score = sum(tag_rarity_scores.get(tag, 0) for tag in common_tags)
-                        
-                        # 共通タグ数でボーナス（多く共通するほど類似度アップ）
-                        tag_count_bonus = len(common_tags) * 0.1
-                        final_score = similarity_score + tag_count_bonus
-                        
-                        scored_posts.append((post, final_score))
-                        
-                        # 詳細ログ
-                        logger.info(f"MATCH: '{post.title}' score={final_score:.4f} (common_tags={common_tags}, similarity={similarity_score:.4f}, bonus={tag_count_bonus})")
-                    else:
-                        logger.debug(f"No common tags with '{post.title}'")
-                else:
-                    logger.debug(f"Post '{post.title}' has no tags")
-        else:
-            logger.debug("Current post has no tags")
+        for post in other_posts:
+            if post.tags:
+                # 共通タグを取得
+                common_tags = set(current_post.tags) & set(post.tags)
+                
+                if common_tags:
+                    # 共通タグ数をスコアにする（シンプル）
+                    score = len(common_tags)
+                    scored_posts.append((post, score))
+                    logger.debug(f"MATCH: '{post.title}' score={score} (common_tags={common_tags})")
         
-        logger.info(f"Found {len(scored_posts)} posts with tag matches")
+        # スコア順にソート（タイブレーカーとしてURLを使用）
+        scored_posts.sort(key=lambda x: (x[1], x[0].url), reverse=True)
         
-        # スコア順にソート
-        scored_posts.sort(key=lambda x: x[1], reverse=True)
-        
-        # タグマッチした記事だけでmax_countに達している場合はそれを返す
-        if len(scored_posts) >= max_count:
-            result = scored_posts[:max_count]
-            logger.debug(f"Tag-based returning {len(result)} articles (tag matches only)")
-            return result
-        
-        # 不足分を日付順で補完
-        used_urls = {post.url for post, _ in scored_posts}
-        remaining_posts = [post for post in other_posts if post.url not in used_urls]
-        
-        # 日付順でソート（より新しい記事を優先）
-        remaining_posts.sort(key=lambda x: x.post_date, reverse=True)
-        
-        # 必要な数まで追加
-        needed_count = max_count - len(scored_posts)
-        for i, post in enumerate(remaining_posts):
-            if i >= needed_count:
-                break
-            scored_posts.append((post, 0.01))  # 日付ベースの低い類似度
-            logger.debug(f"Added by date: '{post.title}' (score=0.01)")
-        
-        logger.info(f"Tag-based returning {len(scored_posts)} articles total")
-        return scored_posts
+        # 上位max_count件を返す
+        result = scored_posts[:max_count]
+        logger.info(f"Simple tag-based returning {len(result)} articles with common tags")
+        return result
 
 
 class TemplateDataGenerator:
@@ -1139,7 +1048,7 @@ class BlogBuilder:
         else:
             logger.info("TF-IDF cache found, skipping precomputation")
         
-        article_paths = list(pathlib.Path("posts").glob("*.md"))
+        article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
         self.build_articles(article_paths)
         self.external_processor.process_external_articles()
     

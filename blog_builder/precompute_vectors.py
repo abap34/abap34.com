@@ -43,7 +43,7 @@ class VectorPrecomputer:
         """全記事のベクトルを事前計算してキャッシュに保存"""
         
         # 全MDファイルを取得
-        md_files = list(posts_dir.glob("*.md"))
+        md_files = sorted(list(posts_dir.glob("*.md")))
         logger.info(f"Found {len(md_files)} markdown files for vectorization")
         
         if not md_files:

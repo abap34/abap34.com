@@ -66,7 +66,7 @@ class TFIDFSimilarityCalculator:
         self.article_ids: List[str] = []
     
     @classmethod
-    def from_cache(cls, cache_data: Dict[str, Any]):
+    def from_cache(cls, cache_data: Dict[str, Any]) -> 'TFIDFSimilarityCalculator':
         """キャッシュデータからインスタンスを作成"""
         instance = cls(cache_data.get('tfidf_config', {}))
         instance.tfidf_matrix = cache_data['tfidf_matrix']
@@ -134,7 +134,7 @@ class TFIDFSimilarityCalculator:
             logger.warning("No article contents provided")
             return
 
-        self.article_ids = list(article_contents.keys())
+        self.article_ids = sorted(list(article_contents.keys()))
         texts = [article_contents[article_id] for article_id in self.article_ids]
         
         # 空のテキストをフィルタリング
@@ -204,8 +204,11 @@ class TFIDFSimilarityCalculator:
             logger.debug(f"  Non-self mean: {non_self_similarities.mean():.6f}, std: {non_self_similarities.std():.6f}")
             logger.debug(f"  Unique similarity values: {len(np.unique(np.round(non_self_similarities, 3)))}")
         
-        # 自分自身を除外して類似度の高い順にソート
-        similar_indices = np.argsort(similarities)[::-1]
+        # 自分自身を除外して類似度の高い順にソート（安定ソート）
+        # タイブレーカーとして記事IDを使用して決定的にする
+        indexed_similarities = [(similarities[i], self.article_ids[i], i) for i in range(len(similarities))]
+        indexed_similarities.sort(key=lambda x: (-x[0], x[1]))  # 類似度降順、ID昇順
+        similar_indices = [x[2] for x in indexed_similarities]
         similar_articles = []
         
         # 利用可能な記事数を確認
