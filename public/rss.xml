@@ -1,368 +1,542 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title> abap34's blog </title>
-<link> https://abap34.com/blog </link>
-<description> abap34's blog </description>
-
+<title>abap34's blog</title>
+<link>https://abap34.com/blog</link>
+<description>abap34's blog</description>
+<language>ja</language>
+<lastBuildDate>Thu, 19 Jun 2025 09:22:47 +0000</lastBuildDate>
 <item>
-<id>Google Summer of Code に Proposal が採択されました！</id>
+<guid>https://abap34.com/posts/gsoc2025.html</guid>
 <title>Google Summer of Code に Proposal が採択されました！</title>
 <link>https://abap34.com/posts/gsoc2025.html</link>
 <pubDate>Fri, 09 May 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+Google Summer of Code に Proposal が採択されました！
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;Google Summer of Code で Julia に出していた Proposal が採択されました！ 🎉🥳&lt;br&gt;&lt;br&gt;Julia の最新のコンパイラインフラを利用して、強力な静的解析を備えた新しい Language Server の機能開発をガシガシやっていきます！✊ &lt;a href=&quot;https://t.co/aEBHcSAnXa&quot;&gt;pic.twitter.com/aEBHcSAnXa&lt;/a&gt;&lt;/p&gt;&amp;mdash; abap34 (@abap34) &lt;a href=&quot;https://twitter.com/abap34/status/1920609443131412630?ref_src=twsrc%5Etfw&quot;&gt;May 8, 2025&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.co...</description>
 </item>
 
 <item>
-<id>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</id>
-<title>東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！</title>
-<link>https://hack.nikkei.com/blog/trap_kaggle_competition_2025/</link>
-<pubDate>Wed, 23 Apr 2025 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>定数伝播の MOP 解の決定不能性の証明</id>
+<guid>https://abap34.com/posts/mop_undeciable.html</guid>
 <title>定数伝播の MOP 解の決定不能性の証明</title>
 <link>https://abap34.com/posts/mop_undeciable.html</link>
 <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+データフロー解析における MOP (Meet Over Path) 解の求解は、一般には決定不能であることを用いて示します。
+MPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。
+前提: MPCP
+有名な決定不能問題の一つに PCP (Post Correspondence Problem) があります。
+PCP は次のような問題です。
+
+Post Correspondence Problem
+有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?
+
+
+つまり、上下に文字列が書いてある「ドミノ」を (複数回の選択を許して) 並べたとき、上と下の文字列が一致するような並べ方があるか? を判定するという問題です。
+
+この問題決定不能なのですが、少し変形した以下のような問題 MPCP (Modified Post Correspondence Problem) も決定不能で...</description>
 </item>
 
 <item>
-<id>2024年度後期振り返り</id>
+<guid>https://abap34.com/posts/hurikaeri_2024_1.html</guid>
 <title>2024年度後期振り返り</title>
 <link>https://abap34.com/posts/hurikaeri_2024_1.html</link>
 <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+
+
+
+2024年度後期の振り返りです。
+今年の前期の振り返りは 
+
+過去の振り返り記事は 
+
+作った・作っているもの
+server.abap34.com (ssh チャットサーバ)
+まずは一発ギャグです。
+
+&lt;div class=&quot;responsive-card&quot;&gt;     &lt;img src=&quot;https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com&quot;&gt;     &lt;div style=&quot;margin: 0 10px 0 10px;&quot;&gt;          &lt;a href=&quot;https://github.com/abap34/server.abap34.com&quot;&quot;&gt;GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ &lt;/a&gt;     &lt;/div&gt; &lt;/div&gt;
+
+これは Go で書いた ssh サーバなのですが、 ssh すると ↓
+
+
+
+認証が始まり、
+...</description>
 </item>
 
 <item>
-<id>ROC-AUC の解釈</id>
+<guid>https://abap34.com/posts/auc.html</guid>
 <title>ROC-AUC の解釈</title>
 <link>https://abap34.com/posts/auc.html</link>
 <pubDate>Sat, 01 Mar 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+
+二値分類の代表的な評価指標である ROC-AUC (Receiver Operating Characteristic - Area Under the Curve)  について説明します。
+結論だけ: ROC-AUC とは?
+ROC-AUC は二値分類の評価指標で、 予測モデル  が 正例と負例からそれぞれ一様に選んだ  と  について  となる確率のことです。 
+
+つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。
+
+計算したいときは、scikit-learn の  を使うと便利です！
+
+
+定義と計算方法
+定義
+ROC-AUC は正解ラベルの列  と予測確率の列  の組  に対して定まる量です。(ただし、 がすべて同じ値からなる場合は計算できません)
+
+ROC-AUC を計算するには、まずは TPR (True Positive Rate,真陽性率) と FPR (False Positive Rate, 偽陽性率) を理解する必要があります。
+TPR と FPR は
+正解ラベルの列  と予測ラベルの列  に対...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (06) - Implementing Small Julia Compiler</id>
+<guid>https://abap34.com/posts/jci_06.html</guid>
 <title>Julia Compiler Internals (06) - Implementing Small Julia Compiler</title>
 <link>https://abap34.com/posts/jci_06.html</link>
 <pubDate>Sun, 16 Feb 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+以前まで続けていた Julia コンパイラの内部構造についての記事について、一旦これまでの知見を使って簡略化した Julia のコンパイルプロセスを実装します。
+そのほかの Juia コンパイラに関連する記事は 
+
+
+
+Julia と 型推論
+まず最初に、(みんなが思い浮かべるものという意味で) 一般的な型推論と少し違うのもあるので、Julia における型推論の利用のされ方について少し書きます。
+型推論 ?
+とくに意識して記述せずとも、特定の式が実行時にとりうる値の型についていくらかの非自明な事実が常に成り立っていることはよくあります。
+
+
+のように書けば、 の値は  です。 
+リテラルがなくとも、
+
+では、 も  もつねに  になるでしょう。 
+さらに、
+
+
+という条件分岐を考えると、それぞれの条件分岐の中では　 は   (, ,  などの親) は  (,  などの親)
+という事実が常に成り立ちます。
+
+
+この記事では Julia の Docs にならい、このような事実の導出─ 「あるコントロールフローにおいてある式が取りうる値の型情報を静的に導くこと」を 型推論 (Ty...</description>
 </item>
 
 <item>
-<id>定理証明支援系 「lapisla-prover」 を開発しました！</id>
-<title>定理証明支援系 「lapisla-prover」 を開発しました！</title>
-<link>https://trap.jp/post/2478/</link>
-<pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>開発環境を紹介しますアドベントカレンダー @abap34</id>
+<guid>https://abap34.com/posts/devenv_advent.html</guid>
 <title>開発環境を紹介しますアドベントカレンダー @abap34</title>
 <link>https://abap34.com/posts/devenv_advent.html</link>
 <pubDate>Fri, 06 Dec 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+
+この記事は、 6日目の記事です。
+こんばんは
+おい全然埋まってないぞ！！！！  
+みなさんはあんまり使っている人がいない変な CLI ツール, エディタ, Chrome 拡張などをお使いでしょうか？
+
+そうでなくともこの手の便利ツールを網羅的に知ることは難しいので、実は人の開発環境を見るのは結構面白いものを知れます。
+
+というわけでこういうアドカレを作ったのですが全然埋まっていないのでまずは自分で書こうと思います。
+
+(ここでいう開発環境は本当に広い意味で、開発に使うものの話ならなんでも良いです)
+網羅的に書くのは当然無理なので適当に変なやつを載せます。
+Basics
+
+OS: macOS
+小学校1年生のときに Mac を与えられて以来、 14年間　macOS を使い続けています。
+もはや他の OS を普段使いすることは考えられないです。
+
+ターミナルエミュレータ
+使っているターミナルエミュレータは iTerm2 です。
+Ctrl 2回押し で全画面に表示するようにしています。
+
+すぐに切り替えられて思考が飛ばないので気に入っています。
+フォントは  というのを使っています。
+
+数...</description>
 </item>
 
 <item>
-<id>コミュニティコンペティションを開催するときの Tips 集</id>
+<guid>https://abap34.com/posts/community_competetion_tips.html</guid>
 <title>コミュニティコンペティションを開催するときの Tips 集</title>
 <link>https://abap34.com/posts/community_competetion_tips.html</link>
 <pubDate>Sun, 01 Dec 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+先月、大学のサークルで運営していた機械学習を勉強するコミュニティを後輩に譲りました: 
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;そういえば、大学のサークルの Kaggleコミュニティの長(?) を後輩に譲りました。&lt;br&gt;(抱えているプロジェクトがあるので、まだまだ色々しますが、一区切り)&lt;br&gt;&lt;br&gt;2年半いろいろできて楽しかったです！ありがとうございました🙇‍♂️😊&lt;a href=&quot;https://t.co/FTj9Ulm7dk&quot;&gt;https://t.co/FTj9Ulm7dk&lt;/a&gt;&lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;mdash; abap34 (@abap34) &lt;a href=&quot;https://twitter.com/abap34/status/1846123877237150005?ref_src=twsrc%5Etf...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (05) - Algorithm of Type Inference [2]</id>
+<guid>https://abap34.com/posts/jci_05.html</guid>
 <title>Julia Compiler Internals (05) - Algorithm of Type Inference [2]</title>
 <link>https://abap34.com/posts/jci_05.html</link>
 <pubDate>Fri, 22 Nov 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+今回もJuliaのコンパイラの内部実装を読んでいくシリーズです。
+シリーズ自体については  を見てください。
+
+ は Julia の型推論について学ぶ前に、抽象解釈やデータフロー解析の基本的な部分をやりました。
+今回は前回見たデータフロー解析問題を解くアルゴリズムを実際に実装してその性質を調べます。
+
+さらに、世間の解説との diff として、停止性や正当性を含む各種性質の証明をすること、なぜこのように定義するのか？何が求まったのか？ などの解説をすることなどを試みてみました。
+
+ただ、頑張って書いていますが、頑張ったからといって必ずしも誤りがなくなるわけではない 😢 (悲しい) ので、 あまり信用せずに読んでください。(とくに証明まわり)
+
+何かあれば一番下のコメントからお願いします。
+
+また、単に頻繁にアップデートが入る可能性が極めて高いというのもあるので、事実の出典にはしないことをとてもお勧めします。 記事に末尾に読んだ文章をまとめておくので、正確な情報を得たい場合はそちらを参照するようにお願いします。
+
+準備 1 ─ プログラムの表現の実装
+プログラム自体の表現
+元...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</id>
+<guid>https://abap34.com/posts/jci_04.html</guid>
 <title>Julia Compiler Internals (04) - Algorithm of Type Inference [1]</title>
 <link>https://abap34.com/posts/jci_04.html</link>
 <pubDate>Mon, 21 Oct 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+小話
+@abap34 です。
+最近は腰と肩がかなり痛いです。いい椅子に座りたい 😢
+この Julia 処理系を読む会もなんやかんや 2ヶ月くらい毎週続いているのですが、いくつかニュースがあったので本題に入る前に書いておきます！
+ちょっとしたニュース ① 
+先日 Julia の Co-Founder の  さんが来日されていて、なんとお会いすることができました。
+
+Twitterのリンクでも貼ろうかと思ったら Wikipedia のページがありました。すごすぎ。
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;It was such an honor to meet &lt;a href=&quot;https://twitter.com/JeffBezanson?ref_src=twsrc%5Etfw&quot;&gt;@JeffBezanson&lt;/a&gt; and fellow Julia compiler enthusiasts in Tokyo! &lt;a href=&quot;https://t.co/r1vzPaP0X7&quot;&gt;pic.twitter.com/...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (03) - Introduction to Type Inference </id>
+<guid>https://abap34.com/posts/jci_03.html</guid>
 <title>Julia Compiler Internals (03) - Introduction to Type Inference </title>
 <link>https://abap34.com/posts/jci_03.html</link>
 <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+Juliaのコンパイラの内部実装を読んでいくシリーズです。
+シリーズ自体については  を見てください。
+Type Inference
+ は Lowering について概観しました。
+今回からは Julia の型推論について概観します。
+
+今回は具体的な型推論アルゴリズムについて詳しく調べる前に、それ以外の部分について整理します。
+Julia の型推論について学ぶためにこの記事を読むのはオススメしません。
+もっと多くのことが、もっとわかりやすく、正確に書いてある文章があるからです。
+勉強記録を読む感覚でお願いします。おそらく間違いがたくさんあるので見つけたら↓のコメント欄にお願いします。
+もっと良い文章の例:
+
+
+What is Type Inference?
+まずは (Juliaにおける) 型推論とは何かを説明します。
+
+Julia は動的型付けのプログラミング言語です。実行時に  の型は定まります。
+一方で、 Juliaコンパイラは、各コントロールフローにおける変数の型を実際に実行する前に可能な限り推論します。
+それによって最適化─ 例えば多重ディスパッチで実際に呼び出す...</description>
 </item>
 
 <item>
-<id>あなたがまだ知らない素数　(by noya2)</id>
+<guid>https://abap34.com/posts/random_prime_generator.html</guid>
 <title>あなたがまだ知らない素数　(by noya2)</title>
 <link>https://abap34.com/posts/random_prime_generator.html</link>
 <pubDate>Tue, 08 Oct 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+
+はじめまして
+はじめまして、noya2 です。普段は競技プログラミングをしています。 almo の contributors の一人です。
+はじめての寄稿です。
+あなたがまだ知らない素数
+次の python プログラムを実行してみましょう。あなたがまだ知らない素数を  つ得ることができます。
+
+
+このコード中の  と  を調節することで、所望の範囲内の素数をランダムに得ることができます。
+おわりに
+競技プログラミングで 乱択素数  が欲しくなったときに使ってください。
+
+
+</description>
 </item>
 
 <item>
-<id>2024年度前期振り返り</id>
+<guid>https://abap34.com/posts/hurikaeri_2024_0.html</guid>
 <title>2024年度前期振り返り</title>
 <link>https://abap34.com/posts/hurikaeri_2024_0.html</link>
 <pubDate>Mon, 30 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+2024年度前期の振り返り
+2024年度前期 (4月~9月) の振り返りです。
+
+去年の前期の振り返りは 
+去年の後期の振り返りは 
+
+作ったもの
+このサイト
+&lt;a href=&quot;https://github.com/abap34/abap34.com&quot;&gt;&lt;img src=&quot;https://gh-card.dev/repos/abap34/abap34.com.svg&quot;&gt;&lt;/a&gt;
+このサイト  がリニューアルされました。
+個人的には記事検索画面  は結構気に入ってます。
+
+almo 
+&lt;a href=&quot;https://github.com/abap34/almo&quot;&gt;&lt;img src=&quot;https://gh-card.dev/repos/abap34/almo.svg&quot;&gt;&lt;/a&gt;
+
+
+すいません、いつ v1 になるんでしょうか。
+
+それはともかくいくつか重要な進展があり、
+Python 向けバインディングの提供とメインのインターフェースをそちらに移動パーサの根本的な書き直し 脚注の追加
+などが行われました。 (44個の PR が mainにマージされました。)
+
+とくにパーサの書き直しは...</description>
 </item>
 
 <item>
-<id>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</id>
+<guid>https://abap34.com/posts/cpp_ci.html</guid>
 <title>C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</title>
 <link>https://abap34.com/posts/cpp_ci.html</link>
 <pubDate>Mon, 23 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+できるもの
+     
+
+はじめに
+人類はまだテストを不要とする技術を開発していないので、テストはいるんですね.  
+
+というわけでテストを書きます。 GitHub で C++ のプロジェクトをやることを想定して、
+Google Test でテストを書くGoogle Benchmark でベンチマークを取るそれの結果の推移の統計を GitHub Pages でいい感じに表示するCodecov でカバレッジを計測する
+あたりを整備する手順をまとめます。
+
+今回は Meson というビルドツールを使ってみます。
+ドキュメントの先頭にはこんな感じのことが書いてあります。
+
+Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible. The main design point of Meson is that every moment a developer spends writing or de...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (02) - Lowering (2) for の linearize</id>
+<guid>https://abap34.com/posts/jci_02.html</guid>
 <title>Julia Compiler Internals (02) - Lowering (2) for の linearize</title>
 <link>https://abap34.com/posts/jci_02.html</link>
 <pubDate>Sat, 21 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+Juliaのコンパイラの内部実装を読んでいくシリーズです。
+シリーズ自体については  を見てください。
+Lowering
+ は Lowering について概観しました。
+今回は、Lowering における for文の処理について少し書きます。
+for の出自
+for はいうまでもなくトップクラスに使われる制御構文ですが、 Juliaにおいては for は以下のような対応の糖衣構文です。
+
+
+
+(このあたりのことは、  さんに教えてもらいました。ありがとうございます。)
+
+ は前回見たように  でバラされていましたが、この糖衣構文を desugar するのはどこでやっているのか見てみます。
+desugar
+degugar は  で行われています。
+例えばわかりやすそうなのでいくと  に
+
+とあります。
+これは  という糖衣構文を  に desugar する処理です。
+このまま見ていくと  に 以下のようなものを見つけることができます。
+
+
+ちょっと長いですが、 どうも for を先ほどの while に書き直す処理がなされていることがわかります。
+なので、 for は
+des...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (01) - Lowering (1)</id>
+<guid>https://abap34.com/posts/jci_01.html</guid>
 <title>Julia Compiler Internals (01) - Lowering (1)</title>
 <link>https://abap34.com/posts/jci_01.html</link>
 <pubDate>Fri, 20 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+Juliaのコンパイラの内部実装を読んでいくシリーズです。
+シリーズ自体については  を見てください。
+Lowering
+ は Juliaの処理系の大まかな流れを見ました。
+今回からは、各セクション (Lowering, Type Inference, ...) の処理の大枠を見ていきます。
+What is Lowering?
+前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。
+例えば、
+
+は
+
+
+
+と、  ループが 直列に展開されているのがわかります。
+
+jl_expand
+ を見てください。
+
+このように Lowering は  によって行われます。　
+ に定義があります。
+
+と、結局  が呼ばれています。    
+ では gc・マクロ展開関連の処理もありますが、今回は  に集中することにします。
+ では Scheme で書かれた Lowering の処理がよばれます。
+
+(ちなみに、最近では Juliaでこれを書き直すという取り組みもあるようです。)
+compile-body
+Scheme側ではなんやかんやあっ...</description>
 </item>
 
 <item>
-<id>Julia Compiler Internals (00) - Introduction</id>
+<guid>https://abap34.com/posts/jci_00.html</guid>
 <title>Julia Compiler Internals (00) - Introduction</title>
 <link>https://abap34.com/posts/jci_00.html</link>
 <pubDate>Wed, 18 Sep 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+はじめに
+先日から Julia の内部実装を読む会を始めたのですが、そこで得た知識をここにまとめていこうと思います。
+すでに scrapbox にメモ書きが生えているのですが、それを再構成してもう少しちゃんと文章に書いていきます。
+短い記事の集まりになる予定です。
+
+前提
+読んでいるコードやドキュメントは全て Julia 1.11-rc3 (コミット: 616e45539db4c49ab019b7ccd318800f240743f6) のものです。なるべく正確になるよう頑張りますが、誤り等あればコメントで指摘していただけるとありがたいです。解説記事というよりメモ書きに近い形態です。 コンパイラや Julia に関する知識を割と前提にしています。
+目標
+一応、 Julia の IR・最適化周りをきちんとめに理解する ことを目標にしています。
+そのため、 例えば
+パーサ周りマクロ展開まわり
+についてはそこまで深くは追求しないことになりそうです。
+目標としてこの辺りを定めたのは
+現代の自動微分ライブラリ:  や  あたりをきちんと理解したい。「Julia ってなんで速いの？」 に対する回答...</description>
 </item>
 
 <item>
-<id>脚注機能の実装に関するメモ</id>
+<guid>https://abap34.com/posts/footnote_implement.html</guid>
 <title>脚注機能の実装に関するメモ</title>
 <link>https://abap34.com/posts/footnote_implement.html</link>
 <pubDate>Wed, 07 Aug 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+脚注機能の実装に関するメモ
+最近、このブログを作ってくれている Markdownパーサである almo  に脚注を実装しました。
+(まさに今つかったこれです)
+
+脚注は、 Common Mark  でも GFM 　でも定められていない構文ですが、長いドキュメントを書くときには結構欲しくなります。
+
+
+ところで、脚注はパーサを書くことを考えると他の構文と比べてやや異質な存在です。
+そのため実装の仕方に割と幅があります。　
+この記事では almo の脚注の実装方法とどうしてそうなったか、というのを日記がてら振り返りたいと思います。
+脚注の何が特別なのか？
+そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。
+Markdown をパースして AST に変換AST を走査して HTML に変換
+almo も同様です。
+
+例えば
+
+のような md ファイルを almo に渡して、
+
+
+ してみると
+
+という結果が吐かれてます。
+
+ここから HTML に変換するわけです。
+
+ここで、パースするとき・この AST から HTML を生成するとき　のうれしい性...</description>
 </item>
 
 <item>
-<id>オンラインジャッジを作った</id>
+<guid>https://abap34.com/posts/oj_abap34.html</guid>
 <title>オンラインジャッジを作った</title>
 <link>https://abap34.com/posts/oj_abap34.html</link>
 <pubDate>Mon, 01 Jul 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+オンラインジャッジを作ったので紹介します。
+作ったもの
+
+
+
+
+
+経緯
+今年も traP で機械学習講習会をしているんですが、せっかくなので演習問題にジャッジがつけたくなりました。
+既存の OSS を使うことも考えたのですが、デプロイの仕方や実行環境の追加の仕方を調べるのがあまり楽しくなさそうだったこと、 traPの認証との連携も面倒そうというあたりから、自分で作った方が早いだろうという判断で作りました。
+技術スタック
+フロントエンド: React (Vercel でホスティング) バックエンド: FastAPI (家のサーバから ngrok でトンネリング)
+フロントエンドについて
+React です。 
+Material-UI でかなり楽ができて感動しました。
+バックエンドについて
+FastAPI です。 とくにジャッジ周りは非同期処理が多いですが、FastAPI だとそのあたりがかなり簡単にかけてすごいな〜と思いました。
+また、性質上同時に大量に提出される場合があるので、適切にジョブをキューイングする必要があります。
+幸いこの知識だけはあったので、 ジャッジのジョブはC...</description>
 </item>
 
 <item>
-<id>最急降下法の収束定理の主張とその証明</id>
+<guid>https://abap34.com/posts/gd_convergence_theorem.html</guid>
 <title>最急降下法の収束定理の主張とその証明</title>
 <link>https://abap34.com/posts/gd_convergence_theorem.html</link>
 <pubDate>Sun, 30 Jun 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
+<description>
+あらすじ
+最近 Webとかあまり慣れていないことばかりブログに書いていたので、数学の話をしようと思います。
+まず、数理最適化の授業で頑張って勉強したものがあんまりテストに出なくて悲しかったのでブログにすることで供養しようと思います。
+最初は、ならったもののうち一番印象に残った定理について書きます。  (ちなみにこれはテストに出ました。)
+前提: 直線探索
+直線探索は　 になるまで以下のように更新を繰り返すアルゴリズムとします.
+
+(ここで、  は  を最小にするような  です)
+
+さて、 が凸であるとき、  なる  は  の大域的最適解です。
+(勾配不等式:  について  とするとわかります)
+したがって、 凸関数  に対して、それなりに小さな  を取ることで最適解を得ることを目指すことができます。
+ところで、大域最適解が存在する一般の  について直線探索は終了するとは限りません。　
+ここでは、とくに  の勾配に条件をつけて、そのときの収束性とその反復回数についての保証を与える定理を紹介します。
+
+最急降下法の収束定理
+
+最急降下法の収束定理
+ 級の関数  について、 大域的最適解 ...</description>
 </item>
 
 <item>
-<id>pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</id>
+<guid>https://abap34.com/posts/pybind11.html</guid>
 <title>pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</title>
 <link>https://abap34.com/posts/pybind11.html</link>
 <pubDate>Tue, 14 May 2024 00:00:00 +0000</pubDate>
 <author>@abap34</author>
-</item>
+<description>
+ことの経緯
+今日も自作マークダウンパーサである  の開発をしています。
+昨今の機能拡張にともなって色々なライブラリを使いたくなってきたのですが、 C++のパッケージマネージャにあまりちゃんとしたものがなく、C++を使うのがかなりしんどくなってきました。
 
-<item>
-<id>mini Kaggle を streamlit で作った</id>
-<title>mini Kaggle を streamlit で作った</title>
-<link>https://abap34.com/posts/dacq.html</link>
-<pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
+Rust とかで書き換えるのは個人的にありでしたが、開発メンバは C++ なら書けるという人が多い (というか、それが C++で書かれた理由です)　ので みんなに働いてもらうためにもあまり大幅な変更は避けたいところです。
 
-<item>
-<id>forkはバッファもコピーするのでフラッシュしておこう </id>
-<title>forkはバッファもコピーするのでフラッシュしておこう </title>
-<link>https://abap34.com/posts/fork_buffer.html</link>
-<pubDate>Tue, 23 Apr 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
+というわけで、最終的に現在の内部実装には手を入れず、外部から Python で呼び出せるようにすることにしました。
 
-<item>
-<id>rebaseしてもGitHub上でのコミット時刻を保つ</id>
-<title>rebaseしてもGitHub上でのコミット時刻を保つ</title>
-<link>https://abap34.com/posts/git_date.html</link>
-<pubDate>Sat, 13 Apr 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
+実際にパースするところなど、パフォーマンス的に重要な部分は今の C++で書かれたままにして、  Front YAML のパースやリアルタイムのプレビュー、 Jupyter Notebook の解析のような、 パフォーマンスにそこまで影響せずかつライブラリに頼りたい部分はライブラリが豊富な Python で書く案です。　
 
-<item>
-<id>livereload でホットリロードするCLIツールを作る</id>
-<title>livereload でホットリロードするCLIツールを作る</title>
-<link>https://abap34.com/posts/livereload.html</link>
-<pubDate>Tue, 09 Apr 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用</id>
-<title>GitHub Actionsでリリース時に自動ビルド + Docker Hubにイメージアップロード + GitHub Actionsから利用</title>
-<link>https://abap34.com/posts/almo_autorelease.html</link>
-<pubDate>Tue, 02 Apr 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>2023年度後期振り返り</id>
-<title>2023年度後期振り返り</title>
-<link>https://abap34.com/posts/hurikaeri_2023_1.html</link>
-<pubDate>Fri, 29 Mar 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>Marp + GitHub Actionsのテンプレートを作った</id>
-<title>Marp + GitHub Actionsのテンプレートを作った</title>
-<link>https://abap34.com/posts/slide-template.html</link>
-<pubDate>Thu, 14 Mar 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</id>
-<title>(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</title>
-<link>https://abap34.com/posts/tinypeg.html</link>
-<pubDate>Wed, 06 Mar 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>3時間で作る自作言語のJuliaトランスパイラ</id>
-<title>3時間で作る自作言語のJuliaトランスパイラ</title>
-<link>https://abap34.com/posts/mini-lang.html</link>
-<pubDate>Thu, 22 Feb 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>作問ハッカソン 002で作問しました </id>
-<title>作問ハッカソン 002で作問しました </title>
-<link>https://abap34.com/posts/sakumon2.html</link>
-<pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>JuliaTokyo #11 でトークをしてきました</id>
-<title>JuliaTokyo #11 でトークをしてきました</title>
-<link>https://abap34.com/posts/juliatokyo11.html</link>
-<pubDate>Wed, 07 Feb 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>marp で counter が使えない</id>
-<title>marp で counter が使えない</title>
-<link>https://abap34.com/posts/marp-counter.html</link>
-<pubDate>Fri, 05 Jan 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>n 次精度 k 階数値微分の導出</id>
-<title>n 次精度 k 階数値微分の導出</title>
-<link>https://abap34.com/posts/n-order-diff.html</link>
-<pubDate>Fri, 10 Nov 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>自明ギャグの定義とその発展</id>
-<title>自明ギャグの定義とその発展</title>
-<link>https://abap34.com/posts/jimei.html</link>
-<pubDate>Fri, 13 Oct 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>DrRacketがかなりおもしろIDEだった</id>
-<title>DrRacketがかなりおもしろIDEだった</title>
-<link>https://abap34.com/posts/racket.html</link>
-<pubDate>Mon, 02 Oct 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>2023年度前期振り返り</id>
-<title>2023年度前期振り返り</title>
-<link>https://abap34.com/posts/hurikaeri_2023_0.html</link>
-<pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</id>
-<title>gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</title>
-<link>https://abap34.com/posts/grpc_ml.html</link>
-<pubDate>Sat, 30 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</id>
-<title>頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</title>
-<link>https://abap34.com/posts/caesar.html</link>
-<pubDate>Fri, 29 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>オセロ探索の並列化の戦略</id>
-<title>オセロ探索の並列化の戦略</title>
-<link>https://abap34.com/posts/parallel_othello.html</link>
-<pubDate>Mon, 25 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>Juliaで実行時間を制限する用のタイマー</id>
-<title>Juliaで実行時間を制限する用のタイマー</title>
-<link>https://abap34.com/posts/julia_timer.html</link>
-<pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>Scheme入門した m1macでのScheme環境構築</id>
-<title>Scheme入門した m1macでのScheme環境構築</title>
-<link>https://abap34.com/posts/hello_scheme.html</link>
-<pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>ブログを自作Markdownパーサで作り直しました</id>
-<title>ブログを自作Markdownパーサで作り直しました</title>
-<link>https://abap34.com/posts/rebuild_abap34_com.html</link>
-<pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-</item>
-
-<item>
-<id>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</id>
-<title>GitHub Actionsで過去コミットとかを参照したいときはfetch-depthを指定しないとダメだった</title>
-<link>https://abap34.com/posts/githubactions_trap.html</link>
-<pubDate>Tue, 29 Aug 2023 00:00:00 +0000</pubDate>
-<author>@abap34</author>
+pybind11
+&lt;a href=&quot;https://github.com/p...</description>
 </item>
 
 </channel>

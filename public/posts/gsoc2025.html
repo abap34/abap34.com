@@ -88,6 +88,13 @@ body {
 .mobile-related-articles {
     display: none;
 }
+
+/* モバイル用サイドバーの基本スタイル */
+.mobile-sidebar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
 .article-body {
     display: flex;
     max-width: 1400px;
@@ -1114,6 +1121,12 @@ body.light-mode button {
     font-style: italic;
 }
 
+.similarity-source {
+    color: #999;
+    font-size: 0.65rem;
+    font-weight: normal;
+}
+
 /* ===============================================
    ダークモード対応
    =============================================== */
@@ -1169,30 +1182,10 @@ body.dark-mode .related-tag {
     color: #ddd;
 }
 
-/* モバイル専用要素のダークモード対応 */
-body.dark-mode .mobile-sidebar {
-    background-color: #222;
-    border-color: #555;
+body.dark-mode .similarity-source {
+    color: #777;
 }
 
-body.dark-mode .mobile-sidebar h3 {
-    color: #ddd;
-    border-color: #555;
-}
-
-body.dark-mode .mobile-sidebar-content {
-    color: #999;
-}
-
-body.dark-mode .mobile-related-articles {
-    background-color: #222;
-    border-color: #555;
-}
-
-body.dark-mode .mobile-related-articles .related-item {
-    background-color: #333;
-    border-color: #555;
-}
 
 /* ===============================================
    レスポンシブデザイン
@@ -1234,31 +1227,6 @@ body.dark-mode .mobile-related-articles .related-item {
 
     .content {
         padding: 0.25rem;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* コンテンツ内の要素の表示順序を調整 */
-    .content > h1,
-    .content > .article-header {
-        order: 1;
-    }
-
-    .content .mobile-sidebar {
-        order: 2;
-    }
-
-    .content > .article-content,
-    .content > .post-content {
-        order: 3;
-    }
-
-    .content .article-navigation {
-        order: 4;
-    }
-
-    .content .mobile-related-articles {
-        order: 5;
     }
 
     /* モバイル用のサイドバー（記事見出し下に表示） */
@@ -1266,28 +1234,6 @@ body.dark-mode .mobile-related-articles .related-item {
         display: block;
         width: 100%;
         margin: 1rem 0;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-    }
-
-    .mobile-sidebar h3 {
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-        color: #495057;
-        border-bottom: 1px solid #dee2e6;
-        padding-bottom: 0.5rem;
-    }
-
-    .mobile-sidebar-content {
-        font-size: 0.9rem;
-        color: #6c757d;
-    }
-
-    .mobile-toc p {
-        margin: 0;
-        padding: 0.5rem 0;
     }
 
     /* モバイル用の関連記事（ナビゲーション下に表示） */
@@ -1295,28 +1241,6 @@ body.dark-mode .mobile-related-articles .related-item {
         display: block;
         width: 100%;
         margin-top: 2rem;
-        order: 10; /* ナビゲーションの後に表示 */
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-    }
-
-    .mobile-related-articles .related-title {
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-    }
-
-    .mobile-related-articles .related-item {
-        margin-bottom: 1rem;
-        padding: 0.75rem;
-        background-color: #fff;
-        border-radius: 6px;
-        border: 1px solid #dee2e6;
-    }
-
-    .mobile-related-articles .related-item:last-child {
-        margin-bottom: 0;
     }
 
     /* デスクトップの関連記事をモバイルでは非表示 */
@@ -1369,6 +1293,22 @@ body.dark-mode .mobile-related-articles .related-item {
         <div class="tag-placeholder">[Julia, コンパイラ, GSoC, 日記]</div>
     </div>
 
+    <!-- モバイル用サイドバー（記事見出し下に表示） -->
+    <div class="mobile-sidebar">
+<div class="sidebar">
+<ul id="mobile-toc-list"></ul>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const desktopToc = document.querySelector("#toc");
+  const mobileToc = document.querySelector("#mobile-toc-list");
+  if (desktopToc && mobileToc) {
+    mobileToc.innerHTML = desktopToc.innerHTML;
+  }
+});
+</script>
+
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
 
@@ -1417,7 +1357,7 @@ Implementation Plan
 Background and Relevant Experience	                   
 Related Software Projects	                             
 Availability	                                        
-</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyK7t6NbaRXKFa5MmOrmyW2X7R0bENSLm2-1S8anfBJvFm5bAZ2Skv9y3u7lzffFDS8UHiR5XuBqCmcWNH06dNUYEPe9DsGe4rf1TnhAH09EF9bwH_rS=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
+</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyKzeIg3iNAB-ZzpAc-Gs6l1GFyApPBcQL5ZJSwnZhmxfMNZsVH264JFq6jWaudfLJWJ693KGTHXjI8W45q04F3HO2_dbGMEipQSSxADnq4FhOJo4n_b=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"91",
     "title":"具体的にやりたいこと"
@@ -1464,7 +1404,7 @@ foo(2.0)
     "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
 });
 </script>
-<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/6f23ff0f0c9ca4d45397034da355f0ebfd0c9fc7bcaa09596172852253ea4c82/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
+<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/837a36362b01df1ef48657aac2b99d124cb38dab7e7f25f065ed89123372c4fb/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
 </code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
 ═════ 1 possible error found ═════
 ┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
@@ -1514,6 +1454,56 @@ foo(2.0)
 <div class="nav-item nav-next"></div>
 </div>
 
+            <!-- モバイル用関連記事（一番下に表示） -->
+            <div class="mobile-related-articles">
+<div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_02.html">
+                            <div class="related-item-title">Julia Compiler Internals (02) - Lowering (2) for の linearize</div>
+                            <div class="related-date">2024/09/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+</div>
+</div>
+
             <hr>
             <!-- コメント欄 (Utterances) -->
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
@@ -1524,53 +1514,51 @@ foo(2.0)
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
             <div class="right-sidebar-sticky">
-                <div class="related-articles">
-<h3 class="related-title">関連記事</h3>
+                <div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
 
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/mini-lang.html">
-                        <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
-                        <div class="related-date">2024/02/22</div>
-                        <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
-                        <div class="related-similarity">類似度: 0.75</div>
-                    </a>
-                </div>
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
 
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/juliatokyo11.html">
-                        <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
-                        <div class="related-date">2024/02/07</div>
-                        <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
-                        <div class="related-similarity">類似度: 0.5</div>
-                    </a>
-                </div>
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
 
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/julia_timer.html">
-                        <div class="related-item-title">Juliaで実行時間を制限する用のタイマー</div>
-                        <div class="related-date">2023/09/24</div>
-                        <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#競技プログラミング</span> <span class="related-tag">#日記</span></div>
-                        <div class="related-similarity">類似度: 0.4</div>
-                    </a>
-                </div>
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_02.html">
+                            <div class="related-item-title">Julia Compiler Internals (02) - Lowering (2) for の linearize</div>
+                            <div class="related-date">2024/09/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
 
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/jci_02.html">
-                        <div class="related-item-title">Julia Compiler Internals (02) - Lowering (2) for の linearize</div>
-                        <div class="related-date">2024/09/21</div>
-                        <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
-                        <div class="related-similarity">類似度: 0.28571</div>
-                    </a>
-                </div>
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
 
-                <div class="related-item">
-                    <a href="https://abap34.com/posts/jci_01.html">
-                        <div class="related-item-title">Julia Compiler Internals (01) - Lowering (1)</div>
-                        <div class="related-date">2024/09/20</div>
-                        <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
-                        <div class="related-similarity">類似度: 0.28571</div>
-                    </a>
-                </div>
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
 </div>
             </div>
         </div>
