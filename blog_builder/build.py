@@ -787,6 +787,42 @@ class NavigationHelper:
         logger.debug(f"Simple tag-based related articles found: {len(result['tag_based'])}")
         
         # TF-IDFベースの関連記事を取得（2本）
+        tfidf_related = NavigationHelper._find_related_articles_by_tfidf(
+            current_post, all_posts, result["tag_based"], tfidf_config
+        )
+        result["tfidf_based"] = tfidf_related
+        
+        # 最終検証：記事数が不足している場合の追加補完
+        total_available = len([post for post in all_posts if post.url != current_post.url and not post.external])
+        total_current = len(result["tag_based"]) + len(result["tfidf_based"])
+        expected_total = min(5, total_available)  # 利用可能な記事数に応じて調整
+        
+        if total_current < expected_total:
+            logger.warning(f"Total articles insufficient: {total_current}/{expected_total}, adding more fallback articles")
+            # 既に選ばれた記事を除外
+            all_used_urls = {post.url for post, _, _ in result["tag_based"] + result["tfidf_based"]}
+            all_other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
+            remaining = [post for post in all_other_posts if post.url not in all_used_urls]
+            remaining.sort(key=lambda x: (x.post_date, x.url), reverse=True)
+            
+            # TF-IDFに不足分を追加
+            needed = expected_total - total_current
+            for post in remaining[:needed]:
+                result["tfidf_based"].append((post, 0.01, "tfidf"))
+                logger.debug(f"Final fallback added: '{post.title}'")
+        
+        logger.debug(f"Final result: {len(result['tag_based'])} tag-based, {len(result['tfidf_based'])} TF-IDF-based (total: {len(result['tag_based']) + len(result['tfidf_based'])})")
+        
+        return result
+    
+    @staticmethod
+    def _find_related_articles_by_tfidf(
+        current_post: BlogPost, 
+        all_posts: List[BlogPost], 
+        tag_based_results: List[Tuple[BlogPost, float, str]], 
+        tfidf_config: Optional[Dict[str, Any]]
+    ) -> List[Tuple[BlogPost, float, str]]:
+        """TF-IDFベースの関連記事を取得（2本）"""
         try:
             try:
                 from .tfidf_similarity import TFIDFSimilarityCalculator
@@ -812,69 +848,52 @@ class NavigationHelper:
                     similar_articles = tfidf_calc.calculate_similarity(current_post.url, 2)
                     logger.debug(f"TF-IDF similarity calculation returned {len(similar_articles)} articles")
                     
+                    result = []
                     # 結果をBlogPostオブジェクトと類似度のタプルに変換
                     for article_url, similarity_score in similar_articles:
                         for post in all_posts:
                             if post.url == article_url and not post.external:
-                                result["tfidf_based"].append((post, similarity_score, "tfidf"))
+                                result.append((post, similarity_score, "tfidf"))
                                 break
-                        if len(result["tfidf_based"]) >= 2:
+                        if len(result) >= 2:
                             break
                     
-                    logger.debug(f"TF-IDF found {len(result['tfidf_based'])} related articles from cache")
+                    logger.debug(f"TF-IDF found {len(result)} related articles from cache")
                     
                     # TF-IDFで不足している場合は、タグベースに選ばれなかった記事から日付順で補完
-                    if len(result["tfidf_based"]) < 2:
-                        logger.debug(f"TF-IDF insufficient ({len(result['tfidf_based'])}), supplementing with recent articles")
-                        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-                        
-                        # タグベースで選ばれた記事を除外
-                        used_urls = {post.url for post, _, _ in result["tag_based"]}
-                        remaining_posts = [post for post in other_posts if post.url not in used_urls]
-                        
-                        # 日付順でソート
-                        remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
-                        
-                        needed = 2 - len(result["tfidf_based"])
-                        for post in remaining_posts[:needed]:
-                            result["tfidf_based"].append((post, 0.01, "tfidf"))
-                
-                else:
-                    logger.debug(f"Current article {current_post.url} not found in TF-IDF cache")
-                    # キャッシュに記事がない場合、日付順で2本取得
-                    other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-                    used_urls = {post.url for post, _, _ in result["tag_based"]}
-                    remaining_posts = [post for post in other_posts if post.url not in used_urls]
-                    remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
+                    if len(result) < 2:
+                        result.extend(NavigationHelper._get_fallback_articles(
+                            current_post, all_posts, tag_based_results, 2 - len(result)
+                        ))
                     
-                    for post in remaining_posts[:2]:
-                        result["tfidf_based"].append((post, 0.01, "tfidf"))
-            else:
-                logger.debug("No valid TF-IDF cache found")
-                # キャッシュがない場合、日付順で2本取得
-                other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-                used_urls = {post.url for post, _, _ in result["tag_based"]}
-                remaining_posts = [post for post in other_posts if post.url not in used_urls]
-                remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
+                    return result
                 
-                for post in remaining_posts[:2]:
-                    result["tfidf_based"].append((post, 0.01, "tfidf"))
+            # キャッシュがない、または記事が見つからない場合のフォールバック
+            return NavigationHelper._get_fallback_articles(
+                current_post, all_posts, tag_based_results, 2
+            )
                 
         except Exception as e:
             logger.warning(f"TF-IDF calculation failed: {e}")
-            # エラーの場合、日付順で2本取得
-            other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-            used_urls = {post.url for post, _, _ in result["tag_based"]}
-            remaining_posts = [post for post in other_posts if post.url not in used_urls]
-            remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
-            
-            for post in remaining_posts[:2]:
-                result["tfidf_based"].append((post, 0.01, "tfidf"))
-        
-        logger.debug(f"Final result: {len(result['tag_based'])} tag-based, {len(result['tfidf_based'])} TF-IDF-based")
-        
-        return result
+            # エラーの場合、フォールバック
+            return NavigationHelper._get_fallback_articles(
+                current_post, all_posts, tag_based_results, 2
+            )
     
+    @staticmethod
+    def _get_fallback_articles(
+        current_post: BlogPost,
+        all_posts: List[BlogPost],
+        tag_based_results: List[Tuple[BlogPost, float, str]],
+        count: int
+    ) -> List[Tuple[BlogPost, float, str]]:
+        """フォールバック用の記事を日付順で取得"""
+        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
+        used_urls = {post.url for post, _, _ in tag_based_results}
+        remaining_posts = [post for post in other_posts if post.url not in used_urls]
+        remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
+        
+        return [(post, 0.01, "tfidf") for post in remaining_posts[:count]]
 
     @staticmethod
     def _find_related_articles_by_tags_simple(
@@ -908,7 +927,20 @@ class NavigationHelper:
         
         # 上位max_count件を返す
         result = scored_posts[:max_count]
-        logger.info(f"Simple tag-based returning {len(result)} articles with common tags")
+        
+        # 不足分を日付順で補完（必ずmax_count本になるようにする）
+        if len(result) < max_count:
+            logger.debug(f"Tag-based insufficient ({len(result)}/{max_count}), supplementing with recent articles")
+            used_urls = {post.url for post, _ in result}
+            remaining_posts = [post for post in other_posts if post.url not in used_urls]
+            remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
+            
+            needed = max_count - len(result)
+            for post in remaining_posts[:needed]:
+                result.append((post, 0.01))  # 低いスコアで追加
+                logger.debug(f"Added by date: '{post.title}' (score=0.01)")
+        
+        logger.info(f"Simple tag-based returning {len(result)} articles ({len(scored_posts)} with common tags)")
         return result
 
 
