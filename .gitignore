@@ -33,3 +33,7 @@ public/cv/main.aux
 public/cv/main.fdb_latexmk
 public/cv/main.fls
 .claude/settings.local.json
+*.pyc
+public/tfidf_cache.pkl
+*.pyc
+*.pkl
