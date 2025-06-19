@@ -91,6 +91,9 @@
         <div class="tag-placeholder">{{tag}}</div>
     </div>
 
+    <!-- モバイル用サイドバー（記事見出し下に表示） -->
+    {{mobile_sidebar}}
+
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
 
@@ -111,6 +114,9 @@
 
             <!-- 記事ナビゲーション -->
             {{navigation}}
+
+            <!-- モバイル用関連記事（一番下に表示） -->
+            {{mobile_related_articles}}
 
             <hr>
             <!-- コメント欄 (Utterances) -->

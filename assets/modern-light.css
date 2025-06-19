@@ -36,6 +36,13 @@ body {
 .mobile-related-articles {
     display: none;
 }
+
+/* モバイル用サイドバーの基本スタイル */
+.mobile-sidebar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
 .article-body {
     display: flex;
     max-width: 1400px;
@@ -1062,6 +1069,12 @@ body.light-mode button {
     font-style: italic;
 }
 
+.similarity-source {
+    color: #999;
+    font-size: 0.65rem;
+    font-weight: normal;
+}
+
 /* ===============================================
    ダークモード対応
    =============================================== */
@@ -1117,30 +1130,10 @@ body.dark-mode .related-tag {
     color: #ddd;
 }
 
-/* モバイル専用要素のダークモード対応 */
-body.dark-mode .mobile-sidebar {
-    background-color: #222;
-    border-color: #555;
+body.dark-mode .similarity-source {
+    color: #777;
 }
 
-body.dark-mode .mobile-sidebar h3 {
-    color: #ddd;
-    border-color: #555;
-}
-
-body.dark-mode .mobile-sidebar-content {
-    color: #999;
-}
-
-body.dark-mode .mobile-related-articles {
-    background-color: #222;
-    border-color: #555;
-}
-
-body.dark-mode .mobile-related-articles .related-item {
-    background-color: #333;
-    border-color: #555;
-}
 
 /* ===============================================
    レスポンシブデザイン
@@ -1182,31 +1175,6 @@ body.dark-mode .mobile-related-articles .related-item {
 
     .content {
         padding: 0.25rem;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* コンテンツ内の要素の表示順序を調整 */
-    .content > h1,
-    .content > .article-header {
-        order: 1;
-    }
-
-    .content .mobile-sidebar {
-        order: 2;
-    }
-
-    .content > .article-content,
-    .content > .post-content {
-        order: 3;
-    }
-
-    .content .article-navigation {
-        order: 4;
-    }
-
-    .content .mobile-related-articles {
-        order: 5;
     }
 
     /* モバイル用のサイドバー（記事見出し下に表示） */
@@ -1214,28 +1182,6 @@ body.dark-mode .mobile-related-articles .related-item {
         display: block;
         width: 100%;
         margin: 1rem 0;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-    }
-
-    .mobile-sidebar h3 {
-        margin-bottom: 0.75rem;
-        font-size: 1rem;
-        color: #495057;
-        border-bottom: 1px solid #dee2e6;
-        padding-bottom: 0.5rem;
-    }
-
-    .mobile-sidebar-content {
-        font-size: 0.9rem;
-        color: #6c757d;
-    }
-
-    .mobile-toc p {
-        margin: 0;
-        padding: 0.5rem 0;
     }
 
     /* モバイル用の関連記事（ナビゲーション下に表示） */
@@ -1243,28 +1189,6 @@ body.dark-mode .mobile-related-articles .related-item {
         display: block;
         width: 100%;
         margin-top: 2rem;
-        order: 10; /* ナビゲーションの後に表示 */
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-radius: 8px;
-        border: 1px solid #e9ecef;
-    }
-
-    .mobile-related-articles .related-title {
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-    }
-
-    .mobile-related-articles .related-item {
-        margin-bottom: 1rem;
-        padding: 0.75rem;
-        background-color: #fff;
-        border-radius: 6px;
-        border: 1px solid #dee2e6;
-    }
-
-    .mobile-related-articles .related-item:last-child {
-        margin-bottom: 0;
     }
 
     /* デスクトップの関連記事をモバイルでは非表示 */

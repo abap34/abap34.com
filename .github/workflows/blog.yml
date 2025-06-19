@@ -78,8 +78,14 @@ jobs:
 
       - name: Add required packages
         run: |
-          python3 -m pip install beautifulsoup4 scikit-learn numpy
+          python3 -m pip install beautifulsoup4 scikit-learn numpy tqdm
       
+      - name: Precompute TF-IDF vectors (if full rebuild needed)
+        if: env.REBUILD == 'true'
+        run: |
+          echo "Full rebuild detected, precomputing TF-IDF vectors..."
+          python3 blog_builder/precompute_vectors.py
+          
       - name: Generate HTML
         run: |
           python3 blog_builder/build.py
