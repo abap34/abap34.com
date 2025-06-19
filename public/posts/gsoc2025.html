@@ -1404,7 +1404,7 @@ foo(2.0)
     "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
 });
 </script>
-<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/837a36362b01df1ef48657aac2b99d124cb38dab7e7f25f065ed89123372c4fb/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
+<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/e2ce466c1dd85c043b7b13165f3371ac0ce883dd17bb95e83497d00cd1faae02/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
 </code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
 ═════ 1 possible error found ═════
 ┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
@@ -1446,9 +1446,9 @@ foo(2.0)
             <div class="article-navigation">
 
                 <div class="nav-item nav-prev">
-                    <a href="https://abap34.com/posts/jci_06.html">
+                    <a href="https://abap34.com/posts/auc.html">
                         <div class="nav-direction">← 前の記事</div>
-                        <div class="nav-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                        <div class="nav-title">ROC-AUC の解釈</div>
                     </a>
                 </div>
 <div class="nav-item nav-next"></div>
@@ -1460,26 +1460,26 @@ foo(2.0)
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/mini-lang.html">
-                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
-                            <div class="related-date">2024/02/22</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/grpc_ml.html">
+                            <div class="related-item-title">gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</div>
+                            <div class="related-date">2023/09/30</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#go</span> <span class="related-tag">#web</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/footnote_implement.html">
+                            <div class="related-item-title">脚注機能の実装に関するメモ</div>
+                            <div class="related-date">2024/08/07</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Markdown</span> <span class="related-tag">#ALMO</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_02.html">
-                            <div class="related-item-title">Julia Compiler Internals (02) - Lowering (2) for の linearize</div>
-                            <div class="related-date">2024/09/21</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                        <a href="https://abap34.com/posts/dacq.html">
+                            <div class="related-item-title">mini Kaggle を streamlit で作った</div>
+                            <div class="related-date">2024/05/12</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Python</span> <span class="related-tag">#streamlit</span></div>
                             </a>
                     </div>
 </div>
@@ -1487,18 +1487,18 @@ foo(2.0)
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/auc.html">
+                            <div class="related-item-title">ROC-AUC の解釈</div>
+                            <div class="related-date">2025/03/01</div>
+                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#評価指標</span> <span class="related-tag">#ROC-AUC</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/devenv_advent.html">
+                            <div class="related-item-title">開発環境を紹介しますアドベントカレンダー @abap34</div>
+                            <div class="related-date">2024/12/06</div>
+                            <div class="related-tags"><span class="related-tag">#開発環境</span> <span class="related-tag">#アドベントカレンダー</span> <span class="related-tag">#Helix</span></div>
                             </a>
                     </div>
 </div>
@@ -1518,26 +1518,26 @@ foo(2.0)
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/mini-lang.html">
-                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
-                            <div class="related-date">2024/02/22</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/grpc_ml.html">
+                            <div class="related-item-title">gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</div>
+                            <div class="related-date">2023/09/30</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#go</span> <span class="related-tag">#web</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/footnote_implement.html">
+                            <div class="related-item-title">脚注機能の実装に関するメモ</div>
+                            <div class="related-date">2024/08/07</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Markdown</span> <span class="related-tag">#ALMO</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_02.html">
-                            <div class="related-item-title">Julia Compiler Internals (02) - Lowering (2) for の linearize</div>
-                            <div class="related-date">2024/09/21</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                        <a href="https://abap34.com/posts/dacq.html">
+                            <div class="related-item-title">mini Kaggle を streamlit で作った</div>
+                            <div class="related-date">2024/05/12</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Python</span> <span class="related-tag">#streamlit</span></div>
                             </a>
                     </div>
 </div>
@@ -1545,18 +1545,18 @@ foo(2.0)
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/auc.html">
+                            <div class="related-item-title">ROC-AUC の解釈</div>
+                            <div class="related-date">2025/03/01</div>
+                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#評価指標</span> <span class="related-tag">#ROC-AUC</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/devenv_advent.html">
+                            <div class="related-item-title">開発環境を紹介しますアドベントカレンダー @abap34</div>
+                            <div class="related-date">2024/12/06</div>
+                            <div class="related-tags"><span class="related-tag">#開発環境</span> <span class="related-tag">#アドベントカレンダー</span> <span class="related-tag">#Helix</span></div>
                             </a>
                     </div>
 </div>
