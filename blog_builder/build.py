@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 try:
     import tqdm
+
     HAS_TQDM = True
 except ImportError:
     HAS_TQDM = False
@@ -20,6 +21,7 @@ except ImportError:
 try:
     import requests
     from bs4 import BeautifulSoup
+
     HAS_WEB_DEPS = True
 except ImportError:
     HAS_WEB_DEPS = False
@@ -28,9 +30,9 @@ except ImportError:
 import os
 
 logging.basicConfig(
-    level=logging.INFO, 
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)8s] %(message)s",
-    datefmt="%H:%M:%S"
+    datefmt="%H:%M:%S",
 )
 logger = logging.getLogger(__name__)
 
@@ -41,6 +43,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 class BuildError(Exception):
     """ビルド処理エラー"""
+
     pass
 
 
@@ -114,7 +117,7 @@ class FileManager:
         try:
             # ディレクトリを作成
             path.parent.mkdir(parents=True, exist_ok=True)
-            
+
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
             return True
@@ -159,7 +162,7 @@ class OGPProcessor:
         if not HAS_WEB_DEPS:
             logger.warning("Web dependencies not available for OGP fetching")
             return "", url
-            
+
         try:
             res = requests.get(url, timeout=10)
             res.raise_for_status()
@@ -167,6 +170,12 @@ class OGPProcessor:
 
             ogp = soup.find("meta", attrs={"property": "og:image"})
             ogp_url = ogp["content"] if ogp and "content" in ogp.attrs else ""
+
+            # 相対パスの場合、ベースURLを付与
+            if ogp_url and not ogp_url.startswith(("http://", "https://")):
+                from urllib.parse import urljoin
+
+                ogp_url = urljoin(url, ogp_url)
 
             title = soup.find("title").text if soup.find("title") else url
 
@@ -350,10 +359,12 @@ class ArticleBuilder:
 
         logger.info(f"Total posts loaded: {len(all_posts)}")
         logger.info(f"Internal posts: {len([p for p in all_posts if not p.external])}")
-        
+
         # デバッグ: '振り返り' タグを持つ記事をすべて表示
-        retrospective_posts = [p for p in all_posts if p.tags and '振り返り' in p.tags]
-        logger.info(f"Posts with '振り返り' tag: {[(p.title, p.external, p.tags) for p in retrospective_posts]}")
+        retrospective_posts = [p for p in all_posts if p.tags and "振り返り" in p.tags]
+        logger.info(
+            f"Posts with '振り返り' tag: {[(p.title, p.external, p.tags) for p in retrospective_posts]}"
+        )
 
         # 前後の記事を取得
         prev_post, next_post = NavigationHelper.find_adjacent_articles(post, all_posts)
@@ -366,7 +377,9 @@ class ArticleBuilder:
         related_articles_dict = NavigationHelper.find_related_articles(
             post, all_posts, 5, tfidf_config
         )
-        logger.debug(f"Related articles: {len(related_articles_dict['tag_based'])} tag-based, {len(related_articles_dict['tfidf_based'])} TF-IDF-based")
+        logger.debug(
+            f"Related articles: {len(related_articles_dict['tag_based'])} tag-based, {len(related_articles_dict['tfidf_based'])} TF-IDF-based"
+        )
         related_data = TemplateDataGenerator.generate_related_articles_data_separated(
             related_articles_dict
         )
@@ -393,15 +406,21 @@ class ArticleBuilder:
 
             # モバイル用のHTML生成
             mobile_sidebar_html = self.generate_mobile_sidebar_html()
-            mobile_related_html = self.generate_mobile_related_articles_html(related_data)
+            mobile_related_html = self.generate_mobile_related_articles_html(
+                related_data
+            )
 
             # プレースホルダーを置換
             html_content = html_content.replace("{{navigation}}", navigation_html)
             html_content = html_content.replace(
                 "{{related_articles}}", related_articles_html
             )
-            html_content = html_content.replace("{{mobile_sidebar}}", mobile_sidebar_html)
-            html_content = html_content.replace("{{mobile_related_articles}}", mobile_related_html)
+            html_content = html_content.replace(
+                "{{mobile_sidebar}}", mobile_sidebar_html
+            )
+            html_content = html_content.replace(
+                "{{mobile_related_articles}}", mobile_related_html
+            )
 
             # 更新されたHTMLを保存
             output_path.write_text(html_content, encoding="utf-8")
@@ -462,17 +481,20 @@ class ArticleBuilder:
     def generate_related_articles_html(self, related_data: Dict[str, Any]) -> str:
         """関連記事のHTMLを生成（タグベースとTF-IDFベース分離）"""
         html = []
-        
+
         # タグベースの関連記事
         if related_data.get("has_tag_related"):
             html.append('<div class="related-articles tag-related">')
             html.append('<h3 class="related-title">同じようなタグの記事</h3>')
-            
+
             for article in related_data["tag_related_articles"]:
                 tags_html = " ".join(
-                    [f'<span class="related-tag">#{tag}</span>' for tag in article["tags"]]
+                    [
+                        f'<span class="related-tag">#{tag}</span>'
+                        for tag in article["tags"]
+                    ]
                 )
-                
+
                 html.append(
                     f"""
                     <div class="related-item">
@@ -483,19 +505,22 @@ class ArticleBuilder:
                             </a>
                     </div>"""
                 )
-            
+
             html.append("</div>")
-        
+
         # TF-IDFベースの関連記事
         if related_data.get("has_tfidf_related"):
             html.append('<div class="related-articles tfidf-related">')
             html.append('<h3 class="related-title">同じような内容の記事</h3>')
-            
+
             for article in related_data["tfidf_related_articles"]:
                 tags_html = " ".join(
-                    [f'<span class="related-tag">#{tag}</span>' for tag in article["tags"]]
+                    [
+                        f'<span class="related-tag">#{tag}</span>'
+                        for tag in article["tags"]
+                    ]
                 )
-                
+
                 html.append(
                     f"""
                     <div class="related-item">
@@ -506,9 +531,9 @@ class ArticleBuilder:
                             </a>
                     </div>"""
                 )
-            
+
             html.append("</div>")
-        
+
         return "\n".join(html)
 
     def generate_mobile_sidebar_html(self) -> str:
@@ -516,36 +541,41 @@ class ArticleBuilder:
         html = ['<div class="mobile-sidebar">']
         html.append('<div class="sidebar">')
         html.append('<ul id="mobile-toc-list"></ul>')
-        html.append('</div>')
-        html.append('</div>')
-        
+        html.append("</div>")
+        html.append("</div>")
+
         # TOCをモバイル版にもコピーするJavaScript
-        html.append('<script>')
+        html.append("<script>")
         html.append('document.addEventListener("DOMContentLoaded", function() {')
         html.append('  const desktopToc = document.querySelector("#toc");')
         html.append('  const mobileToc = document.querySelector("#mobile-toc-list");')
-        html.append('  if (desktopToc && mobileToc) {')
-        html.append('    mobileToc.innerHTML = desktopToc.innerHTML;')
-        html.append('  }')
-        html.append('});')
-        html.append('</script>')
-        
+        html.append("  if (desktopToc && mobileToc) {")
+        html.append("    mobileToc.innerHTML = desktopToc.innerHTML;")
+        html.append("  }")
+        html.append("});")
+        html.append("</script>")
+
         return "\n".join(html)
 
-    def generate_mobile_related_articles_html(self, related_data: Dict[str, Any]) -> str:
+    def generate_mobile_related_articles_html(
+        self, related_data: Dict[str, Any]
+    ) -> str:
         """モバイル用関連記事のHTMLを生成（タグベースとTF-IDFベース分離）"""
         html = ['<div class="mobile-related-articles">']
-        
+
         # タグベースの関連記事
         if related_data.get("has_tag_related"):
             html.append('<div class="related-articles tag-related">')
             html.append('<h3 class="related-title">同じようなタグの記事</h3>')
-            
+
             for article in related_data["tag_related_articles"]:
                 tags_html = " ".join(
-                    [f'<span class="related-tag">#{tag}</span>' for tag in article["tags"]]
+                    [
+                        f'<span class="related-tag">#{tag}</span>'
+                        for tag in article["tags"]
+                    ]
                 )
-                
+
                 html.append(
                     f"""
                     <div class="related-item">
@@ -556,19 +586,22 @@ class ArticleBuilder:
                             </a>
                     </div>"""
                 )
-            
+
             html.append("</div>")
-        
+
         # TF-IDFベースの関連記事
         if related_data.get("has_tfidf_related"):
             html.append('<div class="related-articles tfidf-related">')
             html.append('<h3 class="related-title">同じような内容の記事</h3>')
-            
+
             for article in related_data["tfidf_related_articles"]:
                 tags_html = " ".join(
-                    [f'<span class="related-tag">#{tag}</span>' for tag in article["tags"]]
+                    [
+                        f'<span class="related-tag">#{tag}</span>'
+                        for tag in article["tags"]
+                    ]
                 )
-                
+
                 html.append(
                     f"""
                     <div class="related-item">
@@ -579,9 +612,9 @@ class ArticleBuilder:
                             </a>
                     </div>"""
                 )
-            
+
             html.append("</div>")
-        
+
         html.append("</div>")
         return "\n".join(html)
 
@@ -635,14 +668,18 @@ class ExternalArticleProcessor:
         updated_count = 0
 
         if HAS_TQDM:
-            article_iter = tqdm.tqdm(external_articles, desc="Processing external articles", unit="article")
+            article_iter = tqdm.tqdm(
+                external_articles, desc="Processing external articles", unit="article"
+            )
         else:
             article_iter = external_articles
-            
+
         for i, article_data in enumerate(article_iter):
             if not HAS_TQDM and i % 10 == 0:
-                logger.info(f"Processing external article {i+1}/{len(external_articles)}")
-                
+                logger.info(
+                    f"Processing external article {i+1}/{len(external_articles)}"
+                )
+
             post = self.create_external_post(article_data)
             if not post:
                 continue
@@ -772,82 +809,111 @@ class NavigationHelper:
 
     @staticmethod
     def find_related_articles(
-        current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5, tfidf_config: Dict[str, Any] = None
+        current_post: BlogPost,
+        all_posts: List[BlogPost],
+        max_count: int = 5,
+        tfidf_config: Dict[str, Any] = None,
     ) -> Dict[str, List[Tuple[BlogPost, float, str]]]:
         """シンプルなタグベース3本+TF-IDF 2本の関連記事を取得"""
-        result = {
-            "tag_based": [],
-            "tfidf_based": []
-        }
-        
+        result = {"tag_based": [], "tfidf_based": []}
+
         # シンプルなタグベースの関連記事を取得（3本）
-        tag_related = NavigationHelper._find_related_articles_by_tags_simple(current_post, all_posts, 3)
+        tag_related = NavigationHelper._find_related_articles_by_tags_simple(
+            current_post, all_posts, 3
+        )
         result["tag_based"] = [(post, score, "tags") for post, score in tag_related]
-        
-        logger.debug(f"Simple tag-based related articles found: {len(result['tag_based'])}")
-        
+
+        logger.debug(
+            f"Simple tag-based related articles found: {len(result['tag_based'])}"
+        )
+
         # TF-IDFベースの関連記事を取得（2本）
         tfidf_related = NavigationHelper._find_related_articles_by_tfidf(
             current_post, all_posts, result["tag_based"], tfidf_config
         )
         result["tfidf_based"] = tfidf_related
-        
+
         # 最終検証：記事数が不足している場合の追加補完
-        total_available = len([post for post in all_posts if post.url != current_post.url and not post.external])
+        total_available = len(
+            [
+                post
+                for post in all_posts
+                if post.url != current_post.url and not post.external
+            ]
+        )
         total_current = len(result["tag_based"]) + len(result["tfidf_based"])
         expected_total = min(5, total_available)  # 利用可能な記事数に応じて調整
-        
+
         if total_current < expected_total:
-            logger.warning(f"Total articles insufficient: {total_current}/{expected_total}, adding more fallback articles")
+            logger.warning(
+                f"Total articles insufficient: {total_current}/{expected_total}, adding more fallback articles"
+            )
             # 既に選ばれた記事を除外
-            all_used_urls = {post.url for post, _, _ in result["tag_based"] + result["tfidf_based"]}
-            all_other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-            remaining = [post for post in all_other_posts if post.url not in all_used_urls]
+            all_used_urls = {
+                post.url for post, _, _ in result["tag_based"] + result["tfidf_based"]
+            }
+            all_other_posts = [
+                post
+                for post in all_posts
+                if post.url != current_post.url and not post.external
+            ]
+            remaining = [
+                post for post in all_other_posts if post.url not in all_used_urls
+            ]
             remaining.sort(key=lambda x: (x.post_date, x.url), reverse=True)
-            
+
             # TF-IDFに不足分を追加
             needed = expected_total - total_current
             for post in remaining[:needed]:
                 result["tfidf_based"].append((post, 0.01, "tfidf"))
                 logger.debug(f"Final fallback added: '{post.title}'")
-        
-        logger.debug(f"Final result: {len(result['tag_based'])} tag-based, {len(result['tfidf_based'])} TF-IDF-based (total: {len(result['tag_based']) + len(result['tfidf_based'])})")
-        
+
+        logger.debug(
+            f"Final result: {len(result['tag_based'])} tag-based, {len(result['tfidf_based'])} TF-IDF-based (total: {len(result['tag_based']) + len(result['tfidf_based'])})"
+        )
+
         return result
-    
+
     @staticmethod
     def _find_related_articles_by_tfidf(
-        current_post: BlogPost, 
-        all_posts: List[BlogPost], 
-        tag_based_results: List[Tuple[BlogPost, float, str]], 
-        tfidf_config: Optional[Dict[str, Any]]
+        current_post: BlogPost,
+        all_posts: List[BlogPost],
+        tag_based_results: List[Tuple[BlogPost, float, str]],
+        tfidf_config: Optional[Dict[str, Any]],
     ) -> List[Tuple[BlogPost, float, str]]:
         """TF-IDFベースの関連記事を取得（2本）"""
         try:
             try:
-                from .tfidf_similarity import TFIDFSimilarityCalculator
                 from .precompute_vectors import VectorPrecomputer
+                from .tfidf_similarity import TFIDFSimilarityCalculator
             except ImportError:
-                import sys
                 import os
-                sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-                from blog_builder.tfidf_similarity import TFIDFSimilarityCalculator
+                import sys
+
+                sys.path.append(
+                    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                )
                 from blog_builder.precompute_vectors import VectorPrecomputer
-            
+                from blog_builder.tfidf_similarity import TFIDFSimilarityCalculator
+
             # キャッシュされたベクトルを読み込み
             logger.debug("Loading TF-IDF cache...")
             cache_data = VectorPrecomputer.load_cached_vectors()
-            
+
             if cache_data and VectorPrecomputer.is_cache_valid(tfidf_config or {}):
                 # キャッシュからTF-IDF計算機を復元
                 tfidf_calc = TFIDFSimilarityCalculator.from_cache(cache_data)
-                
+
                 # 現在の記事がキャッシュに含まれているかチェック
                 if current_post.url in tfidf_calc.article_ids:
                     # TF-IDFベースで類似記事を取得
-                    similar_articles = tfidf_calc.calculate_similarity(current_post.url, 2)
-                    logger.debug(f"TF-IDF similarity calculation returned {len(similar_articles)} articles")
-                    
+                    similar_articles = tfidf_calc.calculate_similarity(
+                        current_post.url, 2
+                    )
+                    logger.debug(
+                        f"TF-IDF similarity calculation returned {len(similar_articles)} articles"
+                    )
+
                     result = []
                     # 結果をBlogPostオブジェクトと類似度のタプルに変換
                     for article_url, similarity_score in similar_articles:
@@ -857,42 +923,53 @@ class NavigationHelper:
                                 break
                         if len(result) >= 2:
                             break
-                    
-                    logger.debug(f"TF-IDF found {len(result)} related articles from cache")
-                    
+
+                    logger.debug(
+                        f"TF-IDF found {len(result)} related articles from cache"
+                    )
+
                     # TF-IDFで不足している場合は、タグベースに選ばれなかった記事から日付順で補完
                     if len(result) < 2:
-                        result.extend(NavigationHelper._get_fallback_articles(
-                            current_post, all_posts, tag_based_results, 2 - len(result)
-                        ))
-                    
+                        result.extend(
+                            NavigationHelper._get_fallback_articles(
+                                current_post,
+                                all_posts,
+                                tag_based_results,
+                                2 - len(result),
+                            )
+                        )
+
                     return result
-                
+
             # キャッシュがない、または記事が見つからない場合のフォールバック
             return NavigationHelper._get_fallback_articles(
                 current_post, all_posts, tag_based_results, 2
             )
-                
+
         except Exception as e:
             logger.warning(f"TF-IDF calculation failed: {e}")
             # エラーの場合、フォールバック
             return NavigationHelper._get_fallback_articles(
                 current_post, all_posts, tag_based_results, 2
             )
-    
+
     @staticmethod
     def _get_fallback_articles(
         current_post: BlogPost,
         all_posts: List[BlogPost],
         tag_based_results: List[Tuple[BlogPost, float, str]],
-        count: int
+        count: int,
     ) -> List[Tuple[BlogPost, float, str]]:
         """フォールバック用の記事を日付順で取得"""
-        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
+        other_posts = [
+            post
+            for post in all_posts
+            if post.url != current_post.url and not post.external
+        ]
         used_urls = {post.url for post, _, _ in tag_based_results}
         remaining_posts = [post for post in other_posts if post.url not in used_urls]
         remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
-        
+
         return [(post, 0.01, "tfidf") for post in remaining_posts[:count]]
 
     @staticmethod
@@ -901,46 +978,60 @@ class NavigationHelper:
     ) -> List[Tuple[BlogPost, float]]:
         """シンプルなタグベース関連記事取得（共通タグがある記事のみ）"""
         # 現在の記事を除外（外部記事は除く）
-        other_posts = [post for post in all_posts if post.url != current_post.url and not post.external]
-        
-        logger.debug(f"Simple tag-based analysis for '{current_post.title}' with tags: {current_post.tags}")
-        
+        other_posts = [
+            post
+            for post in all_posts
+            if post.url != current_post.url and not post.external
+        ]
+
+        logger.debug(
+            f"Simple tag-based analysis for '{current_post.title}' with tags: {current_post.tags}"
+        )
+
         if not current_post.tags:
             logger.debug("Current post has no tags, returning empty list")
             return []
-        
+
         scored_posts = []
-        
+
         for post in other_posts:
             if post.tags:
                 # 共通タグを取得
                 common_tags = set(current_post.tags) & set(post.tags)
-                
+
                 if common_tags:
                     # 共通タグ数をスコアにする（シンプル）
                     score = len(common_tags)
                     scored_posts.append((post, score))
-                    logger.debug(f"MATCH: '{post.title}' score={score} (common_tags={common_tags})")
-        
+                    logger.debug(
+                        f"MATCH: '{post.title}' score={score} (common_tags={common_tags})"
+                    )
+
         # スコア順にソート（タイブレーカーとしてURLを使用）
         scored_posts.sort(key=lambda x: (x[1], x[0].url), reverse=True)
-        
+
         # 上位max_count件を返す
         result = scored_posts[:max_count]
-        
+
         # 不足分を日付順で補完（必ずmax_count本になるようにする）
         if len(result) < max_count:
-            logger.debug(f"Tag-based insufficient ({len(result)}/{max_count}), supplementing with recent articles")
+            logger.debug(
+                f"Tag-based insufficient ({len(result)}/{max_count}), supplementing with recent articles"
+            )
             used_urls = {post.url for post, _ in result}
-            remaining_posts = [post for post in other_posts if post.url not in used_urls]
+            remaining_posts = [
+                post for post in other_posts if post.url not in used_urls
+            ]
             remaining_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
-            
+
             needed = max_count - len(result)
             for post in remaining_posts[:needed]:
                 result.append((post, 0.01))  # 低いスコアで追加
                 logger.debug(f"Added by date: '{post.title}' (score=0.01)")
-        
-        logger.info(f"Simple tag-based returning {len(result)} articles ({len(scored_posts)} with common tags)")
+
+        logger.info(
+            f"Simple tag-based returning {len(result)} articles ({len(scored_posts)} with common tags)"
+        )
         return result
 
 
@@ -975,7 +1066,9 @@ class TemplateDataGenerator:
         }
 
     @staticmethod
-    def generate_related_articles_data(related_posts_with_scores: List[Tuple[BlogPost, float, str]]) -> Dict[str, Any]:
+    def generate_related_articles_data(
+        related_posts_with_scores: List[Tuple[BlogPost, float, str]]
+    ) -> Dict[str, Any]:
         """関連記事用データを生成（類似度付き、ソース情報付き）"""
         articles = []
         for item in related_posts_with_scores:
@@ -985,52 +1078,65 @@ class TemplateDataGenerator:
                 # 後方互換性のため
                 post, similarity_score = item
                 source = "unknown"
-            
-            articles.append({
-                "title": post.title,
-                "url": post.url,
-                "thumbnail": post.thumbnail_url,
-                "date": post.post_date,
-                "tags": post.tags[:3],  # 最大3つのタグまで表示
-                "similarity": round(similarity_score, 5),  # 類似度を5桁まで表示
-                "source": source,  # "tfidf" または "tags"
-            })
-        
+
+            articles.append(
+                {
+                    "title": post.title,
+                    "url": post.url,
+                    "thumbnail": post.thumbnail_url,
+                    "date": post.post_date,
+                    "tags": post.tags[:3],  # 最大3つのタグまで表示
+                    "similarity": round(similarity_score, 5),  # 類似度を5桁まで表示
+                    "source": source,  # "tfidf" または "tags"
+                }
+            )
+
         return {
             "has_related": len(related_posts_with_scores) > 0,
             "related_articles": articles,
         }
-    
+
     @staticmethod
-    def generate_related_articles_data_separated(related_dict: Dict[str, List[Tuple[BlogPost, float, str]]]) -> Dict[str, Any]:
+    def generate_related_articles_data_separated(
+        related_dict: Dict[str, List[Tuple[BlogPost, float, str]]]
+    ) -> Dict[str, Any]:
         """分離された関連記事用データを生成（タグベースとTF-IDFベース別々）"""
+
         def convert_articles(articles_list):
             validated_articles = []
             for post, similarity_score, source in articles_list:
                 # 記事データのバリデーション
                 if not post.title or not post.url:
-                    logger.warning(f"Invalid article data: title='{post.title}', url='{post.url}'")
+                    logger.warning(
+                        f"Invalid article data: title='{post.title}', url='{post.url}'"
+                    )
                     continue
-                
-                validated_articles.append({
-                    "title": post.title,
-                    "url": post.url,
-                    "thumbnail": post.thumbnail_url,
-                    "date": post.post_date,
-                    "tags": post.tags[:3],
-                    "source": source,
-                })
+
+                validated_articles.append(
+                    {
+                        "title": post.title,
+                        "url": post.url,
+                        "thumbnail": post.thumbnail_url,
+                        "date": post.post_date,
+                        "tags": post.tags[:3],
+                        "source": source,
+                    }
+                )
             return validated_articles
-        
+
         tag_articles = convert_articles(related_dict.get("tag_based", []))
         tfidf_articles = convert_articles(related_dict.get("tfidf_based", []))
-        
+
         # バリデーション：期待される数の記事が生成されているかチェック
         if len(tag_articles) != len(related_dict.get("tag_based", [])):
-            logger.warning(f"Tag articles validation failed: {len(related_dict.get('tag_based', []))} -> {len(tag_articles)}")
+            logger.warning(
+                f"Tag articles validation failed: {len(related_dict.get('tag_based', []))} -> {len(tag_articles)}"
+            )
         if len(tfidf_articles) != len(related_dict.get("tfidf_based", [])):
-            logger.warning(f"TF-IDF articles validation failed: {len(related_dict.get('tfidf_based', []))} -> {len(tfidf_articles)}")
-        
+            logger.warning(
+                f"TF-IDF articles validation failed: {len(related_dict.get('tfidf_based', []))} -> {len(tfidf_articles)}"
+            )
+
         return {
             "has_tag_related": len(tag_articles) > 0,
             "tag_related_articles": tag_articles,
@@ -1057,14 +1163,16 @@ class BlogBuilder:
     def build_articles(self, article_paths: List[pathlib.Path]) -> None:
         """複数記事をビルド"""
         if HAS_TQDM:
-            article_iter = tqdm.tqdm(article_paths, desc="Building articles", unit="article")
+            article_iter = tqdm.tqdm(
+                article_paths, desc="Building articles", unit="article"
+            )
         else:
             article_iter = article_paths
-            
+
         for i, article_path in enumerate(article_iter):
             if not HAS_TQDM and i % 5 == 0:
                 logger.info(f"Progress: {i+1}/{len(article_paths)}")
-                
+
             try:
                 self.article_builder.build_article(article_path)
             except Exception as e:
@@ -1079,35 +1187,36 @@ class BlogBuilder:
             self.precompute_vectors()
         else:
             logger.info("TF-IDF cache found, skipping precomputation")
-        
+
         article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
         self.build_articles(article_paths)
         self.external_processor.process_external_articles()
-    
+
     def precompute_vectors(self) -> None:
         """TF-IDFベクトルを事前計算"""
         try:
             from .precompute_vectors import VectorPrecomputer
         except ImportError:
-            import sys
             import os
+            import sys
+
             sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             from blog_builder.precompute_vectors import VectorPrecomputer
-        
+
         logger.info("Starting TF-IDF vector precomputation...")
-        
+
         # 設定を取得
-        tfidf_config = self.config.data.get('tfidf_config', {})
-        
+        tfidf_config = self.config.data.get("tfidf_config", {})
+
         # キャッシュが有効かチェック
         if VectorPrecomputer.is_cache_valid(tfidf_config):
             logger.info("TF-IDF cache is valid, skipping precomputation")
             return
-        
+
         # ベクトルを事前計算
         precomputer = VectorPrecomputer(tfidf_config)
         precomputer.precompute_all_vectors()
-        
+
         logger.info("TF-IDF vector precomputation completed")
 
     def build_changed(self, changed_files: List[str]) -> None:
@@ -1200,10 +1309,10 @@ def main() -> int:
                 builder.build_changed(changed_files_data)
             else:
                 logger.info("No changed files found")
-                
+
         logger.info("Build completed successfully")
         return 0
-        
+
     except BuildError as e:
         logger.error(f"Build error: {e}")
         return 1
