@@ -5,7 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Fri, 20 Jun 2025 17:23:35 +0000</lastBuildDate>
+<lastBuildDate>Sat, 21 Jun 2025 07:16:59 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025.html</guid>
 <title>Google Summer of Code に Proposal が採択されました！</title>
@@ -249,29 +249,6 @@ What is Type Inference?
 Julia は動的型付けのプログラミング言語です。実行時に  の型は定まります。
 一方で、 Juliaコンパイラは、各コントロールフローにおける変数の型を実際に実行する前に可能な限り推論します。
 それによって最適化─ 例えば多重ディスパッチで実際に呼び出す...</description>
-</item>
-
-<item>
-<guid>https://abap34.com/posts/random_prime_generator.html</guid>
-<title>あなたがまだ知らない素数　(by noya2)</title>
-<link>https://abap34.com/posts/random_prime_generator.html</link>
-<pubDate>Tue, 08 Oct 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-
-はじめまして
-はじめまして、noya2 です。普段は競技プログラミングをしています。 almo の contributors の一人です。
-はじめての寄稿です。
-あなたがまだ知らない素数
-次の python プログラムを実行してみましょう。あなたがまだ知らない素数を  つ得ることができます。
-
-
-このコード中の  と  を調節することで、所望の範囲内の素数をランダムに得ることができます。
-おわりに
-競技プログラミングで 乱択素数  が欲しくなったときに使ってください。
-
-
-</description>
 </item>
 
 <item>
@@ -537,6 +514,21 @@ Rust とかで書き換えるのは個人的にありでしたが、開発メン
 
 pybind11
 &lt;a href=&quot;https://github.com/p...</description>
+</item>
+
+<item>
+<guid>https://abap34.com/posts/dacq.html</guid>
+<title>mini Kaggle を streamlit で作った</title>
+<link>https://abap34.com/posts/dacq.html</link>
+<pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>
+開発の経緯
+
+ギャグの人数がいるサークル用に、昨年から部内コンペ用のプラットフォームを運営しています。
+今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
+評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
 </item>
 
 </channel>
