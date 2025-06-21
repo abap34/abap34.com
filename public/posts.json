@@ -29,11 +29,11 @@
     "external": true
   },
   {
-    "title": "定数伝播の MOP 解の決定不能性の証明",
+    "title": "定数伝播の MOP 解の計算不能性の証明",
     "post_date": "2025/04/07",
     "url": "https://abap34.com/posts/mop_undeciable.html",
     "thumbnail_url": "https://images.dog.ceo/breeds/leonberg/n02111129_4246.jpg",
-    "content": "\nあらすじ\nデータフロー解析における MOP (Meet Over Path) 解の求解は、一般には決定不能であることを用いて示します。\nMPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。\n前提: MPCP\n有名な決定不能問題の一つに PCP (Post Correspondence Problem) があります。\nPCP は次のような問題です。\n\nPost Correspondence Problem\n有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?\n\n\nつまり、上下に文字列が書いてある「ドミノ」を (複数回の選択を許して) 並べたとき、上と下の文字列が一致するような並べ方があるか? を判定するという問題です。\n\nこの問題決定不能なのですが、少し変形した以下のような問題 MPCP (Modified Post Correspondence Problem) も決定不能であることが知られています。\n\n\nModified Post Correspondence Problem, MPCP\n有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?\n\n\n\nPCP の最初のドミノが固定されたバージョンです。　\nが、これも決定不能であることが知られています。\n今回はこれを使います。\n証明\n次のことを示します。\n\n定数伝播の MOP 解は一般には決定不能である。\n\n\n以下のようなプログラムを考えます。\n,  を　 個のドミノの上下として、\n\nこのプログラムの最後の  の定数伝播の結果を考えましょう。\n に至る CFG 上のパスはドミノの並べ方に 1対1 で対応していることから、  解 における  の値は ,  が MPCP の解をもたないとき、またそのときに限り  になります。\n\n\nしたがって、  解が求まるとすると MPCP が解けてしまいます。\nよって  解の求解は決定不能です。\n感想\n任意の選択を任意回させる、みたいなのでポストの対応問題族に帰着させるのができるわけですね。\n決定不能であることを示すやつで毎回天才証明に唸ってしまうので、同じ作戦で何か証明してみたいところです。\n参考文献\n\n\n\n\n\n\n",
+    "content": "\nあらすじ\nデータフロー解析における MOP (Meet Over Path) 解の求解は、一般には計算不能であることを用いて示します。\nMPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。\n前提: MPCP\n有名な決定不能問題の一つに PCP (Post Correspondence Problem) があります。\nPCP は次のような問題です。\n\nPost Correspondence Problem\n有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?\n\n\nつまり、上下に文字列が書いてある「ドミノ」を (複数回の選択を許して) 並べたとき、上と下の文字列が一致するような並べ方があるか? を判定するという問題です。\n\nこの問題決定不能なのですが、少し変形した以下のような問題 MPCP (Modified Post Correspondence Problem) も決定不能であることが知られています。\n\n\nModified Post Correspondence Problem, MPCP\n有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?\n\n\n\nPCP の最初のドミノが固定されたバージョンです。　\nが、これも決定不能であることが知られています。\n今回はこれを使います。\n証明\n次のことを示します。\n\n定数伝播の MOP 解の求解は計算不能である。\n\n\n以下のようなプログラムを考えます。\n,  を　 個のドミノの上下として、\n\nこのプログラムの最後の  の定数伝播の結果を考えましょう。\n に至る CFG 上のパスはドミノの並べ方に 1対1 で対応していることから、  解 における  の値は ,  が MPCP の解をもたないとき、またそのときに限り  になります。\n\n\nしたがって、  解が求まるとすると MPCP が解けてしまいます。\nよって  解の求解は計算不能です。\n感想\n任意の選択を任意回させる、みたいなのでポストの対応問題族に帰着させるのができるわけですね。\n決定不能であることを示すやつで毎回天才証明に唸ってしまうので、同じ作戦で何か証明してみたいところです。\n参考文献\n\n\n\n\n\n\n",
     "tags": [
       "静的解析",
       "コンパイラ",

@@ -5,7 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Sat, 21 Jun 2025 07:16:59 +0000</lastBuildDate>
+<lastBuildDate>Sat, 21 Jun 2025 13:30:19 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025.html</guid>
 <title>Google Summer of Code に Proposal が採択されました！</title>
@@ -20,13 +20,13 @@ Google Summer of Code に Proposal が採択されました！
 
 <item>
 <guid>https://abap34.com/posts/mop_undeciable.html</guid>
-<title>定数伝播の MOP 解の決定不能性の証明</title>
+<title>定数伝播の MOP 解の計算不能性の証明</title>
 <link>https://abap34.com/posts/mop_undeciable.html</link>
 <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 <description>
 あらすじ
-データフロー解析における MOP (Meet Over Path) 解の求解は、一般には決定不能であることを用いて示します。
+データフロー解析における MOP (Meet Over Path) 解の求解は、一般には計算不能であることを用いて示します。
 MPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。
 前提: MPCP
 有名な決定不能問題の一つに PCP (Post Correspondence Problem) があります。
