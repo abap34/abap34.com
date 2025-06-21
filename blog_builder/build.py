@@ -313,7 +313,9 @@ class ArticleBuilder:
 
         return title, date, ogp_url, content, tags, featured
 
-    def build_article(self, article_path: pathlib.Path) -> None:
+    def build_article(
+        self, article_path: pathlib.Path, include_navigation: bool = True
+    ) -> None:
         """単一記事をビルド"""
         output_path = self.content_processor.to_outputpath(article_path)
         interim_path = self.content_processor.to_interimpath(article_path)
@@ -353,6 +355,14 @@ class ArticleBuilder:
         # まず記事をposts.jsonに追加
         self.update_posts_json(post)
 
+        # ナビゲーションと関連記事の処理は第2段階でのみ実行
+        if include_navigation:
+            self.add_navigation_to_article(post, output_path)
+
+    def add_navigation_to_article(
+        self, post: BlogPost, output_path: pathlib.Path
+    ) -> None:
+        """記事にナビゲーションと関連記事を追加"""
         # ナビゲーションと関連記事の情報を取得（更新されたposts.jsonから）
         all_posts_data = self.file_manager.load_posts()
         all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
@@ -1155,12 +1165,15 @@ class BlogBuilder:
         config_path = config_path or FileManager.CONFIG_PATH
         config_data = FileManager.load_json(config_path)
         self.config = BlogConfig(config_data)
+        self.file_manager = FileManager()
         self.article_builder = ArticleBuilder(self.config)
         self.external_processor = ExternalArticleProcessor()
         self.navigation_helper = NavigationHelper()
         self.template_generator = TemplateDataGenerator()
 
-    def build_articles(self, article_paths: List[pathlib.Path]) -> None:
+    def build_articles(
+        self, article_paths: List[pathlib.Path], include_navigation: bool = True
+    ) -> None:
         """複数記事をビルド"""
         if HAS_TQDM:
             article_iter = tqdm.tqdm(
@@ -1174,12 +1187,55 @@ class BlogBuilder:
                 logger.info(f"Progress: {i+1}/{len(article_paths)}")
 
             try:
-                self.article_builder.build_article(article_path)
+                self.article_builder.build_article(article_path, include_navigation)
             except Exception as e:
                 logger.error(f"Failed to build {article_path}: {e}")
 
+    def add_navigation_to_all_articles(self, article_paths: List[pathlib.Path]) -> None:
+        """全記事にナビゲーションと関連記事を追加"""
+        logger.info("Adding navigation and related articles to all posts...")
+
+        # すべての記事データを取得
+        all_posts_data = self.file_manager.load_posts()
+        all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
+
+        if HAS_TQDM:
+            article_iter = tqdm.tqdm(
+                article_paths, desc="Adding navigation", unit="article"
+            )
+        else:
+            article_iter = article_paths
+
+        for i, article_path in enumerate(article_iter):
+            if not HAS_TQDM and i % 5 == 0:
+                logger.info(f"Navigation progress: {i+1}/{len(article_paths)}")
+
+            try:
+                # 現在の記事のURLを生成
+                output_path = self.article_builder.content_processor.to_outputpath(
+                    article_path
+                )
+                url = self.config.data["root_url"] + "/posts/" + output_path.name
+
+                # 対応する記事を見つける
+                current_post = None
+                for post in all_posts:
+                    if post.url == url:
+                        current_post = post
+                        break
+
+                if current_post:
+                    self.article_builder.add_navigation_to_article(
+                        current_post, output_path
+                    )
+                else:
+                    logger.warning(f"Could not find post data for {article_path}")
+
+            except Exception as e:
+                logger.error(f"Failed to add navigation to {article_path}: {e}")
+
     def build_all(self) -> None:
-        """全記事をビルド"""
+        """全記事をビルド（2段階プロセス）"""
         # ベクトルキャッシュが存在しない場合のみ事前計算
         # (GitHub Actionsでは別途事前計算ステップで実行)
         if not pathlib.Path("public/tfidf_cache.pkl").exists():
@@ -1189,8 +1245,17 @@ class BlogBuilder:
             logger.info("TF-IDF cache found, skipping precomputation")
 
         article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
-        self.build_articles(article_paths)
+
+        # 第1段階: ナビゲーション抜きで全記事をビルド
+        logger.info("Stage 1: Building all articles without navigation...")
+        self.build_articles(article_paths, include_navigation=False)
+
+        # 外部記事も処理
         self.external_processor.process_external_articles()
+
+        # 第2段階: 完成したposts.jsonを使って全記事にナビゲーションを追加
+        logger.info("Stage 2: Adding navigation and related articles...")
+        self.add_navigation_to_all_articles(article_paths)
 
     def precompute_vectors(self) -> None:
         """TF-IDFベクトルを事前計算"""
@@ -1222,8 +1287,19 @@ class BlogBuilder:
     def build_changed(self, changed_files: List[str]) -> None:
         """変更されたファイルのみビルド"""
         article_paths = [pathlib.Path(file_path) for file_path in changed_files]
-        self.build_articles(article_paths)
+
+        # 第1段階: ナビゲーション抜きで変更された記事をビルド
+        logger.info("Building changed articles without navigation...")
+        self.build_articles(article_paths, include_navigation=False)
+
+        # 外部記事も処理
         self.external_processor.process_external_articles()
+
+        # 第2段階: 変更された記事だけでなく、影響を受ける可能性のある全記事にナビゲーションを追加
+        # （前後記事の関係が変わる可能性があるため）
+        logger.info("Updating navigation for all articles...")
+        all_article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
+        self.add_navigation_to_all_articles(all_article_paths)
 
     def initialize_posts_json(self) -> None:
         """posts.jsonを初期化"""
@@ -1286,11 +1362,18 @@ def build(config: dict, article_paths: List[pathlib.Path]) -> None:
     """後方互換性のための関数（非推奨）"""
     blog_config = BlogConfig(config)
     builder = ArticleBuilder(blog_config)
-    for article_path in article_paths:
-        builder.build_article(article_path)
 
+    # 第1段階: ナビゲーション抜きでビルド
+    for article_path in article_paths:
+        builder.build_article(article_path, include_navigation=False)
+
+    # 外部記事処理
     processor = ExternalArticleProcessor()
     processor.process_external_articles()
+
+    # 第2段階: ナビゲーション追加
+    blog_builder = BlogBuilder()
+    blog_builder.add_navigation_to_all_articles(article_paths)
 
 
 def main() -> int:
