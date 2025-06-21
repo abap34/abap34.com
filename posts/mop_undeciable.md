@@ -1,5 +1,5 @@
 ---
-title: 定数伝播の MOP 解の決定不能性の証明
+title: 定数伝播の MOP 解の計算不能性の証明
 author: abap34
 date: 2025/04/07
 tag: [静的解析, コンパイラ,  データフロー解析, 抽象解釈, 計算可能性, 定数伝播]
@@ -7,7 +7,7 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/leonberg/n02111129_4246.jpg
-description: 定数伝播の MOP 解は一般には決定不能であることを示します。
+description: 定数伝播の MOP 解は一般には計算不能であることを示します。
 url: https://abap34.com/posts/mop_undeciable.html
 site_name: abap34's blog
 twitter_site: abap34
@@ -15,7 +15,7 @@ twitter_site: abap34
 
 ## あらすじ
 
-データフロー解析における MOP (Meet Over Path) 解の求解は、一般には決定不能であることを用いて示します。
+データフロー解析における MOP (Meet Over Path) 解の求解は、一般には計算不能であることを用いて示します。
 
 MPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。
 
@@ -70,7 +70,7 @@ PCP の最初のドミノが固定されたバージョンです。　
 
 :::theorem
 
-**定数伝播の MOP 解は一般には決定不能である。**
+**定数伝播の MOP 解の求解は計算不能である。**
 
 :::
 
@@ -115,7 +115,7 @@ $\text{MOP}$ 解 における `z` の値は `u1`, `u2` が MPCP の解をもた�
 
 したがって、 $\text{MOP}$ 解が求まるとすると MPCP が解けてしまいます。
 
-よって $\text{MOP}$ 解の求解は決定不能です。
+よって $\text{MOP}$ 解の求解は計算不能です。
 
 ## 感想
 
