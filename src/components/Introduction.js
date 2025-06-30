@@ -73,7 +73,6 @@ export default function Introduction() {
                         </p>
 
                         <div className="text-sm border-gray-200 dark:border-gray-700 pl-3 py-1">
-                            <p className="font-medium mb-1">Research Interests:</p>
                             <p className="text-gray-600 dark:text-gray-400">
                                 {language === "ja"
                                     ? "最近はプログラミング言語の知識を機械学習に生かすこと， もしくは機械学習の知識をプログラミング言語に生かすことを考えています."
