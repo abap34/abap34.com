@@ -66,13 +66,23 @@ export default function Introduction() {
                             <p className="font-medium mb-1">Research Interests:</p>
                             <p className="text-gray-600 dark:text-gray-400">
                                 {language === "ja"
-                                    ? "- 機械学習 (ソフトウェア基盤, 高速化, 自動証明, LLM)"
-                                    : "- Machine Learning (Software Infrastructure, Automated Theorem Proving, Performance Optimization, LLM)"}
+                                    ? "- 最近はプログラミング言語の知識を機械学習に生かすこと， もしくは機械学習の知識をプログラミング言語に生かすことを考えています."
+                                    : "- Recently, I have been thinking about how to leverage programming language knowledge in machine learning, or vice versa."}
                                 <br />
                                 {language === "ja"
-                                    ? "- プログラミング言語 (その理論と実装, コンパイラ最適化, 静的解析全般, 定理証明支援系)"
-                                    : "- Programming Languages (Both of Theory & Implementation, Optimizing Compilers, Static Analysis, Theorem Provers)"}
+                                    ? "具体的には:"
+                                    : "Specifically:"}
                                 <br />
+                                {language === "ja"
+                                    ? "- 機械学習 (ソフトウェア基盤, 高速化, 自動証明)"
+                                    : "- Machine Learning (Software Infrastructure, Automated Theorem Proving, Performance Optimization)"}
+                                <br />
+                                {language === "ja"
+                                    ? "- プログラミング言語 (その理論と実装, コンパイラ最適化, 形式手法"
+                                    : "- Programming Languages (Both of Theory & Implementation, Optimizing Compilers, Formal Methods)"}
+                                {language === "ja"
+                                    ? "などに興味を持っています."
+                                    : "and related areas."}
                                 <br />
                                 {language === "ja"
                                     ? "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります."
@@ -86,6 +96,9 @@ export default function Introduction() {
                                     ? "よく使うプログラミング言語は Python, Julia, TypeScript, C++, Scheme などです。"
                                     : "I often use programming languages such as Python, Julia, TypeScript, C++, and Scheme."}
                                 <br />
+                                {language === "ja"
+                                    ? "普段はプログラムを書くか音楽を聴くか野球を観て暮らしています。"
+                                    : "I usually spend my time writing programs, listening to music, or watching baseball."}
                             </p>
                         </div>
                     </div>
