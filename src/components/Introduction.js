@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FaGithub, FaSpeakerDeck, FaTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaSpeakerDeck, FaTwitter } from "react-icons/fa";
 import LanguageContext from "../context/LanguageContext";
 
 export default function Introduction() {
@@ -9,16 +9,16 @@ export default function Introduction() {
         <div className="max-w-4xl mx-auto mb-8">
 
             <div className="flex flex-col md:flex-row items-center md:items-center gap-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-                
+
                 <div>
-                <img
-                    src="/icon.png"
-                    alt="abap34"
-                    className="max-w-[128px] max-h-[128px] w-auto h-auto rounded-full border-2 border-gray-300 dark:border-gray-700 shadow-md dark:shadow-gray-800 self-center"
-                />
+                    <img
+                        src="/icon.png"
+                        alt="abap34"
+                        className="max-w-[128px] max-h-[128px] w-auto h-auto rounded-full border-2 border-gray-300 dark:border-gray-700 shadow-md dark:shadow-gray-800 self-center"
+                    />
 
 
-                <div className="flex space-x-4 mt-4 justify-center">
+                    <div className="flex space-x-4 mt-4 justify-center">
                         <a
                             href="https://github.com/abap34"
                             target="_blank"
@@ -46,10 +46,20 @@ export default function Introduction() {
                         >
                             <FaSpeakerDeck className="w-5 h-5" />
                         </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/yuchi-yamaguchi-981a83332"
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label="LinkedIn"
+                            className="text-gray-600 hover:text-blue-700 dark:text-gray-400 dark:hover:text-blue-500 transition-colors"
+                        >
+                            <FaLinkedin className="w-5 h-5" />
+                        </a>
                     </div>
 
                 </div>
-                
+
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         @abap34
@@ -107,7 +117,7 @@ export default function Introduction() {
                     </div>
 
 
-                    
+
                 </div>
             </div>
         </div>
