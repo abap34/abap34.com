@@ -89,8 +89,10 @@ export default function Introduction() {
                                     : "- Machine Learning (Software Infrastructure, Automated Theorem Proving, Performance Optimization)"}
                                 <br />
                                 {language === "ja"
-                                    ? "- プログラミング言語 (その理論と実装, コンパイラ最適化, 形式手法"
+                                    ? "- プログラミング言語 (その理論と実装, コンパイラ最適化, 形式手法)"
                                     : "- Programming Languages (Both of Theory & Implementation, Optimizing Compilers, Formal Methods)"}
+                                <br />
+                                
                                 {language === "ja"
                                     ? "などに興味を持っています."
                                     : "and related areas."}
