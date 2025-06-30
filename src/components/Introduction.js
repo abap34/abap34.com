@@ -80,24 +80,6 @@ export default function Introduction() {
                                 <br />
                                 <br />
                                 {language === "ja"
-                                    ? "具体的には:"
-                                    : "Specifically:"}
-                                <br />
-                                {language === "ja"
-                                    ? "- 機械学習 (ソフトウェア基盤, 高速化, 自動証明)"
-                                    : "- Machine Learning (Software Infrastructure, Automated Theorem Proving, Performance Optimization)"}
-                                <br />
-                                {language === "ja"
-                                    ? "- プログラミング言語 (その理論と実装, コンパイラ最適化, 形式手法)"
-                                    : "- Programming Languages (Both of Theory & Implementation, Optimizing Compilers, Formal Methods)"}
-                                <br />
-                                
-                                {language === "ja"
-                                    ? "などに興味を持っています."
-                                    : "and related areas."}
-                                <br />
-                                <br />
-                                {language === "ja"
                                     ? "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります."
                                     : "Other interests include mathematical optimization (especially continuous optimization) and mathematical statistics, as well as related fields."}
                                 <br />
