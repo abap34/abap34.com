@@ -112,21 +112,39 @@ almo:
     - OSS
   period: 2023 ~
 
-server.abap34.com:
-  title: server.abap34.com
-  img: /works/img/serverabap34com.png
-  repo: abap34/server.abap34.com
-  short_desc: Multi-User SSH Chat Server
+
+blog:
+  title: "abap34.com/blog"
+  img: /works/img/blog.png
+  repo: abap34/my-site
+  short_desc: "The blog of this website"
   desc: |
-    A chat server written in Go.
-    Users can log in using GitHub OAuth authentication or public key authentication.
-    Developed for a private chat server, with the interesting feature of allowing participation in chat with a single SSH command.
-  lang:
-    - Go
+    Many technical articles are posted on [this website's blog](https://www.abap34.com/blog).
   tags:
-    - Go
-    - TUI 
-  period: 2025
+    - Compiler
+    - Mathematics
+    - Machine Learning
+  period: 2023 ~
+  relatedlinks:
+    - https://www.abap34.com/blog
+
+
+competitions:
+  title: "Data Analysis Competition Organization"
+  img: /works/img/competitions.png
+  short_desc: "Organization of Data Analysis Competitions"
+  desc: |
+    I have organized and administered data analysis competitions 5 times as events within my university circle.
+    Two of these were held in collaboration with external companies. For more details, please refer to the related blog posts.
+  tags:
+    - Data Analysis
+    - Machine Learning
+    - Competition
+  period: 2022 ~
+  relatedlinks:
+    - https://trap.jp/post/2518/
+    - https://trap.jp/post/1975/
+
 
 Q_Q:
   title: Q_Q
@@ -149,26 +167,6 @@ Q_Q:
   relatedlinks:
     - https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit
 
-Minia.jl:
-  title: Minia.jl
-  img: /works/img/minia.png
-  repo: abap34/Minia.jl
-  short_desc: A Language Processing System in Julia
-  desc: |
-    Minia.jl is a language processing system written in Julia.
-    It defines and parses grammar using PEG and transpiles it to Julia AST for execution.
-  lang: 
-    - Julia
-  relatedlinks:
-    - https://www.abap34.com/posts/mini-lang.html
-    - https://www.abap34.com/posts/tinypeg.html
-  tags:
-    - Julia
-    - Parser
-    - Language Processing System
-    - OSS
-  period: 2023
-
 abap34.com:
   title: abap34.com
   img: /works/img/abap34com.png
@@ -187,7 +185,7 @@ abap34.com:
     - https://www.abap34.com/blog
   period: 2022
 
-DacQ-v2:  
+DacQ-v2:
   title: DacQ-v2
   img: /works/img/dacq.png
   repo: abap34/DacQ-v2
@@ -231,7 +229,7 @@ ml-lecture-judge:
     - SQLite
   period: 2024
 
-juliatokyo11: 
+juliatokyo11:
   title: "JuliaTokyo #11 Talk: Automatic Differentiation with Julia"
   img: /works/img/juliatokyo11.png
   short_desc: "A presentation on automatic differentiation at JuliaTokyo #11 in February 2024"
@@ -301,25 +299,9 @@ mllecture:
   short_desc: ""
   desc: |
     An introductory machine learning material created for educating new members in my university’s student circle.
+    There are 7 chapters covering the fundamentals of machine learning, focusing primarily on neural networks.
   tags:
     - Machine Learning
-  period: 2023 
+  period: 2023
   relatedlinks:
     - https://abap34.github.io/ml-lecture/
-
-blog:
-  title: "abap34.com/blog"
-  img: /works/img/blog.png
-  repo: abap34/my-site
-  short_desc: "The blog of this website"
-  desc: |
-    Many technical articles are posted on [this website's blog](https://www.abap34.com/blog).
-
-    The content mainly focuses on programming and mathematics-related topics.
-  tags:
-    - Compiler
-    - Mathematics
-    - Machine Learning
-  period: 2023 ~
-  relatedlinks:
-    - https://www.abap34.com/blog
