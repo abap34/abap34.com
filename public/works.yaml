@@ -20,7 +20,6 @@ lapisla:
     - https://lapisla.net
     - https://docs.lapisla.net
 
-
 eta:
   title: eta
   img: /works/img/eta.png
@@ -59,8 +58,7 @@ mu:
   relatedlinks:
     - https://qiita.com/abap34/items/8344a73853ff0efc252f
 
-
-JITrench.jl: 
+JITrench.jl:
   title: JITrench.jl
   img: /works/img/jitrench.png
   repo: abap34/JITrench.jl
@@ -70,7 +68,7 @@ JITrench.jl:
 
     深層学習フレームワークの動作原理に興味をもち、フルクスラッチで実装しました。
     Define-by-Run、 Explicitなパラメータ管理など、 現代的な深層学習フレームワークの特徴を持っています。
-    
+
     また、量子化や計算グラフの最適化など、さまざまなアルゴリズムが実装されています。
   lang:
     - Julia
@@ -82,12 +80,12 @@ JITrench.jl:
   period: 2021 ~ 2023
   relatedlinks:
     - https://www.abap34.com/posts/jitrench.html
-  
-almo: 
+
+almo:
   title: almo
   img: /works/img/almo.png
   repo: abap34/almo
-  lang: 
+  lang:
     - C++
     - Python
   relatedlinks:
@@ -95,12 +93,12 @@ almo:
   short_desc: 拡張 Markdownパーサ・静的サイトジェネレータ
   desc: |
     almo は 拡張 Markdownパーサ・静的サイトジェネレータです。
-    
+
     パーサ本体はパフォーマンスを重視して C++ で実装されていますが、Python向けのバインディングも提供しており、Pythonからも利用・拡張が可能です。 
     almo のもっとも特徴的な機能として、 WebAssembly を利用してブラウザ上で Pythonファイルの実行・プロットができるというものがあります。
-    
+
     最終的には、機械学習や数値計算、アルゴリズムなどに関心がある人にとって便利な執筆環境を提供することを目指して、VSCode機能や Jupyter Notebook からの変換なども実装されています。
-    
+
     このサイトのブログも almo によって作られています.
 
     チームで開発していて、主にプロジェクト全体の設計・実装を担当しています。
@@ -111,22 +109,40 @@ almo:
     - OSS
   period: 2023 ~
 
-server.abap34.com:
-  title: server.abap34.com
-  img: /works/img/serverabap34com.png
-  repo: abap34/server.abap34.com
-  short_desc: マルチユーザーSSHチャットサーバー
-  desc: |
-    Go 言語製のチャットサーバです.
-    GitHub OAuth認証と公開鍵認証でログインできます。
-    身内のチャットサーバのために開発しました。 ssh コマンド一発でチャットに参加できるのがおもしろポイントです。
-  lang:
-    - Go
-  tags:
-    - Go
-    - TUI 
-  period: 2025
 
+blog:
+  title: "abap34.com/blog"
+  img: /works/img/blog.png
+  repo: abap34/my-site
+  short_desc: "このサイトのブログ"
+  desc: |
+    [このサイトのブログ](https://www.abap34.com/blog) に、多くの技術記事を投稿しています。
+  tags:
+    - コンパイラ
+    - 数学
+    - 機械学習
+
+  period: 2023 ~
+  relatedlinks:
+    - https://www.abap34.com/blog
+
+
+
+competitions:
+  title: "データ分析コンペの開催"
+  img: /works/img/competitions.png
+  short_desc: "データ分析コンペの開催"
+  desc: |
+    大学のサークル内のイベントとして、 5回データ分析コンペの作問と運営を行いました。
+    そのうち 2回は外部の企業と連携して開催したものです。くわしくは関連リンクのブログ記事を参照してください。
+  tags:
+    - データ分析
+    - 機械学習
+    - コンペティション
+  period: 2022 ~
+  relatedlinks:
+    - https://trap.jp/post/2518/
+    - https://trap.jp/post/1975/
 
 Q_Q:
   title: Q_Q
@@ -149,27 +165,6 @@ Q_Q:
   relatedlinks:
     - https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit
 
-
-Minia.jl:
-  title: Minia.jl
-  img: /works/img/minia.png
-  repo: abap34/Minia.jl
-  short_desc: Julia 言語製の言語処理系
-  desc: |
-    Minia.jl は Julia 製の言語処理系です。
-    PEG によって文法を定義・パースし、 Julia の AST にトランスパイルして実行するのが特徴です。
-  lang: 
-    - Julia
-  relatedlinks:
-    - https://www.abap34.com/posts/mini-lang.html
-    - https://www.abap34.com/posts/tinypeg.html
-  tags:
-    - Julia
-    - パーサ
-    - 言語処理系
-    - OSS
-  period: 2023
-
 abap34.com:
   title: abap34.com
   img: /works/img/abap34com.png
@@ -188,15 +183,14 @@ abap34.com:
     - https://www.abap34.com/blog
   period: 2022
 
-
-DacQ-v2:  
+DacQ-v2:
   title: DacQ-v2
   img: /works/img/dacq.png
   repo: abap34/DacQ-v2
   short_desc: Streamlit 製のデータ分析コンペティションプラットフォーム
   desc: |
     DacQ-v2 は、 サークルでデータ分析コンペを開催するために開発した、 Streamlit製のデータ分析コンペティションプラットフォームです。
-    
+
     チーム戦機能や Jupyter Notebookベースのディスカッション機能など、 基本的なデータ分析コンペの機能が実装されています。
   lang:
     - Python
@@ -212,7 +206,7 @@ DacQ-v2:
   period: 2024
   relatedlinks:
     - https://www.abap34.com/posts/dacq.html
-  
+
 ml-lecture-judge:
   title: ml-lecture-judge
   img: /works/img/ml-lecture-judge.png
@@ -220,7 +214,7 @@ ml-lecture-judge:
   short_desc: React + FastAPI 製のオンラインジャッジシステム
   desc: |
     サークルで使うために開発したオンラインジャッジシステムです。
-    
+
     フロントは React、 バックエンドは FastAPI で実装していて、ジャッジキューを Celery で適切に管理して実行を安定して行うなどの工夫をしています。
   lang:
     - Python
@@ -232,12 +226,10 @@ ml-lecture-judge:
     - Celery
     - SQLite
 
-
-
-juliatokyo11: 
+juliatokyo11:
   title: "JuliaTokyo #11 トーク: Julia と歩く自動微分"
   img: /works/img/juliatokyo11.png
-  repo: 
+  repo:
   short_desc: "2024年2月に開催された JuliaTokyo #11 で発表した、 自動微分に関する資料"
   desc: |
     自動微分は、機械学習や連続最適化のソフトウェア的基盤になる技術です。
@@ -257,15 +249,14 @@ juliatokyo11:
   relatedlinks:
     - https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen
 
-
 medCon:
   title: medCon2021-1st-place-solution
   img: /works/img/medcon.png
   repo: abap34/medCon2021-1st-place-solution
   short_desc: 全国医療AIコンテスト 2021 の 1位解法
-  desc: | 
+  desc: |
     全国医療AIコンテスト 2021 で優勝したときの solution です。
-    
+
     このコンペは、第 85 回日本循環器学会学術集会で開催されたコンペで、心電図と患者情報から心筋梗塞を発見する、というコンペでした。
 
     工夫した CV で他の参加者と比較してかなり信頼できる実験が行えたこと、比較的強力なモデルを組めたことで優勝することができました。
@@ -276,11 +267,11 @@ medCon:
   period: 2021
   relatedlinks:
     - https://docs.google.com/presentation/d/1zEko7m5alvMbFL09ImxFmKA8heCwzVzMXy1fQay__lM/edit#slide=id.gcadca11317_4_47
-  
+
 parallelprng:
   title: "並列化時代の乱数生成"
   img: /works/img/parallelprng.png
-  repo: 
+  repo:
   short_desc: 擬似乱数生成と並列処理についての資料
   desc: |
     擬似乱数生成は、数値計算・機械学習において欠かせない存在です。
@@ -289,7 +280,7 @@ parallelprng:
     一方で、単純な並列化は擬似乱数生成の再現性を損なうことがあります。
 
     この資料は、まず擬似乱数・並列処理の基礎からはじめ、最終的には並列実行時に再現性を保つための手法について解説しています。
-    
+
     具体例として、 Julia のマルチプロセス・マルチスレッドにおける擬似乱数生成器の状態管理の手法と実装を紹介しています。
 
   tags:
@@ -309,28 +300,11 @@ mllecture:
   repo: abap34/ml-lecture
   short_desc: ""
   desc: |
-    大学のサークルで新入生教育のために作成した機械学習の入門資料です。
+    大学のサークルで新入生教育のために作成した機械学習の入門資料です。 
+    全 7 章にわたって NN を中心に機械学習の基礎を解説しています。
   tags:
     - 機械学習
-  period: 2023 
+  period: 2023
   relatedlinks:
     - https://abap34.github.io/ml-lecture/
-
-blog:
-  title: "abap34.com/blog"
-  img: /works/img/blog.png
-  repo: abap34/my-site
-  short_desc: "このサイトのブログ"
-  desc: |
-    [このサイトのブログ](https://www.abap34.com/blog) に、多くの技術記事を投稿しています。
-
-    
-    プログラム・数学関連の記事を中心に書いています。
-  tags:
-    - コンパイラ
-    - 数学
-    - 機械学習
-
-  period: 2023 ~
-  relatedlinks:
-    - https://www.abap34.com/blog
+    - https://trap.jp/post/1918/
