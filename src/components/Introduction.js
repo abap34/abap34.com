@@ -75,7 +75,7 @@ export default function Introduction() {
                         <div className="text-sm border-gray-200 dark:border-gray-700 pl-3 py-1">
                             <p className="text-gray-600 dark:text-gray-400">
                                 {language === "ja"
-                                    ? "最近はプログラミング言語の知識を機械学習に生かすこと， もしくは機械学習の知識をプログラミング言語に生かすことを考えています."
+                                    ? "最近はプログラミング言語の知識を機械学習に生かすこと，もしくは機械学習の知識をプログラミング言語に生かすことを考えています．"
                                     : "Recently, I have been thinking about how to leverage programming language knowledge in machine learning, or vice versa."}
                                 <br />
                                 <br />
@@ -84,16 +84,16 @@ export default function Introduction() {
                                     : "Other interests include mathematical optimization (especially continuous optimization) and mathematical statistics, as well as related fields."}
                                 <br />
                                 {language === "ja"
-                                    ? "必要に応じて Web 開発 (React, FastAPI を使うことが多いです) もします。"
+                                    ? "必要に応じて Web 開発 (React, FastAPI を使うことが多いです) もします．"
                                     : "I also do web development (often using React and FastAPI) when necessary."}
                                 <br />
                                 {language === "ja"
-                                    ? "よく使うプログラミング言語は Python, Julia, TypeScript, C++, Scheme などです。"
+                                    ? "よく使うプログラミング言語は Python, Julia, TypeScript, C++, Scheme などです．"
                                     : "I often use programming languages such as Python, Julia, TypeScript, C++, and Scheme."}
                                 <br />
                                 <br />
                                 {language === "ja"
-                                    ? "普段はプログラムを書くか音楽を聴くか野球を観て暮らしています。"
+                                    ? "普段はプログラムを書くか音楽を聴くか野球を観て暮らしています．"
                                     : "I usually spend my time writing programs, listening to music, or watching baseball."}
                             </p>
                         </div>
