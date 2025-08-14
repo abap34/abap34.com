@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import LanguageContext from "../context/LanguageContext";
 import yaml from "yaml";
+import LanguageContext from "../context/LanguageContext";
 
 function EachEducation(props) {
     return (
@@ -19,10 +19,10 @@ function EachWork(props) {
     return (
         <div style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
             <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                <a 
-                    href={props.url} 
-                    target="_blank" 
-                    rel="noreferrer" 
+                <a
+                    href={props.url}
+                    target="_blank"
+                    rel="noreferrer"
                     style={{ color: 'inherit', textDecoration: 'none' }}
                 >
                     {props.company}
@@ -120,9 +120,9 @@ export default function Background({ compact = false }) {
                 {data.others.map((other, index) => (
                     <div key={index} style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
                         <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                            <a 
-                                href={other.url} 
-                                target="_blank" 
+                            <a
+                                href={other.url}
+                                target="_blank"
                                 rel="noreferrer"
                                 style={{ color: 'inherit', textDecoration: 'none' }}
                             >

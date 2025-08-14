@@ -87,7 +87,7 @@ a:hover {
   --foreground0: #4c4f69;
   --foreground1: #5c5f77;
   --foreground2: #6c6f85;
-  --accent0: #1e66f5;
+  --accent0: #4c4f69;
   --accent1: #7287fd;
   --accent2: #209fb5;
   --font-size: 16px;
@@ -110,7 +110,7 @@ a:hover {
   --foreground0: #cdd6f4;
   --foreground1: #bac2de;
   --foreground2: #a6adc8;
-  --accent0: #89b4fa;
+  --accent0: #cdd6f4;
   --accent1: #b4befe;
   --accent2: #94e2d5;
 }
