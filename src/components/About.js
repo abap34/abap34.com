@@ -1,11 +1,9 @@
-import { ArrowRight } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import yaml from "yaml";
-import LanguageContext from "../context/LanguageContext";
-import { Card, Section, Text, Link as DSLink, Tag } from "../design-system";
 import { aboutContent } from "../config/content";
+import LanguageContext from "../context/LanguageContext";
+import { Link as DSLink, Tag, Text } from "../design-system";
 
 async function fetchPosts() {
     try {
@@ -38,7 +36,7 @@ export default function About() {
 
     useEffect(() => {
         fetchPosts().then((posts) => {
-            setPosts(posts.slice(0, 4));
+            setPosts(posts.slice(0, 5));
         });
 
         // ワークスを取得
@@ -78,8 +76,8 @@ export default function About() {
                             </div>
                         ))}
                         <div className="text-center mt-4">
-                            <Link 
-                                to="/blog" 
+                            <Link
+                                to="/blog"
                                 className="no-underline font-medium text-accent0"
                             >
                                 {content.messages.viewAllPosts} →
@@ -92,26 +90,6 @@ export default function About() {
                     </div>
                 )}
             </div>
-
-            <hr className="webtui-separator" />
-
-            <div className="py-4">
-                <div className="mb-2 font-bold text-foreground0">
-                    Contact
-                </div>
-                <div>
-                    {content.messages.contactText}{' '}
-                    <DSLink href="https://twitter.com/abap34" external>Twitter</DSLink>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function MarkdownText({ text }) {
-    return (
-        <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed prose prose-sm dark:prose-invert max-w-none">
-            <ReactMarkdown>{text}</ReactMarkdown>
         </div>
     );
 }

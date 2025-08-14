@@ -1,17 +1,17 @@
-import { ChevronDown, ChevronUp, ExternalLink, Tag  } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
 
 const GithubLink = ({ repo }) => (
     <div className="flex items-center gap-2 my-2">
-        <FaGithub className="h-4 w-4" />
+        <FaGithub className="h-4 w-4 text-accent0" />
         <a
             href={`https://github.com/${repo}`}
             target="_blank"
             rel="noreferrer"
-            className="text-sm hover:text-blue-600 transition-colors duration-200  border-none break-all"
+            className="text-sm text-accent0 no-underline hover:underline break-all"
         >
             {repo}
         </a>
@@ -35,19 +35,12 @@ const ExternalLinkComponent = ({ url }) => (
 const Tags = ({ tags }) => (
     <div className="flex flex-wrap gap-2 mt-3">
         {tags && tags.map((tag, index) => (
-            // <span
-            //     key={index}
-            //     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
-            // >
             <span
                 key={index}
-                className="inline-flex items-center px-2.5 py-0.5 bg-gray-100 text-xs font-medium  dark:bg-blue-800 dark:text-blue-200 dark:border-blue-700 rounded-full"
+                className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
             >
-                <Tag className="h-3 w-3 mr-1" />
                 {tag}
             </span>
-
-
         ))}
     </div>
 )
@@ -104,11 +97,11 @@ const WorkModal = ({ work, open, onClose }) => {
     if (!open) return null
 
     return (
-        <div 
+        <div
             className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
             onClick={onClose}
         >
-            <div 
+            <div
                 className="webtui-box max-w-4xl w-full max-h-[90vh] overflow-y-auto m-0"
                 onClick={(e) => e.stopPropagation()}
             >
@@ -232,15 +225,6 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     }
 
     const workEntries = Object.entries(works)
-    const hasMoreWorks = workEntries.length > visibleCount
-
-    const showMore = () => {
-        setVisibleCount(workEntries.length)
-    }
-
-    const showLess = () => {
-        setVisibleCount(defaultVisibleCount)
-    }
 
     if (compact) {
         return (
@@ -259,7 +243,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                             </thead>
                             <tbody>
                                 {workEntries.slice(0, visibleCount).map(([index, work]) => (
-                                    <tr 
+                                    <tr
                                         key={index}
                                         className="cursor-pointer"
                                         onClick={() => handleWorkClick(work)}
@@ -269,11 +253,9 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                         <td>
                                             <div className="flex gap-1 flex-wrap">
                                                 {work.tags?.slice(0, 2).map((tag, i) => (
-                                                    <span 
-                                                        key={i} 
-                                                        is-="badge"
-                                                        variant-="accent1"
-                                                        className="text-xs"
+                                                    <span
+                                                        key={i}
+                                                        className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
                                                     >
                                                         {tag}
                                                     </span>
@@ -299,7 +281,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     }
 
     return (
-        <div className={`py-8 px-4 max-w-7xl mx-auto ${compact ? '' : 'sm:px-6 lg:px-8'}`}>
+        <div className="py-8 px-0">
             {title && !compact && (
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-accent0 mb-2">{title}</h1>
@@ -311,10 +293,10 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                 <div className="text-foreground1">Loading projects...</div>
             ) : (
                 <>
-                    <div className={`grid gap-6 ${compact ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+                    <div className={`grid gap-6 ${compact ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
                         {workEntries.slice(0, visibleCount).map(([index, work]) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className="border border-foreground2 rounded-lg p-6 cursor-pointer bg-background1 transition-all duration-200 ease-in-out hover:shadow-lg"
                                 onClick={() => handleWorkClick(work)}
                             >
@@ -331,7 +313,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                         />
                                     )}
                                 </div>
-                                
+
                                 <div className="mb-3 text-sm text-foreground1 leading-snug">
                                     {work.short_desc}
                                 </div>
@@ -343,7 +325,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                             href={`https://github.com/${work.repo}`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="text-accent0 no-underline text-sm"
+                                            className="text-accent0 no-underline text-sm hover:underline"
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             {work.repo}
@@ -353,7 +335,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
 
                                 <div className="flex gap-2 flex-wrap">
                                     {work.tags?.slice(0, 3).map((tag, i) => (
-                                        <span 
+                                        <span
                                             key={i}
                                             className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
                                         >
@@ -364,22 +346,6 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                             </div>
                         ))}
                     </div>
-
-                    {hasMoreWorks && (
-                        <div className="text-center mt-8">
-                            <button variant-="accent0" onClick={showMore}>
-                                Show More Projects
-                            </button>
-                        </div>
-                    )}
-
-                    {visibleCount > defaultVisibleCount && workEntries.length > defaultVisibleCount && (
-                        <div className="text-center mt-4">
-                            <button variant-="foreground1" onClick={showLess}>
-                                Show Less
-                            </button>
-                        </div>
-                    )}
 
                     {selectedWork && (
                         <WorkModal

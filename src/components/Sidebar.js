@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
 import { Switch } from '../design-system';
@@ -20,16 +20,14 @@ export default function Sidebar() {
     }, [isDark]);
 
     const linkClass = (path) =>
-        `block text-sm no-underline py-0.5 cursor-pointer ${
-            location.pathname === path ? 'text-accent0' : 'text-foreground1'
+        `block text-sm no-underline py-0 cursor-pointer ${location.pathname === path ? 'text-accent0' : 'text-foreground1'
         }`;
 
     return (
-        <nav className="w-64 border-r border-foreground2 p-4 bg-background1 overflow-y-auto sticky top-0 h-screen">
-            <div className="font-bold text-foreground0 mb-4 text-sm">EXPLORER</div>
-            <div className="font-mono text-xs leading-tight">
-                <div className="mb-1 text-foreground1">abap34.com/</div>
-                <div>
+        <nav className="w-64 h-full md:h-screen md:sticky md:top-0 border-r border-foreground2 p-4 bg-background0 overflow-y-auto z-10">
+            <div className="font-mono leading-none">
+                <div className="mb-1 text-foreground0 font-bold text-base">abap34.com/</div>
+                <div className="text-xs">
                     <Link to="/" className={linkClass('/')}>
                         ├─ About
                     </Link>
