@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import yaml from 'yaml';
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
-import SidebarContext from '../context/SidebarContext';
 import About from './About';
+import Background from './Background';
 import Introduction from './Introduction';
 import Works from './Works';
-import Background from './Background';
-import Sidebar from './Sidebar';
 
 export default function TopPage() {
     const { language } = useContext(LanguageContext);
@@ -17,16 +15,16 @@ export default function TopPage() {
     }, [language]);
 
     return (
-        <main className="flex min-h-screen w-full m-0 p-0 bg-background0">
+        <main className="min-h-screen w-full bg-background0">
             {/* Main Content */}
-            <div className="flex-1 p-4">
+            <div className="p-4">
                 <div className="webtui-box">
                     <Introduction />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="webtui-box">
-                        <div className="webtui-box-header">Recent Activity</div>
+                        <div className="webtui-box-header">Recent Blog Posts</div>
                         <About />
                     </div>
 
@@ -37,13 +35,21 @@ export default function TopPage() {
                 </div>
 
                 <div className="webtui-box">
-                    <div className="webtui-box-header">Projects</div>
-                    <Works 
-                        title="" 
-                        path={worksFilename} 
-                        defaultVisibleCount={12}
+                    <div className="webtui-box-header">Works</div>
+                    <Works
+                        title=""
+                        path={worksFilename}
+                        defaultVisibleCount={8}
                         compact={false}
                     />
+                    <div className="text-center mt-4">
+                        <Link
+                            to="/works"
+                            className="no-underline font-medium text-accent0"
+                        >
+                            すべての作品をみる →
+                        </Link>
+                    </div>
                 </div>
             </div>
         </main>
