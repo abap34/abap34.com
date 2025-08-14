@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
-import './Works.css';
 import Tag from './Tag';
+import './Works.css';
 
 const WorkModal = ({ work, open, onClose }) => {
     if (!open) return null
@@ -20,10 +20,11 @@ const WorkModal = ({ work, open, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <row className="works-modal-header">
-                    <span is-="badge" variant-="foreground0" 
-                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                    {/* <span is-="badge" variant-="foreground0"
+                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         {work.title}
-                    </span>
+                    </span> */}
+                    <div></div>
                     <button
                         onClick={onClose}
                         style={{
@@ -43,10 +44,17 @@ const WorkModal = ({ work, open, onClose }) => {
                     </button>
                 </row>
 
+
                 <column pad-="2 1" className="works-modal-body">
+
+                    <column className="works-modal-title">
+                        <h1 className="works-modal-title-text">{work.title}</h1>
+                    </column>
+
                     <column style={{ marginBottom: '1lh' }}>
                         <div className="works-modal-period">{work.period}</div>
                     </column>
+
 
                     {work.img && (
                         <column style={{ marginBottom: '1lh' }}>
@@ -57,6 +65,8 @@ const WorkModal = ({ work, open, onClose }) => {
                             />
                         </column>
                     )}
+
+
 
                     {work.repo && (
                         <row style={{ alignItems: 'center', gap: '1ch', marginBottom: '1lh' }}>
@@ -71,6 +81,22 @@ const WorkModal = ({ work, open, onClose }) => {
                             </a>
                         </row>
                     )}
+
+                    <column style={{ marginBottom: '1lh' }}>
+                        <ReactMarkdown
+                            components={{
+                                a: ({ node, children, ...props }) => (
+                                    <a {...props} className="works-modal-markdown-link" target="_blank" rel="noreferrer">
+                                        {children}
+                                    </a>
+                                ),
+                                p: ({ node, children, ...props }) => <p {...props} className="works-modal-markdown-p">{children}</p>,
+                            }}
+                        >
+                            {work.desc}
+                        </ReactMarkdown>
+                    </column>
+
 
                     {work.relatedlinks && work.relatedlinks.length > 0 && (
                         <column style={{ marginBottom: '1lh' }}>
@@ -90,34 +116,6 @@ const WorkModal = ({ work, open, onClose }) => {
                         </column>
                     )}
 
-                    <column style={{ marginBottom: '1lh' }}>
-                        <ReactMarkdown
-                            components={{
-                                a: ({ node, children, ...props }) => (
-                                    <a {...props} className="works-modal-markdown-link" target="_blank" rel="noreferrer">
-                                        {children}
-                                    </a>
-                                ),
-                                p: ({ node, children, ...props }) => <p {...props} className="works-modal-markdown-p">{children}</p>,
-                            }}
-                        >
-                            {work.desc}
-                        </ReactMarkdown>
-                    </column>
-
-                    <row style={{ flexWrap: 'wrap', gap: '0.5ch' }}>
-                        {work.tags?.map((tag, i) => (
-                            // <span
-                            //     key={i}
-                            //     is-="badge"
-                            //     variant-="foreground0"
-                            // >
-                            // </span>
-                            <Tag key={i}>
-                                {tag}
-                            </Tag>
-                        ))}
-                    </row>
                 </column>
             </column>
         </div>
@@ -190,7 +188,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                                         key={i}
                                                         is-="badge"
                                                         variant-="foreground1"
-                                                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}
+                                                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
                                                     >
                                                         {tag}
                                                     </Tag>

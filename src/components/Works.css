@@ -269,6 +269,13 @@
     margin: 0;
 }
 
+works-modal-title-text {
+    font-size: 1.8rem;
+    font-weight: 1200;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
 .works-modal-period {
     font-size: 0.875rem;
     color: var(--foreground2);
