@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
-import { Switch } from '../design-system';
 import './Sidebar.css';
 
 export default function Sidebar() {
@@ -50,14 +49,15 @@ export default function Sidebar() {
 
                 <div className="sidebar-setting-group">
                     <div className="sidebar-setting-label">Theme</div>
-                    <Switch
-                        id="theme-toggle"
-                        checked={isDark}
-                        onChange={(e) => setIsDark(e.target.checked)}
-                        className="sidebar-switch-small-text"
-                    >
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            is-="switch"
+                            checked={isDark}
+                            onChange={(e) => setIsDark(e.target.checked)}
+                        />
                         {isDark ? 'Dark' : 'Light'}
-                    </Switch>
+                    </label>
                 </div>
 
                 <div className="sidebar-setting-group">

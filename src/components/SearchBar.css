@@ -6,6 +6,15 @@
     max-width: 32rem;
 }
 
+/* SearchBar Component Styles */
+
+.search-bar-container {
+    position: relative;
+    width: 100%;
+    max-width: 32rem;
+}
+
+/* Legacy input and button styles - Commented out to avoid conflicts with WebTUI
 .search-bar-input {
     width: 100%;
     height: 100%;
@@ -76,4 +85,20 @@
 
 [data-webtui-theme="catppuccin-mocha"] .search-bar-button:focus {
     color: #89b4fa;
+}
+*/
+
+/* WebTUI Input and Button Positioning */
+.search-bar-container [is-~="input"] {
+    padding-right: 2.5rem;
+}
+
+.search-bar-container [is-~="button"] {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: auto;
+    padding: 0.25rem;
+    min-width: auto;
 }

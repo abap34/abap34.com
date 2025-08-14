@@ -1,5 +1,121 @@
-/* Tag Component Styles */
+/* Tag Component Styles - WebTUI Inspired */
 
+/* WebTUI Badge styling */
+[is-~="badge"] {
+    color: var(--badge-text, var(--background0));
+    background-image: linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(1ch - 1px),
+        var(--badge-color, var(--foreground0)) calc(1ch - 1px),
+        var(--badge-color, var(--foreground0)) calc(100% - 1ch + 1px),
+        transparent calc(100% - 1ch + 1px),
+        transparent
+    );
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    vertical-align: top;
+    white-space: nowrap;
+    height: 1lh;
+    line-height: 1lh;
+    font-family: var(--font-family, monospace);
+    font-size: var(--font-size, 0.875rem);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: none;
+}
+
+[is-~="badge"]:hover {
+    transform: translateY(-1px);
+}
+
+/* WebTUI Badge pseudo-elements for caps */
+[is-~="badge"]::before,
+[is-~="badge"]::after {
+    content: '';
+    width: 1ch;
+    height: 1lh;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: var(--badge-color, var(--foreground0));
+    overflow: hidden;
+}
+
+[is-~="badge"]::before {
+    border-top-left-radius: 1lh;
+    border-bottom-left-radius: 1lh;
+}
+
+[is-~="badge"]::after {
+    border-top-right-radius: 1lh;
+    border-bottom-right-radius: 1lh;
+}
+
+/* Default color variants */
+[is-~="badge"]:not([variant-]) {
+    --badge-color: var(--foreground0);
+    --badge-text: var(--background0);
+}
+
+[is-~="badge"][variant-="foreground0"] {
+    --badge-color: var(--foreground0);
+    --badge-text: var(--background0);
+}
+
+[is-~="badge"][variant-="foreground1"] {
+    --badge-color: var(--foreground1);
+    --badge-text: var(--background0);
+}
+
+[is-~="badge"][variant-="foreground2"] {
+    --badge-color: var(--foreground2);
+    --badge-text: var(--background0);
+}
+
+[is-~="badge"][variant-="background1"] {
+    --badge-color: var(--background1);
+    --badge-text: var(--foreground0);
+}
+
+[is-~="badge"][variant-="background2"] {
+    --badge-color: var(--background2);
+    --badge-text: var(--foreground0);
+}
+
+/* Catppuccin theme variants */
+[data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="blue"] {
+    --badge-color: #89b4fa;
+    --badge-text: var(--background0);
+}
+
+[data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="green"] {
+    --badge-color: #a6e3a1;
+    --badge-text: var(--background0);
+}
+
+[data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="yellow"] {
+    --badge-color: #f9e2af;
+    --badge-text: var(--background0);
+}
+
+[data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="red"] {
+    --badge-color: #f38ba8;
+    --badge-text: var(--background0);
+}
+
+[data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="purple"] {
+    --badge-color: #cba6f7;
+    --badge-text: var(--background0);
+}
+
+/* Icon styling */
+.tag-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
+/* Legacy CSS - Commented out to avoid conflicts
 .tag {
     display: inline-flex;
     align-items: center;
@@ -20,12 +136,6 @@
     transform: translateY(-1px);
 }
 
-.tag-icon {
-    width: 0.75rem;
-    height: 0.75rem;
-}
-
-/* Dark mode */
 [data-webtui-theme="catppuccin-mocha"] .tag {
     background-color: #313244;
     color: #89b4fa;
@@ -34,29 +144,4 @@
 [data-webtui-theme="catppuccin-mocha"] .tag:hover {
     background-color: #45475a;
 }
-
-/* Different tag colors (optional) */
-.tag.tag-primary {
-    background-color: #dbeafe;
-    color: #1d4ed8;
-}
-
-.tag.tag-secondary {
-    background-color: #f3e8ff;
-    color: #7c3aed;
-}
-
-.tag.tag-success {
-    background-color: #dcfce7;
-    color: #166534;
-}
-
-.tag.tag-warning {
-    background-color: #fef3c7;
-    color: #92400e;
-}
-
-.tag.tag-danger {
-    background-color: #fee2e2;
-    color: #dc2626;
-}
+*/

@@ -1,4 +1,4 @@
-import { ExternalLink, SearchCheck, X } from 'lucide-react';
+import { ExternalLink, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { FaTag } from 'react-icons/fa';
 import SeachBar from './SearchBar';
@@ -186,7 +186,7 @@ function DeleatableTag({ name, label }) {
     }
 
     return (
-        <span className="search-tag">
+        <span is-="badge" variant-="background2" className="search-tag">
             <FaTag className="search-tag-icon" />
             <span>{label}</span>
             <X onClick={handleClick} className="search-tag-close" />
@@ -200,7 +200,7 @@ function DeleatableQuery({ query }) {
     }
 
     return (
-        <span className="search-query">
+        <span is-="badge" variant-="blue" className="search-query">
             <span>{query}</span>
             <X onClick={handleClick} className="search-query-close" />
         </span>
@@ -239,7 +239,6 @@ export default function SearchResult() {
         <main className="search-container">
             <div className="search-main">
                 <div className="search-header">
-                    <SearchCheck className="search-header-icon" />
                     <h1 className="search-header-title">Search</h1>
                 </div>
                 <SeachBar placeholder="To add a search query, type and press Enter" />

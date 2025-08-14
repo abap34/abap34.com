@@ -26,6 +26,7 @@ export default function SearchBar({ placeholder = "Search Blog" }) {
     return (
         <div className="search-bar-container">
             <input
+                is-="input"
                 type="text"
                 placeholder={placeholder}
                 className="search-bar-input"
@@ -34,6 +35,8 @@ export default function SearchBar({ placeholder = "Search Blog" }) {
                 onKeyDown={handleKeyDown}
             />
             <button
+                is-="button"
+                variant-="blue"
                 className="search-bar-button"
                 onClick={handleSearch}
                 aria-label="Search"
