@@ -39,7 +39,23 @@ eta:
     - https://abap34.github.io/eta-presentation
     - https://github.com/abap34/eta
 
-
+JETLS:
+  title: JETLS.jl
+  img: /works/img/jetls.png
+  repo: aviatesk/JETLS.jl
+  short_desc: Next-generation Language Server for Julia
+  desc: |
+    JETLS.jl is the next-generation Language Server for Julia.
+    It utilizes the latest Julia compiler toolchain to provide advanced analysis results.
+    I am participating as a Student Contributor in Google Summer of Code.
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - Compiler
+    - Language Server
+    - OSS
+  period: 2025
 
 mu:
   title: mu
@@ -60,7 +76,7 @@ mu:
   relatedlinks:
     - https://qiita.com/abap34/items/8344a73853ff0efc252f
 
-JITrench.jl: 
+JITrench.jl:
   title: JITrench.jl
   img: /works/img/jitrench.png
   repo: abap34/JITrench.jl
@@ -83,11 +99,11 @@ JITrench.jl:
   relatedlinks:
     - https://www.abap34.com/posts/jitrench.html
 
-almo: 
+almo:
   title: almo
   img: /works/img/almo.png
   repo: abap34/almo
-  lang: 
+  lang:
     - C++
     - Python
   relatedlinks:
@@ -112,7 +128,6 @@ almo:
     - OSS
   period: 2023 ~
 
-
 blog:
   title: "abap34.com/blog"
   img: /works/img/blog.png
@@ -127,7 +142,6 @@ blog:
   period: 2023 ~
   relatedlinks:
     - https://www.abap34.com/blog
-
 
 competitions:
   title: "Data Analysis Competition Organization"
@@ -144,7 +158,6 @@ competitions:
   relatedlinks:
     - https://trap.jp/post/2518/
     - https://trap.jp/post/1975/
-
 
 Q_Q:
   title: Q_Q
@@ -255,7 +268,7 @@ medCon:
   img: /works/img/medcon.png
   repo: abap34/medCon2021-1st-place-solution
   short_desc: Winner of the 2021 National Medical AI Contest
-  desc: | 
+  desc: |
     This is the solution that won the 2021 National Medical AI Contest.
 
     The competition was held at the 85th Annual Meeting of the Japanese Circulation Society, where participants aimed to detect myocardial infarction based on ECG and patient data.
