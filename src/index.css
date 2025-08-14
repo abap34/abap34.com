@@ -1,6 +1,82 @@
 /* Import WebTUI CSS */
 @import '@webtui/css';
 
+/* WebTUI Flexbox Layout */
+column,
+[is-~='column'] {
+    flex-direction: column;
+}
+
+row,
+column,
+[is-~='row'],
+[is-~='column'] {
+    display: flex;
+    gap: 1ch;
+}
+
+/* WebTUI Padding Layout */
+[pad-] {
+    &[pad-^='0'] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    &[pad-^='1'] {
+        padding-left: 1ch;
+        padding-right: 1ch;
+    }
+    &[pad-^='2'] {
+        padding-left: 2ch;
+        padding-right: 2ch;
+    }
+
+    &[pad-$='0'] {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    &[pad-$='1'] {
+        padding-top: 1lh;
+        padding-bottom: 1lh;
+    }
+    &[pad-$='2'] {
+        padding-top: 2lh;
+        padding-bottom: 2lh;
+    }
+}
+
+/* WebTUI Link Styles */
+a {
+  color: var(--foreground1);
+  text-decoration: none;
+  font-family: var(--font-family);
+}
+
+a:hover {
+  color: var(--foreground0);
+  text-decoration: underline;
+}
+
+.view-all-link {
+  color: var(--foreground1);
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  display: block;
+  font-family: var(--font-family);
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+  color: var(--foreground0);
+}
+
+/* WebTUI Badge Focus Fix */
+[is-="badge"] {
+  outline: none;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* WebTUI-inspired Base Styles */
 :root {
   /* Catppuccin Latte (Light) */
@@ -676,41 +752,6 @@ textarea:focus {
 }
 */
 
-/* WebTUI-style Switch */
-input[type="checkbox"][is-="switch"] {
-  appearance: none;
-  width: 2.5rem;
-  height: 1.25rem;
-  border-radius: 0.625rem;
-  background-color: var(--background2);
-  border: 1px solid var(--foreground2);
-  position: relative;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  outline: none;
-}
-
-input[type="checkbox"][is-="switch"]:checked {
-  background-color: var(--accent0);
-  border-color: var(--accent0);
-}
-
-input[type="checkbox"][is-="switch"]::before {
-  content: "";
-  position: absolute;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  background-color: var(--foreground0);
-  top: 0.0625rem;
-  left: 0.0625rem;
-  transition: all 0.15s ease;
-}
-
-input[type="checkbox"][is-="switch"]:checked::before {
-  transform: translateX(1.25rem);
-  background-color: var(--background0);
-}
 
 /* WebTUI-style Typography */
 [variant-="foreground0"] {
@@ -786,41 +827,6 @@ input[type="checkbox"][is-="switch"]:checked::before {
   content: "$ ";
 }
 
-/* WebTUI Box Layout */
-.webtui-box {
-  border: 1px solid var(--foreground2);
-  border-radius: 0.25rem;
-  background-color: var(--background1);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.webtui-box-header {
-  border-bottom: 1px solid var(--foreground2);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--foreground0);
-}
-
-/* Grid Layout for WebTUI */
-.webtui-grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.webtui-grid-2 {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 768px) {
-  .webtui-grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Terminal Table */
 .terminal-table {

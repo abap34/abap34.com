@@ -6,30 +6,17 @@
 }
 
 .top-page-content {
-    padding: 1rem;
+    padding: 1ch;
+    gap: 1lh;
 }
 
 .top-page-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1ch;
 }
 
 @media (min-width: 768px) {
-    .top-page-grid {
-        grid-template-columns: 1fr 1fr;
+    .top-page-content {
+        padding: 2ch;
     }
 }
 
-.view-all-link {
-    text-decoration: none;
-    font-weight: 500;
-    color: var(--accent0);
-    text-align: center;
-    margin-top: 1rem;
-    display: block;
-}
-
-.view-all-link:hover {
-    text-decoration: underline;
-}

@@ -12,38 +12,53 @@ const WorkModal = ({ work, open, onClose }) => {
             className="works-modal-overlay"
             onClick={onClose}
         >
-            <div
+            <column
+                box-="square"
+                shear-="top"
                 className="works-modal-content"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="works-modal-header">
-                    <div>
-                        <div className="works-modal-title">{work.title}</div>
-                        <div className="works-modal-period">{work.period}</div>
-                    </div>
+                <row className="works-modal-header">
+                    <span is-="badge" variant-="foreground0" 
+                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                        {work.title}
+                    </span>
                     <button
-                        is-="button"
-                        variant-="background2"
-                        className="works-modal-close"
                         onClick={onClose}
+                        style={{
+                            background: 'none',
+                            border: '1px solid var(--foreground2)',
+                            color: 'var(--foreground1)',
+                            cursor: 'pointer',
+                            padding: '0.5ch',
+                            fontSize: '1rem',
+                            lineHeight: '1',
+                            fontFamily: 'var(--font-family)',
+                            width: '2ch',
+                            height: '1lh'
+                        }}
                     >
                         ✕
                     </button>
-                </div>
+                </row>
 
-                <div className="works-modal-body">
+                <column pad-="2 1" className="works-modal-body">
+                    <column style={{ marginBottom: '1lh' }}>
+                        <div className="works-modal-period">{work.period}</div>
+                    </column>
+
                     {work.img && (
-                        <div className="works-modal-image">
+                        <column style={{ marginBottom: '1lh' }}>
                             <img
                                 src={work.img}
                                 alt={work.title}
                                 className="works-modal-img"
                             />
-                        </div>
+                        </column>
                     )}
 
                     {work.repo && (
-                        <div className="works-modal-repo">
+                        <row style={{ alignItems: 'center', gap: '1ch', marginBottom: '1lh' }}>
                             <FaGithub className="works-modal-repo-icon" />
                             <a
                                 href={`https://github.com/${work.repo}`}
@@ -53,14 +68,14 @@ const WorkModal = ({ work, open, onClose }) => {
                             >
                                 {work.repo}
                             </a>
-                        </div>
+                        </row>
                     )}
 
                     {work.relatedlinks && work.relatedlinks.length > 0 && (
-                        <div className="works-modal-links">
-                            <div className="works-modal-links-title">Related Links</div>
+                        <column style={{ marginBottom: '1lh' }}>
+                            <div style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5lh' }}>Related Links</div>
                             {work.relatedlinks.map((link, index) => (
-                                <div key={index} className="works-modal-link-item">
+                                <div key={index}>
                                     <a
                                         href={link}
                                         target="_blank"
@@ -71,10 +86,10 @@ const WorkModal = ({ work, open, onClose }) => {
                                     </a>
                                 </div>
                             ))}
-                        </div>
+                        </column>
                     )}
 
-                    <div className="works-modal-description">
+                    <column style={{ marginBottom: '1lh' }}>
                         <ReactMarkdown
                             components={{
                                 a: ({ node, children, ...props }) => (
@@ -87,20 +102,22 @@ const WorkModal = ({ work, open, onClose }) => {
                         >
                             {work.desc}
                         </ReactMarkdown>
-                    </div>
+                    </column>
 
-                    <div className="works-modal-tags">
+                    <row style={{ flexWrap: 'wrap', gap: '0.5ch' }}>
                         {work.tags?.map((tag, i) => (
                             <span
                                 key={i}
-                                className="works-modal-tag"
+                                is-="badge"
+                                variant-="background2"
+                                cap-="round"
                             >
                                 {tag}
                             </span>
                         ))}
-                    </div>
-                </div>
-            </div>
+                    </row>
+                </column>
+            </column>
         </div>
     )
 }
@@ -169,7 +186,9 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                                 {work.tags?.slice(0, 2).map((tag, i) => (
                                                     <span
                                                         key={i}
-                                                        className="works-table-tag"
+                                                        is-="badge"
+                                                        variant-="background2"
+                                                        cap-="round"
                                                     >
                                                         {tag}
                                                     </span>
@@ -251,7 +270,9 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                     {work.tags?.slice(0, 3).map((tag, i) => (
                                         <span
                                             key={i}
-                                            className="works-card-tag"
+                                            is-="badge"
+                                            variant-="background2"
+                                            cap-="round"
                                         >
                                             {tag}
                                         </span>
