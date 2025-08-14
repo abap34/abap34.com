@@ -4,6 +4,7 @@ import { FaBars, FaMoon, FaSun } from 'react-icons/fa';
 import { FaArrowsRotate } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
+import { Button } from '../design-system';
 
 export default function Header() {
   const BIG_ICON_SIZE = 24;
@@ -27,7 +28,7 @@ export default function Header() {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <div>
-            <button onClick={() => setIsDark(!isDark)}>
+            <Button variant="ghost" size="icon" onClick={() => setIsDark(!isDark)}>
               {isDark ? (
                 <div className="flex">
                   <FaSun size={BIG_ICON_SIZE} />
@@ -41,7 +42,7 @@ export default function Header() {
                   <FaSun size={SMALL_ICON_SIZE} />
                 </div>
               )}
-            </button>
+            </Button>
           </div>
           <select
             value={language}
