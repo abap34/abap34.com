@@ -1,6 +1,3 @@
-/* SearchResult Component Styles */
-
-/* Main Layout */
 .search-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -140,16 +137,15 @@
     }
 }
 
-/* Mobile optimizations */
 @media (max-width: 767px) {
     .search-container {
         padding: 0.5rem;
     }
-    
+
     .search-header-title {
         font-size: 1.875rem;
     }
-    
+
     .search-tag,
     .search-query {
         max-width: 12rem;
@@ -278,7 +274,6 @@
     cursor: pointer;
 }
 
-/* Dark mode styles */
 [data-webtui-theme="catppuccin-mocha"] .deletable-tag {
     background-color: var(--background2);
     color: var(--foreground2);
@@ -297,18 +292,15 @@
     color: var(--foreground2);
 }
 
-/* WebTUI Badge Styles for SearchResult */
 [is-~="badge"] {
     color: var(--badge-text, var(--background0));
-    background-image: linear-gradient(
-        90deg,
-        transparent 0,
-        transparent calc(1ch - 1px),
-        var(--badge-color, var(--foreground0)) calc(1ch - 1px),
-        var(--badge-color, var(--foreground0)) calc(100% - 1ch + 1px),
-        transparent calc(100% - 1ch + 1px),
-        transparent
-    );
+    background-image: linear-gradient(90deg,
+            transparent 0,
+            transparent calc(1ch - 1px),
+            var(--badge-color, var(--foreground0)) calc(1ch - 1px),
+            var(--badge-color, var(--foreground0)) calc(100% - 1ch + 1px),
+            transparent calc(100% - 1ch + 1px),
+            transparent);
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
@@ -345,7 +337,6 @@
     border-bottom-right-radius: 1lh;
 }
 
-/* Badge variants */
 [is-~="badge"][variant-="background2"] {
     --badge-color: var(--background2);
     --badge-text: var(--foreground0);

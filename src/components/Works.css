@@ -1,5 +1,3 @@
-/* Works Component Styles */
-
 .works-github-link {
     display: flex;
     align-items: center;
@@ -143,13 +141,6 @@
     text-decoration: underline;
 }
 
-/* .works-card-tags {
-    display: flex;
-    gap: 0.5ch;
-    flex-wrap: wrap;
-} */
-
-/* Dark mode styles */
 [data-webtui-theme="catppuccin-mocha"] .works-card {
     background-color: var(--background1);
 }
@@ -203,7 +194,6 @@
     font-style: italic;
 }
 
-/* Works Grid */
 .works-grid {
     display: grid;
     gap: 1.5rem;
@@ -228,7 +218,6 @@
     grid-template-columns: 1fr;
 }
 
-/* Works Table Styles */
 .works-table-row {
     cursor: pointer;
 }
@@ -242,14 +231,6 @@
     font-size: 0.875rem;
 }
 
-/* .works-table-tags {
-    display: flex;
-    gap: 0.5ch;
-    flex-wrap: wrap;
-} */
-
-
-/* Works Modal Styles */
 .works-modal-overlay {
     position: fixed;
     top: 0;
@@ -303,26 +284,6 @@ works-modal-title-text {
     color: var(--foreground2);
     margin-top: 0.25rem;
 }
-
-/* Legacy button styles - Commented out to avoid conflicts with WebTUI
-.works-modal-close {
-    background: none;
-    border: 1px solid var(--foreground2);
-    border-radius: 0.25rem;
-    color: var(--foreground1);
-    cursor: pointer;
-    padding: 0.5rem;
-    font-size: 1rem;
-    line-height: 1;
-    transition: all 0.15s ease;
-    min-width: auto;
-}
-
-.works-modal-close:hover {
-    background-color: var(--background2);
-    border-color: var(--foreground1);
-}
-*/
 
 
 .works-modal-image {
@@ -441,7 +402,6 @@ works-modal-title-text {
 }
 
 
-/* Light theme adjustments */
 [data-webtui-theme="default"] .works-modal-content,
 [data-webtui-theme="light"] .works-modal-content {
     background-color: var(--background0);
@@ -459,7 +419,6 @@ works-modal-title-text {
     background-color: var(--background0);
 }
 
-/* Dark theme adjustments */
 [data-webtui-theme="catppuccin-mocha"] .works-modal-content {
     background-color: var(--background0);
     border-color: var(--foreground2);
@@ -482,7 +441,6 @@ works-modal-title-text {
     background-color: var(--background1);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .works-modal-overlay {
         padding: 0.5rem;
@@ -506,7 +464,6 @@ works-modal-title-text {
     }
 }
 
-/* Modal Animation */
 @keyframes modal-fade-in {
     from {
         opacity: 0;
@@ -536,45 +493,3 @@ works-modal-title-text {
 .works-modal-content {
     animation: modal-scale-in 0.2s ease-out;
 }
-
-/* WebTUI Button Styles - Commented out to avoid conflicts with global WebTUI styles
-[is-~="button"] {
-    --button-primary: var(--foreground0);
-    --button-secondary: var(--background0);
-    
-    color: var(--button-secondary);
-    background-color: var(--button-primary);
-    font-family: var(--font-family, monospace);
-    font-size: var(--font-size, 0.875rem);
-    line-height: var(--line-height, 1.5);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    padding: 0 1rem;
-    height: 2rem;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-[is-~="button"]:focus {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-[is-~="button"]:hover {
-    transform: translateY(-1px);
-}
-
-[is-~="button"][variant-="background2"] {
-    --button-primary: var(--background2);
-    --button-secondary: var(--foreground0);
-}
-
-/* Dark theme adjustments
-[data-webtui-theme="catppuccin-mocha"] [is-~="button"][variant-="background2"] {
-    --button-primary: var(--background2);
-    --button-secondary: var(--foreground0);
-}
-*/

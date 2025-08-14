@@ -4,44 +4,48 @@
 /* WebTUI Flexbox Layout */
 column,
 [is-~='column'] {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 row,
 column,
 [is-~='row'],
 [is-~='column'] {
-    display: flex;
-    gap: 1ch;
+  display: flex;
+  gap: 1ch;
 }
 
 /* WebTUI Padding Layout */
 [pad-] {
-    &[pad-^='0'] {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    &[pad-^='1'] {
-        padding-left: 1ch;
-        padding-right: 1ch;
-    }
-    &[pad-^='2'] {
-        padding-left: 2ch;
-        padding-right: 2ch;
-    }
+  &[pad-^='0'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-    &[pad-$='0'] {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-    &[pad-$='1'] {
-        padding-top: 1lh;
-        padding-bottom: 1lh;
-    }
-    &[pad-$='2'] {
-        padding-top: 2lh;
-        padding-bottom: 2lh;
-    }
+  &[pad-^='1'] {
+    padding-left: 1ch;
+    padding-right: 1ch;
+  }
+
+  &[pad-^='2'] {
+    padding-left: 2ch;
+    padding-right: 2ch;
+  }
+
+  &[pad-$='0'] {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  &[pad-$='1'] {
+    padding-top: 1lh;
+    padding-bottom: 1lh;
+  }
+
+  &[pad-$='2'] {
+    padding-top: 2lh;
+    padding-bottom: 2lh;
+  }
 }
 
 /* WebTUI Link Styles */
@@ -616,63 +620,6 @@ html {
   gap: 2rem;
 }
 
-/* Legacy WebTUI-style Button - Commented out to avoid conflicts with WebTUI
-button[variant-] {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--foreground2);
-  border-radius: 0.25rem;
-  background-color: var(--background1);
-  color: var(--foreground0);
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-weight: var(--font-weight-normal);
-  text-decoration: none;
-  outline: none;
-}
-
-button[variant-]:hover {
-  background-color: var(--background2);
-  border-color: var(--foreground1);
-}
-
-button[variant-]:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-button[variant-="foreground0"] {
-  background-color: var(--foreground0);
-  color: var(--background0);
-  border-color: var(--foreground0);
-}
-
-button[variant-="foreground0"]:hover {
-  background-color: var(--foreground1);
-  border-color: var(--foreground1);
-}
-
-button[variant-="foreground1"] {
-  background-color: var(--foreground1);
-  color: var(--background0);
-  border-color: var(--foreground1);
-}
-
-button[variant-="accent0"] {
-  background-color: var(--accent0);
-  color: var(--background0);
-  border-color: var(--accent0);
-}
-
-button[variant-="accent0"]:hover {
-  background-color: var(--accent1);
-  border-color: var(--accent1);
-}
-
 /* Button sizes */
 button[variant-][size-="sm"] {
   padding: 0.25rem 0.5rem;
@@ -683,7 +630,6 @@ button[variant-][size-="lg"] {
   padding: 0.75rem 1.5rem;
   font-size: 1.125rem;
 }
-*/
 
 /* Legacy WebTUI-style Badge - Commented out to avoid conflicts with WebTUI
 span[is-="badge"],

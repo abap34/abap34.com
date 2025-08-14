@@ -1,4 +1,3 @@
-/* Sidebar Component Styles */
 .sidebar {
     width: 16rem;
     height: 100%;
@@ -88,11 +87,10 @@
     font-size: 0.75rem;
 }
 
-/* WebTUI Switch Styles */
 input[type="checkbox"][is-="switch"] {
     --switch-thumb-color: var(--foreground2);
     --switch-track-color: var(--background1);
-    
+
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -155,7 +153,6 @@ label:has(input[type="checkbox"][is-="switch"]:focus) {
     text-decoration: underline;
 }
 
-/* Sidebar-specific WebTUI switch adjustments */
 .sidebar label:has(input[type="checkbox"][is-="switch"]) {
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
