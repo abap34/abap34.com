@@ -1,0 +1,35 @@
+/* TopPage Component Styles */
+.top-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--background0);
+}
+
+.top-page-content {
+    padding: 1rem;
+}
+
+.top-page-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .top-page-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.view-all-link {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--accent0);
+    text-align: center;
+    margin-top: 1rem;
+    display: block;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}

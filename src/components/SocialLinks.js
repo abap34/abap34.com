@@ -1,24 +1,16 @@
-import React from 'react';
 import { FaGithub, FaLinkedin, FaSpeakerDeck, FaTwitter } from "react-icons/fa";
+import './SocialLinks.css';
 
 const iconComponents = {
   FaGithub,
-  FaLinkedin, 
+  FaLinkedin,
   FaSpeakerDeck,
   FaTwitter
 };
 
 export function SocialLinks({ links, className = "" }) {
   return (
-    <div 
-      className={className}
-      style={{
-        display: 'flex',
-        gap: '1rem',
-        marginTop: '1rem',
-        justifyContent: 'center'
-      }}
-    >
+    <div className={`social-links ${className}`}>
       {links.map((link) => {
         const IconComponent = iconComponents[link.icon];
         return (
@@ -28,17 +20,9 @@ export function SocialLinks({ links, className = "" }) {
             target="_blank"
             rel="noreferrer"
             aria-label={link.name}
-            variant-="foreground1"
-            style={{
-              transition: 'opacity 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            onMouseEnter={(e) => e.target.style.opacity = '0.8'}
-            onMouseLeave={(e) => e.target.style.opacity = '1'}
+            className="social-link"
           >
-            <IconComponent style={{ width: '1.25rem', height: '1.25rem' }} />
+            <IconComponent className="social-icon" />
           </a>
         );
       })}

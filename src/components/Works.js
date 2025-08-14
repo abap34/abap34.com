@@ -1,143 +1,53 @@
-import { ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
-
-const GithubLink = ({ repo }) => (
-    <div className="flex items-center gap-2 my-2">
-        <FaGithub className="h-4 w-4 text-accent0" />
-        <a
-            href={`https://github.com/${repo}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm text-accent0 no-underline hover:underline break-all"
-        >
-            {repo}
-        </a>
-    </div>
-)
-
-const ExternalLinkComponent = ({ url }) => (
-    <div className="flex items-center gap-2 my-2">
-        <ExternalLink className="h-4 w-4 text-gray-500" />
-        <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm hover:text-blue-600 transition-colors duration-200 underline underline-offset-2 break-all"
-        >
-            {url}
-        </a>
-    </div>
-)
-
-const Tags = ({ tags }) => (
-    <div className="flex flex-wrap gap-2 mt-3">
-        {tags && tags.map((tag, index) => (
-            <span
-                key={index}
-                className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
-            >
-                {tag}
-            </span>
-        ))}
-    </div>
-)
-
-const MarkdownContent = ({ content }) => (
-    <div className="prose prose-sm dark:prose-invert max-w-none mt-4">
-        <ReactMarkdown
-            components={{
-                a: ({ node, ...props }) => (
-                    <a {...props} className="text-blue-600 hover:underline" target="_blank" rel="noreferrer" />
-                ),
-                p: ({ node, ...props }) => <p {...props} className="text-gray-600 dark:text-gray-400" />,
-            }}
-        >
-            {content}
-        </ReactMarkdown>
-    </div>
-)
-
-
-const WorkCard = ({ work, onClick }) => (
-    <div
-        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-5 transition-all duration-300 hover:shadow-md cursor-pointer hover:border-blue-200 dark:hover:border-blue-900"
-        onClick={onClick}
-    >
-        <div className="flex justify-between items-start">
-            <div>
-                <h3 className="text-xl  font-medium text-gray-900 dark:text-white">{work.title}</h3>
-                <p className="text-xs  mt-1 text-gray-500 dark:text-gray-400">{work.period}</p>
-            </div>
-            <div className="hidden sm:block w-16 h-16 rounded overflow-hidden border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-blue-500 font-medium">
-                <img
-                    src={work.img || "/placeholder.svg"}
-                    alt={work.title}
-                    className="w-full h-full object-cover"
-                />
-            </div>
-        </div>
-
-        <div className="mt-4">
-            {work.repo && <GithubLink repo={work.repo} />}
-            <div className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                {work.short_desc}
-            </div>
-        </div>
-
-        <div className="mt-4">
-            <Tags tags={work.tags} />
-        </div>
-    </div>
-)
+import './Works.css';
 
 const WorkModal = ({ work, open, onClose }) => {
     if (!open) return null
 
     return (
         <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            className="works-modal-overlay"
             onClick={onClose}
         >
             <div
-                className="webtui-box max-w-4xl w-full max-h-[90vh] overflow-y-auto m-0"
+                className="works-modal-content"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="webtui-box-header flex justify-between items-start">
+                <div className="works-modal-header">
                     <div>
-                        <div className="text-2xl font-bold text-accent0">{work.title}</div>
-                        <div className="text-sm text-foreground2 mt-1">{work.period}</div>
+                        <div className="works-modal-title">{work.title}</div>
+                        <div className="works-modal-period">{work.period}</div>
                     </div>
                     <button
-                        variant-="foreground1"
+                        className="works-modal-close"
                         onClick={onClose}
-                        className="p-2 min-w-auto"
                     >
                         ✕
                     </button>
                 </div>
 
-                <div className="mt-4">
+                <div className="works-modal-body">
                     {work.img && (
-                        <div className="mb-4 text-center">
+                        <div className="works-modal-image">
                             <img
                                 src={work.img}
                                 alt={work.title}
-                                className="w-80 h-48 object-cover rounded-lg border border-foreground2 inline-block"
+                                className="works-modal-img"
                             />
                         </div>
                     )}
 
                     {work.repo && (
-                        <div className="mb-4 flex items-center gap-2">
-                            <FaGithub className="text-accent0 w-4 h-4" />
+                        <div className="works-modal-repo">
+                            <FaGithub className="works-modal-repo-icon" />
                             <a
                                 href={`https://github.com/${work.repo}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-accent0 no-underline text-sm"
+                                className="works-modal-repo-link"
                             >
                                 {work.repo}
                             </a>
@@ -145,15 +55,15 @@ const WorkModal = ({ work, open, onClose }) => {
                     )}
 
                     {work.relatedlinks && work.relatedlinks.length > 0 && (
-                        <div className="mb-4">
-                            <div className="font-bold text-foreground0 mb-2">Related Links</div>
+                        <div className="works-modal-links">
+                            <div className="works-modal-links-title">Related Links</div>
                             {work.relatedlinks.map((link, index) => (
-                                <div key={index} className="mb-1">
+                                <div key={index} className="works-modal-link-item">
                                     <a
                                         href={link}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="text-accent0 no-underline text-sm"
+                                        className="works-modal-link"
                                     >
                                         {link} →
                                     </a>
@@ -162,24 +72,26 @@ const WorkModal = ({ work, open, onClose }) => {
                         </div>
                     )}
 
-                    <div className="mb-4 leading-relaxed text-foreground1">
+                    <div className="works-modal-description">
                         <ReactMarkdown
                             components={{
-                                a: ({ node, ...props }) => (
-                                    <a {...props} className="text-accent0 no-underline" target="_blank" rel="noreferrer" />
+                                a: ({ node, children, ...props }) => (
+                                    <a {...props} className="works-modal-markdown-link" target="_blank" rel="noreferrer">
+                                        {children}
+                                    </a>
                                 ),
-                                p: ({ node, ...props }) => <p {...props} className="mb-2" />,
+                                p: ({ node, children, ...props }) => <p {...props} className="works-modal-markdown-p">{children}</p>,
                             }}
                         >
                             {work.desc}
                         </ReactMarkdown>
                     </div>
 
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="works-modal-tags">
                         {work.tags?.map((tag, i) => (
                             <span
                                 key={i}
-                                className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
+                                className="works-modal-tag"
                             >
                                 {tag}
                             </span>
@@ -230,7 +142,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
         return (
             <div>
                 {isLoading ? (
-                    <div className="text-foreground1">Loading projects...</div>
+                    <div className="works-loading">Loading projects...</div>
                 ) : (
                     <div className="terminal-table">
                         <table>
@@ -245,17 +157,17 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                 {workEntries.slice(0, visibleCount).map(([index, work]) => (
                                     <tr
                                         key={index}
-                                        className="cursor-pointer"
+                                        className="works-table-row"
                                         onClick={() => handleWorkClick(work)}
                                     >
-                                        <td className="font-bold text-accent0">{work.title}</td>
-                                        <td className="text-sm">{work.period}</td>
+                                        <td className="works-table-title">{work.title}</td>
+                                        <td className="works-table-period">{work.period}</td>
                                         <td>
-                                            <div className="flex gap-1 flex-wrap">
+                                            <div className="works-table-tags">
                                                 {work.tags?.slice(0, 2).map((tag, i) => (
                                                     <span
                                                         key={i}
-                                                        className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
+                                                        className="works-table-tag"
                                                     >
                                                         {tag}
                                                     </span>
@@ -281,51 +193,51 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     }
 
     return (
-        <div className="py-8 px-0">
+        <div className="works-container">
             {title && !compact && (
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-accent0 mb-2">{title}</h1>
-                    <p className="text-foreground1">Click on any project to view details</p>
+                <div className="works-header">
+                    <h1 className="works-title">{title}</h1>
+                    <p className="works-subtitle">Click on any project to view details</p>
                 </div>
             )}
 
             {isLoading ? (
-                <div className="text-foreground1">Loading projects...</div>
+                <div className="works-loading">Loading projects...</div>
             ) : (
                 <>
-                    <div className={`grid gap-6 ${compact ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
+                    <div className={compact ? 'works-grid-compact' : 'works-grid'}>
                         {workEntries.slice(0, visibleCount).map(([index, work]) => (
                             <div
                                 key={index}
-                                className="border border-foreground2 rounded-lg p-6 cursor-pointer bg-background1 transition-all duration-200 ease-in-out hover:shadow-lg"
+                                className="works-card"
                                 onClick={() => handleWorkClick(work)}
                             >
-                                <div className="flex justify-between items-start mb-3">
+                                <div className="works-card-header">
                                     <div>
-                                        <h3 className="font-bold text-accent0 text-lg mb-1">{work.title}</h3>
-                                        <div className="text-sm text-foreground2">{work.period}</div>
+                                        <h3 className="works-card-title">{work.title}</h3>
+                                        <div className="works-card-period">{work.period}</div>
                                     </div>
                                     {work.img && !compact && (
                                         <img
                                             src={work.img}
                                             alt={work.title}
-                                            className="w-12 h-12 rounded border border-foreground2 object-cover"
+                                            className="works-card-image"
                                         />
                                     )}
                                 </div>
 
-                                <div className="mb-3 text-sm text-foreground1 leading-snug">
+                                <div className="works-card-description">
                                     {work.short_desc}
                                 </div>
 
                                 {work.repo && (
-                                    <div className="mb-3 flex items-center gap-2">
-                                        <FaGithub className="text-accent0 w-4 h-4" />
+                                    <div className="works-card-repo">
+                                        <FaGithub className="works-card-repo-icon" />
                                         <a
                                             href={`https://github.com/${work.repo}`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="text-accent0 no-underline text-sm hover:underline"
+                                            className="works-card-repo-link"
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             {work.repo}
@@ -333,11 +245,11 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                     </div>
                                 )}
 
-                                <div className="flex gap-2 flex-wrap">
+                                <div className="works-card-tags">
                                     {work.tags?.slice(0, 3).map((tag, i) => (
                                         <span
                                             key={i}
-                                            className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
+                                            className="works-card-tag"
                                         >
                                             {tag}
                                         </span>

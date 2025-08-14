@@ -4,6 +4,7 @@ import LanguageContext from '../context/LanguageContext';
 import About from './About';
 import Background from './Background';
 import Introduction from './Introduction';
+import './TopPage.css';
 import Works from './Works';
 
 export default function TopPage() {
@@ -15,14 +16,14 @@ export default function TopPage() {
     }, [language]);
 
     return (
-        <main className="min-h-screen w-full bg-background0">
+        <main className="top-page">
             {/* Main Content */}
-            <div className="p-4">
+            <div className="top-page-content">
                 <div className="webtui-box">
                     <Introduction />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="top-page-grid">
                     <div className="webtui-box">
                         <div className="webtui-box-header">Recent Blog Posts</div>
                         <About />
@@ -42,10 +43,10 @@ export default function TopPage() {
                         defaultVisibleCount={8}
                         compact={false}
                     />
-                    <div className="text-center mt-4">
+                    <div className="view-all-link">
                         <Link
                             to="/works"
-                            className="no-underline font-medium text-accent0"
+                            className="view-all-link"
                         >
                             すべての作品をみる →
                         </Link>

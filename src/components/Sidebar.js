@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
 import { Switch } from '../design-system';
+import './Sidebar.css';
 
 export default function Sidebar() {
     const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -20,14 +21,13 @@ export default function Sidebar() {
     }, [isDark]);
 
     const linkClass = (path) =>
-        `block text-sm no-underline py-0 cursor-pointer ${location.pathname === path ? 'text-accent0' : 'text-foreground1'
-        }`;
+        `sidebar-link ${location.pathname === path ? 'active' : ''}`;
 
     return (
-        <nav className="w-64 h-full md:h-screen md:sticky md:top-0 border-r border-foreground2 p-4 bg-background0 overflow-y-auto z-10">
-            <div className="font-mono leading-none">
-                <div className="mb-1 text-foreground0 font-bold text-base">abap34.com/</div>
-                <div className="text-xs">
+        <nav className="sidebar">
+            <div className="sidebar-navigation">
+                <div className="sidebar-title">abap34.com/</div>
+                <div className="sidebar-links">
                     <Link to="/" className={linkClass('/')}>
                         ├─ About
                     </Link>
@@ -43,29 +43,29 @@ export default function Sidebar() {
                 </div>
             </div>
 
-            <hr className="border-t border-foreground2 my-4" />
+            <hr className="sidebar-separator" />
 
-            <div className="text-sm">
-                <div className="font-bold text-foreground0 mb-3">SETTINGS</div>
+            <div className="sidebar-settings">
+                <div className="sidebar-settings-title">SETTINGS</div>
 
-                <div className="mb-4">
-                    <div className="mb-2 text-foreground1">Theme</div>
+                <div className="sidebar-setting-group">
+                    <div className="sidebar-setting-label">Theme</div>
                     <Switch
                         id="theme-toggle"
                         checked={isDark}
                         onChange={(e) => setIsDark(e.target.checked)}
-                        className="text-xs"
+                        className="sidebar-switch-small-text"
                     >
                         {isDark ? 'Dark' : 'Light'}
                     </Switch>
                 </div>
 
-                <div>
-                    <div className="mb-2 text-foreground1">Language</div>
+                <div className="sidebar-setting-group">
+                    <div className="sidebar-setting-label">Language</div>
                     <select
                         value={language}
                         onChange={(e) => toggleLanguage(e.target.value)}
-                        className="border border-foreground2 rounded p-1 bg-background0 text-foreground0 font-mono text-xs w-full"
+                        className="sidebar-select"
                     >
                         <option value="ja">Japanese</option>
                         <option value="en">English</option>

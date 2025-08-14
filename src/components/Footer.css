@@ -1,0 +1,24 @@
+/* Footer Component Styles */
+
+.footer {
+    border-top: 1px solid var(--foreground2);
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+.footer-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.footer-text {
+    color: var(--foreground2);
+    font-size: 0.875rem;
+}
+
+/* Dark mode styles */
+[data-webtui-theme="catppuccin-mocha"] .footer {
+    border-color: var(--foreground2);
+}

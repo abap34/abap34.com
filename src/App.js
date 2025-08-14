@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './components/App.css';
 import Background from './components/Background';
 import Header from './components/Header';
 import SearchResult from './components/SearchResult';
@@ -11,7 +12,7 @@ import SidebarContext, { SidebarProvider } from "./context/SidebarContext";
 
 function PageWrapper({ children }) {
   return (
-    <div className="flex-1 min-w-0 p-4">
+    <div className="page-wrapper">
       {children}
     </div>
   );
@@ -82,37 +83,33 @@ function Abap34Com() {
     <Router>
       <div
         variant-="background0"
-        style={{
-          minHeight: '100vh',
-          fontFamily: 'monospace'
-        }}
+        className="app-layout"
       >
         <Header />
-        <div className="flex min-h-screen relative">
+        <div className="app-main">
           {/* デスクトップ用サイドバー */}
-          <div className="hidden md:block flex-shrink-0">
+          <div className="app-sidebar-desktop">
             <Sidebar />
           </div>
 
           {/* モバイル用オーバーレイサイドバー */}
           {isOpen && (
-            <div className="md:hidden fixed top-10 left-0 right-0 bottom-0 z-40">
+            <div className="app-sidebar-mobile">
               <div
-                className="absolute inset-0 bg-black bg-opacity-50"
+                className="app-sidebar-overlay"
                 onClick={() => setIsOpen(false)}
               ></div>
               {/* サイドバー */}
               <div
-                className="relative w-64 h-full shadow-2xl border-r border-foreground2"
+                className="app-sidebar-panel"
                 onClick={(e) => e.stopPropagation()}
-                style={{ backgroundColor: 'var(--background0)' }}
               >
                 <Sidebar />
               </div>
             </div>
           )}
 
-          <div className="flex-1 min-w-0">
+          <div className="app-content">
             <Routes>
               <Route path="/" element={<TopPage />} />
               <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
