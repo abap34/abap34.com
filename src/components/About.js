@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import yaml from "yaml";
 import LanguageContext from "../context/LanguageContext";
+import { Card, Section, Text, Link as DSLink } from "../design-system";
+import { aboutContent } from "../config/content";
 
 async function fetchPosts() {
     try {
@@ -25,6 +27,7 @@ export default function About() {
     const [posts, setPosts] = useState([]);
     const [works, setWorks] = useState({});
     const { language, toggleLanguage } = useContext(LanguageContext);
+    const content = aboutContent[language];
 
     useEffect(() => {
         let filename = language === "ja" ? "/aboutme.yaml" : "/aboutme_en.yaml";
@@ -55,17 +58,17 @@ export default function About() {
 
 
     return (
-        <div className="max-w-4xl mx-auto py-8 px-6 space-y-8 bg-white dark:bg-gray-900 rounded-lg shadow-sm dark:shadow-gray-800">
-            <Section title="Recent Blog Posts">
+        <Card variant="elevated" className="max-w-4xl mx-auto py-8 px-6 space-y-8">
+            <Section title={content.sections.recentPosts}>
                 <div className="space-y-4">
                     {posts.length > 0 ? (
                         <>
                             {posts.map((post, index) => (
                                 <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-1 font-mono">{post.post_date}</p>
-                                    <a href={post.url} target="_blank" rel="noreferrer" className="text-lg font-medium hover:text-blue-600 transition-colors duration-300">
+                                    <Text variant="small" className="mb-1">{post.post_date}</Text>
+                                    <DSLink href={post.url} external className="text-lg font-medium">
                                         {post.title}
-                                    </a>
+                                    </DSLink>
                                     <div className="mt-2 flex flex-wrap gap-1">
                                         {post.tags.slice(0, 3).map((tag, i) => (
                                             <span key={i} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full font-mono">
@@ -76,32 +79,23 @@ export default function About() {
                                 </div>
                             ))}
                             <Link to="/blog" className="text-blue-600 hover:underline flex items-center mt-4 font-medium">
-                                <span>{language === "ja" ? "すべての投稿を見る" : "View all publications"}</span>
+                                <span>{content.messages.viewAllPosts}</span>
                                 <ArrowRight className="ml-1 h-4 w-4" />
                             </Link>
                         </>
                     ) : (
-                        <p>{language === "ja" ? "投稿を読み込んでいます..." : "Loading publications..."}</p>
+                        <Text>{content.messages.loadingPosts}</Text>
                     )}
                 </div>
             </Section>
 
-            <Section title="Contact">
-                abap0002 [at] gmail.com or Send me a message on <a href="https://twitter.com/abap34" target="_blank" rel="noreferrer" className="text-blue-600 hover:underline">Twitter</a>
+            <Section title={content.sections.contact}>
+                <Text>
+                    {content.messages.contactText}{' '}
+                    <DSLink href="https://twitter.com/abap34" external>Twitter</DSLink>
+                </Text>
             </Section>
-        </div>
-    );
-}
-
-function Section({ icon, title, children }) {
-    return (
-        <section className="space-y-5 transition-all duration-300">
-            <div className="flex items-center gap-3 text-2xl font-medium">
-                {icon}
-                <h2 className="border-l-2 border-gray-200 dark:border-gray-700 pl-3">{title}</h2>
-            </div>
-            <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">{children}</div>
-        </section>
+        </Card>
     );
 }
 
