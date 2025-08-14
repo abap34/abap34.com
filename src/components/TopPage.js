@@ -17,42 +17,66 @@ export default function TopPage() {
 
     return (
         <main className="top-page">
-            {/* Main Content */}
-            <div className="top-page-content">
-                <div className="webtui-box">
+            <column className="top-page-content">
+                <column style={{ marginBottom: '1lh' }}>
                     <Introduction />
-                </div>
+                </column>
 
-                <div className="top-page-grid">
-                    <div className="webtui-box">
-                        <div className="webtui-box-header">Recent Blog Posts</div>
-                        <About />
-                    </div>
+                <row className="top-page-grid">
+                    <column>
+                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                            <row>
+                                <span is-="badge" variant-="foreground0" 
+                                    style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                                    Recent Blog Posts
+                                </span>
+                            </row>
+                            <column pad-="2 1">
+                                <About />
+                            </column>
+                        </column>
+                    </column>
 
-                    <div className="webtui-box">
-                        <div className="webtui-box-header">Background</div>
-                        <Background compact={false} />
-                    </div>
-                </div>
+                    <column>
+                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                            <row>
+                                <span is-="badge" variant-="foreground0" 
+                                    style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                                    Background
+                                </span>
+                            </row>
+                            <column pad-="2 1">
+                                <Background compact={false} />
+                            </column>
+                        </column>
+                    </column>
+                </row>
 
-                <div className="webtui-box">
-                    <div className="webtui-box-header">Works</div>
-                    <Works
-                        title=""
-                        path={worksFilename}
-                        defaultVisibleCount={8}
-                        compact={false}
-                    />
-                    <div className="view-all-link">
-                        <Link
-                            to="/works"
-                            className="view-all-link"
-                        >
-                            すべての作品をみる →
-                        </Link>
-                    </div>
-                </div>
-            </div>
+                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                    <row>
+                        <span is-="badge" variant-="foreground0" 
+                            style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                            Works
+                        </span>
+                    </row>
+                    <column pad-="2 1">
+                        <Works
+                            title=""
+                            path={worksFilename}
+                            defaultVisibleCount={8}
+                            compact={false}
+                        />
+                        <div className="view-all-link" style={{ marginTop: '1lh' }}>
+                            <Link
+                                to="/works"
+                                className="view-all-link"
+                            >
+                                すべての作品をみる →
+                            </Link>
+                        </div>
+                    </column>
+                </column>
+            </column>
         </main>
     );
 }

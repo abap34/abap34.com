@@ -88,7 +88,7 @@
     font-size: 0.75rem;
 }
 
-/* WebTUI Switch Styles - Commented out to avoid conflicts with global WebTUI styles in index.css
+/* WebTUI Switch Styles */
 input[type="checkbox"][is-="switch"] {
     --switch-thumb-color: var(--foreground2);
     --switch-track-color: var(--background1);
@@ -154,7 +154,6 @@ label:has(input[type="checkbox"][is-="switch"]:focus) {
     font-weight: bold;
     text-decoration: underline;
 }
-*/
 
 /* Sidebar-specific WebTUI switch adjustments */
 .sidebar label:has(input[type="checkbox"][is-="switch"]) {
