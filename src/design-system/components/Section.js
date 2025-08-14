@@ -1,17 +1,50 @@
 import React from 'react';
+import { cn } from '../../utils/cn';
 
 export function Section({ title, icon, children, className, ...props }) {
   return (
-    <section className={`space-y-5 transition-all duration-300 ${className || ''}`} {...props}>
+    <section 
+      className={cn('section', className)} 
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.25rem',
+        transition: 'all 0.3s ease',
+      }}
+      {...props}
+    >
       {title && (
-        <div className="flex items-center gap-3 text-2xl font-medium">
+        <div 
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            fontSize: '1.5rem',
+            fontWeight: '500',
+          }}
+        >
           {icon}
-          <h2 className="border-l-2 border-gray-200 dark:border-gray-700 pl-3">
+          <h2 
+            variant-="foreground0"
+            style={{
+              borderLeft: '2px solid var(--foreground2)',
+              paddingLeft: '0.75rem',
+            }}
+          >
             {title}
           </h2>
         </div>
       )}
-      <div className="ml-4 space-y-5 text-gray-700 dark:text-gray-300 leading-relaxed">
+      <div 
+        variant-="foreground1"
+        style={{
+          marginLeft: '1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.25rem',
+          lineHeight: '1.6',
+        }}
+      >
         {children}
       </div>
     </section>

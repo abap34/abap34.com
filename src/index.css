@@ -1,3 +1,406 @@
+/* Tailwind Base */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* WebTUI-inspired Base Styles */
+:root {
+  /* Catppuccin Latte (Light) */
+  --background0: #eff1f5;
+  --background1: #e6e9ef;
+  --background2: #ccd0da;
+  --background3: #9ca0b0;
+  --foreground0: #4c4f69;
+  --foreground1: #5c5f77;
+  --foreground2: #6c6f85;
+  --accent0: #1e66f5;
+  --accent1: #7287fd;
+  --accent2: #209fb5;
+  --font-size: 16px;
+  --line-height: 1.3;
+  --font-weight-bold: 700;
+  --font-weight-normal: 400;
+  --font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  --box-border-color: var(--foreground2);
+  --table-border-color: var(--box-border-color);
+  --separator-color: var(--box-border-color);
+  --separator-background: transparent;
+}
+
+[data-webtui-theme="catppuccin-mocha"] {
+  /* Catppuccin Mocha (Dark) */
+  --background0: #1e1e2e;
+  --background1: #181825;
+  --background2: #313244;
+  --background3: #45475a;
+  --foreground0: #cdd6f4;
+  --foreground1: #bac2de;
+  --foreground2: #a6adc8;
+  --accent0: #89b4fa;
+  --accent1: #b4befe;
+  --accent2: #94e2d5;
+}
+
+body, html {
+  background-color: var(--background0);
+  color: var(--foreground0);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height, 1.5);
+  font-variant-ligatures: common-ligatures;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+/* WebTUI-style Button */
+button[variant-] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--foreground2);
+  border-radius: 0.25rem;
+  background-color: var(--background1);
+  color: var(--foreground0);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: var(--font-weight-normal);
+  text-decoration: none;
+  outline: none;
+}
+
+button[variant-]:hover {
+  background-color: var(--background2);
+  border-color: var(--foreground1);
+}
+
+button[variant-]:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+button[variant-="foreground0"] {
+  background-color: var(--foreground0);
+  color: var(--background0);
+  border-color: var(--foreground0);
+}
+
+button[variant-="foreground0"]:hover {
+  background-color: var(--foreground1);
+  border-color: var(--foreground1);
+}
+
+button[variant-="foreground1"] {
+  background-color: var(--foreground1);
+  color: var(--background0);
+  border-color: var(--foreground1);
+}
+
+button[variant-="accent0"] {
+  background-color: var(--accent0);
+  color: var(--background0);
+  border-color: var(--accent0);
+}
+
+button[variant-="accent0"]:hover {
+  background-color: var(--accent1);
+  border-color: var(--accent1);
+}
+
+/* Button sizes */
+button[variant-][size-="sm"] {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+button[variant-][size-="lg"] {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* WebTUI-style Badge */
+span[is-="badge"], [is-="badge"] {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-normal);
+  background-color: var(--background2);
+  color: var(--foreground0);
+  border: 1px solid var(--foreground2);
+  font-family: var(--font-family);
+}
+
+span[is-="badge"][variant-="accent0"] {
+  background-color: var(--accent0);
+  color: var(--background0);
+  border-color: var(--accent0);
+}
+
+span[is-="badge"][variant-="accent1"] {
+  background-color: var(--accent1);
+  color: var(--background0);
+  border-color: var(--accent1);
+}
+
+span[is-="badge"][variant-="accent2"] {
+  background-color: var(--accent2);
+  color: var(--background0);
+  border-color: var(--accent2);
+}
+
+span[is-="badge"][variant-="foreground1"] {
+  background-color: var(--foreground1);
+  color: var(--background0);
+  border-color: var(--foreground1);
+}
+
+/* WebTUI-style Input */
+input[type="text"], input[type="email"], input[type="password"], 
+select, textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--foreground2);
+  border-radius: 0.25rem;
+  background-color: var(--background1);
+  color: var(--foreground0);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus,
+select:focus, textarea:focus {
+  border-color: var(--accent0);
+  background-color: var(--background0);
+  box-shadow: 0 0 0 2px rgba(var(--accent0), 0.1);
+}
+
+/* WebTUI-style Switch */
+input[type="checkbox"][is-="switch"] {
+  appearance: none;
+  width: 2.5rem;
+  height: 1.25rem;
+  border-radius: 0.625rem;
+  background-color: var(--background2);
+  border: 1px solid var(--foreground2);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+input[type="checkbox"][is-="switch"]:checked {
+  background-color: var(--accent0);
+  border-color: var(--accent0);
+}
+
+input[type="checkbox"][is-="switch"]::before {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: var(--foreground0);
+  top: 0.0625rem;
+  left: 0.0625rem;
+  transition: all 0.15s ease;
+}
+
+input[type="checkbox"][is-="switch"]:checked::before {
+  transform: translateX(1.25rem);
+  background-color: var(--background0);
+}
+
+/* WebTUI-style Typography */
+[variant-="foreground0"] {
+  color: var(--foreground0);
+}
+
+[variant-="foreground1"] {
+  color: var(--foreground1);
+}
+
+[variant-="foreground2"] {
+  color: var(--foreground2);
+}
+
+[variant-="accent0"] {
+  color: var(--accent0);
+}
+
+[variant-="accent1"] {
+  color: var(--accent1);
+}
+
+[variant-="accent2"] {
+  color: var(--accent2);
+}
+
+[variant-="background0"] {
+  background-color: var(--background0);
+}
+
+[variant-="background1"] {
+  background-color: var(--background1);
+}
+
+[variant-="background2"] {
+  background-color: var(--background2);
+}
+
+/* WebTUI-style Terminal Layout */
+.terminal-window {
+  background-color: var(--background0);
+  border: 1px solid var(--foreground2);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.terminal-header {
+  background-color: var(--background2);
+  border-bottom: 1px solid var(--foreground2);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground0);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-content {
+  padding: 1rem;
+  background-color: var(--background0);
+}
+
+.terminal-prompt {
+  font-family: var(--font-family);
+  color: var(--accent0);
+  margin-right: 0.5rem;
+}
+
+.terminal-prompt::before {
+  content: "$ ";
+}
+
+/* WebTUI Box Layout */
+.webtui-box {
+  border: 1px solid var(--foreground2);
+  border-radius: 0.25rem;
+  background-color: var(--background1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.webtui-box-header {
+  border-bottom: 1px solid var(--foreground2);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground0);
+}
+
+/* Grid Layout for WebTUI */
+.webtui-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.webtui-grid-2 {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .webtui-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Terminal Table */
+.terminal-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--foreground2);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.terminal-table th {
+  background-color: var(--background2);
+  border-bottom: 1px solid var(--foreground2);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground0);
+  font-family: var(--font-family);
+}
+
+.terminal-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--foreground2);
+  font-family: var(--font-family);
+  color: var(--foreground1);
+}
+
+.terminal-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.terminal-table tbody tr:hover {
+  background-color: var(--background1);
+}
+
+/* WebTUI Section Separator */
+.webtui-separator {
+  border: none;
+  border-top: 1px solid var(--foreground2);
+  margin: 2rem 0;
+}
+
+/* Terminal Code Block */
+.terminal-code {
+  background-color: var(--background2);
+  border: 1px solid var(--foreground2);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  font-family: var(--font-family);
+  color: var(--foreground0);
+  overflow-x: auto;
+  white-space: pre;
+  margin: 1rem 0;
+}
+
+/* WebTUI Sidebar */
+.webtui-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+}
+
+.webtui-file-tree {
+  font-family: var(--font-family);
+  line-height: 1.4;
+}
+
+.webtui-file-tree div:hover {
+  background-color: var(--background2);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}

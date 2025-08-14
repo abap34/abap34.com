@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import yaml from "yaml";
 import LanguageContext from "../context/LanguageContext";
-import { Card, Section, Text, Link as DSLink } from "../design-system";
+import { Card, Section, Text, Link as DSLink, Badge } from "../design-system";
 import { aboutContent } from "../config/content";
 
 async function fetchPosts() {
@@ -58,44 +58,70 @@ export default function About() {
 
 
     return (
-        <Card variant="elevated" className="max-w-4xl mx-auto py-8 px-6 space-y-8">
-            <Section title={content.sections.recentPosts}>
-                <div className="space-y-4">
-                    {posts.length > 0 ? (
-                        <>
-                            {posts.map((post, index) => (
-                                <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                                    <Text variant="small" className="mb-1">{post.post_date}</Text>
-                                    <DSLink href={post.url} external className="text-lg font-medium">
-                                        {post.title}
-                                    </DSLink>
-                                    <div className="mt-2 flex flex-wrap gap-1">
-                                        {post.tags.slice(0, 3).map((tag, i) => (
-                                            <span key={i} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full font-mono">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
+        <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {posts.length > 0 ? (
+                    <>
+                        {posts.map((post, index) => (
+                            <div key={index} style={{ borderBottom: index < posts.length - 1 ? '1px solid var(--foreground2)' : 'none', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                                <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)', marginBottom: '0.25rem' }}>
+                                    {post.post_date}
                                 </div>
-                            ))}
-                            <Link to="/blog" className="text-blue-600 hover:underline flex items-center mt-4 font-medium">
-                                <span>{content.messages.viewAllPosts}</span>
-                                <ArrowRight className="ml-1 h-4 w-4" />
+                                <DSLink href={post.url} external style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--foreground0)' }}>
+                                    {post.title}
+                                </DSLink>
+                                <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                    {post.tags.slice(0, 3).map((tag, i) => (
+                                        <span
+                                            key={i}
+                                            style={{
+                                                backgroundColor: 'var(--background2)',
+                                                color: 'var(--foreground1)',
+                                                padding: '0.25rem 0.5rem',
+                                                borderRadius: '0.25rem',
+                                                fontSize: '0.75rem',
+                                                fontWeight: 'var(--font-weight-normal)'
+                                            }}
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                            <Link 
+                                to="/blog" 
+                                variant-="accent0"
+                                style={{ 
+                                    textDecoration: 'none',
+                                    fontWeight: '500',
+                                    color: 'var(--accent0)'
+                                }}
+                            >
+                                {content.messages.viewAllPosts} →
                             </Link>
-                        </>
-                    ) : (
+                        </div>
+                    </>
+                ) : (
+                    <div style={{ color: 'var(--foreground1)' }}>
                         <Text>{content.messages.loadingPosts}</Text>
-                    )}
-                </div>
-            </Section>
+                    </div>
+                )}
+            </div>
 
-            <Section title={content.sections.contact}>
-                <Text>
+            <hr className="webtui-separator" />
+
+            <div style={{ padding: '1rem 0' }}>
+                <div style={{ marginBottom: '0.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
+                    Contact
+                </div>
+                <div>
                     {content.messages.contactText}{' '}
                     <DSLink href="https://twitter.com/abap34" external>Twitter</DSLink>
-                </Text>
-            </Section>
-        </Card>
+                </div>
+            </div>
+        </div>
     );
 }
 

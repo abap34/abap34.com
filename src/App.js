@@ -4,9 +4,18 @@ import Background from './components/Background';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import SearchResult from './components/SearchResult';
+import Sidebar from './components/Sidebar';
 import TopPage from './components/TopPage';
 import Works from './components/Works';
 import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
+
+function PageWrapper({ children }) {
+  return (
+    <div style={{ flex: 1, padding: '1rem', width: 'calc(100% - 16rem)' }}>
+      {children}
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -18,16 +27,43 @@ function App() {
 
 function NotFound() {
   return (
-      // 画像つき404ページ.
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-6xl font-bold">404</h1>
-        <p className="text-2xl">Page not found</p>
-        <img src="/img/404.png" alt="404" className="w-1/4" />
-        <a href="/" className="text-blue-500 hover:underline">▶︎ Back to home</a>
+      <div 
+        variant-="background0"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          gap: '1rem'
+        }}
+      >
+        <h1 
+          variant-="foreground0"
+          style={{ fontSize: '4rem', fontWeight: 'bold' }}
+        >
+          404
+        </h1>
+        <p 
+          variant-="foreground1"
+          style={{ fontSize: '1.5rem' }}
+        >
+          Page not found
+        </p>
+        <img 
+          src="/img/404.png" 
+          alt="404" 
+          style={{ width: '25%', maxWidth: '200px' }}
+        />
+        <a 
+          href="/" 
+          variant-="accent0"
+          style={{ textDecoration: 'none' }}
+        >
+          ▶︎ Back to home
+        </a>
       </div>
- 
   );
-
 }
 
 
@@ -41,15 +77,29 @@ function Abap34Com() {
 
   return (
     <Router>
-      <div className="bg-white text-gray-800 font-mono dark:bg-gray-900 dark:text-gray-200 h-full">
-        <Header />
-        <div className="min-h-screen max-w-6xl mx-auto">
+      <div 
+        variant-="background0"
+        style={{
+          minHeight: '100vh',
+          fontFamily: 'monospace'
+        }}
+      >
+        {/* <Header /> */}
+        <div 
+          style={{
+            display: 'flex',
+            minHeight: '100vh',
+            width: '100%',
+            margin: '0',
+            padding: '0'
+          }}
+        >
           <Routes>
             <Route path="/" element={<TopPage />} />
-            <Route path="/background" element={<Background />} />
-            <Route path="/works" element={<Works title="Projects" path={filename} defaultVisibleCount={6} />} />
-            <Route path="/blog" element={<SearchResult />} />
-            <Route path="/search" element={<SearchResult />} />
+            <Route path="/background" element={<><Sidebar /><PageWrapper><Background /></PageWrapper></>} />
+            <Route path="/works" element={<><Sidebar /><PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} /></PageWrapper></>} />
+            <Route path="/blog" element={<><Sidebar /><PageWrapper><SearchResult /></PageWrapper></>} />
+            <Route path="/search" element={<><Sidebar /><PageWrapper><SearchResult /></PageWrapper></>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

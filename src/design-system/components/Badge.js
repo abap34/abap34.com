@@ -1,21 +1,20 @@
 import React from 'react';
 import { cn } from '../../utils/cn';
 
-export function Button({ 
+export function Badge({ 
   className, 
-  variant = 'foreground0', 
-  size = 'default', 
+  variant = 'foreground1', 
   children,
   ...props 
 }) {
   return (
-    <button
+    <span
+      is-="badge"
       variant-={variant}
-      size-={size !== 'default' ? size : undefined}
       className={cn('', className)}
       {...props}
     >
       {children}
-    </button>
+    </span>
   );
 }
