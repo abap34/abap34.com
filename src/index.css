@@ -1,3 +1,6 @@
+/* Import WebTUI CSS */
+@import '@webtui/css';
+
 /* WebTUI-inspired Base Styles */
 :root {
   /* Catppuccin Latte (Light) */
@@ -537,7 +540,7 @@ html {
   gap: 2rem;
 }
 
-/* WebTUI-style Button */
+/* Legacy WebTUI-style Button - Commented out to avoid conflicts with WebTUI
 button[variant-] {
   display: inline-flex;
   align-items: center;
@@ -604,8 +607,9 @@ button[variant-][size-="lg"] {
   padding: 0.75rem 1.5rem;
   font-size: 1.125rem;
 }
+*/
 
-/* WebTUI-style Badge */
+/* Legacy WebTUI-style Badge - Commented out to avoid conflicts with WebTUI
 span[is-="badge"],
 [is-="badge"] {
   display: inline-block;
@@ -642,8 +646,9 @@ span[is-="badge"][variant-="foreground1"] {
   color: var(--background0);
   border-color: var(--foreground1);
 }
+*/
 
-/* WebTUI-style Input */
+/* Legacy WebTUI-style Input - Commented out to avoid conflicts with WebTUI
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -669,6 +674,7 @@ textarea:focus {
   background-color: var(--background0);
   box-shadow: 0 0 0 2px rgba(var(--accent0), 0.1);
 }
+*/
 
 /* WebTUI-style Switch */
 input[type="checkbox"][is-="switch"] {

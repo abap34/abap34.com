@@ -22,6 +22,8 @@ const WorkModal = ({ work, open, onClose }) => {
                         <div className="works-modal-period">{work.period}</div>
                     </div>
                     <button
+                        is-="button"
+                        variant-="background2"
                         className="works-modal-close"
                         onClick={onClose}
                     >

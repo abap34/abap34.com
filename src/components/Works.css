@@ -303,6 +303,7 @@
     margin-top: 0.25rem;
 }
 
+/* Legacy button styles - Commented out to avoid conflicts with WebTUI
 .works-modal-close {
     background: none;
     border: 1px solid var(--foreground2);
@@ -320,6 +321,7 @@
     background-color: var(--background2);
     border-color: var(--foreground1);
 }
+*/
 
 .works-modal-body {
     padding: 1.5rem;
@@ -522,3 +524,45 @@
 .works-modal-content {
     animation: modal-scale-in 0.2s ease-out;
 }
+
+/* WebTUI Button Styles - Commented out to avoid conflicts with global WebTUI styles
+[is-~="button"] {
+    --button-primary: var(--foreground0);
+    --button-secondary: var(--background0);
+    
+    color: var(--button-secondary);
+    background-color: var(--button-primary);
+    font-family: var(--font-family, monospace);
+    font-size: var(--font-size, 0.875rem);
+    line-height: var(--line-height, 1.5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0 1rem;
+    height: 2rem;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+[is-~="button"]:focus {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+[is-~="button"]:hover {
+    transform: translateY(-1px);
+}
+
+[is-~="button"][variant-="background2"] {
+    --button-primary: var(--background2);
+    --button-secondary: var(--foreground0);
+}
+
+/* Dark theme adjustments
+[data-webtui-theme="catppuccin-mocha"] [is-~="button"][variant-="background2"] {
+    --button-primary: var(--background2);
+    --button-secondary: var(--foreground0);
+}
+*/
