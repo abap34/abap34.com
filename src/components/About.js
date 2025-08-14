@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import yaml from "yaml";
 import { aboutContent } from "../config/content";
 import LanguageContext from "../context/LanguageContext";
-import { Link as DSLink, Tag, Text } from "../design-system";
+import Tag from './Tag';
 import './About.css';
 
 async function fetchPosts() {
@@ -49,13 +49,13 @@ export default function About() {
                 {posts.length > 0 ? (
                     <>
                         {posts.map((post, index) => (
-                            <div key={index} className="about-post-item">
+                            <div key={index} className="about-post-item" pad-$="1">
                                 <div className="about-post-date">
                                     {post.post_date}
                                 </div>
-                                <DSLink href={post.url} external>
+                                <a href={post.url} target="_blank" rel="noopener noreferrer" className="about-post-link">
                                     {post.title}
-                                </DSLink>
+                                </a>
                                 <div className="about-post-tags">
                                     {post.tags.slice(0, 3).map((tag, i) => (
                                         <Tag key={i}>{tag}</Tag>
@@ -74,7 +74,7 @@ export default function About() {
                     </>
                 ) : (
                     <div className="about-loading">
-                        <Text>{content.messages.loadingPosts}</Text>
+                        <span>{content.messages.loadingPosts}</span>
                     </div>
                 )}
             </div>
