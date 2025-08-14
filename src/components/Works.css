@@ -13,6 +13,21 @@
     color: var(--accent0);
 }
 
+.works-github-.works-modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
 .works-github-url {
     font-size: 0.875rem;
     color: var(--accent0);
@@ -242,7 +257,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 50;
+    z-index: 999999 !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -255,11 +270,18 @@
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    background-color: var(--background0);
+    border: 1px solid var(--foreground2);
+    border-radius: 0.5rem;
 }
 
 .works-modal-header {
     justify-content: space-between;
     align-items: flex-start;
+    background-color: var(--background1);
+    border-bottom: 1px solid var(--foreground2);
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 1rem;
 }
 
 .works-modal-title {
@@ -413,14 +435,39 @@ works-modal-title-text {
     flex-wrap: wrap;
 }
 
+.works-modal-body {
+    background-color: var(--background0);
+    padding: 1rem;
+}
+
+
+/* Light theme adjustments */
+[data-webtui-theme="default"] .works-modal-content,
+[data-webtui-theme="light"] .works-modal-content {
+    background-color: var(--background0);
+    border-color: var(--foreground2);
+}
+
+[data-webtui-theme="default"] .works-modal-header,
+[data-webtui-theme="light"] .works-modal-header {
+    background-color: var(--background1);
+    border-bottom-color: var(--foreground2);
+}
+
+[data-webtui-theme="default"] .works-modal-body,
+[data-webtui-theme="light"] .works-modal-body {
+    background-color: var(--background0);
+}
 
 /* Dark theme adjustments */
 [data-webtui-theme="catppuccin-mocha"] .works-modal-content {
     background-color: var(--background0);
+    border-color: var(--foreground2);
 }
 
 [data-webtui-theme="catppuccin-mocha"] .works-modal-header {
     background-color: var(--background1);
+    border-bottom-color: var(--foreground2);
 }
 
 [data-webtui-theme="catppuccin-mocha"] .works-modal-close {
