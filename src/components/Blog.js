@@ -47,19 +47,21 @@ function BlogTimeline({ posts }) {
                             {post.post_date}
                         </p>
 
-                        <a href={post.url} target="_blank" rel="noreferrer" className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300 block">
-                            <h3 className="text-lg font-semibold mb-4 mt-2">{post.title}</h3>
+                        <div className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300 block">
+                            <a href={post.url} target="_blank" rel="noreferrer">
+                                <h3 className="text-lg font-semibold mb-4 mt-2">{post.title}</h3>
+                            </a>
 
                             <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg mb-2" />
                             <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">{post.content}</p>
 
                             <div className="flex flex-wrap gap-2">
                                 {post.tags.map((tag, index) => (
-                                    <Tag key={index} name={tag} label={tag} />
+                                    <Tag key={index}>{tag}</Tag>
                                 ))}
                             </div>
 
-                        </a>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import TopPage from './components/TopPage';
 import Works from './components/Works';
 import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
+import SidebarContext, { SidebarProvider } from "./context/SidebarContext";
 
 function PageWrapper({ children }) {
   return (
@@ -20,7 +21,9 @@ function PageWrapper({ children }) {
 function App() {
   return (
     <LanguageProvider>
-      <Abap34Com />
+      <SidebarProvider>
+        <Abap34Com />
+      </SidebarProvider>
     </LanguageProvider>
   );
 }
@@ -69,6 +72,7 @@ function NotFound() {
 
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
+  const { isOpen } = React.useContext(SidebarContext);
   const [filename, setFilename] = useState("/works.yaml");
 
   useEffect(() => {
@@ -84,7 +88,7 @@ function Abap34Com() {
           fontFamily: 'monospace'
         }}
       >
-        {/* <Header /> */}
+        <Header />
         <div 
           style={{
             display: 'flex',
@@ -94,12 +98,15 @@ function Abap34Com() {
             padding: '0'
           }}
         >
+          <div className={`${isOpen ? 'block' : 'hidden'} md:block`}>
+            <Sidebar />
+          </div>
           <Routes>
             <Route path="/" element={<TopPage />} />
-            <Route path="/background" element={<><Sidebar /><PageWrapper><Background /></PageWrapper></>} />
-            <Route path="/works" element={<><Sidebar /><PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} /></PageWrapper></>} />
-            <Route path="/blog" element={<><Sidebar /><PageWrapper><SearchResult /></PageWrapper></>} />
-            <Route path="/search" element={<><Sidebar /><PageWrapper><SearchResult /></PageWrapper></>} />
+            <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
+            <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} /></PageWrapper>} />
+            <Route path="/blog" element={<PageWrapper><SearchResult /></PageWrapper>} />
+            <Route path="/search" element={<PageWrapper><SearchResult /></PageWrapper>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

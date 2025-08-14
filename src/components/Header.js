@@ -1,34 +1,18 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import SidebarContext from '../context/SidebarContext';
 
 export default function Header() {
-  const BIG_ICON_SIZE = 24;
-
+  const { toggleSidebar } = useContext(SidebarContext);
 
   return (
-    <header 
-      variant-="background0"
-      style={{
-        borderBottom: '1px solid var(--foreground2)',
-        padding: '1rem 0',
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-      }}
-    >
-      <div 
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 1rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <div style={{ fontFamily: 'var(--font-family)', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
-          abap34.com
+    <header className="md:hidden bg-background0 border-b border-foreground2 py-1 sticky top-0 z-50 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        <div className="flex items-center">
+          <button onClick={toggleSidebar} className="mr-4 p-2 rounded-md text-foreground1 hover:bg-background2">
+            <FaBars />
+          </button>
         </div>
       </div>
     </header>

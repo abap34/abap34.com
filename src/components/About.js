@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import yaml from "yaml";
 import LanguageContext from "../context/LanguageContext";
-import { Card, Section, Text, Link as DSLink, Badge } from "../design-system";
+import { Card, Section, Text, Link as DSLink, Tag } from "../design-system";
 import { aboutContent } from "../config/content";
 
 async function fetchPosts() {
@@ -59,52 +59,35 @@ export default function About() {
 
     return (
         <div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="flex flex-col gap-4">
                 {posts.length > 0 ? (
                     <>
                         {posts.map((post, index) => (
-                            <div key={index} style={{ borderBottom: index < posts.length - 1 ? '1px solid var(--foreground2)' : 'none', paddingBottom: '1rem', marginBottom: '1rem' }}>
-                                <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)', marginBottom: '0.25rem' }}>
+                            <div key={index} className={`pb-4 mb-4 ${index < posts.length - 1 ? 'border-b border-foreground2' : ''}`}>
+                                <div className="text-sm text-foreground2 mb-1">
                                     {post.post_date}
                                 </div>
-                                <DSLink href={post.url} external style={{ fontSize: '1rem', fontWeight: '500', color: 'var(--foreground0)' }}>
+                                <DSLink href={post.url} external>
                                     {post.title}
                                 </DSLink>
-                                <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                                <div className="mt-2 flex flex-wrap gap-2">
                                     {post.tags.slice(0, 3).map((tag, i) => (
-                                        <span
-                                            key={i}
-                                            style={{
-                                                backgroundColor: 'var(--background2)',
-                                                color: 'var(--foreground1)',
-                                                padding: '0.25rem 0.5rem',
-                                                borderRadius: '0.25rem',
-                                                fontSize: '0.75rem',
-                                                fontWeight: 'var(--font-weight-normal)'
-                                            }}
-                                        >
-                                            {tag}
-                                        </span>
+                                        <Tag key={i}>{tag}</Tag>
                                     ))}
                                 </div>
                             </div>
                         ))}
-                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                        <div className="text-center mt-4">
                             <Link 
                                 to="/blog" 
-                                variant-="accent0"
-                                style={{ 
-                                    textDecoration: 'none',
-                                    fontWeight: '500',
-                                    color: 'var(--accent0)'
-                                }}
+                                className="no-underline font-medium text-accent0"
                             >
                                 {content.messages.viewAllPosts} →
                             </Link>
                         </div>
                     </>
                 ) : (
-                    <div style={{ color: 'var(--foreground1)' }}>
+                    <div className="text-foreground1">
                         <Text>{content.messages.loadingPosts}</Text>
                     </div>
                 )}
@@ -112,8 +95,8 @@ export default function About() {
 
             <hr className="webtui-separator" />
 
-            <div style={{ padding: '1rem 0' }}>
-                <div style={{ marginBottom: '0.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
+            <div className="py-4">
+                <div className="mb-2 font-bold text-foreground0">
                     Contact
                 </div>
                 <div>
