@@ -1,0 +1,97 @@
+/* Sidebar Component Styles */
+.sidebar {
+    width: 16rem;
+    height: 100%;
+    border-right: 1px solid var(--foreground2);
+    padding: 1rem;
+    background-color: var(--background0);
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.sidebar-navigation {
+    font-family: var(--font-family);
+    line-height: 1;
+}
+
+.sidebar-title {
+    margin-bottom: 0.25rem;
+    color: var(--foreground0);
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.sidebar-links {
+    font-size: 0.75rem;
+}
+
+.sidebar-link {
+    display: block;
+    font-size: 0.875rem;
+    text-decoration: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--foreground1);
+    transition: color 0.15s ease;
+}
+
+.sidebar-link:hover {
+    color: var(--accent0);
+}
+
+.sidebar-link.active {
+    color: var(--accent0);
+}
+
+.sidebar-separator {
+    border: none;
+    border-top: 1px solid var(--foreground2);
+    margin: 1rem 0;
+}
+
+.sidebar-settings {
+    font-size: 0.875rem;
+}
+
+.sidebar-settings-title {
+    font-weight: bold;
+    color: var(--foreground0);
+    margin-bottom: 0.75rem;
+}
+
+.sidebar-setting-group {
+    margin-bottom: 1rem;
+}
+
+.sidebar-setting-label {
+    margin-bottom: 0.5rem;
+    color: var(--foreground1);
+}
+
+.sidebar-select {
+    border: 1px solid var(--foreground2);
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    background-color: var(--background0);
+    color: var(--foreground0);
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    width: 100%;
+}
+
+.sidebar-select:focus {
+    border-color: var(--accent0);
+    outline: none;
+}
+
+.sidebar-switch-small-text {
+    font-size: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+}

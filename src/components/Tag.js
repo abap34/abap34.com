@@ -1,17 +1,17 @@
 import { FaTag } from 'react-icons/fa';
+import './Tag.css';
 
-
-export default function Tag({ name, label }) {
+export default function Tag({ name, label, children }) {
     const handleClick = () => {
         const params = new URLSearchParams(window.location.search);
-        params.append('tag', name);
+        params.append('tag', name || children);
         window.location.href = `/search?${params.toString()}`;
     }
 
     return (
-        <span is-="badge" onClick={handleClick} style={{ cursor: 'pointer' }}>
-            <FaTag className="inline-block mr-1" />
-            {label}
+        <span className="tag" onClick={handleClick}>
+            <FaTag className="tag-icon" />
+            {label || children}
         </span>
     );
 }

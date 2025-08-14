@@ -1,7 +1,8 @@
 import { ExternalLink, SearchCheck, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaTag } from 'react-icons/fa';
 import SeachBar from './SearchBar';
+import './SearchResult.css';
 import TagList from './TagList';
 
 async function fetchPosts() {
@@ -125,25 +126,25 @@ export function Post({ index, post, queries }) {
         const highlighted = findHighlightedText(post.content, query);
         if (highlighted.isMatch) {
             return (
-                <a key={index} href={post.url} target="_blank" rel="noreferrer" className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300">
-                    <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg" />
-                    <h3 className="text-lg font-semibold mt-2">
+                <a key={index} href={post.url} target="_blank" rel="noreferrer" className="search-post-card">
+                    <img src={post.thumbnail_url} alt={post.title} className="search-post-image" />
+                    <h3 className="search-post-title">
                         {post.title}
                         {post.external && (
-                            <span className="inline-flex items-center ml-2">
-                                <ExternalLink className="w-4 h-4 text-gray-500" />
-                                <span className="ml-1 text-sm text-gray-500">
+                            <span className="search-post-external">
+                                <ExternalLink className="search-post-external-icon" />
+                                <span className="search-post-domain">
                                     {extractDomain(post.url)}
                                 </span>
                             </span>
                         )}
                     </h3>
-                    <p className="text-sm text-gray-600">{post.post_date}</p>
-                    <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">
+                    <p className="search-post-date">{post.post_date}</p>
+                    <p className="search-post-content">
                         {highlighted.before}
-                        <span className="bg-blue-100 dark:bg-blue-600 text-blue-600 dark:text-gray-100">{highlighted.match}</span>
+                        <span className="search-highlight">{highlighted.match}</span>
                         {highlighted.after}
-                        <span className="text-gray-100 dark:text-gray-600 ml-1">...</span>
+                        <span className="search-ellipsis">...</span>
                     </p>
                 </a>
             );
@@ -156,22 +157,22 @@ export function Post({ index, post, queries }) {
             href={post.url}
             target="_blank"
             rel="noreferrer"
-            className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300"
+            className="search-post-card"
         >
-            <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg" />
-            <h3 className="text-lg font-semibold mt-2">
+            <img src={post.thumbnail_url} alt={post.title} className="search-post-image" />
+            <h3 className="search-post-title">
                 {post.title}
                 {post.external && (
-                    <span className="inline-flex items-center ml-2">
-                        <ExternalLink className="w-4 h-4 text-gray-500" />
-                        <span className="ml-1 text-sm text-gray-500">
+                    <span className="search-post-external">
+                        <ExternalLink className="search-post-external-icon" />
+                        <span className="search-post-domain">
                             {extractDomain(post.url)}
                         </span>
                     </span>
                 )}
             </h3>
-            <p className="text-sm text-gray-600">{post.post_date}</p>
-            <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">{post.content}</p>
+            <p className="search-post-date">{post.post_date}</p>
+            <p className="search-post-content">{post.content}</p>
         </a>
     );
 
@@ -185,10 +186,10 @@ function DeleatableTag({ name, label }) {
     }
 
     return (
-        <span className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-lg space-x-1 word-break-all">
-            <FaTag className="inline-block mr-1" />
+        <span className="search-tag">
+            <FaTag className="search-tag-icon" />
             <span>{label}</span>
-            <X onClick={handleClick} className="inline-block ml-1 w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer" />
+            <X onClick={handleClick} className="search-tag-close" />
         </span>
     );
 }
@@ -199,9 +200,9 @@ function DeleatableQuery({ query }) {
     }
 
     return (
-        <span className="bg-blue-100 dark:bg-blue-600 text-blue-600 dark:text-gray-100 px-2 py-1 rounded-lg space-x-1 word-break-all">
+        <span className="search-query">
             <span>{query}</span>
-            <X onClick={handleClick} className="inline-block ml-1 w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer" />
+            <X onClick={handleClick} className="search-query-close" />
         </span>
     );
 }
@@ -235,14 +236,14 @@ export default function SearchResult() {
 
     const searchedPosts = searchPostsByQueries(searchPostsByTags(posts, tags), queries);
     return (
-        <main className="grid grid-cols-1 lg:grid-cols-[4fr,1fr] gap-4 container mx-auto px-2 py-8 space-y-8">
-            <div className="space-y-8 py-4">
-                <div className="flex items-center space-x-2">
-                    <SearchCheck className="w-8 h-8 text-purple-500" />
-                    <h1 className="text-4xl font-bold">Search </h1>
+        <main className="search-container">
+            <div className="search-main">
+                <div className="search-header">
+                    <SearchCheck className="search-header-icon" />
+                    <h1 className="search-header-title">Search</h1>
                 </div>
                 <SeachBar placeholder="To add a search query, type and press Enter" />
-                <div className="text-gray-600 flex items-center space-x-2">
+                <div className="search-filters">
                     <span>Search for:</span>
                     {queries.map((query, index) => (
                         <DeleatableQuery key={index} query={query} />
@@ -252,17 +253,16 @@ export default function SearchResult() {
                         <DeleatableTag key={index} name={tag} label={tag} />
                     ))}
                 </div>
-                <div className="text-gray-600">Found <span className="font-bold">{searchedPosts.length}</span> posts</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-
+                <div className="search-count">Found <span className="search-count-number">{searchedPosts.length}</span> posts</div>
+                <div className="search-results">
                     {searchedPosts.map((post) => (
                         <Post key={post.url} post={post} queries={queries} index={post.url} />
                     ))}
-                </div></div>
+                </div>
+            </div>
 
-            <TagList allTags={allTags} header='Found Tags' className="sticky top-0" />
-        </main >
-
+            <TagList allTags={allTags} header='Found Tags' className="search-sidebar" />
+        </main>
     );
 }
 
