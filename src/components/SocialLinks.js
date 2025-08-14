@@ -10,7 +10,15 @@ const iconComponents = {
 
 export function SocialLinks({ links, className = "" }) {
   return (
-    <div className={`flex space-x-4 mt-4 justify-center ${className}`}>
+    <div 
+      className={className}
+      style={{
+        display: 'flex',
+        gap: '1rem',
+        marginTop: '1rem',
+        justifyContent: 'center'
+      }}
+    >
       {links.map((link) => {
         const IconComponent = iconComponents[link.icon];
         return (
@@ -20,9 +28,17 @@ export function SocialLinks({ links, className = "" }) {
             target="_blank"
             rel="noreferrer"
             aria-label={link.name}
-            className={`text-gray-600 dark:text-gray-400 transition-colors ${link.hoverColor}`}
+            variant-="foreground1"
+            style={{
+              transition: 'opacity 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+            onMouseLeave={(e) => e.target.style.opacity = '1'}
           >
-            <IconComponent className="w-5 h-5" />
+            <IconComponent style={{ width: '1.25rem', height: '1.25rem' }} />
           </a>
         );
       })}

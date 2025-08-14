@@ -10,10 +10,14 @@ export function ThemeProvider({ children }) {
   const toggleTheme = () => setIsDark(!isDark);
 
   useEffect(() => {
+    const root = document.documentElement;
+    
     if (isDark) {
-      document.documentElement.classList.add('dark');
+      root.setAttribute('data-webtui-theme', 'catppuccin-mocha');
+      root.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      root.removeAttribute('data-webtui-theme');
+      root.classList.remove('dark');
     }
   }, [isDark]);
 
@@ -21,6 +25,7 @@ export function ThemeProvider({ children }) {
     ...theme,
     mode: isDark ? 'dark' : 'light',
     colors: isDark ? theme.modes.dark.colors : theme.modes.light.colors,
+    webtui: isDark ? 'catppuccin-mocha' : 'catppuccin-latte',
     isDark,
     toggleTheme,
   };

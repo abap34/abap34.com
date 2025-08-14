@@ -1,21 +1,17 @@
 import React from 'react';
+import { cn } from '../../utils/cn';
 
-const getCardClasses = ({ variant = 'default', className = '' }) => {
-  const baseClasses = 'rounded-lg border shadow-sm transition-all duration-300';
-  
-  const variants = {
-    default: 'bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700',
-    elevated: 'bg-white border-gray-200 shadow-md hover:shadow-lg dark:bg-gray-900 dark:border-gray-700 dark:shadow-gray-800',
-    ghost: 'bg-transparent border-transparent',
-  };
-  
-  return [baseClasses, variants[variant], className].filter(Boolean).join(' ');
-};
-
-export function Card({ className, variant = 'default', ...props }) {
+export function Card({ className, variant = 'background1', style, ...props }) {
   return (
     <div
-      className={getCardClasses({ variant, className })}
+      variant-={variant}
+      className={cn('card-container', className)}
+      style={{
+        padding: '1.5rem',
+        borderRadius: '0.5rem',
+        border: '1px solid var(--foreground2)',
+        ...style
+      }}
       {...props}
     />
   );
@@ -24,25 +20,42 @@ export function Card({ className, variant = 'default', ...props }) {
 export function CardHeader({ className, ...props }) {
   return (
     <div
-      className={`flex flex-col space-y-1.5 p-6 ${className || ''}`}
+      className={cn('card-header', className)}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.375rem',
+        marginBottom: '1.5rem',
+      }}
       {...props}
     />
   );
 }
 
-export function CardTitle({ className, ...props }) {
+export function CardTitle({ className, variant = 'foreground0', ...props }) {
   return (
     <h3
-      className={`text-2xl font-semibold leading-none tracking-tight ${className || ''}`}
+      variant-={variant}
+      className={cn('card-title', className)}
+      style={{
+        fontSize: '1.5rem',
+        fontWeight: '600',
+        lineHeight: '1.2',
+        letterSpacing: '-0.025em',
+      }}
       {...props}
     />
   );
 }
 
-export function CardDescription({ className, ...props }) {
+export function CardDescription({ className, variant = 'foreground1', ...props }) {
   return (
     <p
-      className={`text-sm text-gray-600 dark:text-gray-400 ${className || ''}`}
+      variant-={variant}
+      className={cn('card-description', className)}
+      style={{
+        fontSize: '0.875rem',
+      }}
       {...props}
     />
   );
@@ -50,12 +63,25 @@ export function CardDescription({ className, ...props }) {
 
 export function CardContent({ className, ...props }) {
   return (
-    <div className={`p-6 pt-0 ${className || ''}`} {...props} />
+    <div 
+      className={cn('card-content', className)} 
+      style={{ paddingTop: 0 }}
+      {...props} 
+    />
   );
 }
 
 export function CardFooter({ className, ...props }) {
   return (
-    <div className={`flex items-center p-6 pt-0 ${className || ''}`} {...props} />
+    <div 
+      className={cn('card-footer', className)}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        paddingTop: 0,
+        marginTop: '1.5rem'
+      }}
+      {...props} 
+    />
   );
 }

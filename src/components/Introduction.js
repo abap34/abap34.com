@@ -9,34 +9,40 @@ export default function Introduction() {
     const content = introductionContent[language];
 
     return (
-        <div className="max-w-4xl mx-auto mb-8">
-            <div className="flex flex-col md:flex-row items-center md:items-center gap-6 pb-6 border-b border-gray-200 dark:border-gray-700">
-                <div>
+        <div>
+            <div 
+                style={{
+                    display: 'flex',
+                    gap: '2rem',
+                    alignItems: 'center'
+                }}
+            >
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img
                         src="/icon.png"
                         alt="abap34"
-                        className="max-w-[128px] max-h-[128px] w-auto h-auto rounded-full border-2 border-gray-300 dark:border-gray-700 shadow-md dark:shadow-gray-800 self-center"
+                        style={{
+                            width: '120px',
+                            height: '120px',
+                            borderRadius: '50%',
+                            border: '2px solid var(--foreground2)',
+                            marginBottom: '1rem'
+                        }}
                     />
                     <SocialLinks links={socialLinks} />
                 </div>
 
-                <div>
-                    <Heading level={1} className="mb-2">
+                <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: '1.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '0.75rem' }}>
                         {content.name}
-                    </Heading>
-
-                    <div className="mb-4">
-                        <Text className="mb-4">
-                            {content.mainDescription}
-                        </Text>
-
-                        <div className="text-sm border-gray-200 dark:border-gray-700 pl-3 py-1">
-                            <Text variant="caption">
-                                {content.detailedDescription.map((line, index) => (
-                                    line === "" ? <br key={index} /> : <span key={index}>{line}<br /></span>
-                                ))}
-                            </Text>
-                        </div>
+                    </div>
+                    <div style={{ marginBottom: '1rem', lineHeight: '1.6', fontSize: '1rem' }}>
+                        {content.mainDescription}
+                    </div>
+                    <div style={{ lineHeight: '1.6', color: 'var(--foreground1)', fontSize: '0.95em' }}>
+                        {content.detailedDescription.map((line, index) => (
+                            line === "" ? <br key={index} /> : <div key={index}>{line}</div>
+                        ))}
                     </div>
                 </div>
             </div>
