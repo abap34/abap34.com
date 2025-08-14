@@ -5,7 +5,7 @@ import yaml from "yaml";
 function EachEducation(props) {
     return (
         <div style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
-            <div style={{ color: 'var(--accent0)', fontWeight: 'var(--font-weight-bold)' }}>
+            <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                 {props.school}
             </div>
             <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
@@ -18,7 +18,7 @@ function EachEducation(props) {
 function EachWork(props) {
     return (
         <div style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
-            <div style={{ color: 'var(--accent0)', fontWeight: 'var(--font-weight-bold)' }}>
+            <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                 <a 
                     href={props.url} 
                     target="_blank" 
@@ -58,7 +58,7 @@ export default function Background({ compact = false }) {
                     <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Education</div>
                     {data.education.slice(0, 2).map((education, index) => (
                         <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
-                            <span style={{ color: 'var(--accent0)' }}>{education.school}</span>
+                            <span style={{ color: 'var(--foreground0)' }}>{education.school}</span>
                             <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
                                 {education.period}
                             </span>
@@ -70,7 +70,7 @@ export default function Background({ compact = false }) {
                     <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Work Experience</div>
                     {data.careers.slice(0, 2).map((career, index) => (
                         <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
-                            <span style={{ color: 'var(--accent0)' }}>{career.company}</span>
+                            <span style={{ color: 'var(--foreground0)' }}>{career.company}</span>
                             <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
                                 {career.period}
                             </span>
@@ -82,7 +82,7 @@ export default function Background({ compact = false }) {
                     <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Activities</div>
                     {data.others.slice(0, 2).map((other, index) => (
                         <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
-                            <span style={{ color: 'var(--accent0)' }}>{other.title}</span>
+                            <span style={{ color: 'var(--foreground0)' }}>{other.title}</span>
                             <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
                                 {other.period}
                             </span>
@@ -119,7 +119,7 @@ export default function Background({ compact = false }) {
                 </h2>
                 {data.others.map((other, index) => (
                     <div key={index} style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
-                        <div style={{ color: 'var(--accent0)', fontWeight: 'var(--font-weight-bold)' }}>
+                        <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                             <a 
                                 href={other.url} 
                                 target="_blank" 

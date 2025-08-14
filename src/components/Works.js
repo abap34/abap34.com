@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
@@ -8,7 +9,7 @@ import './Works.css';
 const WorkModal = ({ work, open, onClose }) => {
     if (!open) return null
 
-    return (
+    const modalContent = (
         <div
             className="works-modal-overlay"
             onClick={onClose}
@@ -119,7 +120,9 @@ const WorkModal = ({ work, open, onClose }) => {
                 </column>
             </column>
         </div>
-    )
+    );
+
+    return createPortal(modalContent, document.body);
 }
 
 export default function Works({ title, path, defaultVisibleCount = 6, compact = false }) {
