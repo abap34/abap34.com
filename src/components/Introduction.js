@@ -9,8 +9,8 @@ export default function Introduction() {
     const content = introductionContent[language];
 
     return (
-        <div>
-            <div className="flex flex-col md:flex-row gap-8 items-center">
+        <div className="flex justify-center">
+            <div className="flex flex-col md:flex-row gap-8 items-center max-w-4xl w-full">
                 <div className="flex-shrink-0 flex flex-col items-center">
                     <img
                         src="/icon.png"
