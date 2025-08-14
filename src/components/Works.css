@@ -10,22 +10,7 @@
 .works-github-icon {
     height: 1rem;
     width: 1rem;
-    color: var(--accent0);
-}
-
-.works-github-.works-modal-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    backdrop-filter: blur(4px);
+    color: var(--foreground1);
 }
 
 .works-github-url {
@@ -95,7 +80,7 @@
 
 .works-card-title {
     font-weight: 700;
-    color: var(--accent0);
+    color: var(--foreground0);
     font-size: 1.125rem;
     margin-bottom: 0.25rem;
 }
@@ -128,13 +113,13 @@
 }
 
 .works-card-repo-icon {
-    color: var(--accent0);
+    color: var(--foreground1);
     width: 1rem;
     height: 1rem;
 }
 
 .works-card-repo-link {
-    color: var(--accent0);
+    color: var(--foreground1);
     text-decoration: none;
     font-size: 0.875rem;
 }
@@ -257,7 +242,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999999 !important;
+    z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -352,13 +337,13 @@ works-modal-title-text {
 }
 
 .works-modal-repo-icon {
-    color: var(--accent0);
+    color: var(--foreground1);
     width: 1.25rem;
     height: 1.25rem;
 }
 
 .works-modal-repo-link {
-    color: var(--accent0);
+    color: var(--foreground1);
     text-decoration: none;
     font-size: 0.875rem;
     font-weight: 500;
