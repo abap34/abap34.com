@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
 import { Switch } from '../design-system';
 
@@ -6,6 +7,7 @@ export default function Sidebar() {
     const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const [isDark, setIsDark] = useState(isDarkOS);
     const { language, toggleLanguage } = useContext(LanguageContext);
+    const location = useLocation();
 
     useEffect(() => {
         if (isDark) {
@@ -16,106 +18,56 @@ export default function Sidebar() {
             document.documentElement.removeAttribute('data-webtui-theme');
         }
     }, [isDark]);
+
+    const linkClass = (path) =>
+        `block text-sm no-underline py-0.5 cursor-pointer ${
+            location.pathname === path ? 'text-accent0' : 'text-foreground1'
+        }`;
+
     return (
-        <nav 
-            style={{
-                width: '16rem',
-                borderRight: '1px solid var(--foreground2)',
-                padding: '1rem',
-                backgroundColor: 'var(--background1)',
-                overflowY: 'auto',
-                position: 'sticky',
-                top: 0,
-                height: '100vh'
-            }}
-        >
-            <div style={{ fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '1rem', fontSize: '0.875rem' }}>
-                EXPLORER
-            </div>
-            <div style={{ fontFamily: 'monospace', lineHeight: '1.2' }}>
-                <div style={{ marginBottom: '0.25rem', color: 'var(--foreground1)', fontSize: '0.875rem' }}>
-                    abap34.com/
-                </div>
+        <nav className="w-64 border-r border-foreground2 p-4 bg-background1 overflow-y-auto sticky top-0 h-screen">
+            <div className="font-bold text-foreground0 mb-4 text-sm">EXPLORER</div>
+            <div className="font-mono text-xs leading-tight">
+                <div className="mb-1 text-foreground1">abap34.com/</div>
                 <div>
-                    <a href="/" style={{ 
-                        display: 'block', 
-                        color: window.location.pathname === '/' ? 'var(--accent0)' : 'var(--foreground1)', 
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        padding: '0.125rem 0',
-                        cursor: 'pointer'
-                    }}>
+                    <Link to="/" className={linkClass('/')}>
                         ├─ About
-                    </a>
-                    <a href="/background" style={{ 
-                        display: 'block', 
-                        color: window.location.pathname === '/background' ? 'var(--accent0)' : 'var(--foreground1)', 
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        padding: '0.125rem 0',
-                        cursor: 'pointer'
-                    }}>
+                    </Link>
+                    <Link to="/background" className={linkClass('/background')}>
                         ├─ Background
-                    </a>
-                    <a href="/works" style={{ 
-                        display: 'block', 
-                        color: window.location.pathname === '/works' ? 'var(--accent0)' : 'var(--foreground1)', 
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        padding: '0.125rem 0',
-                        cursor: 'pointer'
-                    }}>
+                    </Link>
+                    <Link to="/works" className={linkClass('/works')}>
                         ├─ Works
-                    </a>
-                    <a href="/blog" style={{ 
-                        display: 'block', 
-                        color: window.location.pathname === '/blog' ? 'var(--accent0)' : 'var(--foreground1)', 
-                        textDecoration: 'none',
-                        fontSize: '0.875rem',
-                        padding: '0.125rem 0',
-                        cursor: 'pointer'
-                    }}>
+                    </Link>
+                    <Link to="/blog" className={linkClass('/blog')}>
                         └─ Blog
-                    </a>
+                    </Link>
                 </div>
             </div>
 
-            <hr style={{ border: 'none', borderTop: '1px solid var(--foreground2)', margin: '1rem 0' }} />
-            
-            <div style={{ fontSize: '0.875rem' }}>
-                <div style={{ fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '0.75rem' }}>
-                    SETTINGS
-                </div>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                    <div style={{ marginBottom: '0.5rem', color: 'var(--foreground1)' }}>Theme</div>
-                    <Switch 
+            <hr className="border-t border-foreground2 my-4" />
+
+            <div className="text-sm">
+                <div className="font-bold text-foreground0 mb-3">SETTINGS</div>
+
+                <div className="mb-4">
+                    <div className="mb-2 text-foreground1">Theme</div>
+                    <Switch
                         id="theme-toggle"
                         checked={isDark}
                         onChange={(e) => setIsDark(e.target.checked)}
-                        style={{ fontSize: '0.75rem' }}
+                        className="text-xs"
                     >
                         {isDark ? 'Dark' : 'Light'}
                     </Switch>
                 </div>
 
                 <div>
-                    <div style={{ marginBottom: '0.5rem', color: 'var(--foreground1)' }}>Language</div>
+                    <div className="mb-2 text-foreground1">Language</div>
                     <select
                         value={language}
-                        onChange={(e) => {
-                            toggleLanguage(e.target.value);
-                        }}
-                        style={{
-                            border: '1px solid var(--foreground2)',
-                            borderRadius: '0.25rem',
-                            padding: '0.25rem 0.5rem',
-                            backgroundColor: 'var(--background0)',
-                            color: 'var(--foreground0)',
-                            fontFamily: 'var(--font-family)',
-                            fontSize: '0.75rem',
-                            width: '100%'
-                        }}
+                        onChange={(e) => toggleLanguage(e.target.value)}
+                        className="border border-foreground2 rounded p-1 bg-background0 text-foreground0 font-mono text-xs w-full"
                     >
                         <option value="ja">Japanese</option>
                         <option value="en">English</option>

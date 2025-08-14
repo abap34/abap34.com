@@ -105,76 +105,46 @@ const WorkModal = ({ work, open, onClose }) => {
 
     return (
         <div 
-            style={{
-                position: 'fixed',
-                inset: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                zIndex: 50,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '1rem'
-            }}
+            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
             onClick={onClose}
         >
             <div 
-                className="webtui-box"
-                style={{
-                    maxWidth: '48rem',
-                    width: '100%',
-                    maxHeight: '90vh',
-                    overflowY: 'auto',
-                    margin: '0'
-                }}
+                className="webtui-box max-w-4xl w-full max-h-[90vh] overflow-y-auto m-0"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="webtui-box-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                <div className="webtui-box-header flex justify-between items-start">
                     <div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--accent0)' }}>
-                            {work.title}
-                        </div>
-                        <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)', marginTop: '0.25rem' }}>
-                            {work.period}
-                        </div>
+                        <div className="text-2xl font-bold text-accent0">{work.title}</div>
+                        <div className="text-sm text-foreground2 mt-1">{work.period}</div>
                     </div>
                     <button
                         variant-="foreground1"
                         onClick={onClose}
-                        style={{ padding: '0.5rem', minWidth: 'auto' }}
+                        className="p-2 min-w-auto"
                     >
                         ✕
                     </button>
                 </div>
 
-                <div style={{ marginTop: '1rem' }}>
+                <div className="mt-4">
                     {work.img && (
-                        <div style={{ marginBottom: '1rem', textAlign: 'center' }}>
+                        <div className="mb-4 text-center">
                             <img
                                 src={work.img}
                                 alt={work.title}
-                                style={{
-                                    width: '20rem',
-                                    height: '12rem',
-                                    objectFit: 'cover',
-                                    borderRadius: '0.5rem',
-                                    border: '1px solid var(--foreground2)'
-                                }}
+                                className="w-80 h-48 object-cover rounded-lg border border-foreground2 inline-block"
                             />
                         </div>
                     )}
 
                     {work.repo && (
-                        <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <FaGithub style={{ color: 'var(--accent0)', width: '1rem', height: '1rem' }} />
+                        <div className="mb-4 flex items-center gap-2">
+                            <FaGithub className="text-accent0 w-4 h-4" />
                             <a
                                 href={`https://github.com/${work.repo}`}
                                 target="_blank"
                                 rel="noreferrer"
-                                style={{ 
-                                    color: 'var(--accent0)', 
-                                    textDecoration: 'none',
-                                    fontSize: '0.875rem'
-                                }}
+                                className="text-accent0 no-underline text-sm"
                             >
                                 {work.repo}
                             </a>
@@ -182,21 +152,15 @@ const WorkModal = ({ work, open, onClose }) => {
                     )}
 
                     {work.relatedlinks && work.relatedlinks.length > 0 && (
-                        <div style={{ marginBottom: '1rem' }}>
-                            <div style={{ fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '0.5rem' }}>
-                                Related Links
-                            </div>
+                        <div className="mb-4">
+                            <div className="font-bold text-foreground0 mb-2">Related Links</div>
                             {work.relatedlinks.map((link, index) => (
-                                <div key={index} style={{ marginBottom: '0.25rem' }}>
+                                <div key={index} className="mb-1">
                                     <a
                                         href={link}
                                         target="_blank"
                                         rel="noreferrer"
-                                        style={{ 
-                                            color: 'var(--accent0)', 
-                                            textDecoration: 'none',
-                                            fontSize: '0.875rem'
-                                        }}
+                                        className="text-accent0 no-underline text-sm"
                                     >
                                         {link} →
                                     </a>
@@ -205,31 +169,24 @@ const WorkModal = ({ work, open, onClose }) => {
                         </div>
                     )}
 
-                    <div style={{ marginBottom: '1rem', lineHeight: '1.6', color: 'var(--foreground1)' }}>
+                    <div className="mb-4 leading-relaxed text-foreground1">
                         <ReactMarkdown
                             components={{
                                 a: ({ node, ...props }) => (
-                                    <a {...props} style={{ color: 'var(--accent0)', textDecoration: 'none' }} target="_blank" rel="noreferrer" />
+                                    <a {...props} className="text-accent0 no-underline" target="_blank" rel="noreferrer" />
                                 ),
-                                p: ({ node, ...props }) => <p {...props} style={{ marginBottom: '0.5rem' }} />,
+                                p: ({ node, ...props }) => <p {...props} className="mb-2" />,
                             }}
                         >
                             {work.desc}
                         </ReactMarkdown>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <div className="flex gap-2 flex-wrap">
                         {work.tags?.map((tag, i) => (
                             <span
                                 key={i}
-                                style={{
-                                    backgroundColor: 'var(--background2)',
-                                    color: 'var(--foreground1)',
-                                    padding: '0.25rem 0.5rem',
-                                    borderRadius: '0.25rem',
-                                    fontSize: '0.75rem',
-                                    fontWeight: 'var(--font-weight-normal)'
-                                }}
+                                className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
                             >
                                 {tag}
                             </span>
@@ -289,7 +246,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
         return (
             <div>
                 {isLoading ? (
-                    <div style={{ color: 'var(--foreground1)' }}>Loading projects...</div>
+                    <div className="text-foreground1">Loading projects...</div>
                 ) : (
                     <div className="terminal-table">
                         <table>
@@ -304,23 +261,19 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                 {workEntries.slice(0, visibleCount).map(([index, work]) => (
                                     <tr 
                                         key={index}
-                                        style={{ cursor: 'pointer' }}
+                                        className="cursor-pointer"
                                         onClick={() => handleWorkClick(work)}
                                     >
-                                        <td style={{ fontWeight: 'var(--font-weight-bold)', color: 'var(--accent0)' }}>
-                                            {work.title}
-                                        </td>
-                                        <td style={{ fontSize: '0.875rem' }}>
-                                            {work.period}
-                                        </td>
+                                        <td className="font-bold text-accent0">{work.title}</td>
+                                        <td className="text-sm">{work.period}</td>
                                         <td>
-                                            <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
+                                            <div className="flex gap-1 flex-wrap">
                                                 {work.tags?.slice(0, 2).map((tag, i) => (
                                                     <span 
                                                         key={i} 
                                                         is-="badge"
                                                         variant-="accent1"
-                                                        style={{ fontSize: '0.625rem' }}
+                                                        className="text-xs"
                                                     >
                                                         {tag}
                                                     </span>
@@ -346,74 +299,51 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     }
 
     return (
-        <div style={{ padding: compact ? '0' : '2rem 1rem', maxWidth: compact ? 'none' : '72rem', margin: compact ? '0' : '0 auto' }}>
+        <div className={`py-8 px-4 max-w-7xl mx-auto ${compact ? '' : 'sm:px-6 lg:px-8'}`}>
             {title && !compact && (
-                <div style={{ marginBottom: '2rem' }}>
-                    <h1 style={{ fontSize: '2rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--accent0)', marginBottom: '0.5rem' }}>
-                        {title}
-                    </h1>
-                    <p style={{ color: 'var(--foreground1)' }}>Click on any project to view details</p>
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-accent0 mb-2">{title}</h1>
+                    <p className="text-foreground1">Click on any project to view details</p>
                 </div>
             )}
 
             {isLoading ? (
-                <div style={{ color: 'var(--foreground1)' }}>Loading projects...</div>
+                <div className="text-foreground1">Loading projects...</div>
             ) : (
                 <>
-                    <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: compact ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))' }}>
+                    <div className={`grid gap-6 ${compact ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
                         {workEntries.slice(0, visibleCount).map(([index, work]) => (
                             <div 
                                 key={index} 
-                                style={{ 
-                                    border: '1px solid var(--foreground2)', 
-                                    borderRadius: '0.5rem', 
-                                    padding: '1.5rem', 
-                                    cursor: 'pointer',
-                                    backgroundColor: 'var(--background1)',
-                                    transition: 'all 0.2s ease'
-                                }}
+                                className="border border-foreground2 rounded-lg p-6 cursor-pointer bg-background1 transition-all duration-200 ease-in-out hover:shadow-lg"
                                 onClick={() => handleWorkClick(work)}
                             >
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
+                                <div className="flex justify-between items-start mb-3">
                                     <div>
-                                        <h3 style={{ fontWeight: 'var(--font-weight-bold)', color: 'var(--accent0)', fontSize: '1.1rem', marginBottom: '0.25rem' }}>
-                                            {work.title}
-                                        </h3>
-                                        <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
-                                            {work.period}
-                                        </div>
+                                        <h3 className="font-bold text-accent0 text-lg mb-1">{work.title}</h3>
+                                        <div className="text-sm text-foreground2">{work.period}</div>
                                     </div>
                                     {work.img && !compact && (
                                         <img
                                             src={work.img}
                                             alt={work.title}
-                                            style={{
-                                                width: '3rem',
-                                                height: '3rem',
-                                                borderRadius: '0.25rem',
-                                                border: '1px solid var(--foreground2)',
-                                                objectFit: 'cover'
-                                            }}
+                                            className="w-12 h-12 rounded border border-foreground2 object-cover"
                                         />
                                     )}
                                 </div>
                                 
-                                <div style={{ marginBottom: '0.75rem', fontSize: '0.875rem', color: 'var(--foreground1)', lineHeight: '1.4' }}>
+                                <div className="mb-3 text-sm text-foreground1 leading-snug">
                                     {work.short_desc}
                                 </div>
 
                                 {work.repo && (
-                                    <div style={{ marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                        <FaGithub style={{ color: 'var(--accent0)', width: '1rem', height: '1rem' }} />
+                                    <div className="mb-3 flex items-center gap-2">
+                                        <FaGithub className="text-accent0 w-4 h-4" />
                                         <a
                                             href={`https://github.com/${work.repo}`}
                                             target="_blank"
                                             rel="noreferrer"
-                                            style={{ 
-                                                color: 'var(--accent0)', 
-                                                textDecoration: 'none',
-                                                fontSize: '0.875rem'
-                                            }}
+                                            className="text-accent0 no-underline text-sm"
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             {work.repo}
@@ -421,18 +351,11 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                     </div>
                                 )}
 
-                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                <div className="flex gap-2 flex-wrap">
                                     {work.tags?.slice(0, 3).map((tag, i) => (
                                         <span 
                                             key={i}
-                                            style={{
-                                                backgroundColor: 'var(--background2)',
-                                                color: 'var(--foreground1)',
-                                                padding: '0.25rem 0.5rem',
-                                                borderRadius: '0.25rem',
-                                                fontSize: '0.75rem',
-                                                fontWeight: 'var(--font-weight-normal)'
-                                            }}
+                                            className="bg-background2 text-foreground1 px-2 py-1 rounded text-xs font-normal"
                                         >
                                             {tag}
                                         </span>
@@ -443,7 +366,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                     </div>
 
                     {hasMoreWorks && (
-                        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                        <div className="text-center mt-8">
                             <button variant-="accent0" onClick={showMore}>
                                 Show More Projects
                             </button>
@@ -451,7 +374,7 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                     )}
 
                     {visibleCount > defaultVisibleCount && workEntries.length > defaultVisibleCount && (
-                        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+                        <div className="text-center mt-4">
                             <button variant-="foreground1" onClick={showLess}>
                                 Show Less
                             </button>

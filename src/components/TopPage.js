@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import yaml from 'yaml';
 import LanguageContext from '../context/LanguageContext';
+import SidebarContext from '../context/SidebarContext';
 import About from './About';
 import Introduction from './Introduction';
 import Works from './Works';
@@ -16,25 +17,14 @@ export default function TopPage() {
     }, [language]);
 
     return (
-        <main 
-            variant-="background0"
-            style={{
-                display: 'flex',
-                minHeight: '100vh',
-                width: '100%',
-                margin: '0',
-                padding: '0'
-            }}
-        >
-            <Sidebar />
-
+        <main className="flex min-h-screen w-full m-0 p-0 bg-background0">
             {/* Main Content */}
-            <div style={{ flex: 1, padding: '1rem', width: 'calc(100% - 16rem)' }}>
+            <div className="flex-1 p-4">
                 <div className="webtui-box">
                     <Introduction />
                 </div>
 
-                <div className="webtui-grid-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="webtui-box">
                         <div className="webtui-box-header">Recent Activity</div>
                         <About />

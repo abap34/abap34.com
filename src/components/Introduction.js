@@ -10,36 +10,24 @@ export default function Introduction() {
 
     return (
         <div>
-            <div 
-                style={{
-                    display: 'flex',
-                    gap: '2rem',
-                    alignItems: 'center'
-                }}
-            >
-                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+                <div className="flex-shrink-0 flex flex-col items-center">
                     <img
                         src="/icon.png"
                         alt="abap34"
-                        style={{
-                            width: '120px',
-                            height: '120px',
-                            borderRadius: '50%',
-                            border: '2px solid var(--foreground2)',
-                            marginBottom: '1rem'
-                        }}
+                        className="w-32 h-32 rounded-full border-2 border-foreground2 mb-4"
                     />
                     <SocialLinks links={socialLinks} />
                 </div>
 
-                <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: '1.75rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '0.75rem' }}>
+                <div className="flex-1">
+                    <div className="text-3xl font-bold text-foreground0 mb-3">
                         {content.name}
                     </div>
-                    <div style={{ marginBottom: '1rem', lineHeight: '1.6', fontSize: '1rem' }}>
+                    <div className="mb-4 leading-relaxed text-base">
                         {content.mainDescription}
                     </div>
-                    <div style={{ lineHeight: '1.6', color: 'var(--foreground1)', fontSize: '0.95em' }}>
+                    <div className="leading-relaxed text-foreground1 text-sm">
                         {content.detailedDescription.map((line, index) => (
                             line === "" ? <br key={index} /> : <div key={index}>{line}</div>
                         ))}

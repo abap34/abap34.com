@@ -59,12 +59,6 @@ export function Text({ variant = 'foreground1', className, children, size = 'bas
 export function Link({ href, external = false, className, variant = 'accent0', children, ...props }) {
   const linkProps = {
     href,
-    'variant-': variant,
-    className: cn('link', className),
-    style: {
-      textDecoration: 'none',
-      transition: 'opacity 0.2s ease',
-    },
     ...props
   };
   
@@ -74,7 +68,7 @@ export function Link({ href, external = false, className, variant = 'accent0', c
   }
   
   return (
-    <a {...linkProps}>
+    <a {...linkProps} variant-={variant} className={cn('no-underline transition-opacity duration-200', className)}>
       {children}
     </a>
   );
