@@ -1,5 +1,3 @@
-/* Blog Component Styles */
-
 .blog-container {
     max-width: 80rem;
     margin: 0 auto;
@@ -12,7 +10,6 @@
     }
 }
 
-/* Blog Header */
 .blog-header {
     display: grid;
     grid-template-columns: 1fr;
@@ -46,39 +43,7 @@
     gap: 0.5rem;
 }
 
-/* WebTUI button styles - Commented out to avoid conflicts with global WebTUI styles
-[is-~="button"] {
-    --button-primary: var(--foreground0);
-    --button-secondary: var(--background0);
-    
-    color: var(--button-secondary);
-    background-color: var(--button-primary);
-    font-family: var(--font-family, monospace);
-    font-size: var(--font-size, 0.875rem);
-    line-height: var(--line-height, 1.5);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: none;
-    padding: 0 1rem;
-    height: 2.5rem;
-    outline: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
 
-[is-~="button"]:focus {
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-[is-~="button"]:hover {
-    transform: translateY(-1px);
-}
-
-/* Primary button variant */
 [is-~="button"][variant-="blue"] {
     --button-primary: #3b82f6;
     --button-secondary: white;
@@ -89,7 +54,6 @@
     --button-secondary: white;
 }
 
-/* Catppuccin theme button variants */
 [data-webtui-theme="catppuccin-mocha"] [is-~="button"][variant-="blue"] {
     --button-primary: #89b4fa;
     --button-secondary: var(--background0);
@@ -101,12 +65,6 @@
 }
 
 
-/* Legacy button styling - Commented out to avoid conflicts with WebTUI
-.blog-action-btn svg {
-    width: 1rem;
-    height: 1rem;
-}
-*/
 
 .blog-search-section {
     display: flex;
@@ -124,7 +82,6 @@
     height: auto;
 }
 
-/* Blog Content */
 .blog-content {
     display: grid;
     gap: 2rem;
@@ -190,7 +147,6 @@
     font-weight: 700;
 }
 
-/* Blog Timeline */
 .blog-timeline-container {
     max-width: 80rem;
     margin: 0 auto;
@@ -307,7 +263,6 @@
     gap: 0.5rem;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .blog-container {
         padding: 1rem;
