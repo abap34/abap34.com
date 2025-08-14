@@ -20,6 +20,24 @@ lapisla:
     - https://lapisla.net
     - https://docs.lapisla.net
 
+JETLS:
+  title: JETLS.jl
+  img: /works/img/jetls.png
+  repo: aviatesk/JETLS.jl
+  short_desc: Julia の次世代 Language Server
+  desc: |
+    JETLS.jl は Julia の次世代 Language Server です。
+    最新の Julia コンパイラツールチェインを利用して、高度な解析結果を提供します。
+    Google Summer of Code の Student Contributor として参加しています。
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - Compiler
+    - Language Server
+    - OSS
+  period: 2025
+
 eta:
   title: eta
   img: /works/img/eta.png
@@ -109,7 +127,6 @@ almo:
     - OSS
   period: 2023 ~
 
-
 blog:
   title: "abap34.com/blog"
   img: /works/img/blog.png
@@ -125,8 +142,6 @@ blog:
   period: 2023 ~
   relatedlinks:
     - https://www.abap34.com/blog
-
-
 
 competitions:
   title: "データ分析コンペの開催"
