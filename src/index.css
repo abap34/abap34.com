@@ -70,8 +70,8 @@ a:hover {
   color: var(--foreground0);
 }
 
-/* WebTUI Badge Focus Fix */
-[is-="badge"] {
+/* WebTUI Badge Focus Fix - Only for TopPage headers */
+.top-page [is-="badge"] {
   outline: none;
   pointer-events: none;
   user-select: none;

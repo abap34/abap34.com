@@ -128,11 +128,11 @@
     text-decoration: underline;
 }
 
-.works-card-tags {
+/* .works-card-tags {
     display: flex;
     gap: 0.5ch;
     flex-wrap: wrap;
-}
+} */
 
 /* Dark mode styles */
 [data-webtui-theme="catppuccin-mocha"] .works-card {
@@ -227,11 +227,11 @@
     font-size: 0.875rem;
 }
 
-.works-table-tags {
+/* .works-table-tags {
     display: flex;
     gap: 0.5ch;
     flex-wrap: wrap;
-}
+} */
 
 
 /* Works Modal Styles */

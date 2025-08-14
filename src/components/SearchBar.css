@@ -1,19 +1,5 @@
 /* SearchBar Component Styles */
 
-.search-bar-container {
-    position: relative;
-    width: 100%;
-    max-width: 32rem;
-}
-
-/* SearchBar Component Styles */
-
-.search-bar-container {
-    position: relative;
-    width: 100%;
-    max-width: 32rem;
-}
-
 /* Legacy input and button styles - Commented out to avoid conflicts with WebTUI
 .search-bar-input {
     width: 100%;
@@ -86,19 +72,92 @@
 [data-webtui-theme="catppuccin-mocha"] .search-bar-button:focus {
     color: #89b4fa;
 }
+
 */
 
-/* WebTUI Input and Button Positioning */
-.search-bar-container [is-~="input"] {
-    padding-right: 2.5rem;
+/* WebTUI Enhanced Compact Input and Button Styles */
+.search-bar-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 0.5ch;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-.search-bar-container [is-~="button"] {
-    position: absolute;
-    right: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    height: auto;
-    padding: 0.25rem;
-    min-width: auto;
+.search-bar-container > * {
+    flex-shrink: 0;
+}
+
+.search-bar-container > [is-~="input"] {
+    flex: 1 1 auto !important;
+    height: 2.5lh;
+    padding: 0.5lh 1ch;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    min-width: 0 !important;
+    border-width: 2px;
+    box-sizing: border-box;
+}
+
+.search-bar-container > [is-~="button"] {
+    flex: 0 0 auto !important;
+    height: 2.5lh;
+    width: 2.5lh;
+    padding: 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0 !important;
+    border-width: 2px;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+}
+
+.search-bar-container [is-~="button"] svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Enhanced focus styles for better accessibility */
+.search-bar-container [is-~="input"]:focus {
+    outline: 3px solid var(--foreground0);
+    outline-offset: 2px;
+    font-weight: var(--font-weight-bold);
+}
+
+.search-bar-container [is-~="button"]:focus {
+    outline: 3px solid var(--foreground0);
+    outline-offset: 2px;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-bar-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .search-bar-container [is-~="input"] {
+        min-width: 0;
+        font-size: 0.875rem;
+        height: 2.25lh;
+        padding: 0.5lh 1ch;
+    }
+
+    .search-bar-container [is-~="button"] {
+        height: 2.25lh;
+        width: 2.25lh;
+        padding: 0;
+        font-size: 0.875rem;
+    }
+
+    .search-bar-container [is-~="button"] svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
 }

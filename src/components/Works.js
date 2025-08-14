@@ -3,6 +3,7 @@ import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
 import './Works.css';
+import Tag from './Tag';
 
 const WorkModal = ({ work, open, onClose }) => {
     if (!open) return null
@@ -106,14 +107,15 @@ const WorkModal = ({ work, open, onClose }) => {
 
                     <row style={{ flexWrap: 'wrap', gap: '0.5ch' }}>
                         {work.tags?.map((tag, i) => (
-                            <span
-                                key={i}
-                                is-="badge"
-                                variant-="background2"
-                                cap-="round"
-                            >
+                            // <span
+                            //     key={i}
+                            //     is-="badge"
+                            //     variant-="foreground0"
+                            // >
+                            // </span>
+                            <Tag key={i}>
                                 {tag}
-                            </span>
+                            </Tag>
                         ))}
                     </row>
                 </column>
@@ -184,14 +186,14 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                         <td>
                                             <div className="works-table-tags">
                                                 {work.tags?.slice(0, 2).map((tag, i) => (
-                                                    <span
+                                                    <Tag
                                                         key={i}
                                                         is-="badge"
-                                                        variant-="background2"
-                                                        cap-="round"
+                                                        variant-="foreground1"
+                                                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}
                                                     >
                                                         {tag}
-                                                    </span>
+                                                    </Tag>
                                                 ))}
                                             </div>
                                         </td>
@@ -268,14 +270,11 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
 
                                 <div className="works-card-tags">
                                     {work.tags?.slice(0, 3).map((tag, i) => (
-                                        <span
+                                        <Tag
                                             key={i}
-                                            is-="badge"
-                                            variant-="background2"
-                                            cap-="round"
                                         >
                                             {tag}
-                                        </span>
+                                        </Tag>
                                     ))}
                                 </div>
                             </div>
