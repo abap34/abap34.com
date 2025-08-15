@@ -1,0 +1,32 @@
+.top-page {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--background0);
+}
+
+.top-page-content {
+    padding: 1ch;
+    gap: 1lh;
+}
+
+.top-page-grid {
+    gap: 1ch;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-page-grid-item {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .top-page-content {
+        padding: 2ch;
+    }
+    
+    .top-page-grid {
+        flex-direction: row;
+    }
+}
+

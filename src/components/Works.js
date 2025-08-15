@@ -1,197 +1,131 @@
-import { ChevronDown, ChevronUp, ExternalLink, Tag  } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
-
-const GithubLink = ({ repo }) => (
-    <div className="flex items-center gap-2 my-2">
-        <FaGithub className="h-4 w-4" />
-        <a
-            href={`https://github.com/${repo}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm hover:text-blue-600 transition-colors duration-200  border-none break-all"
-        >
-            {repo}
-        </a>
-    </div>
-)
-
-const ExternalLinkComponent = ({ url }) => (
-    <div className="flex items-center gap-2 my-2">
-        <ExternalLink className="h-4 w-4 text-gray-500" />
-        <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm hover:text-blue-600 transition-colors duration-200 underline underline-offset-2 break-all"
-        >
-            {url}
-        </a>
-    </div>
-)
-
-const Tags = ({ tags }) => (
-    <div className="flex flex-wrap gap-2 mt-3">
-        {tags && tags.map((tag, index) => (
-            // <span
-            //     key={index}
-            //     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 border border-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
-            // >
-            <span
-                key={index}
-                className="inline-flex items-center px-2.5 py-0.5 bg-gray-100 text-xs font-medium  dark:bg-blue-800 dark:text-blue-200 dark:border-blue-700 rounded-full"
-            >
-                <Tag className="h-3 w-3 mr-1" />
-                {tag}
-            </span>
-
-
-        ))}
-    </div>
-)
-
-const MarkdownContent = ({ content }) => (
-    <div className="prose prose-sm dark:prose-invert max-w-none mt-4">
-        <ReactMarkdown
-            components={{
-                a: ({ node, ...props }) => (
-                    <a {...props} className="text-blue-600 hover:underline" target="_blank" rel="noreferrer" />
-                ),
-                p: ({ node, ...props }) => <p {...props} className="text-gray-600 dark:text-gray-400" />,
-            }}
-        >
-            {content}
-        </ReactMarkdown>
-    </div>
-)
-
-
-const WorkCard = ({ work, onClick }) => (
-    <div
-        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-5 transition-all duration-300 hover:shadow-md cursor-pointer hover:border-blue-200 dark:hover:border-blue-900"
-        onClick={onClick}
-    >
-        <div className="flex justify-between items-start">
-            <div>
-                <h3 className="text-xl  font-medium text-gray-900 dark:text-white">{work.title}</h3>
-                <p className="text-xs  mt-1 text-gray-500 dark:text-gray-400">{work.period}</p>
-            </div>
-            <div className="hidden sm:block w-16 h-16 rounded overflow-hidden border border-gray-200 dark:border-gray-700 focus-within:ring-2 focus-within:ring-blue-500 font-medium">
-                <img
-                    src={work.img || "/placeholder.svg"}
-                    alt={work.title}
-                    className="w-full h-full object-cover"
-                />
-            </div>
-        </div>
-
-        <div className="mt-4">
-            {work.repo && <GithubLink repo={work.repo} />}
-            <div className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                {work.short_desc}
-            </div>
-        </div>
-
-        <div className="mt-4">
-            <Tags tags={work.tags} />
-        </div>
-    </div>
-)
+import Tag from './Tag';
+import './Works.css';
 
 const WorkModal = ({ work, open, onClose }) => {
-    const [activeTab, setActiveTab] = useState('details')
-
     if (!open) return null
 
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] flex flex-col">
-                {/* Header */}
-                <div className="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-start">
-                    <div>
-                        <h2 className="text-2xl  text-gray-900 dark:text-white">{work.title}</h2>
-                        <p className=" text-sm text-gray-500 dark:text-gray-400">{work.period}</p>
-                    </div>
+    const modalContent = (
+        <div
+            className="works-modal-overlay"
+            onClick={onClose}
+        >
+            <column
+                box-="square"
+                shear-="top"
+                className="works-modal-content"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <row className="works-modal-header">
+                    {/* <span is-="badge" variant-="foreground0"
+                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                        {work.title}
+                    </span> */}
+                    <div></div>
                     <button
                         onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                        style={{
+                            background: 'none',
+                            border: '1px solid var(--foreground2)',
+                            color: 'var(--foreground1)',
+                            cursor: 'pointer',
+                            padding: '0.5ch',
+                            fontSize: '1rem',
+                            lineHeight: '1',
+                            fontFamily: 'var(--font-family)',
+                            width: '2ch',
+                            height: '1lh'
+                        }}
                     >
+                        ✕
                     </button>
-                </div>
+                </row>
 
-                {/* Tabs */}
-                {/* <div className="border-b border-gray-200 dark:border-gray-700">
-                    <div className="flex">
-                        <button
-                            className={`px-4 py-2 text-sm font-medium ${activeTab === 'details'
-                                ? 'border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-                                : 'text-gray-500 dark:text-gray-400'
-                                }`}
-                            onClick={() => setActiveTab('details')}
-                        >
-                            Details
-                        </button>
-                        <button
-                            className={`px-4 py-2 text-sm font-medium ${activeTab === 'preview'
-                                ? 'border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
-                                : 'text-gray-500 dark:text-gray-400'
-                                }`}
-                            onClick={() => setActiveTab('preview')}
-                        >
-                            Preview
-                        </button>
-                    </div>
-                </div> */}
 
-                {/* Content */}
-                <div className="flex-1 overflow-auto">
-                    {/* {activeTab === 'details' ? ( */}
-                        <div className="p-5 space-y-4">
-                            {work.repo && <GithubLink repo={work.repo} />}
+                <column pad-="2 1" className="works-modal-body">
 
-                            {work.relatedlinks && work.relatedlinks.length > 0 && (
-                                <div className="space-y-2">
-                                    <h4 className="text-sm font-medium text-gray-900 dark:text-white">Related Links</h4>
-                                    {work.relatedlinks && work.relatedlinks.map((link, index) => (
-                                        <ExternalLinkComponent key={index} url={link} />
-                                    ))}
-                                </div>
-                            )}
+                    <column className="works-modal-title">
+                        <h1 className="works-modal-title-text">{work.title}</h1>
+                    </column>
 
-                            <MarkdownContent content={work.desc} />
+                    <column style={{ marginBottom: '1lh' }}>
+                        <div className="works-modal-period">{work.period}</div>
+                    </column>
 
-                            <div className="pt-2">
-                                <Tags tags={work.tags} />
-                            </div>
-                        </div>
-                    {/* ) : (
-                        <div className="flex justify-center items-center p-4 h-[50vh]">
+
+                    {work.img && (
+                        <column style={{ marginBottom: '1lh' }}>
                             <img
-                                src={work.img || "/placeholder.svg"}
+                                src={work.img}
                                 alt={work.title}
-                                className="max-h-full max-w-full object-contain rounded-md border border-gray-200 dark:border-gray-700"
+                                className="works-modal-img"
                             />
-                        </div>
-                    )} */}
-                </div>
+                        </column>
+                    )}
 
-                {/* Footer */}
-                <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end">
-                    <button
-                        onClick={onClose}
-                        className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white rounded-md text-sm font-medium transition-colors"
-                    >
-                        Close
-                    </button>
-                </div>
-            </div>
+
+
+                    {work.repo && (
+                        <row style={{ alignItems: 'center', gap: '1ch', marginBottom: '1lh' }}>
+                            <FaGithub className="works-modal-repo-icon" />
+                            <a
+                                href={`https://github.com/${work.repo}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="works-modal-repo-link"
+                            >
+                                {work.repo}
+                            </a>
+                        </row>
+                    )}
+
+                    <column style={{ marginBottom: '1lh' }}>
+                        <ReactMarkdown
+                            components={{
+                                a: ({ node, children, ...props }) => (
+                                    <a {...props} className="works-modal-markdown-link" target="_blank" rel="noreferrer">
+                                        {children}
+                                    </a>
+                                ),
+                                p: ({ node, children, ...props }) => <p {...props} className="works-modal-markdown-p">{children}</p>,
+                            }}
+                        >
+                            {work.desc}
+                        </ReactMarkdown>
+                    </column>
+
+
+                    {work.relatedlinks && work.relatedlinks.length > 0 && (
+                        <column style={{ marginBottom: '1lh' }}>
+                            <div style={{ fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5lh' }}>Related Links</div>
+                            {work.relatedlinks.map((link, index) => (
+                                <div key={index}>
+                                    <a
+                                        href={link}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="works-modal-link"
+                                    >
+                                        {link} →
+                                    </a>
+                                </div>
+                            ))}
+                        </column>
+                    )}
+
+                </column>
+            </column>
         </div>
-    )
+    );
+
+    return createPortal(modalContent, document.body);
 }
 
-export default function Works({ title, path, defaultVisibleCount = 6 }) {
+export default function Works({ title, path, defaultVisibleCount = 6, compact = false }) {
     const [works, setWorks] = useState({})
     const [selectedWork, setSelectedWork] = useState(null)
     const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
@@ -205,12 +139,16 @@ export default function Works({ title, path, defaultVisibleCount = 6 }) {
             .then((data) => {
                 setWorks(data)
                 setIsLoading(false)
+                // If defaultVisibleCount is null, show all works
+                if (defaultVisibleCount === null) {
+                    setVisibleCount(Object.keys(data).length)
+                }
             })
             .catch((error) => {
                 console.error("Error loading works:", error)
                 setIsLoading(false)
             })
-    }, [path])
+    }, [path, defaultVisibleCount])
 
     const handleWorkClick = (work) => {
         setSelectedWork(work)
@@ -221,64 +159,149 @@ export default function Works({ title, path, defaultVisibleCount = 6 }) {
     }
 
     const workEntries = Object.entries(works)
-    const hasMoreWorks = workEntries.length > visibleCount
 
-    const showMore = () => {
-        setVisibleCount(workEntries.length)
-    }
+    if (compact) {
+        return (
+            <div>
+                {isLoading ? (
+                    <div className="works-loading">Loading projects...</div>
+                ) : (
+                    <div className="works-grid-compact">
+                        {workEntries.slice(0, visibleCount).map(([index, work]) => (
+                            <div
+                                key={index}
+                                box-="square"
+                                shear-="top"
+                                className="works-card"
+                                onClick={() => handleWorkClick(work)}
+                            >
+                                <span is-="badge" variant-="foreground0"
+                                    style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                    {work.title}
+                                </span>
 
-    const showLess = () => {
-        setVisibleCount(defaultVisibleCount)
+                                <div className="works-card-content">
+                                    <div className="works-card-period">{work.period}</div>
+                                    
+                                    {work.img && (
+                                        <div className="works-card-image-container">
+                                            <img
+                                                src={work.img}
+                                                alt={work.title}
+                                                className="works-card-image"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-description">
+                                        {work.short_desc || work.desc || 'No description available'}
+                                    </div>
+
+                                    {work.repo && (
+                                        <div className="works-card-repo">
+                                            <FaGithub className="works-card-repo-icon" />
+                                            <a
+                                                href={`https://github.com/${work.repo}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="works-card-repo-link"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {work.repo}
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-tags">
+                                        {work.tags?.map((tag, i) => (
+                                            <Tag key={i}>{tag}</Tag>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {selectedWork && (
+                    <WorkModal
+                        work={selectedWork}
+                        open={!!selectedWork}
+                        onClose={handleCloseModal}
+                    />
+                )}
+            </div>
+        )
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
-                <h1 className="text-4xl  font-bold text-blue-700 dark:text-blue-400 mb-2">{title}</h1>
-                <p className="text-gray-600 dark:text-gray-400">Click on any project to view details</p>
-            </div>
+        <div className="works-container">
+            {title && !compact && (
+                <div className="works-header">
+                    <h1 className="works-title">{title}</h1>
+                    <p className="works-subtitle">Click on any project to view details</p>
+                </div>
+            )}
 
             {isLoading ? (
-                <div className="grid grid-cols-1 gap-6 animate-pulse">
-                    {[...Array(3)].map((_, i) => (
-                        <div key={i} className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
-                    ))}
-                </div>
+                <div className="works-loading">Loading projects...</div>
             ) : (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="works-grid">
                         {workEntries.slice(0, visibleCount).map(([index, work]) => (
-                            <WorkCard
+                            <div
                                 key={index}
-                                work={work}
+                                box-="square"
+                                shear-="top"
+                                className="works-card"
                                 onClick={() => handleWorkClick(work)}
-                            />
+                            >
+                                <span is-="badge" variant-="foreground0"
+                                    style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                    {work.title}
+                                </span>
+
+                                <div className="works-card-content">
+                                    <div className="works-card-period">{work.period}</div>
+                                    
+                                    {work.img && (
+                                        <div className="works-card-image-container">
+                                            <img
+                                                src={work.img}
+                                                alt={work.title}
+                                                className="works-card-image"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-description">
+                                        {work.short_desc || work.desc || 'No description available'}
+                                    </div>
+
+                                    {work.repo && (
+                                        <div className="works-card-repo">
+                                            <FaGithub className="works-card-repo-icon" />
+                                            <a
+                                                href={`https://github.com/${work.repo}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="works-card-repo-link"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {work.repo}
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-tags">
+                                        {work.tags?.map((tag, i) => (
+                                            <Tag key={i}>{tag}</Tag>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         ))}
                     </div>
-
-                    {hasMoreWorks && (
-                        <div className="flex justify-center mt-8">
-                            <button
-                                className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center group transition-colors"
-                                onClick={showMore}
-                            >
-                                Show More
-                                <ChevronDown className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                            </button>
-                        </div>
-                    )}
-
-                    {visibleCount > defaultVisibleCount && workEntries.length > defaultVisibleCount && (
-                        <div className="flex justify-center mt-4">
-                            <button
-                                className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 flex items-center group"
-                                onClick={showLess}
-                            >
-                                Show Less
-                                <ChevronUp className="ml-2 h-4 w-4 group-hover:-translate-y-0.5 transition-transform" />
-                            </button>
-                        </div>
-                    )}
 
                     {selectedWork && (
                         <WorkModal

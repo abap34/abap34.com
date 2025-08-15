@@ -37,3 +37,4 @@ public/cv/main.fls
 public/tfidf_cache.pkl
 *.pyc
 *.pkl
+/build
