@@ -1067,13 +1067,12 @@ table tbody tr:hover {
   
   /* Better button sizing on mobile */
   button {
-    min-height: 44px; /* iOS accessibility guideline */
     padding: 0.5rem 1rem;
   }
   
   /* Better link targets on mobile */
   a {
-    min-height: 44px;
+    /* min-height: 44px; */
     display: inline-flex;
     align-items: center;
   }
