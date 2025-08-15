@@ -1057,7 +1057,7 @@ table tbody tr:hover {
   
   /* Better spacing for mobile */
   .page-wrapper {
-    padding: 0.5rem;
+    padding: 0rem;
   }
   
   /* Ensure content doesn't overflow */
