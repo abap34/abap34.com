@@ -89,7 +89,7 @@ export default function Sidebar() {
                         className="sidebar-select"
                     >
                         <option value="ja">Japanese</option>
-                        <option value="en">English</option>
+                        <option value="en">English (machine translation)</option>
                     </select>
                 </div>
             </div>
