@@ -196,40 +196,50 @@
 
 .works-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: 1ch;
     grid-template-columns: 1fr;
+    align-items: stretch; /* カード高さを揃える */
+    width: 100%;
 }
 
 @media (min-width: 768px) {
     .works-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (min-width: 1024px) {
     .works-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1440px) {
+    .works-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
 .works-grid-compact {
     display: grid;
-    gap: 1.5rem;
+    gap: 1ch;
     grid-template-columns: 1fr;
+    align-items: stretch; /* カード高さを揃える */
+    width: 100%;
 }
 
-.works-table-row {
-    cursor: pointer;
+@media (min-width: 768px) {
+    .works-grid-compact {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
-.works-table-title {
-    font-weight: 700;
-    color: var(--accent0);
+@media (min-width: 1024px) {
+    .works-grid-compact {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
-.works-table-period {
-    font-size: 0.875rem;
-}
 
 .works-modal-overlay {
     position: fixed;

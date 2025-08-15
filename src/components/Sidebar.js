@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
+import SidebarContext from '../context/SidebarContext';
 import './Sidebar.css';
 
 export default function Sidebar() {
     const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const [isDark, setIsDark] = useState(isDarkOS);
     const { language, toggleLanguage } = useContext(LanguageContext);
+    const { setIsOpen } = useContext(SidebarContext);
     const location = useLocation();
 
     useEffect(() => {
@@ -22,21 +24,28 @@ export default function Sidebar() {
     const linkClass = (path) =>
         `sidebar-link ${location.pathname === path ? 'active' : ''}`;
 
+    const handleLinkClick = () => {
+        // モバイルでページ遷移時にサイドバーを閉じる
+        if (window.innerWidth <= 768) {
+            setIsOpen(false);
+        }
+    };
+
     return (
         <nav className="sidebar">
             <div className="sidebar-navigation">
                 <div className="sidebar-title">abap34.com/</div>
                 <div className="sidebar-links">
-                    <Link to="/" className={linkClass('/')}>
+                    <Link to="/" className={linkClass('/')} onClick={handleLinkClick}>
                         ├─ About
                     </Link>
-                    <Link to="/background" className={linkClass('/background')}>
+                    <Link to="/background" className={linkClass('/background')} onClick={handleLinkClick}>
                         ├─ Background
                     </Link>
-                    <Link to="/works" className={linkClass('/works')}>
+                    <Link to="/works" className={linkClass('/works')} onClick={handleLinkClick}>
                         ├─ Works
                     </Link>
-                    <Link to="/blog" className={linkClass('/blog')}>
+                    <Link to="/blog" className={linkClass('/blog')} onClick={handleLinkClick}>
                         └─ Blog
                     </Link>
                 </div>

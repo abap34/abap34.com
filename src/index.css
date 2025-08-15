@@ -98,7 +98,7 @@ a:hover {
   --line-height: 1.3;
   --font-weight-bold: 700;
   --font-weight-normal: 400;
-  --font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  --font-family: ui-monospace, "SF Mono", "Consolas", "Menlo", "Monaco", "Courier New", monospace;
   --box-border-color: var(--foreground2);
   --table-border-color: var(--box-border-color);
   --separator-color: var(--box-border-color);
@@ -774,39 +774,146 @@ textarea:focus {
 }
 
 
-/* Terminal Table */
-.terminal-table {
+/* WebTUI Table Customization for Search/Blog */
+table {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid var(--foreground2);
-  border-radius: 0.25rem;
-  overflow: hidden;
+  font-family: var(--font-family);
+  overflow-x: auto;
 }
 
-.terminal-table th {
-  background-color: var(--background2);
-  border-bottom: 1px solid var(--foreground2);
+table th {
   padding: 0.75rem;
   text-align: left;
   font-weight: var(--font-weight-bold);
-  color: var(--foreground0);
-  font-family: var(--font-family);
+  white-space: nowrap;
 }
 
-.terminal-table td {
+table td {
   padding: 0.75rem;
-  border-bottom: 1px solid var(--foreground2);
-  font-family: var(--font-family);
-  color: var(--foreground1);
+  vertical-align: middle;
 }
 
-.terminal-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.terminal-table tbody tr:hover {
+table tbody tr:hover {
   background-color: var(--background1);
+}
+
+/* WebTUI Works Card Styling */
+.works-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1lh;
+  height: 100%; /* グリッドアイテムの高さを100%に */
+  width: 100%; /* グリッドアイテムの幅を100%に */
+  min-width: 0; /* 内容が長い場合の幅オーバーフローを防ぐ */
+}
+
+.works-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.works-card-period {
+  font-size: 0.75rem;
+  color: var(--foreground2);
+  font-weight: normal;
+  margin-bottom: 0.5lh;
+}
+
+.works-card-content {
+  gap: 0.125lh;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* カード内でコンテンツ部分を伸縮させる */
+  padding: 0.5lh 1ch; /* WebTUI準拠のパディング */
+}
+
+.works-card-image-container {
+  margin-bottom: 0.125lh;
+  flex: 1; /* 残りスペースを全て画像が使用 */
+  display: flex;
+  min-height: 0;
+}
+
+.works-card-image {
+  width: 100%;
+  height: 100%; /* 固定値をやめて100%に */
+  object-fit: cover;
+  border-radius: 0;
+  border: 1px solid var(--foreground2);
+  background-color: var(--background1);
+  flex: 1;
+}
+
+.works-card-description {
+  font-size: 0.8rem;
+  color: var(--foreground1);
+  line-height: 1.3;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.works-card-repo {
+  align-items: center;
+  gap: 0.5ch;
+  display: flex;
+  flex-direction: row;
+  min-width: 0;
+}
+
+.works-card-repo-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent0);
+  flex-shrink: 0;
+}
+
+.works-card-repo-link {
+  color: var(--accent0);
+  text-decoration: none;
+  font-size: 0.8rem;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.works-card-repo-link:hover {
+  text-decoration: underline;
+}
+
+.works-card-tags {
+  flex-wrap: wrap;
+  gap: 0.5ch;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Mobile responsiveness for tables */
+@media (max-width: 768px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  table th,
+  table td {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  table td {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* WebTUI Section Separator */
@@ -937,6 +1044,50 @@ textarea:focus {
 @media (min-width: 640px) {
   .sm\:block {
     display: block;
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  /* Improve readability on mobile */
+  body {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  
+  /* Better spacing for mobile */
+  .page-wrapper {
+    padding: 0.5rem;
+  }
+  
+  /* Ensure content doesn't overflow */
+  .app-content {
+    overflow-x: hidden;
+  }
+  
+  /* Better button sizing on mobile */
+  button {
+    min-height: 44px; /* iOS accessibility guideline */
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Better link targets on mobile */
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  /* Improve WebTUI box responsiveness */
+  [box-] {
+    margin: 0.5rem 0;
+  }
+  
+  /* Better modal sizing on mobile */
+  .works-modal-content {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 1rem auto;
   }
 }
 

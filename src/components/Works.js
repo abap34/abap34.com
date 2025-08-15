@@ -166,42 +166,60 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                 {isLoading ? (
                     <div className="works-loading">Loading projects...</div>
                 ) : (
-                    <div className="terminal-table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Project</th>
-                                    <th>Period</th>
-                                    <th>Tags</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {workEntries.slice(0, visibleCount).map(([index, work]) => (
-                                    <tr
-                                        key={index}
-                                        className="works-table-row"
-                                        onClick={() => handleWorkClick(work)}
-                                    >
-                                        <td className="works-table-title">{work.title}</td>
-                                        <td className="works-table-period">{work.period}</td>
-                                        <td>
-                                            <div className="works-table-tags">
-                                                {work.tags?.slice(0, 2).map((tag, i) => (
-                                                    <Tag
-                                                        key={i}
-                                                        is-="badge"
-                                                        variant-="foreground1"
-                                                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
-                                                    >
-                                                        {tag}
-                                                    </Tag>
-                                                ))}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="works-grid-compact">
+                        {workEntries.slice(0, visibleCount).map(([index, work]) => (
+                            <div
+                                key={index}
+                                box-="square"
+                                shear-="top"
+                                className="works-card"
+                                onClick={() => handleWorkClick(work)}
+                            >
+                                <span is-="badge" variant-="foreground0"
+                                    style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                    {work.title}
+                                </span>
+
+                                <div className="works-card-content">
+                                    <div className="works-card-period">{work.period}</div>
+                                    
+                                    {work.img && (
+                                        <div className="works-card-image-container">
+                                            <img
+                                                src={work.img}
+                                                alt={work.title}
+                                                className="works-card-image"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-description">
+                                        {work.short_desc || work.desc || 'No description available'}
+                                    </div>
+
+                                    {work.repo && (
+                                        <div className="works-card-repo">
+                                            <FaGithub className="works-card-repo-icon" />
+                                            <a
+                                                href={`https://github.com/${work.repo}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="works-card-repo-link"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {work.repo}
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-tags">
+                                        {work.tags?.map((tag, i) => (
+                                            <Tag key={i}>{tag}</Tag>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 )}
 
@@ -229,54 +247,57 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                 <div className="works-loading">Loading projects...</div>
             ) : (
                 <>
-                    <div className={compact ? 'works-grid-compact' : 'works-grid'}>
+                    <div className="works-grid">
                         {workEntries.slice(0, visibleCount).map(([index, work]) => (
                             <div
                                 key={index}
+                                box-="square"
+                                shear-="top"
                                 className="works-card"
                                 onClick={() => handleWorkClick(work)}
                             >
-                                <div className="works-card-header">
-                                    <div>
-                                        <h3 className="works-card-title">{work.title}</h3>
-                                        <div className="works-card-period">{work.period}</div>
-                                    </div>
-                                    {work.img && !compact && (
-                                        <img
-                                            src={work.img}
-                                            alt={work.title}
-                                            className="works-card-image"
-                                        />
+                                <span is-="badge" variant-="foreground0"
+                                    style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                    {work.title}
+                                </span>
+
+                                <div className="works-card-content">
+                                    <div className="works-card-period">{work.period}</div>
+                                    
+                                    {work.img && (
+                                        <div className="works-card-image-container">
+                                            <img
+                                                src={work.img}
+                                                alt={work.title}
+                                                className="works-card-image"
+                                            />
+                                        </div>
                                     )}
-                                </div>
 
-                                <div className="works-card-description">
-                                    {work.short_desc}
-                                </div>
-
-                                {work.repo && (
-                                    <div className="works-card-repo">
-                                        <FaGithub className="works-card-repo-icon" />
-                                        <a
-                                            href={`https://github.com/${work.repo}`}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="works-card-repo-link"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            {work.repo}
-                                        </a>
+                                    <div className="works-card-description">
+                                        {work.short_desc || work.desc || 'No description available'}
                                     </div>
-                                )}
 
-                                <div className="works-card-tags">
-                                    {work.tags?.slice(0, 3).map((tag, i) => (
-                                        <Tag
-                                            key={i}
-                                        >
-                                            {tag}
-                                        </Tag>
-                                    ))}
+                                    {work.repo && (
+                                        <div className="works-card-repo">
+                                            <FaGithub className="works-card-repo-icon" />
+                                            <a
+                                                href={`https://github.com/${work.repo}`}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="works-card-repo-link"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                {work.repo}
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    <div className="works-card-tags">
+                                        {work.tags?.map((tag, i) => (
+                                            <Tag key={i}>{tag}</Tag>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         ))}
