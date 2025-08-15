@@ -77,11 +77,6 @@
     padding: 1.5rem;
     cursor: pointer;
     background-color: var(--background1);
-    transition: all 0.2s ease-in-out;
-}
-
-.works-card:hover {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .works-card-header {
@@ -198,7 +193,8 @@
     display: grid;
     gap: 1ch;
     grid-template-columns: 1fr;
-    align-items: stretch; /* カード高さを揃える */
+    align-items: stretch;
+    /* カード高さを揃える */
     width: 100%;
 }
 
@@ -224,7 +220,8 @@
     display: grid;
     gap: 1ch;
     grid-template-columns: 1fr;
-    align-items: stretch; /* カード高さを揃える */
+    align-items: stretch;
+    /* カード高さを揃える */
     width: 100%;
 }
 
