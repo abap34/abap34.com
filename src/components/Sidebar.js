@@ -6,7 +6,17 @@ import './Sidebar.css';
 
 export default function Sidebar() {
     const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const [isDark, setIsDark] = useState(isDarkOS);
+
+    // localStorageからテーマを取得、なければOSの設定を使用
+    const getInitialTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme !== null) {
+            return savedTheme === 'dark';
+        }
+        return isDarkOS;
+    };
+
+    const [isDark, setIsDark] = useState(getInitialTheme);
     const { language, toggleLanguage } = useContext(LanguageContext);
     const { setIsOpen } = useContext(SidebarContext);
     const location = useLocation();
@@ -19,6 +29,8 @@ export default function Sidebar() {
             document.documentElement.classList.remove('dark');
             document.documentElement.removeAttribute('data-webtui-theme');
         }
+        // テーマをlocalStorageに保存
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }, [isDark]);
 
     const linkClass = (path) =>
@@ -59,8 +71,8 @@ export default function Sidebar() {
                 <div className="sidebar-setting-group">
                     <div className="sidebar-setting-label">Theme</div>
                     <label>
-                        <input 
-                            type="checkbox" 
+                        <input
+                            type="checkbox"
                             is-="switch"
                             checked={isDark}
                             onChange={(e) => setIsDark(e.target.checked)}
