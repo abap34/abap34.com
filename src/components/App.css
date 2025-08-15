@@ -16,11 +16,12 @@
 
 .app-sidebar-mobile {
     position: fixed;
-    top: 2.5rem;
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 40;
+    padding-top: 2.5rem; /* Push content below header */
 }
 
 .app-sidebar-overlay {
@@ -34,7 +35,7 @@
 
 .app-sidebar-panel {
     position: relative;
-    width: 16rem;
+    width: 20rem; /* Increased from 16rem for better mobile usability */
     height: 100%;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     border-right: 1px solid var(--foreground2);
