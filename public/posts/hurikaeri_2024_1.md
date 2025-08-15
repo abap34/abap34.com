@@ -158,7 +158,7 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/2cb81a87e5cd097925c6b0b60b1673bba225450cc62e9aaaabdc6ef0d17267c0/lapisla-prover/lapisla-prover">
+    <img src="https://opengraph.githubassets.com/afc68be3c091e06c197c8ff8e8e7af61f5da0d76295b47b999c0267565cd7ce6/lapisla-prover/lapisla-prover">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosystem designed for everyone. Greetings! 👋</a>
     </div>
@@ -230,7 +230,7 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/d0f7217fa014955aaefc5eae68ed03306d204048ca371a9bb32725518d09edb8/abap34/almo">
+    <img src="https://opengraph.githubassets.com/0264e66c68c51ab07cf26b3b4211554ac840086a261eefe2d6dfa9e849a94f66/abap34/almo">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバ無しでのサンプルコードの実行やジャッジシステムの構築を可能にします。</a>
     </div>
