@@ -1,16 +1,16 @@
-import React from 'react';
 import { FaGithub, FaLinkedin, FaSpeakerDeck, FaTwitter } from "react-icons/fa";
+import './SocialLinks.css';
 
 const iconComponents = {
   FaGithub,
-  FaLinkedin, 
+  FaLinkedin,
   FaSpeakerDeck,
   FaTwitter
 };
 
 export function SocialLinks({ links, className = "" }) {
   return (
-    <div className={`flex space-x-4 mt-4 justify-center ${className}`}>
+    <div className={`social-links ${className}`}>
       {links.map((link) => {
         const IconComponent = iconComponents[link.icon];
         return (
@@ -20,9 +20,9 @@ export function SocialLinks({ links, className = "" }) {
             target="_blank"
             rel="noreferrer"
             aria-label={link.name}
-            className={`text-gray-600 dark:text-gray-400 transition-colors ${link.hoverColor}`}
+            className="social-link"
           >
-            <IconComponent className="w-5 h-5" />
+            <IconComponent className="social-icon" />
           </a>
         );
       })}

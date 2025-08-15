@@ -1,0 +1,171 @@
+.sidebar {
+    width: 16rem;
+    height: 100%;
+    border-right: 1px solid var(--foreground2);
+    padding: 1rem;
+    background-color: var(--background0);
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.sidebar-navigation {
+    font-family: var(--font-family);
+    line-height: 1;
+}
+
+.sidebar-title {
+    margin-bottom: 0.25rem;
+    color: var(--foreground0);
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.sidebar-links {
+    font-size: 0.75rem;
+}
+
+.sidebar-link {
+    display: block;
+    font-size: 0.875rem;
+    text-decoration: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--foreground1);
+    transition: color 0.15s ease;
+}
+
+.sidebar-link:hover {
+    color: var(--accent0);
+}
+
+.sidebar-link.active {
+    color: var(--accent0);
+}
+
+.sidebar-separator {
+    border: none;
+    border-top: 1px solid var(--foreground2);
+    margin: 1rem 0;
+}
+
+.sidebar-settings {
+    font-size: 0.875rem;
+}
+
+.sidebar-settings-title {
+    font-weight: bold;
+    color: var(--foreground0);
+    margin-bottom: 0.75rem;
+}
+
+.sidebar-setting-group {
+    margin-bottom: 1rem;
+}
+
+.sidebar-setting-label {
+    margin-bottom: 0.5rem;
+    color: var(--foreground1);
+}
+
+.sidebar-select {
+    border: 1px solid var(--foreground2);
+    border-radius: 0.25rem;
+    padding: 0.25rem;
+    background-color: var(--background0);
+    color: var(--foreground0);
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    width: 100%;
+}
+
+.sidebar-select:focus {
+    border-color: var(--accent0);
+    outline: none;
+}
+
+.sidebar-switch-small-text {
+    font-size: 0.75rem;
+}
+
+input[type="checkbox"][is-="switch"] {
+    --switch-thumb-color: var(--foreground2);
+    --switch-track-color: var(--background1);
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    position: relative;
+    width: 4ch;
+    height: 1lh;
+    min-width: initial;
+    vertical-align: text-top;
+    font-family: var(--font-family, monospace);
+    font-size: var(--font-size, 0.875rem);
+    line-height: var(--line-height, 1.5);
+    background-color: transparent;
+    outline: none;
+}
+
+input[type="checkbox"][is-="switch"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4ch;
+    height: 1lh;
+    background: var(--switch-track-color);
+}
+
+input[type="checkbox"][is-="switch"]::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2ch;
+    height: 1lh;
+    background: var(--switch-thumb-color);
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"][is-="switch"]:checked::after {
+    left: 2ch;
+    --switch-thumb-color: var(--foreground0);
+}
+
+input[type="checkbox"][is-="switch"]:disabled {
+    --switch-thumb-color: var(--background2);
+    pointer-events: none;
+}
+
+label:has(input[type="checkbox"][is-="switch"]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 1ch;
+    max-width: fit-content;
+    font-size: 0.75rem;
+}
+
+label:has(input[type="checkbox"][is-="switch"]:focus) {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.sidebar label:has(input[type="checkbox"][is-="switch"]) {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar input[type="checkbox"][is-="switch"] {
+    margin-right: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+}

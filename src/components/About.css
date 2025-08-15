@@ -1,0 +1,46 @@
+.about-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.about-post-item {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.about-post-item:not(:last-child) {
+    border-bottom: 1px solid var(--foreground2);
+}
+
+.about-post-date {
+    font-size: 0.875rem;
+    color: var(--foreground2);
+    margin-bottom: 0.25rem;
+}
+
+.about-post-tags {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.about-view-all {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.about-view-all-link {
+    text-decoration: none;
+    font-weight: 500;
+    color: var(--accent0);
+}
+
+.about-view-all-link:hover {
+    text-decoration: underline;
+}
+
+.about-loading {
+    color: var(--foreground1);
+}

@@ -242,7 +242,7 @@ ml-lecture-judge:
     - SQLite
 
 juliatokyo11:
-  title: "JuliaTokyo #11 トーク: Julia と歩く自動微分"
+  title: "Julia と歩く自動微分"
   img: /works/img/juliatokyo11.png
   repo:
   short_desc: "2024年2月に開催された JuliaTokyo #11 で発表した、 自動微分に関する資料"

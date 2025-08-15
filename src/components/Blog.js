@@ -1,7 +1,8 @@
 import { ArrowRight, TrendingUp } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaRss } from 'react-icons/fa';
 import swal from 'sweetalert2';
+import './Blog.css';
 import SearchBar from './SearchBar';
 import Tag from './Tag';
 import TagList from './TagList';
@@ -31,35 +32,46 @@ function copyRSS() {
     });
 }
 
+// 文字列の最初の 100文字を取得し、必要に応じて省略記号を追加
+function truncateContent(content) {
+    const maxLength = 100;
+    if (content.length <= maxLength) {
+        return content;
+    }
+    return content.substring(0, maxLength) + '...';
+}
+
 function BlogTimeline({ posts }) {
     return (
-        <div className="container mx-a px-2 py-8">
-            <div className="relative  mx-auto md:w-full">
+        <div className="blog-timeline-container">
+            <div className="blog-timeline">
                 <div
-                    className="absolute left-4 top-0 h-full w-1 dark:bg-blue-200 bg-blue-200"
+                    className="blog-timeline-line"
                     aria-hidden="true"
                 >
                 </div>
 
                 {posts.map((post, index) => (
-                    <div key={index} className="relative space-y-4 pl-12 mb-8">
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <div key={index} className="blog-timeline-item">
+                        <p className="blog-timeline-date">
                             {post.post_date}
                         </p>
 
-                        <a href={post.url} target="_blank" rel="noreferrer" className="border border-gray-200 rounded-lg p-4 hover:border-blue-600 transition duration-300 block">
-                            <h3 className="text-lg font-semibold mb-4 mt-2">{post.title}</h3>
+                        <div className="blog-timeline-card">
+                            <a href={post.url} target="_blank" rel="noreferrer">
+                                <h3 className="blog-timeline-card-title">{post.title}</h3>
+                            </a>
 
-                            <img src={post.thumbnail_url} alt={post.title} className="w-full h-48 object-cover rounded-lg mb-2" />
-                            <p className="text-sm text-gray-600 mb-2 truncate dark:text-gray-400">{post.content}</p>
+                            <img src={post.thumbnail_url} alt={post.title} className="blog-timeline-card-image" />
+                            <p className="blog-timeline-card-content"> {truncateContent(post.content) }</p>
 
-                            <div className="flex flex-wrap gap-2">
+                            <div className="blog-timeline-card-tags">
                                 {post.tags.map((tag, index) => (
-                                    <Tag key={index} name={tag} label={tag} />
+                                    <Tag key={index}>{tag}</Tag>
                                 ))}
                             </div>
 
-                        </a>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -95,49 +107,44 @@ export default function Blog() {
     }, [posts]);
 
     return (
-        <main className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                    <h1 className="text-4xl font-bold">
-                        <span className="text-blue-600">abap34</span>'s Blog
+        <main className="blog-container">
+            <div className="blog-header">
+                <div className="blog-header-content">
+                    <h1 className="blog-title">
+                        <span className="blog-title-accent">abap34</span>'s Blog
                     </h1>
-                    <div className="flex items-center space-x-2">
-
-
-                        <a className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-blue-400  lg:flex" href="https://www.abap34.com/search" target="_blank" rel="noreferrer">
-                            <ArrowRight className="mr-2" />
+                    <div className="blog-actions">
+                        <a is-="button" variant-="blue" href="https://www.abap34.com/search" target="_blank" rel="noreferrer">
+                            <ArrowRight />
                             View All Posts
                         </a>
 
-                        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded flex items-center space-x-2 transition duration-300 dark:bg-orange-400 hidden lg:flex" onClick={copyRSS}>
-                            <FaRss className="mr-2" />
+                        <button is-="button" variant-="orange" onClick={copyRSS} style={{ display: window.innerWidth >= 1024 ? 'inline-flex' : 'none' }}>
+                            <FaRss />
                             Copy RSS URL
                         </button>
-
                     </div>
 
-                    <div className="flex space-x-2">
+                    <div className="blog-search-section">
                         <SearchBar />
                     </div>
                 </div>
-                <div className="flex justify-center items-center">
-                    <img src="/icon.png" alt="Blog Icon" className="max-w-full h-auto" />
+                <div className="blog-header-image">
+                    <img src="/icon.png" alt="Blog Icon" className="blog-header-icon" />
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-[4fr,1fr] gap-8 md:grid-cols-1 px-0 py-4 lg:px-4">
-                <div className="space-y-8 border-gray-200 rounded-lg lg:p-2 md:p-2 dark:border-gray-700 overflow-y-hidden">
-                    <div className="flex items-center space-x-2 text-xl font-semibold">
-                        <TrendingUp className="w-8 h-8 text-green-500" />
-                        <h2 className="text-5xl font-bold"> Recent Posts </h2>
-
+            <div className="blog-content">
+                <div className="blog-posts-section">
+                    <div className="blog-posts-header">
+                        <TrendingUp className="blog-posts-icon" />
+                        <h2 className="blog-posts-title"> Recent Posts </h2>
                     </div>
 
                     <BlogTimeline posts={posts.slice(0, 10)} />
                 </div>
 
                 <TagList allTags={allTags} />
-
             </div>
         </main>
     );
