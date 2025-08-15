@@ -156,7 +156,7 @@ body {
 }
 
 /* ===============================================
-      TOC 
+      TOC
       =============================================== */
 .toc_title {
     display: none;
@@ -248,7 +248,9 @@ h5 {
 .content ul,
 .content ol,
 .content dl {
-    margin-left: 1.5rem !important;
+    margin-left: 2.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0rem !important;
 }
 
 /* 画像や動画のはみ出し対策 (特に縦長画像) */
