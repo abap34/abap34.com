@@ -736,44 +736,6 @@ textarea:focus {
   background-color: var(--background2);
 }
 
-/* WebTUI-style Terminal Layout */
-.terminal-window {
-  background-color: var(--background0);
-  border: 1px solid var(--foreground2);
-  border-radius: 0.375rem;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.terminal-header {
-  background-color: var(--background2);
-  border-bottom: 1px solid var(--foreground2);
-  padding: 0.5rem 1rem;
-  font-family: var(--font-family);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--foreground0);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.terminal-content {
-  padding: 1rem;
-  background-color: var(--background0);
-}
-
-.terminal-prompt {
-  font-family: var(--font-family);
-  color: var(--accent0);
-  margin-right: 0.5rem;
-}
-
-.terminal-prompt::before {
-  content: "$ ";
-}
-
-
 /* WebTUI Table Customization for Search/Blog */
 table {
   width: 100%;

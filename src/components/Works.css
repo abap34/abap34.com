@@ -263,6 +263,10 @@
     border-radius: 0.5rem;
 }
 
+.works-modal-content::before{
+    border: none !important;
+}
+
 .works-modal-header {
     justify-content: space-between;
     align-items: flex-start;
