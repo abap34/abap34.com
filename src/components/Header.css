@@ -10,6 +10,7 @@
 
 .header-container {
     max-width: 80rem;
+    max-height: 2rem;
     margin: 0 auto;
     padding: 0 1rem;
     display: flex;
