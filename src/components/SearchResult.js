@@ -182,9 +182,9 @@ export default function SearchResult() {
     return (
         <main className="search-container">
             <div className="search-main">
-                <div className="search-header">
+                {/* <div className="search-header">
                     <h1 className="search-header-title">Search</h1>
-                </div>
+                </div> */}
                 <SeachBar placeholder="To add a search query, type and press Enter" />
                 <div className="search-filters">
                     <span>Search for:</span>
