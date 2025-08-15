@@ -38,7 +38,7 @@
     overflow: hidden;
 }
 
-[is-~="badge"]::before {
+/* [is-~="badge"]::before {
     border-top-left-radius: 1lh;
     border-bottom-left-radius: 1lh;
 }
@@ -46,7 +46,7 @@
 [is-~="badge"]::after {
     border-top-right-radius: 1lh;
     border-bottom-right-radius: 1lh;
-}
+} */
 
 [is-~="badge"]:not([variant-]) {
     --badge-color: var(--foreground0);
