@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaTag } from 'react-icons/fa';
 import SeachBar from './SearchBar';
 import './SearchResult.css';
+import Tag from './Tag';
 import TagList from './TagList';
 
 async function fetchPosts() {
@@ -120,63 +121,6 @@ function extractDomain(url) {
     }
 }
 
-export function Post({ index, post, queries }) {
-
-    for (const query of queries) {
-        const highlighted = findHighlightedText(post.content, query);
-        if (highlighted.isMatch) {
-            return (
-                <a key={index} href={post.url} target="_blank" rel="noreferrer" className="search-post-card">
-                    <img src={post.thumbnail_url} alt={post.title} className="search-post-image" />
-                    <h3 className="search-post-title">
-                        {post.title}
-                        {post.external && (
-                            <span className="search-post-external">
-                                <ExternalLink className="search-post-external-icon" />
-                                <span className="search-post-domain">
-                                    {extractDomain(post.url)}
-                                </span>
-                            </span>
-                        )}
-                    </h3>
-                    <p className="search-post-date">{post.post_date}</p>
-                    <p className="search-post-content">
-                        {highlighted.before}
-                        <span className="search-highlight">{highlighted.match}</span>
-                        {highlighted.after}
-                        <span className="search-ellipsis">...</span>
-                    </p>
-                </a>
-            );
-        }
-    }
-
-    // 空の場合　これが返る.
-    return (
-        <a key={index}
-            href={post.url}
-            target="_blank"
-            rel="noreferrer"
-            className="search-post-card"
-        >
-            <img src={post.thumbnail_url} alt={post.title} className="search-post-image" />
-            <h3 className="search-post-title">
-                {post.title}
-                {post.external && (
-                    <span className="search-post-external">
-                        <ExternalLink className="search-post-external-icon" />
-                        <span className="search-post-domain">
-                            {extractDomain(post.url)}
-                        </span>
-                    </span>
-                )}
-            </h3>
-            <p className="search-post-date">{post.post_date}</p>
-            <p className="search-post-content">{post.content}</p>
-        </a>
-    );
-
-}
 
 // 削除可能なタグ.
 // 押すと、クエリパラメータの `tag=` にタグの配列があるので、そこから `name` のタグを削除して、ページをリロードする.
@@ -253,14 +197,42 @@ export default function SearchResult() {
                     ))}
                 </div>
                 <div className="search-count">Found <span className="search-count-number">{searchedPosts.length}</span> posts</div>
-                <div className="search-results">
+                
+                <div className="search-posts-list">
                     {searchedPosts.map((post) => (
-                        <Post key={post.url} post={post} queries={queries} index={post.url} />
+                        <div key={post.url} className="search-post-item">
+                            <div className="search-post-date">
+                                {new Date(post.post_date).toLocaleDateString('ja-JP', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit'
+                                }).replace(/\//g, '-')}
+                                {post.external && (
+                                    <span className="search-post-source">
+                                        <ExternalLink size={12} style={{marginLeft: '0.5ch', marginRight: '0.25ch'}} />
+                                        {extractDomain(post.url)}
+                                    </span>
+                                )}
+                            </div>
+                            <a href={post.url} target="_blank" rel="noreferrer" className="search-post-title-link">
+                                {post.title}
+                            </a>
+                            <div className="search-post-tags">
+                                {post.tags?.slice(0, 4).map((tag, i) => (
+                                    <Tag key={i}>{tag}</Tag>
+                                ))}
+                                {post.tags?.length > 4 && (
+                                    <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
+                                        +{post.tags.length - 4}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            <TagList allTags={allTags} header='Found Tags' className="search-sidebar" />
+            <TagList allTags={allTags} header='Tags' className="search-sidebar" />
         </main>
     );
 }

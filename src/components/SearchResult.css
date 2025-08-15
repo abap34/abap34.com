@@ -108,11 +108,69 @@
 
 .search-count {
     color: var(--foreground2);
+    margin-bottom: 2lh;
 }
 
 .search-count-number {
     font-weight: 700;
 }
+
+/* シンプルな投稿リストスタイル */
+.search-posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5lh;
+}
+
+.search-post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5lh;
+    padding-bottom: 1lh;
+    border-bottom: 1px solid var(--foreground2);
+}
+
+.search-post-item:last-child {
+    border-bottom: none;
+}
+
+.search-post-date {
+    font-size: 0.875rem;
+    color: var(--foreground2);
+    font-family: var(--font-family);
+    display: flex;
+    align-items: center;
+    gap: 0.5ch;
+}
+
+.search-post-source {
+    color: var(--foreground2);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-post-title-link {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--accent0);
+    text-decoration: none;
+    font-family: var(--font-family);
+    line-height: 1.4;
+}
+
+.search-post-title-link:hover {
+    text-decoration: underline;
+    color: var(--foreground0);
+}
+
+.search-post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5ch;
+    align-items: center;
+}
+
 
 .search-results {
     display: grid;

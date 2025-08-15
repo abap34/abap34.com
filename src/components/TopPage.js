@@ -17,49 +17,43 @@ export default function TopPage() {
 
     return (
         <main className="top-page">
-            <column className="top-page-content">
-                <column style={{ marginBottom: '1lh' }}>
+            <div className="top-page-content" style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ marginBottom: '1lh', display: 'flex', flexDirection: 'column' }}>
                     <Introduction />
-                </column>
+                </div>
 
-                <row className="top-page-grid">
-                    <column>
-                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                            <row>
-                                <span is-="badge" variant-="foreground0" 
-                                    style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
-                                    Recent Blog Posts
-                                </span>
-                            </row>
-                            <column pad-="2 1">
+                <div className="top-page-grid">
+                    <div className="top-page-grid-item">
+                        <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                            <span is-="badge" variant-="foreground0" 
+                                style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                                Recent Blog Posts
+                            </span>
+                            <div style={{ padding: '2lh 2ch' }}>
                                 <About />
-                            </column>
-                        </column>
-                    </column>
+                            </div>
+                        </div>
+                    </div>
 
-                    <column>
-                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                            <row>
-                                <span is-="badge" variant-="foreground0" 
-                                    style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
-                                    Background
-                                </span>
-                            </row>
-                            <column pad-="2 1">
+                    <div className="top-page-grid-item">
+                        <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                            <span is-="badge" variant-="foreground0" 
+                                style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                                Background
+                            </span>
+                            <div style={{ padding: '2lh 2ch' }}>
                                 <Background compact={false} />
-                            </column>
-                        </column>
-                    </column>
-                </row>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                    <row>
-                        <span is-="badge" variant-="foreground0" 
-                            style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
-                            Works
-                        </span>
-                    </row>
-                    <column pad-="2 1">
+                <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                    <span is-="badge" variant-="foreground0" 
+                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                        Works
+                    </span>
+                    <div style={{ padding: '2lh 2ch' }}>
                         <Works
                             title=""
                             path={worksFilename}
@@ -74,9 +68,9 @@ export default function TopPage() {
                                 すべての作品をみる →
                             </Link>
                         </div>
-                    </column>
-                </column>
-            </column>
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }

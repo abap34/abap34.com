@@ -16,12 +16,11 @@
 
 .app-sidebar-mobile {
     position: fixed;
-    top: 0;
+    top: 2.5rem; /* ヘッダーの下に配置 */
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 40;
-    padding-top: 2.5rem; /* Push content below header */
 }
 
 .app-sidebar-overlay {
