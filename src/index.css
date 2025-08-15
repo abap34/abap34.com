@@ -800,16 +800,10 @@ table tbody tr:hover {
 /* WebTUI Works Card Styling */
 .works-card {
   cursor: pointer;
-  transition: all 0.2s ease;
   margin-bottom: 1lh;
   height: 100%; /* グリッドアイテムの高さを100%に */
   width: 100%; /* グリッドアイテムの幅を100%に */
   min-width: 0; /* 内容が長い場合の幅オーバーフローを防ぐ */
-}
-
-.works-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .works-card-period {
@@ -1055,9 +1049,8 @@ table tbody tr:hover {
     line-height: 1.4;
   }
   
-  /* Better spacing for mobile */
   .page-wrapper {
-    padding: 0rem;
+    padding: 0.5rem;
   }
   
   /* Ensure content doesn't overflow */

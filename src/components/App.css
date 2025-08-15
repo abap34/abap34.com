@@ -49,7 +49,10 @@
 .page-wrapper {
     flex: 1;
     min-width: 0;
-    padding: 0rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 0rem;
 }
 
 @media (min-width: 768px) {

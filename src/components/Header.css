@@ -33,11 +33,6 @@
     font-size: 18px;
     font-weight: bold;
     font-family: sans-serif;
-    transition: background-color 0.15s ease;
-}
-
-.header-button:hover {
-    background-color: var(--background2);
 }
 
 .header-button+.header-button {
