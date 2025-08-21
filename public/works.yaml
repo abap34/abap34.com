@@ -198,49 +198,6 @@ abap34.com:
     - https://www.abap34.com/blog
   period: 2022
 
-DacQ-v2:
-  title: DacQ-v2
-  img: /works/img/dacq.png
-  repo: abap34/DacQ-v2
-  short_desc: Streamlit 製のデータ分析コンペティションプラットフォーム
-  desc: |
-    DacQ-v2 は、 サークルでデータ分析コンペを開催するために開発した、 Streamlit製のデータ分析コンペティションプラットフォームです。
-
-    チーム戦機能や Jupyter Notebookベースのディスカッション機能など、 基本的なデータ分析コンペの機能が実装されています。
-  lang:
-    - Python
-    - Streamlit
-    - mariaDB
-  tags:
-    - Python
-    - Streamlit
-    - Web
-    - mariaDB
-    - 機械学習
-
-  period: 2024
-  relatedlinks:
-    - https://www.abap34.com/posts/dacq.html
-
-ml-lecture-judge:
-  title: ml-lecture-judge
-  img: /works/img/ml-lecture-judge.png
-  repo: abap34/ml-lecture-judge
-  short_desc: React + FastAPI 製のオンラインジャッジシステム
-  desc: |
-    サークルで使うために開発したオンラインジャッジシステムです。
-
-    フロントは React、 バックエンドは FastAPI で実装していて、ジャッジキューを Celery で適切に管理して実行を安定して行うなどの工夫をしています。
-  lang:
-    - Python
-    - JavaScript
-  tags:
-    - Web
-    - React
-    - FastAPI
-    - Celery
-    - SQLite
-
 juliatokyo11:
   title: "Julia と歩く自動微分"
   img: /works/img/juliatokyo11.png
