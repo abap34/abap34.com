@@ -230,9 +230,9 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/0264e66c68c51ab07cf26b3b4211554ac840086a261eefe2d6dfa9e849a94f66/abap34/almo">
+    <img src="https://opengraph.githubassets.com/3b5b763da5aef69c53298e49d5d08e982b2edcda4caa9ddf8a80d519d1e471a6/abap34/almo">
     <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバ無しでのサンプルコードの実行やジャッジシステムの構築を可能にします。</a>
+         <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバを必要としないサンプルコードの実行環境やジャッジシステムを提供するページの構築を可能にします。</a>
     </div>
 </div>
 

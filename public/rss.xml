@@ -5,7 +5,20 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Fri, 15 Aug 2025 10:33:26 +0000</lastBuildDate>
+<lastBuildDate>Fri, 29 Aug 2025 10:11:01 +0000</lastBuildDate>
+<item>
+<guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
+<title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
+<link>https://abap34.com/posts/gsoc2025_final_report.html</link>
+<pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>GSoC 2025 Final Report
+This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project .
+This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure to provide powerful static analysis.
+Achievements
+Since this project was still in a very early stage, the proposal planned for me to take on a wide range of tasks in close collaboration with my mentor. In practice, I worked on a very broad set ...</description>
+</item>
+
 <item>
 <guid>https://abap34.com/posts/gsoc2025.html</guid>
 <title>Google Summer of Code に Proposal が採択されました！</title>
@@ -514,21 +527,6 @@ Rust とかで書き換えるのは個人的にありでしたが、開発メン
 
 pybind11
 &lt;a href=&quot;https://github.com/p...</description>
-</item>
-
-<item>
-<guid>https://abap34.com/posts/dacq.html</guid>
-<title>mini Kaggle を streamlit で作った</title>
-<link>https://abap34.com/posts/dacq.html</link>
-<pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-開発の経緯
-
-ギャグの人数がいるサークル用に、昨年から部内コンペ用のプラットフォームを運営しています。
-今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
-評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
-&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
 </item>
 
 </channel>
