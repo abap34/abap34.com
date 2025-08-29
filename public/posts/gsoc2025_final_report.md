@@ -70,8 +70,10 @@ Here are some of the major features contributed I made:
 
 While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. [https://github.com/aviatesk/JETLS.jl/pull/145](https://github.com/aviatesk/JETLS.jl/pull/145) and [https://github.com/aviatesk/JETLS.jl/pull/206](https://github.com/aviatesk/JETLS.jl/pull/206) and are examples of such contributions. These are small implementations, but they improve the user experience highly.
 
-The same kind of consideration was required when implementing the features described above. For instance, when implementing Go to ~, how should we decide what is actually "under the cursor"? This is not a straightforward question.
-In cases like `│func(x)` and also in cases like `func│(x)`, what the user most likely intends is—to jump to the definition of func, isn’t it? ([https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773](https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773))
+
+The same kind of consideration was required when implementing the features described above. For instance, when implementing Go to ~, how should we decide what is "under the cursor" ? This is not a straightforward question.
+In cases like `│func(x)` and also in cases like `func│(x)`, where should it go? ─ both to the definition of `func`, isn’t it?
+([https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773](https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773))
 
 
 #### Additional details
