@@ -6,7 +6,7 @@ tag: [Julia, Language Server, コンパイラ, GSoC]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://images.dog.ceo/breeds/retriever-flatcoated/n02099267_979.jpg
+ogp_url: https://abap34.com/posts/gsoc2025_final_report/image-3.png
 description: This is the final report for GSoC 2025. It summarizes the development of the Julia Language Server.
 url: https://abap34.com/posts/gsoc2025_final_report.html
 site_name: abap34's blog
@@ -73,7 +73,7 @@ While analysis and various infrastructure are important, even small UI improveme
 
 #### Additional details
 
-In addition to these, nearly 30 other PRs—including bug fixes and contributions to related packages—were merged :)
+Including to these, 27 PRs—including bug fixes and contributions to related packages—were merged :)
 
 <details>
 <summary>list</summary>
