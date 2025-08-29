@@ -34,7 +34,7 @@ Here are some of the major features contributed I made:
 
 #### Implementation of Go to Definition for methods
 
-<img src="https://private-user-images.githubusercontent.com/53076594/452608655-4c7c3571-d7f9-4f14-a431-eb794afe9ffc.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY0NTU2ODYsIm5iZiI6MTc1NjQ1NTM4NiwicGF0aCI6Ii81MzA3NjU5NC80NTI2MDg2NTUtNGM3YzM1NzEtZDdmOS00ZjE0LWE0MzEtZWI3OTRhZmU5ZmZjLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI5VDA4MTYyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM4MTg2MGM0NWVmZGRkMDgxNGJhYTNhMzU2NmZiNDIxNjIzNzkzNThhOGFmYzIyY2ViY2U4NmRjZWQzMTljOTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Vy-Osl7y1xXKAhwedXTKJP9fLUsidvhxkqMeWmBe9Vc" alt="image-1" width="600"/>
+<img src="gsoc2025_final_report/goto_method.gif" alt="image-1" width="600"/>
 
 - [https://github.com/aviatesk/JETLS.jl/pull/61](https://github.com/aviatesk/JETLS.jl/pull/61)
 - JETLS can also jump to functions defined by `@eval` macro :)
@@ -139,3 +139,5 @@ I would like to express my sincere gratitude to my mentor aviatesk and the Julia
 
 
 I will continue to contribute to the success of this project.
+
+
