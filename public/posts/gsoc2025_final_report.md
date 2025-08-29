@@ -48,7 +48,7 @@ Here are some of the major features contributed I made:
 </video>
 
 - [https://github.com/aviatesk/JETLS.jl/pull/115](https://github.com/aviatesk/JETLS.jl/pull/115)  
-- This is where JuliaLowering played a remarkable role!
+- This is where JuliaLowering played a remarkable role. It is great that such a feature can be implemented with relatively little code by leveraging JuliaLowering.
 
 #### Implementation of a basic configuration system
 
@@ -75,8 +75,9 @@ While analysis and various infrastructure are important, even small UI improveme
 
 Including to these, 27 PRs—including bug fixes and contributions to related packages—were merged :)
 
+
 <details>
-<summary>list</summary>
+<summary>merged PRs</summary>
 
 - [https://github.com/aviatesk/JETLS.jl/pull/236](https://github.com/aviatesk/JETLS.jl/pull/236)  
 - [https://github.com/JuliaStrings/InlineStrings.jl/pull/88](https://github.com/JuliaStrings/InlineStrings.jl/pull/88)  
@@ -112,7 +113,8 @@ As noted earlier, this language server leverages Julia’s new compiler infrastr
 Deepening my understanding of these systems through this development was itself a great outcome for me.
 
 It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project.
-([https://github.com/c42f/JuliaLowering.jl/pull/37](https://github.com/c42f/JuliaLowering.jl/pull/37), [https://github.com/c42f/JuliaLowering.jl/pull/41](https://github.com/c42f/JuliaLowering.jl/pull/41)).
+
+(ex: [https://github.com/c42f/JuliaLowering.jl/pull/37](https://github.com/c42f/JuliaLowering.jl/pull/37), [https://github.com/c42f/JuliaLowering.jl/pull/41](https://github.com/c42f/JuliaLowering.jl/pull/41)).
 
 
 
@@ -136,5 +138,4 @@ This project has the potential to greatly impact the Julia ecosystem, and I am p
 I would like to express my sincere gratitude to my mentor aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.
 
 
-I will continue to contribute to the success of this project!
-
+I will continue to contribute to the success of this project.
