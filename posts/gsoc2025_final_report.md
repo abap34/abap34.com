@@ -16,7 +16,7 @@ twitter_site: @abap34
 
 This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project [Development of a New Language Server for Julia](https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m).
 
-This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure to provide powerful static analysis.
+This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure.
 
 ## Achievements
 
