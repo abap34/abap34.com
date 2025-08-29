@@ -1359,7 +1359,7 @@ Implementation Plan
 Background and Relevant Experience	                   
 Related Software Projects	                             
 Availability	                                        
-</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyLKHMwQWJpi37MPBM_MkN-M7sF4yVbAozydcdkXLOKwEFmWq0IdcjFfRrHqXZQ9ocmPz346LPbDQY04xr3yYDH8zAVtn1ZxCDD7N-rXNaKUEBe-ECX2=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
+</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="responsive-card">     <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyJAJ9ogZ4D-SPHAvHHbJZ7-lFywdyQ9jcl6XQYA8tk6R5sqWwQ7lzkiUzLlq3QhwvimyeQ0Vy9OQiMhqjjr_bNP1BqUyFWNh7MASnt68E4Ui9Q9N3H7=w1200-h630-p">     <div style="margin: 0 10px 0 10px;">          <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing"">(public ver) proposal for GSoC 2025: JETLS  - Google Docs</a>     </div> </div><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"91",
     "title":"具体的にやりたいこと"
@@ -1406,7 +1406,7 @@ foo(2.0)
     "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
 });
 </script>
-<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/20053d8c494bd274cdc6023f6a559cebb2aaceaccf83a4bf6b3f976ce16314ab/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
+<h4 id="150">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="responsive-card">     <img src="https://opengraph.githubassets.com/5e1cb9fc190b440ff9c856501aa24b482c4f11e2b1fc86a1fb3c5a2b6ea8f5e4/aviatesk/JET.jl">     <div style="margin: 0 10px 0 10px;">          <a href="https://github.com/aviatesk/JET.jl"">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annotations.</a>     </div> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
 </code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
 ═════ 1 possible error found ═════
 ┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
@@ -1453,7 +1453,13 @@ foo(2.0)
                         <div class="nav-title">定数伝播の MOP 解の計算不能性の証明</div>
                     </a>
                 </div>
-<div class="nav-item nav-next"></div>
+
+                <div class="nav-item nav-next">
+                    <a href="https://abap34.com/posts/gsoc2025_final_report.html">
+                        <div class="nav-direction">次の記事 →</div>
+                        <div class="nav-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
+                    </a>
+                </div>
 </div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
@@ -1470,18 +1476,18 @@ foo(2.0)
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/juliatokyo11.html">
-                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
-                            <div class="related-date">2024/02/07</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
+                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
+                            <div class="related-date">2025/08/26</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/julia_timer.html">
-                            <div class="related-item-title">Juliaで実行時間を制限する用のタイマー</div>
-                            <div class="related-date">2023/09/24</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#競技プログラミング</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/juliatokyo11.html">
+                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
+                            <div class="related-date">2024/02/07</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
                             </a>
                     </div>
 </div>
@@ -1528,18 +1534,18 @@ foo(2.0)
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/juliatokyo11.html">
-                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
-                            <div class="related-date">2024/02/07</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
+                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
+                            <div class="related-date">2025/08/26</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/julia_timer.html">
-                            <div class="related-item-title">Juliaで実行時間を制限する用のタイマー</div>
-                            <div class="related-date">2023/09/24</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#競技プログラミング</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/juliatokyo11.html">
+                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
+                            <div class="related-date">2024/02/07</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
                             </a>
                     </div>
 </div>

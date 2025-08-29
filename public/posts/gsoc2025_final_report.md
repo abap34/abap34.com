@@ -1,5 +1,5 @@
 ---
-title: GSoC 2025 Final Report (日本語)
+title: GSoC 2025 Final Report ─ Development of a New Language Server for Julia
 author: abap34
 date: 2025/08/26
 tag: [Julia, Language Server, コンパイラ, GSoC]
@@ -7,105 +7,134 @@ twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
 ogp_url: https://images.dog.ceo/breeds/retriever-flatcoated/n02099267_979.jpg
-description: GSoC 2025 の最終レポートです。Julia Language Serverの開発に関する内容をまとめています。
+description: This is the final report for GSoC 2025. It summarizes the development of the Julia Language Server.
 url: https://abap34.com/posts/gsoc2025_final_report.html
 site_name: abap34's blog
 twitter_site: @abap34
 ---
+## GSoC 2025 Final Report
 
-## GSoC 2025 最終レポート
+This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project [Development of a New Language Server for Julia](https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m).
 
-このブログは，
-Google Summer of Code 2025 において私が取り組んだ [Development of a New Language Server for Julia](https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m) の最終レポートです．
+This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure to provide powerful static analysis.
 
+## Achievements
 
-## プロジェクトの概要
-
-Google Summer of Codeでは、「Julia向けの新しい言語サーバーの開発」というプロジェクトに取り組みました。
-
-これは、Juliaの最新のコンパイラ基盤を活用し、
-強力な静的解析を提供する全く新しい言語サーバーを構築するという、
-非常に刺激的なプロジェクトです。
-
-この新しい言語サーバーは、JET（私のメンターであり、このプロジェクトも主導している門脇修平氏が開発）、
-JuliaSyntax.jl、JuliaLowering.jlといったツールを効果的に活用します。
-
-これにより、潜在的なバグをより効果的に検出し、正確かつ迅速な診断結果を報告し、
-そして高い保守性を維持できる言語サーバーを開発できます．
-
-## 取り組んだ成果
-
-このプロジェクトは非常に早期の段階なので，
-プロポーザルではメンターと協議して臨機応変に様々なタスクに取り組むことにしていましたが，実際に私が取り組んだものは様々な細かいものが多くなりました．
+Since this project was still in a very early stage, the proposal planned for me to take on a wide range of tasks in close collaboration with my mentor. In practice, I worked on a very broad set of features.
 
 ![](gsoc2025_final_report/image.png)
 
+The image shows some of the PRs I opened for JETLS itself.
 
-画像は私が JETLS 本体に open した PR の一部です．
+As can be seen from the number of comments, my mentor [@aviatesk](https://github.com/aviatesk) and the Julia community members put in great effort to support my contributions.
 
-そのコメントの数からわかるように，非常に多くの努力を払って私の貢献をサポートしてくれた
-メンターの aviatesk 氏をはじめとしたコミュニティの皆さんにとても感謝しています．
+### Major Contributions
 
-### 特に大きな貢献
+Here are some of the major features contributed I made:
 
-私の貢献のうち機能として大きなものはいくらかあります．
+#### Implementation of Go to Definition for methods
 
-- [local binding の Go to Definition の実装](https://github.com/aviatesk/JETLS.jl/pull/115)
-  - まさに JuliaLowering が素晴らしい役割を果たしているものです！
-  
-<!-- <video controls width="600">
+<img src="https://private-user-images.githubusercontent.com/53076594/452608655-4c7c3571-d7f9-4f14-a431-eb794afe9ffc.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY0NTU2ODYsIm5iZiI6MTc1NjQ1NTM4NiwicGF0aCI6Ii81MzA3NjU5NC80NTI2MDg2NTUtNGM3YzM1NzEtZDdmOS00ZjE0LWE0MzEtZWI3OTRhZmU5ZmZjLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI5VDA4MTYyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM4MTg2MGM0NWVmZGRkMDgxNGJhYTNhMzU2NmZiNDIxNjIzNzkzNThhOGFmYzIyY2ViY2U4NmRjZWQzMTljOTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Vy-Osl7y1xXKAhwedXTKJP9fLUsidvhxkqMeWmBe9Vc" alt="image-1" width="600"/>
+
+- [https://github.com/aviatesk/JETLS.jl/pull/61](https://github.com/aviatesk/JETLS.jl/pull/61)
+- JETLS can also jump to functions defined by `@eval` macro :)
+- In the future, we plan to extend this so that only the methods that could actually be called are suggested, based on type analysis.
+
+#### Implementation of Go to Definition for local bindings
+
+<video controls width="600">
   <source src="https://github.com/user-attachments/assets/cb924339-4475-4171-b390-db3c88ddc257" type="video/mp4">
   Your browser does not support the video tag.
-</video> -->
+</video>
+
+- [https://github.com/aviatesk/JETLS.jl/pull/115](https://github.com/aviatesk/JETLS.jl/pull/115)  
+- This is where JuliaLowering played a remarkable role!
+
+#### Implementation of a basic configuration system
+
+<img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/>
+
+- [https://github.com/aviatesk/JETLS.jl/pull/185](https://github.com/aviatesk/JETLS.jl/pull/185)
+- It also allows dynamic changes after startup.
+- In the future, We plan to [publish a schema](https://www.schemastore.org/) so that completion and validation can be provided in many editors.
+
+#### Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)
+
+![Detecting errors in dependent packages via recursive analysis](gsoc2025_final_report/image-2.png)
+
+- [https://github.com/aviatesk/JETLS.jl/pull/236](https://github.com/aviatesk/JETLS.jl/pull/236)
+- The current analysis routines of JET did not have the ability to recursively locate and analyze the source code of packages. My contribution was to extend JET with such functionality and integrate it into JETLS.
+- This required a detailed study of Julia’s package loading mechanism, which was quite challenging.
+
+#### Some UI improvements
+
+While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. [https://github.com/aviatesk/JETLS.jl/pull/206](https://github.com/aviatesk/JETLS.jl/pull/206) and [https://github.com/aviatesk/JETLS.jl/pull/145](https://github.com/aviatesk/JETLS.jl/pull/145) are examples of such contributions. These are small implementations, but they improve the user experience highly.
 
 
-- [method の Go to Definition の実装](https://github.com/aviatesk/JETLS.jl/pull/61)
-  - JETLS はマクロによって定義された関数へのジャンプもできます :)
-  
-<img src="https://private-user-images.githubusercontent.com/53076594/452608655-4c7c3571-d7f9-4f14-a431-eb794afe9ffc.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY0NTQyMDAsIm5iZiI6MTc1NjQ1MzkwMCwicGF0aCI6Ii81MzA3NjU5NC80NTI2MDg2NTUtNGM3YzM1NzEtZDdmOS00ZjE0LWE0MzEtZWI3OTRhZmU5ZmZjLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI5VDA3NTE0MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTU4NzdlNjFmNWFlNjEwYTg0MWM5YmVhNTA1NmYyMzJjMTlmMDg1YTc0ZmZlNTdmMmNhNDA3MWZlNDNkNGEzMzUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.WZqFCh8CPNXOoBrmi-7-XKKW-mX2Wau-A2tYVRXhRos" alt="image-1" width="600"/>
+#### Additional details
 
-- [LaTeX Symbol, emoji の Completion の実装](https://github.com/aviatesk/JETLS.jl/pull/31)
+In addition to these, nearly 30 other PRs—including bug fixes and contributions to related packages—were merged :)
+
+<details>
+<summary>list</summary>
+
+- [https://github.com/aviatesk/JETLS.jl/pull/236](https://github.com/aviatesk/JETLS.jl/pull/236)  
+- [https://github.com/JuliaStrings/InlineStrings.jl/pull/88](https://github.com/JuliaStrings/InlineStrings.jl/pull/88)  
+- [https://github.com/aviatesk/JETLS.jl/pull/228](https://github.com/aviatesk/JETLS.jl/pull/228)  
+- [https://github.com/c42f/JuliaLowering.jl/pull/41](https://github.com/c42f/JuliaLowering.jl/pull/41)  
+- [https://github.com/aviatesk/JETLS.jl/pull/223](https://github.com/aviatesk/JETLS.jl/pull/223)  
+- [https://github.com/c42f/JuliaLowering.jl/pull/37](https://github.com/c42f/JuliaLowering.jl/pull/37)  
+- [https://github.com/aviatesk/JETLS.jl/pull/206](https://github.com/aviatesk/JETLS.jl/pull/206)  
+- [https://github.com/aviatesk/JETLS.jl/pull/205](https://github.com/aviatesk/JETLS.jl/pull/205)  
+- [https://github.com/aviatesk/JETLS.jl/pull/185](https://github.com/aviatesk/JETLS.jl/pull/185)  
+- [https://github.com/aviatesk/JETLS.jl/pull/148](https://github.com/aviatesk/JETLS.jl/pull/148)  
+- [https://github.com/aviatesk/JETLS.jl/pull/145](https://github.com/aviatesk/JETLS.jl/pull/145)  
+- [https://github.com/aviatesk/JETLS.jl/pull/143](https://github.com/aviatesk/JETLS.jl/pull/143)  
+- [https://github.com/aviatesk/JETLS.jl/pull/139](https://github.com/aviatesk/JETLS.jl/pull/139)  
+- [https://github.com/aviatesk/JETLS.jl/pull/132](https://github.com/aviatesk/JETLS.jl/pull/132)  
+- [https://github.com/aviatesk/JETLS.jl/pull/123](https://github.com/aviatesk/JETLS.jl/pull/123)  
+- [https://github.com/aviatesk/JETLS.jl/pull/115](https://github.com/aviatesk/JETLS.jl/pull/115)  
+- [https://github.com/aviatesk/JETLS.jl/pull/104](https://github.com/aviatesk/JETLS.jl/pull/104)  
+- [https://github.com/aviatesk/JETLS.jl/pull/79](https://github.com/aviatesk/JETLS.jl/pull/79)  
+- [https://github.com/aviatesk/JETLS.jl/pull/77](https://github.com/aviatesk/JETLS.jl/pull/77)  
+- [https://github.com/aviatesk/JETLS.jl/pull/72](https://github.com/aviatesk/JETLS.jl/pull/72)  
+- [https://github.com/aviatesk/JETLS.jl/pull/69](https://github.com/aviatesk/JETLS.jl/pull/69)  
+- [https://github.com/aviatesk/JETLS.jl/pull/61](https://github.com/aviatesk/JETLS.jl/pull/61)  
+- [https://github.com/aviatesk/JETLS.jl/pull/56](https://github.com/aviatesk/JETLS.jl/pull/56)  
+- [https://github.com/aviatesk/JETLS.jl/pull/40](https://github.com/aviatesk/JETLS.jl/pull/40)  
+- [https://github.com/aviatesk/JETLS.jl/pull/31](https://github.com/aviatesk/JETLS.jl/pull/31)  
+- [https://github.com/aviatesk/JETLS.jl/pull/11](https://github.com/aviatesk/JETLS.jl/pull/11)  
+- [https://github.com/aviatesk/JETLS.jl/pull/10](https://github.com/aviatesk/JETLS.jl/pull/10)  
+
+</details>
+
+As noted earlier, this language server leverages Julia’s new compiler infrastructure.
+Deepening my understanding of these systems through this development was itself a great outcome for me.
+
+It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project.
+([https://github.com/c42f/JuliaLowering.jl/pull/37](https://github.com/c42f/JuliaLowering.jl/pull/37), [https://github.com/c42f/JuliaLowering.jl/pull/41](https://github.com/c42f/JuliaLowering.jl/pull/41)).
 
 
-<!-- <video controls width="600">
-<source src="https://github.com/user-attachments/assets/0ee649ae-5404-4553-8b12-fe0858cd60fc" type="video/mp4">
-Your browser does not support the video tag.
-</video> -->
+
+My understanding of both the Julia compiler and JET.jl has also grown significantly.
+
+In particular, the many discussions I had with aviatesk about “virtual global execution” in this LS were crucial to its development.
+
+#### Remaining work
+
+As described in the [roadmap in README.md](https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap), JETLS already supports a variety of features. Beyond error detection, it also includes formatting and an excellent test runner.
+(⚠️ Clarification: This section describes overall LS progress, not just my own contributions.)
 
 
-- [基本的な Configuration System の実装](https://github.com/aviatesk/JETLS.jl/pull/185)
+However, there are still major challenges in performance and stability before it becomes practical. I am highly interested in addressing these, including applying known techniques for faster startup and researching cache strategies best suited to this LS.
 
-<!-- <img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/> -->
+## Conclusion
 
-
-- [再帰的な解析機能の実装 (WIP ですが終わりが近いです．この blog が publish される頃には完了しているかもしれません)](https://github.com/aviatesk/JETLS.jl/pull/236)
-
-<figure>
-
-<img src="gsoc2025_final_report/image-2.png" alt="image-2" width="600"/>
-
-<figcaption>図: 再帰的な解析機能のデモ</figcaption>
-</figure>
+This project has the potential to greatly impact the Julia ecosystem, and I am proud to be part of it.
 
 
-#### そのほかの詳細
+I would like to express my sincere gratitude to my mentor aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.
 
-概要でも述べたように，この Language Server は Julia の新しいコンパイラインフラを活用しています．
-これらは非常に素晴らしく， Language Server 開発において本当に素晴らしいものです．
 
-これらも依然として活発に開発が行われている最中であり，まだ不安定なところもあります．
-Language Server の開発を通してこれらへの理解を深められたことも私にとっては素晴らしいことでした．
+I will continue to contribute to the success of this project!
 
-プロジェクトの最中には， Language Server の開発中に気がついた複数のバグの修正パッチを送信できたこと [https://github.com/c42f/JuliaLowering.jl/pull/37](https://github.com/c42f/JuliaLowering.jl/pull/37), [https://github.com/c42f/JuliaLowering.jl/pull/41](https://github.com/c42f/JuliaLowering.jl/pull/41) は非常に良かったと思います．
-
-他にも， Julia コンパイラおよび JET.jl についても非常に理解が深まりました．
-とくに，この LS における 「グローバルな実行」について aviatesk 氏と多く議論できたことは LS 開発において非常に重要なことでした．
-
-#### LS の現状
-
-⚠️ このセクションは私の貢献だけではなく，この LS に興味を持ってくれた人のための LS 全体の進歩について書いたものです．
-
-[README.md のロードマップ](https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap) にあるように， 
-JETLS はすでに様々な機能をサポートしています．エラーの検出はもちろん，フォーマットや素晴らしいテストランナーも組み込まれています．
-
-実用にはまだパフォーマンスや安定性で非常に大きな課題がありますが，多くの進歩がう

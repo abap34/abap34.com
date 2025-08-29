@@ -16,15 +16,15 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title>gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</title>
+    <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
 
     <!-- OGP / Twitter 用のメタタグ -->
-    <meta property="og:title" content="gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論">
-    <meta property="og:image" content="https://images.dog.ceo/breeds/finnish-lapphund/mochilamvan.jpg">
-    <meta property="og:description" content="gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論する話です">
-    <meta property="og:url" content="https://abap34.com/posts/grpc_ml.html">
+    <meta property="og:title" content="GSoC 2025 Final Report ─ Development of a New Language Server for Julia">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/retriever-flatcoated/n02099267_979.jpg">
+    <meta property="og:description" content="This is the final report for GSoC 2025. It summarizes the development of the Julia Language Server.">
+    <meta property="og:url" content="https://abap34.com/posts/gsoc2025_final_report.html">
     <meta property="og:type" content="article">
-    <meta property="og:site_name" content="abap34.com">
+    <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@abap34" />
@@ -1269,7 +1269,7 @@ body.dark-mode .similarity-source {
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
             <a href="https://abap34.com" class="header-logo">abap34.com</a>
-            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/grpc_ml.html">/gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/gsoc2025_final_report.html">/GSoC 2025 Final Report ─ Development of a New Language Server for Julia</a>
         </div>
 
         <!-- トグルボタンとツイートボタンをグループ化 -->
@@ -1279,7 +1279,7 @@ body.dark-mode .similarity-source {
             <!-- ツイートボタン -->
             <div class="tweet-button">
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-text="gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論" data-url="https://abap34.com/posts/grpc_ml.html" data-via="@abap34"> Tweet </a>
+                    data-text="GSoC 2025 Final Report ─ Development of a New Language Server for Julia" data-url="https://abap34.com/posts/gsoc2025_final_report.html" data-via="@abap34"> Tweet </a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
@@ -1287,12 +1287,12 @@ body.dark-mode .similarity-source {
 
 
     <div class="article-header">
-        <div class="title">gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</div>
+        <div class="title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
         <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">2023/09/30</div>
+        <div class="date">2025/08/26</div>
         <br>
-        <div class="tag-placeholder">[日記, go, web, 機械学習, python]</div>
+        <div class="tag-placeholder">[Julia, Language Server, コンパイラ, GSoC]</div>
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
@@ -1325,177 +1325,73 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <!-- メイン本文 -->
         <div class="content">
-            <br> 　<script>page_contents.push({
+            <script>page_contents.push({
     "type":"H2",
-    "id":"3",
-    "title":"推論を goでやりたい人がいる"
+    "id":"1",
+    "title":"GSoC 2025 Final Report"
 });
 </script>
-<h2 id="3">推論を goでやりたい人がいる</h2><br>世の中ではGoを使っている人が割と多く、 機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、 学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。 (しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
+<h2 id="1">GSoC 2025 Final Report</h2><br>This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project <url> <a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">Development of a New Language Server for Julia</a> </url>.<br>This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure to provide powerful static analysis.<br><script>page_contents.push({
     "type":"H2",
-    "id":"24",
-    "title":"実装"
+    "id":"10",
+    "title":"Achievements"
 });
 </script>
-<h2 id="24">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="language-text">├── api
-│   └── pred.proto
-├── cmd
-│   └── server
-├── main.go
-└── pkg
-    └── grpc
-</code></pre> </div><br>で、<span class="inline-code"> <code>pred.proto</code> </span>はこんな感じです。<br><div class="code-block"> <pre><code class="language-proto">// proto3 で書く
-syntax = &quot;proto3&quot;;
-
-// パッケージ名
-package prediction;
-
-// ここにGoの生成されたコードが置かれる
-option go_package = &quot;pkg/grpc&quot;;
-
-// Prediction というサービスは、Predict というメソッドを持って、PredictはRequestを受け取ってResponseを返す
-service Prediction {
-  rpc Predict (Request) returns (Response);
-}
-
-// Request は input_data というフィールドを持つ
-message Request {
-  string input_data = 1;
-}
-
-// Response は result というフィールドを持つ
-message Response {
-  string result = 1;
-}
-</code></pre> </div><br>え、これだけで諸々作ってくれるらしいです。天才？<br>セットアップして、<br><div class="code-block"> <pre><code class="language-bash">cd src 
-go init mypred
-sudo apt-get install protobuf-compiler
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-</code></pre> </div><br>Go用のコードを生成します。<br><div class="code-block"> <pre><code class="language-bash">cd api
-protoc --go_out=. --go-grpc_out=. pred.proto
-</code></pre> </div><br>Python用のコードを生成します。<br><br><div class="code-block"> <pre><code class="language-bash">python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
-</code></pre> </div><br>こんな感じになります。<br><div class="code-block"> <pre><code class="language-text">├── api
-│   └── pred.proto
-├── cmd
-│   └── server
-│       ├── pred_pb2.py
-│       ├── pred_pb2_grpc.py
-├── main.go
-└── pkg
-    └── grpc
-        ├── pred.pb.go
-        └── pred_grpc.pb.go
-</code></pre> </div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
+<h2 id="10">Achievements</h2><br>Since this project was still in a very early stage, the proposal planned for me to take on a wide range of tasks in close collaboration with my mentor. In practice, I worked on a very broad set of features.<br><figure><img src="gsoc2025_final_report/image.png" ><figcaption></figcaption></figure><br>The image shows some of the PRs I opened for JETLS itself.<br>As can be seen from the number of comments, my mentor <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> and the Julia community members put in great effort to support my contributions.<br><script>page_contents.push({
     "type":"H3",
-    "id":"60",
-    "title":"サーバ側"
+    "id":"23",
+    "title":"Major Contributions"
 });
 </script>
-<h3 id="60">サーバ側</h3><br><div class="code-block"> <pre><code class="language-python">from concurrent import futures
-import logging
-
-import grpc
-import pred_pb2
-import pred_pb2_grpc
-from predictor import string_to_df
-
-class PredServicer(pred_pb2_grpc.PredictionServicer):
-    def __init__(self):
-        pass
-
-    def Predict(self, request, context):
-        # == ここで推論する ==
-        data_df = string_to_df(request.input_data)
-        pred = data_df[&#39;x&#39;] + data_df[&#39;y&#39;]
-        pred_str = pred.to_csv(index=False)
-        # ==================
-        return pred_pb2.Response(result=pred_str)
-
-def serve():
-    port = 50051
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    pred_pb2_grpc.add_PredictionServicer_to_server(PredServicer(), server)
-    server.add_insecure_port(&#39;[::]:{}&#39;.format(port))
-    server.start()
-    print(&#39;start server, listening on port {}&#39;.format(port))
-    server.wait_for_termination()
-
-if __name__ == &#39;__main__&#39;:
-    logging.basicConfig()
-    serve()
-</code></pre> </div><br><script>page_contents.push({
-    "type":"H3",
-    "id":"65",
-    "title":"クライアント側"
+<h3 id="23">Major Contributions</h3><br>Here are some of the major features contributed I made:<br><script>page_contents.push({
+    "type":"H4",
+    "id":"28",
+    "title":"Implementation of Go to Definition for methods"
 });
 </script>
-<h3 id="65">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
-
-import (
-	&quot;context&quot;
-	&quot;log&quot;
-	&quot;net/http&quot;
-	&quot;io/ioutil&quot;
-
-	&quot;github.com/gorilla/mux&quot;
-	&quot;google.golang.org/grpc&quot;
-	predpb &quot;mypred/pkg/grpc&quot;
-	
-)
-
-func PredictHandler(w http.ResponseWriter, r *http.Request) {
-	// gRPCサーバーに接続
-	adress := &quot;localhost:50051&quot;
-	conn, err := grpc.Dial(adress, grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf(&quot;Failed to connect: %v&quot;, err)
-	}
-
-	defer conn.Close()
-
-	// gRPCクライアントを作成
-	c := predpb.NewPredictionClient(conn)
-
-	// リクエストボディを読み込む
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalf(&quot;Failed to read body: %v&quot;, err)
-	}
-	
-	// リクエストを作成
-	req := &amp;predpb.Request{
-		InputData: string(body),
-	}
-
-	// リクエストを送信
-	res, err := c.Predict(context.Background(), req)
-	if err != nil {
-		log.Fatalf(&quot;Failed to predict: %v&quot;, err)
-	}
-
-	// レスポンスを返す
-	w.Write([]byte(res.Result))
-}
-
-func main() {
-	r := mux.NewRouter()
-	r.HandleFunc(&quot;/predict&quot;, PredictHandler)
-	http.ListenAndServe(&quot;:8080&quot;, r)
-}
-</code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
+<h4 id="28">Implementation of Go to Definition for methods</h4><br><img src="https://private-user-images.githubusercontent.com/53076594/452608655-4c7c3571-d7f9-4f14-a431-eb794afe9ffc.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY0NTU2ODYsIm5iZiI6MTc1NjQ1NTM4NiwicGF0aCI6Ii81MzA3NjU5NC80NTI2MDg2NTUtNGM3YzM1NzEtZDdmOS00ZjE0LWE0MzEtZWI3OTRhZmU5ZmZjLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI5VDA4MTYyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM4MTg2MGM0NWVmZGRkMDgxNGJhYTNhMzU2NmZiNDIxNjIzNzkzNThhOGFmYzIyY2ViY2U4NmRjZWQzMTljOTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Vy-Osl7y1xXKAhwedXTKJP9fLUsidvhxkqMeWmBe9Vc" alt="image-1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url></li><li>JETLS can also jump to functions defined by <span class="inline-code"> <code>@eval</code> </span> macro :)</li><li>In the future, we plan to extend this so that only the methods that could actually be called are suggested, based on type analysis.</li></ul><br><script>page_contents.push({
+    "type":"H4",
+    "id":"43",
+    "title":"Implementation of Go to Definition for local bindings"
+});
+</script>
+<h4 id="43">Implementation of Go to Definition for local bindings</h4><br><video controls width="600">   <source src="https://github.com/user-attachments/assets/cb924339-4475-4171-b390-db3c88ddc257" type="video/mp4">   Your browser does not support the video tag. </video><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li>This is where JuliaLowering played a remarkable role!</li></ul><br><script>page_contents.push({
+    "type":"H4",
+    "id":"55",
+    "title":"Implementation of a basic configuration system"
+});
+</script>
+<h4 id="55">Implementation of a basic configuration system</h4><br><img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url></li><li>It also allows dynamic changes after startup.</li><li>In the future, We plan to <url> <a href="https://www.schemastore.org/">publish a schema</a> </url> so that completion and validation can be provided in many editors.</li></ul><br><script>page_contents.push({
+    "type":"H4",
+    "id":"70",
+    "title":"Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)"
+});
+</script>
+<h4 id="70">Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)</h4><br><figure><img src="gsoc2025_final_report/image-2.png" ><figcaption>Detecting errors in dependent packages via recursive analysis</figcaption></figure><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url></li><li>The current analysis routines of JET did not have the ability to recursively locate and analyze the source code of packages. My contribution was to extend JET with such functionality and integrate it into JETLS.</li><li>This required a detailed study of Julia’s package loading mechanism, which was quite challenging.</li></ul><br><script>page_contents.push({
+    "type":"H4",
+    "id":"83",
+    "title":"Some UI improvements"
+});
+</script>
+<h4 id="83">Some UI improvements</h4><br>While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url> and <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url> are examples of such contributions. These are small implementations, but they improve the user experience highly.<br><br><script>page_contents.push({
+    "type":"H4",
+    "id":"93",
+    "title":"Additional details"
+});
+</script>
+<h4 id="93">Additional details</h4><br>In addition to these, nearly 30 other PRs—including bug fixes and contributions to related packages—were merged :)<br><details> <summary>list</summary><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url>  </li><li><url> <a href="https://github.com/JuliaStrings/InlineStrings.jl/pull/88">https://github.com/JuliaStrings/InlineStrings.jl/pull/88</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/228">https://github.com/aviatesk/JETLS.jl/pull/228</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/223">https://github.com/aviatesk/JETLS.jl/pull/223</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/205">https://github.com/aviatesk/JETLS.jl/pull/205</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/148">https://github.com/aviatesk/JETLS.jl/pull/148</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/143">https://github.com/aviatesk/JETLS.jl/pull/143</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/139">https://github.com/aviatesk/JETLS.jl/pull/139</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/132">https://github.com/aviatesk/JETLS.jl/pull/132</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/123">https://github.com/aviatesk/JETLS.jl/pull/123</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/104">https://github.com/aviatesk/JETLS.jl/pull/104</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/79">https://github.com/aviatesk/JETLS.jl/pull/79</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/77">https://github.com/aviatesk/JETLS.jl/pull/77</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/72">https://github.com/aviatesk/JETLS.jl/pull/72</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/69">https://github.com/aviatesk/JETLS.jl/pull/69</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/56">https://github.com/aviatesk/JETLS.jl/pull/56</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/40">https://github.com/aviatesk/JETLS.jl/pull/40</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/31">https://github.com/aviatesk/JETLS.jl/pull/31</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/11">https://github.com/aviatesk/JETLS.jl/pull/11</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/10">https://github.com/aviatesk/JETLS.jl/pull/10</a> </url>  </li></ul><br></details><br>As noted earlier, this language server leverages Julia’s new compiler infrastructure. Deepening my understanding of these systems through this development was itself a great outcome for me.<br>It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project. (<url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>, <url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>).<br><br><br>My understanding of both the Julia compiler and JET.jl has also grown significantly.<br>In particular, the many discussions I had with aviatesk about “virtual global execution” in this LS were crucial to its development.<br><script>page_contents.push({
+    "type":"H4",
+    "id":"199",
+    "title":"Remaining work"
+});
+</script>
+<h4 id="199">Remaining work</h4><br>As described in the <url> <a href="https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap">roadmap in README.md</a> </url>, JETLS already supports a variety of features. Beyond error detection, it also includes formatting and an excellent test runner. (⚠️ Clarification: This section describes overall LS progress, not just my own contributions.)<br><br>However, there are still major challenges in performance and stability before it becomes practical. I am highly interested in addressing these, including applying known techniques for faster startup and researching cache strategies best suited to this LS.<br><script>page_contents.push({
     "type":"H2",
-    "id":"79",
-    "title":"まとめ"
+    "id":"209",
+    "title":"Conclusion"
 });
 </script>
-<h2 id="79">まとめ</h2><ul><li>gRPCでいい感じにPythonで作ったモデルをGoから呼び出せそう</li><li>機械学習の人は機械学習のことを考えてWebの人はWebできて嬉しそう</li><li>個人的にはどれくらい速度が出るのか気になります！(テストデータがクソデカなときとか)</li><ul><li>ので暇になったら調べてみます。</li></ul></ul><br><script>page_contents.push({
-    "type":"H2",
-    "id":"92",
-    "title":"今日の一曲"
-});
-</script>
-<h2 id="92">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/DeGkiItB9d8?si=GFL6bnQBYiDs7uLG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><br><br><br><br><br><div class="footnote"></div>
+<h2 id="209">Conclusion</h2><br>This project has the potential to greatly impact the Julia ecosystem, and I am proud to be part of it.<br><br>I would like to express my sincere gratitude to my mentor aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.<br><br>I will continue to contribute to the success of this project!<br><br><div class="footnote"></div>
 
             <hr>
 
@@ -1503,18 +1399,12 @@ func main() {
             <div class="article-navigation">
 
                 <div class="nav-item nav-prev">
-                    <a href="https://abap34.com/posts/caesar.html">
+                    <a href="https://abap34.com/posts/gsoc2025.html">
                         <div class="nav-direction">← 前の記事</div>
-                        <div class="nav-title">頻度分析してシーザー暗号を複合するやつは実測してみると意外とうまく行く話</div>
+                        <div class="nav-title">Google Summer of Code に Proposal が採択されました！</div>
                     </a>
                 </div>
-
-                <div class="nav-item nav-next">
-                    <a href="https://abap34.com/posts/hurikaeri_2023_0.html">
-                        <div class="nav-direction">次の記事 →</div>
-                        <div class="nav-title">2023年度前期振り返り</div>
-                    </a>
-                </div>
+<div class="nav-item nav-next"></div>
 </div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
@@ -1523,26 +1413,26 @@ func main() {
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
+                        <a href="https://abap34.com/posts/gsoc2025.html">
+                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
+                            <div class="related-date">2025/05/09</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/sakumon2.html">
-                            <div class="related-item-title">作問ハッカソン 002で作問しました </div>
-                            <div class="related-date">2024/02/17</div>
-                            <div class="related-tags"><span class="related-tag">#競プロ</span> <span class="related-tag">#traP</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/racket.html">
-                            <div class="related-item-title">DrRacketがかなりおもしろIDEだった</div>
-                            <div class="related-date">2023/10/02</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Racket</span> <span class="related-tag">#Lisp</span></div>
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 </div>
@@ -1550,10 +1440,10 @@ func main() {
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
-                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
-                            <div class="related-date">2025/08/26</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/jci_01.html">
+                            <div class="related-item-title">Julia Compiler Internals (01) - Lowering (1)</div>
+                            <div class="related-date">2024/09/20</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
                             </a>
                     </div>
 
@@ -1581,26 +1471,26 @@ func main() {
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
+                        <a href="https://abap34.com/posts/gsoc2025.html">
+                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
+                            <div class="related-date">2025/05/09</div>
+                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/sakumon2.html">
-                            <div class="related-item-title">作問ハッカソン 002で作問しました </div>
-                            <div class="related-date">2024/02/17</div>
-                            <div class="related-tags"><span class="related-tag">#競プロ</span> <span class="related-tag">#traP</span> <span class="related-tag">#日記</span></div>
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/racket.html">
-                            <div class="related-item-title">DrRacketがかなりおもしろIDEだった</div>
-                            <div class="related-date">2023/10/02</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Racket</span> <span class="related-tag">#Lisp</span></div>
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 </div>
@@ -1608,10 +1498,10 @@ func main() {
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
-                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
-                            <div class="related-date">2025/08/26</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/jci_01.html">
+                            <div class="related-item-title">Julia Compiler Internals (01) - Lowering (1)</div>
+                            <div class="related-date">2024/09/20</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
                             </a>
                     </div>
 
