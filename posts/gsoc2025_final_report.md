@@ -125,7 +125,7 @@ It was also valuable that I was able to submit bug-fix patches for that infrastr
 
 My understanding of both the Julia compiler and JET.jl has also grown significantly.
 
-In particular, the many discussions I had with aviatesk about “virtual global execution” in this LS were crucial to its development.
+In particular, the many discussions I had with @aviatesk about “virtual global execution” in this LS were crucial to its development.
 
 #### Remaining work
 
@@ -140,7 +140,7 @@ However, there are still major challenges in performance and stability before it
 This project has the potential to greatly impact the Julia ecosystem, and I am proud to be part of it.
 
 
-I would like to express my sincere gratitude to my mentor aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.
+I would like to express my sincere gratitude to my mentor @aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.
 
 
 I will continue to contribute to the success of this project.
