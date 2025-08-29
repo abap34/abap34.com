@@ -73,7 +73,7 @@ While analysis and various infrastructure are important, even small UI improveme
 
 #### Additional details
 
-In addition to these, nearly 30 other PRs—including bug fixes and contributions to related packages—were merged :)
+Including to these, 27 PRs—including bug fixes and contributions to related packages—were merged :)
 
 <details>
 <summary>list</summary>
