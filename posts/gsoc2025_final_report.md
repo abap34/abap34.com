@@ -1,7 +1,7 @@
 ---
 title: GSoC 2025 Final Report ─ Development of a New Language Server for Julia
 author: abap34
-date: 2025/08/26
+date: 2025/09/01
 tag: [Julia, Language Server, コンパイラ, GSoC]
 twitter_id: abap34
 github_id: abap34
