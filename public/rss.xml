@@ -5,12 +5,12 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Mon, 01 Sep 2025 11:47:06 +0000</lastBuildDate>
+<lastBuildDate>Mon, 01 Sep 2025 14:44:04 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
 <link>https://abap34.com/posts/gsoc2025_final_report.html</link>
-<pubDate>Tue, 26 Aug 2025 00:00:00 +0000</pubDate>
+<pubDate>Mon, 01 Sep 2025 00:00:00 +0000</pubDate>
 <author>@abap34</author>
 <description>GSoC 2025 Final Report
 This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project .
