@@ -5,7 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Fri, 29 Aug 2025 15:15:31 +0000</lastBuildDate>
+<lastBuildDate>Mon, 01 Sep 2025 11:47:06 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
@@ -14,11 +14,11 @@
 <author>@abap34</author>
 <description>GSoC 2025 Final Report
 This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project .
-This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure.
+This was an exciting project to build a  new language server that leverages Julia’s latest compiler infrastructure.
 Achievements
 Since this project was still in a very early stage, the proposal planned for me to take on a wide range of tasks in close collaboration with my mentor. In practice, I worked on a very broad set of features.
 
-The image shows some o...</description>
+The image shows some of the PRs ...</description>
 </item>
 
 <item>

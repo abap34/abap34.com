@@ -16,7 +16,7 @@ twitter_site: @abap34
 
 This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project [Development of a New Language Server for Julia](https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m).
 
-This was an exciting project to build a completely new language server that leverages Julia’s latest compiler infrastructure.
+This was an exciting project to build a  new language server that leverages Julia’s latest compiler infrastructure.
 
 ## Achievements
 
@@ -24,13 +24,13 @@ Since this project was still in a very early stage, the proposal planned for me 
 
 ![](gsoc2025_final_report/image.png)
 
-The image shows some of the PRs I opened for JETLS itself.
+The image shows some of the PRs I opened for JETLS.
 
-As can be seen from the number of comments, my mentor [@aviatesk](https://github.com/aviatesk) and the Julia community members put in great effort to support my contributions.
+As can be seen from the number of comments, my mentor [@aviatesk](https://github.com/aviatesk) and the Julia community put in great effort to support my contributions.
 
 ### Major Contributions
 
-Here are some of the major features contributed I made:
+Here are some of the major features I contributed:
 
 #### Implementation of Go to Definition for methods
 
