@@ -20,7 +20,7 @@ This was an exciting project to build a  new language server that leverages Juli
 
 ## Achievements
 
-Since this project was still in a very early stage, the proposal planned for me to take on a wide range of tasks in close collaboration with my mentor. And indeed,, I worked on a very broad set of features.
+Since the project was still at a very early stage, the proposal aimed to flexibly shift tasks in close consultation with my mentor. And indeed, I worked on a very broad set of features.
 
 ![](gsoc2025_final_report/image.png)
 
