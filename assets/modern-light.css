@@ -235,13 +235,14 @@ h5 {
 }
 
 /* インラインコードを本文と区別しやすく */
-.content code {
+.content .inline-code {
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0.1rem 0.3rem;
+    padding: 0rem 0rem;
     font-size: 0.95em;
     overflow: scroll;
+    white-space: pre;
 }
 
 /* 箇条書きの字下げ */
@@ -266,16 +267,6 @@ h5 {
     margin: 1rem auto;
 }
 
-
-/* コードブロック内の行間を広げ可読性を向上 */
-pre code {
-    display: block;
-    white-space: pre;
-    border: none;
-    background: none;
-    line-height: 1.4;
-    margin: 1rem;
-}
 
 /* テーブルのデザイン (シンプル＆見やすい) */
 table {
@@ -492,18 +483,16 @@ footer {
     margin-bottom: 0;
 }
 
-/* mathjax の要素を少し小さめに表示 */
-
-
 .math-block {
     overflow-x: auto;
     overflow-y: hidden;
+    font-size: 0.85em;
 }
 
 .math-inline {
     display: inline-grid;
     overflow: hidden !important;
-    font-size: 0.9em;
+    font-size: 0.85em;
     max-width: 100%;
 }
 
@@ -615,10 +604,6 @@ body.dark-mode .global-header {
     color: #e0e0e0 !important;
 }
 
-body.dark-mode .code {
-    background-color: #595959 !important;
-}
-
 body.dark-mode .article-header {
     color: #e0e0e0 !important;
 }
@@ -637,16 +622,12 @@ body.dark-mode .content h6 {
     border-bottom: 1px solid #555 !important;
 }
 
-body.dark-mode .content code {
+body.dark-mode .content .inline-code {
     background-color: #2d2d2d !important;
     border: 1px solid #555 !important;
     color: #e0e0e0 !important;
 }
 
-body.dark-mode pre code {
-    background-color: #2d2d2d !important;
-    color: #e0e0e0 !important;
-}
 
 body.dark-mode .content a {
     color: #8ab4f8 !important;
@@ -803,17 +784,17 @@ body.light-mode .content h6 {
     border-bottom: 1px solid #ccc !important;
 }
 
-body.light-mode .content code {
+body.light-mode .content .inline-code {
     background-color: #f6f8fa !important;
     border: 1px solid #ddd !important;
     color: #333 !important;
 }
 
-body.light-mode pre code {
-    background-color: #f6f8fa !important;
-    color: #333 !important;
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0em !important;
 }
-
 body.light-mode .content a {
     color: #80bdff !important;
 }
