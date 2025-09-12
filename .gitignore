@@ -38,3 +38,4 @@ public/tfidf_cache.pkl
 *.pyc
 *.pkl
 /build
+posts/galois_connection_and_program_analysis/proof/\#galois_connection.v\#
