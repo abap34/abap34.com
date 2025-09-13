@@ -38,6 +38,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/julia-repl.min.js"></script>
+    <script src="https://unpkg.com/highlightjs-lean/dist/lean.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/scheme.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/languages/dockerfile.min.js"></script>
     <script>hljs.highlightAll();</script>
@@ -49,7 +50,7 @@
     <script type="text/javascript" id="MathJax-script" async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-    <!-- 外部CSSを読み込む (以下が後述の style.css) -->
+    <!-- CSS -->
     <style>/* ===============================================
    Reset / Base
    =============================================== */
@@ -287,13 +288,14 @@ h5 {
 }
 
 /* インラインコードを本文と区別しやすく */
-.content code {
+.content .inline-code {
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0.1rem 0.3rem;
+    padding: 0rem 0rem;
     font-size: 0.95em;
     overflow: scroll;
+    white-space: pre;
 }
 
 /* 箇条書きの字下げ */
@@ -318,16 +320,6 @@ h5 {
     margin: 1rem auto;
 }
 
-
-/* コードブロック内の行間を広げ可読性を向上 */
-pre code {
-    display: block;
-    white-space: pre;
-    border: none;
-    background: none;
-    line-height: 1.4;
-    margin: 1rem;
-}
 
 /* テーブルのデザイン (シンプル＆見やすい) */
 table {
@@ -544,18 +536,16 @@ footer {
     margin-bottom: 0;
 }
 
-/* mathjax の要素を少し小さめに表示 */
-
-
 .math-block {
     overflow-x: auto;
     overflow-y: hidden;
+    font-size: 0.85em;
 }
 
 .math-inline {
     display: inline-grid;
     overflow: hidden !important;
-    font-size: 0.9em;
+    font-size: 0.85em;
     max-width: 100%;
 }
 
@@ -667,10 +657,6 @@ body.dark-mode .global-header {
     color: #e0e0e0 !important;
 }
 
-body.dark-mode .code {
-    background-color: #595959 !important;
-}
-
 body.dark-mode .article-header {
     color: #e0e0e0 !important;
 }
@@ -689,16 +675,12 @@ body.dark-mode .content h6 {
     border-bottom: 1px solid #555 !important;
 }
 
-body.dark-mode .content code {
+body.dark-mode .content .inline-code {
     background-color: #2d2d2d !important;
     border: 1px solid #555 !important;
     color: #e0e0e0 !important;
 }
 
-body.dark-mode pre code {
-    background-color: #2d2d2d !important;
-    color: #e0e0e0 !important;
-}
 
 body.dark-mode .content a {
     color: #8ab4f8 !important;
@@ -855,17 +837,17 @@ body.light-mode .content h6 {
     border-bottom: 1px solid #ccc !important;
 }
 
-body.light-mode .content code {
+body.light-mode .content .inline-code {
     background-color: #f6f8fa !important;
     border: 1px solid #ddd !important;
     color: #333 !important;
 }
 
-body.light-mode pre code {
-    background-color: #f6f8fa !important;
-    color: #333 !important;
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0em !important;
 }
-
 body.light-mode .content a {
     color: #80bdff !important;
 }
@@ -1632,6 +1614,120 @@ document.addEventListener("DOMContentLoaded", function() {
             applyTheme(newTheme);
             localStorage.setItem('theme', newTheme);
         });
+
+
+        // コードブロックに行数とコピー機能を追加
+        /// コードブロックに行数とコピー機能を追加（pre/code は保持）
+        (() => {
+            // 付随スタイル（必要なら一度だけ注入）
+            if (!document.getElementById('cb-ln-style')) {
+                const style = document.createElement('style');
+                style.id = 'cb-ln-style';
+                style.textContent = `
+.cb{position:relative;margin:1rem 0;border:1px solid #e0e0e0;border-radius:.4rem;overflow:hidden}
+.cb-toolbar{display:flex;justify-content:space-between;align-items:center;font:12px/1.2 ui-monospace,Menlo,Consolas,monospace;background:#f7f7f7;padding:.35rem .5rem;border-bottom:1px solid #e0e0e0}
+.cb-lang{opacity:.7}
+.cb-copy{cursor:pointer;border:0;background:#eee;padding:.25rem .5rem;border-radius:.25rem}
+.cb-copy:active{transform:translateY(1px)}
+.cb-body{display:grid;grid-template-columns:auto 1fr}
+.cb-gutter{margin:0; padding:0rem .5rem .5rem .5rem; list-style:none; counter-reset:ln; text-align:right; user-select:none; overflow:auto; border-right:1px solid #e0e0e0}
+.cb-gutter li{counter-increment:ln; line-height:1.5; font:13px/1.5 ui-monospace,Menlo,Consolas,monospace; opacity:.55}
+.cb-gutter li::before{content: counter(ln);}
+.cb-pre{margin:0; padding:.5rem .75rem; overflow:auto}
+.cb.dark{border-color:#333}
+.cb.dark .cb-toolbar{background:#2b2b2b;border-bottom-color:#333;color:#ddd}
+.cb.dark .cb-copy{background:#3a3a3a;color:#eee}
+.cb.dark .cb-gutter{border-right-color:#333}
+`;
+                document.head.appendChild(style);
+            }
+
+            const isDark = () => document.body.classList.contains('dark-mode');
+
+            document.querySelectorAll('pre > code').forEach((code) => {
+                const pre = code.parentElement;
+                if (pre.dataset.enhanced === '1') return;
+
+                // 行数を数える（テキストで数えるのでハイライトは維持）
+                const text = code.textContent.replace(/\n$/, '');
+                const lineCount = Math.max(1, text.split('\n').length);
+
+                // ラッパ生成
+                const wrapper = document.createElement('div');
+                wrapper.className = 'cb' + (isDark() ? ' dark' : '');
+
+                const toolbar = document.createElement('div');
+                toolbar.className = 'cb-toolbar';
+
+                // 言語表示（language-xxx を拾う）
+                const langClass = [...code.classList].find(c => c.startsWith('language-')) || '';
+                const lang = (langClass.replace('language-', '') || code.getAttribute('data-lang') || 'code').toUpperCase();
+                const langSpan = document.createElement('span');
+                langSpan.className = 'cb-lang';
+                langSpan.textContent = lang;
+
+                const copyBtn = document.createElement('button');
+                copyBtn.type = 'button';
+                copyBtn.className = 'cb-copy';
+                copyBtn.textContent = 'Copy';
+
+                toolbar.append(langSpan, copyBtn);
+
+                // 本体（行番号 + 既存 pre/code）
+                const body = document.createElement('div');
+                body.className = 'cb-body';
+
+                // 行番号ガター
+                const gutter = document.createElement('ol');
+                gutter.className = 'cb-gutter';
+                for (let i = 0; i < lineCount; i++) {
+                    const li = document.createElement('li');
+                    gutter.appendChild(li);
+                }
+
+                // 既存 pre を移設してクラス付与のみ
+                pre.classList.add('cb-pre');
+                const container = document.createElement('div');
+                container.appendChild(pre.cloneNode(true)); // スクロール同期のためクローンせず移動でもよい
+                // 置換時に元の pre を差し替える
+                pre.replaceWith(wrapper);
+                // wrapper 配下を構築
+                wrapper.appendChild(toolbar);
+                wrapper.appendChild(body);
+                body.appendChild(gutter);
+                body.appendChild(container.firstChild); // 元の pre
+
+                // コピー
+                copyBtn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        const prev = copyBtn.textContent;
+                        copyBtn.textContent = 'Copied';
+                        setTimeout(() => (copyBtn.textContent = prev), 1200);
+                    } catch {
+                        copyBtn.textContent = 'Failed';
+                        setTimeout(() => (copyBtn.textContent = 'Copy'), 1200);
+                    }
+                });
+
+                // スクロール同期
+                const preEl = wrapper.querySelector('pre.cb-pre');
+                const sync = () => { gutter.scrollTop = preEl.scrollTop; };
+                preEl.addEventListener('scroll', sync);
+
+                // ダークモード同期
+                const mo = new MutationObserver(() => {
+                    if (isDark()) wrapper.classList.add('dark'); else wrapper.classList.remove('dark');
+                });
+                mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+                // 完了フラグ
+                pre.dataset.enhanced = '1';
+            });
+        })();
+
+
+
     </script>
 
     </script>
