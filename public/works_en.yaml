@@ -47,7 +47,7 @@ JETLS:
   desc: |
     JETLS.jl is the next-generation Language Server for Julia.
     It utilizes the latest Julia compiler toolchain to provide advanced analysis results.
-    I am participating as a Student Contributor in Google Summer of Code.
+    As a team member, I work on the design and implementation of various features.
   lang:
     - Julia
   tags:
