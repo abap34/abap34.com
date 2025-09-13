@@ -80,6 +80,19 @@ body {
     word-wrap: break-word;
 }
 
+/* 句読点だけは日本語フォントを使う */
+@font-face {
+    font-family: "Noto Serif JP";
+    src: local("Noto Serif JP"),
+        url("https://fonts.gstatic.com/ea/notoserifjp/v6/NotoSerifJP-Regular.woff2") format("woff2"),
+        url("https://fonts.gstatic.com/ea/notoserifjp/v6/NotoSerifJP-Regular.woff") format("woff");
+    font-weight: 200;
+    font-style: normal;
+    unicode-range: U+3000-303F, U+3040-309F, U+30A0-30FF, U+FF00-FFEF, U+4E00-9FAF, U+3400-4DBF;
+}
+
+
+
 /* ===============================================
       Layout
       =============================================== */
