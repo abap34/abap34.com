@@ -28,7 +28,7 @@ JETLS:
   desc: |
     JETLS.jl は Julia の次世代 Language Server です。
     最新の Julia コンパイラツールチェインを利用して、高度な解析結果を提供します。
-    Google Summer of Code の Student Contributor として参加しています。
+    チームメンバの一人として，さまざまな機能の設計・実装を担当しています。
   lang:
     - Julia
   tags:
