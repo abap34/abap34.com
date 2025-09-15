@@ -1,6 +1,3 @@
-/* ===============================================
-   Reset / Base
-   =============================================== */
 *,
 *::before,
 *::after {
@@ -38,8 +35,6 @@ body {
     unicode-range: U+3000-303F, U+3040-309F, U+30A0-30FF, U+FF00-FFEF, U+4E00-9FAF, U+3400-4DBF;
 }
 
-
-
 /* ===============================================
       Layout
       =============================================== */
@@ -56,6 +51,7 @@ body {
     margin: 0 auto;
     padding: 0 1rem;
 }
+
 .article-body {
     display: flex;
     max-width: 1400px;
@@ -804,10 +800,11 @@ body.light-mode .content .inline-code {
 }
 
 pre code.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0em !important;
+    display: block;
+    overflow-x: auto;
+    padding: 0em !important;
 }
+
 body.light-mode .content a {
     color: #80bdff !important;
 }
