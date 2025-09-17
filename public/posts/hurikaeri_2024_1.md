@@ -158,7 +158,7 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 
 
 <div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/afc68be3c091e06c197c8ff8e8e7af61f5da0d76295b47b999c0267565cd7ce6/lapisla-prover/lapisla-prover">
+    <img src="https://opengraph.githubassets.com/377a70c19e1e007c01559c513a99fcc9314e35113f55eb2df477058c6fa05662/lapisla-prover/lapisla-prover">
     <div style="margin: 0 10px 0 10px;">
          <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosystem designed for everyone. Greetings! 👋</a>
     </div>

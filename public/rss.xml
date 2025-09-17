@@ -5,7 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Mon, 15 Sep 2025 08:43:32 +0000</lastBuildDate>
+<lastBuildDate>Wed, 17 Sep 2025 10:17:25 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
@@ -32,29 +32,6 @@ A...</description>
 あらすじ
 Google Summer of Code に Proposal が採択されました！
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;Google Summer of Code で Julia に出していた Proposal が採択されました！ 🎉🥳&lt;br&gt;&lt;br&gt;Julia の最新のコンパイラインフラを利用して、強力な静的解析を備えた新しい Language Server の機能開発をガシガシやっていきます！✊ &lt;a href=&quot;https://t.co/aEBHcSAnXa&quot;&gt;pic.twitter.com/aEBHcSAnXa&lt;/a&gt;&lt;/p&gt;&amp;mdash; abap34 (@abap34) &lt;a href=&quot;https://twitter.com/abap34/status/1920609443131412630?ref_src=twsrc%5Etfw&quot;&gt;May 8, 2025&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&quot;https://platform.twitter.co...</description>
-</item>
-
-<item>
-<guid>https://abap34.com/posts/mop_undeciable.html</guid>
-<title>定数伝播の MOP 解の計算不能性の証明</title>
-<link>https://abap34.com/posts/mop_undeciable.html</link>
-<pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-あらすじ
-データフロー解析における MOP (Meet Over Path) 解の求解は、一般には計算不能であることを用いて示します。
-MPCP (Modified Post Correspondence Problem) に帰着させることで示します。 内容は Principles of Program Analysis に載っていたものにほぼ沿っています。
-前提: MPCP
-有名な決定不能問題の一つに PCP (Post Correspondence Problem) があります。
-PCP は次のような問題です。
-
-Post Correspondence Problem
-有限な文字列の組の集合:  が与えられたとき、 次を満たす有限の添え字の列  が存在するか?
-
-
-つまり、上下に文字列が書いてある「ドミノ」を (複数回の選択を許して) 並べたとき、上と下の文字列が一致するような並べ方があるか? を判定するという問題です。
-
-この問題決定不能なのですが、少し変形した以下のような問題 MPCP (Modified Post Correspondence Problem) も決定不能で...</description>
 </item>
 
 <item>
@@ -517,6 +494,35 @@ pybind11
 今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
 評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
+</item>
+
+<item>
+<guid>https://abap34.com/posts/fork_buffer.html</guid>
+<title>forkはバッファもコピーするのでフラッシュしておこう </title>
+<link>https://abap34.com/posts/fork_buffer.html</link>
+<pubDate>Tue, 23 Apr 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>
+fork関数の挙動
+C言語では  関数を使って  システムコールを呼び出すことができます。
+
+
+こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。
+
+ところで、  したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。
+
+
+
+では次のコードはどうなるでしょうか
+
+これの出力はこうなります。
+　が二重に出力されました。
+これは  したとき、親プロセスのバッファもコピーされるためです。
+ する前にはちゃんと  しておきましょう。
+感想
+システムプログラミングの講義で先生が話していて試したら確かにそうなってへ〜〜ってなりました
+
+</description>
 </item>
 
 </channel>
