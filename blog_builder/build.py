@@ -1244,7 +1244,12 @@ class BlogBuilder:
         else:
             logger.info("TF-IDF cache found, skipping precomputation")
 
-        article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
+        # wipから始まるファイルをスキップして記事を取得
+        all_md_files = pathlib.Path("posts").glob("*.md")
+        article_paths = sorted([
+            path for path in all_md_files 
+            if not path.stem.startswith("wip")
+        ])
 
         # 第1段階: ナビゲーション抜きで全記事をビルド
         logger.info("Stage 1: Building all articles without navigation...")
@@ -1298,7 +1303,12 @@ class BlogBuilder:
         # 第2段階: 変更された記事だけでなく、影響を受ける可能性のある全記事にナビゲーションを追加
         # （前後記事の関係が変わる可能性があるため）
         logger.info("Updating navigation for all articles...")
-        all_article_paths = sorted(list(pathlib.Path("posts").glob("*.md")))
+        # wipから始まるファイルをスキップして記事を取得
+        all_md_files = pathlib.Path("posts").glob("*.md")
+        all_article_paths = sorted([
+            path for path in all_md_files 
+            if not path.stem.startswith("wip")
+        ])
         self.add_navigation_to_all_articles(all_article_paths)
 
     def initialize_posts_json(self) -> None:
@@ -1307,73 +1317,6 @@ class BlogBuilder:
         recent_posts_path = pathlib.Path("public/recent_posts.json")
         FileManager.save_json(recent_posts_path, [])
 
-
-# 以下は後方互換性のための関数群（非推奨）
-def fetch_ogp(url: str) -> Tuple[str, str]:
-    """後方互換性のための関数（非推奨）"""
-    return OGPProcessor.fetch_ogp(url)
-
-
-def load_json(path: pathlib.Path) -> Dict[str, Any]:
-    """後方互換性のための関数（非推奨）"""
-    return FileManager.load_json(path)
-
-
-def load_rawtext(ir: Dict[str, Any], result: str = "") -> str:
-    """後方互換性のための関数（非推奨）"""
-    return ContentProcessor.load_rawtext(ir, result)
-
-
-def to_outputpath(article_path: pathlib.Path) -> pathlib.Path:
-    """後方互換性のための関数（非推奨）"""
-    return ContentProcessor.to_outputpath(article_path)
-
-
-def to_interimpath(article_path: pathlib.Path) -> pathlib.Path:
-    """後方互換性のための関数（非推奨）"""
-    return ContentProcessor.to_interimpath(article_path)
-
-
-def replace_ogp_url(content: str, ignore_patterns: List[re.Pattern] = None) -> str:
-    """後方互換性のための関数（非推奨）"""
-    return OGPProcessor.replace_ogp_url(content, ignore_patterns)
-
-
-# 定数（後方互換性のため）
-CONFIG_CORRESPONDING = BlogConfig.CONFIG_MAPPING
-IGNORE_PATTERNS = OGPProcessor.IGNORE_PATTERNS
-OGP_TEMPLATE = OGPProcessor.OGP_TEMPLATE
-
-
-def build_article(config: dict, article_path: pathlib.Path) -> None:
-    """後方互換性のための関数（非推奨）"""
-    blog_config = BlogConfig(config)
-    builder = ArticleBuilder(blog_config)
-    builder.build_article(article_path)
-
-
-def process_external_articles(config: dict) -> None:
-    """後方互換性のための関数（非推奨）"""
-    processor = ExternalArticleProcessor()
-    processor.process_external_articles()
-
-
-def build(config: dict, article_paths: List[pathlib.Path]) -> None:
-    """後方互換性のための関数（非推奨）"""
-    blog_config = BlogConfig(config)
-    builder = ArticleBuilder(blog_config)
-
-    # 第1段階: ナビゲーション抜きでビルド
-    for article_path in article_paths:
-        builder.build_article(article_path, include_navigation=False)
-
-    # 外部記事処理
-    processor = ExternalArticleProcessor()
-    processor.process_external_articles()
-
-    # 第2段階: ナビゲーション追加
-    blog_builder = BlogBuilder()
-    blog_builder.add_navigation_to_all_articles(article_paths)
 
 
 def main() -> int:
