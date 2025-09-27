@@ -1,5 +1,6 @@
 """ブログビルドシステム - メインモジュール"""
 
+import argparse
 import json
 import logging
 import math
@@ -1244,12 +1245,18 @@ class BlogBuilder:
         else:
             logger.info("TF-IDF cache found, skipping precomputation")
 
-        # wipから始まるファイルをスキップして記事を取得
+        # wipから始まるファイルをスキップして記事を取得（本番環境のみ）
         all_md_files = pathlib.Path("posts").glob("*.md")
-        article_paths = sorted([
-            path for path in all_md_files 
-            if not path.stem.startswith("wip")
-        ])
+        skip_wip = os.getenv("SKIP_WIP_ARTICLES", "false").lower() == "true"
+        if skip_wip:
+            logger.info("Skipping WIP articles (SKIP_WIP_ARTICLES=true)")
+            article_paths = sorted([
+                path for path in all_md_files 
+                if not path.stem.startswith("wip")
+            ])
+        else:
+            logger.info("Including WIP articles (SKIP_WIP_ARTICLES=false or not set)")
+            article_paths = sorted(list(all_md_files))
 
         # 第1段階: ナビゲーション抜きで全記事をビルド
         logger.info("Stage 1: Building all articles without navigation...")
@@ -1303,13 +1310,42 @@ class BlogBuilder:
         # 第2段階: 変更された記事だけでなく、影響を受ける可能性のある全記事にナビゲーションを追加
         # （前後記事の関係が変わる可能性があるため）
         logger.info("Updating navigation for all articles...")
-        # wipから始まるファイルをスキップして記事を取得
+        # wipから始まるファイルをスキップして記事を取得（本番環境のみ）
         all_md_files = pathlib.Path("posts").glob("*.md")
-        all_article_paths = sorted([
-            path for path in all_md_files 
-            if not path.stem.startswith("wip")
-        ])
+        skip_wip = os.getenv("SKIP_WIP_ARTICLES", "false").lower() == "true"
+        if skip_wip:
+            all_article_paths = sorted([
+                path for path in all_md_files 
+                if not path.stem.startswith("wip")
+            ])
+        else:
+            all_article_paths = sorted(list(all_md_files))
         self.add_navigation_to_all_articles(all_article_paths)
+
+    def build_single_article(self, article_name: str, with_navigation: bool = True) -> None:
+        """特定の記事のみをビルド（開発用）"""
+        # .mdが付いていない場合は追加
+        if not article_name.endswith('.md'):
+            article_name += '.md'
+            
+        article_path = pathlib.Path("posts") / article_name
+        
+        if not article_path.exists():
+            raise BuildError(f"Article not found: {article_path}")
+            
+        logger.info(f"Building single article: {article_name}")
+        
+        # 第1段階: 記事をビルド（ナビゲーション無し）
+        self.build_articles([article_path], include_navigation=False)
+        
+        # 外部記事も処理（posts.jsonの整合性のため）
+        self.external_processor.process_external_articles()
+        
+        # 第2段階: ナビゲーションを追加（要求された場合）
+        if with_navigation:
+            logger.info("Adding navigation to the article...")
+            # 対象記事のみナビゲーション更新
+            self.add_navigation_to_all_articles([article_path])
 
     def initialize_posts_json(self) -> None:
         """posts.jsonを初期化"""
@@ -1321,10 +1357,46 @@ class BlogBuilder:
 
 def main() -> int:
     """メイン関数"""
+    parser = argparse.ArgumentParser(
+        description="ブログビルドシステム",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+使用例:
+  # 全記事ビルド
+  python3 build.py
+  
+  # 特定記事のみビルド
+  python3 build.py --article my_article.md
+  python3 build.py -a my_article
+  
+  # ナビゲーション無しで高速ビルド（開発用）
+  python3 build.py -a my_article --no-navigation
+        """
+    )
+    
+    parser.add_argument(
+        "-a", "--article",
+        type=str,
+        help="特定の記事のみをビルド（ファイル名を指定、.mdは省略可）"
+    )
+    
+    parser.add_argument(
+        "--no-navigation",
+        action="store_true",
+        help="ナビゲーションと関連記事の処理をスキップ（高速ビルド用）"
+    )
+    
+    args = parser.parse_args()
+    
     try:
         builder = BlogBuilder()
-
-        if os.getenv("REBUILD"):
+        
+        # 特定記事のビルド
+        if args.article:
+            logger.info(f"Single article build mode: {args.article}")
+            builder.build_single_article(args.article, with_navigation=not args.no_navigation)
+        # 通常の全体ビルド
+        elif os.getenv("REBUILD"):
             logger.info("Full rebuild mode")
             builder.initialize_posts_json()
             builder.build_all()
