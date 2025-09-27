@@ -1,4 +1,3 @@
-"""ブログビルドシステム - メインモジュール"""
 
 import argparse
 import json
@@ -43,15 +42,11 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 class BuildError(Exception):
-    """ビルド処理エラー"""
-
     pass
 
 
 @dataclass
 class BlogPost:
-    """ブログ記事を表すデータクラス"""
-
     title: str
     post_date: str
     url: str
@@ -63,8 +58,6 @@ class BlogPost:
 
 
 class BlogConfig:
-    """ブログ設定を管理するクラス"""
-
     CONFIG_MAPPING = {
         "overall_theme": "-t",
         "custom_css": "-c",
@@ -77,7 +70,6 @@ class BlogConfig:
         self.data = config_data
 
     def get_almo_args(self) -> List[str]:
-        """almoコマンドの引数を生成"""
         args = []
         for key, flag in self.CONFIG_MAPPING.items():
             if key in self.data:
@@ -86,8 +78,6 @@ class BlogConfig:
 
 
 class FileManager:
-    """ファイル操作を管理するクラス"""
-
     POSTS_JSON_PATH = pathlib.Path("public/posts.json")
     EXTERNAL_ARTICLES_PATH = pathlib.Path("config/external_articles.json")
     CONFIG_PATH = pathlib.Path("config/config.json")
@@ -95,7 +85,6 @@ class FileManager:
 
     @staticmethod
     def load_json(path: pathlib.Path) -> Dict[str, Any]:
-        """JSONファイルを読み込み"""
         try:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
@@ -114,7 +103,6 @@ class FileManager:
 
     @staticmethod
     def save_json(path: pathlib.Path, data: Any) -> bool:
-        """JSONファイルに保存"""
         try:
             # ディレクトリを作成
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -128,20 +116,16 @@ class FileManager:
 
     @staticmethod
     def load_posts() -> List[Dict[str, Any]]:
-        """記事一覧を読み込み"""
         return FileManager.load_json(FileManager.POSTS_JSON_PATH)
 
     @staticmethod
     def save_posts(posts: List[BlogPost]) -> bool:
-        """記事一覧を保存"""
         logger.debug(f"Saving {len(posts)} posts to {FileManager.POSTS_JSON_PATH}")
         posts_data = [post.__dict__ for post in posts]
         return FileManager.save_json(FileManager.POSTS_JSON_PATH, posts_data)
 
 
 class OGPProcessor:
-    """OGP処理を管理するクラス"""
-
     OGP_TEMPLATE = """
 <div class="responsive-card">
     <img src="{img_url}">
@@ -159,7 +143,6 @@ class OGPProcessor:
 
     @staticmethod
     def fetch_ogp(url: str) -> Tuple[str, str]:
-        """URLからOGP情報を取得"""
         if not HAS_WEB_DEPS:
             logger.warning("Web dependencies not available for OGP fetching")
             return "", url
@@ -192,7 +175,6 @@ class OGPProcessor:
     def replace_ogp_url(
         cls, content: str, ignore_patterns: List[re.Pattern] = None
     ) -> str:
-        """コンテンツ内のOGP URLを置換"""
         if ignore_patterns is None:
             ignore_patterns = cls.IGNORE_PATTERNS
 
@@ -222,11 +204,8 @@ class OGPProcessor:
 
 
 class ContentProcessor:
-    """コンテンツ処理を管理するクラス"""
-
     @staticmethod
     def load_rawtext(ir: Dict[str, Any], result: str = "") -> str:
-        """IRからテキストを抽出"""
         if "childs" in ir:
             for child in ir["childs"]:
                 result += ContentProcessor.load_rawtext(child)
@@ -239,18 +218,14 @@ class ContentProcessor:
 
     @staticmethod
     def to_outputpath(article_path: pathlib.Path) -> pathlib.Path:
-        """出力パスを生成"""
         return pathlib.Path("public/posts") / f"{article_path.stem}.html"
 
     @staticmethod
     def to_interimpath(article_path: pathlib.Path) -> pathlib.Path:
-        """中間ファイルパスを生成"""
         return pathlib.Path("public/posts") / f"{article_path.stem}.md"
 
 
 class ArticleBuilder:
-    """記事ビルド処理を管理するクラス"""
-
     def __init__(self, config: BlogConfig):
         self.config = config
         self.file_manager = FileManager()
@@ -258,7 +233,6 @@ class ArticleBuilder:
         self.ogp_processor = OGPProcessor()
 
     def copy_article_assets(self, article_path: pathlib.Path) -> None:
-        """記事のアセットファイルをコピー"""
         try:
             subprocess.run(
                 f"cp -r posts/{article_path.stem} public/posts/", shell=True, check=True
@@ -267,7 +241,6 @@ class ArticleBuilder:
             logger.warning(f"Failed to copy assets for {article_path.stem}: {e}")
 
     def process_content(self, article_path: pathlib.Path) -> str:
-        """記事コンテンツを処理"""
         content = article_path.read_text(encoding="utf-8")
         logger.debug("Processing OGP URLs...")
         content = self.ogp_processor.replace_ogp_url(content)
@@ -277,7 +250,6 @@ class ArticleBuilder:
     def build_with_almo(
         self, interim_path: pathlib.Path, output_path: pathlib.Path
     ) -> Dict[str, Any]:
-        """Almoを使用してビルド"""
         cmd = ["almo/build/almo", str(interim_path), "-o", str(output_path), "-d"]
         cmd.extend(self.config.get_almo_args())
         cmd.extend([">", "tmp.json"])
@@ -295,7 +267,6 @@ class ArticleBuilder:
     def extract_article_metadata(
         self, build_result: Dict[str, Any]
     ) -> Tuple[str, str, str, str, List[str], bool]:
-        """ビルド結果からメタデータを抽出"""
         meta = build_result.get("meta", {})
         title = meta.get("title", "")
         date = meta.get("date", "")
@@ -317,7 +288,6 @@ class ArticleBuilder:
     def build_article(
         self, article_path: pathlib.Path, include_navigation: bool = True
     ) -> None:
-        """単一記事をビルド"""
         output_path = self.content_processor.to_outputpath(article_path)
         interim_path = self.content_processor.to_interimpath(article_path)
 
@@ -363,7 +333,6 @@ class ArticleBuilder:
     def add_navigation_to_article(
         self, post: BlogPost, output_path: pathlib.Path
     ) -> None:
-        """記事にナビゲーションと関連記事を追加"""
         # ナビゲーションと関連記事の情報を取得（更新されたposts.jsonから）
         all_posts_data = self.file_manager.load_posts()
         all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
@@ -404,7 +373,6 @@ class ArticleBuilder:
         navigation_data: Dict[str, Any],
         related_data: Dict[str, Any],
     ) -> None:
-        """生成されたHTMLファイルにナビゲーションと関連記事を追加"""
         try:
             # 生成されたHTMLファイルを読み込み
             html_content = output_path.read_text(encoding="utf-8")
@@ -440,7 +408,6 @@ class ArticleBuilder:
             logger.error(f"Failed to update template with navigation: {e}")
 
     def generate_navigation_html(self, navigation_data: Dict[str, Any]) -> str:
-        """記事ナビゲーションのHTMLを生成"""
         logger.info(f"Navigation data: {navigation_data}")
 
         if not navigation_data.get("has_navigation"):
@@ -490,7 +457,6 @@ class ArticleBuilder:
         return result
 
     def generate_related_articles_html(self, related_data: Dict[str, Any]) -> str:
-        """関連記事のHTMLを生成（タグベースとTF-IDFベース分離）"""
         html = []
 
         # タグベースの関連記事
@@ -548,7 +514,6 @@ class ArticleBuilder:
         return "\n".join(html)
 
     def generate_mobile_sidebar_html(self) -> str:
-        """モバイル用サイドバーのHTMLを生成（デスクトップと同じスタイル）"""
         html = ['<div class="mobile-sidebar">']
         html.append('<div class="sidebar">')
         html.append('<ul id="mobile-toc-list"></ul>')
@@ -571,7 +536,6 @@ class ArticleBuilder:
     def generate_mobile_related_articles_html(
         self, related_data: Dict[str, Any]
     ) -> str:
-        """モバイル用関連記事のHTMLを生成（タグベースとTF-IDFベース分離）"""
         html = ['<div class="mobile-related-articles">']
 
         # タグベースの関連記事
@@ -630,7 +594,6 @@ class ArticleBuilder:
         return "\n".join(html)
 
     def update_posts_json(self, new_post: BlogPost) -> None:
-        """posts.jsonを更新"""
         posts_data = self.file_manager.load_posts()
         posts = [BlogPost(**post_data) for post_data in posts_data]
 
@@ -653,14 +616,12 @@ class ArticleBuilder:
 
 
 class ExternalArticleProcessor:
-    """外部記事処理を管理するクラス"""
 
     def __init__(self):
         self.file_manager = FileManager()
         self.ogp_processor = OGPProcessor()
 
     def process_external_articles(self) -> None:
-        """外部記事を処理"""
         external_path = self.file_manager.EXTERNAL_ARTICLES_PATH
 
         if not external_path.exists():
@@ -721,7 +682,6 @@ class ExternalArticleProcessor:
         )
 
     def create_external_post(self, article_data: Dict[str, Any]) -> Optional[BlogPost]:
-        """外部記事のBlogPostを作成"""
         url = article_data.get("url")
         if not url:
             logger.warning("External article missing URL")
@@ -758,13 +718,11 @@ class ExternalArticleProcessor:
 
 
 class NavigationHelper:
-    """記事ナビゲーション機能を管理するクラス"""
 
     @staticmethod
     def find_adjacent_articles(
         current_post: BlogPost, all_posts: List[BlogPost]
     ) -> Tuple[Optional[BlogPost], Optional[BlogPost]]:
-        """現在の記事の前後の記事を取得"""
         # 外部記事を除外し、日付順にソート
         internal_posts = [post for post in all_posts if not post.external]
         internal_posts.sort(key=lambda x: (x.post_date, x.url), reverse=True)
@@ -825,7 +783,6 @@ class NavigationHelper:
         max_count: int = 5,
         tfidf_config: Dict[str, Any] = None,
     ) -> Dict[str, List[Tuple[BlogPost, float, str]]]:
-        """シンプルなタグベース3本+TF-IDF 2本の関連記事を取得"""
         result = {"tag_based": [], "tfidf_based": []}
 
         # シンプルなタグベースの関連記事を取得（3本）
@@ -892,7 +849,6 @@ class NavigationHelper:
         tag_based_results: List[Tuple[BlogPost, float, str]],
         tfidf_config: Optional[Dict[str, Any]],
     ) -> List[Tuple[BlogPost, float, str]]:
-        """TF-IDFベースの関連記事を取得（2本）"""
         try:
             try:
                 from .precompute_vectors import VectorPrecomputer
@@ -971,7 +927,6 @@ class NavigationHelper:
         tag_based_results: List[Tuple[BlogPost, float, str]],
         count: int,
     ) -> List[Tuple[BlogPost, float, str]]:
-        """フォールバック用の記事を日付順で取得"""
         other_posts = [
             post
             for post in all_posts
@@ -987,7 +942,6 @@ class NavigationHelper:
     def _find_related_articles_by_tags_simple(
         current_post: BlogPost, all_posts: List[BlogPost], max_count: int = 5
     ) -> List[Tuple[BlogPost, float]]:
-        """シンプルなタグベース関連記事取得（共通タグがある記事のみ）"""
         # 現在の記事を除外（外部記事は除く）
         other_posts = [
             post
@@ -1047,13 +1001,11 @@ class NavigationHelper:
 
 
 class TemplateDataGenerator:
-    """テンプレート用データ生成を管理するクラス"""
 
     @staticmethod
     def generate_navigation_data(
         prev_post: Optional[BlogPost], next_post: Optional[BlogPost]
     ) -> Dict[str, Any]:
-        """ナビゲーション用データを生成"""
         return {
             "has_navigation": prev_post is not None or next_post is not None,
             "prev_post": (
@@ -1080,7 +1032,6 @@ class TemplateDataGenerator:
     def generate_related_articles_data(
         related_posts_with_scores: List[Tuple[BlogPost, float, str]]
     ) -> Dict[str, Any]:
-        """関連記事用データを生成（類似度付き、ソース情報付き）"""
         articles = []
         for item in related_posts_with_scores:
             if len(item) == 3:
@@ -1111,7 +1062,6 @@ class TemplateDataGenerator:
     def generate_related_articles_data_separated(
         related_dict: Dict[str, List[Tuple[BlogPost, float, str]]]
     ) -> Dict[str, Any]:
-        """分離された関連記事用データを生成（タグベースとTF-IDFベース別々）"""
 
         def convert_articles(articles_list):
             validated_articles = []
@@ -1160,7 +1110,6 @@ class TemplateDataGenerator:
 
 
 class BlogBuilder:
-    """ブログビルド全体を管理するメインクラス"""
 
     def __init__(self, config_path: pathlib.Path = None):
         config_path = config_path or FileManager.CONFIG_PATH
@@ -1175,7 +1124,6 @@ class BlogBuilder:
     def build_articles(
         self, article_paths: List[pathlib.Path], include_navigation: bool = True
     ) -> None:
-        """複数記事をビルド"""
         if HAS_TQDM:
             article_iter = tqdm.tqdm(
                 article_paths, desc="Building articles", unit="article"
@@ -1193,7 +1141,6 @@ class BlogBuilder:
                 logger.error(f"Failed to build {article_path}: {e}")
 
     def add_navigation_to_all_articles(self, article_paths: List[pathlib.Path]) -> None:
-        """全記事にナビゲーションと関連記事を追加"""
         logger.info("Adding navigation and related articles to all posts...")
 
         # すべての記事データを取得
@@ -1236,7 +1183,6 @@ class BlogBuilder:
                 logger.error(f"Failed to add navigation to {article_path}: {e}")
 
     def build_all(self) -> None:
-        """全記事をビルド（2段階プロセス）"""
         # ベクトルキャッシュが存在しない場合のみ事前計算
         # (GitHub Actionsでは別途事前計算ステップで実行)
         if not pathlib.Path("public/tfidf_cache.pkl").exists():
@@ -1270,7 +1216,6 @@ class BlogBuilder:
         self.add_navigation_to_all_articles(article_paths)
 
     def precompute_vectors(self) -> None:
-        """TF-IDFベクトルを事前計算"""
         try:
             from .precompute_vectors import VectorPrecomputer
         except ImportError:
@@ -1297,7 +1242,6 @@ class BlogBuilder:
         logger.info("TF-IDF vector precomputation completed")
 
     def build_changed(self, changed_files: List[str]) -> None:
-        """変更されたファイルのみビルド"""
         article_paths = [pathlib.Path(file_path) for file_path in changed_files]
 
         # 第1段階: ナビゲーション抜きで変更された記事をビルド
@@ -1323,7 +1267,6 @@ class BlogBuilder:
         self.add_navigation_to_all_articles(all_article_paths)
 
     def build_single_article(self, article_name: str, with_navigation: bool = True) -> None:
-        """特定の記事のみをビルド（開発用）"""
         # .mdが付いていない場合は追加
         if not article_name.endswith('.md'):
             article_name += '.md'
@@ -1348,7 +1291,6 @@ class BlogBuilder:
             self.add_navigation_to_all_articles([article_path])
 
     def initialize_posts_json(self) -> None:
-        """posts.jsonを初期化"""
         FileManager.save_json(FileManager.POSTS_JSON_PATH, [])
         recent_posts_path = pathlib.Path("public/recent_posts.json")
         FileManager.save_json(recent_posts_path, [])
@@ -1356,7 +1298,6 @@ class BlogBuilder:
 
 
 def main() -> int:
-    """メイン関数"""
     parser = argparse.ArgumentParser(
         description="ブログビルドシステム",
         formatter_class=argparse.RawDescriptionHelpFormatter,
