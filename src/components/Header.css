@@ -39,6 +39,20 @@
     margin-left: 0.5rem;
 }
 
+.header-language-toggle {
+    font-size: 14px;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--foreground2);
+    border-radius: 4px;
+    background-color: var(--background1);
+    transition: all 0.2s ease;
+}
+
+.header-language-toggle:hover {
+    background-color: var(--background2);
+    border-color: var(--foreground1);
+}
+
 @media (min-width: 768px) {
     .header {
         display: none;
