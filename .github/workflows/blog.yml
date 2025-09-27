@@ -87,6 +87,8 @@ jobs:
           python3 blog_builder/precompute_vectors.py
           
       - name: Generate HTML
+        env:
+          SKIP_WIP_ARTICLES: true
         run: |
           python3 blog_builder/build.py
 
