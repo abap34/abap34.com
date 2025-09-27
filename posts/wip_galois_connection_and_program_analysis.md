@@ -13,6 +13,13 @@ site_name: abap34's blog
 twitter_site: abap34
 ---
 
+:::info
+研究室でやった [Principle of Program Analysis](https://link.springer.com/book/10.1007/978-3-662-03811-6) の輪講で
+Galois 接続を使った抽象解釈の基礎づけについて学んで面白いなと思ったので，その内容を多少再構成したり，証明を納得がいくもので書き直したり， Lean で形式化したりなどしながらまとめてみます．
+
+**おかねがある人はこちらを購入することをおすすめします．**
+:::
+
 ## プログラム解析と抽象解釈，Galois 接続
 
 この記事では，プログラム解析という言葉をざっくり「(みんなが思う) ふつうの実行前にプログラムの性質を調べる技術」という意味で使います．
@@ -98,10 +105,13 @@ print(z);
 
 これからの実際にそのことを確認していきます・
 
-## Galois 接続の定義と性質
+:::info
 
 とくに断りがないときは
 - 関数は全て全域関数
+:::
+
+## Galois 接続
 
 ### 定義
 
@@ -190,11 +200,10 @@ $\mathrm{sup'}$ も下限が存在すればそれを，存在しなければ $\i
 
 です．
 
-## 性質
 
 ここからはガロア接続の諸性質を見ていきます．
 
-### γ の決定
+### γ の α による一意な決定
 
 
 ところで，初めて私が Galois 接続の定義を見たときに抱いた疑問として， $\gamma$ の役割があります．
@@ -460,6 +469,145 @@ $$
 
 :::
 
+これらを使って目標を示しましょう．
+
+:::theorem
+
+**$\alpha$ に対する $\gamma$ の一意性**
+
+半順序集合 $(L, \leq_L)$， $(M, \leq_M)$, $\alpha : L \to M$, $\gamma_1, \gamma_2 : M \to L$ に対して
+$(L, \alpha, \gamma_1, M)$ と $(L, \alpha, \gamma_2, M)$ がともに Galois 接続であるならば $\gamma_1 = \gamma_2$．
+
+さらに， $(L, \leq_L)$， $(M, \leq_M)$ が完備束のとき
+$$
+\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}
+$$
+
+:::
+
+
+:::proof
+
+**$\gamma_1 = \gamma_2$**
+
+Galois 接続であることから任意の $l \in L, m \in M$ に対して
+
+$$
+\begin{align}
+  \alpha(\gamma_1(m)) \leq_M m \\
+  \alpha(\gamma_2(m)) \leq_M m
+\end{align}
+$$
+
+随伴の性質を (1) に対して $\gamma \leftarrow \gamma_2$，(2) に対して $\gamma \leftarrow \gamma_1$ として使うと
+
+$$
+\begin{align}
+  \gamma_1(m) \leq_L \gamma_2(m) \\
+  \gamma_2(m) \leq_L \gamma_1(m)
+\end{align}
+$$
+
+なので $\leq_L$ の反対称性から $\gamma_1(m) = \gamma_2(m)$．
+
+**$\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}$**
+
+一意性から $\bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}$ が Galois 接続の条件:
+
+1. 単調性
+2. $\forall l \in L, m \in M, l \leq_L \gamma(\alpha(l)) \land \alpha(\gamma(m)) \leq_M m$
+
+を満たすことを示せばよい．
+
+まず単調性を示そう．
+
+$m_1 \leq_M m_2$ なる $m_1, m_2 \in M$ に対して
+
+$\leq_M$ が推移的であることに注意すれば
+
+$\alpha(l) \leq_M m_1 \implies \alpha(l) \leq_M m_2$ なので
+
+$$
+\{ l \in L \mid \alpha(l) \leq_M m_1 \} \subseteq \{ l \in L \mid \alpha(l) \leq_M m_2 \}
+$$
+
+なので $a \subseteq b \implies \bigsqcup a \leq \bigsqcup b$ から
+
+$$
+\gamma(m_1) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_1 \} \leq_L \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_2 \} = \gamma(m_2)
+$$
+
+となって単調性がしたがう．
+
+つぎに条件 2 を示そう．
+
+$\gamma(\alpha(l)) = \bigsqcup \{ l' \in L \mid \alpha(l') \leq_M \alpha(l) \}$ なので， $\leq_M$ の反射律から $l \in \{ l' \in L \mid \alpha(l') \leq_M \alpha(l) \}$ となる． $\bigsqcup S$ が $S$ の上界であることから $l \leq_L \gamma(\alpha(l))$．
+
+
+同様に $\bigsqcup \{ \alpha(l) \mid \alpha(l) \leq_M m \} \leq_M m$．
+
+
+補題 3 から
+
+$$
+\begin{align*}
+  \bigsqcup \{ \alpha(l) \mid \alpha(l) \leq_M m \} & = \alpha \left( \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \} \right) \\
+                                           & = \alpha(\gamma(m))
+\end{align*}
+$$
+
+なので $\alpha(\gamma(m)) \leq_M m$．
+
+
+したがって $\gamma$ は 条件を満たす．
+
+:::
+
+
+というわけで というわけで，抽象化さえ決まれば具体化は一意に定まるという直感が正しいことがわかった上に， 
+$\alpha$ によって具体的に $\gamma$ を構成できることもわかりました．
+
+<details>
+<summary>対応するプログラム</summary>
+
+最後にここ埋める
+
+</details>
+
+
+
+
+### Galois 接続は正当性関係を保つ
+
+Galois 接続がプログラム解析の適切な抽象化であることを確認するために， Galois 接続が「正当さ」を保つことを確認してみます．
+
+値 $V$ と性質 $L$ の間の関係 $R \subseteq V \times L$ であって，次のような性質を満たすものを**正当性関係** と呼ぶことにしましょう．
+
+$v \in V, l_1, l_2 \in L, L' \subseteq L$ について
+
+1. $v \mathrel{R} l_1 \land l_1 \leq_L l_2 \implies v \mathrel{R} l_2$
+2. $\forall l' \in L', v \mathrel{R} l' \implies v \mathrel{R} \bigsqcup L'$
+
+
+これは直感的には
+
+### Galois 挿入の定義
+
+
+### reduction operator による Galois 接続の構成
+
+## Galois 接続によるプログラム解析の基礎づけ
+
+### Galois 接続を組み合わせる
+
+### extraction function
+
+### 環境と意味論の抽象化
+
+
+
+
+
 
 ---
 
@@ -513,7 +661,7 @@ $\gamma \circ \alpha \circ \gamma = \gamma$ も同様に示せる．
 
 </details>
 
-
+---
 
 ## 今日の一曲
 
