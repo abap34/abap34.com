@@ -16,18 +16,18 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title>ROC-AUC の解釈</title>
+    <title>Galois 接続とプログラム解析 (Lean もあるよ)</title>
 
     <!-- OGP / Twitter 用のメタタグ -->
-    <meta property="og:title" content="ROC-AUC の解釈">
-    <meta property="og:image" content="https://abap34.com/posts/auc/image.png">
-    <meta property="og:description" content="ROC-AUC の定義と計算法, その解釈について説明します。">
-    <meta property="og:url" content="https://abap34.com/posts/auc.html">
+    <meta property="og:title" content="Galois 接続とプログラム解析 (Lean もあるよ)">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/corgi-cardigan/n02113186_9807.jpg">
+    <meta property="og:description" content="Galois 接続とプログラム解析への応用についての記事です． Lean による形式化もあります．">
+    <meta property="og:url" content="https://abap34.com/posts/galois_connection_and_program_analysis.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="abap34" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!-- ハイライトJS / FontAwesome -->
@@ -1263,7 +1263,7 @@ body.dark-mode .similarity-source {
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
             <a href="https://abap34.com" class="header-logo">abap34.com</a>
-            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/auc.html">/ROC-AUC の解釈</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/galois_connection_and_program_analysis.html">/Galois 接続とプログラム解析 (Lean もあるよ)</a>
         </div>
 
         <!-- トグルボタンとツイートボタンをグループ化 -->
@@ -1273,7 +1273,7 @@ body.dark-mode .similarity-source {
             <!-- ツイートボタン -->
             <div class="tweet-button">
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-text="ROC-AUC の解釈" data-url="https://abap34.com/posts/auc.html" data-via="@abap34"> Tweet </a>
+                    data-text="Galois 接続とプログラム解析 (Lean もあるよ)" data-url="https://abap34.com/posts/galois_connection_and_program_analysis.html" data-via="abap34"> Tweet </a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
@@ -1281,12 +1281,12 @@ body.dark-mode .similarity-source {
 
 
     <div class="article-header">
-        <div class="title">ROC-AUC の解釈</div>
+        <div class="title">Galois 接続とプログラム解析 (Lean もあるよ)</div>
         <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">2025/03/01</div>
+        <div class="date">2025/09/11</div>
         <br>
-        <div class="tag-placeholder">[機械学習, 評価指標, ROC-AUC]</div>
+        <div class="tag-placeholder">[プログラム解析, Galois 接続, 抽象解釈, 静的解析, コンパイラ, プログラミング言語, Lean]</div>
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
@@ -1319,106 +1319,288 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <!-- メイン本文 -->
         <div class="content">
-            <br><br>二値分類の代表的な評価指標である ROC-AUC (Receiver Operating Characteristic - Area Under the Curve)  について説明します。<br><script>page_contents.push({
+            <br><div class="info">研究室でやった <url> <a href="https://link.springer.com/book/10.1007/978-3-662-03811-6">Principle of Program Analysis</a> </url> の輪講で Galois 接続を使った抽象解釈の基礎づけについて学んで面白いなと思ったので，その内容を多少再構成したり，証明を納得がいくもので書き直したり， Lean で形式化したりなどしながらまとめてみます．<br><span class="strong"> <strong>おかねがある人はこちらを購入することをおすすめします．</strong> </span></div><br><script>page_contents.push({
     "type":"H2",
-    "id":"5",
-    "title":"結論だけ: ROC-AUC とは?"
+    "id":"11",
+    "title":"プログラム解析と抽象解釈，Galois 接続"
 });
 </script>
-<h2 id="5">結論だけ: ROC-AUC とは?</h2><br>ROC-AUC は二値分類の評価指標で、 予測モデル <span class="math-inline"> \( f \) </span> が 正例と負例からそれぞれ一様に選んだ <span class="math-inline"> \( x^{+} \) </span> と <span class="math-inline"> \( x^{-} \) </span> について <span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のことです。 <br><br>つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。<br><br>計算したいときは、scikit-learn の <span class="inline-code"> <code>roc_auc_score</code> </span> を使うと便利です！<br><div class="code-block"> <pre><code class="language-python">&gt;&gt;&gt; from sklearn.metrics import roc_auc_score
-&gt;&gt;&gt; roc_auc_score([0, 1, 1, 0], [0.4, 0.2, 0.9, 0.1]) 
-np.float64(0.75)
-</code></pre> </div><br><br><script>page_contents.push({
+<h2 id="11">プログラム解析と抽象解釈，Galois 接続</h2><br>この記事では，プログラム解析という言葉をざっくり「(みんなが思う) ふつうの実行前にプログラムの性質を調べる技術」という意味で使います．<br>例えば (できるかはさておき)<br><ul><li>ある変数の値がある時点で <span class="inline-code"> <code>null</code> </span> になるかを調べる</li><li>ある関数呼び出しが例外を投げうるかを調べる</li><li>あるプログラムが停止するかを調べる (!)</li></ul><br>などです．<br>ほとんどのプログラマは日々プログラム解析の恩恵を受けてプログラムを書いています． 例えば補完などはプログラムのある位置で存在しうる変数名の解析が必要ですし， 型推論などもプログラム解析の一種と言えます．<br><br>さて，プログラム解析といってもいろいろあり日々研究されていますが， そのうち  <span class="strong"> <strong>抽象解釈 (abstract interpretation)</strong> </span> という枠組みによって解析自体を議論する方法があります．<br>そして，その基礎づけの一つとして「Galois 接続 (Galois connection)」　という概念を使ったものがあります．<br><br><url> <a href="https://www.abap34.com/search?tag=%E6%8A%BD%E8%B1%A1%E8%A7%A3%E9%87%88">抽象解釈についてはこれまで散々扱ってきた</a> </url> ので， 今回は Galois 接続を使って抽象解釈を捉え直してみようと思います．<br>また，その内容の一部 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> について Lean 4 による形式化にも挑戦してみます．<br><url> <a href="https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/GaloisConnection/Defs.html">mathlib にはすでに Galois 接続のさまざまな性質が収録されている</a> </url> のですが， lean の勉強も兼ねてコアの部分はなるべく使わず自分で書くことにします．<br><br>大抵の定義や証明の下に展開ボタンを置いておきます．押すと Lean のコードが見られます．<br><div class="warn"><span class="strong"> <strong>⚠️</strong> </span><br>筆者は専門家ではないので誤りが含まれる可能性があります．それを念頭に読んでいただけるとありがたいです．<br><span class="strong"> <strong>特に Lean に関しては初心者</strong> </span> なので，誤り等あればコメントからご指摘いただけると幸いです<br></div><br><br>先に，この後展開される話についてざっくりとした直感的な説明を軽く書いておきます．<br>プログラム解析は常に最も具体的なものに対してできるとは限りません．例えば<br><br><div class="code-block"> <pre><code class="language-tekitou-lang">x = 1;
+y = 1;
+
+if rand()
+    z = x + y;
+else
+    z = x - y;
+
+print(z);
+</code></pre> </div><br>という感じのプログラムの終了時に <span class="inline-code"> <code>z</code> </span> がとりうる値に関する何らかの解析を行うことを考えてみます．<br>最も理想的，具体的な解析結果は <span class="strong"> <strong>「<span class="inline-code"> <code>z</code> </span> がとりうる値は <span class="inline-code"> <code>0</code> </span> または <span class="inline-code"> <code>2</code> </span> である」</strong> </span> ということでしょう．<br><br>しかし，このような解析は常にリーズナブルに可能，あるいはそもそも計算可能とも限りません．<br>そのため，多くのプログラム解析は「いい感じの」ところまで抽象化された値を求めることになります．<br>例えば 　<ul><li>偶奇のみを考える</li><li>区間のみを考える</li><li>型のみを考える</li></ul><br>みたいなことです．<br>プログラム解析はこのような抽象化された実行を考えることといえます．<br>つまり具体的なもの (例えば典型的には値の集合) と抽象的なもの (偶奇，区間，型など) を対応させていくことが必要になります． このうち，ある種の望ましい性質を持ったものが Galois 接続です．<br>これからの実際にそのことを確認していきます・<br><div class="info"><br>とくに断りがないときは<ul><li>関数は全て全域関数</li></ul></div><br><script>page_contents.push({
     "type":"H2",
-    "id":"29",
-    "title":"定義と計算方法"
+    "id":"121",
+    "title":"Galois 接続"
 });
 </script>
-<h2 id="29">定義と計算方法</h2><br><script>page_contents.push({
+<h2 id="121">Galois 接続</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"32",
+    "id":"124",
     "title":"定義"
 });
 </script>
-<h3 id="32">定義</h3><br>ROC-AUC は正解ラベルの列 <span class="math-inline"> \( \mathbf{y} \in \{0, 1\}^n \) </span> と予測確率の列 <span class="math-inline"> \( \mathbf{p} \in [0, 1]^n \) </span> の組 <span class="math-inline"> \( (\mathbf{y}, \mathbf{p}) \) </span> に対して定まる量です。(ただし、<span class="math-inline"> \( \mathbf{y} \) </span> がすべて同じ値からなる場合は計算できません)<br><br>ROC-AUC を計算するには、まずは TPR (True Positive Rate,真陽性率) と FPR (False Positive Rate, 偽陽性率) を理解する必要があります。<br>TPR と FPR は<br>正解ラベルの列 <span class="math-inline"> \( \mathbf{y} \in \{0, 1\}^n \) </span> と予測ラベルの列 <span class="math-inline"> \( \mathbf{\hat{y}} \in \{0, 1\}^n \) </span> に対して以下の用に定義されます。<br><table>
-<thead>
-<tr>
-<th align="left"> 予測/正解 </th>
-<th align="left"> 1 </th>
-<th align="left"> 0 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"> 1 </td>
-<td align="left"> TP </td>
-<td align="left"> FP </td>
-</tr>
-<tr>
-<td align="left"> 0 </td>
-<td align="left"> FN </td>
-<td align="left"> TN </td>
-</tr>
-</tbody>
-</table>
-<br>として、<br><div class="math-block"> \[ 
+<h3 id="124">定義</h3><br>それでは早速定義から始めましょう．いくらか同値な定義 (この後紹介します) がありますが，今回はとりあえずこれを使います．<br><div class="definition"><br><span class="strong"> <strong>Galois 接続 (Galois connection)</strong> </span><br><br>半順序集合 <span class="math-inline"> \( (L, \leq_L) \) </span> と <span class="math-inline"> \( (M, \leq_M) \) </span>,  <span class="math-inline"> \( \alpha : L \to M \) </span>, <span class="math-inline"> \( \gamma : M \to L \) </span> が次の条件を満たすとき <span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> は<span class="strong"> <strong>Galois 接続</strong> </span>であるという．<br><br><ol><li><span class="math-inline"> \( \alpha, \gamma \) </span> は単調である．</li><li>任意の <span class="math-inline"> \( l \in L, m \in M \) </span> に対して <span class="math-inline"> \( l \leq_L \gamma(\alpha(l)) \) </span> かつ <span class="math-inline"> \( \alpha(\gamma(m)) \leq_M m \) </span></li></ol><br></div><br><br><details><br><summary>対応するプログラム</summary><br><br>最後にここ埋める<br></details><br><br>先ほどの説明でいうところでは，<br><ul><li><span class="math-inline"> \( L \) </span>: 具体的なものの集合</li><li><span class="math-inline"> \( M \) </span>: 抽象化されたものの集合</li><li><span class="math-inline"> \( \alpha \) </span>: 具体的な値を抽象化する関数</li><li><span class="math-inline"> \( \gamma \) </span>: 抽象化された値から具体的な値を取り出す関数</li></ul><br>に対応しています．<br><script>page_contents.push({
+    "type":"H4",
+    "id":"194",
+    "title":"具体例: 区間解析"
+});
+</script>
+<h4 id="194">具体例: 区間解析</h4><br>値として整数のみが存在するようなプログラミング言語で， ある変数がある時点でとりうる値の範囲を解析することを考えてみます．<br><br>調べたい最も具体的な値は <span class="math-inline"> \( \mathcal{P}(\mathbb{Z}) \) </span> です． これは集合の包含関係 <span class="math-inline"> \( \subseteq \) </span> によって半順序集合をなします．<br><br>そして「いい感じに抽象化された」値として整数の区間を考えてみましょう．実際には最大値や最小値が存在しないこともあるので，<br><div class="math-block"> \[ 
 
-\begin{aligned}
-\text{TPR} &= \frac{\text{TP}}{\text{TP} + \text{FN}} \\
-\text{FPR} &= \frac{\text{FP}}{\text{FP} + \text{TN}}
-\end{aligned}
+\text{Interval} = \{ [a, b] \mid a \in \mathbb{Z} \cup \{-\infty\}, b \in \mathbb{Z} \cup \{\infty\}, a \leq b \} \cup \{ [\infty, -\infty] \}
 
- \] </div><br>です。日本語で書けば<br><br><span class="math-inline"> \( \text{TPR} := \) </span> 真の正例のうち、正例と予測されたものの割合 (見落とさなかった率)<br><span class="math-inline"> \( \text{FPR} := \) </span> 真の負例のうち、誤って正例と予測されたものの割合 (誤検知率)<br><br>(多分こっちの方がわかりやすいですね)<br><br>ところでこれをするには予測も確率でなくラベルになっている必要があるわけですが、 閾値 <span class="math-inline"> \( t \) </span> を設定してそれぞれ振り分けることになります。<br>したがって 正解ラベルの列 <span class="math-inline"> \( \mathbf{y} \in \{0, 1\}^n \) </span> と予測確率の列 <span class="math-inline"> \( \mathbf{p} \in [0, 1]^n \) </span> に対して、 <span class="math-inline"> \( t \) </span> を <span class="math-inline"> \( -\infty \) </span> から <span class="math-inline"> \( \infty \) </span> まで動かすことで、各 <span class="math-inline"> \( t \) </span> に対して TPR と FPR の値、<span class="math-inline"> \( \text{TPR}_t \) </span> と <span class="math-inline"> \( \text{FPR}_t \) </span> が定まります。<br><br>これをプロットして得られるののが ROC曲線です。<br><figure><img src="auc/image.png" ><figcaption>ROC曲線の例</figcaption></figure><br>この ROC曲線と 直線 <span class="math-inline"> \( x = 1 \) </span>, <span class="math-inline"> \( y = 0 \) </span> で囲まれる面積が ROC-AUC です！<br>上の曲線の「下」の面積ということですね。 (ROC 曲線を 0 から 1 まで積分した値, といってもいいです)<br><script>page_contents.push({
+ \] </div><br>という集合を考えます．これは以下のように定めた <span class="math-inline"> \( \leq \) </span> によって半順序集合をなします．<br><div class="math-block"> \[ 
+
+[a, b] \leq [c, d] \iff c \leq a \land b \leq d
+
+ \] </div><br>このとき <span class="math-inline"> \( \alpha : \mathcal{P}(\mathbb{Z}) \to \text{Interval} \) </span>, <span class="math-inline"> \( \gamma : \text{Interval} \to \mathcal{P}(\mathbb{Z}) \) </span> を <br><div class="math-block"> \[ 
+
+\begin{align*}
+  \alpha(l) & = [\mathrm{inf'}(l), \mathrm{sup'}(l)] \\
+  \gamma(m) & = \{ z \in \mathbb{Z} \mid \mathrm{inf}(m) \leq z \leq \mathrm{sup}(m) \}
+\end{align*}
+
+ \] </div><br>と定めると <span class="strong"> <strong><span class="math-inline"> \( (\mathcal{P}(\mathbb{Z}), \alpha, \gamma, \text{Interval}) \) </span> は Galois 接続です．</strong> </span>  (条件を確認してみましょう)<br>ここで <span class="math-inline"> \( \mathrm{inf'} \) </span> は上限が存在すればそれを，存在しなければ <span class="math-inline"> \( -\infty \) </span> を返す関数． <span class="math-inline"> \( \mathrm{sup'} \) </span> も下限が存在すればそれを，存在しなければ <span class="math-inline"> \( \infty \) </span> を返す関数です．<br>例えば<br><ul><li><span class="math-inline"> \( \alpha(\{ 1, 2, 3 \}) = [1, 3] \) </span></li><li><span class="math-inline"> \( \alpha(\{1, 4, 5\}) = [1, 5] \) </span></li><li><span class="math-inline"> \( \alpha(\{2, 4, 6 \dots\}) = [2, \infty] \) </span></li><li><span class="math-inline"> \( \alpha(\emptyset) = [\infty, -\infty] \) </span></li><li><span class="math-inline"> \( \gamma([1, 5]) = \{ 1, 2, 3, 4, 5 \} \) </span></li><li><span class="math-inline"> \( \gamma([1, \infty)) = \{ 1, 2, 3, \dots \} \) </span></li><li><span class="math-inline"> \( \gamma([\infty, -\infty]) = \emptyset \) </span></li></ul><br>です．<br><br>ここからはガロア接続の諸性質を見ていきます．<br><script>page_contents.push({
     "type":"H3",
-    "id":"128",
-    "title":"ROC 曲線を書く + 直感的な解釈 ①"
+    "id":"264",
+    "title":"γ の α による一意な決定"
 });
 </script>
-<h3 id="128">ROC 曲線を書く + 直感的な解釈 ①</h3><br>※ ここからは与太話です。<br>ここでは実際に ROC 曲線を書く方法を考えます。<br><br>閾値は <span class="math-inline"> \( -\infty \) </span> から <span class="math-inline"> \( \infty \) </span> まで動かすといっても <span class="math-inline"> \( \text{TPR} \) </span> と <span class="math-inline"> \( \text{FPR} \) </span> が変化するのは <span class="math-inline"> \( t \) </span> が <span class="math-inline"> \( \mathbf{p} \) </span> の要素の値を超えるときだけですから、高々 <span class="math-inline"> \( n \) </span> 個の閾値を考えれば十分です。<br><br>実装するとしたらこんな感じでしょうか。<br><div class="code-block"> <pre><code class="language-python">def rate(y_true: list[int], y_pred_binary: list[int], y:int, y_hat:int) -&gt; float:
-    n = len(y_true)
-    return sum([1 for i in range(n) if y_true[i] == y and y_pred_binary[i] == y_hat]) / n
+<h3 id="264">γ の α による一意な決定</h3><br><br>ところで，初めて私が Galois 接続の定義を見たときに抱いた疑問として， <span class="math-inline"> \( \gamma \) </span> の役割があります．<br>Galois 接続がちゃんとプログラム解析のモデルとして妥当なことにして， <span class="math-inline"> \( \mathbb{Z} \) </span> を値として持つ言語のプログラムの偶奇解析をすることにしてみます．<br><br>すると，解析結果になる抽象的な値:<br><br><ul><li>偶数</li><li>奇数</li><li>偶数または奇数</li><li>偶数でも奇数でもない</li></ul><br><br>に対して，　<span class="math-inline"> \( \gamma \) </span> はそれぞれ <span class="math-inline"> \( 2\mathbb{Z} \) </span>, <span class="math-inline"> \( 2\mathbb{Z}+1 \) </span>, <span class="math-inline"> \( \mathbb{Z} \) </span>, <span class="math-inline"> \( \emptyset \) </span> を返す以外に妥当な結果があるようには思えません．<br><br>結論から言うとこのような感覚は正しく，次のようなことがいえます．<br><div class="theorem"><span class="strong"> <strong><span class="math-inline"> \( \alpha \) </span> に対する <span class="math-inline"> \( \gamma \) </span> の一意性</strong> </span><br>半順序集合 <span class="math-inline"> \( (L, \leq_L) \) </span>， <span class="math-inline"> \( (M, \leq_M) \) </span>, <span class="math-inline"> \( \alpha : L \to M \) </span>, <span class="math-inline"> \( \gamma_1, \gamma_2 : M \to L \) </span> に対して <br><span class="math-inline"> \( (L, \alpha, \gamma_1, M) \) </span> と <span class="math-inline"> \( (L, \alpha, \gamma_2, M) \) </span> がともに Galois 接続であるならば <span class="math-inline"> \( \gamma_1 = \gamma_2 \) </span>．<br>さらに， <span class="math-inline"> \( (L, \leq_L) \) </span>， <span class="math-inline"> \( (M, \leq_M) \) </span> が完備束のとき<br><div class="math-block"> \[ 
 
+\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}
 
-def roc_curve(y_true: list[int], y_pred: list[float]) -&gt; tuple[list[float], list[float]]:
-    n = len(y_true)
-    thresholds = sorted(set(y_pred), reverse=True)
-    tpr = []
-    fpr = []
-    for t in thresholds:
-        y_pred_binary = [int(y &gt;= t) for y in y_pred]
-        tp = rate(y_true, y_pred_binary, 1, 1)
-        fn = rate(y_true, y_pred_binary, 1, 0)
-        fp = rate(y_true, y_pred_binary, 0, 1)
-        tn = rate(y_true, y_pred_binary, 0, 0)
-        tpr.append(tp / (tp + fn))
-        fpr.append(fp / (fp + tn))
-    return tpr, fpr
+ \] </div></div><br><br>まずはこれを示していきます．<br>はじめに，今後便利に使える同値な定義を一つ紹介します．<br><div class="theorem"><br><span class="strong"> <strong>Adjunction (随伴)</strong> </span><br>半順序集合 <span class="math-inline"> \( (L, \leq_L) \) </span> と <span class="math-inline"> \( (M, \leq_M) \) </span>, <span class="math-inline"> \( \alpha : L \to M \) </span>, <span class="math-inline"> \( \gamma : M \to L \) </span> が次の条件を満たすとき <span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> は <span class="strong"> <strong>Adjunction (随伴)</strong> </span> であるという．<br><div class="math-block"> \[ 
 
-def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
-    tpr, fpr = roc_curve(y_true, y_pred)
-    return sum([(tpr[i] + tpr[i - 1]) * (fpr[i] - fpr[i - 1]) / 2 for i in range(1, len(tpr))]) 
-</code></pre> </div><br>なお, これは <span class="math-inline"> \( \Theta(n \log n + n^2) \) </span> のアルゴリズムの実装ですが簡単に <span class="math-inline"> \( \Theta(n \log n) \) </span> にできます。(別に <span class="math-inline"> \( t \) </span> を明示的に計算しなくてもいいことを使うといいです)<br><br>直感的な解釈を書きます。<br><br><span class="math-inline"> \( t \) </span> を <span class="math-inline"> \( 0 \) </span> から <span class="math-inline"> \( 0.1 \) </span> に変えたとき、一つの予測が <span class="math-inline"> \( 1 \) </span> から <span class="math-inline"> \( 0 \) </span> にかわったとします。<br>このとき、<br><ol><li>真の値が <span class="math-inline"> \( 1 \) </span> だったとき (つまり、正解が不正解になったとき)</li><ol><li><span class="math-inline"> \( \text{TP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{FN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 減少</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 変化しない</li></ol><li>真の値が <span class="math-inline"> \( 0 \) </span> だったとき (つまり、不正解が正解になったとき)</li><ol><li><span class="math-inline"> \( \text{FP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{TN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 変化しない</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 減少</li></ol></ol><br><br>となります。<br>したがって, <span class="math-inline"> \( (1, 1) \) </span> から始まって閾値を動かしていき、<br><br><ul><li>不正解に変化  <span class="math-inline"> \( \rightarrow \frac{1}{TP + FN} \) </span> だけ <span class="math-inline"> \( y \) </span> 軸正の向きに進む</li><li>正解に変化 <span class="math-inline"> \( \rightarrow \frac{1}{FP + TN} \) </span> だけ <span class="math-inline"> \( x \) </span> 軸正の向きに進む</li></ul><br><br>というのを繰り返していくわけです。<br>ここで、面積を大きくしたければ最初になるべく <span class="math-inline"> \( y \) </span> 軸負の向きに動かないのがいいです。 このことは <span class="strong"> <strong>正例の予測確率の順位が上位である</strong> </span> ことと対応しています。<br><br>したがって ROC-AUC は正例を上位に, 負例を下位に固められているか？を調べる指標と解釈できます。<br><script>page_contents.push({
+\alpha(l) \leq_M m \iff l \leq_L \gamma(m)
+
+ \] </div><br></div><br><details> <summary>対応するプログラム</summary><br>最後にここ埋める<br><br></details><br><br><div class="theorem"><br>半順序集合 <span class="math-inline"> \( (L, \leq_L) \) </span> と <span class="math-inline"> \( (M, \leq_M) \) </span>, <span class="math-inline"> \( \alpha : L \to M \) </span>, <span class="math-inline"> \( \gamma : M \to L \) </span> に対して，次は同値．<br><ol><li><span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> は Galois 接続である．</li><li><span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> は Adjunction である．</li></ol><br></div><br><div class="proof"><br><span class="strong"> <strong>(1) <span class="math-inline"> \( \Rightarrow \) </span> (2)</strong> </span><div class="math-block"> \[ 
+
+\begin{align*}
+\alpha(l) \leq_M m
+    & \implies \gamma(\alpha(l)) \leq_L \gamma(m)
+    &                                                      & \text{(monotonicity of $\gamma$)}        \\
+    & \implies l \leq_L \gamma(\alpha(l)) \land \gamma(\alpha(l)) \leq_L \gamma(m)
+    &                                                      & \text{(definition of Galois connection)} \\
+    & \implies l \leq_L \gamma(m)
+    &                 & \text{(transitivity of $\leq_L$)}
+\end{align*}
+
+ \] </div><br>また<br><div class="math-block"> \[ 
+
+\begin{align*}
+l \leq_L \gamma(m)
+    & \implies \alpha(l) \leq_M \alpha(\gamma(m))
+    &                                                      & \text{(monotonicity of $\alpha$)}        \\
+    & \implies \alpha(l) \leq_M \alpha(\gamma(m)) \land \alpha(\gamma(m)) \leq_M m
+    &                                                      & \text{(definition of Galois connection)} \\
+    & \implies \alpha(l) \leq_M m
+    &                 & \text{(transitivity of $\leq_M$)}
+\end{align*}
+
+ \] </div><br>なので<br><div class="math-block"> \[ 
+
+\alpha(l) \leq_M m \iff l \leq_L \gamma(m)
+
+ \] </div><br><span class="strong"> <strong>(2) <span class="math-inline"> \( \Rightarrow \) </span> (1)</strong> </span><br>先に Galois 接続の条件2:<br><div class="math-block"> \[ 
+
+\forall l \in L, m \in M,  l \leq_L \gamma(\alpha(l)) \land \alpha(\gamma(m)) \leq_M m
+
+ \] </div><br>を示す．<br><br><span class="math-inline"> \( l \in L \) </span> に対して<br><div class="math-block"> \[ 
+
+  \begin{align*}
+     & \alpha(l) \leq_M \alpha(l)
+     &                                     & \text{(reflexivity of $\leq_M$)}                                      \\
+     & \implies l \leq_L \gamma(\alpha(l))
+     &                                     & \text{(assumption: $\alpha(l) \leq_M m \implies l \leq_L \gamma(m)$)} \\
+  \end{align*}
+
+ \] </div><br><span class="math-inline"> \( m \in M \) </span> に対して<br><div class="math-block"> \[ 
+
+  \begin{align*}
+     & \gamma(m) \leq_L \gamma(m)
+     &                                     & \text{(reflexivity of $\leq_L$)}                                      \\
+     & \implies \alpha(\gamma(m)) \leq_M m
+     &                                     & \text{(assumption: $l \leq_L \gamma(m) \implies \alpha(l) \leq_M m$)} \\
+  \end{align*}
+
+ \] </div><br>つぎに <span class="math-inline"> \( \alpha, \gamma \) </span> が単調であることを示す．<br><br><span class="math-inline"> \( \alpha \) </span> の単調性: <span class="math-inline"> \( l_1 \leq_L l_2 \implies \alpha(l_1) \leq_M \alpha(l_2) \) </span> は<br><div class="math-block"> \[ 
+
+  \begin{align*}
+    l_1 \leq_L l_2                                                        
+     & \implies l_1 \leq_L l_2 \land l_2 \leq_L \gamma(\alpha(l_2))
+     & \text{(Galois connection の条件 2)}                                \\                                     
+     & \implies l_1 \leq_L \gamma(\alpha(l_2))
+    & \text{(transitivity of $\leq_L$)}                                        \\
+    & \implies \alpha(l_1) \leq_M \alpha(l_2)
+    & \text{(assumption: $l \leq_L \gamma(m) \implies \alpha(l) \leq_M m$)}
+  \end{align*}
+
+ \] </div><br><span class="math-inline"> \( \gamma \) </span> の単調性: <span class="math-inline"> \( m_1 \leq_M m_2 \implies \gamma(m_1) \leq_L \gamma(m_2) \) </span> は<br><div class="math-block"> \[ 
+
+  \begin{align*}
+    m_1 \leq_M m_2                                                     
+    & \implies m_1 \leq_M m_2 \land \alpha(\gamma(m_1)) \leq_M m_1
+    & \text{(Galois connection の条件 2)}                                \\
+    & \implies \alpha(\gamma(m_1)) \leq_M m_2
+    & \text{(transitivity of $\leq_M$)}                                        \\
+    & \implies \gamma(m_1) \leq_L \gamma(m_2)
+    & \text{(assumption: $\alpha(l) \leq_M m \implies l \leq_L \gamma(m)$)}
+    \end{align*}
+
+ \] </div><br></div><br><br><br><details><br><summary>対応するプログラム</summary><br>最後にここ埋める<br></details><br><div class="info">ここまでの証明で察した人もいるかもしれませんが <span class="math-inline"> \( \alpha \) </span> と <span class="math-inline"> \( \gamma \) </span> の性質に関する議論はかなり似たものになります． 記事がいたずらに長くなってしまうので，そのような場合の証明はこの後は適宜省略します．</div><br>さらに，次のような重要な性質がいえます．<br><br><div class="theorem">完備束 <span class="math-inline"> \( (L, \leq_L) \) </span>, <span class="math-inline"> \( (M, \leq_M) \) </span> と <span class="math-inline"> \( \alpha: L \to M \) </span> について， Galois 接続 <span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> が存在するとき，任意の <span class="math-inline"> \( L' \subseteq L \) </span> に対して<br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) = \bigsqcup \{ \alpha(l) \mid l \in L' \}
+
+ \] </div><br></div><br><br><div class="proof"><br>Galois 接続であることから随伴となるから<br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) \leq_M m \iff \bigsqcup L' \leq_L \gamma(m)
+
+ \] </div><br><span class="math-inline"> \( \bigsqcup L' \) </span> が <span class="math-inline"> \( L' \) </span> の上界であることから<br><div class="math-block"> \[ 
+
+\bigsqcup L' \leq_L \gamma(m) \Rightarrow \forall l \in L', l \leq_L \gamma(m)
+
+ \] </div><br>さらに上界における最小性から<br><div class="math-block"> \[ 
+
+\forall l \in L', l \leq_L \gamma(m) \Rightarrow \bigsqcup L' \leq_L \gamma(m)
+
+ \] </div><br>となり結局 <br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) \leq_M m \iff \forall l \in L', l \leq_L \gamma(m)
+
+ \] </div><br><br>ここでふたたび随伴であることを使えば<br><div class="math-block"> \[ 
+
+\forall l \in L', l \leq_L \gamma(m) \iff \forall l \in L', \alpha(l) \leq_M m
+
+ \] </div><br>なので<br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) \leq_M m \iff \forall l \in L', \alpha(l) \leq_M m
+
+ \] </div><br>さらに先ほどの <span class="math-inline"> \( \bigsqcup L' \) </span> の議論と同様にすれば<br><div class="math-block"> \[ 
+
+\forall l \in L', \alpha(l) \leq_M m \iff \bigsqcup \{ \alpha(l) \mid l \in L' \} \leq_M m
+
+ \] </div><br><br>よって <br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) \leq_M m \iff \bigsqcup \{ \alpha(l) \mid l \in L' \} \leq_M m
+
+ \] </div><br>が成立する．とくに <span class="math-inline"> \( m \leftarrow \alpha \left( \bigsqcup L' \right) \) </span> と <span class="math-inline"> \( m \leftarrow \alpha \left( \bigsqcup L' \right) \) </span> とすれば <span class="math-inline"> \( \leq_M \) </span> の反対称性から<br><div class="math-block"> \[ 
+
+\alpha \left( \bigsqcup L' \right) = \bigsqcup \{ \alpha(l) \mid l \in L' \}
+
+ \] </div><br></div><br>これらを使って目標を示しましょう．<br><div class="theorem"><br><span class="strong"> <strong><span class="math-inline"> \( \alpha \) </span> に対する <span class="math-inline"> \( \gamma \) </span> の一意性</strong> </span><br>半順序集合 <span class="math-inline"> \( (L, \leq_L) \) </span>， <span class="math-inline"> \( (M, \leq_M) \) </span>, <span class="math-inline"> \( \alpha : L \to M \) </span>, <span class="math-inline"> \( \gamma_1, \gamma_2 : M \to L \) </span> に対して <span class="math-inline"> \( (L, \alpha, \gamma_1, M) \) </span> と <span class="math-inline"> \( (L, \alpha, \gamma_2, M) \) </span> がともに Galois 接続であるならば <span class="math-inline"> \( \gamma_1 = \gamma_2 \) </span>．<br>さらに， <span class="math-inline"> \( (L, \leq_L) \) </span>， <span class="math-inline"> \( (M, \leq_M) \) </span> が完備束のとき<div class="math-block"> \[ 
+
+\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}
+
+ \] </div><br></div><br><br><div class="proof"><br><span class="strong"> <strong><span class="math-inline"> \( \gamma_1 = \gamma_2 \) </span></strong> </span><br>Galois 接続であることから任意の <span class="math-inline"> \( l \in L, m \in M \) </span> に対して<br><div class="math-block"> \[ 
+
+\begin{align}
+  \alpha(\gamma_1(m)) \leq_M m \\
+  \alpha(\gamma_2(m)) \leq_M m
+\end{align}
+
+ \] </div><br>随伴の性質を (1) に対して <span class="math-inline"> \( \gamma \leftarrow \gamma_2 \) </span>，(2) に対して <span class="math-inline"> \( \gamma \leftarrow \gamma_1 \) </span> として使うと<br><div class="math-block"> \[ 
+
+\begin{align}
+  \gamma_1(m) \leq_L \gamma_2(m) \\
+  \gamma_2(m) \leq_L \gamma_1(m)
+\end{align}
+
+ \] </div><br>なので <span class="math-inline"> \( \leq_L \) </span> の反対称性から <span class="math-inline"> \( \gamma_1(m) = \gamma_2(m) \) </span>．<br><span class="strong"> <strong><span class="math-inline"> \( \gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \} \) </span></strong> </span><br>一意性から <span class="math-inline"> \( \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \} \) </span> が Galois 接続の条件:<br><ol><li>単調性</li><li><span class="math-inline"> \( \forall l \in L, m \in M, l \leq_L \gamma(\alpha(l)) \land \alpha(\gamma(m)) \leq_M m \) </span></li></ol><br>を満たすことを示せばよい．<br>まず単調性を示そう．<br><span class="math-inline"> \( m_1 \leq_M m_2 \) </span> なる <span class="math-inline"> \( m_1, m_2 \in M \) </span> に対して<br><span class="math-inline"> \( \leq_M \) </span> が推移的であることに注意すれば<br><span class="math-inline"> \( \alpha(l) \leq_M m_1 \implies \alpha(l) \leq_M m_2 \) </span> なので<br><div class="math-block"> \[ 
+
+\{ l \in L \mid \alpha(l) \leq_M m_1 \} \subseteq \{ l \in L \mid \alpha(l) \leq_M m_2 \}
+
+ \] </div><br>なので <span class="math-inline"> \( a \subseteq b \implies \bigsqcup a \leq \bigsqcup b \) </span> から<br><div class="math-block"> \[ 
+
+\gamma(m_1) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_1 \} \leq_L \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_2 \} = \gamma(m_2)
+
+ \] </div><br>となって単調性がしたがう．<br>つぎに条件 2 を示そう．<br><span class="math-inline"> \( \gamma(\alpha(l)) = \bigsqcup \{ l' \in L \mid \alpha(l') \leq_M \alpha(l) \} \) </span> なので， <span class="math-inline"> \( \leq_M \) </span> の反射律から <span class="math-inline"> \( l \in \{ l' \in L \mid \alpha(l') \leq_M \alpha(l) \} \) </span> となる． <span class="math-inline"> \( \bigsqcup S \) </span> が <span class="math-inline"> \( S \) </span> の上界であることから <span class="math-inline"> \( l \leq_L \gamma(\alpha(l)) \) </span>．<br><br>同様に <span class="math-inline"> \( \bigsqcup \{ \alpha(l) \mid \alpha(l) \leq_M m \} \leq_M m \) </span>．<br><br>補題 3 から<br><div class="math-block"> \[ 
+
+\begin{align*}
+  \bigsqcup \{ \alpha(l) \mid \alpha(l) \leq_M m \} & = \alpha \left( \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \} \right) \\
+                                           & = \alpha(\gamma(m))
+\end{align*}
+
+ \] </div><br>なので <span class="math-inline"> \( \alpha(\gamma(m)) \leq_M m \) </span>．<br><br>したがって <span class="math-inline"> \( \gamma \) </span> は 条件を満たす．<br></div><br><br>というわけで というわけで，抽象化さえ決まれば具体化は一意に定まるという直感が正しいことがわかった上に，  <span class="math-inline"> \( \alpha \) </span> によって具体的に <span class="math-inline"> \( \gamma \) </span> を構成できることもわかりました．<br><details> <summary>対応するプログラム</summary><br>最後にここ埋める<br></details><br><br><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"700",
+    "title":"Galois 接続は正当性関係を保つ"
+});
+</script>
+<h3 id="700">Galois 接続は正当性関係を保つ</h3><br>Galois 接続がプログラム解析の適切な抽象化であることを確認するために， Galois 接続が「正当さ」を保つことを確認してみます．<br>値 <span class="math-inline"> \( V \) </span> と性質 <span class="math-inline"> \( L \) </span> の間の関係 <span class="math-inline"> \( R \subseteq V \times L \) </span> であって，次のような性質を満たすものを<span class="strong"> <strong>正当性関係</strong> </span> と呼ぶことにしましょう．<br><span class="math-inline"> \( v \in V, l_1, l_2 \in L, L' \subseteq L \) </span> について<br><ol><li><span class="math-inline"> \( v \mathrel{R} l_1 \land l_1 \leq_L l_2 \implies v \mathrel{R} l_2 \) </span></li><li><span class="math-inline"> \( \forall l' \in L', v \mathrel{R} l' \implies v \mathrel{R} \bigsqcup L' \) </span></li></ol><br><br>これは直感的には<br><script>page_contents.push({
+    "type":"H3",
+    "id":"728",
+    "title":"Galois 挿入の定義"
+});
+</script>
+<h3 id="728">Galois 挿入の定義</h3><br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"732",
+    "title":"reduction operator による Galois 接続の構成"
+});
+</script>
+<h3 id="732">reduction operator による Galois 接続の構成</h3><br><script>page_contents.push({
     "type":"H2",
-    "id":"253",
-    "title":"直感的な解釈 ②"
+    "id":"735",
+    "title":"Galois 接続によるプログラム解析の基礎づけ"
 });
 </script>
-<h2 id="253">直感的な解釈 ②</h2><br>このことをよりはっきり示す、最初に書いた事実:<br><br>ROC-AUC は 正例 <span class="math-inline"> \( x^{+} \) </span> と負例 <span class="math-inline"> \( x^{-} \) </span> を一様に選んだとき<span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のこと。<br><br>について書いておきます。<br>色々と進んだ結果もあるみたいなのですが <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br>ここでは簡単に有限のサンプルに対してこれを示します。<br>正例のサンプル数を <span class="math-inline"> \( n_+ \) </span>, 負例のサンプル数を <span class="math-inline"> \( n_- \) </span> として、 <span class="math-inline"> \( x_i^{+} \) </span> を正例の <span class="math-inline"> \( i \) </span> 番目のサンプル, <span class="math-inline"> \( x_i^{-} \) </span> を負例の <span class="math-inline"> \( i \) </span> 番目のサンプルとします。<br>ここで、次の事実が成り立ちます:<br><div class="math-block"> \[ 
+<h2 id="735">Galois 接続によるプログラム解析の基礎づけ</h2><br><script>page_contents.push({
+    "type":"H3",
+    "id":"738",
+    "title":"Galois 接続を組み合わせる"
+});
+</script>
+<h3 id="738">Galois 接続を組み合わせる</h3><br><script>page_contents.push({
+    "type":"H3",
+    "id":"741",
+    "title":"extraction function"
+});
+</script>
+<h3 id="741">extraction function</h3><br><script>page_contents.push({
+    "type":"H3",
+    "id":"744",
+    "title":"環境と意味論の抽象化"
+});
+</script>
+<h3 id="744">環境と意味論の抽象化</h3><br><br><br><br><br><br><hr><br><script>page_contents.push({
+    "type":"H4",
+    "id":"754",
+    "title":"そのほかの性質メモ"
+});
+</script>
+<h4 id="754">そのほかの性質メモ</h4><br><br><div class="theorem"><br>Galois 接続 <span class="math-inline"> \( (L, \alpha, \gamma, M) \) </span> について<br><ol><li><span class="math-inline"> \( \alpha \circ \gamma \circ \alpha = \alpha \) </span></li><li><span class="math-inline"> \( \gamma \circ \alpha \circ \gamma = \gamma \) </span></li></ol><br></div><br><div class="proof"><br><span class="math-inline"> \( \alpha \circ \gamma \circ \alpha = \alpha \) </span>:<br><div class="math-block"> \[ 
 
-\text{AUC} = \dfrac{1}{n_-} \sum_{i=1}^{n_-} \text{TPR}_{f(x^{-}_i)}
+\begin{align*}
+           & l \leq_L \gamma(\alpha(l))
+           &                                            & \text{(Definition of Galois connection)} \\
+  \implies & \alpha(l) \leq_M \alpha(\gamma(\alpha(l)))
+           &                                            & \text{(Monotonicity of $\alpha$)}        \\
+\end{align*}
 
- \] </div><br>このことは <span class="math-inline"> \( x \) </span> 軸負の向きに <span class="math-inline"> \( \dfrac{1}{n_-} \) </span>  だけ進み、そのときの「高さ」は <span class="math-inline"> \( \text{TPR}_{f(x^{-}_i)} \) </span>  なることからわかります。<br>ここで、<span class="math-inline"> \( \text{TPR} \) </span> の定義から<br><div class="math-block"> \[ 
+ \] </div><br>また<br><div class="math-block"> \[ 
 
-\text{TPR}_{f(x^{-}_i)} = \dfrac{1}{n_+} \mid \{ j \mid f(x^{+}_j) > f(x^{-}_i) \} \mid
+\begin{align*}
+           & \gamma(\alpha(l)) \leq_L \gamma(\alpha(l))
+           &                                            & \text{(Reflexivity of $\leq_L$)}          \\
+  \implies & \alpha(\gamma(\alpha(l))) \leq_M \alpha(l)
+           &                                            & \text{(Theorem 1)} \\
+\end{align*}
 
- \] </div><br>です。<br>なので結局<br><div class="math-block"> \[ 
-
-\begin{aligned}
-\text{AUC} &= \dfrac{1}{n_-} \sum_{i=1}^{n_-} \dfrac{1}{n_+} \mid \{ j \mid f(x^{+}_j) > f(x^{-}_i) \} \mid \\
-&= \dfrac{1}{n_+ n_-} \sum_{i=1}^{n_-} \sum_{j=1}^{n_+} \mathbb{I}(f(x^{+}_j) > f(x^{-}_i))
-\end{aligned}
-
- \] </div><br>となります。これが示したいことでした。<br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> Mason, S. J., Graham, N. E. (2002). Areas beneath the relative operating characteristics (ROC) and relative operating levels (ROL) curves: Statistical significance and interpretation. Quarterly Journal of the Royal Meteorological Society (128): 2145–2166.</span></div>
+ \] </div><br>なので <span class="math-inline"> \( \leq_M \) </span> の反対称性から <span class="math-inline"> \( \alpha(l) = \alpha(\gamma(\alpha(l))) \) </span><br><br><span class="math-inline"> \( \gamma \circ \alpha \circ \gamma = \gamma \) </span> も同様に示せる．</div><br><br><details> <summary>対応するプログラム</summary><br>最後にここ埋める<br></details><br><hr><br><script>page_contents.push({
+    "type":"H2",
+    "id":"802",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="802">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/mWYk273lZOs?si=WeGA-TY5I9gZvAkz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 一部と書いたのは挫折したものがいくらかあるからです．</span></div>
 
             <hr>
 
@@ -1426,18 +1608,12 @@ def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
             <div class="article-navigation">
 
                 <div class="nav-item nav-prev">
-                    <a href="https://abap34.com/posts/jci_06.html">
+                    <a href="https://abap34.com/posts/gsoc2025_final_report.html">
                         <div class="nav-direction">← 前の記事</div>
-                        <div class="nav-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                        <div class="nav-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
                     </a>
                 </div>
-
-                <div class="nav-item nav-next">
-                    <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
-                        <div class="nav-direction">次の記事 →</div>
-                        <div class="nav-title">2024年度後期振り返り</div>
-                    </a>
-                </div>
+<div class="nav-item nav-next"></div>
 </div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
@@ -1446,26 +1622,26 @@ def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/parallel_othello.html">
-                            <div class="related-item-title">オセロ探索の並列化の戦略</div>
-                            <div class="related-date">2023/09/25</div>
-                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#ゲームAI</span> <span class="related-tag">#Julia</span></div>
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/grpc_ml.html">
-                            <div class="related-item-title">gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</div>
-                            <div class="related-date">2023/09/30</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#go</span> <span class="related-tag">#web</span></div>
+                        <a href="https://abap34.com/posts/jci_05.html">
+                            <div class="related-item-title">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</div>
+                            <div class="related-date">2024/11/22</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/wip_galois_connection_and_program_analysis.html">
-                            <div class="related-item-title">Galois 接続とプログラム解析 (Lean もあるよ)</div>
-                            <div class="related-date">2025/09/11</div>
-                            <div class="related-tags"><span class="related-tag">#プログラム解析</span> <span class="related-tag">#Galois 接続</span> <span class="related-tag">#抽象解釈</span></div>
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
                             </a>
                     </div>
 </div>
@@ -1481,10 +1657,10 @@ def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/n-order-diff.html">
+                            <div class="related-item-title">n 次精度 k 階数値微分の導出</div>
+                            <div class="related-date">2023/11/10</div>
+                            <div class="related-tags"><span class="related-tag">#数学</span> <span class="related-tag">#Python</span> <span class="related-tag">#微分</span></div>
                             </a>
                     </div>
 </div>
@@ -1504,26 +1680,26 @@ def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/parallel_othello.html">
-                            <div class="related-item-title">オセロ探索の並列化の戦略</div>
-                            <div class="related-date">2023/09/25</div>
-                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#ゲームAI</span> <span class="related-tag">#Julia</span></div>
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/grpc_ml.html">
-                            <div class="related-item-title">gRPCを使ったプロセス間通信でGoからいい感じに学習済みモデルを呼び出して推論</div>
-                            <div class="related-date">2023/09/30</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#go</span> <span class="related-tag">#web</span></div>
+                        <a href="https://abap34.com/posts/jci_05.html">
+                            <div class="related-item-title">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</div>
+                            <div class="related-date">2024/11/22</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/wip_galois_connection_and_program_analysis.html">
-                            <div class="related-item-title">Galois 接続とプログラム解析 (Lean もあるよ)</div>
-                            <div class="related-date">2025/09/11</div>
-                            <div class="related-tags"><span class="related-tag">#プログラム解析</span> <span class="related-tag">#Galois 接続</span> <span class="related-tag">#抽象解釈</span></div>
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
                             </a>
                     </div>
 </div>
@@ -1539,10 +1715,10 @@ def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/n-order-diff.html">
+                            <div class="related-item-title">n 次精度 k 階数値微分の導出</div>
+                            <div class="related-date">2023/11/10</div>
+                            <div class="related-tags"><span class="related-tag">#数学</span> <span class="related-tag">#Python</span> <span class="related-tag">#微分</span></div>
                             </a>
                     </div>
 </div>
