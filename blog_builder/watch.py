@@ -90,7 +90,7 @@ class SmartFileWatcher(FileSystemEventHandler):
         self.loop = loop
         self.watch_patterns = watch_patterns or ['.md', '.jpg', '.png', '.gif', '.svg', '.css', '.js']
         self.last_event_time = {}
-        self.debounce_interval = 0.1  # 100ms debounce
+        self.debounce_interval = 1.0  # 1秒 debounce
     
     def should_process_file(self, file_path: str) -> bool:
         path = pathlib.Path(file_path)
@@ -133,9 +133,15 @@ class AsyncBuildManager:
     def __init__(self):
         self.build_lock = asyncio.Lock()
         self.build_count = 0
+        self.is_building = False
     
     async def build_article(self, article_name: str, with_navigation: bool = False) -> Dict[str, Any]:
+        if self.is_building:
+            print("Build already in progress, skipping...")
+            return {"success": False, "error": "Build in progress", "article": article_name}
+        
         async with self.build_lock:
+            self.is_building = True
             self.build_count += 1
             build_id = self.build_count
             
@@ -172,9 +178,11 @@ class AsyncBuildManager:
                     "article": article_name
                 }
                 
+                self.is_building = False
                 return result
                 
             except Exception as e:
+                self.is_building = False
                 return {
                     "build_id": build_id,
                     "success": False,
