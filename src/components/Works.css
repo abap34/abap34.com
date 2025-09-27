@@ -295,20 +295,41 @@
     background-color: var(--background0);
     border: 1px solid var(--foreground2);
     border-radius: 0.5rem;
+    position: relative;
+}
+
+.works-modal-close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--background0);
+    border: 1px solid var(--foreground2);
+    color: var(--foreground1);
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    font-family: var(--font-family);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.works-modal-close-button:hover {
+    background: var(--foreground2);
+    color: var(--background0);
 }
 
 .works-modal-content::before{
     border: none !important;
 }
 
-.works-modal-header {
-    justify-content: space-between;
-    align-items: flex-start;
-    background-color: var(--background1);
-    border-bottom: 1px solid var(--foreground2);
-    border-radius: 0.5rem 0.5rem 0 0;
-    padding: 1rem;
-}
+
 
 .works-modal-title {
     font-size: 1.5rem;
@@ -453,12 +474,6 @@ works-modal-title-text {
     border-color: var(--foreground2);
 }
 
-[data-webtui-theme="default"] .works-modal-header,
-[data-webtui-theme="light"] .works-modal-header {
-    background-color: var(--background1);
-    border-bottom-color: var(--foreground2);
-}
-
 [data-webtui-theme="default"] .works-modal-body,
 [data-webtui-theme="light"] .works-modal-body {
     background-color: var(--background0);
@@ -469,13 +484,14 @@ works-modal-title-text {
     border-color: var(--foreground2);
 }
 
-[data-webtui-theme="catppuccin-mocha"] .works-modal-header {
-    background-color: var(--background1);
-    border-bottom-color: var(--foreground2);
+[data-webtui-theme="catppuccin-mocha"] .works-modal-close-button {
+    color: var(--foreground0);
+    background: var(--background0);
 }
 
-[data-webtui-theme="catppuccin-mocha"] .works-modal-close {
-    color: var(--foreground0);
+[data-webtui-theme="catppuccin-mocha"] .works-modal-close-button:hover {
+    background: var(--foreground2);
+    color: var(--background0);
 }
 
 [data-webtui-theme="catppuccin-mocha"] .works-modal-repo {
@@ -495,8 +511,12 @@ works-modal-title-text {
         max-height: 95vh;
     }
 
-    .works-modal-header {
-        padding: 1rem;
+    .works-modal-close-button {
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.4rem;
     }
 
     .works-modal-body {
