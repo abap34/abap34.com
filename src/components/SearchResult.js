@@ -97,19 +97,7 @@ function searchPostsByTags(posts, tags) {
     }, posts);
 }
 
-function findHighlightedText(content, query) {
-    const isMatch = content.toLowerCase().includes(query.toLowerCase());
 
-    const index = content.toLowerCase().indexOf(query.toLowerCase());
-    const start = Math.max(0, index - 10);
-    const end = Math.min(content.length, index + query.length + 100);
-    const before = content.slice(start, index);
-
-    const match = content.slice(index, index + query.length);
-    const after = content.slice(index + query.length, end);
-
-    return { isMatch, before, match, after };
-}
 
 // ドメイン名を抽出する関数
 function extractDomain(url) {
