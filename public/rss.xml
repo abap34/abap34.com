@@ -5,26 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Sat, 27 Sep 2025 14:34:07 +0000</lastBuildDate>
-<item>
-<guid>https://abap34.com/posts/wip_galois_connection_and_program_analysis.html</guid>
-<title>Galois 接続とプログラム解析 (Lean もあるよ)</title>
-<link>https://abap34.com/posts/wip_galois_connection_and_program_analysis.html</link>
-<pubDate>Thu, 11 Sep 2025 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-研究室でやった  の輪講で Galois 接続を使った抽象解釈の基礎づけについて学んで面白いなと思ったので，その内容を多少再構成したり，証明を納得がいくもので書き直したり， Lean で形式化したりなどしながらまとめてみます．
-おかねがある人はこちらを購入することをおすすめします．
-プログラム解析と抽象解釈，Galois 接続
-この記事では，プログラム解析という言葉をざっくり「(みんなが思う) ふつうの実行前にプログラムの性質を調べる技術」という意味で使います．
-例えば (できるかはさておき)
-ある変数の値がある時点で  になるかを調べるある関数呼び出しが例外を投げうるかを調べるあるプログラムが停止するかを調べる (!)
-などです．
-ほとんどのプログラマは日々プログラム解析の恩恵を受けてプログラムを書いています． 例えば補完などはプログラムのある位置で存在しうる変数名の解析が必要ですし， 型推論などもプログラム解析の一種と言えます．
-
-さて，プログラム解析といってもいろいろあり日々研究されていますが， そのうち  抽象解釈 (abstract interpretation) という枠...</description>
-</item>
-
+<lastBuildDate>Sat, 27 Sep 2025 14:39:08 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
@@ -513,6 +494,35 @@ pybind11
 今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
 評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
+</item>
+
+<item>
+<guid>https://abap34.com/posts/fork_buffer.html</guid>
+<title>forkはバッファもコピーするのでフラッシュしておこう </title>
+<link>https://abap34.com/posts/fork_buffer.html</link>
+<pubDate>Tue, 23 Apr 2024 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>
+fork関数の挙動
+C言語では  関数を使って  システムコールを呼び出すことができます。
+
+
+こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。
+
+ところで、  したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。
+
+
+
+では次のコードはどうなるでしょうか
+
+これの出力はこうなります。
+　が二重に出力されました。
+これは  したとき、親プロセスのバッファもコピーされるためです。
+ する前にはちゃんと  しておきましょう。
+感想
+システムプログラミングの講義で先生が話していて試したら確かにそうなってへ〜〜ってなりました
+
+</description>
 </item>
 
 </channel>
