@@ -409,9 +409,11 @@ works-modal-title-text {
     color: var(--accent0);
     text-decoration: none;
     font-size: 0.875rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
+    display: inline-block;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    hyphens: auto;
 }
 
 .works-modal-link:hover {
@@ -450,6 +452,9 @@ works-modal-title-text {
 .works-modal-body {
     background-color: var(--background0);
     padding: 1rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
 }
 
 
