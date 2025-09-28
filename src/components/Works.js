@@ -23,7 +23,7 @@ const WorkModal = ({ work, open, onClose }) => {
             >
                 <button
                     is-="button"
-                    variant-="foreground0"
+                    variant-="background2"
                     onClick={onClose}
                     className="works-modal-close-button"
                     aria-label="Close modal"
