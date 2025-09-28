@@ -11,20 +11,9 @@ import sys
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
-try:
-    import tqdm
-
-    HAS_TQDM = True
-except ImportError:
-    HAS_TQDM = False
-
-try:
-    import requests
-    from bs4 import BeautifulSoup
-
-    HAS_WEB_DEPS = True
-except ImportError:
-    HAS_WEB_DEPS = False
+import tqdm
+import requests
+from bs4 import BeautifulSoup
 
 # Configure logging with clear screen support
 import os
@@ -143,10 +132,6 @@ class OGPProcessor:
 
     @staticmethod
     def fetch_ogp(url: str) -> Tuple[str, str]:
-        if not HAS_WEB_DEPS:
-            logger.warning("Web dependencies not available for OGP fetching")
-            return "", url
-
         try:
             res = requests.get(url, timeout=10)
             res.raise_for_status()
@@ -640,18 +625,11 @@ class ExternalArticleProcessor:
         added_count = 0
         updated_count = 0
 
-        if HAS_TQDM:
-            article_iter = tqdm.tqdm(
-                external_articles, desc="Processing external articles", unit="article"
-            )
-        else:
-            article_iter = external_articles
+        article_iter = tqdm.tqdm(
+            external_articles, desc="Processing external articles", unit="article"
+        )
 
         for i, article_data in enumerate(article_iter):
-            if not HAS_TQDM and i % 10 == 0:
-                logger.info(
-                    f"Processing external article {i+1}/{len(external_articles)}"
-                )
 
             post = self.create_external_post(article_data)
             if not post:
@@ -850,20 +828,10 @@ class NavigationHelper:
         tag_based_results: List[Tuple[BlogPost, float, str]],
         tfidf_config: Optional[Dict[str, Any]],
     ) -> List[Tuple[BlogPost, float, str]]:
+        from .precompute_vectors import VectorPrecomputer
+        from .tfidf_similarity import TFIDFSimilarityCalculator
+        
         try:
-            try:
-                from .precompute_vectors import VectorPrecomputer
-                from .tfidf_similarity import TFIDFSimilarityCalculator
-            except ImportError:
-                import os
-                import sys
-
-                sys.path.append(
-                    os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-                )
-                from blog_builder.precompute_vectors import VectorPrecomputer
-                from blog_builder.tfidf_similarity import TFIDFSimilarityCalculator
-
             # キャッシュされたベクトルを読み込み
             logger.debug("Loading TF-IDF cache...")
             cache_data = VectorPrecomputer.load_cached_vectors()
@@ -1125,16 +1093,11 @@ class BlogBuilder:
     def build_articles(
         self, article_paths: List[pathlib.Path], include_navigation: bool = True
     ) -> None:
-        if HAS_TQDM:
-            article_iter = tqdm.tqdm(
-                article_paths, desc="Building articles", unit="article"
-            )
-        else:
-            article_iter = article_paths
+        article_iter = tqdm.tqdm(
+            article_paths, desc="Building articles", unit="article"
+        )
 
         for i, article_path in enumerate(article_iter):
-            if not HAS_TQDM and i % 5 == 0:
-                logger.info(f"Progress: {i+1}/{len(article_paths)}")
 
             try:
                 self.article_builder.build_article(article_path, include_navigation)
@@ -1148,16 +1111,11 @@ class BlogBuilder:
         all_posts_data = self.file_manager.load_posts()
         all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
 
-        if HAS_TQDM:
-            article_iter = tqdm.tqdm(
-                article_paths, desc="Adding navigation", unit="article"
-            )
-        else:
-            article_iter = article_paths
+        article_iter = tqdm.tqdm(
+            article_paths, desc="Adding navigation", unit="article"
+        )
 
         for i, article_path in enumerate(article_iter):
-            if not HAS_TQDM and i % 5 == 0:
-                logger.info(f"Navigation progress: {i+1}/{len(article_paths)}")
 
             try:
                 # 現在の記事のURLを生成
@@ -1217,14 +1175,7 @@ class BlogBuilder:
         self.add_navigation_to_all_articles(article_paths)
 
     def precompute_vectors(self) -> None:
-        try:
-            from .precompute_vectors import VectorPrecomputer
-        except ImportError:
-            import os
-            import sys
-
-            sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            from blog_builder.precompute_vectors import VectorPrecomputer
+        from .precompute_vectors import VectorPrecomputer
 
         logger.info("Starting TF-IDF vector precomputation...")
 
