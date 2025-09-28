@@ -13,7 +13,7 @@ body {
     /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
-    font-family: monospace;
+    font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
@@ -252,6 +252,7 @@ h5 {
     font-size: 0.95em;
     overflow: scroll;
     white-space: pre;
+    word-break: break-all;
 }
 
 /* 箇条書きの字下げ */
@@ -333,6 +334,12 @@ figcaption {
     display: block;
     margin-top: 0.5rem;
     text-align: center;
+}
+
+
+strong {
+    /* ちょっと強めに */
+    font-weight: 1000;
 }
 
 /* ===============================================
