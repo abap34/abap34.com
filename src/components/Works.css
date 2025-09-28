@@ -303,8 +303,8 @@
     top: 1rem;
     right: 1rem;
     z-index: 10;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -479,18 +479,18 @@ works-modal-title-text {
 
 @media (max-width: 768px) {
     .works-modal-overlay {
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .works-modal-content {
-        max-height: 95vh;
+        max-height: 85vh;
     }
 
     .works-modal-close-button {
         top: 0.75rem;
         right: 0.75rem;
-        width: 3rem;
-        height: 3rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 
     .works-modal-body {
