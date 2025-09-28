@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
+import { X } from "lucide-react";
 import yaml from "yaml";
 import Tag from './Tag';
 import './Works.css';
@@ -20,30 +21,15 @@ const WorkModal = ({ work, open, onClose }) => {
                 className="works-modal-content"
                 onClick={(e) => e.stopPropagation()}
             >
-                <row className="works-modal-header">
-                    {/* <span is-="badge" variant-="foreground0"
-                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
-                        {work.title}
-                    </span> */}
-                    <div></div>
-                    <button
-                        onClick={onClose}
-                        style={{
-                            background: 'none',
-                            border: '1px solid var(--foreground2)',
-                            color: 'var(--foreground1)',
-                            cursor: 'pointer',
-                            padding: '0.5ch',
-                            fontSize: '1rem',
-                            lineHeight: '1',
-                            fontFamily: 'var(--font-family)',
-                            width: '2ch',
-                            height: '1lh'
-                        }}
-                    >
-                        ✕
-                    </button>
-                </row>
+                <button
+                    is-="button"
+                    variant-="background2"
+                    onClick={onClose}
+                    className="works-modal-close-button"
+                    aria-label="Close modal"
+                >
+                    <X />
+                </button>
 
 
                 <column pad-="2 1" className="works-modal-body">
