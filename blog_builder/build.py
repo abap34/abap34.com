@@ -150,6 +150,7 @@ class OGPProcessor:
         try:
             res = requests.get(url, timeout=10)
             res.raise_for_status()
+            res.encoding = 'utf-8'
             soup = BeautifulSoup(res.text, "html.parser")
 
             ogp = soup.find("meta", attrs={"property": "og:image"})
