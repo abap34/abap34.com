@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaGithub } from "react-icons/fa6";
 import ReactMarkdown from "react-markdown";
+import { X } from "lucide-react";
 import yaml from "yaml";
 import Tag from './Tag';
 import './Works.css';
@@ -21,10 +22,13 @@ const WorkModal = ({ work, open, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+                    is-="button"
+                    variant-="foreground0"
                     onClick={onClose}
                     className="works-modal-close-button"
+                    aria-label="Close modal"
                 >
-                    ✕
+                    <X />
                 </button>
 
 
