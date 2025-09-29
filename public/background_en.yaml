@@ -24,7 +24,7 @@ careers:
     project: ""
 
 others:
-  - title: "Google Summer of Code 2025"
+  - title: "Google Summer of Code 2025 ─ Development of a New Language Server for Julia"
     url: "https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m"
     description: "A proposal titled 'Development of a New Language Server for Julia' was accepted by Julia. Worked on developing a new Language Server for Julia."
     period: "2025"

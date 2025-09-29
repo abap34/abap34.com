@@ -31,9 +31,9 @@ function EachWork(props) {
             <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                 {props.period} | {props.worktype}
             </div>
-            <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
+            {/* <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
                 {props.project}
-            </div>
+            </div> */}
         </div>
     );
 }
@@ -132,9 +132,9 @@ export default function Background({ compact = false }) {
                         <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                             {other.period}
                         </div>
-                        <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
+                        {/* <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
                             {other.description}
-                        </div>
+                        </div> */}
                     </div>
                 ))}
             </div>
