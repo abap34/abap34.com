@@ -5,7 +5,7 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Mon, 29 Sep 2025 16:05:29 +0000</lastBuildDate>
+<lastBuildDate>Mon, 29 Sep 2025 17:03:46 +0000</lastBuildDate>
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
@@ -53,14 +53,7 @@ Google Summer of Code に Proposal が採択されました！
 server.abap34.com (ssh チャットサーバ)
 まずは一発ギャグです。
 
-&lt;div class=&quot;responsive-card&quot;&gt;     &lt;img src=&quot;https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com&quot;&gt;     &lt;div style=&quot;margin: 0 10px 0 10px;&quot;&gt;          &lt;a href=&quot;https://github.com/abap34/server.abap34.com&quot;&quot;&gt;GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ &lt;/a&gt;     &lt;/div&gt; &lt;/div&gt;
-
-これは Go で書いた ssh サーバなのですが、 ssh すると ↓
-
-
-
-認証が始まり、
-...</description>
+&lt;div class=&quot;link-card&quot;&gt;     &lt;a href=&quot;https://github.com/abap34/server.abap34.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;link-card-container&quot;&gt;         &lt;div class=&quot;link-card-image&quot;&gt;             &lt;img src=&quot;https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com&quot; alt=&quot;GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ &quot; o...</description>
 </item>
 
 <item>

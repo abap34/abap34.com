@@ -32,11 +32,26 @@ featured: true
 まずは一発ギャグです。
 
 
-<div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/server.abap34.com"">GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ `ssh abap34@server.abap34.com  -p 39001`</a>
-    </div>
+<div class="link-card">
+    <a href="https://github.com/abap34/server.abap34.com" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/b02ffe6b941b3c6526c27959fd7211b6e02ab4bb44ae7d9ff696e1344b614c3f/abap34/server.abap34.com" alt="GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ `ssh abap34@server.abap34.com  -p 39001`" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - abap34/server.abap34.com: just 🐩ᯓᡣ𐭩 ▶︎ `ssh abap34@server.abap34.com  -p 39001`</h3>
+                <p class="link-card-description">just 🐩ᯓᡣ𐭩 ▶︎ `ssh abap34@server.abap34.com  -p 39001` - abap34/server.abap34.com</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/abap34/server.abap34.com</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
 
 
@@ -69,11 +84,26 @@ $ ssh {ここに GitHub のユーザ名}@server.abap34.com -p 39001
 ### mu (型推論付きの処理系)
 
 
-<div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/56a834218c95be64b39ec1c9824387c9221e36ba05b39dec8d93a9a05de16f34/abap34/mu">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/mu"">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type analysis</a>
-    </div>
+<div class="link-card">
+    <a href="https://github.com/abap34/mu" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/56a834218c95be64b39ec1c9824387c9221e36ba05b39dec8d93a9a05de16f34/abap34/mu" alt="GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static ty" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static ty</h3>
+                <p class="link-card-description">Implementation of multiple dispatch and abstract interpretation based  static type analysis  - GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type...</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/abap34/mu</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
 
 
@@ -140,11 +170,26 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 これは実装などブログにしました。 qiita に載せたのですが、同じものをこっちにも最近動かしました。
 
 
-<div class="responsive-card">
-    <img src="https://abap34.com/posts/jci_06/image.png">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://abap34.com/posts/jci_06.html"">Julia Compiler Internals (06) - Implementing Small Julia Compiler</a>
-    </div>
+<div class="link-card">
+    <a href="https://abap34.com/posts/jci_06.html" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://abap34.com/posts/jci_06/image.png" alt="Julia Compiler Internals (06) - Implementing Small Julia Compiler" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://abap34.com/favicon.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">abap34's blog</span>
+                </div>
+                <h3 class="link-card-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</h3>
+                <p class="link-card-description">多重ディスパッチと抽象解釈に基づく型推論が載った処理系を作ります。</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">abap34.com/posts/jci_06.html</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
  
 
@@ -157,22 +202,54 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 多分これが一番時間を使った気がします。定理証明支援系  (とそのエディタ、そのレジストリ、そのほか色々全部のプラットフォームです。)
 
 
-<div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/377a70c19e1e007c01559c513a99fcc9314e35113f55eb2df477058c6fa05662/lapisla-prover/lapisla-prover">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/lapisla-prover/lapisla-prover"">GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosystem designed for everyone. Greetings! 👋</a>
-    </div>
+<div class="link-card">
+    <a href="https://github.com/lapisla-prover/lapisla-prover" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/377a70c19e1e007c01559c513a99fcc9314e35113f55eb2df477058c6fa05662/lapisla-prover/lapisla-prover" alt="GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosyste" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - lapisla-prover/lapisla-prover: lapisla is a *battery-pluggable* theorem prover and ecosyste</h3>
+                <p class="link-card-description">lapisla is a *battery-pluggable* theorem prover and ecosystem designed for everyone. Greetings! 👋 - lapisla-prover/lapisla-prover</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/lapisla-prover/lapisla-prover</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
 
 
 
-<div class="responsive-card">
-    <img src="https://trap.jp/content/images/2025/01/img_5128.png">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://trap.jp/post/2478/"">
-			冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！ | 東京科学大学デジタル創作同好会traP
-	</a>
-    </div>
+<div class="link-card">
+    <a href="https://trap.jp/post/2478/" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://trap.jp/content/images/2025/01/img_5128.png" alt="冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://trap.jp/content/images/size/w256h256/2020/01/traP_logo_icon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">東京科学大学デジタル創作同好会traP</span>
+                </div>
+                <h3 class="link-card-title">冬ハッカソンで定理証明支援系 「lapisla-prover」(and more !) を開発しました！</h3>
+                <p class="link-card-description">この記事は 1/19 ~ 1/26 に行われた冬ハッカソン2024 10 班「Cat dance at the cafe」の参加記です。
+
+私たちは今回のハッカソンで定理証明支援系 「lapisla-prover」とそのほか全てを開発し、技術賞を獲得しました 🥳‌                              
+
+この記事ではこの lapisla-prover のコンセプトと実装を紹介</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">trap.jp/post/2478/</span>
+                <span class="link-card-date">2025/02/09</span>
+            </div>
+        </div>
+    </a>
 </div>
 
 
@@ -192,13 +269,30 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 またコンペをやりました。
 
 
-<div class="responsive-card">
-    <img src="https://trap.jp/content/images/2025/03/mosaic_20250315035433-1.png">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://trap.jp/post/2518/"">
-			traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！ | 東京科学大学デジタル創作同好会traP
-	</a>
-    </div>
+<div class="link-card">
+    <a href="https://trap.jp/post/2518/" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://trap.jp/content/images/2025/03/mosaic_20250315035433-1.png" alt="traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://trap.jp/content/images/size/w256h256/2020/01/traP_logo_icon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">東京科学大学デジタル創作同好会traP</span>
+                </div>
+                <h3 class="link-card-title">traP Kaggle 班 x 日本経済新聞社でデータ分析コンペを開催しました！</h3>
+                <p class="link-card-description">情報工学系 B3 の @abap34 です。昨年まで Kaggle 班の班長をしていました。
+
+さて、Kaggle 班では定期的に部内データ分析コンペを開催しているのですが、
+
+Kaggle班で機械学習講習会と部内データ分析コンペを開催しました！こんばんは ！ 情報工学系 B3 の @abap34 です。Kaggle 班の班長をしています。最近は、財布を落として教務課の人に怒られました。 さて、梅</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">trap.jp/post/2518/</span>
+                <span class="link-card-date">2025/03/17</span>
+            </div>
+        </div>
+    </a>
 </div>
 
 
@@ -229,22 +323,52 @@ mu.MuCore.MuTypes.Union{mu.MuCore.MuTypes.Int, mu.MuCore.MuTypes.Bool}
 このブログを動かしているやつです。
 
 
-<div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/3b5b763da5aef69c53298e49d5d08e982b2edcda4caa9ddf8a80d519d1e471a6/abap34/almo">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/almo"">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバを必要としないサンプルコードの実行環境やジャッジシステムを提供するページの構築を可能にします。</a>
-    </div>
+<div class="link-card">
+    <a href="https://github.com/abap34/almo" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/3b5b763da5aef69c53298e49d5d08e982b2edcda4caa9ddf8a80d519d1e471a6/abap34/almo" alt="GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サー" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - abap34/almo: [⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サー</h3>
+                <p class="link-card-description">[⚠️ WIP] ALMOは拡張Markdownパーサ・静的サイトジェネレータです。WebAssemblyを使ってブラウザ上で完結する実行環境を提供し、サーバを必要としないサンプルコードの実行環境やジャッジシステムを提供するページの構築を可能にします。 - abap34/almo</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/abap34/almo</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
 
 
 本格的にビルドシステムの書き換え (ついでにユーザが触る部分は全部 Python に) をやろうとしているのですがシングルバイナリで配るために Hacky なビルドをしているせいで前途多難です。
 
 
-<div class="responsive-card">
-    <img src="https://opengraph.githubassets.com/ed1f72e3735bfcdb2d52f009a40d84dcd1526b3e3c094b0ce9f5a28b70661597/abap34/almo/pull/167">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="https://github.com/abap34/almo/pull/167"">ビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo · GitHub</a>
-    </div>
+<div class="link-card">
+    <a href="https://github.com/abap34/almo/pull/167" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/ed1f72e3735bfcdb2d52f009a40d84dcd1526b3e3c094b0ce9f5a28b70661597/abap34/almo/pull/167" alt="ビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">ビルドシステムの書き換え by abap34 · Pull Request #167 · abap34/almo</h3>
+                <p class="link-card-description">fix #166</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/abap34/almo/pull/167</span>
+                
+            </div>
+        </div>
+    </a>
 </div>
 
 
