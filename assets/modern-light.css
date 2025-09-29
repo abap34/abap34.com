@@ -249,10 +249,12 @@ h5 {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 0rem 0rem;
+    margin: 0 0rem;
     font-size: 0.95em;
-    overflow: scroll;
-    white-space: pre;
+    overflow-wrap: break-word;
     word-break: break-all;
+    white-space: pre-wrap;
+    max-width: 100%;
 }
 
 /* 箇条書きの字下げ */
