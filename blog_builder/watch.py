@@ -89,107 +89,298 @@ class SmartFileWatcher(FileSystemEventHandler):
         self.callback = callback
         self.loop = loop
         self.watch_patterns = watch_patterns or ['.md', '.jpg', '.png', '.gif', '.svg', '.css', '.js']
-        self.last_event_time = {}
+        self.pending_tasks = {}  # ファイルパス -> asyncio.Task
         self.debounce_interval = 1.0  # 1秒 debounce
     
     def should_process_file(self, file_path: str) -> bool:
         path = pathlib.Path(file_path)
         return any(file_path.endswith(pattern) for pattern in self.watch_patterns)
     
-    def debounce_event(self, file_path: str) -> bool:
-        now = time.time()
-        last_time = self.last_event_time.get(file_path, 0)
-        
-        if now - last_time < self.debounce_interval:
-            return False
-        
-        self.last_event_time[file_path] = now
-        return True
+    async def debounced_callback(self, file_path: str, event_type: str):
+        """debounce間隔後にコールバックを実行"""
+        try:
+            await asyncio.sleep(self.debounce_interval)
+            await self.callback(file_path, event_type)
+        except Exception as e:
+            print(f"Error in debounced callback: {e}")
+        finally:
+            # タスク完了後にクリーンアップ
+            self.pending_tasks.pop(file_path, None)
     
-    def schedule_async_callback(self, file_path: str, event_type: str):
-        if self.loop and not self.loop.is_closed():
-            try:
-                asyncio.run_coroutine_threadsafe(
-                    self.callback(file_path, event_type), 
-                    self.loop
-                )
-            except Exception as e:
-                print(f"Error scheduling callback: {e}")
+    def schedule_debounced_callback(self, file_path: str, event_type: str):
+        if not self.loop or self.loop.is_closed():
+            return
+            
+        # 既存のタスクがある場合はキャンセル
+        if file_path in self.pending_tasks:
+            old_task = self.pending_tasks[file_path]
+            if not old_task.done():
+                old_task.cancel()
+                print(f"Cancelled previous build for: {file_path}")
+        
+        # 新しいタスクをスケジュール
+        try:
+            task = asyncio.run_coroutine_threadsafe(
+                self.debounced_callback(file_path, event_type),
+                self.loop
+            )
+            self.pending_tasks[file_path] = task
+            print(f"Scheduled debounced build for: {file_path}")
+        except (RuntimeError, Exception) as e:
+            print(f"Error scheduling callback: {e}")
     
     def on_modified(self, event):
         if not event.is_directory and self.should_process_file(event.src_path):
-            if self.debounce_event(event.src_path):
-                print(f"File modified: {event.src_path}")
-                self.schedule_async_callback(event.src_path, "modified")
+            print(f"File modified: {event.src_path}")
+            self.schedule_debounced_callback(event.src_path, "modified")
     
     def on_created(self, event):
         if not event.is_directory and self.should_process_file(event.src_path):
-            if self.debounce_event(event.src_path):
-                print(f"File created: {event.src_path}")
-                self.schedule_async_callback(event.src_path, "created")
+            print(f"File created: {event.src_path}")
+            self.schedule_debounced_callback(event.src_path, "created")
 
 
 class AsyncBuildManager:
     def __init__(self):
-        self.build_lock = asyncio.Lock()
         self.build_count = 0
-        self.is_building = False
+        self.current_build_task = None
+        self.pending_build_params = None
     
-    async def build_article(self, article_name: str, with_navigation: bool = False) -> Dict[str, Any]:
-        if self.is_building:
-            print("Build already in progress, skipping...")
-            return {"success": False, "error": "Build in progress", "article": article_name}
+    async def build_article(self, article_name: str, with_navigation: bool = False, use_fake_data: bool = False) -> Dict[str, Any]:
+        build_params = {
+            "article_name": article_name,
+            "with_navigation": with_navigation,
+            "use_fake_data": use_fake_data
+        }
         
-        async with self.build_lock:
-            self.is_building = True
+        # 既存のビルドがある場合は新しいパラメータで置き換え
+        if self.current_build_task and not self.current_build_task.done():
+            print(f"Replacing current build with new parameters...")
+            self.pending_build_params = build_params
+            return {"success": True, "message": "Build queued", "article": article_name}
+        
+        # 新しいビルドを開始
+        self.current_build_task = asyncio.create_task(self._execute_build(**build_params))
+        return await self.current_build_task
+    
+    async def _execute_build(self, article_name: str, with_navigation: bool = False, use_fake_data: bool = False) -> Dict[str, Any]:
+        while True:
             self.build_count += 1
             build_id = self.build_count
-            
             start_time = time.time()
             
             try:
-                # ビルドコマンド構築
-                cmd = [
-                    sys.executable, "blog_builder/build.py",
-                    "--article", article_name
-                ]
+                if use_fake_data:
+                    # 偽データモード：build.pyを呼ばずに直接ファイル操作
+                    print(f"Starting fake data build #{build_id} for {article_name}")
+                    result = await self._build_with_fake_data(article_name, build_id)
+                else:
+                    # 実データモード：build.pyを呼び出し
+                    cmd = [
+                        sys.executable, "blog_builder/build.py",
+                        "--article", article_name
+                    ]
+                    
+                    if not with_navigation:
+                        cmd.append("--no-navigation")
+                    
+                    print(f"Starting build #{build_id} for {article_name}")
+                    
+                    # 非同期でプロセス実行
+                    process = await asyncio.create_subprocess_exec(
+                        *cmd,
+                        stdout=asyncio.subprocess.PIPE,
+                        stderr=asyncio.subprocess.PIPE,
+                        cwd=pathlib.Path.cwd()
+                    )
+                    
+                    stdout, stderr = await process.communicate()
+                    
+                    build_time = time.time() - start_time
+                    
+                    result = {
+                        "build_id": build_id,
+                        "success": process.returncode == 0,
+                        "build_time": build_time,
+                        "stdout": stdout.decode() if stdout else "",
+                        "stderr": stderr.decode() if stderr else "",
+                        "article": article_name
+                    }
                 
-                if not with_navigation:
-                    cmd.append("--no-navigation")
+                # ビルド完了後、保留中の新しいパラメータがあるかチェック
+                if self.pending_build_params:
+                    pending_params = self.pending_build_params
+                    self.pending_build_params = None
+                    print(f"Found pending build, starting with new parameters...")
+                    # 新しいパラメータでビルドを継続
+                    article_name = pending_params["article_name"]
+                    with_navigation = pending_params["with_navigation"]
+                    use_fake_data = pending_params["use_fake_data"]
+                    continue
                 
-                # 非同期でプロセス実行
-                process = await asyncio.create_subprocess_exec(
-                    *cmd,
-                    stdout=asyncio.subprocess.PIPE,
-                    stderr=asyncio.subprocess.PIPE,
-                    cwd=pathlib.Path.cwd()
-                )
-                
-                stdout, stderr = await process.communicate()
-                
-                build_time = time.time() - start_time
-                
-                result = {
-                    "build_id": build_id,
-                    "success": process.returncode == 0,
-                    "build_time": build_time,
-                    "stdout": stdout.decode() if stdout else "",
-                    "stderr": stderr.decode() if stderr else "",
-                    "article": article_name
-                }
-                
-                self.is_building = False
                 return result
                 
             except Exception as e:
-                self.is_building = False
+                build_time = time.time() - start_time
+                result = {
+                    "build_id": build_id,
+                    "success": False,
+                    "build_time": build_time,
+                    "error": str(e),
+                    "article": article_name
+                }
+                
+                # エラーの場合も保留中のビルドをチェック
+                if self.pending_build_params:
+                    pending_params = self.pending_build_params
+                    self.pending_build_params = None
+                    print(f"Build failed, but found pending build, retrying with new parameters...")
+                    article_name = pending_params["article_name"]
+                    with_navigation = pending_params["with_navigation"]
+                    use_fake_data = pending_params["use_fake_data"]
+                    continue
+                
+                return result
+    
+    async def _build_with_fake_data(self, article_name: str, build_id: int) -> Dict[str, Any]:
+        """偽データを使ってHTMLファイルを生成する簡易ビルド"""
+        start_time = time.time()
+        
+        try:
+            # まずノーマルビルドを実行（ナビゲーション無し）
+            cmd = [
+                sys.executable, "blog_builder/build.py",
+                "--article", article_name,
+                "--no-navigation"
+            ]
+            
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                cwd=pathlib.Path.cwd()
+            )
+            
+            stdout, stderr = await process.communicate()
+            
+            if process.returncode != 0:
                 return {
                     "build_id": build_id,
                     "success": False,
                     "build_time": time.time() - start_time,
-                    "error": str(e),
+                    "stdout": stdout.decode() if stdout else "",
+                    "stderr": stderr.decode() if stderr else "",
                     "article": article_name
                 }
+            
+            # HTMLファイルに偽データを埋め込む
+            html_path = pathlib.Path("public/posts") / f"{article_name}.html"
+            if html_path.exists():
+                await self._inject_fake_data_to_html(html_path)
+            
+            build_time = time.time() - start_time
+            return {
+                "build_id": build_id,
+                "success": True,
+                "build_time": build_time,
+                "stdout": stdout.decode() if stdout else "",
+                "stderr": stderr.decode() if stderr else "",
+                "article": article_name
+            }
+            
+        except Exception as e:
+            return {
+                "build_id": build_id,
+                "success": False,
+                "build_time": time.time() - start_time,
+                "error": str(e),
+                "article": article_name
+            }
+    
+    async def _inject_fake_data_to_html(self, html_path: pathlib.Path):
+        """HTMLファイルに偽データを注入"""
+        try:
+            async with aiofiles.open(html_path, 'r', encoding='utf-8') as f:
+                content = await f.read()
+            
+            # 偽ナビゲーションHTML
+            fake_navigation = '''
+            <div class="article-navigation">
+                <div class="nav-item nav-prev">
+                    <a href="/posts/prev_article.html">
+                        <div class="nav-direction">← 前の記事</div>
+                        <div class="nav-title">前の記事のタイトル（サンプル）</div>
+                    </a>
+                </div>
+                <div class="nav-item nav-next">
+                    <a href="/posts/next_article.html">
+                        <div class="nav-direction">次の記事 →</div>
+                        <div class="nav-title">次の記事のタイトル（サンプル）</div>
+                    </a>
+                </div>
+            </div>
+            '''
+            
+            # 偽関連記事HTML
+            fake_related = '''
+            <div class="related-articles tag-related">
+                <h3 class="related-title">同じようなタグの記事</h3>
+                <div class="related-item">
+                    <a href="/posts/related1.html">
+                        <div class="related-item-title">関連記事1（タグベース）</div>
+                        <div class="related-date">2024-01-15</div>
+                        <div class="related-tags">
+                            <span class="related-tag">#Python</span>
+                            <span class="related-tag">#プログラミング</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <a href="/posts/related2.html">
+                        <div class="related-item-title">関連記事2（タグベース）</div>
+                        <div class="related-date">2024-01-10</div>
+                        <div class="related-tags">
+                            <span class="related-tag">#機械学習</span>
+                            <span class="related-tag">#データ分析</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="related-articles tfidf-related">
+                <h3 class="related-title">同じような内容の記事</h3>
+                <div class="related-item">
+                    <a href="/posts/related3.html">
+                        <div class="related-item-title">関連記事3（内容ベース）</div>
+                        <div class="related-date">2024-01-20</div>
+                        <div class="related-tags">
+                            <span class="related-tag">#アルゴリズム</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="related-item">
+                    <a href="/posts/related4.html">
+                        <div class="related-item-title">関連記事4（内容ベース）</div>
+                        <div class="related-date">2024-01-05</div>
+                        <div class="related-tags">
+                            <span class="related-tag">#開発環境</span>
+                            <span class="related-tag">#ツール</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            '''
+            
+            # プレースホルダーを置換
+            content = content.replace("{{navigation}}", fake_navigation)
+            content = content.replace("{{related_articles}}", fake_related)
+            content = content.replace("{{mobile_sidebar}}", "")
+            content = content.replace("{{mobile_related_articles}}", "")
+            
+            async with aiofiles.open(html_path, 'w', encoding='utf-8') as f:
+                await f.write(content)
+                
+        except Exception as e:
+            print(f"Error injecting fake data: {e}")
 
 
 class LiveReloadServer:
@@ -341,14 +532,15 @@ class SimpleConsole:
         
     def add_build_result(self, result: Dict):
         self.builds += 1
-        self.build_time_total += result["build_time"]
+        build_time = result.get("build_time", 0.0)
+        self.build_time_total += build_time
         
-        status = "OK" if result["success"] else "FAIL"
+        status = "OK" if result.get("success", False) else "FAIL"
         avg_time = self.build_time_total / self.builds
         
-        print(f"[{datetime.now().strftime('%H:%M:%S')}] Build #{self.builds}: {status} ({result['build_time']:.2f}s, avg: {avg_time:.2f}s)")
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Build #{self.builds}: {status} ({build_time:.2f}s, avg: {avg_time:.2f}s)")
         
-        if not result["success"]:
+        if not result.get("success", False):
             error = result.get("error", result.get("stderr", "Unknown error"))
             print(f"Error: {error}")
     
@@ -434,12 +626,14 @@ def generate_qr_code(url: str):
 
 
 class LiveWatcher:
-    def __init__(self, article_name: str, port: int = None, with_navigation: bool = False):
+    def __init__(self, article_name: str, port: int = None, with_navigation: bool = False, use_fake_data: bool = True):
         self.article_name = article_name
         self.with_navigation = with_navigation
+        self.use_fake_data = use_fake_data
         self.port = port or find_free_port()
         
         self.console_ui = SimpleConsole(article_name, self.port)
+        print("🎨 Design preview mode: Using fake data for navigation and related articles")
         self.build_manager = AsyncBuildManager()
         self.live_server = LiveReloadServer(self.port)
         
@@ -461,11 +655,25 @@ class LiveWatcher:
     def setup_signal_handlers(self):
         """シグナルハンドラー設定"""
         def signal_handler(signum, frame):
-            if self.running:
-                asyncio.create_task(self.shutdown())
+            print(f"\nReceived signal {signum}, shutting down...")
+            self.running = False
+            # イベントループが実行中の場合、シャットダウンタスクを作成
+            try:
+                loop = asyncio.get_running_loop()
+                if loop and not loop.is_closed():
+                    # 新しいタスクでシャットダウンを実行
+                    asyncio.create_task(self.force_shutdown())
+            except RuntimeError:
+                # イベントループが実行されていない場合は何もしない
+                pass
         
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
+    
+    async def force_shutdown(self):
+        """強制シャットダウン用のヘルパー"""
+        await asyncio.sleep(0.1)  # 短い遅延を入れる
+        await self.shutdown()
     
     async def on_file_changed(self, file_path: str, event_type: str):
         print(f"File changed: {file_path} ({event_type})")
@@ -481,21 +689,47 @@ class LiveWatcher:
         })
         
         # ビルド実行
-        result = await self.build_manager.build_article(
-            self.article_name, 
-            self.with_navigation
-        )
+        try:
+            result = await self.build_manager.build_article(
+                self.article_name, 
+                self.with_navigation,
+                self.use_fake_data
+            )
+            
+            # 結果の検証
+            if not isinstance(result, dict):
+                result = {
+                    "success": False,
+                    "build_time": 0.0,
+                    "error": "Invalid build result format",
+                    "article": self.article_name
+                }
+        except Exception as e:
+            print(f"Build error: {e}")
+            result = {
+                "success": False,
+                "build_time": 0.0,
+                "error": str(e),
+                "article": self.article_name
+            }
         
         self.console_ui.add_build_result(result)
         
         await self.live_server.broadcast_message({
             "type": "build_complete",
-            "success": result["success"],
-            "build_time": result["build_time"],
+            "success": result.get("success", False),
+            "build_time": result.get("build_time", 0.0),
             "error": result.get("error", result.get("stderr", ""))
         })
         
         if result["success"]:
+            # ライブリロードスクリプトを再注入
+            await self.inject_livereload_script()
+            
+            # クライアント数を確認
+            client_count = len(self.live_server.clients)
+            print(f"Sending reload to {client_count} clients")
+            
             await self.live_server.broadcast_message({"type": "reload"})
     
     def setup_file_watching(self):
@@ -519,7 +753,8 @@ class LiveWatcher:
         
         result = await self.build_manager.build_article(
             self.article_name,
-            self.with_navigation
+            self.with_navigation,
+            self.use_fake_data
         )
         
         self.console_ui.add_build_result(result)
@@ -595,22 +830,56 @@ class LiveWatcher:
             self.startup_complete = True
             
             # メインループ
-            while self.running:
-                await asyncio.sleep(0.5)
+            print("Press Ctrl+C to stop the server...")
+            try:
+                while self.running:
+                    await asyncio.sleep(0.5)
+            except KeyboardInterrupt:
+                print("\nKeyboard interrupt received in main loop, shutting down...")
+                self.running = False
+            except asyncio.CancelledError:
+                print("\nAsyncio task cancelled, shutting down...")
+                self.running = False
         
         finally:
             await self.shutdown()
     
     async def shutdown(self):
+        if not self.running:
+            return  # 既にシャットダウン処理中
+            
+        print("Shutting down systems...")
         self.running = False
         
-        # ファイル監視停止
-        if self.observer.is_alive():
-            self.observer.stop()
-            self.observer.join(timeout=2)
-        
-        # サーバー停止
-        await self.live_server.stop()
+        try:
+            # ビルド中のタスクをキャンセル
+            if (hasattr(self.build_manager, 'current_build_task') and 
+                self.build_manager.current_build_task and 
+                not self.build_manager.current_build_task.done()):
+                print("Cancelling current build...")
+                self.build_manager.current_build_task.cancel()
+                try:
+                    await self.build_manager.current_build_task
+                except asyncio.CancelledError:
+                    pass
+            
+            # ファイル監視停止
+            if hasattr(self, 'observer') and self.observer.is_alive():
+                print("Stopping file observer...")
+                self.observer.stop()
+                # ノンブロッキングで待機
+                try:
+                    self.observer.join(timeout=1)
+                except:
+                    pass
+            
+            # サーバー停止
+            if hasattr(self, 'live_server'):
+                print("Stopping live server...")
+                await self.live_server.stop()
+                
+        except Exception as e:
+            print(f"Error during shutdown: {e}")
         
         print("System stopped.")
 
@@ -629,7 +898,8 @@ def main(article, port, navigation, help_extended):
         print("- 非同期ビルド処理")
         print("使用例:")
         print("  python3 watch.py                    # インタラクティブ選択")
-        print("  python3 watch.py my_article         # 記事指定")
+        print("  python3 watch.py my_article         # 記事指定（偽データ）")
+        print("  python3 watch.py my_article -n      # ナビゲーション有効")
         return
     
     # 記事選択
@@ -646,19 +916,29 @@ def main(article, port, navigation, help_extended):
         return
     
     # システム開始
+    watcher = None
     try:
         watcher = LiveWatcher(
             article_name=article,
             port=port,
-            with_navigation=navigation
+            with_navigation=navigation,
+            use_fake_data=True  # watch時は常に偽データ
         )
         
         asyncio.run(watcher.start())
         
     except KeyboardInterrupt:
-        print("\nInterrupted by user")
+        print("\nKeyboard interrupt in main, shutting down...")
     except Exception as e:
         print(f"Error: {e}")
+    finally:
+        if watcher:
+            print("Final cleanup...")
+            # 同期的にクリーンアップ
+            if hasattr(watcher, 'observer') and watcher.observer.is_alive():
+                watcher.observer.stop()
+                watcher.observer.join(timeout=0.5)
+        print("Exiting...")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 
 import argparse
+import asyncio
 import json
 import logging
 import math
@@ -10,9 +11,13 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
+import hashlib
+from datetime import datetime, timedelta
 
 import tqdm
 import requests
+import aiohttp
+import aiofiles
 from bs4 import BeautifulSoup
 from precompute_vectors import VectorPrecomputer
 from tfidf_similarity import TFIDFSimilarityCalculator
@@ -118,13 +123,33 @@ class FileManager:
 
 class OGPProcessor:
     OGP_TEMPLATE = """
-<div class="responsive-card">
-    <img src="{img_url}">
-    <div style="margin: 0 10px 0 10px;">
-         <a href="{url}"">{title}</a>
-    </div>
+<div class="link-card">
+    <a href="{url}" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="{img_url}" alt="{title}" onerror="this.src='{fallback_img}'" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="{favicon}" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">{site_name}</span>
+                </div>
+                <h3 class="link-card-title">{title}</h3>
+                <p class="link-card-description">{description}</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">{display_url}</span>
+                {published_date}
+            </div>
+        </div>
+    </a>
 </div>
 """
+
+    FALLBACK_IMAGE = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo="
+    
+    CACHE_PATH = pathlib.Path("public/ogp_cache.json")
+    CACHE_EXPIRE_DAYS = 7
 
     IGNORE_PATTERNS = [
         re.compile(r"```.*?```", re.DOTALL),
@@ -132,40 +157,201 @@ class OGPProcessor:
         re.compile(r"<!--.*?-->"),
     ]
 
-    @staticmethod
-    def fetch_ogp(url: str) -> Tuple[str, str]:
+    def __init__(self):
+        self.cache = self._load_cache()
+        self.session = None
+        self.semaphore = None
+        self._session_initialized = False
+
+    def _get_cache_key(self, url: str) -> str:
+        return hashlib.md5(url.encode()).hexdigest()
+
+    def _load_cache(self) -> Dict[str, Any]:
         try:
-            res = requests.get(url, timeout=10)
-            res.raise_for_status()
-            res.encoding = 'utf-8'
-            soup = BeautifulSoup(res.text, "html.parser")
-
-            ogp = soup.find("meta", attrs={"property": "og:image"})
-            ogp_url = ogp["content"] if ogp and "content" in ogp.attrs else ""
-
-            # 相対パスの場合、ベースURLを付与
-            if ogp_url and not ogp_url.startswith(("http://", "https://")):
-                from urllib.parse import urljoin
-
-                ogp_url = urljoin(url, ogp_url)
-
-            title = soup.find("title").text if soup.find("title") else url
-
-            return ogp_url, title
-        except requests.RequestException as e:
-            logger.error(f"Request error fetching OGP for {url}: {e}")
-            return "", url
+            if self.CACHE_PATH.exists():
+                with open(self.CACHE_PATH, 'r', encoding='utf-8') as f:
+                    return json.load(f)
         except Exception as e:
-            logger.error(f"Error fetching OGP for {url}: {e}")
-            return "", url
+            logger.warning(f"Failed to load OGP cache: {e}")
+        return {}
 
-    @classmethod
-    def replace_ogp_url(
-        cls, content: str, ignore_patterns: List[re.Pattern] = None
+    def _save_cache(self):
+        try:
+            self.CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.CACHE_PATH, 'w', encoding='utf-8') as f:
+                json.dump(self.cache, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            logger.warning(f"Failed to save OGP cache: {e}")
+
+    def _is_cache_valid(self, cache_entry: Dict) -> bool:
+        if "timestamp" not in cache_entry:
+            return False
+        cache_time = datetime.fromisoformat(cache_entry["timestamp"])
+        expire_time = cache_time + timedelta(days=self.CACHE_EXPIRE_DAYS)
+        return datetime.now() < expire_time
+
+    async def fetch_ogp(self, url: str) -> Dict[str, str]:
+        cache_key = self._get_cache_key(url)
+        
+        # キャッシュチェックは呼び出し元で行うため、ここでは直接取得
+        # セマフォで並列数制限
+        async with self.semaphore:
+            try:
+                headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                }
+                
+                timeout = aiohttp.ClientTimeout(total=5)  # 5秒に短縮
+                async with self.session.get(url, headers=headers, timeout=timeout) as response:
+                    response.raise_for_status()
+                    html = await response.text()
+                    soup = BeautifulSoup(html, "html.parser")
+                    
+                    from urllib.parse import urljoin, urlparse
+
+                    # OG画像を取得
+                    og_image = soup.find("meta", attrs={"property": "og:image"})
+                    img_url = ""
+                    if og_image and "content" in og_image.attrs:
+                        img_url = og_image["content"]
+                        if img_url and not img_url.startswith(("http://", "https://")):
+                            img_url = urljoin(url, img_url)
+
+                    # タイトルを取得
+                    title = ""
+                    og_title = soup.find("meta", attrs={"property": "og:title"})
+                    if og_title and "content" in og_title.attrs:
+                        title = og_title["content"]
+                    else:
+                        title_tag = soup.find("title")
+                        if title_tag:
+                            title = title_tag.get_text(strip=True)
+                        else:
+                            title = urlparse(url).netloc
+
+                    # 説明を取得
+                    description = ""
+                    og_description = soup.find("meta", attrs={"property": "og:description"})
+                    if og_description and "content" in og_description.attrs:
+                        description = og_description["content"]
+                    else:
+                        meta_description = soup.find("meta", attrs={"name": "description"})
+                        if meta_description and "content" in meta_description.attrs:
+                            description = meta_description["content"]
+
+                    # サイト名を取得
+                    site_name = ""
+                    og_site_name = soup.find("meta", attrs={"property": "og:site_name"})
+                    if og_site_name and "content" in og_site_name.attrs:
+                        site_name = og_site_name["content"]
+                    else:
+                        site_name = urlparse(url).netloc
+
+                    # ファビコンを取得
+                    favicon = ""
+                    favicon_links = soup.find_all("link", attrs={"rel": re.compile(r".*icon.*", re.I)})
+                    if favicon_links:
+                        favicon_href = favicon_links[0].get("href", "")
+                        if favicon_href:
+                            if not favicon_href.startswith(("http://", "https://")):
+                                favicon = urljoin(url, favicon_href)
+                            else:
+                                favicon = favicon_href
+                    
+                    if not favicon:
+                        parsed = urlparse(url)
+                        favicon = f"{parsed.scheme}://{parsed.netloc}/favicon.ico"
+
+                    # 公開日を取得
+                    published_date = ""
+                    article_time = soup.find("meta", attrs={"property": "article:published_time"})
+                    if article_time and "content" in article_time.attrs:
+                        try:
+                            dt = datetime.fromisoformat(article_time["content"].replace('Z', '+00:00'))
+                            published_date = f'<span class="link-card-date">{dt.strftime("%Y/%m/%d")}</span>'
+                        except:
+                            published_date = ""
+
+                    # 表示用URL
+                    parsed = urlparse(url)
+                    display_url = f"{parsed.netloc}{parsed.path}"
+                    if len(display_url) > 50:
+                        display_url = display_url[:47] + "..."
+
+                    ogp_data = {
+                        "img_url": img_url or self.FALLBACK_IMAGE,
+                        "fallback_img": self.FALLBACK_IMAGE,
+                        "title": title[:100] if title else url,
+                        "description": description[:200] if description else "",
+                        "site_name": site_name,
+                        "favicon": favicon,
+                        "url": url,
+                        "display_url": display_url,
+                        "published_date": published_date
+                    }
+
+                    # キャッシュに保存
+                    self.cache[cache_key] = {
+                        "data": ogp_data,
+                        "timestamp": datetime.now().isoformat()
+                    }
+
+                    logger.debug(f"Fetched OGP data for {url}")
+                    return ogp_data
+
+            except Exception as e:
+                logger.warning(f"Failed to fetch OGP for {url}: {e}")
+                fallback_data = self._get_fallback_data(url)
+                
+                # エラーデータもキャッシュ（短期間）
+                self.cache[cache_key] = {
+                    "data": fallback_data,
+                    "timestamp": (datetime.now() - timedelta(days=self.CACHE_EXPIRE_DAYS-1)).isoformat()
+                }
+                
+                return fallback_data
+
+    def _get_fallback_data(self, url: str) -> Dict[str, str]:
+        from urllib.parse import urlparse
+        parsed = urlparse(url)
+        return {
+            "img_url": self.FALLBACK_IMAGE,
+            "fallback_img": self.FALLBACK_IMAGE,
+            "title": parsed.netloc or url,
+            "description": "リンク先の情報を取得できませんでした",
+            "site_name": parsed.netloc or "Unknown Site",
+            "favicon": f"{parsed.scheme}://{parsed.netloc}/favicon.ico" if parsed.netloc else "",
+            "url": url,
+            "display_url": parsed.netloc or url,
+            "published_date": ""
+        }
+
+    async def _ensure_session(self):
+        """セッションが初期化されていない場合は初期化する"""
+        if not self._session_initialized or self.session is None or self.session.closed:
+            if self.session and not self.session.closed:
+                await self.session.close()
+            
+            connector = aiohttp.TCPConnector(limit=20, limit_per_host=5)
+            self.session = aiohttp.ClientSession(connector=connector)
+            self.semaphore = asyncio.Semaphore(10)
+            self._session_initialized = True
+            logger.debug("OGP session initialized")
+
+    async def _close_session(self):
+        """セッションを閉じる"""
+        if self.session and not self.session.closed:
+            await self.session.close()
+            self._session_initialized = False
+            logger.debug("OGP session closed")
+
+    async def replace_ogp_url(
+        self, content: str, ignore_patterns: List[re.Pattern] = None
     ) -> str:
         if ignore_patterns is None:
-            ignore_patterns = cls.IGNORE_PATTERNS
+            ignore_patterns = self.IGNORE_PATTERNS
 
+        # 除外範囲を計算
         excluded_spans = []
         for pattern in ignore_patterns:
             for match in pattern.finditer(content):
@@ -178,17 +364,76 @@ class OGPProcessor:
                     return True
             return False
 
+        # OGP URLを全て抽出
         ogp_pattern = re.compile(r"{@ogp\s+(.*?)\s*}")
-
-        def replacement(match: re.Match) -> str:
+        matches = []
+        for match in ogp_pattern.finditer(content):
             start, end = match.span()
-            if is_excluded(start, end):
-                return match.group(0)
-            ogp_url = match.group(1)
-            img_url, title = cls.fetch_ogp(ogp_url)
-            return cls.OGP_TEMPLATE.format(img_url=img_url, url=ogp_url, title=title)
+            if not is_excluded(start, end):
+                matches.append((match, match.group(1)))
 
-        return ogp_pattern.sub(replacement, content)
+        if not matches:
+            return content
+
+        # キャッシュされていないURLのみチェック
+        urls = [url for _, url in matches]
+        uncached_urls = []
+        cached_data = {}
+        
+        for url in urls:
+            cache_key = self._get_cache_key(url)
+            if cache_key in self.cache and self._is_cache_valid(self.cache[cache_key]):
+                cached_data[url] = self.cache[cache_key]["data"]
+                logger.debug(f"Using cached OGP data for {url}")
+            else:
+                uncached_urls.append(url)
+        
+        # キャッシュされていないURLがある場合のみセッションを作成
+        if uncached_urls:
+            logger.info(f"Fetching OGP data for {len(uncached_urls)} URLs ({len(cached_data)} cached)...")
+            await self._ensure_session()
+            
+            try:
+                ogp_data_list = await asyncio.gather(
+                    *[self.fetch_ogp(url) for url in uncached_urls],
+                    return_exceptions=True
+                )
+                
+                # 取得したデータをcached_dataに追加
+                for url, ogp_data in zip(uncached_urls, ogp_data_list):
+                    if isinstance(ogp_data, dict):
+                        cached_data[url] = ogp_data
+                    else:
+                        cached_data[url] = self._get_fallback_data(url)
+            finally:
+                await self._close_session()
+        else:
+            logger.info(f"All {len(urls)} URLs found in cache")
+            
+        # 元の順序でデータを再構築
+        ogp_data_list = [cached_data[url] for url in urls]
+
+        # 結果を置換
+        replacements = {}
+        for (match, url), ogp_data in zip(matches, ogp_data_list):
+            if isinstance(ogp_data, dict):
+                replacements[match.group(0)] = self.OGP_TEMPLATE.format(**ogp_data)
+            else:
+                # エラーの場合はフォールバック
+                fallback_data = self._get_fallback_data(url)
+                replacements[match.group(0)] = self.OGP_TEMPLATE.format(**fallback_data)
+
+        # 文字列置換
+        result = content
+        for original, replacement in replacements.items():
+            result = result.replace(original, replacement)
+
+        # キャッシュ保存
+        self._save_cache()
+        logger.info(f"OGP processing completed for {len(urls)} URLs")
+        
+        return result
+
 
 
 class ContentProcessor:
@@ -232,7 +477,8 @@ class ArticleBuilder:
     def process_content(self, article_path: pathlib.Path) -> str:
         content = article_path.read_text(encoding="utf-8")
         logger.debug("Processing OGP URLs...")
-        content = self.ogp_processor.replace_ogp_url(content)
+        # 非同期OGP処理
+        content = asyncio.run(self.ogp_processor.replace_ogp_url(content))
         logger.debug("OGP processing complete.")
         return content
 
@@ -631,6 +877,44 @@ class ExternalArticleProcessor:
         posts_data = self.file_manager.load_posts()
         posts = [BlogPost(**post_data) for post_data in posts_data]
 
+        # 並列処理で外部記事を作成
+        async def process_external_articles_async():
+            # OGPが必要な記事のURLを収集
+            ogp_needed = []
+            for article_data in external_articles:
+                url = article_data.get("url")
+                title = article_data.get("title")
+                thumbnail_url = article_data.get("thumbnail_url")
+                if url and (not title or not thumbnail_url):
+                    ogp_needed.append((article_data, url))
+            
+            # 並列でOGPデータを取得
+            if ogp_needed:
+                await self.ogp_processor._ensure_session()
+                try:
+                    urls = [url for _, url in ogp_needed]
+                    ogp_results = await asyncio.gather(
+                        *[self.ogp_processor.fetch_ogp(url) for url in urls],
+                        return_exceptions=True
+                    )
+                    
+                    # 結果をマッピング
+                    ogp_map = {}
+                    for (article_data, url), ogp_data in zip(ogp_needed, ogp_results):
+                        if isinstance(ogp_data, dict):
+                            ogp_map[url] = ogp_data
+                        else:
+                            ogp_map[url] = None
+                finally:
+                    await self.ogp_processor._close_session()
+            else:
+                ogp_map = {}
+            
+            return ogp_map
+        
+        # 非同期処理を実行
+        ogp_map = asyncio.run(process_external_articles_async())
+        
         added_count = 0
         updated_count = 0
 
@@ -639,8 +923,7 @@ class ExternalArticleProcessor:
         )
 
         for i, article_data in enumerate(article_iter):
-
-            post = self.create_external_post(article_data)
+            post = self.create_external_post_with_ogp(article_data, ogp_map)
             if not post:
                 continue
 
@@ -669,7 +952,7 @@ class ExternalArticleProcessor:
             f"External articles processing complete: {added_count} added, {updated_count} updated"
         )
 
-    def create_external_post(self, article_data: Dict[str, Any]) -> Optional[BlogPost]:
+    def create_external_post_with_ogp(self, article_data: Dict[str, Any], ogp_map: Dict[str, Dict]) -> Optional[BlogPost]:
         url = article_data.get("url")
         if not url:
             logger.warning("External article missing URL")
@@ -679,19 +962,25 @@ class ExternalArticleProcessor:
         thumbnail_url = article_data.get("thumbnail_url")
 
         # OGP情報を取得（タイトルまたはサムネイルが不足している場合）
-        if not title or not thumbnail_url:
-            try:
-                ogp_img, ogp_title = self.ogp_processor.fetch_ogp(url)
+        if (not title or not thumbnail_url) and url in ogp_map:
+            ogp_data = ogp_map[url]
+            if ogp_data:
                 if not title:
-                    title = ogp_title
+                    title = ogp_data.get("title", url)
                 if not thumbnail_url:
-                    thumbnail_url = ogp_img
-            except Exception as e:
-                logger.error(f"Error fetching OGP for {url}: {e}")
+                    thumbnail_url = ogp_data.get("img_url", "")
+            else:
+                # OGP取得に失敗した場合
                 if not title:
                     title = url
                 if not thumbnail_url:
                     thumbnail_url = ""
+        
+        # デフォルト値設定
+        if not title:
+            title = url
+        if not thumbnail_url:
+            thumbnail_url = ""
 
         return BlogPost(
             title=title,

@@ -84,7 +84,7 @@ jobs:
 
       - name: Add required packages
         run: |
-          python3 -m pip install beautifulsoup4 scikit-learn numpy tqdm requests
+          python3 -m pip install beautifulsoup4 scikit-learn numpy tqdm requests aiohttp aiofiles
       
       - name: Precompute TF-IDF vectors (if full rebuild needed)
         if: env.REBUILD == 'true'
