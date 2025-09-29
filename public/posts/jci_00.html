@@ -302,10 +302,12 @@ h5 {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 0rem 0rem;
+    margin: 0 0rem;
     font-size: 0.95em;
-    overflow: scroll;
-    white-space: pre;
+    overflow-wrap: break-word;
     word-break: break-all;
+    white-space: pre-wrap;
+    max-width: 100%;
 }
 
 /* 箇条書きの字下げ */
@@ -1298,7 +1300,20 @@ body.dark-mode .similarity-source {
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
-    {{mobile_sidebar}}
+    <div class="mobile-sidebar">
+<div class="sidebar">
+<ul id="mobile-toc-list"></ul>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const desktopToc = document.querySelector("#toc");
+  const mobileToc = document.querySelector("#mobile-toc-list");
+  if (desktopToc && mobileToc) {
+    mobileToc.innerHTML = desktopToc.innerHTML;
+  }
+});
+</script>
 
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
@@ -1448,10 +1463,72 @@ CodeInfo(
             <hr>
 
             <!-- 記事ナビゲーション -->
-            {{navigation}}
+            <div class="article-navigation">
+
+                <div class="nav-item nav-prev">
+                    <a href="https://abap34.com/posts/footnote_implement.html">
+                        <div class="nav-direction">← 前の記事</div>
+                        <div class="nav-title">脚注機能の実装に関するメモ</div>
+                    </a>
+                </div>
+
+                <div class="nav-item nav-next">
+                    <a href="https://abap34.com/posts/jci_01.html">
+                        <div class="nav-direction">次の記事 →</div>
+                        <div class="nav-title">Julia Compiler Internals (01) - Lowering (1)</div>
+                    </a>
+                </div>
+</div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
-            {{mobile_related_articles}}
+            <div class="mobile-related-articles">
+<div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_05.html">
+                            <div class="related-item-title">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</div>
+                            <div class="related-date">2024/11/22</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+</div>
+</div>
 
             <hr>
             <!-- コメント欄 (Utterances) -->
@@ -1463,7 +1540,52 @@ CodeInfo(
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
             <div class="right-sidebar-sticky">
-                {{related_articles}}
+                <div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_05.html">
+                            <div class="related-item-title">Julia Compiler Internals (05) - Algorithm of Type Inference [2]</div>
+                            <div class="related-date">2024/11/22</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/mini-lang.html">
+                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
+                            <div class="related-date">2024/02/22</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_06.html">
+                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
+                            <div class="related-date">2025/02/16</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                            </a>
+                    </div>
+</div>
             </div>
         </div>
     </div>

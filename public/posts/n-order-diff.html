@@ -302,10 +302,12 @@ h5 {
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 0rem 0rem;
+    margin: 0 0rem;
     font-size: 0.95em;
-    overflow: scroll;
-    white-space: pre;
+    overflow-wrap: break-word;
     word-break: break-all;
+    white-space: pre-wrap;
+    max-width: 100%;
 }
 
 /* 箇条書きの字下げ */
@@ -1462,7 +1464,20 @@ const runBlock = async (objectid) => {
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
-    {{mobile_sidebar}}
+    <div class="mobile-sidebar">
+<div class="sidebar">
+<ul id="mobile-toc-list"></ul>
+</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const desktopToc = document.querySelector("#toc");
+  const mobileToc = document.querySelector("#mobile-toc-list");
+  if (desktopToc && mobileToc) {
+    mobileToc.innerHTML = desktopToc.innerHTML;
+  }
+});
+</script>
 
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
@@ -1677,10 +1692,72 @@ plt.show()
             <hr>
 
             <!-- 記事ナビゲーション -->
-            {{navigation}}
+            <div class="article-navigation">
+
+                <div class="nav-item nav-prev">
+                    <a href="https://abap34.com/posts/jimei.html">
+                        <div class="nav-direction">← 前の記事</div>
+                        <div class="nav-title">自明ギャグの定義とその発展</div>
+                    </a>
+                </div>
+
+                <div class="nav-item nav-next">
+                    <a href="https://abap34.com/posts/marp-counter.html">
+                        <div class="nav-direction">次の記事 →</div>
+                        <div class="nav-title">marp で counter が使えない</div>
+                    </a>
+                </div>
+</div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
-            {{mobile_related_articles}}
+            <div class="mobile-related-articles">
+<div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/pybind11.html">
+                            <div class="related-item-title">pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</div>
+                            <div class="related-date">2024/05/14</div>
+                            <div class="related-tags"><span class="related-tag">#C++</span> <span class="related-tag">#Python</span> <span class="related-tag">#pybind11</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/dacq.html">
+                            <div class="related-item-title">mini Kaggle を streamlit で作った</div>
+                            <div class="related-date">2024/05/12</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Python</span> <span class="related-tag">#streamlit</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/slide-template.html">
+                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
+                            <div class="related-date">2024/03/14</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/auc.html">
+                            <div class="related-item-title">ROC-AUC の解釈</div>
+                            <div class="related-date">2025/03/01</div>
+                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#評価指標</span> <span class="related-tag">#ROC-AUC</span></div>
+                            </a>
+                    </div>
+</div>
+</div>
 
             <hr>
             <!-- コメント欄 (Utterances) -->
@@ -1692,7 +1769,52 @@ plt.show()
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
             <div class="right-sidebar-sticky">
-                {{related_articles}}
+                <div class="related-articles tag-related">
+<h3 class="related-title">同じようなタグの記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/pybind11.html">
+                            <div class="related-item-title">pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</div>
+                            <div class="related-date">2024/05/14</div>
+                            <div class="related-tags"><span class="related-tag">#C++</span> <span class="related-tag">#Python</span> <span class="related-tag">#pybind11</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/dacq.html">
+                            <div class="related-item-title">mini Kaggle を streamlit で作った</div>
+                            <div class="related-date">2024/05/12</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Python</span> <span class="related-tag">#streamlit</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/slide-template.html">
+                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
+                            <div class="related-date">2024/03/14</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
+                            </a>
+                    </div>
+</div>
+<div class="related-articles tfidf-related">
+<h3 class="related-title">同じような内容の記事</h3>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/jci_04.html">
+                            <div class="related-item-title">Julia Compiler Internals (04) - Algorithm of Type Inference [1]</div>
+                            <div class="related-date">2024/10/21</div>
+                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
+                            </a>
+                    </div>
+
+                    <div class="related-item">
+                        <a href="https://abap34.com/posts/auc.html">
+                            <div class="related-item-title">ROC-AUC の解釈</div>
+                            <div class="related-date">2025/03/01</div>
+                            <div class="related-tags"><span class="related-tag">#機械学習</span> <span class="related-tag">#評価指標</span> <span class="related-tag">#ROC-AUC</span></div>
+                            </a>
+                    </div>
+</div>
             </div>
         </div>
     </div>
