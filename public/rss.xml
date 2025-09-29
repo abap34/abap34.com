@@ -5,7 +5,29 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Mon, 29 Sep 2025 17:03:46 +0000</lastBuildDate>
+<lastBuildDate>Mon, 29 Sep 2025 18:01:26 +0000</lastBuildDate>
+<item>
+<guid>https://abap34.com/posts/hurikaeri_2025_0.html</guid>
+<title>2025年度前期振り返り</title>
+<link>https://abap34.com/posts/hurikaeri_2025_0.html</link>
+<pubDate>Tue, 30 Sep 2025 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>
+
+2025年度前期の振り返りです。
+
+去年の後期の振り返りは 
+
+過去の振り返り記事は 
+
+作った・作っているもの
+JETLS.jl (Julia の次世代 Language Server, Google Summer of Code)
+今年の前期に一番時間を使ったものはこれでした．
+
+
+&lt;div class=&quot;link-card&quot;&gt;     &lt;a href=&quot;https://github.com/aviatesk/JETLS.jl&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;link-card-container&quot;&gt;         &lt;div class=&quot;link-card-image&quot;&gt;             &lt;img src=&quot;https://opengraph.githubassets.com/1223ca35b09e946f77bb5834dead3a881b1564f02d1abb7c2608c1a374b52efb/aviatesk/JETLS.jl&quot; alt=&quot;GitHub - aviatesk/JETLS....</description>
+</item>
+
 <item>
 <guid>https://abap34.com/posts/gsoc2025_final_report.html</guid>
 <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
@@ -487,35 +509,6 @@ pybind11
 今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
 評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
-</item>
-
-<item>
-<guid>https://abap34.com/posts/fork_buffer.html</guid>
-<title>forkはバッファもコピーするのでフラッシュしておこう </title>
-<link>https://abap34.com/posts/fork_buffer.html</link>
-<pubDate>Tue, 23 Apr 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-fork関数の挙動
-C言語では  関数を使って  システムコールを呼び出すことができます。
-
-
-こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。
-
-ところで、  したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。
-
-
-
-では次のコードはどうなるでしょうか
-
-これの出力はこうなります。
-　が二重に出力されました。
-これは  したとき、親プロセスのバッファもコピーされるためです。
- する前にはちゃんと  しておきましょう。
-感想
-システムプログラミングの講義で先生が話していて試したら確かにそうなってへ〜〜ってなりました
-
-</description>
 </item>
 
 </channel>

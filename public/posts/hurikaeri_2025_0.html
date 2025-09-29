@@ -16,18 +16,18 @@
     <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
         charset="utf-8"></script>
 
-    <title>GSoC 2025 Final Report ─ Development of a New Language Server for Julia</title>
+    <title>2025年度前期振り返り</title>
 
     <!-- OGP / Twitter 用のメタタグ -->
-    <meta property="og:title" content="GSoC 2025 Final Report ─ Development of a New Language Server for Julia">
-    <meta property="og:image" content="https://abap34.com/posts/gsoc2025_final_report/image-3.png">
-    <meta property="og:description" content="This is the final report for GSoC 2025. It summarizes the development of the Julia Language Server.">
-    <meta property="og:url" content="https://abap34.com/posts/gsoc2025_final_report.html">
+    <meta property="og:title" content="2025年度前期振り返り">
+    <meta property="og:image" content="https://images.dog.ceo/breeds/doberman/n02107142_413.jpg">
+    <meta property="og:description" content="2025年度前期の振り返りです。">
+    <meta property="og:url" content="https://abap34.com/posts/hurikaeri_2025_0.html">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="abap34's blog">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@abap34" />
+    <meta name="twitter:site" content="abap34" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!-- ハイライトJS / FontAwesome -->
@@ -1437,7 +1437,7 @@ body.dark-mode .similarity-source {
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
             <a href="https://abap34.com" class="header-logo">abap34.com</a>
-            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/gsoc2025_final_report.html">/GSoC 2025 Final Report ─ Development of a New Language Server for Julia</a>
+            > <a href="https://abap34.com/blog">/blog</a> > <a href="https://abap34.com/posts/hurikaeri_2025_0.html">/2025年度前期振り返り</a>
         </div>
 
         <!-- トグルボタンとツイートボタンをグループ化 -->
@@ -1447,7 +1447,7 @@ body.dark-mode .similarity-source {
             <!-- ツイートボタン -->
             <div class="tweet-button">
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                    data-text="GSoC 2025 Final Report ─ Development of a New Language Server for Julia" data-url="https://abap34.com/posts/gsoc2025_final_report.html" data-via="@abap34"> Tweet </a>
+                    data-text="2025年度前期振り返り" data-url="https://abap34.com/posts/hurikaeri_2025_0.html" data-via="abap34"> Tweet </a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
         </div>
@@ -1455,12 +1455,12 @@ body.dark-mode .similarity-source {
 
 
     <div class="article-header">
-        <div class="title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
+        <div class="title">2025年度前期振り返り</div>
         <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
-        <div class="date">2025/09/01</div>
+        <div class="date">2025/09/30</div>
         <br>
-        <div class="tag-placeholder">[Julia, Language Server, コンパイラ, GSoC]</div>
+        <div class="tag-placeholder">[日記, 振り返り]</div>
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
@@ -1493,73 +1493,137 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <!-- メイン本文 -->
         <div class="content">
-            <script>page_contents.push({
+            <br><br>2025年度前期の振り返りです。<br><br>去年の後期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2024_1.html">→ こちら</a> </url><br><br>過去の振り返り記事は <url> <a href="https://www.abap34.com/search?tag=%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A">→ こちら</a> </url><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"1",
-    "title":"GSoC 2025 Final Report"
+    "id":"14",
+    "title":"作った・作っているもの"
 });
 </script>
-<h2 id="1">GSoC 2025 Final Report</h2><br>This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project <url> <a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">Development of a New Language Server for Julia</a> </url>.<br>This was an exciting project to build a  new language server that leverages Julia’s latest compiler infrastructure.<br><script>page_contents.push({
-    "type":"H2",
-    "id":"10",
-    "title":"Achievements"
-});
-</script>
-<h2 id="10">Achievements</h2><br>Since the project was still at a very early stage, the proposal aimed to flexibly shift tasks in close consultation with my mentor. And indeed, I worked on a very broad set of features.<br><figure><img src="gsoc2025_final_report/image.png" ><figcaption></figcaption></figure><br>The image shows some of the PRs I opened for JETLS.<br>As can be seen from the number of comments, my mentor <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> and the Julia community put in great effort to support my contributions.<br><script>page_contents.push({
+<h2 id="14">作った・作っているもの</h2><br><script>page_contents.push({
     "type":"H3",
-    "id":"23",
-    "title":"Major Contributions"
+    "id":"17",
+    "title":"JETLS.jl (Julia の次世代 Language Server, Google Summer of Code)"
 });
 </script>
-<h3 id="23">Major Contributions</h3><br>Here are some of the major features I contributed:<br><script>page_contents.push({
-    "type":"H4",
-    "id":"28",
-    "title":"Implementation of Go to Definition for methods"
+<h3 id="17">JETLS.jl (Julia の次世代 Language Server, Google Summer of Code)</h3><br>今年の前期に一番時間を使ったものはこれでした．<br><br><br><div class="link-card">     <a href="https://github.com/aviatesk/JETLS.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/1223ca35b09e946f77bb5834dead3a881b1564f02d1abb7c2608c1a374b52efb/aviatesk/JETLS.jl" alt="GitHub - aviatesk/JETLS.jl: A new language server for Julia" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">GitHub - aviatesk/JETLS.jl: A new language server for Julia</h3>                 <p class="link-card-description">A new language server for Julia. Contribute to aviatesk/JETLS.jl development by creating an account on GitHub.</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/aviatesk/JETLS.jl</span><br>            </div>         </div>     </a> </div><br><br><br>すでに記事にもなっていますね．<br><br><br><div class="link-card">     <a href="https://www.abap34.com/posts/gsoc2025.html" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://abap34.com/posts/gsoc2025/image-1.png" alt="Google Summer of Code に Proposal が採択されました！" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://www.abap34.com/favicon.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">abap34's blog</span>                 </div>                 <h3 class="link-card-title">Google Summer of Code に Proposal が採択されました！</h3>                 <p class="link-card-description">Google Summer of Code 2025 に参加します！ やりたいことや準備について書きます。</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">www.abap34.com/posts/gsoc2025.html</span><br>            </div>         </div>     </a> </div><br><br><br><div class="link-card">     <a href="https://www.abap34.com/posts/gsoc2025_final_report.html" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://abap34.com/posts/gsoc2025_final_report/image-3.png" alt="GSoC 2025 Final Report ─ Development of a New Language Server for Julia" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://www.abap34.com/favicon.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">abap34's blog</span>                 </div>                 <h3 class="link-card-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</h3>                 <p class="link-card-description">This is the final report for GSoC 2025. It summarizes the development of the Julia Language Server.</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">www.abap34.com/posts/gsoc2025_final_report.html</span><br>            </div>         </div>     </a> </div><br><br><br>ざっくりいえば既存の LS と異なり<br><ul><li>Julia コンパイラのインフラを最大限活用することで保守性をあげて</li><li>advanced なさまざまな解析が可能な</li></ul><br><br>LS です． 本当の本当に初期段階なので，かなり色々な機能の開発を担当しています．<br><br>レベルが高いプログラマの人たちと一緒に仕事をするのはとても楽しかったですし， これを機に Julia コンパイラに一層詳しくなれたとてもいい機会でした．<br>いろいろな課題も認識することができ，研究ネタになりそうな話もいっぱいあり今後が楽しみです．(引き続きチームのメンバーとして頑張って行く予定です！)<br><br>また，自分の中で海外で仕事や研究をするということに対する価値観の変化もありました．<br><br>いままでは海外で学生や労働をすることは，認識しつつもリアルな選択肢の中に入ってくるまでは来ていませんでした．<br><br>ですが，日本の外にはすごい人がいっぱいいることをちゃんと認識する (わかってるつもりだったんですが) とともに，わりと選択肢として考えられるようになりました． 英語を真面目に練習したいと思います．<br><br>来年の JuliaCon (in ドイツらしいです) くらいまでには質疑応答とかスラスラできるくらいにはなっていたい．．．<br><script>page_contents.push({
+    "type":"H3",
+    "id":"74",
+    "title":"eta (Scheme インタプリタ)"
 });
 </script>
-<h4 id="28">Implementation of Go to Definition for methods</h4><br><img src="gsoc2025_final_report/goto_method.gif" alt="image-1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url></li><li>JETLS can also jump to functions defined by <span class="inline-code"> <code>@eval</code> </span> macro :)</li><li>In the future, we plan to extend this so that only the methods that could actually be called are suggested, based on type analysis.</li></ul><br><script>page_contents.push({
-    "type":"H4",
-    "id":"43",
-    "title":"Implementation of Go to Definition for local bindings"
+<h3 id="74">eta (Scheme インタプリタ)</h3><br>Scheme (Racket) 製の Scheme インタプリタです．<br><br><div class="link-card">     <a href="https://github.com/abap34/eta" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/951a2aae647bd571362689d5bb80d21a2a31a009c0d17c3ecc79d96bd006671d/abap34/eta" alt="GitHub - abap34/eta: A interpreter that support first class continuation. A few seconds before surre" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">GitHub - abap34/eta: A interpreter that support first class continuation. A few seconds before surre</h3>                 <p class="link-card-description">A interpreter that support first class continuation. A few seconds before surrender— Start over! - abap34/eta</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/abap34/eta</span><br>            </div>         </div>     </a> </div><br><br>call/cc, TCO などが実装されています．<br><br><figure><img src="hurikaeri_2025_0/image-2.png" ><figcaption></figcaption></figure><br><br>call/cc は初めて実装したのでとても勉強になりました． evaluator を CPS で書くことでとてもシンプルに実装されています．<br><br>また，エラー報告をなるべくちゃんとやる，というのも真面目に考えてみたのですが，それなりにいい感じになりました． 上にあるようにバイトレベルでエラーも出ますし Stack Trace も出ます．<br><br><script>page_contents.push({
+    "type":"H3",
+    "id":"97",
+    "title":"abap34.com"
 });
 </script>
-<h4 id="43">Implementation of Go to Definition for local bindings</h4><br><video controls width="600">   <source src="https://github.com/user-attachments/assets/cb924339-4475-4171-b390-db3c88ddc257" type="video/mp4">   Your browser does not support the video tag. </video><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li>This is where JuliaLowering played a remarkable role. It is great that such a feature can be implemented with relatively little code by leveraging JuliaLowering.</li></ul><br><script>page_contents.push({
-    "type":"H4",
-    "id":"55",
-    "title":"Implementation of a basic configuration system"
+<h3 id="97">abap34.com</h3><br>デザインが一新されました．落ち着く未来はおそらく来なさそうです．<br><script>page_contents.push({
+    "type":"H3",
+    "id":"102",
+    "title":"謎のスライド作成ツール"
 });
 </script>
-<h4 id="55">Implementation of a basic configuration system</h4><br><img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url></li><li>It also allows dynamic changes after startup.</li><li>In the future, We plan to <url> <a href="https://www.schemastore.org/">publish a schema</a> </url> so that completion and validation can be provided in many editors.</li></ul><br><script>page_contents.push({
-    "type":"H4",
-    "id":"70",
-    "title":"Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)"
-});
-</script>
-<h4 id="70">Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)</h4><br><figure><img src="gsoc2025_final_report/image-2.png" ><figcaption>Detecting errors in dependent packages via recursive analysis</figcaption></figure><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url></li><li>The current analysis routines of JET did not have the ability to recursively locate and analyze the source code of packages. My contribution was to extend JET with such functionality and integrate it into JETLS.</li><li>This required a detailed study of Julia’s package loading mechanism, which was quite challenging.</li></ul><br><script>page_contents.push({
-    "type":"H4",
-    "id":"83",
-    "title":"Some UI improvements"
-});
-</script>
-<h4 id="83">Some UI improvements</h4><br>While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url> and <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url> and are examples of such contributions. These are small implementations, but they improve the user experience highly.<br><br>The same kind of consideration was required when implementing the features described above. For instance, when implementing Go to ~, how should we decide what is "under the cursor" ? This is not a straightforward question. In cases like <span class="inline-code"> <code>│func(x)</code> </span> and also in cases like <span class="inline-code"> <code>func│(x)</code> </span>, where should it go? ─ both to the definition of <span class="inline-code"> <code>func</code> </span>, isn’t it? (<url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773">https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773</a> </url>)<br><br><script>page_contents.push({
-    "type":"H4",
-    "id":"104",
-    "title":"Additional details"
-});
-</script>
-<h4 id="104">Additional details</h4><br>Including to these, many PRs—including bug fixes and contributions to related packages—were merged :)<br><br><details> <summary>merged PRs</summary><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url>  </li><li><url> <a href="https://github.com/JuliaStrings/InlineStrings.jl/pull/88">https://github.com/JuliaStrings/InlineStrings.jl/pull/88</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/228">https://github.com/aviatesk/JETLS.jl/pull/228</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/223">https://github.com/aviatesk/JETLS.jl/pull/223</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/205">https://github.com/aviatesk/JETLS.jl/pull/205</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/148">https://github.com/aviatesk/JETLS.jl/pull/148</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/143">https://github.com/aviatesk/JETLS.jl/pull/143</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/139">https://github.com/aviatesk/JETLS.jl/pull/139</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/132">https://github.com/aviatesk/JETLS.jl/pull/132</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/123">https://github.com/aviatesk/JETLS.jl/pull/123</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/104">https://github.com/aviatesk/JETLS.jl/pull/104</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/79">https://github.com/aviatesk/JETLS.jl/pull/79</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/77">https://github.com/aviatesk/JETLS.jl/pull/77</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/72">https://github.com/aviatesk/JETLS.jl/pull/72</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/69">https://github.com/aviatesk/JETLS.jl/pull/69</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/56">https://github.com/aviatesk/JETLS.jl/pull/56</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/40">https://github.com/aviatesk/JETLS.jl/pull/40</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/31">https://github.com/aviatesk/JETLS.jl/pull/31</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/11">https://github.com/aviatesk/JETLS.jl/pull/11</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/10">https://github.com/aviatesk/JETLS.jl/pull/10</a> </url>  </li></ul><br></details><br>As noted earlier, this language server leverages Julia’s new compiler infrastructure. Deepening my understanding of these systems through this development was itself a great outcome for me.<br>It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project.<br>(ex: <url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>, <url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>).<br><br><br>My understanding of both the Julia compiler and JET.jl has also grown significantly.<br>In particular, the many discussions I had with @aviatesk about “virtual global execution” in this LS were crucial to its development.<br><script>page_contents.push({
-    "type":"H4",
-    "id":"213",
-    "title":"Remaining work"
-});
-</script>
-<h4 id="213">Remaining work</h4><br>As described in the <url> <a href="https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap">roadmap in README.md</a> </url>, JETLS already supports a variety of features. Beyond error detection, it also includes formatting and an excellent test runner. (⚠️ Clarification: This section describes overall LS progress, not just my own contributions.)<br><br>However, there are still major challenges in performance and stability before it becomes practical. I am highly interested in addressing these, including applying known techniques for faster startup and researching cache strategies best suited to this LS.<br><script>page_contents.push({
+<h3 id="102">謎のスライド作成ツール</h3><br>裏でコソコソ作っているものがあるのでここでコンセプトだけ紹介します．<br><br>自分はよくスライドを作ります． <url> <a href="https://speakerdeck.com/abap34">⇨ speakerdeck</a> </url><br>スライドのデザインや構成にも比較的こだわりがある方です． いまは<br><ol><li>数式やプログラムを多用する</li><li>Git 管理がしたい</li></ol><br>ということから，ほとんどのスライドは marp で作成しています．<br>おそらく <url> <a href="https://speakerdeck.com/abap34/dong-gong-da-trap-kaggleban-ji-jie-xue-xi-jiang-xi-hui-2024">東工大 traP Kaggle班 機械学習講習会 2024</a> </url> などは marp 以外ではかなり大変だったと思います．<br>一方で，自分がヘンテコなスライドばかり作ろうとするので様々な不満が出てきました．<br> (※ これは marp を使っているのに書くには本当に不当な文句です，marp が悪いとか言いたいのではなくて，自分からの需要がずれてきたという話です)<br><br>大体以下のような不満を持っています:<br><ol><li><span class="strong"> <strong>プログラムや図の更新忘れ，コピペミスをしてしまう</strong> </span></li><ol><li>データやアルゴリズムをちょっと変更したときにスライドの方をアップデートし忘れがちです．</li><li>プログラムのコピペミスをすることもあります</li></ol><li><span class="strong"> <strong>グラフを何度も貼るのが面倒</strong> </span></li><ol><li>自分は <url> <a href="https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen?slide=92">ここ</a> </url> からの数枚のような，連続した図による説明を多用しがちです．しかしこれをやるには毎回図を書き出しては貼るという作業が必要で，更新し直すのもとても面倒です．</li></ol><li><span class="strong"> <strong>スライド自身の情報や外部とのインタラクションなどからの生成をユーザが簡単に，際限なくできて欲しい</strong> </span></li><ol><li>BibTeX のサポート, Table of Contents の自動生成, アイコンの簡単な挿入などがしたいです</li><li>marp でも可能ですが，ものすごく簡単というわけではありません</li><li>エディタ支援を受けながらやりたいところでもあります</li></ol></ol><br><br>そこで今考えているのはスライドを programmable にすることです．<br><br>大体，次のような感じで書けるようになることを目指しています．<br><br><div class="code-block"> <pre><code class="language-python">from datetime import datetime
+import matplotlib.pyplot as plt
+from pathlib import Path
+import pandas as pd
+
+from yogrt.component import Slide, Page, Text, Src, Image, TwoColumn
+from mydesignlib import MyTitlePage, MyHeader, MyTableOfContents
+
+slide = Slide()
+page1 = MyTitlePage(title=&quot;インライン化入門&quot;, date=datetime(), icon=GitHubIcon(&quot;abap34&quot;))
+slide &lt;&lt; page1
+slide &lt;&lt; Page(Text(&quot;適切なインライン化をすることで，高速化が期待できます．&quot;))
+
+alg1_src = Path(&quot;alg1.py&quot;).read_text()
+py_static_lint(alg1_src)
+
+slide &lt;&lt; Page(
+  MyHeader(&quot;アルゴリズム1: 適当なアルゴリズム&quot;, level=2),
+  TwoColumn(
+    Text(&quot;実装例 (Python)&quot;),
+    Src(alg1_src, lang=&quot;python&quot;)
+  )
+)
+
+input_data = pd.read_csv(&quot;data.csv&quot;)
+result0 = some_algorithm(input_data)
+graph0 = plt.plot(result0)
+
+slide &lt;&lt; Page(
+  MyHeader(&quot;途中結果その1&quot;, level=3),
+  Image(graph0, caption=&quot;途中結果 その1&quot;)
+)
+
+result1 = some_algorithm(result0)
+graph1 = plt.plot(result1)
+
+slide &lt;&lt; Page(
+  MyHeader(&quot;最終結果&quot;, level=2),
+  Image(graph1, caption=&quot;最終結果&quot;)
+)
+
+toc_list: list[tuple[int, str]] = []
+for page in slide.pages:
+    for comp in page.components:
+        if isinstance(comp, MyHeader) and comp.level &lt;= 2:
+            toc_list.append((comp.level, comp.text))
+
+slide.insert(2, MyTableOfContents(toc_list))
+
+slide.export(&quot;my_slide.html&quot;)
+</code></pre> </div><br>このような python のプログラムによってスライドを作成します．<br>スライドのページもコンポーネントも全て Python のオブジェクトであって，自由に操作できます．<br><br>例えば，このようにすれば時刻をわざわざ入力しなくて良いです．<br>GitHub のアイコンなどもいちいちダウンロードしなくても取得してくるやつを実装しておくだけでいいですし， 補完やチェックも容易です．<br><div class="code-block"> <pre><code class="language-plaintext">MyTitlePage(title=&quot;インライン化入門&quot;, date=datetime(), icon=GitHubIcon(&quot;abap34&quot;))
+</code></pre> </div><br>また，デザインに関しても <span class="inline-code"> <code>MyTitlePage</code> </span> のようなものを作ることによって marp のようにすぐに高クオリティなスライドが作れます．<br><br>ソースコードの更新忘れやコピペミスも<br><div class="code-block"> <pre><code class="language-python">alg1_src = Path(&quot;alg1.py&quot;).read_text()
+py_static_lint(alg1_src)
+</code></pre> </div><br>のようにすることで防げています．<br>複数グラフの貼り付けも<br><div class="code-block"> <pre><code class="language-python">input_data = pd.read_csv(&quot;data.csv&quot;)
+result0 = some_algorithm(input_data)
+graph0 = plt.plot(result0)
+
+slide &lt;&lt; Page(
+  MyHeader(&quot;途中結果その1&quot;, level=3),
+  Image(graph0, caption=&quot;途中結果 その1&quot;)
+)
+
+result1 = some_algorithm(result0)
+graph1 = plt.plot(result1)
+
+slide &lt;&lt; Page(
+  MyHeader(&quot;最終結果&quot;, level=2),
+  Image(graph1, caption=&quot;最終結果&quot;)
+)
+</code></pre> </div><br>のように容易に実現できていますし，データを更新するだけで全て更新できます．<br>さらに<br><div class="code-block"> <pre><code class="language-python">toc_list: list[tuple[int, str]] = []
+for page in slide.pages:
+    for comp in page.components:
+        if isinstance(comp, MyHeader) and comp.level &lt;= 2:
+            toc_list.append((comp.level, comp.text))
+
+slide.insert(2, MyTableOfContents(toc_list))
+</code></pre> </div><br>のようにして Table of Contents のサポートもごく簡単なプログラムを書くだけで実現できます． 様々な拡張が簡単に実装できそうでいいなと思っています．<br><br>普通に便利そうなので，いい感じにして公開したいと思っています．<br><br>(まだ何も置かれていません)<br><br><div class="link-card">     <a href="https://github.com/abap34/yogrt" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/4b84c0909879c2da91c586a522a6c291b3001a9f035b48f45538cb68657d597f/abap34/yogrt" alt="GitHub - abap34/yogrt: A slide description DSL for people with a Programming Addiction." onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">GitHub - abap34/yogrt: A slide description DSL for people with a Programming Addiction.</h3>                 <p class="link-card-description">A slide description DSL for people with a Programming Addiction. - abap34/yogrt</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/abap34/yogrt</span><br>            </div>         </div>     </a> </div><br><br><br><script>page_contents.push({
     "type":"H2",
-    "id":"223",
-    "title":"Conclusion"
+    "id":"216",
+    "title":"書いた・書いているもの"
 });
 </script>
-<h2 id="223">Conclusion</h2><br>This project has the potential to greatly impact the Julia ecosystem, and I am proud to be part of it.<br><br>I would like to express my sincere gratitude to my mentor @aviatesk and the Julia community for their warm guidance throughout GSoC. I also thank my university friends, lab seniors, and advisor for supporting me in various ways.<br><br>I will continue to contribute to the success of this project.<br><br><br><div class="footnote"></div>
+<h2 id="216">書いた・書いているもの</h2><br>研究室に配属されたので，ゼミや輪講が始まりました．<br>なんか出席するだけでパソコンカタカタに詳しくなれてすごいぜ<br><br>輪講では <url> <a href="https://link.springer.com/book/10.1007/978-3-662-03811-6">Principles of Program Analysis</a> </url> を読みました．<br>自分が担当した範囲は Galois 接続に関連するもので，かなり面白かったのでブログ記事にしているところです．4割くらい書けたのでそろそろ出したい．<br>(wip: <url> <a href="https://github.com/abap34/abap34.com/blob/main/posts/wip_galois_connection_and_program_analysis.md">https://github.com/abap34/abap34.com/blob/main/posts/wip_galois_connection_and_program_analysis.md</a> </url>)<br><br>証明のしょうもないミスを見つけたかったのと，ついでに勉強しようと思い内容の Lean による形式化にも挑戦しています．<br><br><div class="link-card">     <a href="https://github.com/abap34/galois-connection.lean/blob/main/GaloisConnection/Basic.lean" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/0c20479f9096f34d68f6bf2f06080f8695641be4ceddc50d75c982fb72157eea/abap34/galois-connection.lean" alt="galois-connection.lean/GaloisConnection/Basic.lean at main · abap34/galois-connection.lean" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">galois-connection.lean/GaloisConnection/Basic.lean at main · abap34/galois-connection.lean</h3>                 <p class="link-card-description">Contribute to abap34/galois-connection.lean development by creating an account on GitHub.</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/abap34/galois-connection.lean/blob/m...</span><br>            </div>         </div>     </a> </div><br><br><br>他にもいちおう外に書いたブログなどがあります．<br><br><br><div class="link-card">     <a href="https://hack.nikkei.com/blog/trap_kaggle_competition_2025/" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://hack.nikkei.com/images/ogp/trap_kaggle_competition_2025.png" alt="東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！ — HACK The Nikkei" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://hack.nikkei.com/favicon.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">hack.nikkei.com</span>                 </div>                 <h3 class="link-card-title">東京科学大学デジタル創作同好会 traP と共同でデータ分析コンペを開催しました！ — HACK The Nikkei</h3>                 <p class="link-card-description">2025年3月に東京科学大学デジタル創作同好会 traP と開催したデータ分析コンペについて紹介します。</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">hack.nikkei.com/blog/trap_kaggle_competition_2025/</span><br>            </div>         </div>     </a> </div><br><br><br>後期はゼミなどの資料も出せる感じにして公開していきたいですね．<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"257",
+    "title":"その他"
+});
+</script>
+<h2 id="257">その他</h2><br><ul><li>後期の Contributions 数は 647 でした．(<span class="inline-code"> <code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2025-04-01&quot;) | .contributionCount] | add&#39;</code> </span>)</li><li>しばらくいたインターンをやめました．とてもいいところだったのでポジキャンするなどして恩返ししていきたい．</li><li>論文の管理用のちょっとしたツールを作ってもらいました． <url> <a href="https://github.com/abap34/theke">https://github.com/abap34/theke</a> </url> LLM 要約とか依存関係のグラフが見れるやつです．自分で使うくらいならまぁ便利ではありますがクオリティは... 自分からの需要がちゃんとわかったら自分で真面目に作りたいですね．</li><li>2 年くらい前にとある OSS に投げていたもののレビューが放置されていた PR が急にレビュー & マージされてびっくりしました．どうも Copilot がレビューに導入されてキューが動いたということらしいです．いい話だなと思いました．</li><li>いい包丁を買いました．QoL が上がりました．</li><li>家にホワイトボードを設置しました．QoL が爆上がりしました．</li><li>研究室はめちゃくちゃ居心地が良くて楽しいです</li><ul><li>どこもこんな感じかと思っていたんですが，友達に聞いた感じだとそうでもないらしいので，とてもラッキーだったなと思います．</li><li>ふらっと来たら先生や先輩がいて，普通に同じテーブルで弁当食べながら変なコンパイラの話などしていると言ったらびっくりされました</li></ul><li>東京ヤクルト... 😢</li><li>卒業が半年遅れる予定です．単位が足りていないとか院試に落ちたわけではなく(バカデカボイス)，開発と研究に集中するための措置です．幸い GSoC に採択されたりそのほか労働のおかげで金銭的な問題がなんとかなりそうだったのでこういう感じになりました．生まれた時間を有効に使っていきたいと思います．</li></ul><br><script>page_contents.push({
+    "type":"H2",
+    "id":"289",
+    "title":"抱負など"
+});
+</script>
+<h2 id="289">抱負など</h2><br>この半年だけでもエーアイの発展も含め環境が変わりつつありますね．<br>自分も簡単なタスクは Claude Code に丸投げすることが増えてきたので時代の変化を感じるところです．<br><br>他にも地元の友達は就職していたり，もう子供がいたり (！)<br>優秀な同期は何人か卒業していたり (かたや卒業したくなくて騒いでるのに)，<br>海外に行ってしまう人もいたり (かたや卒業したくなくて騒いでるのに) (寂しい)<br>自分の周辺でも色々変化を感じています．<br><br>自分は実家が寺で父は僧侶をしているんですが，今まで家がバカみたいに広くてウケるな程度の感想しか持っていませんでした． が，最近になって割と影響を受けているなと感じることが増えてきました．<br><br>そのうちの一つを紹介すると，「刹那滅」という言葉があります． すごくざっくりいうと，「全ての事物は瞬間ごとに消滅と生成を繰り返している」という主張で，よく言われる諸行無常，みたいなのと似ている話です． (こっちの方が主張として真に強いですが)<br><br>もちろん物理的に本当にそうなっているとかそういう話をしたいわけではないんですが，自分は割とこの考え方が好きです．<br><br>あまり自分を規定しすぎずに，そのとき興味があることに対して真面目に取り組めていけたらと思います．<br><br>とりあえずこの文章をタイプしているときの自分は一貫してプログラミング言語について考えるのが好きなようなので， 引き続き研究頑張っていきます 💪💪<br><br><script>page_contents.push({
+    "type":"H2",
+    "id":"321",
+    "title":"今日の一曲"
+});
+</script>
+<h2 id="321">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/mNpPQXMgtmw?si=eRJwd-NXS_LygD6t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"></div>
 
             <hr>
 
@@ -1567,18 +1631,12 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="article-navigation">
 
                 <div class="nav-item nav-prev">
-                    <a href="https://abap34.com/posts/gsoc2025.html">
+                    <a href="https://abap34.com/posts/gsoc2025_final_report.html">
                         <div class="nav-direction">← 前の記事</div>
-                        <div class="nav-title">Google Summer of Code に Proposal が採択されました！</div>
+                        <div class="nav-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
                     </a>
                 </div>
-
-                <div class="nav-item nav-next">
-                    <a href="https://abap34.com/posts/hurikaeri_2025_0.html">
-                        <div class="nav-direction">次の記事 →</div>
-                        <div class="nav-title">2025年度前期振り返り</div>
-                    </a>
-                </div>
+<div class="nav-item nav-next"></div>
 </div>
 
             <!-- モバイル用関連記事（一番下に表示） -->
@@ -1587,26 +1645,26 @@ document.addEventListener("DOMContentLoaded", function() {
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025.html">
-                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
-                            <div class="related-date">2025/05/09</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
+                            <div class="related-item-title">2024年度後期振り返り</div>
+                            <div class="related-date">2025/03/31</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/mini-lang.html">
-                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
-                            <div class="related-date">2024/02/22</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_0.html">
+                            <div class="related-item-title">2024年度前期振り返り</div>
+                            <div class="related-date">2024/09/30</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
+                            <div class="related-item-title">2023年度後期振り返り</div>
+                            <div class="related-date">2024/03/29</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 </div>
@@ -1614,18 +1672,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_01.html">
-                            <div class="related-item-title">Julia Compiler Internals (01) - Lowering (1)</div>
-                            <div class="related-date">2024/09/20</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
+                            <div class="related-item-title">2024年度後期振り返り</div>
+                            <div class="related-date">2025/03/31</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/livereload.html">
-                            <div class="related-item-title">livereload でホットリロードするCLIツールを作る</div>
-                            <div class="related-date">2024/04/09</div>
-                            <div class="related-tags"><span class="related-tag">#Python</span> <span class="related-tag">#Web</span> <span class="related-tag">#CLI</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
+                            <div class="related-item-title">2023年度後期振り返り</div>
+                            <div class="related-date">2024/03/29</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 </div>
@@ -1645,26 +1703,26 @@ document.addEventListener("DOMContentLoaded", function() {
 <h3 class="related-title">同じようなタグの記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025.html">
-                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
-                            <div class="related-date">2025/05/09</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
+                            <div class="related-item-title">2024年度後期振り返り</div>
+                            <div class="related-date">2025/03/31</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/mini-lang.html">
-                            <div class="related-item-title">3時間で作る自作言語のJuliaトランスパイラ</div>
-                            <div class="related-date">2024/02/22</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_0.html">
+                            <div class="related-item-title">2024年度前期振り返り</div>
+                            <div class="related-date">2024/09/30</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
+                            <div class="related-item-title">2023年度後期振り返り</div>
+                            <div class="related-date">2024/03/29</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 </div>
@@ -1672,18 +1730,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <h3 class="related-title">同じような内容の記事</h3>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_01.html">
-                            <div class="related-item-title">Julia Compiler Internals (01) - Lowering (1)</div>
-                            <div class="related-date">2024/09/20</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#Scheme</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2024_1.html">
+                            <div class="related-item-title">2024年度後期振り返り</div>
+                            <div class="related-date">2025/03/31</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/livereload.html">
-                            <div class="related-item-title">livereload でホットリロードするCLIツールを作る</div>
-                            <div class="related-date">2024/04/09</div>
-                            <div class="related-tags"><span class="related-tag">#Python</span> <span class="related-tag">#Web</span> <span class="related-tag">#CLI</span></div>
+                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
+                            <div class="related-item-title">2023年度後期振り返り</div>
+                            <div class="related-date">2024/03/29</div>
+                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
                             </a>
                     </div>
 </div>
