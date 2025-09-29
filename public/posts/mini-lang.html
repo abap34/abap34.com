@@ -66,7 +66,7 @@ body {
     /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
-    font-family: monospace;
+    font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
@@ -305,6 +305,7 @@ h5 {
     font-size: 0.95em;
     overflow: scroll;
     white-space: pre;
+    word-break: break-all;
 }
 
 /* 箇条書きの字下げ */
@@ -386,6 +387,12 @@ figcaption {
     display: block;
     margin-top: 0.5rem;
     text-align: center;
+}
+
+
+strong {
+    /* ちょっと強めに */
+    font-weight: 1000;
 }
 
 /* ===============================================
@@ -1291,20 +1298,7 @@ body.dark-mode .similarity-source {
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
-    <div class="mobile-sidebar">
-<div class="sidebar">
-<ul id="mobile-toc-list"></ul>
-</div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const desktopToc = document.querySelector("#toc");
-  const mobileToc = document.querySelector("#mobile-toc-list");
-  if (desktopToc && mobileToc) {
-    mobileToc.innerHTML = desktopToc.innerHTML;
-  }
-});
-</script>
+    {{mobile_sidebar}}
 
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
@@ -1603,72 +1597,10 @@ end
             <hr>
 
             <!-- 記事ナビゲーション -->
-            <div class="article-navigation">
-
-                <div class="nav-item nav-prev">
-                    <a href="https://abap34.com/posts/sakumon2.html">
-                        <div class="nav-direction">← 前の記事</div>
-                        <div class="nav-title">作問ハッカソン 002で作問しました </div>
-                    </a>
-                </div>
-
-                <div class="nav-item nav-next">
-                    <a href="https://abap34.com/posts/tinypeg.html">
-                        <div class="nav-direction">次の記事 →</div>
-                        <div class="nav-title">(WIP) 【週刊 PEGパーサジェネレータ を作ろう】 [創刊号] [最終号]</div>
-                    </a>
-                </div>
-</div>
+            {{navigation}}
 
             <!-- モバイル用関連記事（一番下に表示） -->
-            <div class="mobile-related-articles">
-<div class="related-articles tag-related">
-<h3 class="related-title">同じようなタグの記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025.html">
-                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
-                            <div class="related-date">2025/05/09</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/juliatokyo11.html">
-                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
-                            <div class="related-date">2024/02/07</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/julia_timer.html">
-                            <div class="related-item-title">Juliaで実行時間を制限する用のタイマー</div>
-                            <div class="related-date">2023/09/24</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#競技プログラミング</span> <span class="related-tag">#日記</span></div>
-                            </a>
-                    </div>
-</div>
-<div class="related-articles tfidf-related">
-<h3 class="related-title">同じような内容の記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_03.html">
-                            <div class="related-item-title">Julia Compiler Internals (03) - Introduction to Type Inference </div>
-                            <div class="related-date">2024/10/15</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
-                            </a>
-                    </div>
-</div>
-</div>
+            {{mobile_related_articles}}
 
             <hr>
             <!-- コメント欄 (Utterances) -->
@@ -1680,52 +1612,7 @@ end
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
             <div class="right-sidebar-sticky">
-                <div class="related-articles tag-related">
-<h3 class="related-title">同じようなタグの記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025.html">
-                            <div class="related-item-title">Google Summer of Code に Proposal が採択されました！</div>
-                            <div class="related-date">2025/05/09</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span> <span class="related-tag">#GSoC</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/juliatokyo11.html">
-                            <div class="related-item-title">JuliaTokyo #11 でトークをしてきました</div>
-                            <div class="related-date">2024/02/07</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#日記</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/julia_timer.html">
-                            <div class="related-item-title">Juliaで実行時間を制限する用のタイマー</div>
-                            <div class="related-date">2023/09/24</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#競技プログラミング</span> <span class="related-tag">#日記</span></div>
-                            </a>
-                    </div>
-</div>
-<div class="related-articles tfidf-related">
-<h3 class="related-title">同じような内容の記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_06.html">
-                            <div class="related-item-title">Julia Compiler Internals (06) - Implementing Small Julia Compiler</div>
-                            <div class="related-date">2025/02/16</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#コンパイラ</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/jci_03.html">
-                            <div class="related-item-title">Julia Compiler Internals (03) - Introduction to Type Inference </div>
-                            <div class="related-date">2024/10/15</div>
-                            <div class="related-tags"><span class="related-tag">#JuliaCompilerInternals</span> <span class="related-tag">#Julia</span> <span class="related-tag">#型推論</span></div>
-                            </a>
-                    </div>
-</div>
+                {{related_articles}}
             </div>
         </div>
     </div>

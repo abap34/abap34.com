@@ -66,7 +66,7 @@ body {
     /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
-    font-family: monospace;
+    font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
@@ -305,6 +305,7 @@ h5 {
     font-size: 0.95em;
     overflow: scroll;
     white-space: pre;
+    word-break: break-all;
 }
 
 /* 箇条書きの字下げ */
@@ -386,6 +387,12 @@ figcaption {
     display: block;
     margin-top: 0.5rem;
     text-align: center;
+}
+
+
+strong {
+    /* ちょっと強めに */
+    font-weight: 1000;
 }
 
 /* ===============================================
@@ -1291,20 +1298,7 @@ body.dark-mode .similarity-source {
     </div>
 
     <!-- モバイル用サイドバー（記事見出し下に表示） -->
-    <div class="mobile-sidebar">
-<div class="sidebar">
-<ul id="mobile-toc-list"></ul>
-</div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const desktopToc = document.querySelector("#toc");
-  const mobileToc = document.querySelector("#mobile-toc-list");
-  if (desktopToc && mobileToc) {
-    mobileToc.innerHTML = desktopToc.innerHTML;
-  }
-});
-</script>
+    {{mobile_sidebar}}
 
     <!-- 3) コンテンツ本体 (サイドバー + メイン本文 + 右サイドバー) -->
     <div class="article-body">
@@ -1352,66 +1346,10 @@ document.addEventListener("DOMContentLoaded", function() {
             <hr>
 
             <!-- 記事ナビゲーション -->
-            <div class="article-navigation">
-<div class="nav-item nav-prev"></div>
-
-                <div class="nav-item nav-next">
-                    <a href="https://abap34.com/posts/rebuild_abap34_com.html">
-                        <div class="nav-direction">次の記事 →</div>
-                        <div class="nav-title">ブログを自作Markdownパーサで作り直しました</div>
-                    </a>
-                </div>
-</div>
+            {{navigation}}
 
             <!-- モバイル用関連記事（一番下に表示） -->
-            <div class="mobile-related-articles">
-<div class="related-articles tag-related">
-<h3 class="related-title">同じようなタグの記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/git_date.html">
-                            <div class="related-item-title">rebaseしてもGitHub上でのコミット時刻を保つ</div>
-                            <div class="related-date">2024/04/13</div>
-                            <div class="related-tags"><span class="related-tag">#Git</span> <span class="related-tag">#GitHub</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/cpp_ci.html">
-                            <div class="related-item-title">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</div>
-                            <div class="related-date">2024/09/23</div>
-                            <div class="related-tags"><span class="related-tag">#C++</span> <span class="related-tag">#CI</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-</div>
-<div class="related-articles tfidf-related">
-<h3 class="related-title">同じような内容の記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
-                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
-                            <div class="related-date">2025/09/01</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
-                            </a>
-                    </div>
-</div>
-</div>
+            {{mobile_related_articles}}
 
             <hr>
             <!-- コメント欄 (Utterances) -->
@@ -1423,52 +1361,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
             <div class="right-sidebar-sticky">
-                <div class="related-articles tag-related">
-<h3 class="related-title">同じようなタグの記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/git_date.html">
-                            <div class="related-item-title">rebaseしてもGitHub上でのコミット時刻を保つ</div>
-                            <div class="related-date">2024/04/13</div>
-                            <div class="related-tags"><span class="related-tag">#Git</span> <span class="related-tag">#GitHub</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/cpp_ci.html">
-                            <div class="related-item-title">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</div>
-                            <div class="related-date">2024/09/23</div>
-                            <div class="related-tags"><span class="related-tag">#C++</span> <span class="related-tag">#CI</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-</div>
-<div class="related-articles tfidf-related">
-<h3 class="related-title">同じような内容の記事</h3>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/slide-template.html">
-                            <div class="related-item-title">Marp + GitHub Actionsのテンプレートを作った</div>
-                            <div class="related-date">2024/03/14</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#Marp</span> <span class="related-tag">#GitHub Actions</span></div>
-                            </a>
-                    </div>
-
-                    <div class="related-item">
-                        <a href="https://abap34.com/posts/gsoc2025_final_report.html">
-                            <div class="related-item-title">GSoC 2025 Final Report ─ Development of a New Language Server for Julia</div>
-                            <div class="related-date">2025/09/01</div>
-                            <div class="related-tags"><span class="related-tag">#Julia</span> <span class="related-tag">#Language Server</span> <span class="related-tag">#コンパイラ</span></div>
-                            </a>
-                    </div>
-</div>
+                {{related_articles}}
             </div>
         </div>
     </div>
