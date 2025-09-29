@@ -212,11 +212,12 @@ class ContentProcessor:
 
 
 class ArticleBuilder:
-    def __init__(self, config: BlogConfig):
+    def __init__(self, config: BlogConfig, use_fake_data: bool = False):
         self.config = config
         self.file_manager = FileManager()
         self.content_processor = ContentProcessor()
         self.ogp_processor = OGPProcessor()
+        self.use_fake_data = use_fake_data
 
     def copy_article_assets(self, article_path: pathlib.Path) -> None:
         try:
@@ -319,36 +320,42 @@ class ArticleBuilder:
     def add_navigation_to_article(
         self, post: BlogPost, output_path: pathlib.Path
     ) -> None:
-        # ナビゲーションと関連記事の情報を取得（更新されたposts.jsonから）
-        all_posts_data = self.file_manager.load_posts()
-        all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
+        if self.use_fake_data:
+            # デザイン確認用の偽データを使用
+            logger.info("Using fake data for design preview")
+            navigation_data = FakeDataGenerator.generate_fake_navigation_data()
+            related_data = FakeDataGenerator.generate_fake_related_articles_data()
+        else:
+            # ナビゲーションと関連記事の情報を取得（更新されたposts.jsonから）
+            all_posts_data = self.file_manager.load_posts()
+            all_posts = [BlogPost(**post_data) for post_data in all_posts_data]
 
-        logger.info(f"Total posts loaded: {len(all_posts)}")
-        logger.info(f"Internal posts: {len([p for p in all_posts if not p.external])}")
+            logger.info(f"Total posts loaded: {len(all_posts)}")
+            logger.info(f"Internal posts: {len([p for p in all_posts if not p.external])}")
 
-        # デバッグ: '振り返り' タグを持つ記事をすべて表示
-        retrospective_posts = [p for p in all_posts if p.tags and "振り返り" in p.tags]
-        logger.info(
-            f"Posts with '振り返り' tag: {[(p.title, p.external, p.tags) for p in retrospective_posts]}"
-        )
+            # デバッグ: '振り返り' タグを持つ記事をすべて表示
+            retrospective_posts = [p for p in all_posts if p.tags and "振り返り" in p.tags]
+            logger.info(
+                f"Posts with '振り返り' tag: {[(p.title, p.external, p.tags) for p in retrospective_posts]}"
+            )
 
-        # 前後の記事を取得
-        prev_post, next_post = NavigationHelper.find_adjacent_articles(post, all_posts)
-        navigation_data = TemplateDataGenerator.generate_navigation_data(
-            prev_post, next_post
-        )
+            # 前後の記事を取得
+            prev_post, next_post = NavigationHelper.find_adjacent_articles(post, all_posts)
+            navigation_data = TemplateDataGenerator.generate_navigation_data(
+                prev_post, next_post
+            )
 
-        # 関連記事を取得（タグベースとTF-IDFベース）
-        tfidf_config = self.config.data.get("tfidf_config", {})
-        related_articles_dict = NavigationHelper.find_related_articles(
-            post, all_posts, 5, tfidf_config
-        )
-        logger.debug(
-            f"Related articles: {len(related_articles_dict['tag_based'])} tag-based, {len(related_articles_dict['tfidf_based'])} TF-IDF-based"
-        )
-        related_data = TemplateDataGenerator.generate_related_articles_data_separated(
-            related_articles_dict
-        )
+            # 関連記事を取得（タグベースとTF-IDFベース）
+            tfidf_config = self.config.data.get("tfidf_config", {})
+            related_articles_dict = NavigationHelper.find_related_articles(
+                post, all_posts, 5, tfidf_config
+            )
+            logger.debug(
+                f"Related articles: {len(related_articles_dict['tag_based'])} tag-based, {len(related_articles_dict['tfidf_based'])} TF-IDF-based"
+            )
+            related_data = TemplateDataGenerator.generate_related_articles_data_separated(
+                related_articles_dict
+            )
 
         # テンプレートファイルを更新してナビゲーションと関連記事の情報を含める
         self.update_template_with_navigation(output_path, navigation_data, related_data)
@@ -969,6 +976,104 @@ class NavigationHelper:
         return result
 
 
+class FakeDataGenerator:
+    """デザイン確認用の偽データ生成機能"""
+    
+    @staticmethod
+    def generate_fake_navigation_data() -> Dict[str, Any]:
+        return {
+            "has_navigation": True,
+            "prev_post": {
+                "title": "前の記事のタイトル（サンプル）",
+                "url": "/posts/prev_article.html",
+                "thumbnail": "",
+            },
+            "next_post": {
+                "title": "次の記事のタイトル（サンプル）",
+                "url": "/posts/next_article.html", 
+                "thumbnail": "",
+            },
+        }
+    
+    @staticmethod
+    def generate_fake_related_articles_data() -> Dict[str, Any]:
+        return {
+            "has_tag_related": True,
+            "tag_related_articles": [
+                {
+                    "title": "関連記事1（タグベース）",
+                    "url": "/posts/related1.html",
+                    "thumbnail": "",
+                    "date": "2024-01-15",
+                    "tags": ["Python", "プログラミング"],
+                    "source": "tags"
+                },
+                {
+                    "title": "関連記事2（タグベース）",
+                    "url": "/posts/related2.html",
+                    "thumbnail": "",
+                    "date": "2024-01-10",
+                    "tags": ["機械学習", "データ分析"],
+                    "source": "tags"
+                }
+            ],
+            "has_tfidf_related": True,
+            "tfidf_related_articles": [
+                {
+                    "title": "関連記事3（内容ベース）",
+                    "url": "/posts/related3.html",
+                    "thumbnail": "",
+                    "date": "2024-01-20",
+                    "tags": ["アルゴリズム"],
+                    "source": "tfidf"
+                },
+                {
+                    "title": "関連記事4（内容ベース）",
+                    "url": "/posts/related4.html", 
+                    "thumbnail": "",
+                    "date": "2024-01-05",
+                    "tags": ["開発環境", "ツール"],
+                    "source": "tfidf"
+                }
+            ],
+            "has_related": True,
+            "related_articles": [
+                {
+                    "title": "関連記事1（タグベース）",
+                    "url": "/posts/related1.html",
+                    "thumbnail": "",
+                    "date": "2024-01-15",
+                    "tags": ["Python", "プログラミング"],
+                    "source": "tags"
+                },
+                {
+                    "title": "関連記事2（タグベース）",
+                    "url": "/posts/related2.html",
+                    "thumbnail": "",
+                    "date": "2024-01-10",
+                    "tags": ["機械学習", "データ分析"],
+                    "source": "tags"
+                },
+                {
+                    "title": "関連記事3（内容ベース）",
+                    "url": "/posts/related3.html",
+                    "thumbnail": "",
+                    "date": "2024-01-20",
+                    "tags": ["アルゴリズム"],
+                    "source": "tfidf"
+                },
+                {
+                    "title": "関連記事4（内容ベース）",
+                    "url": "/posts/related4.html",
+                    "thumbnail": "",
+                    "date": "2024-01-05",
+                    "tags": ["開発環境", "ツール"],
+                    "source": "tfidf"
+                }
+            ]
+        }
+
+
 class TemplateDataGenerator:
 
     @staticmethod
@@ -1080,15 +1185,16 @@ class TemplateDataGenerator:
 
 class BlogBuilder:
 
-    def __init__(self, config_path: pathlib.Path = None):
+    def __init__(self, config_path: pathlib.Path = None, use_fake_data: bool = False):
         config_path = config_path or FileManager.CONFIG_PATH
         config_data = FileManager.load_json(config_path)
         self.config = BlogConfig(config_data)
         self.file_manager = FileManager()
-        self.article_builder = ArticleBuilder(self.config)
+        self.article_builder = ArticleBuilder(self.config, use_fake_data=use_fake_data)
         self.external_processor = ExternalArticleProcessor()
         self.navigation_helper = NavigationHelper()
         self.template_generator = TemplateDataGenerator()
+        self.use_fake_data = use_fake_data
 
     def build_articles(
         self, article_paths: List[pathlib.Path], include_navigation: bool = True
@@ -1218,29 +1324,42 @@ class BlogBuilder:
             all_article_paths = sorted(list(all_md_files))
         self.add_navigation_to_all_articles(all_article_paths)
 
-    def build_single_article(self, article_name: str, with_navigation: bool = True) -> None:
-        # .mdが付いていない場合は追加
-        if not article_name.endswith('.md'):
-            article_name += '.md'
+    def build_single_article(self, article_name: str, with_navigation: bool = True, use_fake_data: bool = False) -> None:
+        # 偽データ使用の場合は一時的にフラグを設定
+        original_fake_data = self.use_fake_data
+        if use_fake_data:
+            self.use_fake_data = True
+            self.article_builder.use_fake_data = True
             
-        article_path = pathlib.Path("posts") / article_name
-        
-        if not article_path.exists():
-            raise BuildError(f"Article not found: {article_path}")
+        try:
+            # .mdが付いていない場合は追加
+            if not article_name.endswith('.md'):
+                article_name += '.md'
+                
+            article_path = pathlib.Path("posts") / article_name
             
-        logger.info(f"Building single article: {article_name}")
-        
-        # 第1段階: 記事をビルド（ナビゲーション無し）
-        self.build_articles([article_path], include_navigation=False)
-        
-        # 外部記事も処理（posts.jsonの整合性のため）
-        self.external_processor.process_external_articles()
-        
-        # 第2段階: ナビゲーションを追加（要求された場合）
-        if with_navigation:
-            logger.info("Adding navigation to the article...")
-            # 対象記事のみナビゲーション更新
-            self.add_navigation_to_all_articles([article_path])
+            if not article_path.exists():
+                raise BuildError(f"Article not found: {article_path}")
+                
+            logger.info(f"Building single article: {article_name}" + (" (with fake data)" if use_fake_data else ""))
+            
+            # 第1段階: 記事をビルド（ナビゲーション無し）
+            self.build_articles([article_path], include_navigation=False)
+            
+            # 偽データ使用時は外部記事処理をスキップ
+            if not use_fake_data:
+                # 外部記事も処理（posts.jsonの整合性のため）
+                self.external_processor.process_external_articles()
+            
+            # 第2段階: ナビゲーションを追加（要求された場合）
+            if with_navigation:
+                logger.info("Adding navigation to the article..." + (" (fake data)" if use_fake_data else ""))
+                # 対象記事のみナビゲーション更新
+                self.add_navigation_to_all_articles([article_path])
+        finally:
+            # フラグを元に戻す
+            self.use_fake_data = original_fake_data
+            self.article_builder.use_fake_data = original_fake_data
 
     def initialize_posts_json(self) -> None:
         FileManager.save_json(FileManager.POSTS_JSON_PATH, [])
@@ -1264,6 +1383,9 @@ def main() -> int:
   
   # ナビゲーション無しで高速ビルド（開発用）
   python3 build.py -a my_article --no-navigation
+  
+  # 偽データでデザイン確認
+  python3 build.py -a my_article --fake-data
         """
     )
     
@@ -1279,15 +1401,21 @@ def main() -> int:
         help="ナビゲーションと関連記事の処理をスキップ（高速ビルド用）"
     )
     
+    parser.add_argument(
+        "--fake-data",
+        action="store_true",
+        help="デザイン確認用の偽データを使用（開発用）"
+    )
+    
     args = parser.parse_args()
     
     try:
-        builder = BlogBuilder()
+        builder = BlogBuilder(use_fake_data=args.fake_data)
         
         # 特定記事のビルド
         if args.article:
             logger.info(f"Single article build mode: {args.article}")
-            builder.build_single_article(args.article, with_navigation=not args.no_navigation)
+            builder.build_single_article(args.article, with_navigation=not args.no_navigation, use_fake_data=args.fake_data)
         # 通常の全体ビルド
         elif os.getenv("REBUILD"):
             logger.info("Full rebuild mode")
