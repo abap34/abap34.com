@@ -14,6 +14,8 @@ from typing import Any, Dict, List, Optional, Tuple
 import tqdm
 import requests
 from bs4 import BeautifulSoup
+from precompute_vectors import VectorPrecomputer
+from tfidf_similarity import TFIDFSimilarityCalculator
 
 # Configure logging with clear screen support
 import os
@@ -835,8 +837,6 @@ class NavigationHelper:
         tag_based_results: List[Tuple[BlogPost, float, str]],
         tfidf_config: Optional[Dict[str, Any]],
     ) -> List[Tuple[BlogPost, float, str]]:
-        from .precompute_vectors import VectorPrecomputer
-        from .tfidf_similarity import TFIDFSimilarityCalculator
         
         try:
             # キャッシュされたベクトルを読み込み
@@ -1281,7 +1281,6 @@ class BlogBuilder:
         self.add_navigation_to_all_articles(article_paths)
 
     def precompute_vectors(self) -> None:
-        from .precompute_vectors import VectorPrecomputer
 
         logger.info("Starting TF-IDF vector precomputation...")
 
@@ -1384,8 +1383,7 @@ def main() -> int:
   # ナビゲーション無しで高速ビルド（開発用）
   python3 build.py -a my_article --no-navigation
   
-  # 偽データでデザイン確認
-  python3 build.py -a my_article --fake-data
+  # ビルドは常に実データを使用
         """
     )
     
@@ -1401,21 +1399,15 @@ def main() -> int:
         help="ナビゲーションと関連記事の処理をスキップ（高速ビルド用）"
     )
     
-    parser.add_argument(
-        "--fake-data",
-        action="store_true",
-        help="デザイン確認用の偽データを使用（開発用）"
-    )
-    
     args = parser.parse_args()
     
     try:
-        builder = BlogBuilder(use_fake_data=args.fake_data)
+        builder = BlogBuilder(use_fake_data=False)  # ビルド時は常に実データ
         
         # 特定記事のビルド
         if args.article:
             logger.info(f"Single article build mode: {args.article}")
-            builder.build_single_article(args.article, with_navigation=not args.no_navigation, use_fake_data=args.fake_data)
+            builder.build_single_article(args.article, with_navigation=not args.no_navigation, use_fake_data=False)
         # 通常の全体ビルド
         elif os.getenv("REBUILD"):
             logger.info("Full rebuild mode")
