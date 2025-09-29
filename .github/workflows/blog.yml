@@ -70,8 +70,14 @@ jobs:
             config/**
             assets/**
             blog_builder/**
-            .rebuild
-          
+
+      - name: Check manual rebuild
+        run: |
+          if git log -1 --pretty=%B | grep -q 'rebuild'; then
+            echo "Manual rebuild triggered."
+            echo "REBUILD=true" >> $GITHUB_ENV
+          fi
+
       - name: Output need rebuild
         if:  ${{ steps.check.outputs.all_changed_files }} != ""
         run: echo "REBUILD=true" >> $GITHUB_ENV
