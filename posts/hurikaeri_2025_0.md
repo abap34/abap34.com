@@ -6,7 +6,7 @@ tag: [日記, 振り返り]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: https://images.dog.ceo/breeds/doberman/n02107142_413.jpg
+ogp_url: https://abap34.com/posts/hurikaeri_2025_0/image-3.png
 description: 2025年度前期の振り返りです。
 url: https://abap34.com/posts/hurikaeri_2025_0.html
 site_name: abap34's blog
