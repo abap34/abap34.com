@@ -31,7 +31,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!-- ハイライトJS / FontAwesome -->
-    <link rel="stylesheet"
+    <link rel="stylesheet" id="highlight-theme"
         href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/a11y-light.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -1712,13 +1712,26 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         function applyTheme(theme) {
+            const highlightTheme = document.getElementById('highlight-theme');
+            
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('theme-toggle').textContent = '☀️';
+                // ダークモード用のハイライトテーマに変更
+                highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/monokai.min.css';
             } else {
                 document.body.classList.remove('dark-mode');
                 document.getElementById('theme-toggle').textContent = '🌙';
+                // ライトモード用のハイライトテーマに変更
+                highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.0/styles/github.min.css';
             }
+            
+            // highlight.jsを再実行してハイライトを更新
+            setTimeout(() => {
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }, 100); // CSSの読み込みを少し待つ
         }
 
         // 初期表示：localStorage に保存されたテーマがあればそれを適用し、なければ OS の設定に従う
