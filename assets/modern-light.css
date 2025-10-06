@@ -1369,4 +1369,9 @@ body.dark-mode .similarity-source {
     .article-navigation {
         order: 5;
     }
+
+    /* コードブロックの行数部分の横幅を狭くしてモバイルでの可読性を向上 */
+    .cb-gutter {
+        padding: 0rem .25rem .5rem .25rem !important;
+    }
 }
