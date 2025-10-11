@@ -626,10 +626,11 @@ def generate_qr_code(url: str):
 
 
 class LiveWatcher:
-    def __init__(self, article_name: str, port: int = None, with_navigation: bool = False, use_fake_data: bool = True):
+    def __init__(self, article_name: str, port: int = None, with_navigation: bool = False, use_fake_data: bool = True, auto_reload: bool = False):
         self.article_name = article_name
         self.with_navigation = with_navigation
         self.use_fake_data = use_fake_data
+        self.auto_reload = auto_reload
         self.port = port or find_free_port()
         
         self.console_ui = SimpleConsole(article_name, self.port)
@@ -722,7 +723,7 @@ class LiveWatcher:
             "error": result.get("error", result.get("stderr", ""))
         })
         
-        if result["success"]:
+        if result["success"] and self.auto_reload:
             # ライブリロードスクリプトを再注入
             await self.inject_livereload_script()
             
@@ -731,6 +732,8 @@ class LiveWatcher:
             print(f"Sending reload to {client_count} clients")
             
             await self.live_server.broadcast_message({"type": "reload"})
+        elif result["success"] and not self.auto_reload:
+            print("Build successful. Auto-reload is disabled. Manually refresh browser to see changes.")
     
     def setup_file_watching(self):
         watch_paths = []
@@ -888,8 +891,9 @@ class LiveWatcher:
 @click.argument('article', required=False)
 @click.option('--port', '-p', type=int, help='ポート番号 (自動検出)')
 @click.option('--navigation', '-n', is_flag=True, help='ナビゲーション有効化 (重い)')
+@click.option('--auto-reload', '-r', is_flag=True, help='自動リロード有効化 (デフォルト: 無効)')
 @click.option('--help-extended', is_flag=True, help='詳細ヘルプ表示')
-def main(article, port, navigation, help_extended):
+def main(article, port, navigation, auto_reload, help_extended):
     if help_extended:
         print("ライブリロードシステム")
         print("主な機能:")
@@ -900,6 +904,8 @@ def main(article, port, navigation, help_extended):
         print("  python3 watch.py                    # インタラクティブ選択")
         print("  python3 watch.py my_article         # 記事指定（偽データ）")
         print("  python3 watch.py my_article -n      # ナビゲーション有効")
+        print("  python3 watch.py my_article -r      # 自動リロード有効")
+        print("  python3 watch.py my_article -n -r   # 全機能有効")
         return
     
     # 記事選択
@@ -922,7 +928,8 @@ def main(article, port, navigation, help_extended):
             article_name=article,
             port=port,
             with_navigation=navigation,
-            use_fake_data=True  # watch時は常に偽データ
+            use_fake_data=True,  # watch時は常に偽データ
+            auto_reload=auto_reload
         )
         
         asyncio.run(watcher.start())
