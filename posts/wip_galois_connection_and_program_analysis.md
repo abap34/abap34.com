@@ -15,14 +15,18 @@ twitter_site: abap34
 
 :::info
 研究室でやった [Principle of Program Analysis](https://link.springer.com/book/10.1007/978-3-662-03811-6) の輪講で
-Galois 接続を使った抽象解釈の基礎づけについて学んで面白いなと思ったので，その内容を多少再構成したり，証明を納得がいくもので書き直したり， Lean で形式化したりなどしながらまとめてみます．
+Galois 接続についてやり面白いなと思ったので，その内容を多少再構成したり，証明を納得がいくもので書き直したり， Lean で形式化したりなどしながらまとめてみます．
+
 
 **おかねがある人はこちらを購入することをおすすめします．**
 :::
 
 ## プログラム解析と抽象解釈，Galois 接続
 
-この記事では，プログラム解析という言葉をざっくり「(みんなが思う) ふつうの実行前にプログラムの性質を調べる技術」という意味で使います．
+この記事では，プログラム解析という言葉をざっくり
+
+「(みんなが思うふつうの) 実行前にプログラムの性質を調べる技術」という意味で使います．
+
 
 例えば (できるかはさておき)
 
@@ -32,37 +36,47 @@ Galois 接続を使った抽象解釈の基礎づけについて学んで面白�
 
 などです．
 
+
 ほとんどのプログラマは日々プログラム解析の恩恵を受けてプログラムを書いています．
+
 例えば補完などはプログラムのある位置で存在しうる変数名の解析が必要ですし，
 型推論などもプログラム解析の一種と言えます．
 
 
-さて，プログラム解析といってもいろいろあり日々研究されていますが，
-そのうち  **抽象解釈 (abstract interpretation)** という枠組みによって解析自体を議論する方法があります．
-
-そして，その基礎づけの一つとして「Galois 接続 (Galois connection)」　という概念を使ったものがあります．
+プログラム解析とひとくちに言っても膨大な種類がありますが，
+これを **抽象解釈 (abstract interpretation)** という枠組みによって包摂的に捉えることができることが知られています．
 
 
-[抽象解釈についてはこれまで散々扱ってきた](https://www.abap34.com/search?tag=%E6%8A%BD%E8%B1%A1%E8%A7%A3%E9%87%88) ので，
-今回は Galois 接続を使って抽象解釈を捉え直してみようと思います．
+そして，その基礎づけの一つとして「**Galois 接続 (Galois connection)**」　という概念を使ったものがあります．
 
-また，その内容の一部 [^1] について Lean 4 による形式化にも挑戦してみます．
 
-[mathlib にはすでに Galois 接続のさまざまな性質が収録されている](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/GaloisConnection/Defs.html) のですが， lean の勉強も兼ねてコアの部分はなるべく使わず自分で書くことにします．
+[抽象解釈やプログラム解析についてはこれまでいくらか扱ってきましたが](https://www.abap34.com/search?tag=%E6%8A%BD%E8%B1%A1%E8%A7%A3%E9%87%88)，
+今回は Galois 接続をつかったプログラム解析の基礎づけについて紹介します．
 
-[^1]: 一部と書いたのは挫折したものがいくらかあるからです．
 
-大抵の定義や証明の下に展開ボタンを置いておきます．押すと Lean のコードが見られます．
+さらに，**これを使ってさまざまな実践的なプログラム解析の枠組みを簡単に構成できること**を紹介します．
+
+
+また， Julia コンパイラを例に，実践的な抽象解釈の実装設計との関連についても考えてみます．
+
+
+また，その内容の一部について Lean 4 による形式化にも挑戦してみます．
+
+[mathlib にはすでに Galois 接続のさまざまな性質が収録されている](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/GaloisConnection/Defs.html) のですが，
+勉強も兼ねてコアの部分はなるべく使わず自分で書くことにします．
+
+
+大抵の定義や証明に切り替えボタンを置いておきます．押すと Lean のコードが見られます．
 
 :::warn
-**⚠️**
+**⚠️** 筆者は専門家ではないので誤りが含まれる可能性があります．
 
-筆者は専門家ではないので誤りが含まれる可能性があります．それを念頭に読んでいただけるとありがたいです．
-
-**特に Lean に関しては初心者** なので，誤り等あればコメントからご指摘いただけると幸いです
+さらに重要なこととして，**Lean に関しては初心者** なので，それを念頭に読んでいただけるとありがたいです．
+誤り等あればコメントからご指摘いただけると幸いです．
 
 :::
 
+### Introduction: プログラム解析と抽象化
 
 先に，この後展開される話についてざっくりとした直感的な説明を軽く書いておきます．
 
@@ -83,11 +97,11 @@ print(z);
 
 という感じのプログラムの終了時に `z` がとりうる値に関する何らかの解析を行うことを考えてみます．
 
+
 最も理想的，具体的な解析結果は **「`z` がとりうる値は `0` または `2` である」** ということでしょう．
 
 
-しかし，このような解析は常にリーズナブルに可能，あるいはそもそも計算可能とも限りません．
-
+しかし，このような解析は常にリーズナブルに可能，あるいはそもそも計算可能であるとは限りません．
 そのため，多くのプログラム解析は「いい感じの」ところまで抽象化された値を求めることになります．
 
 例えば
@@ -98,18 +112,15 @@ print(z);
 
 みたいなことです．
 
-プログラム解析はこのような抽象化された実行を考えることといえます．
+プログラム解析はこのような抽象化された評価を考えることといえます．
 
-つまり具体的なもの (例えば典型的には値の集合) と抽象的なもの (偶奇，区間，型など) を対応させていくことが必要になります．
+つまり
+- 具体的なもの (例えば典型的には値の集合) と
+- 抽象的なもの (偶奇，区間，型など) 
+
+を対応させていくことが必要になります．
 このうち，ある種の望ましい性質を持ったものが Galois 接続です．
-
 これからの実際にそのことを確認していきます・
-
-:::info
-
-とくに断りがないときは
-- 関数は全て全域関数
-:::
 
 ## Galois 接続
 
@@ -201,27 +212,24 @@ $\mathrm{sup'}$ も下限が存在すればそれを，存在しなければ $\i
 です．
 
 
-ここからはガロア接続の諸性質を見ていきます．
-
 ### γ の α による一意な決定
 
 
 ところで，初めて私が Galois 接続の定義を見たときに抱いた疑問として， $\gamma$ の役割があります．
 
-Galois 接続がちゃんとプログラム解析のモデルとして妥当なことにして，
+一旦 Galois 接続がちゃんとプログラム解析のモデルとして妥当なことにして，
 $\mathbb{Z}$ を値として持つ言語のプログラムの偶奇解析をすることにしてみます．
 
 
-すると，解析結果になる抽象的な値:
+すると「抽象的な値」となる:
 
 
 - 偶数
 - 奇数
-- 偶数または奇数
-- 偶数でも奇数でもない
 
+(実際には「偶数または奇数」などもあります)
 
-に対して，　$\gamma$ はそれぞれ $2\mathbb{Z}$, $2\mathbb{Z}+1$, $\mathbb{Z}$, $\emptyset$ を返す以外に妥当な結果があるようには思えません．
+に対して，　$\gamma$ はそれぞれ $2\mathbb{Z}$, $2\mathbb{Z}+1$ を返す以外に妥当な結果があるようには思えません．
 
 
 結論から言うとこのような感覚は正しく，次のようなことがいえます．
@@ -229,9 +237,9 @@ $\mathbb{Z}$ を値として持つ言語のプログラムの偶奇解析をす�
 :::theorem
 **$\alpha$ に対する $\gamma$ の一意性**
 
-半順序集合 $(L, \leq_L)$， $(M, \leq_M)$, $\alpha : L \to M$, $\gamma_1, \gamma_2 : M \to L$ に対して 
+半順序集合 $(L, \leq_L)$， $(M, \leq_M)$, $\alpha : L \to M$, $\gamma_1, \gamma_2 : M \to L$ に対して
 
-$(L, \alpha, \gamma_1, M)$ と $(L, \alpha, \gamma_2, M)$ がともに Galois 接続であるならば $\gamma_1 = \gamma_2$．
+$(L, \alpha, \gamma_1, M)$ と $(L, \alpha, \gamma_2, M)$ がともに Galois 接続であるならば $\gamma_1 = \gamma_2$
 
 さらに， $(L, \leq_L)$， $(M, \leq_M)$ が完備束のとき
 
@@ -246,7 +254,6 @@ $$
 はじめに，今後便利に使える同値な定義を一つ紹介します．
 
 :::theorem
-
 **Adjunction (随伴)**
 
 半順序集合 $(L, \leq_L)$ と $(M, \leq_M)$,
@@ -353,9 +360,9 @@ $\alpha$ の単調性: $l_1 \leq_L l_2 \implies \alpha(l_1) \leq_M \alpha(l_2)$ 
 
 $$
   \begin{align*}
-    l_1 \leq_L l_2                                                        
+    l_1 \leq_L l_2
      & \implies l_1 \leq_L l_2 \land l_2 \leq_L \gamma(\alpha(l_2))
-     & \text{(Galois connection の条件 2)}                                \\                                     
+     & \text{(Galois connection の条件 2)}                                \\
      & \implies l_1 \leq_L \gamma(\alpha(l_2))
     & \text{(transitivity of $\leq_L$)}                                        \\
     & \implies \alpha(l_1) \leq_M \alpha(l_2)
@@ -367,7 +374,7 @@ $\gamma$ の単調性: $m_1 \leq_M m_2 \implies \gamma(m_1) \leq_L \gamma(m_2)$ 
 
 $$
   \begin{align*}
-    m_1 \leq_M m_2                                                     
+    m_1 \leq_M m_2
     & \implies m_1 \leq_M m_2 \land \alpha(\gamma(m_1)) \leq_M m_1
     & \text{(Galois connection の条件 2)}                                \\
     & \implies \alpha(\gamma(m_1)) \leq_M m_2
@@ -391,26 +398,25 @@ $$
 
 :::info
 ここまでの証明で察した人もいるかもしれませんが
-$\alpha$ と $\gamma$ の性質に関する議論はかなり似たものになります．
+$\alpha$ の性質に関する議論と $\gamma$ の性質に関する議論はかなり似たものになります．
 記事がいたずらに長くなってしまうので，そのような場合の証明はこの後は適宜省略します．
 :::
 
-さらに，次のような重要な性質がいえます．
+これを使うと，まず次のような重要な性質がいえます．
 
 
 :::theorem
 完備束 $(L, \leq_L)$, $(M, \leq_M)$ と $\alpha: L \to M$ について， Galois 接続 $(L, \alpha, \gamma, M)$ が存在するとき，任意の $L' \subseteq L$ に対して
 
 $$
-\alpha \left( \bigsqcup L' \right) = \bigsqcup \{ \alpha(l) \mid l \in L' \}
+\alpha \left( \bigsqcup L' \right) = \bigsqcup \alpha \left[L'\right]
 $$
 
 :::
 
-
 :::proof
 
-Galois 接続であることから随伴となるから
+Galois 接続であることから随伴なので
 
 $$
 \alpha \left( \bigsqcup L' \right) \leq_M m \iff \bigsqcup L' \leq_L \gamma(m)
@@ -450,29 +456,28 @@ $$
 さらに先ほどの $\bigsqcup L'$ の議論と同様にすれば
 
 $$
-\forall l \in L', \alpha(l) \leq_M m \iff \bigsqcup \{ \alpha(l) \mid l \in L' \} \leq_M m
+\forall l \in L', \alpha(l) \leq_M m \iff \bigsqcup \alpha \left[L'\right] \leq_M m
 $$
 
 
 よって 
 
 $$
-\alpha \left( \bigsqcup L' \right) \leq_M m \iff \bigsqcup \{ \alpha(l) \mid l \in L' \} \leq_M m
+\alpha \left( \bigsqcup L' \right) \leq_M m \iff \bigsqcup \alpha \left[L'\right] \leq_M m
 $$
 
 が成立する．とくに $m \leftarrow \alpha \left( \bigsqcup L' \right)$ と
 $m \leftarrow \alpha \left( \bigsqcup L' \right)$ とすれば $\leq_M$ の反対称性から
 
 $$
-\alpha \left( \bigsqcup L' \right) = \bigsqcup \{ \alpha(l) \mid l \in L' \}
+\alpha \left( \bigsqcup L' \right) = \bigsqcup \alpha \left[L'\right]
 $$
 
 :::
 
-これらを使って目標を示しましょう．
+これらを使って目標を示しましょう．先ほどの定理を再掲します．
 
 :::theorem
-
 **$\alpha$ に対する $\gamma$ の一意性**
 
 半順序集合 $(L, \leq_L)$， $(M, \leq_M)$, $\alpha : L \to M$, $\gamma_1, \gamma_2 : M \to L$ に対して
@@ -485,10 +490,9 @@ $$
 
 :::
 
-
 :::proof
 
-**$\gamma_1 = \gamma_2$**
+- **$\gamma$ の一意性**
 
 Galois 接続であることから任意の $l \in L, m \in M$ に対して
 
@@ -510,7 +514,10 @@ $$
 
 なので $\leq_L$ の反対称性から $\gamma_1(m) = \gamma_2(m)$．
 
-**$\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}$**
+
+---
+
+- **完備束であるとき $\gamma_1(m) = \gamma_2(m) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}$**
 
 一意性から $\bigsqcup \{ l \in L \mid \alpha(l) \leq_M m \}$ が Galois 接続の条件:
 
@@ -531,7 +538,7 @@ $$
 \{ l \in L \mid \alpha(l) \leq_M m_1 \} \subseteq \{ l \in L \mid \alpha(l) \leq_M m_2 \}
 $$
 
-なので $a \subseteq b \implies \bigsqcup a \leq \bigsqcup b$ から
+よって $a \subseteq b \implies \bigsqcup a \leq \bigsqcup b$ であることから
 
 $$
 \gamma(m_1) = \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_1 \} \leq_L \bigsqcup \{ l \in L \mid \alpha(l) \leq_M m_2 \} = \gamma(m_2)
@@ -547,7 +554,7 @@ $\gamma(\alpha(l)) = \bigsqcup \{ l' \in L \mid \alpha(l') \leq_M \alpha(l) \}$ 
 同様に $\bigsqcup \{ \alpha(l) \mid \alpha(l) \leq_M m \} \leq_M m$．
 
 
-補題 3 から
+定理 3 から
 
 $$
 \begin{align*}
@@ -564,8 +571,8 @@ $$
 :::
 
 
-というわけで というわけで，抽象化さえ決まれば具体化は一意に定まるという直感が正しいことがわかった上に， 
-$\alpha$ によって具体的に $\gamma$ を構成できることもわかりました．
+というわけで， **「抽象化」さえ決まれば「具体化」は一意に定まる** ということがわかった上に， 
+$\alpha$ によって具体的に $\gamma$ が決定できることもわかりました．
 
 <details>
 <summary>対応するプログラム</summary>
@@ -574,16 +581,14 @@ $\alpha$ によって具体的に $\gamma$ を構成できることもわかり�
 
 </details>
 
-
-
-
 ### Galois 接続は正当性関係を保つ
 
 Galois 接続がプログラム解析の適切な抽象化であることを確認するために， Galois 接続が「正当さ」を保つことを確認してみます．
 
 値 $V$ と性質 $L$ の間の関係 $R \subseteq V \times L$ であって，次のような性質を満たすものを**正当性関係** と呼ぶことにしましょう．
 
-$v \in V, l_1, l_2 \in L, L' \subseteq L$ について
+
+任意の $v \in V, l_1, l_2 \in L, L' \subseteq L$ に対して
 
 1. $v \mathrel{R} l_1 \land l_1 \leq_L l_2 \implies v \mathrel{R} l_2$
 2. $\forall l' \in L', v \mathrel{R} l' \implies v \mathrel{R} \bigsqcup L'$
@@ -596,7 +601,7 @@ $v \in V, l_1, l_2 \in L, L' \subseteq L$ について
 
 ### reduction operator による Galois 接続の構成
 
-## Galois 接続によるプログラム解析の基礎づけ
+## Galois 接続による実践的なプログラム解析の構成
 
 ### Galois 接続を組み合わせる
 
@@ -605,8 +610,11 @@ $v \in V, l_1, l_2 \in L, L' \subseteq L$ について
 ### 環境と意味論の抽象化
 
 
+## 実践的な抽象解釈の実装設計との関連
 
+### Julia コンパイラの型推論おける束の構成
 
+### Galois 接続と解析のための束の構成
 
 
 ---
