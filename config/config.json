@@ -6,7 +6,7 @@
     "twitter_id": "abap34",
     "github_id": "abap34",
     "overall_theme": "light",
-    "custom_css": "assets/modern-light.css",
+    "custom_css": "assets/style.css",
     "template": "assets/template.html",
     "editor_theme": "ace/theme/monokai",
     "syntax_theme": "a11y-light",
