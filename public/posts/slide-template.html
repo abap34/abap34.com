@@ -12,10 +12,7 @@
             gtag('config', 'G-10Y7GMS7GV');
         }
     </script>
-
-    <script type="text/javascript" src="//code.typesquare.com/static/ZDbTe4IzCko%253D/ts106f.js"
-        charset="utf-8"></script>
-
+    
     <title>Marp + GitHub Actionsのテンプレートを作った</title>
 
     <!-- OGP / Twitter 用のメタタグ -->
@@ -66,7 +63,7 @@ body {
     /* 画面全体に背景が伸びるようにする */
     background-color: #fff;
     color: #333;
-    font-family: monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     line-height: 1.5;
     /* 文字ちょっと */
     /*  global-header のぶんを押し下げる */
@@ -280,6 +277,7 @@ body {
 .content h4,
 .content h5,
 .content h6 {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-weight: bold;
     margin-top: 2rem;
     margin-bottom: 1rem;
@@ -298,6 +296,7 @@ h5 {
 
 /* インラインコードを本文と区別しやすく */
 .content .inline-code {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -541,7 +540,7 @@ footer {
 }
 
 .proof::before {
-    content: "Proof " counter(proof) " ";
+    content: "Proof ";
     font-weight: bold;
     color: #333;
 }
@@ -865,9 +864,19 @@ body.light-mode .content .inline-code {
 }
 
 pre code.hljs {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     display: block;
     overflow-x: auto;
     padding: 0em !important;
+    /* background は透明に */
+    background: none !important;
+}
+
+/* すべてのコードブロックに等幅フォントを確実に適用 */
+pre, code {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 body.light-mode .content a {
@@ -1166,6 +1175,7 @@ body.dark-mode .link-card-date {
    記事ナビゲーション
    =============================================== */
 .article-navigation {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     display: flex;
     justify-content: space-between;
     margin: 2rem 0;
@@ -1218,6 +1228,7 @@ body.dark-mode .link-card-date {
    関連記事
    =============================================== */
 .related-articles {
+    font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     margin-top: 1rem;
     padding: 1rem;
     border-radius: 4px;
