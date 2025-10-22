@@ -12,7 +12,10 @@
     "syntax_theme": "a11y-light",
     "related_articles_count": 5,
     "tfidf_config": {
-        "ngram_range": [1, 3],
+        "ngram_range": [
+            1,
+            3
+        ],
         "max_features": 12000,
         "min_df": 1,
         "max_df": 1.0,
@@ -20,4 +23,4 @@
         "sublinear_tf": false,
         "norm": "l2"
     }
-  }
+}
