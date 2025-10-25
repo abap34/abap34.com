@@ -124,6 +124,12 @@ body {
     padding: 0.5rem;
     max-height: 80vh;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .content {
@@ -145,6 +151,12 @@ body {
     top: 3.5rem;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.right-sidebar-sticky::-webkit-scrollbar {
+    display: none;
 }
 
 /* ===============================================
@@ -559,6 +571,12 @@ footer {
     overflow-x: auto;
     overflow-y: hidden;
     font-size: 0.85em;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.math-block::-webkit-scrollbar {
+    display: none;
 }
 
 .math-inline {
@@ -870,6 +888,12 @@ pre code.hljs {
     padding: 0em !important;
     /* background は透明に */
     background: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+pre code.hljs::-webkit-scrollbar {
+    display: none;
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
@@ -877,6 +901,16 @@ pre, code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
+}
+
+pre {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+pre::-webkit-scrollbar {
+    display: none;
 }
 
 body.light-mode .content a {
@@ -1686,10 +1720,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
-                            <div class="related-item-title">2023年度後期振り返り</div>
-                            <div class="related-date">2024/03/29</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
+                        <a href="https://abap34.com/posts/devenv_advent.html">
+                            <div class="related-item-title">開発環境を紹介しますアドベントカレンダー @abap34</div>
+                            <div class="related-date">2024/12/06</div>
+                            <div class="related-tags"><span class="related-tag">#開発環境</span> <span class="related-tag">#アドベントカレンダー</span> <span class="related-tag">#Helix</span></div>
                             </a>
                     </div>
 </div>
@@ -1744,10 +1778,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
 
                     <div class="related-item">
-                        <a href="https://abap34.com/posts/hurikaeri_2023_1.html">
-                            <div class="related-item-title">2023年度後期振り返り</div>
-                            <div class="related-date">2024/03/29</div>
-                            <div class="related-tags"><span class="related-tag">#日記</span> <span class="related-tag">#振り返り</span></div>
+                        <a href="https://abap34.com/posts/devenv_advent.html">
+                            <div class="related-item-title">開発環境を紹介しますアドベントカレンダー @abap34</div>
+                            <div class="related-date">2024/12/06</div>
+                            <div class="related-tags"><span class="related-tag">#開発環境</span> <span class="related-tag">#アドベントカレンダー</span> <span class="related-tag">#Helix</span></div>
                             </a>
                     </div>
 </div>

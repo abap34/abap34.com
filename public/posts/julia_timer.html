@@ -124,6 +124,12 @@ body {
     padding: 0.5rem;
     max-height: 80vh;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
 }
 
 .content {
@@ -145,6 +151,12 @@ body {
     top: 3.5rem;
     max-height: calc(100vh - 4rem);
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.right-sidebar-sticky::-webkit-scrollbar {
+    display: none;
 }
 
 /* ===============================================
@@ -559,6 +571,12 @@ footer {
     overflow-x: auto;
     overflow-y: hidden;
     font-size: 0.85em;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.math-block::-webkit-scrollbar {
+    display: none;
 }
 
 .math-inline {
@@ -870,6 +888,12 @@ pre code.hljs {
     padding: 0em !important;
     /* background は透明に */
     background: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+pre code.hljs::-webkit-scrollbar {
+    display: none;
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
@@ -877,6 +901,16 @@ pre, code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
+}
+
+pre {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+pre::-webkit-scrollbar {
+    display: none;
 }
 
 body.light-mode .content a {

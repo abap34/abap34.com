@@ -301,6 +301,7 @@ Julia の関数はあたらしい引数の型の組で呼び出されたまさ�
 
 Julia の型推論は関数境界を跨いで行われます。つまり、ビルトイン関数とは限らない (= 返り値の型が明らかでない) `g` の呼び出しを含む `f` をコンパイルする際、`g` に対する推論も行われます。
 
+
 まとめると、以下のようになります。
 
 :::info
@@ -325,7 +326,7 @@ Julia は JIT コンパイル[^jitcompile] で動作する動的型付けの言�
 
 [^jitcompile]: Julia は関数が初見の型の組の引数で呼び出されたまさにそのときにコンパイルされるという意味で JIT コンパイル方式の言語と位置付けられていますが、 例えば V8 がするようなTracing による最適化は行いません。なので Julia は単にコンパイルのタイミングが遅かったりバイナリを明示的に名前がついたファイルとして出力しないだけで、実装の実態は AoT コンパイルに近いです。
 
-```no_method.jl
+```julia
 myadd(a::Int, b::Int) = a + b
 
 function main()
@@ -352,7 +353,29 @@ main()
 
 ここでは JET.jl を紹介します。
 
-https://github.com/aviatesk/JET.jl
+
+<div class="link-card">
+    <a href="https://github.com/aviatesk/JET.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/64bcbd92fa11a1444c7a6703fa2d68fb4f509c8e5de7fd6036d385b92e7af362/aviatesk/JET.jl" alt="GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot</h3>
+                <p class="link-card-description">An experimental code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/aviatesk/JET.jl</span>
+                
+            </div>
+        </div>
+    </a>
+</div>
+
 
 ```julia
 julia> using JET
@@ -377,7 +400,15 @@ JET.jl は、Julia コンパイラの型推論プロセスを利用して、上�
 
 また、このようなツールの組み込みはまだ発展途上ですというのが正直な答えになってしまうものの、Language Server も一応あります。
 
-https://github.com/julia-vscode/LanguageServer.jl
+{@https://github.com/julia-vscode/LanguageServer.jl}
+
+
+:::info
+**追記**
+
+このようなツールの組み込みをしている Language Server を開発しています: [https://github.com/aviatesk/JETLS.jl](https://github.com/aviatesk/JETLS.jl)
+
+:::
 
 
 Julia の型システムそのものについての詳しい解説は (30 記事くらいになってしまうので) ここでは深くは触れません。
@@ -394,7 +425,7 @@ Julia の型システムそのものについての詳しい解説は (30 記事
 
 まずは実装を始める前に、型推論プロセスの入出力を明確にしておきましょう。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/56511b86-333b-c441-f8b4-36b4704a3cd1.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/56511b86-333b-c441-f8b4-36b4704a3cd1.png)
 
 まず、Julia の処理系はソースコードをパースして (surface-) AST を作ります。
 
@@ -465,13 +496,16 @@ julia> lowered_ir.args[1].code[1:10]
  :(i = %9)
 ```
 
-一方で lowering の処理それ自体は現在は C や Scheme で実装されているのですが、最近は Julia によって書き直すプロジェクトが進んでおり、いずれは Julia で完結するかもしれません。(パーサもかつては Scheme 製でしたが今は Julia製のものが動いています。https://github.com/JuliaLang/JuliaSyntax.jl)
+一方で lowering の処理それ自体は現在は C や Scheme で実装されているのですが、最近は Julia によって書き直すプロジェクトが進んでおり、いずれは Julia で完結するかもしれません。
+パーサもかつては Scheme 製でしたが今は Julia製のものが動いています。
 
-https://github.com/c42f/JuliaLowering.jl
+[https://github.com/JuliaLang/JuliaSyntax.jl](https://github.com/JuliaLang/JuliaSyntax.jl)
+
+[https://github.com/c42f/JuliaLowering.jl](https://github.com/c42f/JuliaLowering.jl)
 
 この lowerd IR を受け取り、型情報を付加したものを出力するのが目標です。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d8118ab4-c178-42f4-a5e4-96314a86dac5.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d8118ab4-c178-42f4-a5e4-96314a86dac5.png)
 
 
 
@@ -546,9 +580,7 @@ y? <=  偶数
 今回は 「未定義」 $\leq$ 「偶数」 $=$ 「奇数」 $\leq$「偶数または奇数」 という感じでしょうか。
 
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/819ab0a4-5d78-4f22-8caa-df8a0536ea40.png)
-
-
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/819ab0a4-5d78-4f22-8caa-df8a0536ea40.png)
 
 
 
@@ -571,6 +603,7 @@ y? <=  偶数
 
 先ほども書いたようにここでその話を展開すると同人誌になってしまうので、気になる方は上のリンクを踏んでもらえればと思います。
 
+
 ここでは今回利用する結果だけを簡単に述べます。
 
 抽象解釈の枠組みで、「ある命令の実行前後でプログラムの抽象状態のうちなるべく具体的なものを求める」という問題である「データフロー解析問題」を解くことができます。
@@ -578,7 +611,7 @@ y? <=  偶数
 データフロー解析問題に対しては、抽象状態とその順序, そして意味関数が
 
 1. 意味関数が単調
-2. 抽象状態と順序関係が無限上昇鎖を持たない束をなす
+2. 抽象状態と順序関係によってなす束が無限上昇鎖を持たない
 
 という条件を満たすときに停止する求解アルゴリズムが知られています。
 
@@ -600,7 +633,29 @@ y? <=  偶数
 
 実装はすべて
 
-https://github.com/abap34/mu
+
+<div class="link-card">
+    <a href="https://github.com/abap34/mu" target="_blank" rel="noopener noreferrer" class="link-card-container">
+        <div class="link-card-image">
+            <img src="https://opengraph.githubassets.com/56a834218c95be64b39ec1c9824387c9221e36ba05b39dec8d93a9a05de16f34/abap34/mu" alt="GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static ty" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+        </div>
+        <div class="link-card-content">
+            <div>
+                <div class="link-card-header">
+                    <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
+                    <span class="link-card-domain">GitHub</span>
+                </div>
+                <h3 class="link-card-title">GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static ty</h3>
+                <p class="link-card-description">Implementation of multiple dispatch and abstract interpretation based  static type analysis  - GitHub - abap34/mu: Implementation of multiple dispatch and abstract interpretation based  static type...</p>
+            </div>
+            <div class="link-card-footer">
+                <span class="link-card-url">github.com/abap34/mu</span>
+                
+            </div>
+        </div>
+    </a>
+</div>
+
 
 に置いておきます。(良かったら star つけてください)
 
@@ -665,7 +720,7 @@ function main(){
 
 このグラフに現れる型の組については、`A` と`B`が同じか、このグラフの `Any` から `Bottom` への経路であって、`B` が `A` よりも先に出てくるものがあるとき、またそのときに限り `B` は `A` の親です。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/78c32648-ce21-41e0-bde0-f564a65a4b23.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/78c32648-ce21-41e0-bde0-f564a65a4b23.png)
 
 
 例えば `Int <: Real`, `Int <: Int`, `Float <: Number` です。
@@ -727,7 +782,7 @@ function main(){
 
 とにかく、こっちを採用したことによって先ほどの親子関係がなす階層構造はこんな感じになります。
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/c5cdd4ec-3b38-f5ed-8503-a60965099166.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/c5cdd4ec-3b38-f5ed-8503-a60965099166.png)
 
 型パラメータとして `n` が追加されたことで、型の数が有限でなくなりました。
 
@@ -807,9 +862,6 @@ Tuple は値の組を表す型で、型パラメータとして型の組を取�
 
 [^juliasubtypingdecide]: Belyakova, Julia, et al. "Decidable Subtyping of Existential Types for Julia." Proceedings of the ACM on Programming Languages 8.PLDI (2024): 1091-1114.
 
-
-
-
 ---
 
 [^jlsubtyping_undecidable]: Belyakova, Julia, et al. "Decidable Subtyping of Existential Types for Julia." Proceedings of the ACM on Programming Languages 8.PLDI (2024): 1091-1114.
@@ -818,9 +870,6 @@ Tuple は値の組を表す型で、型パラメータとして型の組を取�
 </details>
 
 [^fastsubtyping]: Chung, Benjamin, Francesco Zappa Nardelli, and Jan Vitek. "Julia's efficient algorithm for subtyping unions and covariant tuples (Pearl)." ECOOP 2019-33rd European Conference of Object-Oriented Programming. 2019.
-
-
-
 
 
 さて、こと型推論のことを考えると、if文の分岐でそれぞれ `Int`, `Float` が返るようなケースでは
@@ -905,14 +954,17 @@ $\nabla$ が **(pair-) Widening Operator である** という. [^setwidening]
 
 $y_0 = x_0, \\ y_{i+1} = y_i \nabla x_{i+1}$ と定める。このとき $\\{ y_i \\}_{i \in \mathbb{N}}$ は次の性質を満たす。
 
+
+
 **[性質]** ある $k$ が存在して $y_k = y_{k+1} = y_{k+2} = \cdots$ 
+
 
 
 ### 具体例
 
 $P$ を、すべての整数区間の集合と最小元のための特別な要素を加えた集合、つまり
 
-$P = \\{ \bot \\} \cup \\{ [l, u] \mid l \in \mathbb{Z} \cup \\{ -\infty \\}, u \in   \mathbb{Z} \cup \\{ \infty \\}, l < u \\}$
+$P = \{ \bot \} \cup \{ [l, u] \mid l \in \mathbb{Z} \cup \{ -\infty \}, u \in   \mathbb{Z} \cup \{ \infty \}, l < u \}$
 
 として、区間の包含関係で $\leq$ を定義します。
 (ここで $\bot$ は任意の区間 $x$ について $\bot \subseteq x$ なるとします)
@@ -939,7 +991,7 @@ $$
 停止性も左端・右端だけが拡大するケースと両方が拡大するケースをそれぞれ考えると、したがうのが簡単にわかります。
 
 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d7f1ba6c-105f-b8a1-c34f-3bc511b25c69.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/d7f1ba6c-105f-b8a1-c34f-3bc511b25c69.png)
 
 
 ### Widening の役割
@@ -1064,7 +1116,7 @@ Widening は
 今回は PEG を使って構文を定義しました。お好きな方法でパーサを定義してもらえればと思います。
 面倒であれば S式や json を入力にしてしまうという手もあります。
 
-パーサのディレクトリ: https://github.com/abap34/mu/tree/main/src/parse
+パーサのディレクトリ: [https://github.com/abap34/mu/tree/main/src/parse](https://github.com/abap34/mu/tree/main/src/parse)
 
 AST は Julia の構造を参考に、ノード自体の情報と子ノードを Vector で持つ形式にします。
 
@@ -1141,13 +1193,12 @@ julia> mu.MuCore.parse(TESTCASE6) |> dump
 ```
 
 という AST が構築されます。S式っぽい見やすい printing を頑張って書くと 
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/5ecf6922-90ce-aeeb-0cc7-f6775411944e.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/5ecf6922-90ce-aeeb-0cc7-f6775411944e.png)
 
 
 という感じです。
 
 ### lowering
-
 #### IR の表現
 
 さて、lowering です。
@@ -1209,7 +1260,7 @@ end
 
 とはいえ、行うことは本当に場合わけを頑張ることのみです。
 
-例えば、while 文の lowering の処理を見てみましょう。(https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/lowering/lowering.jl#L157)
+例えば、while 文の lowering の処理を見てみましょう: [https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/lowering/lowering.jl#L157](https://github.com/abap34/mu/blob/33cedc918a83b4fd6ce8b8bc43f1e50236c5075a/src/lowering/lowering.jl#L157)
 
 
 ```julia
@@ -1294,7 +1345,7 @@ y  = (CALL add %1 4)
 
 というのを再帰的に行うことで右辺を単一の変数呼び出しにします。
     
-![image.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/51c5d240-aabd-d41d-78cd-5ff2fd3ae4a2.png)
+![](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/3929241/51c5d240-aabd-d41d-78cd-5ff2fd3ae4a2.png)
 
 先ほどの関数の lowering 結果は以下のようになります。
 
@@ -1327,7 +1378,7 @@ julia> mu.MuCore.lowering(ast)
 
 今回の処理系でも Verify のために具体的な実行を担う `ConcreateInterpreter` が実装されています。
 
-https://github.com/abap34/mu/blob/main/src/interpreter/concreateinterpreter.jl
+[https://github.com/abap34/mu/blob/main/src/interpreter/concreateinterpreter.jl](https://github.com/abap34/mu/blob/main/src/interpreter/concreateinterpreter.jl)
 
 ### 型推論の実装
 
@@ -1381,8 +1432,8 @@ $I_i$ が $\text{var} \in V$ への代入だったとして、 $![I_i !]$ を考
 
 $$
 a'(v) = \begin{cases}
-\text{typeof(c)} &\quad v = \text{var} \\\\
-a(v) &\quad  \text{otherwise} \\\\
+\text{typeof(c)} &\quad v = \text{var} \\
+a(v) &\quad  \text{otherwise} \\
 \end{cases}
 $$
 
