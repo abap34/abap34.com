@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"JuliaTokyo #11 でトークをしてきました"
 });
 </script>
-<h2 id="3">JuliaTokyo #11 でトークをしてきました</h2><br>2/3 に開催された JuliaTokyo #11 で発表をしてきました。<br><url> <a href="https://juliatokyo.connpass.com/event/306300/ ">https://juliatokyo.connpass.com/event/306300/</a> </url><br>当日は現地50人くらい + オンラインでも30人くらいの方が見ていたらしく、結構盛り上がっていました。<br>自分は「Juliaと歩く自動微分の世界」というタイトルで30分トークをさせていただきました。<br>資料は　SpeakerDeck ・このサイトにもアップされているのでもしよかったら見てください。<br>(この資料自体の内容はともかくとして、最後の一枚はかなり嬉しい人が多いと思います)<br><br><iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/95948ff2f7a14389992dc1c79d92f5cf" title="Julia Tokyo #11 トーク: 「Juliaで歩く自動微分」" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe><br><br>自動微分は最近かなり色々勉強しているところですが、Julia周辺で活発に研究されていて面白いです。<br>当分の目標は <url> <a href="https://github.com/JuliaDiff/Diffractor.jl">Difffractor.jl</a> </url> を理解することですが、どうにも難解すぎて道は遠そうです。<br><br>また、資料は <url> <a href="https://marp.app/">marp</a> </url> で書いてるのですが、このくらい長大になってくると単一の markdown ファイルで書くのが辛くなってきます。<br>なので、適当に Makefile を組んで分割してビルドできるようにしたのですが、めちゃくちゃ体験が良かったのでおすすめです。<br>(<url> <a href="https://github.com/abap34/juliatokyo11">Repo</a> </url> <br>マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。<br>これからも Juliaを使って面白いことができたらなと思います。 運営の皆様、ありがとうございました  🙇‍♂️  <br><br><script>page_contents.push({
+<h2 id="3">JuliaTokyo #11 でトークをしてきました</h2><br>2/3 に開催された JuliaTokyo #11 で発表をしてきました。<br><url><a href="https://juliatokyo.connpass.com/event/306300/ ">https://juliatokyo.connpass.com/event/306300/</a></url><br>当日は現地50人くらい + オンラインでも30人くらいの方が見ていたらしく、結構盛り上がっていました。<br>自分は「Juliaと歩く自動微分の世界」というタイトルで30分トークをさせていただきました。<br>資料は　SpeakerDeck ・このサイトにもアップされているのでもしよかったら見てください。<br>(この資料自体の内容はともかくとして、最後の一枚はかなり嬉しい人が多いと思います)<br><br><iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/95948ff2f7a14389992dc1c79d92f5cf" title="Julia Tokyo #11 トーク: 「Juliaで歩く自動微分」" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe><br><br>自動微分は最近かなり色々勉強しているところですが、Julia周辺で活発に研究されていて面白いです。<br>当分の目標は <url><a href="https://github.com/JuliaDiff/Diffractor.jl">Difffractor.jl</a></url> を理解することですが、どうにも難解すぎて道は遠そうです。<br><br>また、資料は <url><a href="https://marp.app/">marp</a></url> で書いてるのですが、このくらい長大になってくると単一の markdown ファイルで書くのが辛くなってきます。<br>なので、適当に Makefile を組んで分割してビルドできるようにしたのですが、めちゃくちゃ体験が良かったのでおすすめです。<br>(<url><a href="https://github.com/abap34/juliatokyo11">Repo</a></url> <br>マクロで低いレイヤに介入しまくって色々できる Juliaはやっぱり楽しいなと感じました。<br>これからも Juliaを使って面白いことができたらなと思います。 運営の皆様、ありがとうございました  🙇‍♂️  <br><br><script>page_contents.push({
     "type":"H2",
     "id":"44",
     "title":" 今日の一曲"

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1550,25 +1585,25 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"ちょっとしたニュース ① "
 });
 </script>
-<h3 id="11">ちょっとしたニュース ① </h3><br>先日 Julia の Co-Founder の <url> <a href="https://en.wikipedia.org/wiki/Jeff_Bezanson">Jeff Bezanson</a> </url> さんが来日されていて、なんとお会いすることができました。<br><br>Twitterのリンクでも貼ろうかと思ったら Wikipedia のページがありました。すごすぎ。<br><br><blockquote class="twitter-tweet"><p lang="en" dir="ltr">It was such an honor to meet <a href="https://twitter.com/JeffBezanson?ref_src=twsrc%5Etfw">@JeffBezanson</a> and fellow Julia compiler enthusiasts in Tokyo! <a href="https://t.co/r1vzPaP0X7">pic.twitter.com/r1vzPaP0X7</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1846208258216022469?ref_src=twsrc%5Etfw">October 15, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>そこで 「Julia の処理系を読む会を毎週やっていて、あなたが 10 年前に Scheme で書いたコードをみんなで何時間も読んでいるんです」と伝えたらとても喜んで貰えました！笑<br><br><script>page_contents.push({
+<h3 id="11">ちょっとしたニュース ① </h3><br>先日 Julia の Co-Founder の <url><a href="https://en.wikipedia.org/wiki/Jeff_Bezanson">Jeff Bezanson</a></url> さんが来日されていて、なんとお会いすることができました。<br><br>Twitterのリンクでも貼ろうかと思ったら Wikipedia のページがありました。すごすぎ。<br><br><blockquote class="twitter-tweet"><p lang="en" dir="ltr">It was such an honor to meet <a href="https://twitter.com/JeffBezanson?ref_src=twsrc%5Etfw">@JeffBezanson</a> and fellow Julia compiler enthusiasts in Tokyo! <a href="https://t.co/r1vzPaP0X7">pic.twitter.com/r1vzPaP0X7</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1846208258216022469?ref_src=twsrc%5Etfw">October 15, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>そこで 「Julia の処理系を読む会を毎週やっていて、あなたが 10 年前に Scheme で書いたコードをみんなで何時間も読んでいるんです」と伝えたらとても喜んで貰えました！笑<br><br><script>page_contents.push({
     "type":"H3",
     "id":"28",
     "title":"ちょっとしたニュース ②"
 });
 </script>
-<h3 id="28">ちょっとしたニュース ②</h3><br>第5回のコードを読んでいるとき、まだ SSA形式の IR になっていないはずなのに SSA形式の IR にするようなチェックがなされている箇所を見つけ、 「不思議だな〜」と話していたところがあったのですが、今日の記事にも登場する Juliaコンパイラの中の人であるところの aviatesk さんに聞いてみたところ、どうもミス (実際誤った挙動にはならないのでバグというほどでもないですが) っぽいという結論に至りました。<br>読み始めたときにバグの一つや二つでも見つけられたらいいな〜と思っていたのでこれは嬉しいです。<br>追伸: 修正のPRが作られて、マージされました。 <url> <a href="https://github.com/JuliaLang/julia/pull/56314">https://github.com/JuliaLang/julia/pull/56314</a> </url><br><br>いろいろといいことが起きてていい感じですね。今後も頑張っていきます！<br><br><hr><br><br><script>page_contents.push({
+<h3 id="28">ちょっとしたニュース ②</h3><br>第5回のコードを読んでいるとき、まだ SSA形式の IR になっていないはずなのに SSA形式の IR にするようなチェックがなされている箇所を見つけ、 「不思議だな〜」と話していたところがあったのですが、今日の記事にも登場する Juliaコンパイラの中の人であるところの aviatesk さんに聞いてみたところ、どうもミス (実際誤った挙動にはならないのでバグというほどでもないですが) っぽいという結論に至りました。<br>読み始めたときにバグの一つや二つでも見つけられたらいいな〜と思っていたのでこれは嬉しいです。<br>追伸: 修正のPRが作られて、マージされました。 <url><a href="https://github.com/JuliaLang/julia/pull/56314">https://github.com/JuliaLang/julia/pull/56314</a></url><br><br>いろいろといいことが起きてていい感じですね。今後も頑張っていきます！<br><br><hr><br><br><script>page_contents.push({
     "type":"H2",
     "id":"45",
     "title":"あらすじ"
 });
 </script>
-<h2 id="45">あらすじ</h2><br>今回もJuliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><br><url> <a href="https://abap34.com/posts/jci_03.html">前回</a> </url> は Julia の型推論について概観しました。<br><br>今回は実際にアルゴリズムに踏み込んでいきます。<br>具体的には、一旦 Julia のソースコードから離れて aviatesk さんの記事 <url> <a href="https://zenn.dev/aviatesk/articles/data-flow-problem-20201025">Juliaの型推論アルゴリズムを実装する</a> </url> を読んで実装しようと思います。 (以下 「元記事」とかきます)<br><br>この記事はなるべく元記事の理解の補足になることを目指しています。<br>少し長くなりそうなので 2,3 個に分ける予定です。<br><br>まず今回は前提知識や問題設定などについて書きます。<br><br>(※ この記事の執筆は aviatesk さんの許諾をいただいて行われています。ありがとうございます！)<br><br><script>page_contents.push({
+<h2 id="45">あらすじ</h2><br>今回もJuliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url><a href="https://abap34.com/posts/jci_00.html">第0回</a></url> を見てください。<br><br><url><a href="https://abap34.com/posts/jci_03.html">前回</a></url> は Julia の型推論について概観しました。<br><br>今回は実際にアルゴリズムに踏み込んでいきます。<br>具体的には、一旦 Julia のソースコードから離れて aviatesk さんの記事 <url><a href="https://zenn.dev/aviatesk/articles/data-flow-problem-20201025">Juliaの型推論アルゴリズムを実装する</a></url> を読んで実装しようと思います。 (以下 「元記事」とかきます)<br><br>この記事はなるべく元記事の理解の補足になることを目指しています。<br>少し長くなりそうなので 2,3 個に分ける予定です。<br><br>まず今回は前提知識や問題設定などについて書きます。<br><br>(※ この記事の執筆は aviatesk さんの許諾をいただいて行われています。ありがとうございます！)<br><br><script>page_contents.push({
     "type":"H2",
     "id":"77",
     "title":"束 (Lattice) の定義と具体例"
 });
 </script>
-<h2 id="77">束 (Lattice) の定義と具体例</h2><br>少しだけ使う概念の準備を書いておきます。<br><div class="definition"><span class="strong"> <strong>束 (Lattice)</strong> </span><br><br>集合 <span class="math-inline"> \( L \) </span> と <span class="math-inline"> \( L \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> が以下の条件を満たすとき、<span class="math-inline"> \( (L, \leq) \) </span> を束であるという。<br><ol><li><span class="math-inline"> \( \leq \) </span> が半順序である</li><li>各 <span class="math-inline"> \( x, y \in L \) </span> について <span class="math-inline"> \( \{ x, y \} \) </span> の上限と下限が常に存在する</li></ol><br>とくに <span class="math-inline"> \( L \) </span> が有限集合のとき、有限束という。</div><br><div class="definition"><span class="strong"> <strong>交わり(meet), 結び(join)</strong> </span><br><br>束 <span class="math-inline"> \( (L, \leq) \) </span> について、<br><ul><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \inf \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の交わり (meet)</li><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \sup \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の結び (join)</li></ul><br>という。</div><br>これだけだとパッとわかりにくいので、具体例を挙げてみます。<br><script>page_contents.push({
+<h2 id="77">束 (Lattice) の定義と具体例</h2><br>少しだけ使う概念の準備を書いておきます。<br><div class="definition"><span class="strong"><strong>束 (Lattice)</strong></span><br><br>集合 <span class="math-inline"> \( L \) </span> と <span class="math-inline"> \( L \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> が以下の条件を満たすとき、<span class="math-inline"> \( (L, \leq) \) </span> を束であるという。<br><ol><li><span class="math-inline"> \( \leq \) </span> が半順序である</li><li>各 <span class="math-inline"> \( x, y \in L \) </span> について <span class="math-inline"> \( \{ x, y \} \) </span> の上限と下限が常に存在する</li></ol><br>とくに <span class="math-inline"> \( L \) </span> が有限集合のとき、有限束という。</div><br><div class="definition"><span class="strong"><strong>交わり(meet), 結び(join)</strong></span><br><br>束 <span class="math-inline"> \( (L, \leq) \) </span> について、<br><ul><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \inf \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の交わり (meet)</li><li><span class="math-inline"> \( x, y \in L \) </span> に対して <span class="math-inline"> \( \sup \{ x, y \} \) </span> を <span class="math-inline"> \( x \) </span> と <span class="math-inline"> \( y \) </span> の結び (join)</li></ul><br>という。</div><br>これだけだとパッとわかりにくいので、具体例を挙げてみます。<br><script>page_contents.push({
     "type":"H3",
     "id":"147",
     "title":"束の例1: 論理関数"
@@ -1605,7 +1640,7 @@ f \leq g \Leftrightarrow \forall x \in \mathbb{B}^n, f(x) \leq g(x)
 </tr>
 </tbody>
 </table>
-<br><br>からなるわけですが、<br>以下のような図でその束の構造を表すことができます。<br><div class="code-block"> <pre><code class="language-plaintext">     l
+<br><br>からなるわけですが、<br>以下のような図でその束の構造を表すことができます。<br><div class="code-block"><pre><code class="language-plaintext">     l
      /\
     /  \
    /    \
@@ -1616,28 +1651,28 @@ f \leq g \Leftrightarrow \forall x \in \mathbb{B}^n, f(x) \leq g(x)
     \  /
      \/
      f
-</code></pre> </div><br>つまり、ふんわり言うと束は上のような上下関係をいい感じの図にしたときに、どれをとっても下か上に辿れば交わるものと言えます。 (このような図を Hasse 図と言います。なお、全ての束が Hasse 図で表せるわけではないです  (例えば <span class="math-inline"> \( \mathbb{R} \) </span> と通常の大小関係))<br>なのでこういうグラフが得られているのであれば  <span class="math-inline"> \( \inf \{a, b\} \) </span> と <span class="math-inline"> \( \sup \{a, b\} \) </span> を求めるのは LCA を求める問題に帰着します。<br><br><br><script>page_contents.push({
+</code></pre></div><br>つまり、ふんわり言うと束は上のような上下関係をいい感じの図にしたときに、どれをとっても下か上に辿れば交わるものと言えます。 (このような図を Hasse 図と言います。なお、全ての束が Hasse 図で表せるわけではないです  (例えば <span class="math-inline"> \( \mathbb{R} \) </span> と通常の大小関係))<br>なのでこういうグラフが得られているのであれば  <span class="math-inline"> \( \inf \{a, b\} \) </span> と <span class="math-inline"> \( \sup \{a, b\} \) </span> を求めるのは LCA を求める問題に帰着します。<br><br><br><script>page_contents.push({
     "type":"H3",
     "id":"261",
     "title":"束の例2: Julia の型"
 });
 </script>
-<h3 id="261">束の例2: Julia の型</h3><br>Julia の型と、その親子関係による順序関係も束をなします。<br><span class="math-inline"> \( L \) </span> を Julia の型全体の集合とし、<br><span class="math-inline"> \( L = \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \cdots \} \) </span> <br><br>二項関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><span class="math-inline"> \( T \leq U \Leftrightarrow \) </span> 型 <span class="math-inline"> \( T \) </span> が型 <span class="math-inline"> \( U \) </span> のサブタイプである<br><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束になります。<br>上に載せた図を作ることで直感的に確認しておきましょう、 「Julia Type Tree」 とかで検索するといい感じの図が出てきます。<br><figure><img src="jci_04/image.png" ><figcaption>https://stackoverflow.com/questions/71524602/visualize-the-julia-type-tree より</figcaption></figure><br>おかしいです！ 束であるためには任意の 2つの元について下限が必要ですから、枝分かれのある木な訳がないです。<br><br>しかし Julia の Concrete Type は サブタイプを持たないはずです。どう言うことでしょうか？<br><br>──実は Julia の Concrete Type にサブタイプが存在しないと言うのが誤りで、 <span class="inline-code"> <code>Union{}</code> </span> 型と言う型が存在してこれは任意の型のサブタイプになります。<br>(<span class="inline-code"> <code>Union{}</code> </span> のオブジェクトは存在しません。型としてのみ存在します。)<br><br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; Union{} &lt;: Any
+<h3 id="261">束の例2: Julia の型</h3><br>Julia の型と、その親子関係による順序関係も束をなします。<br><span class="math-inline"> \( L \) </span> を Julia の型全体の集合とし、<br><span class="math-inline"> \( L = \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \cdots \} \) </span> <br><br>二項関係 <span class="math-inline"> \( \leq \) </span> を次のように定義します:<br><span class="math-inline"> \( T \leq U \Leftrightarrow \) </span> 型 <span class="math-inline"> \( T \) </span> が型 <span class="math-inline"> \( U \) </span> のサブタイプである<br><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束になります。<br>上に載せた図を作ることで直感的に確認しておきましょう、 「Julia Type Tree」 とかで検索するといい感じの図が出てきます。<br><figure><img src="jci_04/image.png" ><figcaption>https://stackoverflow.com/questions/71524602/visualize-the-julia-type-tree より</figcaption></figure><br>おかしいです！ 束であるためには任意の 2つの元について下限が必要ですから、枝分かれのある木な訳がないです。<br><br>しかし Julia の Concrete Type は サブタイプを持たないはずです。どう言うことでしょうか？<br><br>──実は Julia の Concrete Type にサブタイプが存在しないと言うのが誤りで、 <span class="inline-code"><code>Union{}</code></span> 型と言う型が存在してこれは任意の型のサブタイプになります。<br>(<span class="inline-code"><code>Union{}</code></span> のオブジェクトは存在しません。型としてのみ存在します。)<br><br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; Union{} &lt;: Any
 true
 
 julia&gt; Union{} &lt;: Int64
 true
-</code></pre> </div><br>したがって、任意の Concrete Type <span class="math-inline"> \( T, U \) </span> に対して <span class="math-inline"> \( \inf \{ T, U \} = \text{Union\{\}} \) </span> となります。<br>この型の存在によって Julia の型の階層関係は束をなします。<br><script>page_contents.push({
+</code></pre></div><br>したがって、任意の Concrete Type <span class="math-inline"> \( T, U \) </span> に対して <span class="math-inline"> \( \inf \{ T, U \} = \text{Union\{\}} \) </span> となります。<br>この型の存在によって Julia の型の階層関係は束をなします。<br><script>page_contents.push({
     "type":"H3",
     "id":"318",
     "title":"高さの有限性"
 });
 </script>
-<h3 id="318">高さの有限性</h3><br>さて、今後この束でプログラムのさまざまな抽象状態を表現するわけですが、その計算の複雑性を考える上で非常に重要な特徴があるのでここで導入します、<br><div class="definition"><span class="strong"> <strong>鎖 (Chain)</strong> </span><br>集合 <span class="math-inline"> \( L \) </span> と <span class="math-inline"> \( L \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> を考える.<br>ここで、 <span class="math-inline"> \( P \subseteq L \) </span> が任意の <span class="math-inline"> \( x, y \in P \) </span> に対して <span class="math-inline"> \( x \leq y \) </span> または <span class="math-inline"> \( y \leq x \) </span> となるとき、 <span class="math-inline"> \( P \) </span> を<span class="strong"> <strong>鎖</strong> </span>といい、 <span class="math-inline"> \( |P| - 1 \) </span> を鎖の<span class="strong"> <strong>長さ</strong> </span>という。 <br></div><br><br><div class="definition"><span class="strong"> <strong>高さ</strong> </span><br>最小元 <span class="math-inline"> \( \bot \) </span> が存在する半順序集合 <span class="math-inline"> \( (L, \leq) \) </span> の元 <span class="math-inline"> \( x \) </span> に対して、 <span class="math-inline"> \( [ \bot, x ] \subseteq L \) </span> の鎖の長さの最大値を <span class="math-inline"> \( x \) </span> の<span class="strong"> <strong>高さ</strong> </span>という。<br>さらに、 <span class="math-inline"> \( L \) </span> の元の高さの最大値を <span class="strong"> <strong>Lの高さ</strong> </span> という。<br></div><br>例えば<br><div class="math-block"> \[ 
+<h3 id="318">高さの有限性</h3><br>さて、今後この束でプログラムのさまざまな抽象状態を表現するわけですが、その計算の複雑性を考える上で非常に重要な特徴があるのでここで導入します、<br><div class="definition"><span class="strong"><strong>鎖 (Chain)</strong></span><br>集合 <span class="math-inline"> \( L \) </span> と <span class="math-inline"> \( L \) </span> 上の二項関係 <span class="math-inline"> \( \leq \) </span> を考える.<br>ここで、 <span class="math-inline"> \( P \subseteq L \) </span> が任意の <span class="math-inline"> \( x, y \in P \) </span> に対して <span class="math-inline"> \( x \leq y \) </span> または <span class="math-inline"> \( y \leq x \) </span> となるとき、 <span class="math-inline"> \( P \) </span> を<span class="strong"><strong>鎖</strong></span>といい、 <span class="math-inline"> \( |P| - 1 \) </span> を鎖の<span class="strong"><strong>長さ</strong></span>という。 <br></div><br><br><div class="definition"><span class="strong"><strong>高さ</strong></span><br>最小元 <span class="math-inline"> \( \bot \) </span> が存在する半順序集合 <span class="math-inline"> \( (L, \leq) \) </span> の元 <span class="math-inline"> \( x \) </span> に対して、 <span class="math-inline"> \( [ \bot, x ] \subseteq L \) </span> の鎖の長さの最大値を <span class="math-inline"> \( x \) </span> の<span class="strong"><strong>高さ</strong></span>という。<br>さらに、 <span class="math-inline"> \( L \) </span> の元の高さの最大値を <span class="strong"><strong>Lの高さ</strong></span> という。<br></div><br>例えば<br><div class="math-block"> \[ 
 
 \{ \text{Any}, \text{Number}, \text{Real}, \text{Int64} \}
 
- \] </div><br>などは鎖で、長さは 3 です。<br>また、先ほど挙げた論理関数全体の集合がなす束の高さは 2 です。<br><br>では Julia の型 (に親子関係を入れたもの) は有限性条件を満たすでしょうか？<br><span class="strong"> <strong>実は満たしません。無限上昇鎖を作ることができます。</strong> </span><br>これについては今後見ていきたいと思います。<br><br><hr><br>さて、このように束は割といろんなところに現れる構造っぽいです。<br>そして、実はプログラムのさまざまな要素・状態を束で表現することでいろいろな性質の解析ができます。<br>ここからはそれを具体的に見ていきます。<br><script>page_contents.push({
+ \] </div><br>などは鎖で、長さは 3 です。<br>また、先ほど挙げた論理関数全体の集合がなす束の高さは 2 です。<br><br>では Julia の型 (に親子関係を入れたもの) は有限性条件を満たすでしょうか？<br><span class="strong"><strong>実は満たしません。無限上昇鎖を作ることができます。</strong></span><br>これについては今後見ていきたいと思います。<br><br><hr><br>さて、このように束は割といろんなところに現れる構造っぽいです。<br>そして、実はプログラムのさまざまな要素・状態を束で表現することでいろいろな性質の解析ができます。<br>ここからはそれを具体的に見ていきます。<br><script>page_contents.push({
     "type":"H2",
     "id":"411",
     "title":"抽象解釈"
@@ -1649,7 +1684,7 @@ true
     "title":"抽象解釈による定数畳み込み: 問題設定"
 });
 </script>
-<h3 id="429">抽象解釈による定数畳み込み: 問題設定</h3><br>以下のような機能を持つ簡単な言語を考えます。<br><br><ul><li>代入: <span class="inline-code"> <code>x := 1</code> </span>, <span class="inline-code"> <code>r := y + z</code> </span></li><li>goto: <span class="inline-code"> <code>goto line</code> </span></li><li>条件つき goto: <span class="inline-code"> <code>if x &lt; 10 goto inst</code> </span>, <span class="inline-code"> <code>if x ≤ z goto inst</code> </span></li></ul><br>簡単のために、代入の右辺は定数か変数またはそれらの二項演算のみで、値は全て整数とします。<br>例えば以下のような感じです。 <br><div class="code-block"> <pre><code class="language-plaintext">0 ─ I₀ = x := 1
+<h3 id="429">抽象解釈による定数畳み込み: 問題設定</h3><br>以下のような機能を持つ簡単な言語を考えます。<br><br><ul><li>代入: <span class="inline-code"><code>x := 1</code></span>, <span class="inline-code"><code>r := y + z</code></span></li><li>goto: <span class="inline-code"><code>goto line</code></span></li><li>条件つき goto: <span class="inline-code"><code>if x &lt; 10 goto inst</code></span>, <span class="inline-code"><code>if x ≤ z goto inst</code></span></li></ul><br>簡単のために、代入の右辺は定数か変数またはそれらの二項演算のみで、値は全て整数とします。<br>例えば以下のような感じです。 <br><div class="code-block"><pre><code class="language-plaintext">0 ─ I₀ = x := 1
 │   I₁ = y := 2
 │   I₂ = z := 3
 └── I₃ = goto I₈
@@ -1658,7 +1693,7 @@ true
 2 ─ I₆ = r := z + y
 3 ─ I₇ = x := x + 1
 4 ─ I₈ = if x &lt; 10 goto I₄
-</code></pre> </div><br><details> <summary>左についている枠について</summary><br>命令列の左に枠がついていますが、これは基本ブロック (Basic Block) というものです。 基本ブロックは、文の列であって、分岐も合流もない、つまり一つの入り口と一つの出口を持つものをいいます。<br>これによってプログラム全体の流れを表したものを制御フローグラフ (Control Flow Graph) と言います。<br>プログラムが直列化されていれば goto, 条件付き goto によって分割することでこれが得られます。 (Julia では Lowering によってこれがされているんでした！このシリーズの過去記事を見てください。) </details><br>じっと見ると、以下のような処理をしていることがわかります。<br><div class="code-block"> <pre><code class="language-julia">x = 1
+</code></pre></div><br><details> <summary>左についている枠について</summary><br>命令列の左に枠がついていますが、これは基本ブロック (Basic Block) というものです。 基本ブロックは、文の列であって、分岐も合流もない、つまり一つの入り口と一つの出口を持つものをいいます。<br>これによってプログラム全体の流れを表したものを制御フローグラフ (Control Flow Graph) と言います。<br>プログラムが直列化されていれば goto, 条件付き goto によって分割することでこれが得られます。 (Julia では Lowering によってこれがされているんでした！このシリーズの過去記事を見てください。) </details><br>じっと見ると、以下のような処理をしていることがわかります。<br><div class="code-block"><pre><code class="language-julia">x = 1
 y = 2
 z = 3
 
@@ -1671,7 +1706,7 @@ while x &lt; 10
 
      # @show x, y, z, r
 end
-</code></pre> </div><br>手で実行してみると、こんな感じです.<br><br><table>
+</code></pre></div><br>手で実行してみると、こんな感じです.<br><br><table>
 <thead>
 <tr>
 <th align="left"> step </th>
@@ -1938,13 +1973,13 @@ end
 </tr>
 </tbody>
 </table>
-<br><br><span class="inline-code"> <code>x</code> </span> をループカウンタとして使いつつ、最後の <span class="inline-code"> <code>10 - z</code> </span> 回は <span class="inline-code"> <code>r = z + y</code> </span> もする、みたいなコードです (これは何？)<br><br>さて、ここから以下の事実を静的解析によって見つけることが目標です:<br><br><div style="text-align: center;"><br><span class="strong"> <strong><span class="inline-code"> <code>y</code> </span>, <span class="inline-code"> <code>z</code> </span>, <span class="inline-code"> <code>r</code> </span> は定数である</strong> </span><br></div><br><script>page_contents.push({
+<br><br><span class="inline-code"><code>x</code></span> をループカウンタとして使いつつ、最後の <span class="inline-code"><code>10 - z</code></span> 回は <span class="inline-code"><code>r = z + y</code></span> もする、みたいなコードです (これは何？)<br><br>さて、ここから以下の事実を静的解析によって見つけることが目標です:<br><br><div style="text-align: center;"><br><span class="strong"><strong><span class="inline-code"><code>y</code></span>, <span class="inline-code"><code>z</code></span>, <span class="inline-code"><code>r</code></span> は定数である</strong></span><br></div><br><script>page_contents.push({
     "type":"H3",
     "id":"1009",
     "title":"データフロー解析の形式的定義"
 });
 </script>
-<h3 id="1009">データフロー解析の形式的定義</h3><br>このあと具体的なアルゴリズムに入る前に、もう少し解こうとしている問題をもう少し一般化して定式化してみます。<br>今回解きたい問題は、以下のように定義される 「データフロー解析」 と呼ばれる抽象解釈によって解ける問題の一つとして捉えることができます。<br><br>データフロー解析は、簡単に言えば次のような問題を解くことです。<br><ul><li><span class="strong"> <strong>命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ。</strong> </span></li></ul><br>実際に計算機上で解くために、形式的に定義してみましょう。<br><br><div class="definition"><span class="strong"> <strong>データフロー解析 (Data Flow Analysis)</strong> </span><br><br>命令全体の集合を <span class="math-inline"> \( \text{Instr} \) </span> 、プログラムの状態全体の集合を <span class="math-inline"> \( A \) </span> とする。<br><span class="math-inline"> \( \text{Instr} \) </span> は <br><ul><li>代入 </li><li>goto</li><li>条件つき goto</li></ul><br>のいずれかに属する命令の集合。<br><br>ここで、以下のような四つ組 <span class="math-inline"> \( (P, L, ![.!], a_0) \) </span> を考える:<br><ul><li><span class="math-inline"> \( P = I_1, I_2, \cdots, I_n \in \text{Instr} \) </span>: プログラム (命令の有限列)</li><li><span class="math-inline"> \( L = (A, \leq) \) </span>: 高さが有限の束</li><li><span class="math-inline"> \( ![.!] \in \text{Instr} \to (A \to A) \) </span>: 各命令の作用を表す単調関数を返す関数 </li><li><span class="math-inline"> \( a_0 \in A \) </span>: 初期状態</li></ul><br>このとき、データフロー解析は以下のような問題を解くことである:<br><span class="math-inline"> \( \text{Pred}_P: \{1, 2, \cdots, n\} \to 2^{\{1, 2, \cdots, n\}} \) </span> を<br><div class="math-block"> \[ 
+<h3 id="1009">データフロー解析の形式的定義</h3><br>このあと具体的なアルゴリズムに入る前に、もう少し解こうとしている問題をもう少し一般化して定式化してみます。<br>今回解きたい問題は、以下のように定義される 「データフロー解析」 と呼ばれる抽象解釈によって解ける問題の一つとして捉えることができます。<br><br>データフロー解析は、簡単に言えば次のような問題を解くことです。<br><ul><li><span class="strong"><strong>命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ。</strong></span></li></ul><br>実際に計算機上で解くために、形式的に定義してみましょう。<br><br><div class="definition"><span class="strong"><strong>データフロー解析 (Data Flow Analysis)</strong></span><br><br>命令全体の集合を <span class="math-inline"> \( \text{Instr} \) </span> 、プログラムの状態全体の集合を <span class="math-inline"> \( A \) </span> とする。<br><span class="math-inline"> \( \text{Instr} \) </span> は <br><ul><li>代入 </li><li>goto</li><li>条件つき goto</li></ul><br>のいずれかに属する命令の集合。<br><br>ここで、以下のような四つ組 <span class="math-inline"> \( (P, L, ![.!], a_0) \) </span> を考える:<br><ul><li><span class="math-inline"> \( P = I_1, I_2, \cdots, I_n \in \text{Instr} \) </span>: プログラム (命令の有限列)</li><li><span class="math-inline"> \( L = (A, \leq) \) </span>: 高さが有限の束</li><li><span class="math-inline"> \( ![.!] \in \text{Instr} \to (A \to A) \) </span>: 各命令の作用を表す単調関数を返す関数 </li><li><span class="math-inline"> \( a_0 \in A \) </span>: 初期状態</li></ul><br>このとき、データフロー解析は以下のような問題を解くことである:<br><span class="math-inline"> \( \text{Pred}_P: \{1, 2, \cdots, n\} \to 2^{\{1, 2, \cdots, n\}} \) </span> を<br><div class="math-block"> \[ 
 
 j \in \text{Pred}_P(i) \Leftrightarrow 
 I_j \in \{ \text{goto i}, \text{条件つき goto i} \} \text{ または } j = i - 1  \ かつ\  I_i \neq \text{goto}
@@ -1953,7 +1988,7 @@ I_j \in \{ \text{goto i}, \text{条件つき goto i} \} \text{ または } j = i
 
 s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n) 
 
- \] </div><br>を満たす最大の解 <span class="math-inline"> \( s_1, s_2, \cdots, s_n \) </span> を求めよ<br></div><br>少し補足をします。<br><ul><li>状態 <span class="math-inline"> \( s \in A \) </span> のときに 命令 <span class="math-inline"> \( I \) </span> を実行したときの状態は <span class="math-inline"> \( ![I!](s) \) </span> です (記法の確認です)</li><li><span class="inline-code"> <code>\bigsqcap</code> </span> が MathJax で使えなかったので <span class="math-inline"> \( \prod \) </span> で代用しています。交わりの意味です。</li><li>つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。</li><li><span class="math-inline"> \( \text{Pred}_P(i) \) </span> はややこしくなっていますが、要は命令 <span class="math-inline"> \( I_i \) </span> の直前になりうる命令のインデックスの集合になります。</li><ul><li>果たしてこれは最初に書いた「命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ」に対応する妥当な定義でしょうか？実はとても議論の余地、というか抜けがあります。次回の記事で議論するので、一旦ここは置いておいてください。</li></ul><li>元記事や <url> <a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">元論文</a> </url> では <span class="math-inline"> \( L \) </span> を その交わりと結びで定義していますが、ここでは準備に合わせて <span class="math-inline"> \( (A, \leq) \) </span> としています。</li><li>順序関係が <span class="math-inline"> \( A \) </span> 上で定まっていることに注意しましょう。 (後述します)</li></ul><br><br><script>page_contents.push({
+ \] </div><br>を満たす最大の解 <span class="math-inline"> \( s_1, s_2, \cdots, s_n \) </span> を求めよ<br></div><br>少し補足をします。<br><ul><li>状態 <span class="math-inline"> \( s \in A \) </span> のときに 命令 <span class="math-inline"> \( I \) </span> を実行したときの状態は <span class="math-inline"> \( ![I!](s) \) </span> です (記法の確認です)</li><li><span class="inline-code"><code>\bigsqcap</code></span> が MathJax で使えなかったので <span class="math-inline"> \( \prod \) </span> で代用しています。交わりの意味です。</li><li>つまり、 連立方程式の各方程式はつまるところ「ありうる直前命令からの実行結果の全ての交わり」と言うことになります。</li><li><span class="math-inline"> \( \text{Pred}_P(i) \) </span> はややこしくなっていますが、要は命令 <span class="math-inline"> \( I_i \) </span> の直前になりうる命令のインデックスの集合になります。</li><ul><li>果たしてこれは最初に書いた「命令 <span class="math-inline"> \( i \) </span> の直前/直後の抽象状態として、最も具体的なものを求めよ」に対応する妥当な定義でしょうか？実はとても議論の余地、というか抜けがあります。次回の記事で議論するので、一旦ここは置いておいてください。</li></ul><li>元記事や <url><a href="https://www.semanticscholar.org/paper/A-Graph-Free-Approach-to-Data-Flow-Analysis-Mohnen/5ad8cb6b477793ffb5ec29dde89df6b82dbb6dba?p2df">元論文</a></url> では <span class="math-inline"> \( L \) </span> を その交わりと結びで定義していますが、ここでは準備に合わせて <span class="math-inline"> \( (A, \leq) \) </span> としています。</li><li>順序関係が <span class="math-inline"> \( A \) </span> 上で定まっていることに注意しましょう。 (後述します)</li></ul><br><br><script>page_contents.push({
     "type":"H3",
     "id":"1131",
     "title":"定数畳み込みの形式的定義"
@@ -1987,7 +2022,7 @@ s_i = \prod_{j \in \text{Pred}_P(i)} ![I_j!](s_j) \quad (i = 1, 2, \cdots, n)
 
 l_i \leq l_j \Leftrightarrow l_i = l_j \text{ または } l_i = \bot \text{ または } l_j = \top
 
- \] </div><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束です。 <br><br>図にすると<br><figure><img src="jci_04/image-1.png" ><figcaption>元記事より</figcaption></figure><br>みたいな感じです。<br><span class="math-inline"> \( \bot, \top \) </span> はそれぞれ次のような意味です。 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br><ul><li><span class="math-inline"> \( \bot \) </span>: 定数でない</li><li><span class="math-inline"> \( \top \) </span>: 未定義</li></ul><br><br>このような状態 <span class="math-inline"> \( C \) </span> を設定することで、実際の実行から、「定数かどうか && 定数ならその値」を考える抽象的な解釈に落とし込まれるわけです！ (たぶん)<br><br>例えば (そんなもんが役に立つのかはさておき) 単に「定数かどうか」だけ調べるのであれば <span class="math-inline"> \( C = \{ \bot, c, \top \} \) </span>  みたいな感じでいいのだと思います。<br><br>なお、注意する点として、 <span class="strong"> <strong>データフロー解析の問題設定においてはあくまでも束をなのは 各変数でなく状態 <span class="math-inline"> \( A \) </span> と <span class="math-inline"> \( A \) </span> 上の順序です。</strong> </span><br>したがって <span class="math-inline"> \( A \) </span> 上の順序関係を考える必要があります。<br>が、そこまで大変でなく単に次のようにすればいいです。<br><div class="math-block"> \[ 
+ \] </div><br>このとき <span class="math-inline"> \( (L, \leq) \) </span> は束です。 <br><br>図にすると<br><figure><img src="jci_04/image-1.png" ><figcaption>元記事より</figcaption></figure><br>みたいな感じです。<br><span class="math-inline"> \( \bot, \top \) </span> はそれぞれ次のような意味です。 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br><ul><li><span class="math-inline"> \( \bot \) </span>: 定数でない</li><li><span class="math-inline"> \( \top \) </span>: 未定義</li></ul><br><br>このような状態 <span class="math-inline"> \( C \) </span> を設定することで、実際の実行から、「定数かどうか && 定数ならその値」を考える抽象的な解釈に落とし込まれるわけです！ (たぶん)<br><br>例えば (そんなもんが役に立つのかはさておき) 単に「定数かどうか」だけ調べるのであれば <span class="math-inline"> \( C = \{ \bot, c, \top \} \) </span>  みたいな感じでいいのだと思います。<br><br>なお、注意する点として、 <span class="strong"><strong>データフロー解析の問題設定においてはあくまでも束をなのは 各変数でなく状態 <span class="math-inline"> \( A \) </span> と <span class="math-inline"> \( A \) </span> 上の順序です。</strong></span><br>したがって <span class="math-inline"> \( A \) </span> 上の順序関係を考える必要があります。<br>が、そこまで大変でなく単に次のようにすればいいです。<br><div class="math-block"> \[ 
 
 a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
 
@@ -1997,7 +2032,7 @@ a_i \leq a_j \Leftrightarrow \forall x \in X, a_i(x) \leq a_j(x)
     "title":"3. <span class="math-inline"> \( ![.!] \) </span>"
 });
 </script>
-<h4 id="1272">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"> <code>x := expr</code> </span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"> <code>x</code> </span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
+<h4 id="1272">3. <span class="math-inline"> \( ![.!] \) </span></h4><br>構文は 3種類に分かれているわけですが、それぞれについて考えればいいです。<br>[代入]<br><span class="inline-code"><code>x := expr</code></span> としたとき、 <span class="math-inline"> \( x \) </span> 以外の変数の状態は変わりません。<br>右辺に現れるのが全て定数( <span class="math-inline"> \( \neq \bot \) </span>) であれば <span class="inline-code"><code>x</code></span> も定数になりますから、  <span class="math-inline"> \( s' = ![\text{var} := \text{expr}!](s) \) </span> は次のようになります。<br><br><div class="math-block"> \[ 
 
 a = 
 \begin{cases}
@@ -2030,7 +2065,7 @@ s(x) & \text{otherwise}
     "title":"今日の一曲"
 });
 </script>
-<h2 id="1329">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url> <a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a> </url></span></div>
+<h2 id="1329">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/D0W44Z3D3wo?si=kvQ68VsF5tg-C5lC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> 分野によって入れ替わることもあるみたいです。 <url><a href="https://x.com/__pandaman64__/status/1321404812332654592">参考</a></url></span></div>
 
             <hr>
 

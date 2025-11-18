@@ -34,7 +34,7 @@ twitter_site: abap34
 <div class="link-card">
     <a href="https://github.com/aviatesk/JETLS.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">
         <div class="link-card-image">
-            <img src="https://opengraph.githubassets.com/35253f599635adf37ceb56fbfce13eb7989a7f426f118561f18e3c4cfee53874/aviatesk/JETLS.jl" alt="GitHub - aviatesk/JETLS.jl: A new language server for Julia" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+            <img src="https://opengraph.githubassets.com/e55b8c552e2d41f520b3093d63069dd3db5857eac617f1d8c85cde9414590d12/aviatesk/JETLS.jl" alt="GitHub - aviatesk/JETLS.jl: A new language server for Julia" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
         </div>
         <div class="link-card-content">
             <div>
@@ -142,7 +142,7 @@ Scheme (Racket) 製の Scheme インタプリタです．
 <div class="link-card">
     <a href="https://github.com/abap34/eta" target="_blank" rel="noopener noreferrer" class="link-card-container">
         <div class="link-card-image">
-            <img src="https://opengraph.githubassets.com/951a2aae647bd571362689d5bb80d21a2a31a009c0d17c3ecc79d96bd006671d/abap34/eta" alt="GitHub - abap34/eta: A interpreter that support first class continuation. A few seconds before surre" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+            <img src="https://opengraph.githubassets.com/146a0276c9846963a01a55df62448d6dd66dc2792dcb5602eceb3e05b22374df/abap34/eta" alt="GitHub - abap34/eta: A interpreter that support first class continuation. Start over!" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
         </div>
         <div class="link-card-content">
             <div>
@@ -150,8 +150,8 @@ Scheme (Racket) 製の Scheme インタプリタです．
                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
                     <span class="link-card-domain">GitHub</span>
                 </div>
-                <h3 class="link-card-title">GitHub - abap34/eta: A interpreter that support first class continuation. A few seconds before surre</h3>
-                <p class="link-card-description">A interpreter that support first class continuation. A few seconds before surrender— Start over! - abap34/eta</p>
+                <h3 class="link-card-title">GitHub - abap34/eta: A interpreter that support first class continuation. Start over!</h3>
+                <p class="link-card-description">A interpreter that support first class continuation. Start over! - abap34/eta</p>
             </div>
             <div class="link-card-footer">
                 <span class="link-card-url">github.com/abap34/eta</span>

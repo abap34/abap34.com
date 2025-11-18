@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,13 +1579,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"GSoC 2025 Final Report"
 });
 </script>
-<h2 id="1">GSoC 2025 Final Report</h2><br>This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project <url> <a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">Development of a New Language Server for Julia</a> </url>.<br>This was an exciting project to build a  new language server that leverages Julia’s latest compiler infrastructure.<br><script>page_contents.push({
+<h2 id="1">GSoC 2025 Final Report</h2><br>This blog is the final report of my work during Google Summer of Code 2025, where I worked on the project <url><a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">Development of a New Language Server for Julia</a></url>.<br>This was an exciting project to build a  new language server that leverages Julia’s latest compiler infrastructure.<br><script>page_contents.push({
     "type":"H2",
     "id":"10",
     "title":"Achievements"
 });
 </script>
-<h2 id="10">Achievements</h2><br>Since the project was still at a very early stage, the proposal aimed to flexibly shift tasks in close consultation with my mentor. And indeed, I worked on a very broad set of features.<br><figure><img src="gsoc2025_final_report/image.png" ><figcaption></figcaption></figure><br>The image shows some of the PRs I opened for JETLS.<br>As can be seen from the number of comments, my mentor <url> <a href="https://github.com/aviatesk">@aviatesk</a> </url> and the Julia community put in great effort to support my contributions.<br><script>page_contents.push({
+<h2 id="10">Achievements</h2><br>Since the project was still at a very early stage, the proposal aimed to flexibly shift tasks in close consultation with my mentor. And indeed, I worked on a very broad set of features.<br><figure><img src="gsoc2025_final_report/image.png" ><figcaption></figcaption></figure><br>The image shows some of the PRs I opened for JETLS.<br>As can be seen from the number of comments, my mentor <url><a href="https://github.com/aviatesk">@aviatesk</a></url> and the Julia community put in great effort to support my contributions.<br><script>page_contents.push({
     "type":"H3",
     "id":"23",
     "title":"Major Contributions"
@@ -1562,43 +1597,43 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"Implementation of Go to Definition for methods"
 });
 </script>
-<h4 id="28">Implementation of Go to Definition for methods</h4><br><img src="gsoc2025_final_report/goto_method.gif" alt="image-1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url></li><li>JETLS can also jump to functions defined by <span class="inline-code"> <code>@eval</code> </span> macro :)</li><li>In the future, we plan to extend this so that only the methods that could actually be called are suggested, based on type analysis.</li></ul><br><script>page_contents.push({
+<h4 id="28">Implementation of Go to Definition for methods</h4><br><img src="gsoc2025_final_report/goto_method.gif" alt="image-1" width="600"/><br><ul><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a></url></li><li>JETLS can also jump to functions defined by <span class="inline-code"><code>@eval</code></span> macro :)</li><li>In the future, we plan to extend this so that only the methods that could actually be called are suggested, based on type analysis.</li></ul><br><script>page_contents.push({
     "type":"H4",
     "id":"43",
     "title":"Implementation of Go to Definition for local bindings"
 });
 </script>
-<h4 id="43">Implementation of Go to Definition for local bindings</h4><br><video controls width="600">   <source src="https://github.com/user-attachments/assets/cb924339-4475-4171-b390-db3c88ddc257" type="video/mp4">   Your browser does not support the video tag. </video><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li>This is where JuliaLowering played a remarkable role. It is great that such a feature can be implemented with relatively little code by leveraging JuliaLowering.</li></ul><br><script>page_contents.push({
+<h4 id="43">Implementation of Go to Definition for local bindings</h4><br><video controls width="600">   <source src="https://github.com/user-attachments/assets/cb924339-4475-4171-b390-db3c88ddc257" type="video/mp4">   Your browser does not support the video tag. </video><br><ul><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a></url>  </li><li>This is where JuliaLowering played a remarkable role. It is great that such a feature can be implemented with relatively little code by leveraging JuliaLowering.</li></ul><br><script>page_contents.push({
     "type":"H4",
     "id":"55",
     "title":"Implementation of a basic configuration system"
 });
 </script>
-<h4 id="55">Implementation of a basic configuration system</h4><br><img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url></li><li>It also allows dynamic changes after startup.</li><li>In the future, We plan to <url> <a href="https://www.schemastore.org/">publish a schema</a> </url> so that completion and validation can be provided in many editors.</li></ul><br><script>page_contents.push({
+<h4 id="55">Implementation of a basic configuration system</h4><br><img src="https://github.com/user-attachments/assets/8128f891-cbfb-490d-a905-aa342c82d9fc" alt="config_demo_v1" width="600"/><br><ul><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a></url></li><li>It also allows dynamic changes after startup.</li><li>In the future, We plan to <url><a href="https://www.schemastore.org/">publish a schema</a></url> so that completion and validation can be provided in many editors.</li></ul><br><script>page_contents.push({
     "type":"H4",
     "id":"70",
     "title":"Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)"
 });
 </script>
-<h4 id="70">Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)</h4><br><figure><img src="gsoc2025_final_report/image-2.png" ><figcaption>Detecting errors in dependent packages via recursive analysis</figcaption></figure><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url></li><li>The current analysis routines of JET did not have the ability to recursively locate and analyze the source code of packages. My contribution was to extend JET with such functionality and integrate it into JETLS.</li><li>This required a detailed study of Julia’s package loading mechanism, which was quite challenging.</li></ul><br><script>page_contents.push({
+<h4 id="70">Implementation of recursive analysis (WIP, but close to completion at the time of writing so it may be merged when this is published)</h4><br><figure><img src="gsoc2025_final_report/image-2.png" ><figcaption>Detecting errors in dependent packages via recursive analysis</figcaption></figure><br><ul><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a></url></li><li>The current analysis routines of JET did not have the ability to recursively locate and analyze the source code of packages. My contribution was to extend JET with such functionality and integrate it into JETLS.</li><li>This required a detailed study of Julia’s package loading mechanism, which was quite challenging.</li></ul><br><script>page_contents.push({
     "type":"H4",
     "id":"83",
     "title":"Some UI improvements"
 });
 </script>
-<h4 id="83">Some UI improvements</h4><br>While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url> and <url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url> and are examples of such contributions. These are small implementations, but they improve the user experience highly.<br><br>The same kind of consideration was required when implementing the features described above. For instance, when implementing Go to ~, how should we decide what is "under the cursor" ? This is not a straightforward question. In cases like <span class="inline-code"> <code>│func(x)</code> </span> and also in cases like <span class="inline-code"> <code>func│(x)</code> </span>, where should it go? ─ both to the definition of <span class="inline-code"> <code>func</code> </span>, isn’t it? (<url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773">https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773</a> </url>)<br><br><script>page_contents.push({
+<h4 id="83">Some UI improvements</h4><br>While analysis and various infrastructure are important, even small UI improvements can greatly affect the usability of a language server. <url><a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a></url> and <url><a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a></url> and are examples of such contributions. These are small implementations, but they improve the user experience highly.<br><br>The same kind of consideration was required when implementing the features described above. For instance, when implementing Go to ~, how should we decide what is "under the cursor" ? This is not a straightforward question. In cases like <span class="inline-code"><code>│func(x)</code></span> and also in cases like <span class="inline-code"><code>func│(x)</code></span>, where should it go? ─ both to the definition of <span class="inline-code"><code>func</code></span>, isn’t it? (<url><a href="https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773">https://github.com/aviatesk/JETLS.jl/pull/61#discussion_r2134707773</a></url>)<br><br><script>page_contents.push({
     "type":"H4",
     "id":"104",
     "title":"Additional details"
 });
 </script>
-<h4 id="104">Additional details</h4><br>Including to these, many PRs—including bug fixes and contributions to related packages—were merged :)<br><br><details> <summary>merged PRs</summary><br><ul><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a> </url>  </li><li><url> <a href="https://github.com/JuliaStrings/InlineStrings.jl/pull/88">https://github.com/JuliaStrings/InlineStrings.jl/pull/88</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/228">https://github.com/aviatesk/JETLS.jl/pull/228</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/223">https://github.com/aviatesk/JETLS.jl/pull/223</a> </url>  </li><li><url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/205">https://github.com/aviatesk/JETLS.jl/pull/205</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/148">https://github.com/aviatesk/JETLS.jl/pull/148</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/143">https://github.com/aviatesk/JETLS.jl/pull/143</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/139">https://github.com/aviatesk/JETLS.jl/pull/139</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/132">https://github.com/aviatesk/JETLS.jl/pull/132</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/123">https://github.com/aviatesk/JETLS.jl/pull/123</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/104">https://github.com/aviatesk/JETLS.jl/pull/104</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/79">https://github.com/aviatesk/JETLS.jl/pull/79</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/77">https://github.com/aviatesk/JETLS.jl/pull/77</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/72">https://github.com/aviatesk/JETLS.jl/pull/72</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/69">https://github.com/aviatesk/JETLS.jl/pull/69</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/56">https://github.com/aviatesk/JETLS.jl/pull/56</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/40">https://github.com/aviatesk/JETLS.jl/pull/40</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/31">https://github.com/aviatesk/JETLS.jl/pull/31</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/11">https://github.com/aviatesk/JETLS.jl/pull/11</a> </url>  </li><li><url> <a href="https://github.com/aviatesk/JETLS.jl/pull/10">https://github.com/aviatesk/JETLS.jl/pull/10</a> </url>  </li></ul><br></details><br>As noted earlier, this language server leverages Julia’s new compiler infrastructure. Deepening my understanding of these systems through this development was itself a great outcome for me.<br>It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project.<br>(ex: <url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a> </url>, <url> <a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a> </url>).<br><br><br>My understanding of both the Julia compiler and JET.jl has also grown significantly.<br>In particular, the many discussions I had with @aviatesk about “virtual global execution” in this LS were crucial to its development.<br><script>page_contents.push({
+<h4 id="104">Additional details</h4><br>Including to these, many PRs—including bug fixes and contributions to related packages—were merged :)<br><br><details> <summary>merged PRs</summary><br><ul><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/236">https://github.com/aviatesk/JETLS.jl/pull/236</a></url>  </li><li><url><a href="https://github.com/JuliaStrings/InlineStrings.jl/pull/88">https://github.com/JuliaStrings/InlineStrings.jl/pull/88</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/228">https://github.com/aviatesk/JETLS.jl/pull/228</a></url>  </li><li><url><a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/223">https://github.com/aviatesk/JETLS.jl/pull/223</a></url>  </li><li><url><a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/206">https://github.com/aviatesk/JETLS.jl/pull/206</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/205">https://github.com/aviatesk/JETLS.jl/pull/205</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/185">https://github.com/aviatesk/JETLS.jl/pull/185</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/148">https://github.com/aviatesk/JETLS.jl/pull/148</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/145">https://github.com/aviatesk/JETLS.jl/pull/145</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/143">https://github.com/aviatesk/JETLS.jl/pull/143</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/139">https://github.com/aviatesk/JETLS.jl/pull/139</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/132">https://github.com/aviatesk/JETLS.jl/pull/132</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/123">https://github.com/aviatesk/JETLS.jl/pull/123</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/115">https://github.com/aviatesk/JETLS.jl/pull/115</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/104">https://github.com/aviatesk/JETLS.jl/pull/104</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/79">https://github.com/aviatesk/JETLS.jl/pull/79</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/77">https://github.com/aviatesk/JETLS.jl/pull/77</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/72">https://github.com/aviatesk/JETLS.jl/pull/72</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/69">https://github.com/aviatesk/JETLS.jl/pull/69</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/61">https://github.com/aviatesk/JETLS.jl/pull/61</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/56">https://github.com/aviatesk/JETLS.jl/pull/56</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/40">https://github.com/aviatesk/JETLS.jl/pull/40</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/31">https://github.com/aviatesk/JETLS.jl/pull/31</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/11">https://github.com/aviatesk/JETLS.jl/pull/11</a></url>  </li><li><url><a href="https://github.com/aviatesk/JETLS.jl/pull/10">https://github.com/aviatesk/JETLS.jl/pull/10</a></url>  </li></ul><br></details><br>As noted earlier, this language server leverages Julia’s new compiler infrastructure. Deepening my understanding of these systems through this development was itself a great outcome for me.<br>It was also valuable that I was able to submit bug-fix patches for that infrastructure during the project.<br>(ex: <url><a href="https://github.com/c42f/JuliaLowering.jl/pull/37">https://github.com/c42f/JuliaLowering.jl/pull/37</a></url>, <url><a href="https://github.com/c42f/JuliaLowering.jl/pull/41">https://github.com/c42f/JuliaLowering.jl/pull/41</a></url>).<br><br><br>My understanding of both the Julia compiler and JET.jl has also grown significantly.<br>In particular, the many discussions I had with @aviatesk about “virtual global execution” in this LS were crucial to its development.<br><script>page_contents.push({
     "type":"H4",
     "id":"213",
     "title":"Remaining work"
 });
 </script>
-<h4 id="213">Remaining work</h4><br>As described in the <url> <a href="https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap">roadmap in README.md</a> </url>, JETLS already supports a variety of features. Beyond error detection, it also includes formatting and an excellent test runner. (⚠️ Clarification: This section describes overall LS progress, not just my own contributions.)<br><br>However, there are still major challenges in performance and stability before it becomes practical. I am highly interested in addressing these, including applying known techniques for faster startup and researching cache strategies best suited to this LS.<br><script>page_contents.push({
+<h4 id="213">Remaining work</h4><br>As described in the <url><a href="https://github.com/aviatesk/JETLS.jl?tab=readme-ov-file#roadmap">roadmap in README.md</a></url>, JETLS already supports a variety of features. Beyond error detection, it also includes formatting and an excellent test runner. (⚠️ Clarification: This section describes overall LS progress, not just my own contributions.)<br><br>However, there are still major challenges in performance and stability before it becomes practical. I am highly interested in addressing these, including applying known techniques for faster startup and researching cache strategies best suited to this LS.<br><script>page_contents.push({
     "type":"H2",
     "id":"223",
     "title":"Conclusion"

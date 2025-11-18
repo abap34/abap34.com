@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"fork関数の挙動"
 });
 </script>
-<h2 id="2">fork関数の挙動</h2><br>C言語では <span class="inline-code"> <code>fork</code> </span> 関数を使って <span class="inline-code"> <code>fork(2)</code> </span> システムコールを呼び出すことができます。<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+<h2 id="2">fork関数の挙動</h2><br>C言語では <span class="inline-code"><code>fork</code></span> 関数を使って <span class="inline-code"><code>fork(2)</code></span> システムコールを呼び出すことができます。<br><div class="code-block"><pre><code class="language-c">#include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 
 int main(void) {
@@ -1555,11 +1590,11 @@ int main(void) {
         printf(&quot;Hello from parent process\n&quot;);
     }
 }
-</code></pre> </div><br><div class="code-block"> <pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork
+</code></pre></div><br><div class="code-block"><pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork
 ❰yuchi❙~/Desktop/sysprog❱✔≻ ./fork
 Hello from parent process
 Hello from child process
-</code></pre> </div><br>こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。<br><br>ところで、 <span class="inline-code"> <code>fork</code> </span> したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+</code></pre></div><br>こんな感じで親プロセスと子プロセスがそれぞれメッセージを出力してくれます。<br><br>ところで、 <span class="inline-code"><code>fork</code></span> したとき、子プロセスには親プロセスのメモリ空間がまんまコピーされます。<br><div class="code-block"><pre><code class="language-c">#include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 
 int main(void) {
@@ -1573,11 +1608,11 @@ int main(void) {
         printf(&quot;Hello from parent process! btw x = %d\n&quot;, x);
     }
 }
-</code></pre> </div><br><div class="code-block"> <pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✘≻ gcc fork.c -o fork
+</code></pre></div><br><div class="code-block"><pre><code class="language-shell">❰yuchi❙~/Desktop/sysprog❱✘≻ gcc fork.c -o fork
 ❰yuchi❙~/Desktop/sysprog❱✔≻ ./fork
 Hello from parent process! btw x = 123
 Hello from child process! btw x = 123
-</code></pre> </div><br><br>では次のコードはどうなるでしょうか<br><div class="code-block"> <pre><code class="language-c">#include &lt;stdio.h&gt;
+</code></pre></div><br><br>では次のコードはどうなるでしょうか<br><div class="code-block"><pre><code class="language-c">#include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
 
 int main(void) {
@@ -1594,11 +1629,11 @@ int main(void) {
         printf(&quot;Hello from parent %d!\n&quot;, getpid());
     }
 }
-</code></pre> </div><br>これの出力はこうなります。<div class="code-block"> <pre><code class="language-plaintext">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork
+</code></pre></div><br>これの出力はこうなります。<div class="code-block"><pre><code class="language-plaintext">❰yuchi❙~/Desktop/sysprog❱✔≻ gcc fork.c -o fork
 ❰yuchi❙~/Desktop/sysprog❱✔≻ ./fork
 hogehogehogeHello from parent 21679!
 hogehogehogeHello from child 21680!
-</code></pre> </div><br><span class="inline-code"> <code>hogehogehoge</code> </span>　が二重に出力されました。<br>これは <span class="inline-code"> <code>fork</code> </span> したとき、親プロセスのバッファもコピーされるためです。<br><span class="inline-code"> <code>fork</code> </span> する前にはちゃんと <span class="inline-code"> <code>fflush</code> </span> しておきましょう。<br><script>page_contents.push({
+</code></pre></div><br><span class="inline-code"><code>hogehogehoge</code></span>　が二重に出力されました。<br>これは <span class="inline-code"><code>fork</code></span> したとき、親プロセスのバッファもコピーされるためです。<br><span class="inline-code"><code>fork</code></span> する前にはちゃんと <span class="inline-code"><code>fflush</code></span> しておきましょう。<br><script>page_contents.push({
     "type":"H2",
     "id":"46",
     "title":"感想"

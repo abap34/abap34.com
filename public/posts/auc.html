@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,10 +1579,10 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"結論だけ: ROC-AUC とは?"
 });
 </script>
-<h2 id="5">結論だけ: ROC-AUC とは?</h2><br>ROC-AUC は二値分類の評価指標で、 予測モデル <span class="math-inline"> \( f \) </span> が 正例と負例からそれぞれ一様に選んだ <span class="math-inline"> \( x^{+} \) </span> と <span class="math-inline"> \( x^{-} \) </span> について <span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のことです。 <br><br>つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。<br><br>計算したいときは、scikit-learn の <span class="inline-code"> <code>roc_auc_score</code> </span> を使うと便利です！<br><div class="code-block"> <pre><code class="language-python">&gt;&gt;&gt; from sklearn.metrics import roc_auc_score
+<h2 id="5">結論だけ: ROC-AUC とは?</h2><br>ROC-AUC は二値分類の評価指標で、 予測モデル <span class="math-inline"> \( f \) </span> が 正例と負例からそれぞれ一様に選んだ <span class="math-inline"> \( x^{+} \) </span> と <span class="math-inline"> \( x^{-} \) </span> について <span class="math-inline"> \( f(x^{+}) > f(x^{-}) \) </span> となる確率のことです。 <br><br>つまり、ちゃんと正例の予測確率の順位を負例よりも高い位置に持ってこれているか？という「分離能力」を測る指標といえます。<br><br>計算したいときは、scikit-learn の <span class="inline-code"><code>roc_auc_score</code></span> を使うと便利です！<br><div class="code-block"><pre><code class="language-python">&gt;&gt;&gt; from sklearn.metrics import roc_auc_score
 &gt;&gt;&gt; roc_auc_score([0, 1, 1, 0], [0.4, 0.2, 0.9, 0.1]) 
 np.float64(0.75)
-</code></pre> </div><br><br><script>page_contents.push({
+</code></pre></div><br><br><script>page_contents.push({
     "type":"H2",
     "id":"29",
     "title":"定義と計算方法"
@@ -1593,7 +1628,7 @@ np.float64(0.75)
     "title":"ROC 曲線を書く + 直感的な解釈 ①"
 });
 </script>
-<h3 id="128">ROC 曲線を書く + 直感的な解釈 ①</h3><br>※ ここからは与太話です。<br>ここでは実際に ROC 曲線を書く方法を考えます。<br><br>閾値は <span class="math-inline"> \( -\infty \) </span> から <span class="math-inline"> \( \infty \) </span> まで動かすといっても <span class="math-inline"> \( \text{TPR} \) </span> と <span class="math-inline"> \( \text{FPR} \) </span> が変化するのは <span class="math-inline"> \( t \) </span> が <span class="math-inline"> \( \mathbf{p} \) </span> の要素の値を超えるときだけですから、高々 <span class="math-inline"> \( n \) </span> 個の閾値を考えれば十分です。<br><br>実装するとしたらこんな感じでしょうか。<br><div class="code-block"> <pre><code class="language-python">def rate(y_true: list[int], y_pred_binary: list[int], y:int, y_hat:int) -&gt; float:
+<h3 id="128">ROC 曲線を書く + 直感的な解釈 ①</h3><br>※ ここからは与太話です。<br>ここでは実際に ROC 曲線を書く方法を考えます。<br><br>閾値は <span class="math-inline"> \( -\infty \) </span> から <span class="math-inline"> \( \infty \) </span> まで動かすといっても <span class="math-inline"> \( \text{TPR} \) </span> と <span class="math-inline"> \( \text{FPR} \) </span> が変化するのは <span class="math-inline"> \( t \) </span> が <span class="math-inline"> \( \mathbf{p} \) </span> の要素の値を超えるときだけですから、高々 <span class="math-inline"> \( n \) </span> 個の閾値を考えれば十分です。<br><br>実装するとしたらこんな感じでしょうか。<br><div class="code-block"><pre><code class="language-python">def rate(y_true: list[int], y_pred_binary: list[int], y:int, y_hat:int) -&gt; float:
     n = len(y_true)
     return sum([1 for i in range(n) if y_true[i] == y and y_pred_binary[i] == y_hat]) / n
 
@@ -1616,7 +1651,7 @@ def roc_curve(y_true: list[int], y_pred: list[float]) -&gt; tuple[list[float], l
 def roc_auc_score(y_true: list[int], y_pred: list[float]) -&gt; float:
     tpr, fpr = roc_curve(y_true, y_pred)
     return sum([(tpr[i] + tpr[i - 1]) * (fpr[i] - fpr[i - 1]) / 2 for i in range(1, len(tpr))]) 
-</code></pre> </div><br>なお, これは <span class="math-inline"> \( \Theta(n \log n + n^2) \) </span> のアルゴリズムの実装ですが簡単に <span class="math-inline"> \( \Theta(n \log n) \) </span> にできます。(別に <span class="math-inline"> \( t \) </span> を明示的に計算しなくてもいいことを使うといいです)<br><br>直感的な解釈を書きます。<br><br><span class="math-inline"> \( t \) </span> を <span class="math-inline"> \( 0 \) </span> から <span class="math-inline"> \( 0.1 \) </span> に変えたとき、一つの予測が <span class="math-inline"> \( 1 \) </span> から <span class="math-inline"> \( 0 \) </span> にかわったとします。<br>このとき、<br><ol><li>真の値が <span class="math-inline"> \( 1 \) </span> だったとき (つまり、正解が不正解になったとき)</li><ol><li><span class="math-inline"> \( \text{TP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{FN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 減少</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 変化しない</li></ol><li>真の値が <span class="math-inline"> \( 0 \) </span> だったとき (つまり、不正解が正解になったとき)</li><ol><li><span class="math-inline"> \( \text{FP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{TN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 変化しない</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 減少</li></ol></ol><br><br>となります。<br>したがって, <span class="math-inline"> \( (1, 1) \) </span> から始まって閾値を動かしていき、<br><br><ul><li>不正解に変化  <span class="math-inline"> \( \rightarrow \frac{1}{TP + FN} \) </span> だけ <span class="math-inline"> \( y \) </span> 軸正の向きに進む</li><li>正解に変化 <span class="math-inline"> \( \rightarrow \frac{1}{FP + TN} \) </span> だけ <span class="math-inline"> \( x \) </span> 軸正の向きに進む</li></ul><br><br>というのを繰り返していくわけです。<br>ここで、面積を大きくしたければ最初になるべく <span class="math-inline"> \( y \) </span> 軸負の向きに動かないのがいいです。 このことは <span class="strong"> <strong>正例の予測確率の順位が上位である</strong> </span> ことと対応しています。<br><br>したがって ROC-AUC は正例を上位に, 負例を下位に固められているか？を調べる指標と解釈できます。<br><script>page_contents.push({
+</code></pre></div><br>なお, これは <span class="math-inline"> \( \Theta(n \log n + n^2) \) </span> のアルゴリズムの実装ですが簡単に <span class="math-inline"> \( \Theta(n \log n) \) </span> にできます。(別に <span class="math-inline"> \( t \) </span> を明示的に計算しなくてもいいことを使うといいです)<br><br>直感的な解釈を書きます。<br><br><span class="math-inline"> \( t \) </span> を <span class="math-inline"> \( 0 \) </span> から <span class="math-inline"> \( 0.1 \) </span> に変えたとき、一つの予測が <span class="math-inline"> \( 1 \) </span> から <span class="math-inline"> \( 0 \) </span> にかわったとします。<br>このとき、<br><ol><li>真の値が <span class="math-inline"> \( 1 \) </span> だったとき (つまり、正解が不正解になったとき)</li><ol><li><span class="math-inline"> \( \text{TP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{FN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 減少</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 変化しない</li></ol><li>真の値が <span class="math-inline"> \( 0 \) </span> だったとき (つまり、不正解が正解になったとき)</li><ol><li><span class="math-inline"> \( \text{FP} \) </span> は 1 減る</li><li><span class="math-inline"> \( \text{TN} \) </span> は 1 増える</li><li><span class="math-inline"> \( \text{TPR} \) </span> は 変化しない</li><li><span class="math-inline"> \( \text{FPR} \) </span> は 減少</li></ol></ol><br><br>となります。<br>したがって, <span class="math-inline"> \( (1, 1) \) </span> から始まって閾値を動かしていき、<br><br><ul><li>不正解に変化  <span class="math-inline"> \( \rightarrow \frac{1}{TP + FN} \) </span> だけ <span class="math-inline"> \( y \) </span> 軸正の向きに進む</li><li>正解に変化 <span class="math-inline"> \( \rightarrow \frac{1}{FP + TN} \) </span> だけ <span class="math-inline"> \( x \) </span> 軸正の向きに進む</li></ul><br><br>というのを繰り返していくわけです。<br>ここで、面積を大きくしたければ最初になるべく <span class="math-inline"> \( y \) </span> 軸負の向きに動かないのがいいです。 このことは <span class="strong"><strong>正例の予測確率の順位が上位である</strong></span> ことと対応しています。<br><br>したがって ROC-AUC は正例を上位に, 負例を下位に固められているか？を調べる指標と解釈できます。<br><script>page_contents.push({
     "type":"H2",
     "id":"253",
     "title":"直感的な解釈 ②"

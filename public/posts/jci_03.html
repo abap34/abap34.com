@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,25 +1579,25 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"あらすじ"
 });
 </script>
-<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><script>page_contents.push({
+<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url><a href="https://abap34.com/posts/jci_00.html">第0回</a></url> を見てください。<br><script>page_contents.push({
     "type":"H2",
     "id":"11",
     "title":"Type Inference"
 });
 </script>
-<h2 id="11">Type Inference</h2><br><url> <a href="https://abap34.com/posts/jci_02.html">前回</a> </url> は Lowering について概観しました。<br>今回からは Julia の型推論について概観します。<br><br>今回は具体的な型推論アルゴリズムについて詳しく調べる前に、それ以外の部分について整理します。<br><div class="danger">Julia の型推論について学ぶためにこの記事を読むのはオススメしません。<br>もっと多くのことが、もっとわかりやすく、正確に書いてある文章があるからです。<br>勉強記録を読む感覚でお願いします。おそらく間違いがたくさんあるので見つけたら↓のコメント欄にお願いします。</div><br>もっと良い文章の例:<br><ul><li><url> <a href="https://github.com/aviatesk/grad-thesis">random grad thesis about Julia</a> </url></li><li><url> <a href="https://info.juliahub.com/blog/inference-convergence-algorithm-in-julia">Inference Convergence Algorithm in Julia</a> </url></li></ul><br><br><script>page_contents.push({
+<h2 id="11">Type Inference</h2><br><url><a href="https://abap34.com/posts/jci_02.html">前回</a></url> は Lowering について概観しました。<br>今回からは Julia の型推論について概観します。<br><br>今回は具体的な型推論アルゴリズムについて詳しく調べる前に、それ以外の部分について整理します。<br><div class="danger">Julia の型推論について学ぶためにこの記事を読むのはオススメしません。<br>もっと多くのことが、もっとわかりやすく、正確に書いてある文章があるからです。<br>勉強記録を読む感覚でお願いします。おそらく間違いがたくさんあるので見つけたら↓のコメント欄にお願いします。</div><br>もっと良い文章の例:<br><ul><li><url><a href="https://github.com/aviatesk/grad-thesis">random grad thesis about Julia</a></url></li><li><url><a href="https://info.juliahub.com/blog/inference-convergence-algorithm-in-julia">Inference Convergence Algorithm in Julia</a></url></li></ul><br><br><script>page_contents.push({
     "type":"H3",
     "id":"39",
     "title":"What is Type Inference?"
 });
 </script>
-<h3 id="39">What is Type Inference?</h3><br>まずは (<span class="strong"> <strong>Juliaにおける</strong> </span>) 型推論とは何かを説明します。<br><br>Julia は動的型付けのプログラミング言語です。実行時に <span class="math-inline"> \( (変数, 場所) \) </span> の型は定まります。<br>一方で、 Juliaコンパイラは、各コントロールフローにおける変数の型を実際に実行する前に可能な限り推論します。<br>それによって最適化─ 例えば多重ディスパッチで実際に呼び出すメソッドを静的に解決したりします。<br><br>さらに、Juliaの型推論は inter-procedural に行われていて、その関数の中で呼び出される関数にも飛んでいって解析を行います。<br>この辺どこまで潜るかのトレードオフは大変そうに見えますが、実際大変なようです。 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br><br><script>page_contents.push({
+<h3 id="39">What is Type Inference?</h3><br>まずは (<span class="strong"><strong>Juliaにおける</strong></span>) 型推論とは何かを説明します。<br><br>Julia は動的型付けのプログラミング言語です。実行時に <span class="math-inline"> \( (変数, 場所) \) </span> の型は定まります。<br>一方で、 Juliaコンパイラは、各コントロールフローにおける変数の型を実際に実行する前に可能な限り推論します。<br>それによって最適化─ 例えば多重ディスパッチで実際に呼び出すメソッドを静的に解決したりします。<br><br>さらに、Juliaの型推論は inter-procedural に行われていて、その関数の中で呼び出される関数にも飛んでいって解析を行います。<br>この辺どこまで潜るかのトレードオフは大変そうに見えますが、実際大変なようです。 <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span><br><br><script>page_contents.push({
     "type":"H3",
     "id":"65",
     "title":"Example"
 });
 </script>
-<h3 id="65">Example</h3><br>例えば <span class="inline-code"> <code>f(x) = 2x</code> </span> という関数を考えます。<br>これは、 <span class="inline-code"> <code>x::Int</code> </span> なら <span class="inline-code"> <code>Int</code> </span> が帰ってきます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; f(x) = 2x
+<h3 id="65">Example</h3><br>例えば <span class="inline-code"><code>f(x) = 2x</code></span> という関数を考えます。<br>これは、 <span class="inline-code"><code>x::Int</code></span> なら <span class="inline-code"><code>Int</code></span> が帰ってきます。<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; f(x) = 2x
 f (generic function with 1 method)
 
 julia&gt; @code_typed f(2)
@@ -1571,12 +1606,12 @@ CodeInfo(
 └──      return %1
 ) =&gt;
 Int64
-</code></pre> </div><br><span class="inline-code"> <code>@code_typed</code> </span> マクロで実際推論できているのがわかります。<br>さらに <span class="inline-code"> <code>x::Float64</code> </span> なら <span class="inline-code"> <code>Float64</code> </span> が帰ってきます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; @code_typed f(2.0)
+</code></pre></div><br><span class="inline-code"><code>@code_typed</code></span> マクロで実際推論できているのがわかります。<br>さらに <span class="inline-code"><code>x::Float64</code></span> なら <span class="inline-code"><code>Float64</code></span> が帰ってきます。<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; @code_typed f(2.0)
 CodeInfo(
 1 ─ %1 = Base.mul_float(2.0, x)::Float64
 └──      return %1
 ) =&gt; Float64
-</code></pre> </div><br>推論できてますね。さらに、内部的には　<span class="inline-code"> <code>mul_int</code> </span> と <span class="inline-code"> <code>mul_float</code> </span> が使われています。<br><br>ではもう少し意地悪な例を検討してみます。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; a = 2
+</code></pre></div><br>推論できてますね。さらに、内部的には　<span class="inline-code"><code>mul_int</code></span> と <span class="inline-code"><code>mul_float</code></span> が使われています。<br><br>ではもう少し意地悪な例を検討してみます。<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; a = 2
 2
 
 julia&gt; f(x) = a * x
@@ -1584,19 +1619,19 @@ f (generic function with 1 method)
 
 julia&gt; f(3)
 6
-</code></pre> </div><br>グローバル変数 <span class="inline-code"> <code>a</code> </span> を定義して　<span class="inline-code"> <code>f(x) = a * x</code> </span> とします。 <span class="inline-code"> <code>f(3)</code> </span> は 6 と正しく計算できていますが、<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; @code_typed f(2)
+</code></pre></div><br>グローバル変数 <span class="inline-code"><code>a</code></span> を定義して　<span class="inline-code"><code>f(x) = a * x</code></span> とします。 <span class="inline-code"><code>f(3)</code></span> は 6 と正しく計算できていますが、<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; @code_typed f(2)
 CodeInfo(
 1 ─ %1 = Main.a::Any
 │   %2 = (%1 * x)::Any
 └──      return %2
 ) =&gt; Any
-</code></pre> </div><br>と、 <span class="inline-code"> <code>Any</code> </span> となりました。  これは <span class="inline-code"> <code>Main.a</code> </span> の型を考慮した型推論は Julia は行わないためです。 (これがなぜかは分かりません。)<br>さらに、出力をよく見るとこれまで特化した関数 (<span class="inline-code"> <code>mul_int</code> </span>, <span class="inline-code"> <code>mul_float</code> </span>) が使われていたところが <span class="inline-code"> <code>*</code> </span> になっています。<br><br>(<span class="inline-code"> <code>@code_typed</code> </span> によって行われるものという意味で、) <br>Julia の型推論プロセス全体は <br><div style="text-align: center;"><br><span class="strong"> <strong>引数の実際の型</strong> </span>　<br>⬇︎ から、 <br><span class="strong"> <strong>各処理における型を推論</strong> </span> (推測ではない) <br>⬇︎  して、 <br><span class="strong"> <strong>最適化を行う</strong> </span> <br></div><br> ものと言えます。<br><br><script>page_contents.push({
+</code></pre></div><br>と、 <span class="inline-code"><code>Any</code></span> となりました。  これは <span class="inline-code"><code>Main.a</code></span> の型を考慮した型推論は Julia は行わないためです。 (これがなぜかは分かりません。)<br>さらに、出力をよく見るとこれまで特化した関数 (<span class="inline-code"><code>mul_int</code></span>, <span class="inline-code"><code>mul_float</code></span>) が使われていたところが <span class="inline-code"><code>*</code></span> になっています。<br><br>(<span class="inline-code"><code>@code_typed</code></span> によって行われるものという意味で、) <br>Julia の型推論プロセス全体は <br><div style="text-align: center;"><br><span class="strong"><strong>引数の実際の型</strong></span>　<br>⬇︎ から、 <br><span class="strong"><strong>各処理における型を推論</strong></span> (推測ではない) <br>⬇︎  して、 <br><span class="strong"><strong>最適化を行う</strong></span> <br></div><br> ものと言えます。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"156",
     "title":"How Julia's Type Inference Works (アルゴリズム以外)"
 });
 </script>
-<h3 id="156">How Julia's Type Inference Works (アルゴリズム以外)</h3><br>まず、具体的な型推論アルゴリズムに入る前に、一旦読むべきところだけ整理します。<br><br><br>第 0 回で掲載した Julia の処理系の概観図を再掲します。<br><figure><img src="jci_03/image-1.png" ><figcaption></figcaption></figure><br><br>Julia の型推論は、 Lowering されて得た IR に対して行われます。<br><br>前回まででみたように IR は以下のようなものでした.<br><ul><li>マクロは全て展開済み</li><li>ループなども分解されて、全て直列の命令に書き換えられている</li></ul><br><br>型推論の「入力」はこれになります。 <span class="inline-code"> <code>CodeInfo</code> </span> という型のオブジェクトです。<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ci = @code_lowered f(2)
+<h3 id="156">How Julia's Type Inference Works (アルゴリズム以外)</h3><br>まず、具体的な型推論アルゴリズムに入る前に、一旦読むべきところだけ整理します。<br><br><br>第 0 回で掲載した Julia の処理系の概観図を再掲します。<br><figure><img src="jci_03/image-1.png" ><figcaption></figcaption></figure><br><br>Julia の型推論は、 Lowering されて得た IR に対して行われます。<br><br>前回まででみたように IR は以下のようなものでした.<br><ul><li>マクロは全て展開済み</li><li>ループなども分解されて、全て直列の命令に書き換えられている</li></ul><br><br>型推論の「入力」はこれになります。 <span class="inline-code"><code>CodeInfo</code></span> という型のオブジェクトです。<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; ci = @code_lowered f(2)
 CodeInfo(
 1 ─ %1 = Main.a * x
 └──      return %1
@@ -1668,7 +1703,7 @@ Core.CodeInfo
   constprop: UInt8 0x00
   purity: UInt16 0x0000
   inlining_cost: UInt16 0xffff
-</code></pre> </div><br>と、こんな感じです。<br>型推論の本質パートは <span class="inline-code"> <code>typeinfer.jl</code> </span>, <span class="inline-code"> <code>abstractinterpretation.jl</code> </span> などにあり、 <span class="inline-code"> <code>typeinf</code> </span> とその中身である <span class="inline-code"> <code>_typeinf</code> </span> などを見ると良いです。<br><div class="warning">このあたりのフローはバージョン違いでかなり構造が変わっていました。初回記事に見ているコミットが載っているので確認してください。</div><br>なんやかんやあるのですが、 (え？) 最終的にはおそらく <span class="inline-code"> <code>abstract_call_*</code> </span> 関数たちが実際に型推論を行っているのだと思います。<br>なんやかんやはメモ用の scrapbox にあります: <url> <a href="https://scrapbox.io/reading-julia-internal/">https://scrapbox.io/reading-julia-internal/</a> </url><br><br>あまりにも中身がないですが、一応今回 具体的な型推論アルゴリズムについて詳しく調べる前に、それ以外の部分について整理する記事、なのでここまでです。<br><br>(毎記事頑張って中身を詰めることにすると全然 Publish されなくなってしまうので...)<br><br>次回は、 @aviatesk さんの解説記事を参考に実際の Julia の型推論のアルゴリズムについて見ていきます。<br><br><script>page_contents.push({
+</code></pre></div><br>と、こんな感じです。<br>型推論の本質パートは <span class="inline-code"><code>typeinfer.jl</code></span>, <span class="inline-code"><code>abstractinterpretation.jl</code></span> などにあり、 <span class="inline-code"><code>typeinf</code></span> とその中身である <span class="inline-code"><code>_typeinf</code></span> などを見ると良いです。<br><div class="warning">このあたりのフローはバージョン違いでかなり構造が変わっていました。初回記事に見ているコミットが載っているので確認してください。</div><br>なんやかんやあるのですが、 (え？) 最終的にはおそらく <span class="inline-code"><code>abstract_call_*</code></span> 関数たちが実際に型推論を行っているのだと思います。<br>なんやかんやはメモ用の scrapbox にあります: <url><a href="https://scrapbox.io/reading-julia-internal/">https://scrapbox.io/reading-julia-internal/</a></url><br><br>あまりにも中身がないですが、一応今回 具体的な型推論アルゴリズムについて詳しく調べる前に、それ以外の部分について整理する記事、なのでここまでです。<br><br>(毎記事頑張って中身を詰めることにすると全然 Publish されなくなってしまうので...)<br><br>次回は、 @aviatesk さんの解説記事を参考に実際の Julia の型推論のアルゴリズムについて見ていきます。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"219",
     "title":"今日の一曲"

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,19 +1579,19 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"ことの経緯"
 });
 </script>
-<h2 id="2">ことの経緯</h2><br>今日も自作マークダウンパーサである <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url> の開発をしています。<br>昨今の機能拡張にともなって色々なライブラリを使いたくなってきたのですが、 C++のパッケージマネージャにあまりちゃんとしたものがなく、<span class="strong"> <strong>C++を使うのがかなりしんどくなってきました。</strong> </span><br><br>Rust とかで書き換えるのは個人的にありでしたが、開発メンバは C++ なら書けるという人が多い (というか、それが C++で書かれた理由です)　ので みんなに働いてもらうためにもあまり大幅な変更は避けたいところです。<br><br>というわけで、最終的に現在の内部実装には手を入れず、外部から Python で呼び出せるようにすることにしました。<br><br>実際にパースするところなど、パフォーマンス的に重要な部分は今の C++で書かれたままにして、  Front YAML のパースやリアルタイムのプレビュー、 Jupyter Notebook の解析のような、 パフォーマンスにそこまで影響せずかつライブラリに頼りたい部分はライブラリが豊富な Python で書く案です。　<br><br><script>page_contents.push({
+<h2 id="2">ことの経緯</h2><br>今日も自作マークダウンパーサである <url><a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a></url> の開発をしています。<br>昨今の機能拡張にともなって色々なライブラリを使いたくなってきたのですが、 C++のパッケージマネージャにあまりちゃんとしたものがなく、<span class="strong"><strong>C++を使うのがかなりしんどくなってきました。</strong></span><br><br>Rust とかで書き換えるのは個人的にありでしたが、開発メンバは C++ なら書けるという人が多い (というか、それが C++で書かれた理由です)　ので みんなに働いてもらうためにもあまり大幅な変更は避けたいところです。<br><br>というわけで、最終的に現在の内部実装には手を入れず、外部から Python で呼び出せるようにすることにしました。<br><br>実際にパースするところなど、パフォーマンス的に重要な部分は今の C++で書かれたままにして、  Front YAML のパースやリアルタイムのプレビュー、 Jupyter Notebook の解析のような、 パフォーマンスにそこまで影響せずかつライブラリに頼りたい部分はライブラリが豊富な Python で書く案です。　<br><br><script>page_contents.push({
     "type":"H2",
     "id":"23",
     "title":"pybind11"
 });
 </script>
-<h2 id="23">pybind11</h2><br><a href="https://github.com/pybind/pybind11"><img src="https://gh-card.dev/repos/pybind/pybind11.svg"></a> <br><br><span class="strong"> <strong>pybind11</strong> </span> は、 C++の関数やクラスをバインドして Python から呼び出すためのライブラリです。<br>PyTorch や TensorFlow もこれを使っています。<br>かなり少ないコード量でかつオーバーヘッドもかなり少なく Python から C++ を呼び出すことができます。<br><br><script>page_contents.push({
+<h2 id="23">pybind11</h2><br><a href="https://github.com/pybind/pybind11"><img src="https://gh-card.dev/repos/pybind/pybind11.svg"></a> <br><br><span class="strong"><strong>pybind11</strong></span> は、 C++の関数やクラスをバインドして Python から呼び出すためのライブラリです。<br>PyTorch や TensorFlow もこれを使っています。<br>かなり少ないコード量でかつオーバーヘッドもかなり少なく Python から C++ を呼び出すことができます。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"38",
     "title":"セットアップ"
 });
 </script>
-<h3 id="38">セットアップ</h3><br>環境は以下の通りです。<br><div class="code-block"> <pre><code class="language-plaintext">---------------------
+<h3 id="38">セットアップ</h3><br>環境は以下の通りです。<br><div class="code-block"><pre><code class="language-plaintext">---------------------
 OS: macOS 13.5 22G74 arm64
 Host: Mac14,2
 Kernel: 22.6.0
@@ -1572,31 +1607,31 @@ Terminal Font: JuliaMono-Regular 12
 CPU: Apple M2
 GPU: Apple M2
 Memory: 3397MiB / 24576MiB
-</code></pre> </div><br>m1mac なので色々とめんどそうな予感もしますがやっていきます。<br>さて、pybind11 は親切にも pip でインストールできます。<br><br>バージョンとかにかなりセンシティブなので pipenv とかを使うと良さそうです。<br><div class="code-block"> <pre><code class="language-bash">$ pipenv --python 3.9
-</code></pre> </div><br><div class="code-block"> <pre><code class="language-bash">$ pipenv install pybind11
-</code></pre> </div><br>これだけでインストールは完了です。すごい。<br>早速 Pythonで動かしたい C++ の関数を書いてみます。<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;pybind11/pybind11.h&gt;
+</code></pre></div><br>m1mac なので色々とめんどそうな予感もしますがやっていきます。<br>さて、pybind11 は親切にも pip でインストールできます。<br><br>バージョンとかにかなりセンシティブなので pipenv とかを使うと良さそうです。<br><div class="code-block"><pre><code class="language-bash">$ pipenv --python 3.9
+</code></pre></div><br><div class="code-block"><pre><code class="language-bash">$ pipenv install pybind11
+</code></pre></div><br>これだけでインストールは完了です。すごい。<br>早速 Pythonで動かしたい C++ の関数を書いてみます。<br><div class="code-block"><pre><code class="language-cpp">#include &lt;pybind11/pybind11.h&gt;
 
 int add(int i, int j) {
     return i + j;
 }
-</code></pre> </div><br>これを <span class="inline-code"> <code>example</code> </span> という名前のモジュールにバインドしてみます。<br><br><div class="code-block"> <pre><code class="language-cpp">PYBIND11_MODULE(example, m) {
+</code></pre></div><br>これを <span class="inline-code"><code>example</code></span> という名前のモジュールにバインドしてみます。<br><br><div class="code-block"><pre><code class="language-cpp">PYBIND11_MODULE(example, m) {
     m.doc() = &quot;pybind11 example plugin&quot;; // optional module docstring
 
     m.def(&quot;add&quot;, &amp;add, &quot;A function which adds two numbers&quot;);
 }
-</code></pre> </div><br>コンパイルしてみます。<br><span class="inline-code"> <code>python3 -m pybind11 --includes</code> </span> で、pybind11 のインクルードパスが取得できるので、これを渡してやってコンパイルします。<br><br>Apple Silicon だと <span class="inline-code"> <code>-undefined dynamic_lookup</code> </span> というオプションをつけないとエラーが出るので注意してください。<br><br><div class="code-block"> <pre><code class="language-bash">g++ \
+</code></pre></div><br>コンパイルしてみます。<br><span class="inline-code"><code>python3 -m pybind11 --includes</code></span> で、pybind11 のインクルードパスが取得できるので、これを渡してやってコンパイルします。<br><br>Apple Silicon だと <span class="inline-code"><code>-undefined dynamic_lookup</code></span> というオプションをつけないとエラーが出るので注意してください。<br><br><div class="code-block"><pre><code class="language-bash">g++ \
  -O3 -shared -std=c++23 -undefined dynamic_lookup \
  $(python3 -m pybind11 --includes) \
  example.cpp -o example.so
-</code></pre> </div><br><span class="inline-code"> <code>example.so</code> </span> が生成されました。 早速動かしてみます。<br><div class="code-block"> <pre><code class="language-bash">$ pipenv run python3 -c &quot;import example; print(example.add(1, 2))&quot;
+</code></pre></div><br><span class="inline-code"><code>example.so</code></span> が生成されました。 早速動かしてみます。<br><div class="code-block"><pre><code class="language-bash">$ pipenv run python3 -c &quot;import example; print(example.add(1, 2))&quot;
 3
-</code></pre> </div><br><br><span class="math-inline"> \( 1 + 2 \) </span> が計算されてます！ 無事に Python から C++ の関数を呼び出すことができました！　革命ですね <br><br><br><br><script>page_contents.push({
+</code></pre></div><br><br><span class="math-inline"> \( 1 + 2 \) </span> が計算されてます！ 無事に Python から C++ の関数を呼び出すことができました！　革命ですね <br><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"94",
     "title":"実践編"
 });
 </script>
-<h2 id="94">実践編</h2><br>ALMO の関数もバインディングすると...<br><br><a href="https://asciinema.org/a/659310" target="_blank"><img src="https://asciinema.org/a/659310.svg" /></a><br><br>Python から <span class="inline-code"> <code>almo.md_to_html</code> </span> するだけで HTML が生成されるようになりました　🥳<br>たいていの型はいい感じに 対応づけられているので、そこまで変なことをしていなければかなり簡単にバインドできると思います。<br><script>page_contents.push({
+<h2 id="94">実践編</h2><br>ALMO の関数もバインディングすると...<br><br><a href="https://asciinema.org/a/659310" target="_blank"><img src="https://asciinema.org/a/659310.svg" /></a><br><br>Python から <span class="inline-code"><code>almo.md_to_html</code></span> するだけで HTML が生成されるようになりました　🥳<br>たいていの型はいい感じに 対応づけられているので、そこまで変なことをしていなければかなり簡単にバインドできると思います。<br><script>page_contents.push({
     "type":"H2",
     "id":"109",
     "title":"まとめ"

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1580,7 +1615,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"デプロイについて"
 });
 </script>
-<h3 id="58">デプロイについて</h3><br>フロントエンドは Vercel です。<br>APIサーバですが、家のサーバで立ち上げて ngrok でトンネリングしています。<br>稼働するのが高々2週間程度の予定なこと、ジャッジを高速にできるようそれなりのスペックが欲しいこと、そして <span class="strong"> <strong>どこかに必ずバグを仕込んでいる確信があったので、停止したとき素早くデータを救出できそうなこと</strong> </span> などを鑑みて ngrok を使ってみました。<br>感想としては、かなり良かったです。お手軽かつ安定していてログも見やすいですしかなり気に入っています。 今後も短期的にサービスを公開するときは使っていきたいと思いました。<br><script>page_contents.push({
+<h3 id="58">デプロイについて</h3><br>フロントエンドは Vercel です。<br>APIサーバですが、家のサーバで立ち上げて ngrok でトンネリングしています。<br>稼働するのが高々2週間程度の予定なこと、ジャッジを高速にできるようそれなりのスペックが欲しいこと、そして <span class="strong"><strong>どこかに必ずバグを仕込んでいる確信があったので、停止したとき素早くデータを救出できそうなこと</strong></span> などを鑑みて ngrok を使ってみました。<br>感想としては、かなり良かったです。お手軽かつ安定していてログも見やすいですしかなり気に入っています。 今後も短期的にサービスを公開するときは使っていきたいと思いました。<br><script>page_contents.push({
     "type":"H2",
     "id":"72",
     "title":"最後に"

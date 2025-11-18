@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1550,7 +1585,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"(Q_Q) ?"
 });
 </script>
-<h3 id="10">(Q_Q) ?</h3><br><ul><li>「いかしかめか」と読みます。部内ハッカソンで作りました。</li><li>部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。</li><li>諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。</li><li>bot と検索エンジンの実装と発表を担当しました</li><li>発表スライド : <url> <a href="https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink</a> </url></li></ul><br><br><figure><img src="hurikaeri_2023_0/sh.png" ><figcaption>サジェストしてくれる便利なやつ</figcaption></figure><br><script>page_contents.push({
+<h3 id="10">(Q_Q) ?</h3><br><ul><li>「いかしかめか」と読みます。部内ハッカソンで作りました。</li><li>部内SNSでの質問と回答を収集して自動で収集しページを構築、類似質問と回答をサジェストします。</li><li>諸々とサジェスト周りの実装を担当しましたが、計算資源がきつい中でサジェストしなきゃで、面白かったです。</li><li>bot と検索エンジンの実装と発表を担当しました</li><li>発表スライド : <url><a href="https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">https://www.canva.com/design/DAFmIYJAcZ0/ORsZk-s0UZHNjIB479qnAA/view?utm_content=DAFmIYJAcZ0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink</a></url></li></ul><br><br><figure><img src="hurikaeri_2023_0/sh.png" ><figcaption>サジェストしてくれる便利なやつ</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"29",
     "title":"Wuff"
@@ -1574,7 +1609,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"機械学習講習会"
 });
 </script>
-<h3 id="68">機械学習講習会</h3><br><ul><li>ここまで 3つの内容は全部これです</li><li>新入部員向けの教育でやりました。</li><li>全7回、合計10時間講義 + 演習やりました。</li><li>内容は traP のブログにまとまっているので読んでみてください。 個人的には結構頑張りました。</li><li>サークルを卒業した先輩とか弊学の先生とかに結構褒められていて嬉しかったです。</li><li>ブログ: <url> <a href="https://trap.jp/post/1918/">Kaggle部で機械学習講習会を開催しました！</a> </url></li></ul><br><figure><img src="hurikaeri_2023_0/pz.png" ><figcaption>ノリでピザを出したりしていました。大学生っぽくて楽しいですね</figcaption></figure><br><script>page_contents.push({
+<h3 id="68">機械学習講習会</h3><br><ul><li>ここまで 3つの内容は全部これです</li><li>新入部員向けの教育でやりました。</li><li>全7回、合計10時間講義 + 演習やりました。</li><li>内容は traP のブログにまとまっているので読んでみてください。 個人的には結構頑張りました。</li><li>サークルを卒業した先輩とか弊学の先生とかに結構褒められていて嬉しかったです。</li><li>ブログ: <url><a href="https://trap.jp/post/1918/">Kaggle部で機械学習講習会を開催しました！</a></url></li></ul><br><figure><img src="hurikaeri_2023_0/pz.png" ><figcaption>ノリでピザを出したりしていました。大学生っぽくて楽しいですね</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"88",
     "title":"JITrench.jl の計算グラフの最適化機能"
@@ -1586,19 +1621,19 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"Juliaで並列AlphaBeta法"
 });
 </script>
-<h3 id="102">Juliaで並列AlphaBeta法</h3><br><ul><li>大学の人工知能の講義でなんかレポートを書けと言われたので書いて授業で発表しました。</li><li>pdfを貼っているだけですが記事にしているので読んでみてください。 </li><li>記事: <url> <a href="https://www.abap34.com/posts/parallel_othello.html">https://www.abap34.com/posts/parallel_othello.html</a> </url></li><li>並列化もしんどかったけどビットボードで脳が破壊されました</li></ul><br><br><figure><img src="hurikaeri_2023_0/bb.png" ><figcaption>デバッグが、つらい！</figcaption></figure><br><script>page_contents.push({
+<h3 id="102">Juliaで並列AlphaBeta法</h3><br><ul><li>大学の人工知能の講義でなんかレポートを書けと言われたので書いて授業で発表しました。</li><li>pdfを貼っているだけですが記事にしているので読んでみてください。 </li><li>記事: <url><a href="https://www.abap34.com/posts/parallel_othello.html">https://www.abap34.com/posts/parallel_othello.html</a></url></li><li>並列化もしんどかったけどビットボードで脳が破壊されました</li></ul><br><br><figure><img src="hurikaeri_2023_0/bb.png" ><figcaption>デバッグが、つらい！</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"119",
     "title":"ALMO"
 });
 </script>
-<h3 id="119">ALMO</h3><br><ul><li>レポジトリ: <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url></li><li>このページを作っているMarkdownパーサです。WebAssemblyで実行可能なコードブロックとかプロットとかジャッジが作れます。</li><li>かなりかなりブラッシュアップされて v1.0 リリース間近です。<span class="overline"> <s>ドキュメントを書くのが面倒でなかなかリリースされない</s> </span></li></ul><br><br><figure><img src="hurikaeri_2023_0/cb.png" ><figcaption>ひっそりコミットし続けている</figcaption></figure><br><script>page_contents.push({
+<h3 id="119">ALMO</h3><br><ul><li>レポジトリ: <url><a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a></url></li><li>このページを作っているMarkdownパーサです。WebAssemblyで実行可能なコードブロックとかプロットとかジャッジが作れます。</li><li>かなりかなりブラッシュアップされて v1.0 リリース間近です。<span class="overline"><s>ドキュメントを書くのが面倒でなかなかリリースされない</s></span></li></ul><br><br><figure><img src="hurikaeri_2023_0/cb.png" ><figcaption>ひっそりコミットし続けている</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"136",
     "title":"部内コンペ (sponsored by ピクシブ社) の運営"
 });
 </script>
-<h3 id="136">部内コンペ (sponsored by ピクシブ社) の運営</h3><br><ul><li>去年から運営しているコンペをやりました。</li><li>今年はスポンサーがついたので、それも含めて色々やることが多くて大変でしたがめちゃくちゃ楽しかったです。</li><li>開催記録が例によって traP のブログにまとまっているので読んでみてください。</li><li>ブログ: <url> <a href="https://trap.jp/post/1975/">traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記</a> </url></li></ul><br><figure><img src="hurikaeri_2023_0/mito.png" ><figcaption>👍</figcaption></figure><br><script>page_contents.push({
+<h3 id="136">部内コンペ (sponsored by ピクシブ社) の運営</h3><br><ul><li>去年から運営しているコンペをやりました。</li><li>今年はスポンサーがついたので、それも含めて色々やることが多くて大変でしたがめちゃくちゃ楽しかったです。</li><li>開催記録が例によって traP のブログにまとまっているので読んでみてください。</li><li>ブログ: <url><a href="https://trap.jp/post/1975/">traP コンペ 2023 夏 sponsored by ピクシブ株式会社 運営後記</a></url></li></ul><br><figure><img src="hurikaeri_2023_0/mito.png" ><figcaption>👍</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"152",
     "title":"その他"

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1585,25 +1620,25 @@ document.addEventListener("DOMContentLoaded", function() {
 </tr>
 </tbody>
 </table>
-<br>コンペを開催すると、機械学習の実践的な勉強になるのはもちろんですが、not 機械学習のエンジニアの人が参加してくれたり、やはりなんだかんだみんな楽しくやってくれて盛り上がるのでいいなぁと思っています。<br><br><br>ところで、コンペを運営する側の知見はあまり転がっていないので、はじめてコンペをやろうとすると、どういうことに気をつけるべきか、どういう工夫が世の中にあるのか、わからないがちです。<br>そこで、後輩のためにコンペ運営のコツ、やった方がいいことなどを引き継ぎ資料として残しておこうと思っていたのですが、 特に企業秘密(?)にしておく理由もないのでここに書きたいと思います。<br>(細い運営記録などは <url> <a href="https://trap.jp/author/abap34/">https://trap.jp/author/abap34/</a> </url> などに転がっています.)<br><br><script>page_contents.push({
+<br>コンペを開催すると、機械学習の実践的な勉強になるのはもちろんですが、not 機械学習のエンジニアの人が参加してくれたり、やはりなんだかんだみんな楽しくやってくれて盛り上がるのでいいなぁと思っています。<br><br><br>ところで、コンペを運営する側の知見はあまり転がっていないので、はじめてコンペをやろうとすると、どういうことに気をつけるべきか、どういう工夫が世の中にあるのか、わからないがちです。<br>そこで、後輩のためにコンペ運営のコツ、やった方がいいことなどを引き継ぎ資料として残しておこうと思っていたのですが、 特に企業秘密(?)にしておく理由もないのでここに書きたいと思います。<br>(細い運営記録などは <url><a href="https://trap.jp/author/abap34/">https://trap.jp/author/abap34/</a></url> などに転がっています.)<br><br><script>page_contents.push({
     "type":"H2",
     "id":"77",
     "title":"Tips 1. データセットの便利な探し方"
 });
 </script>
-<h2 id="77">Tips 1. データセットの便利な探し方</h2><br>どんなデータを持ってくるか、そしてどんなタスクを解かせるかは、いうまでもなくコンペの面白さに最も大きく影響します。<br><br>〇〇が好きな人が多いから、これをやろう！ ×× な会社だからこれにしよう！ のようにテーマが決まっている場合は特に書くことはないですが、とりあえず面白いコンペをやることだけが決まっていて、データセットの候補が特にない場合は何処かデータセットがまとまっているところから拾ってくることになると思います。<br><br>自分の場合、以下のあたりをよく見ていました。<br><ul><li><url> <a href="https://www.kaggle.com/datasets">Kaggle Datasets</a> </url></li><li><url> <a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a> </url></li><li><url> <a href="https://datasetsearch.research.google.com/">Google Dataset Search</a> </url></li></ul><br>個人的には Kaggle がデータセットのサイズやタスクで絞れたり使いやすいのでお勧めです。<br>ただ、Kaggle Datasets からとってくるときの注意として、 <span style="color: red;"> <span class="strong"> <strong>権利関係が明らかでないヤバそうなデータセットがちょくちょくあるので、この辺りのチェックが必須です。</strong> </span></span> <br>元ネタであろうデータセットが Credit されていなかったり、そもそも本物なのかすら怪しいものがちょくちょくあります。<br>本当の本当に身内でやる場合ならともかく、ちゃんとしたい場合は気をつけてください。<br><br>なので<br><ol><li>Kaggle Datasets でいい感じのテーマを見つける (アイデア出しとして使う)</li><li>そのテーマのちゃんとしたデータセットを拾う</li></ol><br>というのが自分のやり方でした。<br><script>page_contents.push({
+<h2 id="77">Tips 1. データセットの便利な探し方</h2><br>どんなデータを持ってくるか、そしてどんなタスクを解かせるかは、いうまでもなくコンペの面白さに最も大きく影響します。<br><br>〇〇が好きな人が多いから、これをやろう！ ×× な会社だからこれにしよう！ のようにテーマが決まっている場合は特に書くことはないですが、とりあえず面白いコンペをやることだけが決まっていて、データセットの候補が特にない場合は何処かデータセットがまとまっているところから拾ってくることになると思います。<br><br>自分の場合、以下のあたりをよく見ていました。<br><ul><li><url><a href="https://www.kaggle.com/datasets">Kaggle Datasets</a></url></li><li><url><a href="https://archive.ics.uci.edu/ml/index.php">UCI Machine Learning Repository</a></url></li><li><url><a href="https://datasetsearch.research.google.com/">Google Dataset Search</a></url></li></ul><br>個人的には Kaggle がデータセットのサイズやタスクで絞れたり使いやすいのでお勧めです。<br>ただ、Kaggle Datasets からとってくるときの注意として、 <span style="color: red;"> <span class="strong"><strong>権利関係が明らかでないヤバそうなデータセットがちょくちょくあるので、この辺りのチェックが必須です。</strong></span></span> <br>元ネタであろうデータセットが Credit されていなかったり、そもそも本物なのかすら怪しいものがちょくちょくあります。<br>本当の本当に身内でやる場合ならともかく、ちゃんとしたい場合は気をつけてください。<br><br>なので<br><ol><li>Kaggle Datasets でいい感じのテーマを見つける (アイデア出しとして使う)</li><li>そのテーマのちゃんとしたデータセットを拾う</li></ol><br>というのが自分のやり方でした。<br><script>page_contents.push({
     "type":"H2",
     "id":"118",
     "title":"Tips 2. 人工データセットを使うことを検討しよう"
 });
 </script>
-<h2 id="118">Tips 2. 人工データセットを使うことを検討しよう</h2><br>適当なテーマのデータセットを必ず手に入れる方法として、自前でそれっぽいものを生成してしまうというのもあります。<br>メリットはライセンスなどを気にしなくていいこと、準備の工数が見積もりやすいこと、難易度含めタスクをいくらでも調整できることなどがあります。<br>(とくに二つ目はかなり強いです。データ準備の期間を予測するのはかなり難しいです。)<br><br>デメリットとしては致命的なリークを生みやすい、タスクの説得力が生まれにくい (<span class="strong"> <strong>データの生成方法を推定するだけのバトルになってしまうと楽しくない</strong> </span>) などがパッとあがります。<br><br>ただ、初心者向けにとりあえず一回やってみる、というような場合はメリットがデメリットを上回ることも結構あると思います。 なので、そのような場合は人工データセットを使うのも一つの手です。<br><script>page_contents.push({
+<h2 id="118">Tips 2. 人工データセットを使うことを検討しよう</h2><br>適当なテーマのデータセットを必ず手に入れる方法として、自前でそれっぽいものを生成してしまうというのもあります。<br>メリットはライセンスなどを気にしなくていいこと、準備の工数が見積もりやすいこと、難易度含めタスクをいくらでも調整できることなどがあります。<br>(とくに二つ目はかなり強いです。データ準備の期間を予測するのはかなり難しいです。)<br><br>デメリットとしては致命的なリークを生みやすい、タスクの説得力が生まれにくい (<span class="strong"><strong>データの生成方法を推定するだけのバトルになってしまうと楽しくない</strong></span>) などがパッとあがります。<br><br>ただ、初心者向けにとりあえず一回やってみる、というような場合はメリットがデメリットを上回ることも結構あると思います。 なので、そのような場合は人工データセットを使うのも一つの手です。<br><script>page_contents.push({
     "type":"H2",
     "id":"136",
     "title":"Tips 3. Starter Notebook を用意して、 Submit までしてもらおう"
 });
 </script>
-<h2 id="136">Tips 3. Starter Notebook を用意して、 Submit までしてもらおう</h2><br>初心者の人にコンペに取り組んでもらうには、とにかく最初のサブミットをしてもらって順位表に載ってもらうことが大事です。<br>そこでまずは簡単な Solution を <span class="strong"> <strong>完全に</strong> </span> 実装した Starter Notebook を作ることをお勧めします。<br><br>さらに、その Starter Notebook をほとんどそのまま実行してもらって Submit までやってもらうことも強くお勧めします。 やはり順位表に載って人を抜いたり抜かれたりすることは全ての人に有効なモチベーションになるからです。 (ランダムシードに好きな数字を入れて実行して投稿してみましょう〜　などがおすすめ)<br><br><br>注意点として、初心者の人が多い場合、このような Notebook がコンペの方向性を本当の本当に決定づけてしまうこともあります。 (例えば、 LightGBM を使ったそこそこのスコアの Solution を提供してしまうと、全員が LightGBM のハイパラチューニングを 1週間しちゃうみたいなことがある) (1敗)<br><br>Starter Notebook がよい Solution である必要は全くなく、Starter Notebook に工夫の余地を大量に残して、かつ選択肢を提示するのが大事です。<br><script>page_contents.push({
+<h2 id="136">Tips 3. Starter Notebook を用意して、 Submit までしてもらおう</h2><br>初心者の人にコンペに取り組んでもらうには、とにかく最初のサブミットをしてもらって順位表に載ってもらうことが大事です。<br>そこでまずは簡単な Solution を <span class="strong"><strong>完全に</strong></span> 実装した Starter Notebook を作ることをお勧めします。<br><br>さらに、その Starter Notebook をほとんどそのまま実行してもらって Submit までやってもらうことも強くお勧めします。 やはり順位表に載って人を抜いたり抜かれたりすることは全ての人に有効なモチベーションになるからです。 (ランダムシードに好きな数字を入れて実行して投稿してみましょう〜　などがおすすめ)<br><br><br>注意点として、初心者の人が多い場合、このような Notebook がコンペの方向性を本当の本当に決定づけてしまうこともあります。 (例えば、 LightGBM を使ったそこそこのスコアの Solution を提供してしまうと、全員が LightGBM のハイパラチューニングを 1週間しちゃうみたいなことがある) (1敗)<br><br>Starter Notebook がよい Solution である必要は全くなく、Starter Notebook に工夫の余地を大量に残して、かつ選択肢を提示するのが大事です。<br><script>page_contents.push({
     "type":"H2",
     "id":"156",
     "title":"Tips 4. 質問対応をしよう"
@@ -1615,7 +1650,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"Tips 5. 簡単なサブセットを作ることで難易度を調整しよう"
 });
 </script>
-<h2 id="169">Tips 5. 簡単なサブセットを作ることで難易度を調整しよう</h2><br>多くの場合、コンペは<br><ul><li>初心者にとっては 1 Sub しやすく</li><li>上級者は飽きない</li></ul><br>ものであって欲しいです。<br>そこでおすすめなのは、データのうち処理が簡単なものだけを抜き出したサブセットを作ってあげることです。<br>例えば<br><ul><li><span class="inline-code"> <code>train.csv</code> </span>  　</li><li><span class="inline-code"> <code>test.csv</code> </span> </li><li><span class="inline-code"> <code>sample_submission.csv</code> </span> </li></ul><br>のような典型的な構成のコンペでは <span class="inline-code"> <code>train.csv, test.csv</code> </span> からパッと処理するのが難しい列を除いて、また <span class="inline-code"> <code>train</code> </span> は行数を少なくして  <span class="inline-code"> <code>train_tiny.csv</code> </span>  <span class="inline-code"> <code>test_tiny.csv</code> </span> のようなファイルを最初から配ってあげ、初心者の人はとりあえずこれを見てやってみてください、とすると良いです。<br><br>EDA・学習含めいろいろ処理が早く終わってとっつきやすいというのもありますし、 <span class="strong"> <strong>初心者の参加者が普段使うソフトウェアで扱えるサイズにしておく</strong> </span> ことで、 データ分析コンペの本質パートであるところの学習データを眺めて性質を考察する、というのを初心者の人でもやってくれて嬉しくなります。<br><script>page_contents.push({
+<h2 id="169">Tips 5. 簡単なサブセットを作ることで難易度を調整しよう</h2><br>多くの場合、コンペは<br><ul><li>初心者にとっては 1 Sub しやすく</li><li>上級者は飽きない</li></ul><br>ものであって欲しいです。<br>そこでおすすめなのは、データのうち処理が簡単なものだけを抜き出したサブセットを作ってあげることです。<br>例えば<br><ul><li><span class="inline-code"><code>train.csv</code></span>  　</li><li><span class="inline-code"><code>test.csv</code></span> </li><li><span class="inline-code"><code>sample_submission.csv</code></span> </li></ul><br>のような典型的な構成のコンペでは <span class="inline-code"><code>train.csv, test.csv</code></span> からパッと処理するのが難しい列を除いて、また <span class="inline-code"><code>train</code></span> は行数を少なくして  <span class="inline-code"><code>train_tiny.csv</code></span>  <span class="inline-code"><code>test_tiny.csv</code></span> のようなファイルを最初から配ってあげ、初心者の人はとりあえずこれを見てやってみてください、とすると良いです。<br><br>EDA・学習含めいろいろ処理が早く終わってとっつきやすいというのもありますし、 <span class="strong"><strong>初心者の参加者が普段使うソフトウェアで扱えるサイズにしておく</strong></span> ことで、 データ分析コンペの本質パートであるところの学習データを眺めて性質を考察する、というのを初心者の人でもやってくれて嬉しくなります。<br><script>page_contents.push({
     "type":"H2",
     "id":"213",
     "title":"Tips 6. Disucussion 賞を作ろう"

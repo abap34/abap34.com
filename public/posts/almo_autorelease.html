@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,13 +1579,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"いろいろ大変リリース作業"
 });
 </script>
-<h2 id="2">いろいろ大変リリース作業</h2><br>拡張 Markdownパーサ兼静的サイトジェネレータの <url> <a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a> </url>  を毎日たのしく開発しています。<br>ところで、これは静的サイトジェネレータなので、いろんな人のブログなどに使ってもらうことを想定しています。<br><br>となると、 GitHub Actions などでも利用しやすいように環境を整える必要があります。<br>GitHub Actions では、 <span class="inline-code"> <code>use: docker://hoge/huga:latest</code> </span> のように指定することで Docker Hub にあるイメージを利用することができます。<br><br>そこで、リリースを打つたびに Docker イメージをビルドして、 Docker Hub にアップロードするようにします。作業記録です。<br><script>page_contents.push({
+<h2 id="2">いろいろ大変リリース作業</h2><br>拡張 Markdownパーサ兼静的サイトジェネレータの <url><a href="https://github.com/abap34/ALMO">https://github.com/abap34/ALMO</a></url>  を毎日たのしく開発しています。<br>ところで、これは静的サイトジェネレータなので、いろんな人のブログなどに使ってもらうことを想定しています。<br><br>となると、 GitHub Actions などでも利用しやすいように環境を整える必要があります。<br>GitHub Actions では、 <span class="inline-code"><code>use: docker://hoge/huga:latest</code></span> のように指定することで Docker Hub にあるイメージを利用することができます。<br><br>そこで、リリースを打つたびに Docker イメージをビルドして、 Docker Hub にアップロードするようにします。作業記録です。<br><script>page_contents.push({
     "type":"H3",
     "id":"21",
     "title":"Docker Hub にイメージをアップロードする"
 });
 </script>
-<h3 id="21">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"> <pre><code class="language-plaintext">FROM alpine:latest
+<h3 id="21">Docker Hub にイメージをアップロードする</h3><br>とりあえず Dockerfile を作ります。<br><div class="code-block"><pre><code class="language-plaintext">FROM alpine:latest
 
 RUN apk add --no-cache g++
 
@@ -1563,7 +1598,7 @@ COPY . .
 RUN bash build.sh
 
 ENTRYPOINT [ &quot;./docker-entrypoint.sh&quot; ]
-</code></pre> </div><br><url> <a href="https://hub.docker.com/">Docker Hub</a> </url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"> <code>DOCKERHUB_USERNAME</code> </span> と <span class="inline-code"> <code>DOCKERHUB_TOKEN</code> </span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"> <pre><code class="language-yaml">name: Build and push Docker image
+</code></pre></div><br><url><a href="https://hub.docker.com/">Docker Hub</a></url> で My Account > Security > New Access Token からトークンを取得します。<br>次にレポジトリの Settings > Security > Secrets and variables > New Repository Secret から <span class="inline-code"><code>DOCKERHUB_USERNAME</code></span> と <span class="inline-code"><code>DOCKERHUB_TOKEN</code></span> を設定します。<br><br>あとは以下のように GitHub Actions を設定します。<br><div class="code-block"><pre><code class="language-yaml">name: Build and push Docker image
 
 on:
   release:
@@ -1589,13 +1624,13 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/almo:latest
-</code></pre> </div><br><br>注意ポイントとしては、 GitHub Actions からこのイメージを利用するときは <span class="inline-code"> <code>WORKDIR</code> </span> などが上書きされるみたいなので気をつけて <span class="inline-code"> <code>Dockerfile</code> </span> と <span class="inline-code"> <code>docker-entrypoint.sh</code> </span> を作らないとハマります。<br><figure><img src="almo_autorelease/image.png" ><figcaption>run の引数</figcaption></figure><br><br>これで、リリース時に Docker イメージをビルドして Docker Hub にアップロードすることができるようになりました。<br><figure><img src="almo_autorelease/almo.png" ><figcaption></figcaption></figure><br><script>page_contents.push({
+</code></pre></div><br><br>注意ポイントとしては、 GitHub Actions からこのイメージを利用するときは <span class="inline-code"><code>WORKDIR</code></span> などが上書きされるみたいなので気をつけて <span class="inline-code"><code>Dockerfile</code></span> と <span class="inline-code"><code>docker-entrypoint.sh</code></span> を作らないとハマります。<br><figure><img src="almo_autorelease/image.png" ><figcaption>run の引数</figcaption></figure><br><br>これで、リリース時に Docker イメージをビルドして Docker Hub にアップロードすることができるようになりました。<br><figure><img src="almo_autorelease/almo.png" ><figcaption></figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"58",
     "title":"リリース時にいろんなプラットフォームに対応する"
 });
 </script>
-<h3 id="58">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"> <pre><code class="language-yaml">name: Release for all platforms
+<h3 id="58">リリース時にいろんなプラットフォームに対応する</h3><br>コレは、 GitHub Actions でマトリクスビルドを使うことで簡単に実現できます。<br><div class="code-block"><pre><code class="language-yaml">name: Release for all platforms
 
 on:
   release:
@@ -1624,18 +1659,18 @@ jobs:
           asset_content_type: application/octet-stream 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-</code></pre> </div><br><br>便利ですね。<br><br><script>page_contents.push({
+</code></pre></div><br><br>便利ですね。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"69",
     "title":"使用例"
 });
 </script>
-<h3 id="69">使用例</h3><br>Docker Hubにアップロードしたおかげで 誰でも簡単にビルドができるようになりました。<br><div class="code-block"> <pre><code class="language-bash">docker pull abap/almo:latest
-</code></pre> </div><br>して、<br><div class="code-block"> <pre><code class="language-bash">docker run abap/almo:latest example.md
-</code></pre> </div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"> <pre><code class="language-yaml">uses: docker://abap/almo:latest
+<h3 id="69">使用例</h3><br>Docker Hubにアップロードしたおかげで 誰でも簡単にビルドができるようになりました。<br><div class="code-block"><pre><code class="language-bash">docker pull abap/almo:latest
+</code></pre></div><br>して、<br><div class="code-block"><pre><code class="language-bash">docker run abap/almo:latest example.md
+</code></pre></div><br>するだけで利用できます。　便利！<br><br>GitHub Actions からも<br><div class="code-block"><pre><code class="language-yaml">uses: docker://abap/almo:latest
 args:
     example.md
-</code></pre> </div><br>だけで利用できます。<br><script>page_contents.push({
+</code></pre></div><br>だけで利用できます。<br><script>page_contents.push({
     "type":"H2",
     "id":"89",
     "title":"おわりに"

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,34 +1579,34 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"あらすじ"
 });
 </script>
-<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><script>page_contents.push({
+<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url><a href="https://abap34.com/posts/jci_00.html">第0回</a></url> を見てください。<br><script>page_contents.push({
     "type":"H2",
     "id":"11",
     "title":"Lowering"
 });
 </script>
-<h2 id="11">Lowering</h2><br><url> <a href="https://abap34.com/posts/jc2_00.html">前回</a> </url> は Lowering について概観しました。<br>今回は、Lowering における for文の処理について少し書きます。<br><script>page_contents.push({
+<h2 id="11">Lowering</h2><br><url><a href="https://abap34.com/posts/jc2_00.html">前回</a></url> は Lowering について概観しました。<br>今回は、Lowering における for文の処理について少し書きます。<br><script>page_contents.push({
     "type":"H3",
     "id":"19",
     "title":"for の出自"
 });
 </script>
-<h3 id="19">for の出自</h3><br>for はいうまでもなくトップクラスに使われる制御構文ですが、 Juliaにおいては for は以下のような対応の糖衣構文です。<br><div class="code-block"> <pre><code class="language-julia">for i in 1:10
+<h3 id="19">for の出自</h3><br>for はいうまでもなくトップクラスに使われる制御構文ですが、 Juliaにおいては for は以下のような対応の糖衣構文です。<br><div class="code-block"><pre><code class="language-julia">for i in 1:10
     println(i)
 end
-</code></pre> </div><br><span class="math-inline"> \( \Leftrightarrow \) </span><br><div class="code-block"> <pre><code class="language-julia">_next = iterate(1:10)
+</code></pre></div><br><span class="math-inline"> \( \Leftrightarrow \) </span><br><div class="code-block"><pre><code class="language-julia">_next = iterate(1:10)
 while _next !== nothing
     (i, state) = _next
     println(i)
     _next = iterate(1:10, state)
 end
-</code></pre> </div><br>(このあたりのことは、 <url> <a href="https://x.com/antimon2">@antimon2</a> </url> さんに教えてもらいました。ありがとうございます。)<br><br><span class="inline-code"> <code>while</code> </span> は前回見たように <span class="inline-code"> <code>compile</code> </span> でバラされていましたが、この糖衣構文を desugar するのはどこでやっているのか見てみます。<br><script>page_contents.push({
+</code></pre></div><br>(このあたりのことは、 <url><a href="https://x.com/antimon2">@antimon2</a></url> さんに教えてもらいました。ありがとうございます。)<br><br><span class="inline-code"><code>while</code></span> は前回見たように <span class="inline-code"><code>compile</code></span> でバラされていましたが、この糖衣構文を desugar するのはどこでやっているのか見てみます。<br><script>page_contents.push({
     "type":"H3",
     "id":"40",
     "title":"desugar"
 });
 </script>
-<h3 id="40">desugar</h3><br>degugar は <span class="inline-code"> <code>julia-syntax.scm</code> </span> で行われています。<br>例えばわかりやすそうなのでいくと <span class="inline-code"> <code>julia-syntax.scm#L44</code> </span> に<br><div class="code-block"> <pre><code class="language-scheme">;; generate first comparison call, converting e.g. (a &lt; b &lt; c)
+<h3 id="40">desugar</h3><br>degugar は <span class="inline-code"><code>julia-syntax.scm</code></span> で行われています。<br>例えばわかりやすそうなのでいくと <span class="inline-code"><code>julia-syntax.scm#L44</code></span> に<br><div class="code-block"><pre><code class="language-scheme">;; generate first comparison call, converting e.g. (a &lt; b &lt; c)
 ;; to ((call &lt; a b) b &lt; c)
 (define (compare-one e)
   (let* ((arg   (caddr e))
@@ -1595,7 +1630,7 @@ end
          (add-init arg arg2
                    `(call ,(cadr e) ,(car e) ,arg2))
          (cons arg2 (cdddr e))))))
-</code></pre> </div><br>とあります。<br>これは <span class="inline-code"> <code>a &lt; b &lt; c</code> </span> という糖衣構文を <span class="inline-code"> <code>(a &lt; b) &lt; c</code> </span> に desugar する処理です。<br>このまま見ていくと <span class="inline-code"> <code>julia-syntax.scm#L1791</code> </span> に 以下のようなものを見つけることができます。<br><br><div class="code-block"> <pre><code class="language-scheme">(define (expand-for lhss itrs body)
+</code></pre></div><br>とあります。<br>これは <span class="inline-code"><code>a &lt; b &lt; c</code></span> という糖衣構文を <span class="inline-code"><code>(a &lt; b) &lt; c</code></span> に desugar する処理です。<br>このまま見ていくと <span class="inline-code"><code>julia-syntax.scm#L1791</code></span> に 以下のようなものを見つけることができます。<br><br><div class="code-block"><pre><code class="language-scheme">(define (expand-for lhss itrs body)
   (define (outer? x) (and (pair? x) (eq? (car x) &#39;outer)))
   (let ((copied-vars  ;; variables not declared `outer` are copied in the innermost loop
          ;; TODO: maybe filter these to remove vars not assigned in the loop
@@ -1640,7 +1675,7 @@ end
                             (block ,body
                                    (= ,next (call (top iterate) ,coll ,state)))
                             (call (top not_int) (call (core ===) ,next (null))))))))))))
-</code></pre> </div><br>ちょっと長いですが、 どうも for を先ほどの while に書き直す処理がなされていることがわかります。<br>なので、 for は<br>desugar → (while として) <span class="inline-code"> <code>compile</code> </span> というながれで AST から linearize されて IR になることがわかりました。<br><br><script>page_contents.push({
+</code></pre></div><br>ちょっと長いですが、 どうも for を先ほどの while に書き直す処理がなされていることがわかります。<br>なので、 for は<br>desugar → (while として) <span class="inline-code"><code>compile</code></span> というながれで AST から linearize されて IR になることがわかりました。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"77",
     "title":"まとめ"

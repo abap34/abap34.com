@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1550,7 +1585,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"はじめに"
 });
 </script>
-<h2 id="18">はじめに</h2><br><blockquote>人類はまだテストを不要とする技術を開発していないので、テストはいるんですね. <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> </blockquote><br><br>というわけでテストを書きます。 GitHub で C++ のプロジェクトをやることを想定して、<br><ul><li>Google Test でテストを書く</li><li>Google Benchmark でベンチマークを取る</li><li>それの結果の推移の統計を GitHub Pages でいい感じに表示する</li><li>Codecov でカバレッジを計測する</li></ul><br>あたりを整備する手順をまとめます。<br><br>今回は Meson というビルドツールを使ってみます。<br>ドキュメントの先頭にはこんな感じのことが書いてあります。<br><br><blockquote>Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible. The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.</blockquote><br><br>user friendry, いいことばですね (ほんとに)<br><br>ドキュメントもいちおうあります.　<url> <a href="https://mesonbuild.com/index.html">https://mesonbuild.com/index.html</a> </url><br>正直あまり網羅的には書いてくれていない印象ですが... 😢 <br><br>以下の Dockerfile で作った devcontainer で作業しています。<br><br><div class="code-block"> <pre><code class="language-Dockerfile">FROM ubuntu:22.04
+<h2 id="18">はじめに</h2><br><blockquote>人類はまだテストを不要とする技術を開発していないので、テストはいるんですね. <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span> </blockquote><br><br>というわけでテストを書きます。 GitHub で C++ のプロジェクトをやることを想定して、<br><ul><li>Google Test でテストを書く</li><li>Google Benchmark でベンチマークを取る</li><li>それの結果の推移の統計を GitHub Pages でいい感じに表示する</li><li>Codecov でカバレッジを計測する</li></ul><br>あたりを整備する手順をまとめます。<br><br>今回は Meson というビルドツールを使ってみます。<br>ドキュメントの先頭にはこんな感じのことが書いてあります。<br><br><blockquote>Meson is an open source build system meant to be both extremely fast, and, even more importantly, as user friendly as possible. The main design point of Meson is that every moment a developer spends writing or debugging build definitions is a second wasted. So is every second spent waiting for the build system to actually start compiling code.</blockquote><br><br>user friendry, いいことばですね (ほんとに)<br><br>ドキュメントもいちおうあります.　<url><a href="https://mesonbuild.com/index.html">https://mesonbuild.com/index.html</a></url><br>正直あまり網羅的には書いてくれていない印象ですが... 😢 <br><br>以下の Dockerfile で作った devcontainer で作業しています。<br><br><div class="code-block"><pre><code class="language-Dockerfile">FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -1566,7 +1601,7 @@ RUN apt-get update &amp;&amp; apt-get install -y \
     python3-pip \
     python3-setuptools \
     &amp;&amp; apt-get clean
-</code></pre> </div><br>とくに Mac の人は devcontainer でやるのがおすすめです。 (400敗)<br><br><script>page_contents.push({
+</code></pre></div><br>とくに Mac の人は devcontainer でやるのがおすすめです。 (400敗)<br><br><script>page_contents.push({
     "type":"H2",
     "id":"74",
     "title":"ローカルでの環境構築"
@@ -1578,21 +1613,21 @@ RUN apt-get update &amp;&amp; apt-get install -y \
     "title":"サンプルプロジェクト"
 });
 </script>
-<h3 id="77">サンプルプロジェクト</h3><br>こんな感じのプロジェクトを作ります。<br><br><div class="code-block"> <pre><code class="language-plaintext">➤ tree .
+<h3 id="77">サンプルプロジェクト</h3><br>こんな感じのプロジェクトを作ります。<br><br><div class="code-block"><pre><code class="language-plaintext">➤ tree .
 .
 ├── LICENSE
 └── src
     ├── main.cpp
     ├── mylib.cpp
     └── mylib.hpp
-</code></pre> </div><br><span class="inline-code"> <code>src/mylib.hpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#ifndef MYLIB_HPP
+</code></pre></div><br><span class="inline-code"><code>src/mylib.hpp</code></span>:<br><div class="code-block"><pre><code class="language-cpp">#ifndef MYLIB_HPP
 #define MYLIB_HPP
 
 int sum(int a, int b, int c);
 int try_to_sum(int a, int b, int c);
 
 #endif // MYLIB_HPP
-</code></pre> </div><br><span class="inline-code"> <code>src/mylib.cpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
+</code></pre></div><br><span class="inline-code"><code>src/mylib.cpp</code></span>:<br><div class="code-block"><pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
 
 int sum(int a, int b, int c) {
     return a + b + c;
@@ -1604,27 +1639,27 @@ int try_to_sum(int a, int b, int c) {
     }
     return a + b + c;
 }
-</code></pre> </div><br><span class="inline-code"> <code>src/main.cpp</code> </span>:<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;iostream&gt;
+</code></pre></div><br><span class="inline-code"><code>src/main.cpp</code></span>:<br><div class="code-block"><pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &quot;mylib.hpp&quot;
 
 int main() {
     std::cout &lt;&lt; &quot;Sum: &quot; &lt;&lt; try_to_sum(1, 2, 3) &lt;&lt; std::endl;
     return 0;
 }
-</code></pre> </div><br>3 つの数の総和を取る (ただし、前 2 つの和が 100 を超える場合は -1 を返す) です。<br><script>page_contents.push({
+</code></pre></div><br>3 つの数の総和を取る (ただし、前 2 つの和が 100 を超える場合は -1 を返す) です。<br><script>page_contents.push({
     "type":"H3",
     "id":"102",
     "title":"Meson の設定"
 });
 </script>
-<h3 id="102">Meson の設定</h3><br>Meson の設定を書きます。　とりあえず <span class="inline-code"> <code>main.cpp</code> </span> を実行できるとこまで行きます。<br>設定ファイルは <span class="inline-code"> <code>meson.build</code> </span> という名前で作ります。<br><br><div class="code-block"> <pre><code class="language-plaintext">project(&#39;sumsum&#39;, &#39;cpp&#39;,
+<h3 id="102">Meson の設定</h3><br>Meson の設定を書きます。　とりあえず <span class="inline-code"><code>main.cpp</code></span> を実行できるとこまで行きます。<br>設定ファイルは <span class="inline-code"><code>meson.build</code></span> という名前で作ります。<br><br><div class="code-block"><pre><code class="language-plaintext">project(&#39;sumsum&#39;, &#39;cpp&#39;,
   version: &#39;0.1.0&#39;,
   default_options: [&#39;cpp_std=c++20&#39;])
 
 src = [&#39;src/main.cpp&#39;, &#39;src/mylib.cpp&#39;]
 
 executable(&#39;sumsum&#39;, src)
-</code></pre> </div><br><br>実際にビルドしてみます。<br><br><span class="inline-code"> <code>meson setup {dir}</code> </span> で <span class="inline-code"> <code>{dir}</code> </span> にビルドディレクトリが作られます。<br><br>そこで <span class="inline-code"> <code>meson compile</code> </span> でビルドが走ります。 (前までは <span class="inline-code"> <code>ninja</code> </span> を直接叩くことになっていたようですが、今は <span class="inline-code"> <code>meson compile</code> </span> で適切にバックエンドを見つけてやってくれるみたいです)<br><br><div class="code-block"> <pre><code class="language-bash">➤ meson setup builddir &amp;&amp; cd builddir
+</code></pre></div><br><br>実際にビルドしてみます。<br><br><span class="inline-code"><code>meson setup {dir}</code></span> で <span class="inline-code"><code>{dir}</code></span> にビルドディレクトリが作られます。<br><br>そこで <span class="inline-code"><code>meson compile</code></span> でビルドが走ります。 (前までは <span class="inline-code"><code>ninja</code></span> を直接叩くことになっていたようですが、今は <span class="inline-code"><code>meson compile</code></span> で適切にバックエンドを見つけてやってくれるみたいです)<br><br><div class="code-block"><pre><code class="language-bash">➤ meson setup builddir &amp;&amp; cd builddir
 The Meson build system
 Version: 1.5.2
 ...
@@ -1643,19 +1678,19 @@ Found ninja-1.12.1 at /opt/homebrew/bin/ninja
 INFO: autodetecting backend as ninja
 INFO: calculating backend command to run: /opt/homebrew/bin/ninja
 [3/3] Linking target sumsum
-</code></pre> </div><br>というわけでビルドが終わると、<br><div class="code-block"> <pre><code class="language-bash">➤ ./sumsum
+</code></pre></div><br>というわけでビルドが終わると、<br><div class="code-block"><pre><code class="language-bash">➤ ./sumsum
 Sum: 6
-</code></pre> </div><br>無事に実行されました！　<br><script>page_contents.push({
+</code></pre></div><br>無事に実行されました！　<br><script>page_contents.push({
     "type":"H3",
     "id":"143",
     "title":"Google Test の導入"
 });
 </script>
-<h3 id="143">Google Test の導入</h3><br>まずは <span class="inline-code"> <code>git submodule</code> </span> で.... もしくは <span class="inline-code"> <code>cmake</code> </span> の <span class="inline-code"> <code>fetch_content</code> </span> で... ではなく、 なんと Meson は wrapdb というところにいろんなライブラリを置いてくれていて簡単にとってくることができます。<br><br><url> <a href="https://mesonbuild.com/Wrapdb-projects.html">https://mesonbuild.com/Wrapdb-projects.html</a> </url><br><br><span class="inline-code"> <code>meson wrap install {name}</code> </span> で取れます。<br>早速 Google Test を取ってきます。<br><br><div class="code-block"> <pre><code class="language-bash">➤ mkdir subprojects
+<h3 id="143">Google Test の導入</h3><br>まずは <span class="inline-code"><code>git submodule</code></span> で.... もしくは <span class="inline-code"><code>cmake</code></span> の <span class="inline-code"><code>fetch_content</code></span> で... ではなく、 なんと Meson は wrapdb というところにいろんなライブラリを置いてくれていて簡単にとってくることができます。<br><br><url><a href="https://mesonbuild.com/Wrapdb-projects.html">https://mesonbuild.com/Wrapdb-projects.html</a></url><br><br><span class="inline-code"><code>meson wrap install {name}</code></span> で取れます。<br>早速 Google Test を取ってきます。<br><br><div class="code-block"><pre><code class="language-bash">➤ mkdir subprojects
 
 ➤ meson wrap install gtest
 Installed gtest version 1.15.0 revision 1
-</code></pre> </div><br>すると、 <span class="inline-code"> <code>subprojects/gtest.wrap</code> </span> というファイルができていて、<br><div class="code-block"> <pre><code class="language-ini">[wrap-file]
+</code></pre></div><br>すると、 <span class="inline-code"><code>subprojects/gtest.wrap</code></span> というファイルができていて、<br><div class="code-block"><pre><code class="language-ini">[wrap-file]
 directory = googletest-1.15.0
 source_url = https://github.com/google/googletest/archive/refs/tags/v1.15.0.tar.gz
 source_filename = gtest-1.15.0.tar.gz
@@ -1671,7 +1706,7 @@ gtest = gtest_dep
 gtest_main = gtest_main_dep
 gmock = gmock_dep
 gmock_main = gmock_main_dep
-</code></pre> </div><br>ではこれを使ってテストを書きます。<br><br><span class="inline-code"> <code>tests/test_mylib.cpp</code> </span> を作ります。<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;gtest/gtest.h&gt;
+</code></pre></div><br>ではこれを使ってテストを書きます。<br><br><span class="inline-code"><code>tests/test_mylib.cpp</code></span> を作ります。<br><div class="code-block"><pre><code class="language-cpp">#include &lt;gtest/gtest.h&gt;
 #include &quot;src/mylib.hpp&quot;
 
 TEST(MyLibTest, SumTest) {
@@ -1682,7 +1717,7 @@ int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&amp;argc, argv);
     return RUN_ALL_TESTS();
 }
-</code></pre> </div><br><span class="inline-code"> <code>meson.build</code> </span> にテストの設定を追加します。<br><div class="code-block"> <pre><code class="language-cmake">project(&#39;sumsum&#39;, &#39;cpp&#39;,
+</code></pre></div><br><span class="inline-code"><code>meson.build</code></span> にテストの設定を追加します。<br><div class="code-block"><pre><code class="language-cmake">project(&#39;sumsum&#39;, &#39;cpp&#39;,
   version: &#39;0.1.0&#39;,
   default_options: [&#39;cpp_std=c++20&#39;])
 
@@ -1704,7 +1739,7 @@ test_exe = executable(&#39;test_sumsum&#39;, test_src,
 )
 
 test(&#39;test_sumsum&#39;, test_exe)
-</code></pre> </div><br><span class="inline-code"> <code>builddir</code> </span> を一旦消して再度ビルドすると、<br><div class="code-block"> <pre><code class="language-bash">➤ meson compile
+</code></pre></div><br><span class="inline-code"><code>builddir</code></span> を一旦消して再度ビルドすると、<br><div class="code-block"><pre><code class="language-bash">➤ meson compile
 INFO: autodetecting backend as ninja
 INFO: calculating backend command to run: /opt/homebrew/bin/ninja
 [8/8] Linking target test_sumsum
@@ -1725,14 +1760,14 @@ Skipped:            0
 Timeout:            0
 
 Full log written to /Users/yuchi/Desktop/this-is-practice-repository-removed-soon/builddir/meson-logs/testlog.txt
-</code></pre> </div><br>ヨシ!<br><script>page_contents.push({
+</code></pre></div><br>ヨシ!<br><script>page_contents.push({
     "type":"H3",
     "id":"192",
     "title":"Google Benchmark の導入"
 });
 </script>
-<h3 id="192">Google Benchmark の導入</h3><br>Google Benchmark も同様に <span class="inline-code"> <code>meson wrap install</code> </span> で取ってきます。ありがたい...<br><br><div class="code-block"> <pre><code class="language-bash">➤ meson wrap install google-benchmark
-</code></pre> </div><br><span class="inline-code"> <code>tests/benchmark_mylib.cpp</code> </span> を作ります。<br><div class="code-block"> <pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
+<h3 id="192">Google Benchmark の導入</h3><br>Google Benchmark も同様に <span class="inline-code"><code>meson wrap install</code></span> で取ってきます。ありがたい...<br><br><div class="code-block"><pre><code class="language-bash">➤ meson wrap install google-benchmark
+</code></pre></div><br><span class="inline-code"><code>tests/benchmark_mylib.cpp</code></span> を作ります。<br><div class="code-block"><pre><code class="language-cpp">#include &lt;benchmark/benchmark.h&gt;
 #include &quot;src/mylib.hpp&quot;
 
 static void BM_Sum(benchmark::State&amp; state) {
@@ -1744,7 +1779,7 @@ static void BM_Sum(benchmark::State&amp; state) {
 BENCHMARK(BM_Sum);
 
 BENCHMARK_MAIN();
-</code></pre> </div><br><span class="inline-code"> <code>meson.build</code> </span> にベンチマークの設定を追加します。<br><div class="code-block"> <pre><code class="language-diff">➤ git diff meson.build
+</code></pre></div><br><span class="inline-code"><code>meson.build</code></span> にベンチマークの設定を追加します。<br><div class="code-block"><pre><code class="language-diff">➤ git diff meson.build
 diff --git a/meson.build b/meson.build
 index c231b3a..5788c5c 100644
 --- a/meson.build
@@ -1771,7 +1806,7 @@ index c231b3a..5788c5c 100644
 +)
 +
 +
-</code></pre> </div><br>ビルドして実行すると、<br><br><div class="code-block"> <pre><code class="language-bash">➤ ./benchmark_sumsum
+</code></pre></div><br>ビルドして実行すると、<br><br><div class="code-block"><pre><code class="language-bash">➤ ./benchmark_sumsum
 Unable to determine clock rate from sysctl: hw.cpufrequency: No such file or directory
 This does not affect benchmark measurements, only the metadata output.
 ***WARNING*** Failed to set thread affinity. Estimated CPU frequency may be incorrect.
@@ -1787,44 +1822,44 @@ Load Average: 6.87, 5.16, 4.16
 Benchmark           Time             CPU   Iterations
 -----------------------------------------------------
 BM_Sum           2.64 ns         2.64 ns    259362043
-</code></pre> </div><br>無事にベンチマークが取れました！<br><script>page_contents.push({
+</code></pre></div><br>無事にベンチマークが取れました！<br><script>page_contents.push({
     "type":"H3",
     "id":"219",
     "title":"カバレッジ計測"
 });
 </script>
-<h3 id="219">カバレッジ計測</h3><br>最後に、カバレッジの計測をします。<br><br>なんと Meson は Meson のレベルでカバレッジをよしなにやってくれます。<br>順番に見ていきましょう。<br>まずは、カバレッジ用のビルドを作ります。<br><div class="code-block"> <pre><code class="language-bash">➤ meson setup builddir_cov --buildtype=debugoptimized -Db_coverage=true
+<h3 id="219">カバレッジ計測</h3><br>最後に、カバレッジの計測をします。<br><br>なんと Meson は Meson のレベルでカバレッジをよしなにやってくれます。<br>順番に見ていきましょう。<br>まずは、カバレッジ用のビルドを作ります。<br><div class="code-block"><pre><code class="language-bash">➤ meson setup builddir_cov --buildtype=debugoptimized -Db_coverage=true
 
 ➤ meson compile -C builddir_cov
-</code></pre> </div><br>すると、例えば <br><div class="code-block"> <pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
+</code></pre></div><br>すると、例えば <br><div class="code-block"><pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
 builddir_cov/libsumsum.dylib.p/
 ├── libsumsum.dylib.symbols
 ├── src_mylib.cpp.gcno
 └── src_mylib.cpp.o
-</code></pre> </div><br>のように、 <span class="inline-code"> <code>.gcno</code> </span> ファイルができています。 <br><br>ではテストを実行してみます。<br><div class="code-block"> <pre><code class="language-bash">➤ ./test_sumsum
-</code></pre> </div><br>すると、例えば<br><div class="code-block"> <pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
+</code></pre></div><br>のように、 <span class="inline-code"><code>.gcno</code></span> ファイルができています。 <br><br>ではテストを実行してみます。<br><div class="code-block"><pre><code class="language-bash">➤ ./test_sumsum
+</code></pre></div><br>すると、例えば<br><div class="code-block"><pre><code class="language-bash">➤ tree builddir_cov/libsumsum.dylib.p/
 builddir_cov/libsumsum.dylib.p/
 ├── libsumsum.dylib.symbols
 ├── src_mylib.cpp.gcda
 ├── src_mylib.cpp.gcno
 └── src_mylib.cpp.o
-</code></pre> </div><br>と、 <span class="inline-code"> <code>.gcda</code> </span> ファイルが無事に生成されています。<br><br>そうしたら、カバレッジレポートを生成します。<br><div class="code-block"> <pre><code class="language-bash">➤ ninja -C builddir_cov coverage-html
-</code></pre> </div><br>すると、 <span class="inline-code"> <code>meson-logs/coveragereport/index.html</code> </span> が生成されます。<br>これを開くと...<br><figure><img src="cpp_ci/image.png" ><figcaption></figcaption></figure><br>無事にカバレッジレポートが生成されました！　(´・ω・｀)🎉<br><script>page_contents.push({
+</code></pre></div><br>と、 <span class="inline-code"><code>.gcda</code></span> ファイルが無事に生成されています。<br><br>そうしたら、カバレッジレポートを生成します。<br><div class="code-block"><pre><code class="language-bash">➤ ninja -C builddir_cov coverage-html
+</code></pre></div><br>すると、 <span class="inline-code"><code>meson-logs/coveragereport/index.html</code></span> が生成されます。<br>これを開くと...<br><figure><img src="cpp_ci/image.png" ><figcaption></figcaption></figure><br>無事にカバレッジレポートが生成されました！　(´・ω・｀)🎉<br><script>page_contents.push({
     "type":"H2",
     "id":"269",
     "title":"GitHub Actions で CI する"
 });
 </script>
-<h2 id="269">GitHub Actions で CI する</h2><br>最後に、これを GitHub Actions で継続的に行うようにします。<br>(ここから出てくる Action は <span class="inline-code"> <code>on</code> </span> などは適当なので適宜必要なものに変えてください)<br><script>page_contents.push({
+<h2 id="269">GitHub Actions で CI する</h2><br>最後に、これを GitHub Actions で継続的に行うようにします。<br>(ここから出てくる Action は <span class="inline-code"><code>on</code></span> などは適当なので適宜必要なものに変えてください)<br><script>page_contents.push({
     "type":"H3",
     "id":"278",
     "title":"テスト"
 });
 </script>
-<h3 id="278">テスト</h3><br>まずはテストを走らせるようにします。<br>依存ライブラリをまとめてインストールするスクリプトを書きます。<br><div class="code-block"> <pre><code class="language-bash">mkdir subprojects
+<h3 id="278">テスト</h3><br>まずはテストを走らせるようにします。<br>依存ライブラリをまとめてインストールするスクリプトを書きます。<br><div class="code-block"><pre><code class="language-bash">mkdir subprojects
 meson wrap install gtest
 meson wrap install google-benchmark
-</code></pre> </div><br>あとは適当な Action を書きます。<br><div class="code-block"> <pre><code class="language-yaml">name: Test
+</code></pre></div><br>あとは適当な Action を書きます。<br><div class="code-block"><pre><code class="language-yaml">name: Test
 
 on: [push, pull_request]
 
@@ -1846,13 +1881,13 @@ jobs:
 
     - name: Test
       run: cd builddir &amp;&amp; ./test_sumsum
-</code></pre> </div><br>すると、<br><figure><img src="cpp_ci/image-1.png" ><figcaption></figcaption></figure><br>これで PR時にはテストが走るようになりました。<br><script>page_contents.push({
+</code></pre></div><br>すると、<br><figure><img src="cpp_ci/image-1.png" ><figcaption></figcaption></figure><br>これで PR時にはテストが走るようになりました。<br><script>page_contents.push({
     "type":"H3",
     "id":"297",
     "title":"ベンチマーク"
 });
 </script>
-<h3 id="297">ベンチマーク</h3><br>続いてべンチマークを走らせるようにします。<br><url> <a href="https://github.com/benchmark-action/github-action-benchmark">https://github.com/benchmark-action/github-action-benchmark</a> </url><br>という素晴らしい　Action があるのでこれを使います。<br>この Action を使うと、<br><ul><li>ベンチマークの結果をコメントに書く</li><li>ベンチマークの推移を記録して GitHub Pages に表示</li></ul><br>などができます。<br><br>README.md にしたがって、このアクションで使えるように結果を吐く、以下のような Action を書きます。<br><br><div class="code-block"> <pre><code class="language-yaml">name: Benchmark
+<h3 id="297">ベンチマーク</h3><br>続いてべンチマークを走らせるようにします。<br><url><a href="https://github.com/benchmark-action/github-action-benchmark">https://github.com/benchmark-action/github-action-benchmark</a></url><br>という素晴らしい　Action があるのでこれを使います。<br>この Action を使うと、<br><ul><li>ベンチマークの結果をコメントに書く</li><li>ベンチマークの推移を記録して GitHub Pages に表示</li></ul><br>などができます。<br><br>README.md にしたがって、このアクションで使えるように結果を吐く、以下のような Action を書きます。<br><br><div class="code-block"><pre><code class="language-yaml">name: Benchmark
 
 on: [push, pull_request]
 
@@ -1886,7 +1921,7 @@ jobs:
         fail-on-alert: true
         auto-push: true
         comment-always: true
-</code></pre> </div><br>すると、<br><figure><img src="cpp_ci/image-6.png" ><figcaption></figcaption></figure><br>こんな感じで、各コミットに対してベンチマークの結果を教えてくれます。<br>さらに、例えば <span class="inline-code"> <code>mylib.hpp</code> </span> を<br><div class="code-block"> <pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
+</code></pre></div><br>すると、<br><figure><img src="cpp_ci/image-6.png" ><figcaption></figcaption></figure><br>こんな感じで、各コミットに対してベンチマークの結果を教えてくれます。<br>さらに、例えば <span class="inline-code"><code>mylib.hpp</code></span> を<br><div class="code-block"><pre><code class="language-cpp">#include &quot;mylib.hpp&quot;
 #include &lt;unistd.h&gt;
 
 int sum(int a, int b, int c) {
@@ -1900,13 +1935,13 @@ int try_to_sum(int a, int b, int c) {
     }
     return a + b + c;
 }
-</code></pre> </div><br>こんな感じにして 1秒の <span class="inline-code"> <code>sleep</code> </span> を入れてものすごくパフォーマンスを落とすようにしてみると、<br><figure><img src="cpp_ci/image-7.png" ><figcaption></figcaption></figure><br>テストが失敗します！便利！<br><br>さらに、 <span class="inline-code"> <code>gh-pages</code> </span> ブランチを生やしておいて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、<br><figure><img src="cpp_ci/image-5.png" ><figcaption></figcaption></figure><br>パフォーマンスの推移を見られるページが生成されます。便利。<br><script>page_contents.push({
+</code></pre></div><br>こんな感じにして 1秒の <span class="inline-code"><code>sleep</code></span> を入れてものすごくパフォーマンスを落とすようにしてみると、<br><figure><img src="cpp_ci/image-7.png" ><figcaption></figcaption></figure><br>テストが失敗します！便利！<br><br>さらに、 <span class="inline-code"><code>gh-pages</code></span> ブランチを生やしておいて、 GitHub Pages を gh-pages 起点で作るように設定しておくと、<br><figure><img src="cpp_ci/image-5.png" ><figcaption></figcaption></figure><br>パフォーマンスの推移を見られるページが生成されます。便利。<br><script>page_contents.push({
     "type":"H3",
     "id":"351",
     "title":"カバレッジ計測"
 });
 </script>
-<h3 id="351">カバレッジ計測</h3><br>最後に、カバレッジ計測を Codecov で行うようにします。<br><url> <a href="https://app.codecov.io/">https://app.codecov.io/</a> </url> にいって　Key をもらい、 Secrets に登録しておきます。<br><br>本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。 公式の example や色んな情報を見ると <span class="inline-code"> <code>bash (curl codecov...)</code> </span> のような事をして直接(?) しているものが多いですが、以下のように Actions 経由で渡す方が色々設定できて圧倒的に良いと思います。<br><br><div class="code-block"> <pre><code class="language-yaml">name: Codecov
+<h3 id="351">カバレッジ計測</h3><br>最後に、カバレッジ計測を Codecov で行うようにします。<br><url><a href="https://app.codecov.io/">https://app.codecov.io/</a></url> にいって　Key をもらい、 Secrets に登録しておきます。<br><br>本当に計測する部分はもうできているので、あとはそれを XML 形式にエクスポートして Codecov に渡すだけです。 公式の example や色んな情報を見ると <span class="inline-code"><code>bash (curl codecov...)</code></span> のような事をして直接(?) しているものが多いですが、以下のように Actions 経由で渡す方が色々設定できて圧倒的に良いと思います。<br><br><div class="code-block"><pre><code class="language-yaml">name: Codecov
 
 on: [push, pull_request]
 
@@ -1937,19 +1972,19 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: builddir_cov/meson-logs/coverage.xml
-</code></pre> </div><br>するとこんな感じでカバレッジ計測結果が見られます　(´・ω・｀)🎉<br><figure><img src="cpp_ci/image-8.png" ><figcaption></figcaption></figure><br><br><span class="inline-code"> <code>a + b + c &gt; 100</code> </span> などがテストできていないことがわかりますね。<br>また、新たに PR を出すと<br><figure><img src="cpp_ci/image-9.png" ><figcaption></figcaption></figure><br>カバレッジの変化が見られます。便利。<br><script>page_contents.push({
+</code></pre></div><br>するとこんな感じでカバレッジ計測結果が見られます　(´・ω・｀)🎉<br><figure><img src="cpp_ci/image-8.png" ><figcaption></figcaption></figure><br><br><span class="inline-code"><code>a + b + c &gt; 100</code></span> などがテストできていないことがわかりますね。<br>また、新たに PR を出すと<br><figure><img src="cpp_ci/image-9.png" ><figcaption></figcaption></figure><br>カバレッジの変化が見られます。便利。<br><script>page_contents.push({
     "type":"H2",
     "id":"381",
     "title":"まとめ"
 });
 </script>
-<h2 id="381">まとめ</h2><br><br>実は最初は CMake + devcontainer なしでやろうとして本当に酷い目あったりしていました。<br>(例えば、ちゃんと <span class="inline-code"> <code>CXX=g++</code> </span> な事をしても <span class="inline-code"> <code>gcov</code> </span> は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)<br><br>令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。<br>約2日間、「C++ やめていい？」しか言っていなかったです。<br><br>とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。<br><script>page_contents.push({
+<h2 id="381">まとめ</h2><br><br>実は最初は CMake + devcontainer なしでやろうとして本当に酷い目あったりしていました。<br>(例えば、ちゃんと <span class="inline-code"><code>CXX=g++</code></span> な事をしても <span class="inline-code"><code>gcov</code></span> は Clang 用のものがデフォルトでは実は使われていて、、、などのパッとわからない依存がたくさんあり、大変なことになっていました。)<br><br>令和の世の中、プログラミング言語はもはやそのものではなく、パッケージマネージャ、ビルドツール、エディタの支援 etc... によって差がつく、みたいなことが言われて久しいですが、それをひしひしと感じる作業でした。<br>約2日間、「C++ やめていい？」しか言っていなかったです。<br><br>とはいえ、 Meson は結構いいものを知ったなという気持ちです。これで色々と開発を便利にしていきたい。<br><script>page_contents.push({
     "type":"H2",
     "id":"401",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="401">今日の一曲</h2><br><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1591947091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/koshy-226161802" title="Watson (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Watson (Official)</a> · <a href="https://soundcloud.com/koshy-226161802/mj-freestyle" title="MJ Freestyle" target="_blank" style="color: #cccccc; text-decoration: none;">MJ Freestyle</a></div><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://logmi.jp/tech/articles/330373">「自分の未来予測を信じてちょっと意地を張ってみる」 まつもとゆきひろ氏がRubyに型宣言を入れない理由</a> </url> より.</span></div>
+<h2 id="401">今日の一曲</h2><br><iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1591947091&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/koshy-226161802" title="Watson (Official)" target="_blank" style="color: #cccccc; text-decoration: none;">Watson (Official)</a> · <a href="https://soundcloud.com/koshy-226161802/mj-freestyle" title="MJ Freestyle" target="_blank" style="color: #cccccc; text-decoration: none;">MJ Freestyle</a></div><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url><a href="https://logmi.jp/tech/articles/330373">「自分の未来予測を信じてちょっと意地を張ってみる」 まつもとゆきひろ氏がRubyに型宣言を入れない理由</a></url> より.</span></div>
 
             <hr>
 

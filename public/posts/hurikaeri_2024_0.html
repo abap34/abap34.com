@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"2024年度前期の振り返り"
 });
 </script>
-<h2 id="2">2024年度前期の振り返り</h2><br>2024年度前期 (4月~9月) の振り返りです。<br><br>去年の前期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2023_0.html">→ こちら</a> </url><br>去年の後期の振り返りは <url> <a href="https://www.abap34.com/posts/hurikaeri_2023_1.html">→ こちら</a> </url><br><br><script>page_contents.push({
+<h2 id="2">2024年度前期の振り返り</h2><br>2024年度前期 (4月~9月) の振り返りです。<br><br>去年の前期の振り返りは <url><a href="https://www.abap34.com/posts/hurikaeri_2023_0.html">→ こちら</a></url><br>去年の後期の振り返りは <url><a href="https://www.abap34.com/posts/hurikaeri_2023_1.html">→ こちら</a></url><br><br><script>page_contents.push({
     "type":"H2",
     "id":"15",
     "title":"作ったもの"
@@ -1556,13 +1591,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"このサイト"
 });
 </script>
-<h3 id="18">このサイト</h3><br><a href="https://github.com/abap34/abap34.com"><img src="https://gh-card.dev/repos/abap34/abap34.com.svg"></a><br>このサイト <url> <a href="abap34.com">abap34.com</a> </url> がリニューアルされました。<br>個人的には記事検索画面 <url> <a href="https://www.abap34.com/search?tag=%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9&q=Julia">https://www.abap34.com/search</a> </url> は結構気に入ってます。<br><figure><img src="hurikaeri_2024_0/image.png" ><figcaption>検索画面</figcaption></figure><br><script>page_contents.push({
+<h3 id="18">このサイト</h3><br><a href="https://github.com/abap34/abap34.com"><img src="https://gh-card.dev/repos/abap34/abap34.com.svg"></a><br>このサイト <url><a href="abap34.com">abap34.com</a></url> がリニューアルされました。<br>個人的には記事検索画面 <url><a href="https://www.abap34.com/search?tag=%E3%82%B3%E3%83%B3%E3%83%91%E3%82%A4%E3%83%A9&q=Julia">https://www.abap34.com/search</a></url> は結構気に入ってます。<br><figure><img src="hurikaeri_2024_0/image.png" ><figcaption>検索画面</figcaption></figure><br><script>page_contents.push({
     "type":"H3",
     "id":"33",
     "title":"almo "
 });
 </script>
-<h3 id="33">almo </h3><br><a href="https://github.com/abap34/almo"><img src="https://gh-card.dev/repos/abap34/almo.svg"></a><br><url> <a href="https://github.com/abap34/almo/tags">ついにリリースが v0.9.5-alpha まできてしまいました。</a> </url><br><br>すいません、いつ v1 になるんでしょうか。<br><br>それはともかくいくつか重要な進展があり、<br><ul><li>Python 向けバインディングの提供とメインのインターフェースをそちらに移動</li><li>パーサの根本的な書き直し <url> <a href="https://github.com/abap34/almo/pull/130">https://github.com/abap34/almo/pull/130</a> </url></li><li>脚注の追加</li></ul><br>などが行われました。 (44個の PR が mainにマージされました。)<br><br>とくにパーサの書き直しは noya2 が、 脚注の追加は potato167 さんが Contribution してくれました。大感謝。<br><br>Python 向けバインディングは自分が作業していて、 Python側から AST を操作したり、 Jupyter Notebook から変換したり、 jinja2 を使った拡張性の高いテンプレートの作成などができるようになりました。<br>(今はその過程で見つかったパフォーマンス上の問題に対応するために、そもそものベンチマークの仕組みの整備などをしています。)<br>こういう感じのコードが動きます。 (中身は全部 C++ です！)<br><div class="code-block"> <pre><code class="language-python">import almo
+<h3 id="33">almo </h3><br><a href="https://github.com/abap34/almo"><img src="https://gh-card.dev/repos/abap34/almo.svg"></a><br><url><a href="https://github.com/abap34/almo/tags">ついにリリースが v0.9.5-alpha まできてしまいました。</a></url><br><br>すいません、いつ v1 になるんでしょうか。<br><br>それはともかくいくつか重要な進展があり、<br><ul><li>Python 向けバインディングの提供とメインのインターフェースをそちらに移動</li><li>パーサの根本的な書き直し <url><a href="https://github.com/abap34/almo/pull/130">https://github.com/abap34/almo/pull/130</a></url></li><li>脚注の追加</li></ul><br>などが行われました。 (44個の PR が mainにマージされました。)<br><br>とくにパーサの書き直しは noya2 が、 脚注の追加は potato167 さんが Contribution してくれました。大感謝。<br><br>Python 向けバインディングは自分が作業していて、 Python側から AST を操作したり、 Jupyter Notebook から変換したり、 jinja2 を使った拡張性の高いテンプレートの作成などができるようになりました。<br>(今はその過程で見つかったパフォーマンス上の問題に対応するために、そもそものベンチマークの仕組みの整備などをしています。)<br>こういう感じのコードが動きます。 (中身は全部 C++ です！)<br><div class="code-block"><pre><code class="language-python">import almo
 
 divblock = almo.DivBlock(&quot;code&quot;)
 
@@ -1610,13 +1645,13 @@ pretty_print(ast)
 # │   ├── &lt;alm.oRawText (uuid: 10)&gt;
 # │   ├── &lt;almo.RawText (uuid: 11)&gt;
 # │   └── &lt;almo.NewLine (uuid: 12)&gt;
-</code></pre> </div><br><br>almo に関連する記事もいくつか書きました:<br><ul><li><url> <a href="https://www.abap34.com/posts/pybind11.html">pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</a> </url></li><li><url> <a href="https://www.abap34.com/posts/livereload.html">livereload でホットリロードするCLIツールを作る</a> </url></li><li><url> <a href="https://www.abap34.com/posts/footnote_implement.html">脚注機能の実装に関するメモ</a> </url></li><li><url> <a href="https://www.abap34.com/posts/cpp_ci.html">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</a> </url></li></ul><br><br>これ書いてて思ったんですが、やっぱり早急にリンクカード欲しいですね。<br><script>page_contents.push({
+</code></pre></div><br><br>almo に関連する記事もいくつか書きました:<br><ul><li><url><a href="https://www.abap34.com/posts/pybind11.html">pybind11 を使って C++の関数をバインドして Pythonから呼び出す (m1mac)</a></url></li><li><url><a href="https://www.abap34.com/posts/livereload.html">livereload でホットリロードするCLIツールを作る</a></url></li><li><url><a href="https://www.abap34.com/posts/footnote_implement.html">脚注機能の実装に関するメモ</a></url></li><li><url><a href="https://www.abap34.com/posts/cpp_ci.html">C++ のプロジェクトでいい感じの テスト・ベンチマーク・カバレッジ計測環境を構築する</a></url></li></ul><br><br>これ書いてて思ったんですが、やっぱり早急にリンクカード欲しいですね。<br><script>page_contents.push({
     "type":"H3",
     "id":"85",
     "title":"DacQ (-v2)"
 });
 </script>
-<h3 id="85">DacQ (-v2)</h3><br>データ分析コンペのプラットフォームです。<br><br><a href="https://github.com/abap34/DacQ-v2"><img src="https://gh-card.dev/repos/abap34/DacQ-v2.svg"></a><br><br><br>軽率にやりたい放題コンペをやるために作りました。 <br>記事: <url> <a href="https://www.abap34.com/posts/dacq.html">mini Kaggle を streamlit で作った</a> </url><br>チーム戦を含めたコンペの機能、 Discussion 機能などがあります。<br><figure><img src="hurikaeri_2024_0/image-2.png" ><figcaption></figcaption></figure><br><br>実際にこれを使ってコンペをしましたが、なんとか致命的な不具合なく終わってくれてよかったです。<br><br><figure><img src="hurikaeri_2024_0/image-1.png" ><figcaption>順位表</figcaption></figure><br><br><script>page_contents.push({
+<h3 id="85">DacQ (-v2)</h3><br>データ分析コンペのプラットフォームです。<br><br><a href="https://github.com/abap34/DacQ-v2"><img src="https://gh-card.dev/repos/abap34/DacQ-v2.svg"></a><br><br><br>軽率にやりたい放題コンペをやるために作りました。 <br>記事: <url><a href="https://www.abap34.com/posts/dacq.html">mini Kaggle を streamlit で作った</a></url><br>チーム戦を含めたコンペの機能、 Discussion 機能などがあります。<br><figure><img src="hurikaeri_2024_0/image-2.png" ><figcaption></figcaption></figure><br><br>実際にこれを使ってコンペをしましたが、なんとか致命的な不具合なく終わってくれてよかったです。<br><br><figure><img src="hurikaeri_2024_0/image-1.png" ><figcaption>順位表</figcaption></figure><br><br><script>page_contents.push({
     "type":"H3",
     "id":"111",
     "title":"ml-lecture-judge"
@@ -1634,7 +1669,7 @@ pretty_print(ast)
     "title":"コンペ開催"
 });
 </script>
-<h3 id="147">コンペ開催</h3><br>上に付随して講習会とコンペを一つやりました: <url> <a href="https://trap.jp/post/2289/">https://trap.jp/post/2289/</a> </url><br>大抵のことはこの記事に書いてありますが、<br><ul><li>38 チームが 1Sub 以上 (<span class="strong"> <strong>1チーム3人です！</strong> </span>)</li><li>合計で 1692 Sub</li></ul><br>と、今までやったコンペの中では一番大規模でした。<br><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日は機械学習講習会の第6回の講義とコンペの開会式(?) でした。ネットワークの攻撃検知を題材に1週間のコンペを始めました！！40以上のチームが組まれていて盛り上がっています🙌<br> <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a> <a href="https://t.co/Q8OQLVJAxS">pic.twitter.com/Q8OQLVJAxS</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1811009775033078126?ref_src=twsrc%5Etfw">July 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>盛り上がってよかった。<br><br><br><br><script>page_contents.push({
+<h3 id="147">コンペ開催</h3><br>上に付随して講習会とコンペを一つやりました: <url><a href="https://trap.jp/post/2289/">https://trap.jp/post/2289/</a></url><br>大抵のことはこの記事に書いてありますが、<br><ul><li>38 チームが 1Sub 以上 (<span class="strong"><strong>1チーム3人です！</strong></span>)</li><li>合計で 1692 Sub</li></ul><br>と、今までやったコンペの中では一番大規模でした。<br><br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">今日は機械学習講習会の第6回の講義とコンペの開会式(?) でした。ネットワークの攻撃検知を題材に1週間のコンペを始めました！！40以上のチームが組まれていて盛り上がっています🙌<br> <a href="https://twitter.com/hashtag/trap1kaggle?src=hash&amp;ref_src=twsrc%5Etfw">#trap1kaggle</a> <a href="https://t.co/Q8OQLVJAxS">pic.twitter.com/Q8OQLVJAxS</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1811009775033078126?ref_src=twsrc%5Etfw">July 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br><br>盛り上がってよかった。<br><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"175",
     "title":"書いたもの"
@@ -1652,19 +1687,19 @@ pretty_print(ast)
     "title":"Julia Compiler Internals"
 });
 </script>
-<h3 id="201">Julia Compiler Internals</h3><br>mrkn さんと antimon2 さんと一緒に毎週木曜日の夜に Juliaの処理系の実装を読む会をしていて、そこで知った内容をまとめるシリーズを始めました。 大体週に 1, 2本のペースで書いていて、今後も続けていくつもりです。<br>JuliaLangJa の Discord で毎週開催しているので、興味がある方はぜひ 🤗<br><url> <a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">https://www.abap34.com/search?tag=JuliaCompilerInternals</a> </url><br><br><script>page_contents.push({
+<h3 id="201">Julia Compiler Internals</h3><br>mrkn さんと antimon2 さんと一緒に毎週木曜日の夜に Juliaの処理系の実装を読む会をしていて、そこで知った内容をまとめるシリーズを始めました。 大体週に 1, 2本のペースで書いていて、今後も続けていくつもりです。<br>JuliaLangJa の Discord で毎週開催しているので、興味がある方はぜひ 🤗<br><url><a href="https://www.abap34.com/search?tag=JuliaCompilerInternals">https://www.abap34.com/search?tag=JuliaCompilerInternals</a></url><br><br><script>page_contents.push({
     "type":"H2",
     "id":"211",
     "title":"その他・大学など"
 });
 </script>
-<h2 id="211">その他・大学など</h2><ul><li><span class="strong"> <strong>何事もなければ</strong> </span> 4年で卒業できそうです。 よかった.</li><li>atmaCup #17 に参加しました。 (68/319 ...) NLPコンペは数年ぶりで、自分の知識が化石と化していることを痛感しました。ちゃんとキャッチアップします。</li><li>大学の OS の授業がめちゃくちゃ面白くて、興味を持ちました。 それまでは知識も興味も全然なかったですが、 授業を受けてからかなり多くの文章がスッと読めるようになり感動しました。今後も割と真面目に勉強していきたいです。</li><li>夏休みの前半に帰省して全ての親知らずを抜きました。歯が痛いだけで脳がまともなパフォーマンスを一切発揮してくれなく、人間弱すぎるなぁと思いました。</li><li>東京ヤクルトスワローズは今年もダメでした。 <figure><img src="hurikaeri_2024_0/image-8.png" ><figcaption>どうして</figcaption></figure></li><li>東京工業大学が消滅しました。</li><li>前期のコントリビューション数は 1982 Contributions でした。 (<span class="inline-code"> <code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2024-04-01&quot;) | .contributionCount] | add&#39;</code> </span> してください)</li></ul><br><br><script>page_contents.push({
+<h2 id="211">その他・大学など</h2><ul><li><span class="strong"><strong>何事もなければ</strong></span> 4年で卒業できそうです。 よかった.</li><li>atmaCup #17 に参加しました。 (68/319 ...) NLPコンペは数年ぶりで、自分の知識が化石と化していることを痛感しました。ちゃんとキャッチアップします。</li><li>大学の OS の授業がめちゃくちゃ面白くて、興味を持ちました。 それまでは知識も興味も全然なかったですが、 授業を受けてからかなり多くの文章がスッと読めるようになり感動しました。今後も割と真面目に勉強していきたいです。</li><li>夏休みの前半に帰省して全ての親知らずを抜きました。歯が痛いだけで脳がまともなパフォーマンスを一切発揮してくれなく、人間弱すぎるなぁと思いました。</li><li>東京ヤクルトスワローズは今年もダメでした。 <figure><img src="hurikaeri_2024_0/image-8.png" ><figcaption>どうして</figcaption></figure></li><li>東京工業大学が消滅しました。</li><li>前期のコントリビューション数は 1982 Contributions でした。 (<span class="inline-code"><code>curl &quot;https://github-contributions-api.deno.dev/abap34.json?flat=true&quot; | jq &#39;[.contributions[] | select(.date &gt;= &quot;2024-04-01&quot;) | .contributionCount] | add&#39;</code></span> してください)</li></ul><br><br><script>page_contents.push({
     "type":"H2",
     "id":"235",
     "title":"ふりかえりと抱負"
 });
 </script>
-<h2 id="235">ふりかえりと抱負</h2><br>なんとなく記事を見てみると Web っぽいものが多いです。  Web 系の知識は何も知らずに今までやってきましたが、 それこそ ChatGPT などのおかげでかなり学びやすくなって、低いクオリティのものならサッと作れるようになっていい話です。 (streamlit にもありがとう)<br><br>とはいえ、自分にとって人と差別化できる要素だとは思っていないので、 後期はもっと機械学習・低レイヤ、、、 「発展させるために自分の人生を使っても良さそう」 と思っていることの勉強に時間を使っていきたいです。<br><br>また、それなりに (とくに、大学の) コミュニティに色々と返せたような気もするので、なるべく自分のために頑張りたいです。<br><hr><br>なんとなく以前より 「これ (計算機) で食べていくぞ」 という実感 (自覚?) が強くなってきました。<br><span class="strong"> <strong>正直に言うと、半年あったらもうちょっとできただろという気持ちがあり、自分の目指しているエンジニア像になれるか不安しかない</strong> </span>ので、後期は一層頑張ります。<br><br><script>page_contents.push({
+<h2 id="235">ふりかえりと抱負</h2><br>なんとなく記事を見てみると Web っぽいものが多いです。  Web 系の知識は何も知らずに今までやってきましたが、 それこそ ChatGPT などのおかげでかなり学びやすくなって、低いクオリティのものならサッと作れるようになっていい話です。 (streamlit にもありがとう)<br><br>とはいえ、自分にとって人と差別化できる要素だとは思っていないので、 後期はもっと機械学習・低レイヤ、、、 「発展させるために自分の人生を使っても良さそう」 と思っていることの勉強に時間を使っていきたいです。<br><br>また、それなりに (とくに、大学の) コミュニティに色々と返せたような気もするので、なるべく自分のために頑張りたいです。<br><hr><br>なんとなく以前より 「これ (計算機) で食べていくぞ」 という実感 (自覚?) が強くなってきました。<br><span class="strong"><strong>正直に言うと、半年あったらもうちょっとできただろという気持ちがあり、自分の目指しているエンジニア像になれるか不安しかない</strong></span>ので、後期は一層頑張ります。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"255",
     "title":"今日の一曲"
