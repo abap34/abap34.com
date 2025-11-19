@@ -59,11 +59,11 @@ export default function TopPage() {
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Works
                     </span>
-                    <div style={{ padding: '2lh 2ch' }}>
+                    <div style={{ padding: '1lh 2ch 2lh 2ch' }}>
                         <Works
                             title=""
                             path={worksFilename}
-                            defaultVisibleCount={8}
+                            defaultVisibleCount={9}
                             compact={false}
                         />
                         <div className="view-all-link" style={{ marginTop: '1lh' }}>
