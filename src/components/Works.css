@@ -79,10 +79,10 @@
     background-color: var(--background1);
 }
 
-.works-card [is="badge"],
-.works-card [is-~="badge"],
-.works-card span[is="badge"],
-.works-card span[is-~="badge"] {
+.works-card > [is="badge"],
+.works-card > [is-~="badge"],
+.works-card > span[is="badge"],
+.works-card > span[is-~="badge"] {
     white-space: normal !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
@@ -96,10 +96,10 @@
     overflow: visible !important;
 }
 
-.works-grid .works-card [is="badge"],
-.works-grid .works-card [is-~="badge"],
-.works-grid-compact .works-card [is="badge"],
-.works-grid-compact .works-card [is-~="badge"] {
+.works-grid .works-card > [is="badge"],
+.works-grid .works-card > [is-~="badge"],
+.works-grid-compact .works-card > [is="badge"],
+.works-grid-compact .works-card > [is-~="badge"] {
     white-space: normal !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;

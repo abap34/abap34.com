@@ -113,7 +113,7 @@ function Abap34Com() {
             <Routes>
               <Route path="/" element={<TopPage />} />
               <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
-              <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} /></PageWrapper>} />
+              <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} showTagFilter={true} /></PageWrapper>} />
               <Route path="/blog" element={<PageWrapper><SearchResult /></PageWrapper>} />
               <Route path="/search" element={<PageWrapper><SearchResult /></PageWrapper>} />
               <Route path="*" element={<NotFound />} />

@@ -766,6 +766,7 @@ table tbody tr:hover {
   height: 100%; /* グリッドアイテムの高さを100%に */
   width: 100%; /* グリッドアイテムの幅を100%に */
   min-width: 0; /* 内容が長い場合の幅オーバーフローを防ぐ */
+  border: none !important;
 }
 
 .works-card-period {
@@ -1047,7 +1048,7 @@ table tbody tr:hover {
 
 /* Dark mode variants - these will work with the existing theme system */
 [data-webtui-theme="catppuccin-mocha"] .dark\:bg-gray-800 {
-  background-color: var(--background1);
+  background-color: var(--foreground2);
 }
 
 [data-webtui-theme="catppuccin-mocha"] .dark\:border-gray-700 {
