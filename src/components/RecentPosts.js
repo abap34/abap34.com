@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { aboutContent } from "../config/content";
 import LanguageContext from "../context/LanguageContext";
 import BlogPostItem from './BlogPostItem';
-import './SearchResult.css';
 
 async function fetchPosts() {
     try {

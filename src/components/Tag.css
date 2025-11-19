@@ -21,6 +21,9 @@
     cursor: pointer;
     transition: transform 0.2s ease;
     border: none;
+    pointer-events: auto;
+    position: relative;
+    z-index: 100;
 }
 
 [is-~="badge"]:hover {
@@ -77,6 +80,12 @@
     --badge-color: var(--background2);
     --badge-text: var(--foreground0);
 }
+
+[is-~="badge"][variant-="blue"] {
+    --badge-color: #3b82f6;
+    --badge-text: white;
+}
+
 [data-webtui-theme="catppuccin-mocha"] [is-~="badge"][variant-="blue"] {
     --badge-color: #89b4fa;
     --badge-text: var(--background0);
