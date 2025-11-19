@@ -29,7 +29,7 @@ export default function BlogPostItem({ post, maxTags = 3 }) {
             </a>
             <div className="search-post-tags">
                 {post.tags?.slice(0, maxTags).map((tag, i) => (
-                    <Tag key={i}>{tag}</Tag>
+                    <Tag key={i} name={tag}>{tag}</Tag>
                 ))}
                 {post.tags?.length > maxTags && (
                     <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
