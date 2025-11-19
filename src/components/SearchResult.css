@@ -87,21 +87,48 @@
 }
 
 .search-query {
-    background-color: #dbeafe;
-    color: #2563eb;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.5rem;
-    display: flex;
+    /* Tag風のスタイルに統一 */
+    color: var(--badge-text, var(--background0));
+    background-image: linear-gradient(
+        90deg,
+        transparent 0,
+        transparent calc(1ch - 1px),
+        var(--foreground1) calc(1ch - 1px),
+        var(--foreground1) calc(100% - 1ch + 1px),
+        transparent calc(100% - 1ch + 1px),
+        transparent
+    );
+    display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    word-break: break-word;
-    max-width: 15rem;
+    vertical-align: top;
+    white-space: nowrap;
+    height: 1lh;
+    line-height: 1lh;
+    font-family: var(--font-family, monospace);
+    font-size: var(--font-size, 0.875rem);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: none;
+    pointer-events: auto;
+    position: relative;
+    z-index: 100;
+    padding: 0 0.5rem;
+}
+
+.search-query::before,
+.search-query::after {
+    content: '';
+    width: 1ch;
+    height: 1lh;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: var(--foreground1);
     overflow: hidden;
 }
 
-[data-webtui-theme="catppuccin-mocha"] .search-query {
-    background-color: #89b4fa;
-    color: var(--background0);
+.search-query:hover {
+    transform: translateY(-1px);
 }
 
 .search-query-close {
@@ -109,7 +136,6 @@
     margin-left: 0.25rem;
     width: 1rem;
     height: 1rem;
-    color: var(--foreground2);
     cursor: pointer;
 }
 
