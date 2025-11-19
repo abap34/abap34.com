@@ -1,11 +1,10 @@
 export const introductionContent = {
   ja: {
     name: "@abap34",
-    mainDescription: "機械学習とプログラミング言語が好きです. 理論も実装もできる研究者・エンジニアが目標です.",
+    mainDescription: "プログラミング言語の研究をしています．機械学習も好きです． 理論も実装もできる研究者・エンジニアを目指しています．",
     detailedDescription: [
-      "最近はプログラミング言語の知識を機械学習に生かすこと，もしくは機械学習の知識をプログラミング言語に生かすことを考えています．",
-      "",
-      "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域に関心があります.",
+      "そのほか 数理最適化 (とくに連続最適化), 数理統計に関連する領域にも関心があります.",
+      "どの分野でも理論的な側面と実装の両方について考えることが好きです．",
       "必要に応じて Web 開発 (React, FastAPI を使うことが多いです) もします．",
       "よく使うプログラミング言語は Python, Julia, TypeScript, C++, Scheme などです．",
       "",
@@ -14,11 +13,10 @@ export const introductionContent = {
   },
   en: {
     name: "@abap34",
-    mainDescription: "Machine Learning & Programming Languages enthusiast. I aim to be a researcher/engineer who can do both theory and implementation.",
+    mainDescription: "I research programming languages and also like machine learning. I aim to be a researcher/engineer who can do both theory and implementation.",
     detailedDescription: [
-      "Recently, I have been thinking about how to leverage programming language knowledge in machine learning, or vice versa.",
-      "",
       "Other interests include mathematical optimization (especially continuous optimization) and mathematical statistics, as well as related fields.",
+      "I enjoy considering both theoretical and implementation aspects in any field.",
       "I also do web development (often using React and FastAPI) when necessary.",
       "I often use programming languages such as Python, Julia, TypeScript, C++, and Scheme.",
       "",

@@ -1,9 +1,9 @@
-import { ExternalLink, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { FaTag } from 'react-icons/fa';
+import BlogPostItem from './BlogPostItem';
 import SeachBar from './SearchBar';
 import './SearchResult.css';
-import Tag from './Tag';
 import TagList from './TagList';
 
 async function fetchPosts() {
@@ -111,17 +111,6 @@ function findHighlightedText(content, query) {
     return { isMatch, before, match, after };
 }
 
-// ドメイン名を抽出する関数
-function extractDomain(url) {
-    try {
-        const domain = new URL(url).hostname;
-        return domain.replace(/^www\./, ''); // www. がある場合は削除
-    } catch (e) {
-        return '';
-    }
-}
-
-
 // 削除可能なタグ.
 // 押すと、クエリパラメータの `tag=` にタグの配列があるので、そこから `name` のタグを削除して、ページをリロードする.
 function DeleatableTag({ name, label }) {
@@ -200,34 +189,7 @@ export default function SearchResult() {
                 
                 <div className="search-posts-list">
                     {searchedPosts.map((post) => (
-                        <div key={post.url} className="search-post-item">
-                            <div className="search-post-date">
-                                {new Date(post.post_date).toLocaleDateString('ja-JP', {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit'
-                                }).replace(/\//g, '-')}
-                                {post.external && (
-                                    <span className="search-post-source">
-                                        <ExternalLink size={12} style={{marginLeft: '0.5ch', marginRight: '0.25ch'}} />
-                                        {extractDomain(post.url)}
-                                    </span>
-                                )}
-                            </div>
-                            <a href={post.url} target="_blank" rel="noreferrer" className="search-post-title-link">
-                                {post.title}
-                            </a>
-                            <div className="search-post-tags">
-                                {post.tags?.slice(0, 4).map((tag, i) => (
-                                    <Tag key={i}>{tag}</Tag>
-                                ))}
-                                {post.tags?.length > 4 && (
-                                    <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
-                                        +{post.tags.length - 4}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
+                        <BlogPostItem key={post.url} post={post} maxTags={4} />
                     ))}
                 </div>
             </div>
