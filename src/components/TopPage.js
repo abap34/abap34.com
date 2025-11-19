@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
-import About from './About';
+import RecentPosts from './RecentPosts';
 import Background from './Background';
 import Introduction from './Introduction';
 import './TopPage.css';
@@ -18,27 +18,33 @@ export default function TopPage() {
     return (
         <main className="top-page">
             <div className="top-page-content" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ marginBottom: '1lh', display: 'flex', flexDirection: 'column' }}>
-                    <Introduction />
+                <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                    <span is-="badge" variant-="foreground0"
+                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                        Introduction
+                    </span>
+                    <div style={{ padding: '2lh 2ch' }}>
+                        <Introduction />
+                    </div>
                 </div>
 
                 <div className="top-page-grid">
                     <div className="top-page-grid-item">
                         <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                            <span is-="badge" variant-="foreground0" 
-                                style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                            <span is-="badge" variant-="foreground0"
+                                style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                                 Recent Blog Posts
                             </span>
                             <div style={{ padding: '2lh 2ch' }}>
-                                <About />
+                                <RecentPosts />
                             </div>
                         </div>
                     </div>
 
                     <div className="top-page-grid-item">
                         <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                            <span is-="badge" variant-="foreground0" 
-                                style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                            <span is-="badge" variant-="foreground0"
+                                style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                                 Background
                             </span>
                             <div style={{ padding: '2lh 2ch' }}>
@@ -49,8 +55,8 @@ export default function TopPage() {
                 </div>
 
                 <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
-                    <span is-="badge" variant-="foreground0" 
-                        style={{'--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)'}}>
+                    <span is-="badge" variant-="foreground0"
+                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Works
                     </span>
                     <div style={{ padding: '2lh 2ch' }}>
@@ -71,6 +77,6 @@ export default function TopPage() {
                     </div>
                 </div>
             </div>
-        </main>
+        </main >
     );
 }
