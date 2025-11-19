@@ -37,6 +37,10 @@ JETLS:
     - Language Server
     - OSS
   period: 2025
+  relatedlinks:
+    - https://www.abap34.com/posts/gsoc2025_final_report.html
+    - https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m
+    - https://julialang.org/blog/2025/07/gsoc-projects-announcement/
 
 eta:
   title: eta
