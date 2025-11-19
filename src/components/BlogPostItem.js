@@ -27,9 +27,9 @@ export default function BlogPostItem({ post, maxTags = 3 }) {
             <a href={post.url} target="_blank" rel="noopener noreferrer" className="search-post-title-link">
                 {post.title}
             </a>
-            <div className="search-post-tags">
+            <div className="works-card-tags">
                 {post.tags?.slice(0, maxTags).map((tag, i) => (
-                    <Tag key={i} name={tag}>{tag}</Tag>
+                    <Tag key={i} name={tag} targetPage="/search">{tag}</Tag>
                 ))}
                 {post.tags?.length > maxTags && (
                     <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
