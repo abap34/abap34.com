@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,25 +1579,25 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"あらすじ"
 });
 </script>
-<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url> <a href="https://abap34.com/posts/jci_00.html">第0回</a> </url> を見てください。<br><script>page_contents.push({
+<h2 id="2">あらすじ</h2><br>Juliaのコンパイラの内部実装を読んでいくシリーズです。<br>シリーズ自体については <url><a href="https://abap34.com/posts/jci_00.html">第0回</a></url> を見てください。<br><script>page_contents.push({
     "type":"H2",
     "id":"11",
     "title":"Lowering"
 });
 </script>
-<h2 id="11">Lowering</h2><br><url> <a href="https://abap34.com/posts/jci_00.html">前回</a> </url> は Juliaの処理系の大まかな流れを見ました。<br>今回からは、各セクション (Lowering, Type Inference, ...) の処理の大枠を見ていきます。<br><script>page_contents.push({
+<h2 id="11">Lowering</h2><br><url><a href="https://abap34.com/posts/jci_00.html">前回</a></url> は Juliaの処理系の大まかな流れを見ました。<br>今回からは、各セクション (Lowering, Type Inference, ...) の処理の大枠を見ていきます。<br><script>page_contents.push({
     "type":"H3",
     "id":"19",
     "title":"What is Lowering?"
 });
 </script>
-<h3 id="19">What is Lowering?</h3><br>前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
+<h3 id="19">What is Lowering?</h3><br>前回も書きましたが、 Lowering は AST を もう少しネイティブに近い IR に変換する処理です。<br>例えば、<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; ex = quote
        s = 0
        for i in 1:10
            s += i
        end
        end
-</code></pre> </div><br>は<br><br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; Meta.lower(Main, ex)
+</code></pre></div><br>は<br><br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; Meta.lower(Main, ex)
 :($(Expr(:thunk, CodeInfo(
     @ REPL[1]:2 within `top-level scope`
 1 ─       Core.NewvarNode(:(#s1))
@@ -1592,14 +1627,14 @@ document.addEventListener("DOMContentLoaded", function() {
 6 ─       goto #5
 7 ┄       return nothing
 ))))
-</code></pre> </div><br><br>と、 <span class="inline-code"> <code>for</code> </span> ループが 直列に展開されているのがわかります。<br><br><script>page_contents.push({
+</code></pre></div><br><br>と、 <span class="inline-code"><code>for</code></span> ループが 直列に展開されているのがわかります。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"39",
     "title":"jl_expand"
 });
 </script>
-<h3 id="39">jl_expand</h3><br><span class="inline-code"> <code>base/meta.jl#L161</code> </span> を見てください。<br><div class="code-block"> <pre><code class="language-julia">lower(m::Module, @nospecialize(x)) = ccall(:jl_expand, Any, (Any, Any), x, m)
-</code></pre> </div><br>このように Lowering は <span class="inline-code"> <code>jl_expand</code> </span> によって行われます。　<br><span class="inline-code"> <code>src/ast.jl#L1280</code> </span> に定義があります。<br><div class="code-block"> <pre><code class="language-c">// Lower an expression tree into Julia&#39;s intermediate-representation.
+<h3 id="39">jl_expand</h3><br><span class="inline-code"><code>base/meta.jl#L161</code></span> を見てください。<br><div class="code-block"><pre><code class="language-julia">lower(m::Module, @nospecialize(x)) = ccall(:jl_expand, Any, (Any, Any), x, m)
+</code></pre></div><br>このように Lowering は <span class="inline-code"><code>jl_expand</code></span> によって行われます。　<br><span class="inline-code"><code>src/ast.jl#L1280</code></span> に定義があります。<br><div class="code-block"><pre><code class="language-c">// Lower an expression tree into Julia&#39;s intermediate-representation.
 JL_DLLEXPORT jl_value_t *jl_expand(jl_value_t *expr, jl_module_t *inmodule)
 {
     return jl_expand_with_loc(expr, inmodule, &quot;none&quot;, 0);
@@ -1625,19 +1660,19 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
     JL_GC_POP();
     return expr;
 }
-</code></pre> </div><br>と、結局 <span class="inline-code"> <code>jl_expand_in_world</code> </span> が呼ばれています。    <br><span class="inline-code"> <code>jl_expand_in_world</code> </span> では gc・マクロ展開関連の処理もありますが、今回は <span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> に集中することにします。<br><span class="inline-code"> <code>jl_call_scm_on_ast_and_loc</code> </span> では Scheme で書かれた Lowering の処理がよばれます。<br><br>(ちなみに、最近では Juliaでこれを書き直すという取り組み<span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span>もあるようです。)<br><script>page_contents.push({
+</code></pre></div><br>と、結局 <span class="inline-code"><code>jl_expand_in_world</code></span> が呼ばれています。    <br><span class="inline-code"><code>jl_expand_in_world</code></span> では gc・マクロ展開関連の処理もありますが、今回は <span class="inline-code"><code>jl_call_scm_on_ast_and_loc</code></span> に集中することにします。<br><span class="inline-code"><code>jl_call_scm_on_ast_and_loc</code></span> では Scheme で書かれた Lowering の処理がよばれます。<br><br>(ちなみに、最近では Juliaでこれを書き直すという取り組み<span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span>もあるようです。)<br><script>page_contents.push({
     "type":"H3",
     "id":"73",
     "title":"compile-body"
 });
 </script>
-<h3 id="73">compile-body</h3><br>Scheme側ではなんやかんやあって最終的に <span class="inline-code"> <code>src/julia-syntax.scm</code> </span> にある実装たちが本質パートを担当してくれます。<br>このファイルは 5000行以上あってかなり大変な見た目をしていますが、やっていることをあたるにはおそらく <span class="inline-code"> <code>julia-expand1</code> </span> を見れば良さそうです。<br><div class="code-block"> <pre><code class="language-scheme">(define (julia-expand1 ex file line)
+<h3 id="73">compile-body</h3><br>Scheme側ではなんやかんやあって最終的に <span class="inline-code"><code>src/julia-syntax.scm</code></span> にある実装たちが本質パートを担当してくれます。<br>このファイルは 5000行以上あってかなり大変な見た目をしていますが、やっていることをあたるにはおそらく <span class="inline-code"><code>julia-expand1</code></span> を見れば良さそうです。<br><div class="code-block"><pre><code class="language-scheme">(define (julia-expand1 ex file line)
   (compact-and-renumber
    (linearize
     (closure-convert
      (analyze-variables!
       (resolve-scopes ex)))) file line))
-</code></pre> </div><br><br>一旦、 Lowering でおそらく一番核心的なことである制御構文をバラして直列にしているところ (= <span class="inline-code"> <code>linearize</code> </span>) だけ注目してみることにします。<br>するとこれは <span class="inline-code"> <code>compile-body</code> </span> という関数がやってくれいていることを読み取れます。<br><br><div class="code-block"> <pre><code class="language-scheme">(define (linearize e)
+</code></pre></div><br><br>一旦、 Lowering でおそらく一番核心的なことである制御構文をバラして直列にしているところ (= <span class="inline-code"><code>linearize</code></span>) だけ注目してみることにします。<br>するとこれは <span class="inline-code"><code>compile-body</code></span> という関数がやってくれいていることを読み取れます。<br><br><div class="code-block"><pre><code class="language-scheme">(define (linearize e)
   (cond ((or (not (pair? e)) (quoted? e)) e)
         ((eq? (car e) &#39;lambda)
          (set-car! (cdddr e) (compile-body (cadddr e) (append (car (caddr e))
@@ -1645,7 +1680,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
                                            e)))
         (else (for-each linearize (cdr e))))
   e)
-</code></pre> </div><br><span class="inline-code"> <code>compile-body</code> </span> を見ましょう。 <span class="inline-code"> <code>src/julia-syntax.scm#4296</code> </span> です。<br><br><span class="strong"> <strong>... 長い！！！ (700行↑)</strong> </span><br><br>一旦真面目に全部読むのは後に回すとして、処理の概略を雰囲気で読み取ることを試みます。<br>まず、先頭ではラベルのカウンタとかが置いてあります。 これを使って goto のラベルを作っているように見えますね。<br><div class="code-block"> <pre><code class="language-scheme">(define (make-label)
+</code></pre></div><br><span class="inline-code"><code>compile-body</code></span> を見ましょう。 <span class="inline-code"><code>src/julia-syntax.scm#4296</code></span> です。<br><br><span class="strong"><strong>... 長い！！！ (700行↑)</strong></span><br><br>一旦真面目に全部読むのは後に回すとして、処理の概略を雰囲気で読み取ることを試みます。<br>まず、先頭ではラベルのカウンタとかが置いてあります。 これを使って goto のラベルを作っているように見えますね。<br><div class="code-block"><pre><code class="language-scheme">(define (make-label)
     (begin0 label-counter
             (set! label-counter (+ 1 label-counter))))
 (define (mark-label l) (emit `(label ,l)))
@@ -1656,7 +1691,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
         (let ((l (make-label)))
         (mark-label l)
         l)))
-</code></pre> </div><br><br>続いて、例えば L4663 を見ます。<br><div class="code-block"> <pre><code class="language-scheme">((if elseif)
+</code></pre></div><br><br>続いて、例えば L4663 を見ます。<br><div class="code-block"><pre><code class="language-scheme">((if elseif)
     (let* ((tests (emit-cond (cadr e) break-labels &#39;_))
         (end-jump `(goto _))
         (val (if (and value (not tail)) (new-mutable-var) #f)))
@@ -1678,7 +1713,7 @@ JL_DLLEXPORT jl_value_t *jl_expand_in_world(jl_value_t *expr, jl_module_t *inmod
             (if (length= e 3)
                 (emit-return tail v2)))
         val))))
-</code></pre> </div><br><br>どうも <span class="inline-code"> <code>if, elseif</code> </span> がジャンプに書き換えられていそうです。<br>実際、<br><br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = quote
+</code></pre></div><br><br>どうも <span class="inline-code"><code>if, elseif</code></span> がジャンプに書き換えられていそうです。<br>実際、<br><br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; ex = quote
            if rand() &lt; 0.5
                1
            else
@@ -1707,7 +1742,7 @@ julia&gt; Meta.lower(Main, ex)
     @ REPL[11]:5 within `top-level scope`
 3 ─      return 0
 ))))
-</code></pre> </div><br>ですね。 最初に見た <span class="inline-code"> <code>make&amp;mark-label</code> </span> で goto のラベルを作っているのがわかります。<br><br>このような定義が前後で延々と続いていて、どうも素直に制御構文ごとにバラし方を考えて、順番にバラしているようです。<br><br><script>page_contents.push({
+</code></pre></div><br>ですね。 最初に見た <span class="inline-code"><code>make&amp;mark-label</code></span> で goto のラベルを作っているのがわかります。<br><br>このような定義が前後で延々と続いていて、どうも素直に制御構文ごとにバラし方を考えて、順番にバラしているようです。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"137",
     "title":"まとめ"
@@ -1719,7 +1754,7 @@ julia&gt; Meta.lower(Main, ex)
     "title":"今日の一曲"
 });
 </script>
-<h2 id="145">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url> <a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a> </url>  </span></div>
+<h2 id="145">今日の一曲</h2><br><iframe width="560" height="315" src="https://www.youtube.com/embed/d0ARerCxF8c?si=Gz4RV12QlRHvTJgH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> JuliaLowering.jl というのがあるみたいです。 (まだ experimental)  <url><a href="https://github.com/c42f/JuliaLowering.jl">JuliaLowering.jl</a></url>  </span></div>
 
             <hr>
 

@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1556,7 +1591,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"目標"
 });
 </script>
-<h3 id="23">目標</h3><br>一応、 <span class="strong"> <strong>Julia の IR・最適化周りをきちんとめに理解する</strong> </span> ことを目標にしています。<br>そのため、 例えば<br><ul><li>パーサ周り</li><li>マクロ展開まわり</li></ul><br>についてはそこまで深くは追求しないことになりそうです。<br>目標としてこの辺りを定めたのは<br><ul><li>現代の自動微分ライブラリ: <url> <a href="https://arxiv.org/abs/1810.07951">https://arxiv.org/abs/1810.07951</a> </url> や <url> <a href="https://arxiv.org/abs/2010.01709">https://arxiv.org/abs/2010.01709</a> </url> あたりをきちんと理解したい。</li><li>「Julia ってなんで速いの？」 に対する回答を常に適切な粒度でできるまできちんと理解したい。</li></ul><br>あたりによるものです。<br>なのでこのあたりに関心がある人は面白いと思います。<br><script>page_contents.push({
+<h3 id="23">目標</h3><br>一応、 <span class="strong"><strong>Julia の IR・最適化周りをきちんとめに理解する</strong></span> ことを目標にしています。<br>そのため、 例えば<br><ul><li>パーサ周り</li><li>マクロ展開まわり</li></ul><br>についてはそこまで深くは追求しないことになりそうです。<br>目標としてこの辺りを定めたのは<br><ul><li>現代の自動微分ライブラリ: <url><a href="https://arxiv.org/abs/1810.07951">https://arxiv.org/abs/1810.07951</a></url> や <url><a href="https://arxiv.org/abs/2010.01709">https://arxiv.org/abs/2010.01709</a></url> あたりをきちんと理解したい。</li><li>「Julia ってなんで速いの？」 に対する回答を常に適切な粒度でできるまできちんと理解したい。</li></ul><br>あたりによるものです。<br>なのでこのあたりに関心がある人は面白いと思います。<br><script>page_contents.push({
     "type":"H2",
     "id":"57",
     "title":"00. Julia の処理系の大枠"
@@ -1568,7 +1603,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"パース"
 });
 </script>
-<h3 id="64">パース</h3><br>ソースコードはまずパースされて AST に変換されます。<br>Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、 Julia 1.9 までは lisp で書かれたパーサが使われていたのが、Julia 1.10 からは <url> <a href="https://github.com/JuliaLang/JuliaSyntax.jl">https://github.com/JuliaLang/JuliaSyntax.jl</a> </url> がデフォルトになりました。<br><script>page_contents.push({
+<h3 id="64">パース</h3><br>ソースコードはまずパースされて AST に変換されます。<br>Syntax Error 周りがかなり見やすくなったので気がついた人も多いと思いますが、 Julia 1.9 までは lisp で書かれたパーサが使われていたのが、Julia 1.10 からは <url><a href="https://github.com/JuliaLang/JuliaSyntax.jl">https://github.com/JuliaLang/JuliaSyntax.jl</a></url> がデフォルトになりました。<br><script>page_contents.push({
     "type":"H3",
     "id":"73",
     "title":"マクロの展開"
@@ -1580,10 +1615,10 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"Lowering"
 });
 </script>
-<h3 id="80">Lowering</h3><br>AST は Lowering という処理を経て、 IR に変換されます。<br>AST と IR の違いですが、 IR の方がかなりネイティブに近い形式になっています。<br>実際に見るのがわかりやすいと思います。<br>例えば、<br><div class="code-block"> <pre><code class="language-julia-repl">for i in 1:10
+<h3 id="80">Lowering</h3><br>AST は Lowering という処理を経て、 IR に変換されます。<br>AST と IR の違いですが、 IR の方がかなりネイティブに近い形式になっています。<br>実際に見るのがわかりやすいと思います。<br>例えば、<br><div class="code-block"><pre><code class="language-julia-repl">for i in 1:10
     s += i
 end
-</code></pre> </div><br>の AST は<br><div class="code-block"> <pre><code class="language-julia-repl">julia&gt; ex = :(for i in 1:10
+</code></pre></div><br>の AST は<br><div class="code-block"><pre><code class="language-julia-repl">julia&gt; ex = :(for i in 1:10
            s += i
        end)
 :(for i = 1:10
@@ -1598,7 +1633,7 @@ julia&gt; Meta.show_sexpr(ex)
     (:+=, :s, :i),
     :(#= REPL[19]:3 =#)
   ))
-</code></pre> </div><br>と、そのままループ構造が残っていますが、IR に変換されると<br><div class="code-block"> <pre><code class="language-julia">julia&gt; Meta.lower(Main, ex)
+</code></pre></div><br>と、そのままループ構造が残っていますが、IR に変換されると<br><div class="code-block"><pre><code class="language-julia">julia&gt; Meta.lower(Main, ex)
 :($(Expr(:thunk, CodeInfo(
     @ none within `top-level scope`
 1 ─ %1  = 1:10
@@ -1619,19 +1654,19 @@ julia&gt; Meta.show_sexpr(ex)
 3 ─       goto #2
 4 ┄       return nothing
 ))))
-</code></pre> </div><br>と、ループ構造が <span class="inline-code"> <code>goto</code> </span> とかで書き換えられているのがわかります。<br><br><script>page_contents.push({
+</code></pre></div><br>と、ループ構造が <span class="inline-code"><code>goto</code></span> とかで書き換えられているのがわかります。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"106",
     "title":"Infer types "
 });
 </script>
-<h3 id="106">Infer types </h3><br>この IR に対して型推論が行われます。<br>ここがおそらく今回のシリーズで一番難しい部分になるかと思います。 今書けることといえば<br><span class="inline-code"> <code>@code_typed</code> </span> とかで型推論の結果を見ることができますよ、くらいでしょうか。 　<div class="code-block"> <pre><code class="language-julia">julia&gt; @code_typed 1 + 3.4
+<h3 id="106">Infer types </h3><br>この IR に対して型推論が行われます。<br>ここがおそらく今回のシリーズで一番難しい部分になるかと思います。 今書けることといえば<br><span class="inline-code"><code>@code_typed</code></span> とかで型推論の結果を見ることができますよ、くらいでしょうか。 　<div class="code-block"><pre><code class="language-julia">julia&gt; @code_typed 1 + 3.4
 CodeInfo(
 1 ─ %1 = Base.sitofp(Float64, x)::Float64
 │   %2 = Base.add_float(%1, y)::Float64
 └──      return %2
 ) =&gt; Float64
-</code></pre> </div><br><script>page_contents.push({
+</code></pre></div><br><script>page_contents.push({
     "type":"H3",
     "id":"117",
     "title":"SSA Convert"

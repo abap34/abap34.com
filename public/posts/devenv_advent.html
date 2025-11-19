@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1538,13 +1573,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         <!-- メイン本文 -->
         <div class="content">
-            <br><figure><img src="devenv_advent/image.png" ><figcaption></figcaption></figure><br>この記事は、<url> <a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー</a> </url> 6日目の記事です。<br><script>page_contents.push({
+            <br><figure><img src="devenv_advent/image.png" ><figcaption></figcaption></figure><br>この記事は、<url><a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー</a></url> 6日目の記事です。<br><script>page_contents.push({
     "type":"H2",
     "id":"8",
     "title":"こんばんは"
 });
 </script>
-<h2 id="8">こんばんは</h2><br>おい全然埋まってないぞ！！！！ <url> <a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー！！！！！！！！</a> </url> <br>みなさんはあんまり使っている人がいない変な CLI ツール, エディタ, Chrome 拡張などをお使いでしょうか？<br><br>そうでなくともこの手の便利ツールを網羅的に知ることは難しいので、実は人の開発環境を見るのは結構面白いものを知れます。<br><br>というわけでこういうアドカレを作ったのですが全然埋まっていないのでまずは自分で書こうと思います。<br><br>(ここでいう開発環境は本当に広い意味で、開発に使うものの話ならなんでも良いです)<br>網羅的に書くのは当然無理なので適当に変なやつを載せます。<br><script>page_contents.push({
+<h2 id="8">こんばんは</h2><br>おい全然埋まってないぞ！！！！ <url><a href="https://adventar.org/calendars/10438">開発環境を紹介しますアドベントカレンダー！！！！！！！！</a></url> <br>みなさんはあんまり使っている人がいない変な CLI ツール, エディタ, Chrome 拡張などをお使いでしょうか？<br><br>そうでなくともこの手の便利ツールを網羅的に知ることは難しいので、実は人の開発環境を見るのは結構面白いものを知れます。<br><br>というわけでこういうアドカレを作ったのですが全然埋まっていないのでまずは自分で書こうと思います。<br><br>(ここでいう開発環境は本当に広い意味で、開発に使うものの話ならなんでも良いです)<br>網羅的に書くのは当然無理なので適当に変なやつを載せます。<br><script>page_contents.push({
     "type":"H2",
     "id":"28",
     "title":"Basics"
@@ -1562,13 +1597,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"ターミナルエミュレータ"
 });
 </script>
-<h3 id="41">ターミナルエミュレータ</h3><br>使っているターミナルエミュレータは iTerm2 です。<br>Ctrl 2回押し で全画面に表示するようにしています。<br><figure><img src="devenv_advent/iterm2_hotkey.gif" ><figcaption></figcaption></figure><br>すぐに切り替えられて思考が飛ばないので気に入っています。<br>フォントは <url> <a href="https://juliamono.netlify.app/">JuliaMono</a> </url> というのを使っています。<br><br>数学記号系が非常に充実しているので、このフォントをいろいろなところで使っています。<br><br><script>page_contents.push({
+<h3 id="41">ターミナルエミュレータ</h3><br>使っているターミナルエミュレータは iTerm2 です。<br>Ctrl 2回押し で全画面に表示するようにしています。<br><figure><img src="devenv_advent/iterm2_hotkey.gif" ><figcaption></figcaption></figure><br>すぐに切り替えられて思考が飛ばないので気に入っています。<br>フォントは <url><a href="https://juliamono.netlify.app/">JuliaMono</a></url> というのを使っています。<br><br>数学記号系が非常に充実しているので、このフォントをいろいろなところで使っています。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"60",
     "title":"シェル"
 });
 </script>
-<h3 id="60">シェル</h3><br>シェルは fish を使っています。<br>デフォルトでもいい感じの見た目・異常に補完が効くことなどが気に入ってずっと使っています。<br><figure><img src="devenv_advent/image-2.png" ><figcaption>今どきのエンジニアは天気もターミナルで確認します</figcaption></figure><br><br>また、アルファベット 2文字が枯渇するのではないかという勢いで異常な alias を貼りまくっており、 例えば <span class="inline-code"> <code>code .</code> </span> を <span class="inline-code"> <code>ch</code> </span> にする、みたいなノリで全てを 2タイプで終わらせています。便利かは不明です。<br><br><script>page_contents.push({
+<h3 id="60">シェル</h3><br>シェルは fish を使っています。<br>デフォルトでもいい感じの見た目・異常に補完が効くことなどが気に入ってずっと使っています。<br><figure><img src="devenv_advent/image-2.png" ><figcaption>今どきのエンジニアは天気もターミナルで確認します</figcaption></figure><br><br>また、アルファベット 2文字が枯渇するのではないかという勢いで異常な alias を貼りまくっており、 例えば <span class="inline-code"><code>code .</code></span> を <span class="inline-code"><code>ch</code></span> にする、みたいなノリで全てを 2タイプで終わらせています。便利かは不明です。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"77",
     "title":"エディタ"
@@ -1586,7 +1621,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"Data Preview"
 });
 </script>
-<h3 id="122">Data Preview</h3><br><url> <a href="https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview">Data Preview</a> </url> は、なんかやたらリッチなデータのプレビューができる拡張です。<br><br>結構重いのであまり常に使える感じではないですが、小さいデータを見るときにはかなり便利でよく使っています。<br><script>page_contents.push({
+<h3 id="122">Data Preview</h3><br><url><a href="https://marketplace.visualstudio.com/items?itemName=RandomFractalsInc.vscode-data-preview">Data Preview</a></url> は、なんかやたらリッチなデータのプレビューができる拡張です。<br><br>結構重いのであまり常に使える感じではないですが、小さいデータを見るときにはかなり便利でよく使っています。<br><script>page_contents.push({
     "type":"H3",
     "id":"131",
     "title":"Easzy Snippet"
@@ -1616,13 +1651,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"nvitop"
 });
 </script>
-<h3 id="157">nvitop</h3><br>GPU が焼き切れないか心配しながら日々計算を回していますが、モニタリングで便利なのが<br><a href="https://github.com/XuehaiPan/nvitop"><img src="https://gh-card.dev/repos/XuehaiPan/nvitop.svg"></a><br>です.<br><br><figure><img src="devenv_advent/image-6.png" ><figcaption></figcaption></figure><br><br>かなりいい感じに CPU/GPU の使用率を表示してくれます。 <span class="inline-code"> <code>nvidia-smi</code> </span> を回すのはやめてこっちを使いましょう。<br><script>page_contents.push({
+<h3 id="157">nvitop</h3><br>GPU が焼き切れないか心配しながら日々計算を回していますが、モニタリングで便利なのが<br><a href="https://github.com/XuehaiPan/nvitop"><img src="https://gh-card.dev/repos/XuehaiPan/nvitop.svg"></a><br>です.<br><br><figure><img src="devenv_advent/image-6.png" ><figcaption></figcaption></figure><br><br>かなりいい感じに CPU/GPU の使用率を表示してくれます。 <span class="inline-code"><code>nvidia-smi</code></span> を回すのはやめてこっちを使いましょう。<br><script>page_contents.push({
     "type":"H3",
     "id":"174",
     "title":"Google Scholar PDF Reader"
 });
 </script>
-<h3 id="174">Google Scholar PDF Reader</h3><br><url> <a href="https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp?hl=ja">Google Scholar PDF Reader</a> </url> は Chrome拡張なのですが、めちゃくちゃにおすすめです。<br><figure><img src="devenv_advent/image-9.png" ><figcaption></figcaption></figure><br>pdf を開くとまずこのようにいい感じに目次を出してくれたり、<br><figure><img src="devenv_advent/image-10.png" ><figcaption></figcaption></figure><br>AI 要約をしてくれたり、また Google Scholar のマイライブラリに一発でグループ分けして追加したり、引用を一発で出せたり...とまぁ色々いいところはあるんですが、 個人的に一番革新的で感動したのは<br><figure><img src="devenv_advent/image-11.png" ><figcaption></figcaption></figure><br>この <span class="strong"> <strong>夜間モード</strong> </span> です。 いい感じに黒基調の色に pdf を変換してくれます！<br>何がすごいかというと、<br><figure><img src="devenv_advent/image-12.png" ><figcaption></figcaption></figure><br>こんな感じのも<br><figure><img src="devenv_advent/image-13.png" ><figcaption></figcaption></figure><br>結構読める感じに変換してくれます！ <br>基本的に寝る前にベッドで pdf を読んでいるので、 目が毎晩破壊され無事不眠症を発動していたのですが、 おかげでかなり楽になって本当に感動しました。<br>なので普段はこれを使って pdf を読んでいます。<br>翻訳系は昔は Readable を使っていたんですが、 ChatGPT だけで同等以上のことができると感じたので今はそちらのみを使っています。<br>基本的に ChatGPT に投げて要約を読んで、細かいところを読みつつ英語がわからなったりしたら訳してもらったり、必要な前提知識をあげてもらったりしています。<br><script>page_contents.push({
+<h3 id="174">Google Scholar PDF Reader</h3><br><url><a href="https://chromewebstore.google.com/detail/google-scholar-pdf-reader/dahenjhkoodjbpjheillcadbppiidmhp?hl=ja">Google Scholar PDF Reader</a></url> は Chrome拡張なのですが、めちゃくちゃにおすすめです。<br><figure><img src="devenv_advent/image-9.png" ><figcaption></figcaption></figure><br>pdf を開くとまずこのようにいい感じに目次を出してくれたり、<br><figure><img src="devenv_advent/image-10.png" ><figcaption></figcaption></figure><br>AI 要約をしてくれたり、また Google Scholar のマイライブラリに一発でグループ分けして追加したり、引用を一発で出せたり...とまぁ色々いいところはあるんですが、 個人的に一番革新的で感動したのは<br><figure><img src="devenv_advent/image-11.png" ><figcaption></figcaption></figure><br>この <span class="strong"><strong>夜間モード</strong></span> です。 いい感じに黒基調の色に pdf を変換してくれます！<br>何がすごいかというと、<br><figure><img src="devenv_advent/image-12.png" ><figcaption></figcaption></figure><br>こんな感じのも<br><figure><img src="devenv_advent/image-13.png" ><figcaption></figcaption></figure><br>結構読める感じに変換してくれます！ <br>基本的に寝る前にベッドで pdf を読んでいるので、 目が毎晩破壊され無事不眠症を発動していたのですが、 おかげでかなり楽になって本当に感動しました。<br>なので普段はこれを使って pdf を読んでいます。<br>翻訳系は昔は Readable を使っていたんですが、 ChatGPT だけで同等以上のことができると感じたので今はそちらのみを使っています。<br>基本的に ChatGPT に投げて要約を読んで、細かいところを読みつつ英語がわからなったりしたら訳してもらったり、必要な前提知識をあげてもらったりしています。<br><script>page_contents.push({
     "type":"H3",
     "id":"213",
     "title":"Wakatime"
@@ -1634,7 +1669,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"GitHub 関連"
 });
 </script>
-<h3 id="221">GitHub 関連</h3><br>他の GitHub 関連の便利ツールだと、GitHub のファイルにアイコンをつけてくれる <url> <a href="https://chromewebstore.google.com/detail/material-icons-for-github/bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc">Material Icons for GitHub</a> </url> とか Contribution Graph をいい感じにしてくれる <url> <a href="https://chromewebstore.google.com/detail/github-isometric-contribu/mjoedlfflcchnleknnceiplgaeoegien">GitHub Isometric Contributions</a> </url>　とかも使っています。<br><br>飽きたのでこの辺にします。<br><br><script>page_contents.push({
+<h3 id="221">GitHub 関連</h3><br>他の GitHub 関連の便利ツールだと、GitHub のファイルにアイコンをつけてくれる <url><a href="https://chromewebstore.google.com/detail/material-icons-for-github/bggfcpfjbdkhfhfmkjpbhnkhnpjjeomc">Material Icons for GitHub</a></url> とか Contribution Graph をいい感じにしてくれる <url><a href="https://chromewebstore.google.com/detail/github-isometric-contribu/mjoedlfflcchnleknnceiplgaeoegien">GitHub Isometric Contributions</a></url>　とかも使っています。<br><br>飽きたのでこの辺にします。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"234",
     "title":"今日の一曲"

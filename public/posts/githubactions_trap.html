@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1541,10 +1576,10 @@ document.addEventListener("DOMContentLoaded", function() {
             <br><script>page_contents.push({
     "type":"H2",
     "id":"2",
-    "title":"<span class="inline-code"> <code>git diff</code> </span> が通らない"
+    "title":"<span class="inline-code"><code>git diff</code></span> が通らない"
 });
 </script>
-<h2 id="2"><span class="inline-code"> <code>git diff</code> </span> が通らない</h2><url> <a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a> </url>では、 マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"> <pre><code class="language-bash">- name: Check for Changes in MD Files
+<h2 id="2"><span class="inline-code"><code>git diff</code></span> が通らない</h2><url><a href="https://github.com/abap34/my-site/blob/main/.github/workflows/blog.yml">このページをビルドしてくれるGitHub Actionのワークフローファイル</a></url>では、 マークダウンファイルで差分があったときだけビルドするために<br><br><div class="code-block"><pre><code class="language-bash">- name: Check for Changes in MD Files
   id: check_changes
   run: |
     changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep &#39;\.md&#39; || true)
@@ -1554,18 +1589,18 @@ document.addEventListener("DOMContentLoaded", function() {
     else
       echo &quot;Change: $changed_files&quot;
     fi
-</code></pre> </div><br>みたいなことをしていますが、これを普通に書くだけでは <span class="inline-code"> <code>fetal: bad obejct xxx...</code> </span>となります。<br><br><br>全然原因がわからず、 <span class="inline-code"> <code>actions/checkout</code> </span>を見にいくと、<br><br><figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
+</code></pre></div><br>みたいなことをしていますが、これを普通に書くだけでは <span class="inline-code"><code>fetal: bad obejct xxx...</code></span>となります。<br><br><br>全然原因がわからず、 <span class="inline-code"><code>actions/checkout</code></span>を見にいくと、<br><br><figure><img src="checkout.png" ><figcaption>Alt text</figcaption></figure><br>すいません。 READMEの一番上に書いてありました。<br><script>page_contents.push({
     "type":"H2",
     "id":"26",
     "title":"対応策"
 });
 </script>
-<h2 id="26">対応策</h2><br><div class="code-block"> <pre><code class="language-bash">steps:
+<h2 id="26">対応策</h2><br><div class="code-block"><pre><code class="language-bash">steps:
   - name: Checkout Repository
     uses: actions/checkout@v2
     with:
         fetch-depth: 0
-</code></pre> </div><br>として全てのコミットを参照できるようにすると <span class="inline-code"> <code>git diff</code> </span>が動いて差分だけビルドできるようになりました。<br><br><br><br><br><div class="footnote"></div>
+</code></pre></div><br>として全てのコミットを参照できるようにすると <span class="inline-code"><code>git diff</code></span>が動いて差分だけビルドできるようになりました。<br><br><br><br><br><div class="footnote"></div>
 
             <hr>
 

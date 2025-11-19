@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,13 +1579,13 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"livereload"
 });
 </script>
-<h2 id="2">livereload</h2><br><url> <a href="https://livereload.readthedocs.io/en/latest/">livereload</a> </url> は Pythonのパッケージで、ファイルの変更イベントを検知していろいろ走らせることができます。<br><br>なのでコレをつかって <url> <a href="https://github.com/abap34/ALMO">ALMO</a> </url> でリアルタイムにプレビューできる CLI ツールを作ります。<br><script>page_contents.push({
+<h2 id="2">livereload</h2><br><url><a href="https://livereload.readthedocs.io/en/latest/">livereload</a></url> は Pythonのパッケージで、ファイルの変更イベントを検知していろいろ走らせることができます。<br><br>なのでコレをつかって <url><a href="https://github.com/abap34/ALMO">ALMO</a></url> でリアルタイムにプレビューできる CLI ツールを作ります。<br><script>page_contents.push({
     "type":"H2",
     "id":"13",
     "title":"実装"
 });
 </script>
-<h2 id="13">実装</h2><br><br><div class="code-block"> <pre><code class="language-python">import argparse
+<h2 id="13">実装</h2><br><br><div class="code-block"><pre><code class="language-python">import argparse
 import subprocess
 import os
 import socket
@@ -1632,7 +1667,7 @@ def main():
     
 if __name__ == &#39;__main__&#39;:
     main()
-</code></pre> </div><br><br><span class="inline-code"> <code>setup.py</code> </span> を適当に書いて、コマンド一個で叩けるようにしておきます。<br><div class="code-block"> <pre><code class="language-python">from setuptools import setup, find_packages
+</code></pre></div><br><br><span class="inline-code"><code>setup.py</code></span> を適当に書いて、コマンド一個で叩けるようにしておきます。<br><div class="code-block"><pre><code class="language-python">from setuptools import setup, find_packages
 
 setup(
     name=&#39;almo&#39;,
@@ -1648,19 +1683,19 @@ setup(
         ],
     },
 )
-</code></pre> </div><br><br><br><br><script>page_contents.push({
+</code></pre></div><br><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"28",
     "title":"結果"
 });
 </script>
-<h2 id="28">結果</h2><br><figure><img src="livereload/demo.gif" ><figcaption></figcaption></figure><br><br>いい感じにプレビューできるようになりました！ <br><br>もうすでに VSCode拡張で同じ機能が実現されていましたが、 ブラウザと微妙に表示が違ったり <span class="inline-code"> <code>WebViewPanel</code> </span> は別ウィンドウで開けなかったりと色々と不満があったので、 ブラウザで見ることができるのはかなり便利です。<br><br><script>page_contents.push({
+<h2 id="28">結果</h2><br><figure><img src="livereload/demo.gif" ><figcaption></figcaption></figure><br><br>いい感じにプレビューできるようになりました！ <br><br>もうすでに VSCode拡張で同じ機能が実現されていましたが、 ブラウザと微妙に表示が違ったり <span class="inline-code"><code>WebViewPanel</code></span> は別ウィンドウで開けなかったりと色々と不満があったので、 ブラウザで見ることができるのはかなり便利です。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"42",
     "title":"今日の一曲"
 });
 </script>
-<h2 id="42">今日の一曲</h2><br><span class="italic"> <i>Cool</i> </span><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/XEKPn3WbksE?si=ac7SmasFiL-TYLkM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><div class="footnote"></div>
+<h2 id="42">今日の一曲</h2><br><span class="italic"><i>Cool</i></span><br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/XEKPn3WbksE?si=ac7SmasFiL-TYLkM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><div class="footnote"></div>
 
             <hr>
 

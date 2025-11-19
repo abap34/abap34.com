@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"うおー"
 });
 </script>
-<h2 id="3">うおー</h2>タイトルの通り、ブログを自作Markdownパーサで作り直しました。<br>中身は <br><a href="https://github.com/abap34/ALMO"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/abap34/ALMO.png" width="460px"></a><br>です。<br>Zennにも<url> <a href="https://zenn.dev/abap34/articles/105023ca9fc5c6">記事</a> </url>を書いたんですが、  PyOdideを使って実行環境・ジャッジ同梱のHTMLが吐けるというパーサです。<br>これをGitHub Actionsで動かしてこのページを作っています。<br>もちろん普通のMarkdownも書けるので、基本的にはそういう運用になっていくと思いますが、 せっかく作ったので今後はブログにもうちょっと記事を書いていこうと思います。<br><script>page_contents.push({
+<h2 id="3">うおー</h2>タイトルの通り、ブログを自作Markdownパーサで作り直しました。<br>中身は <br><a href="https://github.com/abap34/ALMO"><img src="https://github-link-card.s3.ap-northeast-1.amazonaws.com/abap34/ALMO.png" width="460px"></a><br>です。<br>Zennにも<url><a href="https://zenn.dev/abap34/articles/105023ca9fc5c6">記事</a></url>を書いたんですが、  PyOdideを使って実行環境・ジャッジ同梱のHTMLが吐けるというパーサです。<br>これをGitHub Actionsで動かしてこのページを作っています。<br>もちろん普通のMarkdownも書けるので、基本的にはそういう運用になっていくと思いますが、 せっかく作ったので今後はブログにもうちょっと記事を書いていこうと思います。<br><script>page_contents.push({
     "type":"H2",
     "id":"21",
     "title":"ここ一週間くらいの近況報告"
@@ -1562,7 +1597,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"おべんきょう"
 });
 </script>
-<h3 id="37">おべんきょう</h3><br>測度論の勉強をひそかにやっています。<br><br>情報工学系(僕の所属している学科)は、確率統計の授業はあるんですが、 測度論含め「確率論」の基礎のきちんとした(?)授業はなく、数理計算科学系という同じ学院のもう一つの系でその辺りをかなりきちんとやる授業が開講されています。<br><br>が、こちらの授業が情報工学系の授業とかなりコンフリクトしており、 履修するのが難しいということが判明したので、 とりあえず自分でやってみることにしました。<br><br>今は、<url> <a href="https://amzn.asia/d/719TjTr">測度・確率・ルベーグ積分 応用への最短コース (原 啓介)</a> </url> を進めています。<br><script>page_contents.push({
+<h3 id="37">おべんきょう</h3><br>測度論の勉強をひそかにやっています。<br><br>情報工学系(僕の所属している学科)は、確率統計の授業はあるんですが、 測度論含め「確率論」の基礎のきちんとした(?)授業はなく、数理計算科学系という同じ学院のもう一つの系でその辺りをかなりきちんとやる授業が開講されています。<br><br>が、こちらの授業が情報工学系の授業とかなりコンフリクトしており、 履修するのが難しいということが判明したので、 とりあえず自分でやってみることにしました。<br><br>今は、<url><a href="https://amzn.asia/d/719TjTr">測度・確率・ルベーグ積分 応用への最短コース (原 啓介)</a></url> を進めています。<br><script>page_contents.push({
     "type":"H3",
     "id":"53",
     "title":"中日ドラゴンズ"

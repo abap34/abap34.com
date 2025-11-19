@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,20 +1579,20 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"推論を goでやりたい人がいる"
 });
 </script>
-<h2 id="3">推論を goでやりたい人がいる</h2><br>世の中ではGoを使っている人が割と多く、 機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url> <a href="https://github.com/go-gota/gota">gota</a> </url> でそれなりにいけそうというのがわかったのですが、 学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。 (しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
+<h2 id="3">推論を goでやりたい人がいる</h2><br>世の中ではGoを使っている人が割と多く、 機械学習の人が一緒に何かやろうと思うとGoを使う必要が割とあります。<br><br><br>となるとPython製のライブラリで作った学習済みモデルをGoからいい感じに呼んで推論する必要があります。<br><br>ところが結構な場合、Goでのいい感じの推論は公式にサポートされていません。<br>前処理系は <url><a href="https://github.com/go-gota/gota">gota</a></url> でそれなりにいけそうというのがわかったのですが、 学習済みモデルを動かす部分は非公式でも全然ちゃんとサポートされているものが出てこなくて厳しい気持ちになります。 (しんどいというよりは、もはやちょっと無理そうという感じ)<br><br>なので、gRPCを使って別個建てたPythonのプロセスに対してGoからお願いして推論してもらうことにします。<br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"24",
     "title":"実装"
 });
 </script>
-<h2 id="24">実装</h2><url> <a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a> </url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"> <pre><code class="language-text">├── api
+<h2 id="24">実装</h2><url><a href="https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro">こちらの記事</a></url> をとても参考にさせていただきました。ありがとうございます。<br>こういうファイル構造にします。<br><div class="code-block"><pre><code class="language-text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
 ├── main.go
 └── pkg
     └── grpc
-</code></pre> </div><br>で、<span class="inline-code"> <code>pred.proto</code> </span>はこんな感じです。<br><div class="code-block"> <pre><code class="language-proto">// proto3 で書く
+</code></pre></div><br>で、<span class="inline-code"><code>pred.proto</code></span>はこんな感じです。<br><div class="code-block"><pre><code class="language-proto">// proto3 で書く
 syntax = &quot;proto3&quot;;
 
 // パッケージ名
@@ -1580,15 +1615,15 @@ message Request {
 message Response {
   string result = 1;
 }
-</code></pre> </div><br>え、これだけで諸々作ってくれるらしいです。天才？<br>セットアップして、<br><div class="code-block"> <pre><code class="language-bash">cd src 
+</code></pre></div><br>え、これだけで諸々作ってくれるらしいです。天才？<br>セットアップして、<br><div class="code-block"><pre><code class="language-bash">cd src 
 go init mypred
 sudo apt-get install protobuf-compiler
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-</code></pre> </div><br>Go用のコードを生成します。<br><div class="code-block"> <pre><code class="language-bash">cd api
+</code></pre></div><br>Go用のコードを生成します。<br><div class="code-block"><pre><code class="language-bash">cd api
 protoc --go_out=. --go-grpc_out=. pred.proto
-</code></pre> </div><br>Python用のコードを生成します。<br><br><div class="code-block"> <pre><code class="language-bash">python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
-</code></pre> </div><br>こんな感じになります。<br><div class="code-block"> <pre><code class="language-text">├── api
+</code></pre></div><br>Python用のコードを生成します。<br><br><div class="code-block"><pre><code class="language-bash">python -m grpc_tools.protoc -I. --python_out=../cmd/server --grpc_python_out=../cmd/server pred.proto
+</code></pre></div><br>こんな感じになります。<br><div class="code-block"><pre><code class="language-text">├── api
 │   └── pred.proto
 ├── cmd
 │   └── server
@@ -1599,13 +1634,13 @@ protoc --go_out=. --go-grpc_out=. pred.proto
     └── grpc
         ├── pred.pb.go
         └── pred_grpc.pb.go
-</code></pre> </div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
+</code></pre></div><br>あとはサーバ側をPython, クライアント側をGoで書きます。<br><script>page_contents.push({
     "type":"H3",
     "id":"60",
     "title":"サーバ側"
 });
 </script>
-<h3 id="60">サーバ側</h3><br><div class="code-block"> <pre><code class="language-python">from concurrent import futures
+<h3 id="60">サーバ側</h3><br><div class="code-block"><pre><code class="language-python">from concurrent import futures
 import logging
 
 import grpc
@@ -1637,13 +1672,13 @@ def serve():
 if __name__ == &#39;__main__&#39;:
     logging.basicConfig()
     serve()
-</code></pre> </div><br><script>page_contents.push({
+</code></pre></div><br><script>page_contents.push({
     "type":"H3",
     "id":"65",
     "title":"クライアント側"
 });
 </script>
-<h3 id="65">クライアント側</h3><br><div class="code-block"> <pre><code class="language-go">package main
+<h3 id="65">クライアント側</h3><br><div class="code-block"><pre><code class="language-go">package main
 
 import (
 	&quot;context&quot;
@@ -1696,7 +1731,7 @@ func main() {
 	r.HandleFunc(&quot;/predict&quot;, PredictHandler)
 	http.ListenAndServe(&quot;:8080&quot;, r)
 }
-</code></pre> </div><br>これで <span class="inline-code"> <code>main.go</code> </span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
+</code></pre></div><br>これで <span class="inline-code"><code>main.go</code></span> を実行させて、 csvファイルを投げ込むと.....<br><figure><img src="grpc_ml/req.png" ><figcaption></figcaption></figure><br>推論結果が返ってきました。笑顔に。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"79",
     "title":"まとめ"

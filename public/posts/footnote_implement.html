@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1550,7 +1585,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"脚注の何が特別なのか？"
 });
 </script>
-<h2 id="35">脚注の何が特別なのか？</h2><br>そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。<br><ol><li>Markdown をパースして AST に変換</li><li>AST を走査して HTML に変換</li></ol><br>almo も同様です。<br><br>例えば<br><div class="code-block"> <pre><code class="language-md"># Heading  1
+<h2 id="35">脚注の何が特別なのか？</h2><br>そもそもたいていの md2html な処理系たちはたいてい次のようなフローで処理を行います。<br><ol><li>Markdown をパースして AST に変換</li><li>AST を走査して HTML に変換</li></ol><br>almo も同様です。<br><br>例えば<br><div class="code-block"><pre><code class="language-md"># Heading  1
 
 **~~To be or not to be~~**
 
@@ -1558,7 +1593,7 @@ document.addEventListener("DOMContentLoaded", function() {
 - list2
   - list3
   - list4
-</code></pre> </div><br>のような md ファイルを almo に渡して、<br><div class="code-block"> <pre><code class="language-python">import almo
+</code></pre></div><br>のような md ファイルを almo に渡して、<br><div class="code-block"><pre><code class="language-python">import almo
 
 md = &quot;&quot;&quot;
 # Heading  1
@@ -1572,19 +1607,19 @@ md = &quot;&quot;&quot;
 &quot;&quot;&quot;
 
 ast = almo.parse(md)
-</code></pre> </div><br><br><span class="inline-code"> <code>ast.to_dot()</code> </span> してみると<br><figure><img src="footnote_implement/ast.svg" ><figcaption></figcaption></figure><br>という結果が吐かれてます。<br><br>ここから HTML に変換するわけです。<br><br>ここで、パースするとき・この AST から HTML を生成するとき　のうれしい性質として、「各ノードは独立に考えてもいい」というのがあります。<br><br>例えば HTML に変換するときは、それぞれのノードは (他のノードが valid な出力をしてくれているという前提に立って)、　自分が正しい出力をすれば良いだけです。<br><br><br><span class="lined"><span class="strong"> <strong>しかし、脚注は違います。</strong> </span></span><br><br><br>脚注は以下のような性質があります:<br><ul><li>定義は末尾に生成される</li><li>番号を振る</li><li>未定義な脚注がないかチェックする</li></ul><br><br>したがって、 <span class="strong"> <strong>AST 全体にわたるグローバルな状態を検査する必要があります。</strong> </span><br>これが脚注の他の構文との違いです。<br><br><script>page_contents.push({
+</code></pre></div><br><br><span class="inline-code"><code>ast.to_dot()</code></span> してみると<br><figure><img src="footnote_implement/ast.svg" ><figcaption></figcaption></figure><br>という結果が吐かれてます。<br><br>ここから HTML に変換するわけです。<br><br>ここで、パースするとき・この AST から HTML を生成するとき　のうれしい性質として、「各ノードは独立に考えてもいい」というのがあります。<br><br>例えば HTML に変換するときは、それぞれのノードは (他のノードが valid な出力をしてくれているという前提に立って)、　自分が正しい出力をすれば良いだけです。<br><br><br><span class="lined"><span class="strong"><strong>しかし、脚注は違います。</strong></span></span><br><br><br>脚注は以下のような性質があります:<br><ul><li>定義は末尾に生成される</li><li>番号を振る</li><li>未定義な脚注がないかチェックする</li></ul><br><br>したがって、 <span class="strong"><strong>AST 全体にわたるグローバルな状態を検査する必要があります。</strong></span><br>これが脚注の他の構文との違いです。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"101",
     "title":"どう実装するのか？"
 });
 </script>
-<h2 id="101">どう実装するのか？</h2><br>最初に自分が提案したのは、パースをする際に使う <span class="inline-code"> <code>Reader</code> </span> にグローバルな状態を持たせてパースさせていくことでした。<br><br>というのも、実は類似の仕組みがすでに実装されていたためです。<br>これは almo 特有の事情ですが、Pyodide をロードするのは非常にコストがかかるので、不要ならこれをスキップするために 「Pyodide が必要か？」というのを調べるために <span class="inline-code"> <code>Reader</code> </span> クラスに情報を持たせる仕組みがすでにありました。<br><br>そのため、自分は当初これと同様の実装を提案しましたが、一緒に開発している友人から別の仕組みを提案されました。<br><br><br>そもそも、 <span class="inline-code"> <code>Reader</code> </span> クラスにあまり情報を持たせるのはうれしくありません。 この手の構文が増えるたびに肥大化していくのが目に見えています。<br><br>そこで、脚注の実装を AST に対する後処理として行うことを提案されました。<br><br><br>つまり、 (第一段階の) AST を作る段階では末尾に移動させる、正しい脚注定義がなされているかをチェックする、などの処理は行わず、 AST が完成した後に走査・操作を行なって所望の結果を得る、というものです。<br><br>この実装で統一することで 「Pyodide が必要か？」という処理も単に特定のノードが含まれるかを最後にチェックするだけに書き直して、割とスッキリした実装になりました。<br><br><script>page_contents.push({
+<h2 id="101">どう実装するのか？</h2><br>最初に自分が提案したのは、パースをする際に使う <span class="inline-code"><code>Reader</code></span> にグローバルな状態を持たせてパースさせていくことでした。<br><br>というのも、実は類似の仕組みがすでに実装されていたためです。<br>これは almo 特有の事情ですが、Pyodide をロードするのは非常にコストがかかるので、不要ならこれをスキップするために 「Pyodide が必要か？」というのを調べるために <span class="inline-code"><code>Reader</code></span> クラスに情報を持たせる仕組みがすでにありました。<br><br>そのため、自分は当初これと同様の実装を提案しましたが、一緒に開発している友人から別の仕組みを提案されました。<br><br><br>そもそも、 <span class="inline-code"><code>Reader</code></span> クラスにあまり情報を持たせるのはうれしくありません。 この手の構文が増えるたびに肥大化していくのが目に見えています。<br><br>そこで、脚注の実装を AST に対する後処理として行うことを提案されました。<br><br><br>つまり、 (第一段階の) AST を作る段階では末尾に移動させる、正しい脚注定義がなされているかをチェックする、などの処理は行わず、 AST が完成した後に走査・操作を行なって所望の結果を得る、というものです。<br><br>この実装で統一することで 「Pyodide が必要か？」という処理も単に特定のノードが含まれるかを最後にチェックするだけに書き直して、割とスッキリした実装になりました。<br><br><script>page_contents.push({
     "type":"H2",
     "id":"135",
     "title":"実装"
 });
 </script>
-<h2 id="135">実装</h2><br><url> <a href="https://github.com/abap34/almo/blob/b3389f3126551e85ae6d3bebe8a77913793fa61d/src/render.hpp#L100">実際の実装</a> </url>　では、<br><br><div class="code-block"> <pre><code class="language-cpp">void move_footnote_to_end(Markdown&amp; ast) {
+<h2 id="135">実装</h2><br><url><a href="https://github.com/abap34/almo/blob/b3389f3126551e85ae6d3bebe8a77913793fa61d/src/render.hpp#L100">実際の実装</a></url>　では、<br><br><div class="code-block"><pre><code class="language-cpp">void move_footnote_to_end(Markdown&amp; ast) {
     std::vector&lt;std::shared_ptr&lt;ASTNode&gt;&gt; footnote_defs =
         ast.nodes_byclass(&quot;FootnoteDefinition&quot;);
 
@@ -1597,7 +1632,7 @@ ast = almo.parse(md)
         ast.move_node(node, footnote_div);
     }
 }
-</code></pre> </div><br>という感じで、 脚注のノードを末尾に移動させる処理を行っています。　便利！<br><br><script>page_contents.push({
+</code></pre></div><br>という感じで、 脚注のノードを末尾に移動させる処理を行っています。　便利！<br><br><script>page_contents.push({
     "type":"H2",
     "id":"147",
     "title":"感想"
@@ -1609,7 +1644,7 @@ ast = almo.parse(md)
     "title":"今日の一曲"
 });
 </script>
-<h2 id="155">今日の一曲</h2><br>最近雨やばいですよね<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yEpKC0wXy4M?si=MvIcU92Y6I_1f1rt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url> <a href="https://github.com/abap34/almo">https://github.com/abap34/almo</a> </url></span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> <url> <a href="https://spec.commonmark.org/">https://spec.commonmark.org/</a> </url></span><span class="footnote-def" id="label_3"><a href="#ref_3">[3]</a> <url> <a href="https://github.github.com/gfm/">https://github.github.com/gfm/</a> </url></span></div>
+<h2 id="155">今日の一曲</h2><br>最近雨やばいですよね<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/yEpKC0wXy4M?si=MvIcU92Y6I_1f1rt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><br><br><br><div class="footnote"><span class="footnote-def" id="label_1"><a href="#ref_1">[1]</a> <url><a href="https://github.com/abap34/almo">https://github.com/abap34/almo</a></url></span><span class="footnote-def" id="label_2"><a href="#ref_2">[2]</a> <url><a href="https://spec.commonmark.org/">https://spec.commonmark.org/</a></url></span><span class="footnote-def" id="label_3"><a href="#ref_3">[3]</a> <url><a href="https://github.github.com/gfm/">https://github.github.com/gfm/</a></url></span></div>
 
             <hr>
 

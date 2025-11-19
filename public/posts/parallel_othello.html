@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,7 +1579,7 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"？"
 });
 </script>
-<h2 id="2">？</h2><br>ちょっと前に人工知能の講義で発表したスライドです。<br>レポートを書いて優秀だったら発表できて加点されるみたいな講義で、 発表した + 最優秀だったらしいです。すごい。<br>Twitterに上げたら実装で参考にした <url> <a href="https://twitter.com/issei_y/status/1686367844123209729">山本さんから反応があって嬉しかった</a> </url>です。<br><br>最初の方に並列化についてやや微妙な説明が続きますが、 発表時間との兼ね合いとか、大学の同級生がターゲットのため、 あんまり詳しく説明しても空気がやばくなりそうで、 心の目で読んでもらえればと思います。<br><br><iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe><br><br><br><br><div class="footnote"></div>
+<h2 id="2">？</h2><br>ちょっと前に人工知能の講義で発表したスライドです。<br>レポートを書いて優秀だったら発表できて加点されるみたいな講義で、 発表した + 最優秀だったらしいです。すごい。<br>Twitterに上げたら実装で参考にした <url><a href="https://twitter.com/issei_y/status/1686367844123209729">山本さんから反応があって嬉しかった</a></url>です。<br><br>最初の方に並列化についてやや微妙な説明が続きますが、 発表時間との兼ね合いとか、大学の同級生がターゲットのため、 あんまり詳しく説明しても空気がやばくなりそうで、 心の目で読んでもらえればと思います。<br><br><iframe src="https://drive.google.com/viewerng/viewer?embedded=true&url=https://raw.githubusercontent.com/abap34/ParallelOthello.jl/main/slide.pdf" width="100%" height="500px"></iframe><br><br><br><br><div class="footnote"></div>
 
             <hr>
 

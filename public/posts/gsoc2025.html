@@ -306,19 +306,19 @@ h5 {
     margin-bottom: 1rem;
 }
 
-/* インラインコードを本文と区別しやすく */
 .content .inline-code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     background-color: #f6f8fa;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 0rem 0rem;
+    padding: 0rem 0.25rem;
     margin: 0 0rem;
     font-size: 0.95em;
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
     max-width: 100%;
+    color: #db2955;
 }
 
 /* 箇条書きの字下げ */
@@ -406,6 +406,14 @@ figcaption {
 strong {
     /* ちょっと強めに */
     font-weight: 1000;
+}
+
+blockquote {
+    border-left: 4px solid #ddd;
+    margin: 1rem 0;
+    padding-left: 1rem;
+    color: #353434;
+    background-color: #f9f9f9;
 }
 
 /* ===============================================
@@ -585,6 +593,32 @@ footer {
     font-size: 0.85em;
     max-width: 100%;
 }
+
+/*=============================================
+      ちょっとした span
+    =============================================*/
+
+/* 文字の上にドットをつける */
+.dot-over {
+    -webkit-text-emphasis: filled;
+    text-emphasis: filled;
+    -webkit-text-emphasis-color: #ff9800;
+    text-emphasis-color: #ff9800;
+    -webkit-text-emphasis-style: circle;
+    text-emphasis-style: circle;
+    font-weight: bold;
+}
+
+
+/* 文字の下に水色の波線をつける */
+.wave-underline {
+    text-decoration: underline wavy;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 0.15em;
+    text-underline-offset: 0.1em;
+    text-decoration-color: #80bdff;
+}
+
 
 /* ===============================================
       Footnotes
@@ -897,7 +931,8 @@ pre code.hljs::-webkit-scrollbar {
 }
 
 /* すべてのコードブロックに等幅フォントを確実に適用 */
-pre, code {
+pre,
+code {
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     font-size: 13px;
     line-height: 1.5;
@@ -1050,7 +1085,7 @@ body.light-mode button {
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     max-width: 600px;
 }
 
@@ -1166,13 +1201,13 @@ body.light-mode button {
         flex-direction: column;
         height: auto;
     }
-    
+
     .link-card-image {
         flex: none;
         height: 160px;
         width: 100%;
     }
-    
+
     .link-card-content {
         padding: 16px;
     }
@@ -1544,25 +1579,25 @@ document.addEventListener("DOMContentLoaded", function() {
     "title":"あらすじ"
 });
 </script>
-<h2 id="2">あらすじ</h2><br>Google Summer of Code に Proposal が採択されました！<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Google Summer of Code で Julia に出していた Proposal が採択されました！ 🎉🥳<br><br>Julia の最新のコンパイラインフラを利用して、強力な静的解析を備えた新しい Language Server の機能開発をガシガシやっていきます！✊ <a href="https://t.co/aEBHcSAnXa">pic.twitter.com/aEBHcSAnXa</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1920609443131412630?ref_src=twsrc%5Etfw">May 8, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>Julia の新しい Language Server の開発をやっていく予定です。<br>プロジェクトページ: <url> <a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m</a> </url><br><br>この記事には具体的にやりたいことや準備の記録などを書いておきます。<br><br><script>page_contents.push({
+<h2 id="2">あらすじ</h2><br>Google Summer of Code に Proposal が採択されました！<br><blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Google Summer of Code で Julia に出していた Proposal が採択されました！ 🎉🥳<br><br>Julia の最新のコンパイラインフラを利用して、強力な静的解析を備えた新しい Language Server の機能開発をガシガシやっていきます！✊ <a href="https://t.co/aEBHcSAnXa">pic.twitter.com/aEBHcSAnXa</a></p>&mdash; abap34 (@abap34) <a href="https://twitter.com/abap34/status/1920609443131412630?ref_src=twsrc%5Etfw">May 8, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br>Julia の新しい Language Server の開発をやっていく予定です。<br>プロジェクトページ: <url><a href="https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m">https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m</a></url><br><br>この記事には具体的にやりたいことや準備の記録などを書いておきます。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"18",
     "title":"先行研究"
 });
 </script>
-<h3 id="18">先行研究</h3><br><ul><li><url> <a href="https://saza.hatenadiary.jp/entry/2022/12/24/011018">Google Summer of Code に参加した話 ─ Saza's blog</a> </url></li><li><url> <a href="https://momoka0122y.hatenablog.com/entry/2022/05/26/232604">GSoC (Google Summer of Code)で chromiumに採択された。 ─ momokaのブログ</a> </url></li><li><url> <a href="https://www.shanpu.info/blogs/20211225_gsoc2021/">GSoC 2021 参加記 ─ shanpu-portal</a> </url></li><li><url> <a href="https://sanposhiho.com/posts/gsoc2020/">Google Summer of Code2020に申し込んでみた ─ さんぽしの散歩記</a> </url></li></ul><br>などなど (GSoC 参加記 などで検索すればたくさん出てきます)<br><br><script>page_contents.push({
+<h3 id="18">先行研究</h3><br><ul><li><url><a href="https://saza.hatenadiary.jp/entry/2022/12/24/011018">Google Summer of Code に参加した話 ─ Saza's blog</a></url></li><li><url><a href="https://momoka0122y.hatenablog.com/entry/2022/05/26/232604">GSoC (Google Summer of Code)で chromiumに採択された。 ─ momokaのブログ</a></url></li><li><url><a href="https://www.shanpu.info/blogs/20211225_gsoc2021/">GSoC 2021 参加記 ─ shanpu-portal</a></url></li><li><url><a href="https://sanposhiho.com/posts/gsoc2020/">Google Summer of Code2020に申し込んでみた ─ さんぽしの散歩記</a></url></li></ul><br>などなど (GSoC 参加記 などで検索すればたくさん出てきます)<br><br><script>page_contents.push({
     "type":"H2",
     "id":"34",
     "title":"GSoC とは"
 });
 </script>
-<h2 id="34">GSoC とは</h2><br>他のブログに詳しい説明がたくさんあるので簡潔にまとめると、<br><br><ul><li>Google が主催するオープンソースプロジェクトへの参加を支援するプログラム</li><li>学生は開発したいものの Proposal を書いて参加組織に送る</li><li>参加組織は Proposal を審査して、採択の可否を決める <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span></li><li>学生がオープンソースプロジェクトに参加して、開発を行う</li><li>Google から報酬がもらえる (国とプロジェクト規模に応じて変わる. 日本で大規模プロジェクトだと今年は $.5400)</li><li>採択率は 8% くらい? <url> <a href="https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html">https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html</a> </url></li><ul><li>ただ、おそらく大量のインド人が応募しているために実態より競争率が高く見えていると思います。</li></ul></ul><br><br>というやつです。<br>開発したいもの、と書きましたが大抵の組織では Idea List が公開されていて、そこから選んで書くのが一般的です。<br><script>page_contents.push({
+<h2 id="34">GSoC とは</h2><br>他のブログに詳しい説明がたくさんあるので簡潔にまとめると、<br><br><ul><li>Google が主催するオープンソースプロジェクトへの参加を支援するプログラム</li><li>学生は開発したいものの Proposal を書いて参加組織に送る</li><li>参加組織は Proposal を審査して、採択の可否を決める <span class="footnote-ref"><sup id="ref_1"><a href="#label_1">[1]</a></sup></span></li><li>学生がオープンソースプロジェクトに参加して、開発を行う</li><li>Google から報酬がもらえる (国とプロジェクト規模に応じて変わる. 日本で大規模プロジェクトだと今年は $.5400)</li><li>採択率は 8% くらい? <url><a href="https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html">https://opensource.googleblog.com/2025/05/gsoc-2025-we-have-our-contributors.html</a></url></li><ul><li>ただ、おそらく大量のインド人が応募しているために実態より競争率が高く見えていると思います。</li></ul></ul><br><br>というやつです。<br>開発したいもの、と書きましたが大抵の組織では Idea List が公開されていて、そこから選んで書くのが一般的です。<br><script>page_contents.push({
     "type":"H2",
     "id":"66",
     "title":"参加まで"
 });
 </script>
-<h2 id="66">参加まで</h2><br>昨年ごろから Julia の Language Server を作り直したいな〜 と漠然と考えていたのですが、 そのときたまたま Julia の Co-Founder である Jeff Bezanson さんとご飯を食べる機会がありました。<br><br>そこで Language Server の話になり、同席していた  JET.jl の作者で Julia Hub の <url> <a href="https://github.com/aviatesk">aviatesk</a> </url> さんにメンターを快諾していただいて、 最終的に aviatesk さんがかつて進めていた JET.jl を利用した Language Server の開発をやることになりました。<br><br>その後応募が始まった頃に Language Server の開発を GSoC の Idea List に載せてもらい、 Proposal の執筆を開始しました。<br>目次は以下のような感じです。<br><div class="code-block"> <pre><code class="language-plaintext">Abstract                                               
+<h2 id="66">参加まで</h2><br>昨年ごろから Julia の Language Server を作り直したいな〜 と漠然と考えていたのですが、 そのときたまたま Julia の Co-Founder である Jeff Bezanson さんとご飯を食べる機会がありました。<br><br>そこで Language Server の話になり、同席していた  JET.jl の作者で Julia Hub の <url><a href="https://github.com/aviatesk">aviatesk</a></url> さんにメンターを快諾していただいて、 最終的に aviatesk さんがかつて進めていた JET.jl を利用した Language Server の開発をやることになりました。<br><br>その後応募が始まった頃に Language Server の開発を GSoC の Idea List に載せてもらい、 Proposal の執筆を開始しました。<br>目次は以下のような感じです。<br><div class="code-block"><pre><code class="language-plaintext">Abstract                                               
 Technical Description	                                  
  [1] Analyzing required information from the codebase	 
  [2] Presenting information clearly and effectively	   
@@ -1572,7 +1607,7 @@ Implementation Plan
 Background and Relevant Experience	                   
 Related Software Projects	                             
 Availability	                                        
-</code></pre> </div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="link-card">     <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyK8WzjhzfGLwQdcf34pjna7Zohl0RUBKrU92nJ_CmebzhpaxpKTEy8M8Kmt11nVXM7OLSteDt4o0fc0HkmEK0rH-YQG4Ccq2zEfx6MyNGHHPabAIuH6=w1200-h630-p" alt="(public ver) proposal for GSoC 2025: JETLS " onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">Google Docs</span>                 </div>                 <h3 class="link-card-title">(public ver) proposal for GSoC 2025: JETLS </h3>                 <p class="link-card-description">2025 Proposal:  Development of a New Language Server for Julia   Name: XXXXXXXXXX Email: XXXXX@XXXXX Country & timezone: Japan, UTC+9 School Name & Study: Department of Computer Science, School of Com</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">docs.google.com/document/d/1rk39WzYwvI1jEx9FtYw...</span><br>            </div>         </div>     </a> </div><br><br><br><script>page_contents.push({
+</code></pre></div><br><br>内容は ⬇︎ で公開しています。<br><br><div class="link-card">     <a href="https://docs.google.com/document/d/1rk39WzYwvI1jEx9FtYwAynwVmjyjwjo_F9RExQBD3J8/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://lh7-us.googleusercontent.com/docs/AHkbwyKFaFkhWGUBwk_38oTEEbdt7VaVu3jEzOB81TDNnto0Xa1nG196xLMIZKsP3QOn61gSTYC2XfgtB8405SQYAMWh6YX467U5FC3tzVropcGbIzXxK_Ez=w1200-h630-p" alt="(public ver) proposal for GSoC 2025: JETLS " onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://ssl.gstatic.com/docs/documents/images/kix-favicon-2023q4.ico" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">Google Docs</span>                 </div>                 <h3 class="link-card-title">(public ver) proposal for GSoC 2025: JETLS </h3>                 <p class="link-card-description">2025 Proposal:  Development of a New Language Server for Julia   Name: XXXXXXXXXX Email: XXXXX@XXXXX Country & timezone: Japan, UTC+9 School Name & Study: Department of Computer Science, School of Com</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">docs.google.com/document/d/1rk39WzYwvI1jEx9FtYw...</span><br>            </div>         </div>     </a> </div><br><br><br><script>page_contents.push({
     "type":"H2",
     "id":"93",
     "title":"具体的にやりたいこと"
@@ -1584,30 +1619,30 @@ Availability
     "title":"LanguageServer.jl の課題"
 });
 </script>
-<h3 id="100">LanguageServer.jl の課題</h3><br>今、 Julia では <url> <a href="https://github.com/julia-vscode/LanguageServer.jl">LanguageServer.jl</a> </url> がメジャーですが、 LanguageServer.jl はいくらか課題を抱えていました。 <br>主要なものを挙げるとしたら以下のような感じでしょうか。<br><script>page_contents.push({
+<h3 id="100">LanguageServer.jl の課題</h3><br>今、 Julia では <url><a href="https://github.com/julia-vscode/LanguageServer.jl">LanguageServer.jl</a></url> がメジャーですが、 LanguageServer.jl はいくらか課題を抱えていました。 <br>主要なものを挙げるとしたら以下のような感じでしょうか。<br><script>page_contents.push({
     "type":"H4",
     "id":"109",
     "title":"Missing References が頻発する"
 });
 </script>
-<h4 id="109">Missing References が頻発する</h4><br>Language Server の主要な機能として、 Go To Definition や Find References などがあります。<br><br>これは実装箇所や仕様箇所に飛べる便利な機能ですが、 LanguageServer.jl ではこれらがうまく働かないことが非常に多いです。<br>("Missing" で Issues を検索した結果: <url> <a href="https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing">https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing</a> </url>) <br><br><script>page_contents.push({
+<h4 id="109">Missing References が頻発する</h4><br>Language Server の主要な機能として、 Go To Definition や Find References などがあります。<br><br>これは実装箇所や仕様箇所に飛べる便利な機能ですが、 LanguageServer.jl ではこれらがうまく働かないことが非常に多いです。<br>("Missing" で Issues を検索した結果: <url><a href="https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing">https://github.com/julia-vscode/LanguageServer.jl/issues?q=is%3Aissue%20state%3Aopen%20Missing</a></url>) <br><br><script>page_contents.push({
     "type":"H4",
     "id":"122",
     "title":"コードベースが複雑化してメンテナンスが難しくなっている"
 });
 </script>
-<h4 id="122">コードベースが複雑化してメンテナンスが難しくなっている</h4><br>Language Sever Protocol 自体が多くのことを要求するという事情もありますが、コードベースが複雑になってしまっていて、 全体を把握しているメンテナーの方がほとんどいなくなってしまいました。 <url> <a href="https://github.com/julia-vscode/LanguageServer.jl/commits/main/">ref: コミット列</a> </url><br><script>page_contents.push({
+<h4 id="122">コードベースが複雑化してメンテナンスが難しくなっている</h4><br>Language Sever Protocol 自体が多くのことを要求するという事情もありますが、コードベースが複雑になってしまっていて、 全体を把握しているメンテナーの方がほとんどいなくなってしまいました。 <url><a href="https://github.com/julia-vscode/LanguageServer.jl/commits/main/">ref: コミット列</a></url><br><script>page_contents.push({
     "type":"H4",
     "id":"128",
     "title":"(課題?) 型エラーなどの高度な解析が行われない"
 });
 </script>
-<h4 id="128">(課題?) 型エラーなどの高度な解析が行われない</h4><br>これは課題というよりかは設計思想とかの範疇だと思いますが、 LanguageServer.jl はそこまで高度な解析を行いません。<br>例えば<br><div class="code-block"> <pre><code class="language-julia">function foo(x::Int)
+<h4 id="128">(課題?) 型エラーなどの高度な解析が行われない</h4><br>これは課題というよりかは設計思想とかの範疇だと思いますが、 LanguageServer.jl はそこまで高度な解析を行いません。<br>例えば<br><div class="code-block"><pre><code class="language-julia">function foo(x::Int)
     return x + 1
 end
 
 foo(2.0)
-</code></pre> </div><br>はもちろんエラー (実行時例外ですが！)　になります。 が、LanguageServer.jl は基本的に赤線は引いてくれません。<br><br><script>page_contents.push({
+</code></pre></div><br>はもちろんエラー (実行時例外ですが！)　になります。 が、LanguageServer.jl は基本的に赤線は引いてくれません。<br><br><script>page_contents.push({
     "type":"H3",
     "id":"140",
     "title":"🆕 Language Server"
@@ -1619,8 +1654,8 @@ foo(2.0)
     "title":"JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する"
 });
 </script>
-<h4 id="152">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="link-card">     <a href="https://github.com/aviatesk/JET.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/64bcbd92fa11a1444c7a6703fa2d68fb4f509c8e5de7fd6036d385b92e7af362/aviatesk/JET.jl" alt="GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot</h3>                 <p class="link-card-description">An experimental code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/aviatesk/JET.jl</span><br>            </div>         </div>     </a> </div><br><br>例えば <br><div class="code-block"> <pre><code class="language-julia">sum([])
-</code></pre> </div><br>はエラーになりますが、 (<span class="inline-code"> <code>[]</code> </span> は <span class="inline-code"> <code>Any</code> </span> 型の配列で、 <span class="inline-code"> <code>zero(::Type{Any})</code> </span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"> <pre><code class="language-julia">julia&gt; @report_call sum([])
+<h4 id="152">JET.jl を利用して、複雑な型エラーやパフォーマンスの問題を検出・警告する</h4><br>JET.jl は aviatesk さんが開発している Julia の静的解析ツールで、型エラーやパフォーマンスの問題を検出することができます。<br><br><div class="link-card">     <a href="https://github.com/aviatesk/JET.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">         <div class="link-card-image">             <img src="https://opengraph.githubassets.com/7e324f93e0f67ae4e2143023c364fbc8be763e7968e457af42047f253070fe08/aviatesk/JET.jl" alt="GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">         </div>         <div class="link-card-content">             <div>                 <div class="link-card-header">                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">                     <span class="link-card-domain">GitHub</span>                 </div>                 <h3 class="link-card-title">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot</h3>                 <p class="link-card-description">An experimental code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl</p>             </div>             <div class="link-card-footer">                 <span class="link-card-url">github.com/aviatesk/JET.jl</span><br>            </div>         </div>     </a> </div><br><br>例えば <br><div class="code-block"><pre><code class="language-julia">sum([])
+</code></pre></div><br>はエラーになりますが、 (<span class="inline-code"><code>[]</code></span> は <span class="inline-code"><code>Any</code></span> 型の配列で、 <span class="inline-code"><code>zero(::Type{Any})</code></span> は定義されていないため) JET.jl はこれを検出してくれます。<br><div class="code-block"><pre><code class="language-julia">julia&gt; @report_call sum([])
 ═════ 1 possible error found ═════
 ┌ sum(a::Vector{Any}) @ Base ./reducedim.jl:982
 │┌ sum(a::Vector{Any}; dims::Colon, kw::@Kwargs{}) @ Base ./reducedim.jl:982
@@ -1629,7 +1664,7 @@ foo(2.0)
     
     ││┌ zero(::Type{Any}) @ Base ./missing.jl:106
     │││ MethodError: no method matching zero(::Type{Any}): Base.throw(Base.MethodError(zero, tuple(Base.Any)::Tuple{DataType})::MethodError)
-</code></pre> </div><br>このようなエラーを検出して Diagnostics として提供します。<br><br><figure><img src="gsoc2025/image-5.png" ><figcaption>高度な型解析結果の表示</figcaption></figure><br>他にも型不安定性の表示や、そもそもの型推論結果の表示 (Types on Hover) などに取り組みたいと思っています。<br><script>page_contents.push({
+</code></pre></div><br>このようなエラーを検出して Diagnostics として提供します。<br><br><figure><img src="gsoc2025/image-5.png" ><figcaption>高度な型解析結果の表示</figcaption></figure><br>他にも型不安定性の表示や、そもそもの型推論結果の表示 (Types on Hover) などに取り組みたいと思っています。<br><script>page_contents.push({
     "type":"H4",
     "id":"184",
     "title":"Julia の最新のコンパイラインフラを利用して、メンテナンス性と開発効率を向上させる"
