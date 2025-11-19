@@ -180,7 +180,7 @@ Q_Q:
     - Web
     - 機械学習
     - 自然言語処理
-  period: 2024
+  period: 2023
   relatedlinks:
     - https://www.canva.com/design/DAFmIYJAcZ0/q8OUe14zuF-7xBIBPzOaEg/edit
 
@@ -229,7 +229,7 @@ medCon:
   title: medCon2021-1st-place-solution
   img: /works/img/medcon.png
   repo: abap34/medCon2021-1st-place-solution
-  short_desc: 全国医療AIコンテスト 2021 の 1位解法
+  short_desc: 全国医療AIコンテスト 2021 の優勝解法
   desc: |
     全国医療AIコンテスト 2021 で優勝したときの solution です。
 
