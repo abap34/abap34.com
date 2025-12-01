@@ -8,10 +8,13 @@ export default function Tag({ name, label, children, variant = "foreground1", ta
         window.location.href = `${targetPage}?${params.toString()}`;
     }
 
+    const displayText = label || children;
+    const truncatedText = displayText.length > 15 ? displayText.substring(0, 15) + '...' : displayText;
+
     return (
         <span is-="badge" variant-={variant} onClick={handleClick}>
             <FaTag className="tag-icon" />
-            {label || children}
+            {truncatedText}
         </span>
     );
 }
