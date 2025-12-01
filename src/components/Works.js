@@ -6,7 +6,6 @@ import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
 import SearchBar from './SearchBar';
 import Tag from './Tag';
-import TagList from './TagList';
 import './SearchResult.css';
 import './Works.css';
 
@@ -211,7 +210,6 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     const [selectedWork, setSelectedWork] = useState(null)
     const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
     const [isLoading, setIsLoading] = useState(true)
-    const [allTags, setAllTags] = useState([])
 
     useEffect(() => {
         setIsLoading(true)
@@ -231,22 +229,6 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                 setIsLoading(false)
             })
     }, [path, defaultVisibleCount])
-
-    // タグの集計
-    useEffect(() => {
-        const workEntries = Object.entries(works);
-        const tags = workEntries.reduce((acc, [_, work]) => {
-            work.tags?.forEach((tag) => {
-                if (acc[tag]) {
-                    acc[tag] += 1;
-                } else {
-                    acc[tag] = 1;
-                }
-            });
-            return acc;
-        }, {});
-        setAllTags(Object.entries(tags).sort((a, b) => b[1] - a[1]));
-    }, [works]);
 
     const handleWorkClick = (work) => {
         setSelectedWork(work)
@@ -338,8 +320,8 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     // showTagFilter = trueの場合、SearchResult風のレイアウトを使用
     if (showTagFilter) {
         return (
-            <main className="search-container">
-                <div className="search-main">
+            <main className="works-container">
+                <div>
                     {title && (
                         <div className="works-header">
                             <h1 className="works-title">{title}</h1>
@@ -433,8 +415,6 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                         />
                     )}
                 </div>
-
-                <TagList allTags={allTags} header='Tags' className="search-sidebar" targetPage="/works" />
             </main>
         );
     }
