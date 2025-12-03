@@ -24,22 +24,18 @@ export default function GuideModal() {
 
     return (
         <div className="guide-modal" role="status" aria-live="polite">
-            <button
-                type="button"
-                className="guide-modal-close-button"
-                aria-label="Close keyboard navigation guide"
-                onClick={() => setIsVisible(false)}
-            >
-                ×
-            </button>
             <div className="guide-modal-body">
                 <div className="guide-modal-row">
-                    <span className="guide-modal-keys">hjkl / ←↑→⇩</span>
-                    <span className="guide-modal-label">movement</span>
+                    <span className="guide-modal-keys">hjkl / ←↑→↓</span>
+                    <span className="guide-modal-label">Move</span>
                 </div>
                 <div className="guide-modal-row">
-                    <span className="guide-modal-keys">Enter / Esc</span>
-                    <span className="guide-modal-label">決定 / 戻る</span>
+                    <span className="guide-modal-keys">Enter</span>
+                    <span className="guide-modal-label">Select</span>
+                </div>
+                <div className="guide-modal-row">
+                    <span className="guide-modal-keys">Esc</span>
+                    <span className="guide-modal-label">Back</span>
                 </div>
             </div>
         </div>
