@@ -1,6 +1,6 @@
 .background-focusable {
-    transition: box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
-    border-radius: 0.5rem;
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    border-radius: 0;
 }
 
 .background-focusable[data-has-url="true"] {
@@ -8,7 +8,11 @@
 }
 
 .background-focusable.keyboard-focused {
-    box-shadow: 0 0 0 2px var(--accent0);
-    background-color: color-mix(in srgb, var(--accent0) 12%, transparent);
-    transform: scale(1.01);
+    background-color: var(--accent0);
+    color: var(--background0);
+    transform: translateX(0.5ch);
+}
+
+.background-focusable.keyboard-focused a {
+    color: var(--background0);
 }

@@ -50,6 +50,13 @@ export function FocusProvider({ children }) {
 
     const [worksColumns, setWorksColumns] = useState(() => getWorksColumnCount(location.pathname));
     const [navigationLocked, setNavigationLocked] = useState(false);
+    const getMobileDisabled = useCallback(() => {
+        if (typeof window === 'undefined') return false;
+        const isSmall = window.innerWidth <= 768;
+        const hasTouch = typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0;
+        return isSmall || hasTouch;
+    }, []);
+    const [keyboardDisabled, setKeyboardDisabled] = useState(getMobileDisabled);
 
     const standaloneSectionIndex = STANDALONE_SECTION_MAP[location.pathname];
     const isStandalonePage = typeof standaloneSectionIndex !== 'undefined';
@@ -134,6 +141,7 @@ export function FocusProvider({ children }) {
     }, [focusSidebar, focusStandaloneSection, isHomePage, isStandalonePage, location.pathname, standaloneSectionIndex]);
 
     const getActiveFocusId = useCallback(() => {
+        if (keyboardDisabled) return null;
         if (region === 'sidebar') {
             return `sidebar-${sidebarIndex}`;
         }
@@ -153,7 +161,7 @@ export function FocusProvider({ children }) {
             return `top-item-works-${itemIndex}`;
         }
         return null;
-    }, [region, sidebarIndex, mode, sectionIndex, itemIndex]);
+    }, [keyboardDisabled, region, sidebarIndex, mode, sectionIndex, itemIndex]);
 
     const activeFocusId = getActiveFocusId();
 
@@ -192,7 +200,7 @@ export function FocusProvider({ children }) {
     }, []);
 
     const handleSidebarKeys = useCallback((event) => {
-        if (navigationLocked || region !== 'sidebar') return false;
+        if (keyboardDisabled || navigationLocked || region !== 'sidebar') return false;
         if (!['j', 'k', 'h', 'l', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(event.key)) {
             return false;
         }
@@ -220,7 +228,7 @@ export function FocusProvider({ children }) {
             return true;
         }
         return false;
-    }, [activateTopFromSidebar, focusStandaloneSection, location.pathname, moveSidebarFocus, navigationLocked, region, sidebarIndex]);
+    }, [activateTopFromSidebar, focusStandaloneSection, keyboardDisabled, location.pathname, moveSidebarFocus, navigationLocked, region, sidebarIndex]);
 
     const clampItemIndex = useCallback((count) => {
         setItemIndex((prev) => Math.min(prev, Math.max(count - 1, 0)));
@@ -276,7 +284,7 @@ export function FocusProvider({ children }) {
     }, [sectionIndex, sectionMeta, worksColumns]);
 
     const handleTopKeys = useCallback((event) => {
-        if (navigationLocked || region !== 'top') return false;
+        if (keyboardDisabled || navigationLocked || region !== 'top') return false;
         const key = event.key;
         if (!['j', 'k', 'h', 'l', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape'].includes(key)) {
             return false;
@@ -403,16 +411,17 @@ export function FocusProvider({ children }) {
         }
 
         return true;
-    }, [activateFocusedElement, focusSidebar, handleItemMove, handleSectionMove, handleWorksMove, isStandalonePage, mode, navigationLocked, region, sectionIndex, sectionMeta, worksColumns]);
+    }, [activateFocusedElement, focusSidebar, handleItemMove, handleSectionMove, handleWorksMove, isStandalonePage, keyboardDisabled, mode, navigationLocked, region, sectionIndex, sectionMeta, worksColumns]);
 
     useEffect(() => {
+        if (keyboardDisabled) return undefined;
         const handleKeyDown = (event) => {
             if (handleSidebarKeys(event)) return;
             handleTopKeys(event);
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [handleSidebarKeys, handleTopKeys]);
+    }, [handleSidebarKeys, handleTopKeys, keyboardDisabled]);
 
     const lockNavigation = useCallback(() => setNavigationLocked(true), []);
     const unlockNavigation = useCallback(() => setNavigationLocked(false), []);

@@ -5,7 +5,8 @@
     padding: 1.5rem 1rem;
     background-color: var(--background0);
     overflow-y: auto;
-    z-index: 10;
+    position: relative;
+    z-index: 200;
 }
 
 .sidebar-container {

@@ -119,6 +119,16 @@ a:hover {
   --accent2: #94e2d5;
 }
 
+@media (max-width: 768px), (pointer: coarse) {
+  .keyboard-focused {
+    outline: none !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    border-color: inherit !important;
+  }
+}
+
 body,
 html {
   background-color: var(--background0);
