@@ -43,8 +43,8 @@ function truncateContent(content) {
 
 function BlogTimeline({ posts }) {
     return (
-        <div className="blog-timeline-container">
-            <div className="blog-timeline">
+        <column className="blog-timeline-container">
+            <column className="blog-timeline">
                 <div
                     className="blog-timeline-line"
                     aria-hidden="true"
@@ -52,12 +52,12 @@ function BlogTimeline({ posts }) {
                 </div>
 
                 {posts.map((post, index) => (
-                    <div key={index} className="blog-timeline-item">
+                    <column key={index} className="blog-timeline-item">
                         <p className="blog-timeline-date">
                             {post.post_date}
                         </p>
 
-                        <div className="blog-timeline-card">
+                        <column box-="square" shear-="top" className="blog-timeline-card">
                             <a href={post.url} target="_blank" rel="noreferrer">
                                 <h3 className="blog-timeline-card-title">{post.title}</h3>
                             </a>
@@ -65,17 +65,17 @@ function BlogTimeline({ posts }) {
                             <img src={post.thumbnail_url} alt={post.title} className="blog-timeline-card-image" />
                             <p className="blog-timeline-card-content"> {truncateContent(post.content) }</p>
 
-                            <div className="blog-timeline-card-tags">
+                            <row className="blog-timeline-card-tags">
                                 {post.tags.map((tag, index) => (
                                     <Tag key={index}>{tag}</Tag>
                                 ))}
-                            </div>
+                            </row>
 
-                        </div>
-                    </div>
+                        </column>
+                    </column>
                 ))}
-            </div>
-        </div>
+            </column>
+        </column>
     );
 }
 
@@ -108,12 +108,12 @@ export default function Blog() {
 
     return (
         <main className="blog-container">
-            <div className="blog-header">
-                <div className="blog-header-content">
+            <column className="blog-header">
+                <column className="blog-header-content">
                     <h1 className="blog-title">
                         <span className="blog-title-accent">abap34</span>'s Blog
                     </h1>
-                    <div className="blog-actions">
+                    <row className="blog-actions">
                         <a is-="button" variant-="blue" href="https://www.abap34.com/search" target="_blank" rel="noreferrer">
                             <ArrowRight />
                             View All Posts
@@ -123,29 +123,29 @@ export default function Blog() {
                             <FaRss />
                             Copy RSS URL
                         </button>
-                    </div>
+                    </row>
 
-                    <div className="blog-search-section">
+                    <column className="blog-search-section">
                         <SearchBar />
-                    </div>
-                </div>
-                <div className="blog-header-image">
+                    </column>
+                </column>
+                <column className="blog-header-image">
                     <img src="/icon.png" alt="Blog Icon" className="blog-header-icon" />
-                </div>
-            </div>
+                </column>
+            </column>
 
-            <div className="blog-content">
-                <div className="blog-posts-section">
-                    <div className="blog-posts-header">
+            <column className="blog-content">
+                <column className="blog-posts-section">
+                    <row className="blog-posts-header">
                         <TrendingUp className="blog-posts-icon" />
                         <h2 className="blog-posts-title"> Recent Posts </h2>
-                    </div>
+                    </row>
 
                     <BlogTimeline posts={posts.slice(0, 10)} />
-                </div>
+                </column>
 
                 <TagList allTags={allTags} />
-            </div>
+            </column>
         </main>
     );
 }

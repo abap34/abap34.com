@@ -205,7 +205,7 @@ const WorkModal = ({ work, open, onClose }) => {
     return createPortal(modalContent, document.body);
 }
 
-export default function Works({ title, path, defaultVisibleCount = 6, compact = false, showTagFilter = false }) {
+export default function Works({ title, path, defaultVisibleCount = 6, compact = false, showTagFilter = false, simple = false }) {
     const [works, setWorks] = useState({})
     const [selectedWork, setSelectedWork] = useState(null)
     const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
@@ -242,6 +242,63 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     const tags = getSearchTags();
     const workEntries = Object.entries(works);
     const filteredWorks = filterWorksByQueries(filterWorksByTags(workEntries, tags), queries);
+
+    // Simple list mode (like RecentPosts)
+    if (simple) {
+        return (
+            <div>
+                {isLoading ? (
+                    <column style={{ color: 'var(--foreground2)' }}>
+                        <span>Loading projects...</span>
+                    </column>
+                ) : (
+                    <>
+                        <div className="works-simple-grid">
+                            {filteredWorks.slice(0, visibleCount).map(([index, work]) => (
+                                <div key={index} className="works-simple-item" onClick={() => handleWorkClick(work)}>
+                                    {work.img && (
+                                        <img
+                                            src={work.img}
+                                            alt={work.title}
+                                            className="works-simple-thumbnail"
+                                        />
+                                    )}
+                                    <column className="works-simple-content">
+                                        <div className="search-post-title-link">
+                                            {work.title}
+                                        </div>
+                                        {(work.short_desc || work.desc) && (
+                                            <div className="works-simple-description">
+                                                {work.short_desc || work.desc}
+                                            </div>
+                                        )}
+                                        <row className="works-card-tags">
+                                            {work.tags?.slice(0, 3).map((tag, i) => (
+                                                <Tag key={i} name={tag} targetPage="/works">{tag}</Tag>
+                                            ))}
+                                            {work.tags?.length > 3 && (
+                                                <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
+                                                    +{work.tags.length - 3}
+                                                </span>
+                                            )}
+                                        </row>
+                                    </column>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+
+                {selectedWork && (
+                    <WorkModal
+                        work={selectedWork}
+                        open={!!selectedWork}
+                        onClose={handleCloseModal}
+                    />
+                )}
+            </div>
+        );
+    }
 
     if (compact) {
         return (

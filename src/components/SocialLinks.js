@@ -10,7 +10,7 @@ const iconComponents = {
 
 export function SocialLinks({ links, className = "" }) {
   return (
-    <div className={`social-links ${className}`}>
+    <row className={`social-links ${className}`}>
       {links.map((link) => {
         const IconComponent = iconComponents[link.icon];
         return (
@@ -26,6 +26,6 @@ export function SocialLinks({ links, className = "" }) {
           </a>
         );
       })}
-    </div>
+    </row>
   );
 }

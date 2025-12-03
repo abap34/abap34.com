@@ -7,7 +7,7 @@
     gap: 2rem;
     max-height: 80vh;
     border: 1px solid var(--foreground2);
-    border-radius: 0.5rem;
+    border-radius: 0;
     padding: 0.5rem 1rem;
 }
 
@@ -46,7 +46,7 @@
     flex-wrap: wrap;
     border: 1px solid var(--foreground2);
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0;
 }
 
 [data-webtui-theme="catppuccin-mocha"] .taglist-tags {

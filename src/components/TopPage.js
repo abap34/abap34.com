@@ -17,66 +17,66 @@ export default function TopPage() {
 
     return (
         <main className="top-page">
-            <div className="top-page-content" style={{ display: 'flex', flexDirection: 'column' }}>
-                <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+            <column className="top-page-content">
+                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
                     <span is-="badge" variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Introduction
                     </span>
-                    <div style={{ padding: '2lh 2ch' }}>
+                    <column style={{ padding: '2lh 2ch' }}>
                         <Introduction />
-                    </div>
-                </div>
+                    </column>
+                </column>
 
                 <div className="top-page-grid">
                     <div className="top-page-grid-item">
-                        <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
                             <span is-="badge" variant-="foreground0"
                                 style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                                 Recent Blog Posts
                             </span>
-                            <div style={{ padding: '2lh 2ch' }}>
+                            <column style={{ padding: '2lh 2ch' }}>
                                 <RecentPosts />
-                            </div>
-                        </div>
+                            </column>
+                        </column>
                     </div>
 
                     <div className="top-page-grid-item">
-                        <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                        <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
                             <span is-="badge" variant-="foreground0"
                                 style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                                 Background
                             </span>
-                            <div style={{ padding: '2lh 2ch' }}>
+                            <column style={{ padding: '2lh 2ch' }}>
                                 <Background compact={false} />
-                            </div>
-                        </div>
+                            </column>
+                        </column>
                     </div>
                 </div>
 
-                <div box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
                     <span is-="badge" variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Works
                     </span>
-                    <div style={{ padding: '1lh 2ch 2lh 2ch' }}>
+                    <column style={{ padding: '2lh 2ch' }}>
                         <Works
                             title=""
                             path={worksFilename}
-                            defaultVisibleCount={9}
-                            compact={false}
+                            defaultVisibleCount={6}
+                            simple={true}
                         />
-                        <div className="view-all-link" style={{ marginTop: '1lh' }}>
+                        <column style={{ marginTop: '2lh', textAlign: 'left' }}>
                             <Link
                                 to="/works"
-                                className="view-all-link"
+                                className="search-post-title-link"
                             >
                                 すべての作品をみる →
                             </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </column>
+                    </column>
+                </column>
+            </column>
         </main >
     );
 }

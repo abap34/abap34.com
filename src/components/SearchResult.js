@@ -170,12 +170,12 @@ export default function SearchResult() {
     const searchedPosts = searchPostsByQueries(searchPostsByTags(posts, tags), queries);
     return (
         <main className="search-container">
-            <div className="search-main">
+            <column className="search-main">
                 {/* <div className="search-header">
                     <h1 className="search-header-title">Search</h1>
                 </div> */}
                 <SeachBar placeholder="To add a search query, type and press Enter" />
-                <div className="search-filters">
+                <row className="search-filters">
                     <span>Search for:</span>
                     {queries.map((query, index) => (
                         <DeleatableQuery key={index} query={query} />
@@ -184,15 +184,15 @@ export default function SearchResult() {
                     {tags.map((tag, index) => (
                         <DeleatableTag key={index} name={tag} label={tag} />
                     ))}
-                </div>
+                </row>
                 <div className="search-count">Found <span className="search-count-number">{searchedPosts.length}</span> posts</div>
-                
-                <div className="search-posts-list">
+
+                <column className="search-posts-list">
                     {searchedPosts.map((post) => (
                         <BlogPostItem key={post.url} post={post} maxTags={4} />
                     ))}
-                </div>
-            </div>
+                </column>
+            </column>
 
             <TagList allTags={allTags} header='Tags' className="search-sidebar" />
         </main>
