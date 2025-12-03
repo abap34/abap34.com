@@ -1,16 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import yaml from "yaml";
 import LanguageContext from "../context/LanguageContext";
 import { useFocusContext } from "../context/FocusContext";
 import './Background.css';
 
-function FocusableEntry({ children, focusId, isFocused }) {
+function FocusableEntry({ children, focusId, isFocused, url }) {
+    const handleClick = useCallback(() => {
+        if (!url || typeof window === 'undefined') return;
+        const opened = window.open(url, '_blank', 'noopener,noreferrer');
+        if (opened) {
+            opened.opener = null;
+        }
+    }, [url]);
+
     return (
         <column
             className={`background-focusable ${isFocused ? 'keyboard-focused' : ''}`}
             style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)', gap: '0.25rem' }}
             data-focus-id={focusId}
             data-focus-activate="self"
+            data-has-url={url ? 'true' : undefined}
+            role={url ? 'link' : undefined}
+            onClick={handleClick}
         >
             {children}
         </column>
@@ -84,8 +95,13 @@ export default function Background({ compact = false }) {
     const educationCount = data.education?.length || 0;
     const careerCount = data.careers?.length || 0;
 
-    const entry = (child, focusId) => (
-        <FocusableEntry key={focusId} focusId={focusId} isFocused={activeFocusId === focusId}>
+    const entry = (child, focusId, url) => (
+        <FocusableEntry
+            key={focusId}
+            focusId={focusId}
+            isFocused={activeFocusId === focusId}
+            url={url}
+        >
             {child}
         </FocusableEntry>
     );
@@ -106,7 +122,8 @@ export default function Background({ compact = false }) {
                                 {education.period}
                             </div>
                         </>,
-                        `top-item-background-${index}`
+                        `top-item-background-${index}`,
+                        education.url
                     )
                 )}
             </column>
@@ -119,20 +136,14 @@ export default function Background({ compact = false }) {
                     entry(
                         <>
                             <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                                <a
-                                    href={career.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    style={{ color: 'inherit', textDecoration: 'none' }}
-                                >
-                                    {career.company}
-                                </a>
+                                {career.company}
                             </div>
                             <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                 {career.period} | {career.worktype}
                             </div>
                         </>,
-                        `top-item-background-${educationCount + index}`
+                        `top-item-background-${educationCount + index}`,
+                        career.url
                     )
                 )}
             </column>
@@ -145,20 +156,14 @@ export default function Background({ compact = false }) {
                     entry(
                         <>
                             <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                                <a
-                                    href={other.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    style={{ color: 'inherit', textDecoration: 'none' }}
-                                >
-                                    {other.title}
-                                </a>
+                                {other.title}
                             </div>
                             <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                 {other.period}
                             </div>
                         </>,
-                        `top-item-background-${educationCount + careerCount + index}`
+                        `top-item-background-${educationCount + careerCount + index}`,
+                        other.url
                     )
                 )}
             </column>

@@ -77,6 +77,13 @@
     padding: 0.5rem;
     cursor: pointer;
     background-color: var(--background1);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.works-card.keyboard-focused {
+    border-color: var(--accent0);
+    box-shadow: 0 0 0 2px var(--accent0);
+    transform: translate(-2px, -2px);
 }
 
 .works-card > [is="badge"],

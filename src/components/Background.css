@@ -3,6 +3,10 @@
     border-radius: 0.5rem;
 }
 
+.background-focusable[data-has-url="true"] {
+    cursor: pointer;
+}
+
 .background-focusable.keyboard-focused {
     box-shadow: 0 0 0 2px var(--accent0);
     background-color: color-mix(in srgb, var(--accent0) 12%, transparent);
