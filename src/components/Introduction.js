@@ -13,9 +13,10 @@ export default function Introduction() {
             <div className="intro-layout">
                 <div className="intro-profile">
                     <img
-                        src="/icon.png"
+                        src="/commic34.png"
                         alt="abap34"
                         className="intro-avatar"
+                        size={240}
                     />
                     <SocialLinks links={socialLinks} />
                 </div>
