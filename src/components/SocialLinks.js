@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaSpeakerDeck, FaTwitter } from "react-icons/fa";
+import { useFocusContext } from "../context/FocusContext";
 import './SocialLinks.css';
 
 const iconComponents = {
@@ -9,10 +10,15 @@ const iconComponents = {
 };
 
 export function SocialLinks({ links, className = "" }) {
+  const { activeFocusId } = useFocusContext();
+
   return (
     <row className={`social-links ${className}`}>
-      {links.map((link) => {
+      {links.map((link, index) => {
         const IconComponent = iconComponents[link.icon];
+        const focusId = `top-item-intro-${index}`;
+        const isFocused = activeFocusId === focusId;
+
         return (
           <a
             key={link.name}
@@ -20,7 +26,9 @@ export function SocialLinks({ links, className = "" }) {
             target="_blank"
             rel="noreferrer"
             aria-label={link.name}
-            className="social-link"
+            className={`social-link ${isFocused ? 'keyboard-focused' : ''}`}
+            data-focus-id={focusId}
+            data-focus-activate="self"
           >
             <IconComponent className="social-icon" />
           </a>

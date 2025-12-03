@@ -1,0 +1,77 @@
+.guide-modal {
+    position: fixed;
+    bottom: 2.5ch;
+    left: 2.5ch;
+    width: min(20rem, calc(100vw - 3rem));
+    background-color: var(--background1);
+    border: 1px solid var(--foreground2);
+    border-radius: 0.5rem;
+    box-shadow:
+        0 0 0 1px var(--background3),
+        0 10px 30px rgba(0, 0, 0, 0.45);
+    color: var(--foreground0);
+    font-family: var(--font-family), 'JetBrains Mono', monospace;
+    z-index: 100000;
+    padding: 1rem 1.25rem 1rem 1rem;
+    animation: guide-modal-slide-in 0.25s ease-out;
+}
+
+.guide-modal-close-button {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.4rem;
+    background: transparent;
+    border: none;
+    color: var(--foreground2);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.1rem;
+}
+
+.guide-modal-close-button:hover {
+    color: var(--foreground0);
+}
+
+.guide-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.guide-modal-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1ch;
+}
+
+.guide-modal-keys {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent0);
+    font-weight: 600;
+    background-color: var(--background2);
+    border: 1px solid var(--foreground2);
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    min-width: 11ch;
+    text-align: center;
+}
+
+.guide-modal-label {
+    font-size: 0.95rem;
+    color: var(--foreground0);
+    flex: 1;
+    text-align: right;
+}
+
+@keyframes guide-modal-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

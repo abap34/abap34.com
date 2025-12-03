@@ -162,10 +162,25 @@
     gap: 0.5lh;
     padding-bottom: 0.75lh;
     border-bottom: 1px solid var(--foreground2);
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .search-post-item:last-child {
     border-bottom: none;
+}
+
+.search-post-item.keyboard-focused {
+    background-color: var(--accent0);
+    color: var(--background0);
+    padding: 0.5lh 1ch;
+    margin: -0.5lh -1ch;
+    transform: translateX(0.5ch);
+}
+
+.search-post-item.keyboard-focused .search-post-date,
+.search-post-item.keyboard-focused .search-post-title-link,
+.search-post-item.keyboard-focused .search-post-source {
+    color: var(--background0);
 }
 
 .search-post-date {
@@ -191,11 +206,20 @@
     text-decoration: none;
     font-family: var(--font-family);
     line-height: 1.4;
+    transition: color 0.15s ease;
 }
 
 .search-post-title-link:hover {
     text-decoration: underline;
     color: var(--foreground0);
+}
+
+.search-post-title-link.keyboard-focused,
+a.search-post-title-link[data-focusable="true"].keyboard-focused {
+    background-color: var(--accent0);
+    color: var(--background0);
+    padding: 0.25lh 1ch;
+    display: inline-block;
 }
 
 .search-post-tags {
