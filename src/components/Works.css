@@ -536,9 +536,15 @@ works-modal-title-text {
 
 /* Simple list layout for TopPage */
 .works-simple-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1lh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5lh 2ch;
+}
+
+@media (max-width: 768px) {
+    .works-simple-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .works-simple-item {
