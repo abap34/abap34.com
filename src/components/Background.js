@@ -16,7 +16,12 @@ function FocusableEntry({ children, focusId, isFocused, url }) {
     return (
         <column
             className={`background-focusable ${isFocused ? 'keyboard-focused' : ''}`}
-            style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)', gap: '0.25rem' }}
+            style={{
+                margin: '0 0.5rem 0.5rem',
+                padding: '0.5rem',
+                borderBottom: '1px solid var(--foreground2)',
+                gap: '0.25rem'
+            }}
             data-focus-id={focusId}
             data-focus-activate="self"
             data-has-url={url ? 'true' : undefined}
@@ -95,16 +100,19 @@ export default function Background({ compact = false }) {
     const educationCount = data.education?.length || 0;
     const careerCount = data.careers?.length || 0;
 
-    const entry = (child, focusId, url) => (
-        <FocusableEntry
-            key={focusId}
-            focusId={focusId}
-            isFocused={activeFocusId === focusId}
-            url={url}
-        >
-            {child}
-        </FocusableEntry>
-    );
+    const entry = (renderContent, focusId, url) => {
+        const isFocused = activeFocusId === focusId;
+        return (
+            <FocusableEntry
+                key={focusId}
+                focusId={focusId}
+                isFocused={isFocused}
+                url={url}
+            >
+                {renderContent(isFocused)}
+            </FocusableEntry>
+        );
+    };
 
     return (
         <column style={{ gap: '2rem' }}>
@@ -114,14 +122,16 @@ export default function Background({ compact = false }) {
                 </h2>
                 {data.education.map((education, index) =>
                     entry(
-                        <>
-                            <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                                {education.school}
-                            </div>
-                            <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
-                                {education.period}
-                            </div>
-                        </>,
+                        (isFocused) => (
+                            <>
+                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                    {education.school}
+                                </div>
+                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                    {education.period}
+                                </div>
+                            </>
+                        ),
                         `top-item-background-${index}`,
                         education.url
                     )
@@ -134,14 +144,16 @@ export default function Background({ compact = false }) {
                 </h2>
                 {data.careers.map((career, index) =>
                     entry(
-                        <>
-                            <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                                {career.company}
-                            </div>
-                            <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
-                                {career.period} | {career.worktype}
-                            </div>
-                        </>,
+                        (isFocused) => (
+                            <>
+                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                    {career.company}
+                                </div>
+                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                    {career.period} | {career.worktype}
+                                </div>
+                            </>
+                        ),
                         `top-item-background-${educationCount + index}`,
                         career.url
                     )
@@ -154,14 +166,16 @@ export default function Background({ compact = false }) {
                 </h2>
                 {data.others.map((other, index) =>
                     entry(
-                        <>
-                            <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
-                                {other.title}
-                            </div>
-                            <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
-                                {other.period}
-                            </div>
-                        </>,
+                        (isFocused) => (
+                            <>
+                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                    {other.title}
+                                </div>
+                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                    {other.period}
+                                </div>
+                            </>
+                        ),
                         `top-item-background-${educationCount + careerCount + index}`,
                         other.url
                     )
