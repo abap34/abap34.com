@@ -14,8 +14,8 @@ function extractDomain(url) {
 
 export default function BlogPostItem({ post, maxTags = 3 }) {
     return (
-        <div className="search-post-item">
-            <div className="search-post-date">
+        <column className="search-post-item">
+            <row className="search-post-date">
                 {post.post_date}
                 {post.external && (
                     <span className="search-post-source">
@@ -23,11 +23,11 @@ export default function BlogPostItem({ post, maxTags = 3 }) {
                         {extractDomain(post.url)}
                     </span>
                 )}
-            </div>
+            </row>
             <a href={post.url} target="_blank" rel="noopener noreferrer" className="search-post-title-link">
                 {post.title}
             </a>
-            <div className="works-card-tags">
+            <row className="works-card-tags">
                 {post.tags?.slice(0, maxTags).map((tag, i) => (
                     <Tag key={i} name={tag} targetPage="/search">{tag}</Tag>
                 ))}
@@ -36,7 +36,7 @@ export default function BlogPostItem({ post, maxTags = 3 }) {
                         +{post.tags.length - maxTags}
                     </span>
                 )}
-            </div>
-        </div>
+            </row>
+        </column>
     );
 }

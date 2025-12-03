@@ -45,54 +45,57 @@ export default function Sidebar() {
 
     return (
         <nav className="sidebar">
-            <div className="sidebar-navigation">
-                <div className="sidebar-title">abap34.com/</div>
-                <div className="sidebar-links">
-                    <Link to="/" className={linkClass('/')} onClick={handleLinkClick}>
-                        ├─ About
-                    </Link>
-                    <Link to="/background" className={linkClass('/background')} onClick={handleLinkClick}>
-                        ├─ Background
-                    </Link>
-                    <Link to="/works" className={linkClass('/works')} onClick={handleLinkClick}>
-                        ├─ Works
-                    </Link>
-                    <Link to="/blog" className={linkClass('/blog')} onClick={handleLinkClick}>
-                        └─ Blog
-                    </Link>
-                </div>
-            </div>
+            <column className="sidebar-container">
+                <column className="sidebar-navigation">
+                    <div className="sidebar-title">abap34.com/</div>
+                    <column className="sidebar-links">
+                        <Link to="/" className={linkClass('/')} onClick={handleLinkClick}>
+                            ├─ About
+                        </Link>
+                        <Link to="/background" className={linkClass('/background')} onClick={handleLinkClick}>
+                            ├─ Background
+                        </Link>
+                        <Link to="/works" className={linkClass('/works')} onClick={handleLinkClick}>
+                            ├─ Works
+                        </Link>
+                        <Link to="/blog" className={linkClass('/blog')} onClick={handleLinkClick}>
+                            └─ Blog
+                        </Link>
+                    </column>
+                </column>
 
-            <hr className="sidebar-separator" />
+                <hr className="sidebar-separator" />
 
-            <div className="sidebar-settings">
-                <div className="sidebar-settings-title">SETTINGS</div>
+                <column className="sidebar-settings">
+                    <div className="sidebar-settings-title">SETTINGS</div>
 
-                <div className="sidebar-setting-group">
-                    <div className="sidebar-setting-label">Theme</div>
-                    <label>
-                        <input
-                            type="checkbox"
-                            is-="switch"
-                            checked={isDark}
-                            onChange={(e) => setIsDark(e.target.checked)}
-                        />
-                        {isDark ? 'Dark' : 'Light'}
-                    </label>
-                </div>
+                    <column className="sidebar-setting-group">
+                        <div className="sidebar-setting-label">Theme</div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                is-="switch"
+                                checked={isDark}
+                                onChange={(e) => setIsDark(e.target.checked)}
+                            />
+                            {isDark ? 'Dark' : 'Light'}
+                        </label>
+                    </column>
 
-                <div className="sidebar-setting-group">
-                    <div className="sidebar-setting-label">Language</div>
-                    <select
-                        value={language}
-                        onChange={(e) => toggleLanguage(e.target.value)}
-                        className="sidebar-select"
-                    >
-                        <option value="ja">Japanese</option>
-                        <option value="en">English (machine translation)</option>
-                    </select>
-                </div>
-            </div>
+                    <column className="sidebar-setting-group">
+                        <div className="sidebar-setting-label">Language</div>
+                        <select
+                            is-="select"
+                            value={language}
+                            onChange={(e) => toggleLanguage(e.target.value)}
+                            className="sidebar-select"
+                        >
+                            <option value="ja">Japanese</option>
+                            <option value="en">English (machine translation)</option>
+                        </select>
+                    </column>
+                </column>
+            </column>
         </nav>
     );
 }

@@ -9,9 +9,9 @@ export default function Introduction() {
     const content = introductionContent[language];
 
     return (
-        <div className="intro-container">
-            <div className="intro-layout">
-                <div className="intro-profile">
+        <column className="intro-container">
+            <row className="intro-layout">
+                <column className="intro-profile">
                     <img
                         src="/commic34.png"
                         alt="abap34"
@@ -19,22 +19,22 @@ export default function Introduction() {
                         size={240}
                     />
                     <SocialLinks links={socialLinks} />
-                </div>
+                </column>
 
-                <div className="intro-content">
+                <column className="intro-content">
                     <div className="intro-name">
                         {content.name}
                     </div>
                     <div className="intro-main-description">
                         {content.mainDescription}
                     </div>
-                    <div className="intro-detailed-description">
+                    <column className="intro-detailed-description">
                         {content.detailedDescription.map((line, index) => (
                             line === "" ? <br key={index} /> : <div key={index}>{line}</div>
                         ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </column>
+                </column>
+            </row>
+        </column>
     );
 }

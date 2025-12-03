@@ -14,16 +14,16 @@ export default function Header() {
 
   return (
     <header className="header">
-      <div className="header-container">
-        <div className="header-controls">
-          <button onClick={toggleSidebar} className="header-button">
+      <row className="header-container">
+        <row className="header-controls">
+          <button is-="button" variant-="background2" onClick={toggleSidebar} className="header-button">
             {isThree ? '三' : '四'}
           </button>
-          <button onClick={handlePlusClick} className="header-button">
+          <button is-="button" variant-="background2" onClick={handlePlusClick} className="header-button">
             ＋
           </button>
-        </div>
-      </div>
+        </row>
+      </row>
     </header>
   );
 }

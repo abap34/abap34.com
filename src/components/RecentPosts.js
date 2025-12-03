@@ -31,26 +31,26 @@ export default function RecentPosts() {
 
 
     return (
-        <div className="search-posts-list">
+        <column className="search-posts-list">
             {posts.length > 0 ? (
                 <>
                     {posts.map((post, index) => (
                         <BlogPostItem key={index} post={post} maxTags={3} />
                     ))}
-                    <div style={{ marginTop: '2lh', textAlign: 'left' }}>
+                    <column style={{ marginTop: '2lh', textAlign: 'left' }}>
                         <Link
                             to="/blog"
                             className="search-post-title-link"
                         >
                             {content.messages.viewAllPosts} →
                         </Link>
-                    </div>
+                    </column>
                 </>
             ) : (
-                <div style={{ color: 'var(--foreground2)' }}>
+                <column style={{ color: 'var(--foreground2)' }}>
                     <span>{content.messages.loadingPosts}</span>
-                </div>
+                </column>
             )}
-        </div>
+        </column>
     );
 }

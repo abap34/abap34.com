@@ -14,8 +14,8 @@
     gap: 0.25rem;
     vertical-align: top;
     white-space: nowrap;
-    height: 1lh;
-    line-height: 1lh;
+    height: 1.15lh;
+    line-height: 1.15lh;
     font-family: var(--font-family, monospace);
     font-size: var(--font-size, 0.875rem);
     cursor: pointer;
@@ -34,7 +34,7 @@
 [is-~="badge"]::after {
     content: '';
     width: 1ch;
-    height: 1lh;
+    height: 1.15lh;
     display: inline-block;
     vertical-align: middle;
     background-color: var(--badge-color, var(--foreground0));

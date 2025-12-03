@@ -4,20 +4,20 @@ import LanguageContext from "../context/LanguageContext";
 
 function EachEducation(props) {
     return (
-        <div style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
+        <column style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)', gap: '0.25rem' }}>
             <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                 {props.school}
             </div>
             <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                 {props.period}
             </div>
-        </div>
+        </column>
     );
 }
 
 function EachWork(props) {
     return (
-        <div style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
+        <column style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)', gap: '0.25rem' }}>
             <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                 <a
                     href={props.url}
@@ -34,7 +34,7 @@ function EachWork(props) {
             {/* <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
                 {props.project}
             </div> */}
-        </div>
+        </column>
     );
 }
 
@@ -53,72 +53,72 @@ export default function Background({ compact = false }) {
 
     if (compact) {
         return (
-            <div>
-                <div style={{ marginBottom: '1rem' }}>
-                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Education</div>
+            <column style={{ gap: '1rem' }}>
+                <column style={{ gap: '0.5rem' }}>
+                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>Education</div>
                     {data.education.slice(0, 2).map((education, index) => (
-                        <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                        <row key={index} style={{ fontSize: '0.875rem', gap: '0.5rem' }}>
                             <span style={{ color: 'var(--foreground0)' }}>{education.school}</span>
-                            <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
+                            <span style={{ color: 'var(--foreground2)' }}>
                                 {education.period}
                             </span>
-                        </div>
+                        </row>
                     ))}
-                </div>
+                </column>
 
-                <div style={{ marginBottom: '1rem' }}>
-                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Work Experience</div>
+                <column style={{ gap: '0.5rem' }}>
+                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>Work Experience</div>
                     {data.careers.slice(0, 2).map((career, index) => (
-                        <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                        <row key={index} style={{ fontSize: '0.875rem', gap: '0.5rem' }}>
                             <span style={{ color: 'var(--foreground0)' }}>{career.company}</span>
-                            <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
+                            <span style={{ color: 'var(--foreground2)' }}>
                                 {career.period}
                             </span>
-                        </div>
+                        </row>
                     ))}
-                </div>
+                </column>
 
-                <div>
-                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)', marginBottom: '0.5rem' }}>Activities</div>
+                <column style={{ gap: '0.5rem' }}>
+                    <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>Activities</div>
                     {data.others.slice(0, 2).map((other, index) => (
-                        <div key={index} style={{ fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                        <row key={index} style={{ fontSize: '0.875rem', gap: '0.5rem' }}>
                             <span style={{ color: 'var(--foreground0)' }}>{other.title}</span>
-                            <span style={{ color: 'var(--foreground2)', marginLeft: '0.5rem' }}>
+                            <span style={{ color: 'var(--foreground2)' }}>
                                 {other.period}
                             </span>
-                        </div>
+                        </row>
                     ))}
-                </div>
-            </div>
+                </column>
+            </column>
         );
     }
 
     return (
-        <div>
-            <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '1rem' }}>
+        <column style={{ gap: '2rem' }}>
+            <column style={{ gap: '1rem' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
                     Education
                 </h2>
                 {data.education.map((education, index) => (
                     <EachEducation key={index} school={education.school} period={education.period} />
                 ))}
-            </div>
+            </column>
 
-            <div style={{ marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '1rem' }}>
+            <column style={{ gap: '1rem' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
                     Work Experience
                 </h2>
                 {data.careers.map((career, index) => (
                     <EachWork key={index} company={career.company} url={career.url} period={career.period} worktype={career.worktype} project={career.project} />
                 ))}
-            </div>
+            </column>
 
-            <div>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)', marginBottom: '1rem' }}>
+            <column style={{ gap: '1rem' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 'var(--font-weight-bold)', color: 'var(--foreground0)' }}>
                     Others
                 </h2>
                 {data.others.map((other, index) => (
-                    <div key={index} style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)' }}>
+                    <column key={index} style={{ marginBottom: '0.5rem', paddingBottom: '0.5rem', borderBottom: '1px solid var(--foreground2)', gap: '0.25rem' }}>
                         <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                             <a
                                 href={other.url}
@@ -135,9 +135,9 @@ export default function Background({ compact = false }) {
                         {/* <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)' }}>
                             {other.description}
                         </div> */}
-                    </div>
+                    </column>
                 ))}
-            </div>
-        </div>
+            </column>
+        </column>
     );
 }

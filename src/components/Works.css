@@ -68,13 +68,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
 }
 
 .works-card {
     border: 1px solid var(--foreground2);
-    border-radius: 0.5rem;
-    padding: 1.5rem;
+    border-radius: 0;
+    padding: 0.5rem;
     cursor: pointer;
     background-color: var(--background1);
 }
@@ -117,7 +117,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .works-card-title {
@@ -135,20 +135,20 @@
 .works-card-image {
     width: 3rem;
     height: 3rem;
-    border-radius: 0.25rem;
+    border-radius: 0;
     border: 1px solid var(--foreground2);
     object-fit: cover;
 }
 
 .works-card-description {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-size: 0.875rem;
     color: var(--foreground1);
     line-height: 1.4;
 }
 
 .works-card-repo {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -198,11 +198,11 @@
 
 /* Works Main Container */
 .works-container {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
 }
 
 .works-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .works-title {
@@ -225,12 +225,12 @@
 
 .works-grid {
     display: grid;
-    gap: 1ch;
+    gap: 0.5ch;
     grid-template-columns: 1fr;
     align-items: stretch;
     /* カード高さを揃える */
     width: 100%;
-    max-width: 90%;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -290,7 +290,7 @@
     overflow-y: auto;
     background-color: var(--background0);
     border: 1px solid var(--foreground2);
-    border-radius: 0.5rem;
+    border-radius: 0;
     position: relative;
 }
 
@@ -334,7 +334,7 @@ works-modal-title-text {
 
 
 .works-modal-image {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
@@ -343,19 +343,19 @@ works-modal-title-text {
     height: auto;
     max-height: 12rem;
     object-fit: cover;
-    border-radius: 0.5rem;
+    border-radius: 0;
     border: 1px solid var(--foreground2);
     display: inline-block;
 }
 
 .works-modal-repo {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem;
     background-color: var(--background1);
-    border-radius: 0.375rem;
+    border-radius: 0;
     border: 1px solid var(--foreground2);
 }
 
@@ -377,17 +377,17 @@ works-modal-title-text {
 }
 
 .works-modal-links {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     padding: 0.75rem;
     background-color: var(--background1);
-    border-radius: 0.375rem;
+    border-radius: 0;
     border: 1px solid var(--foreground2);
 }
 
 .works-modal-links-title {
     font-weight: 700;
     color: var(--foreground0);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -417,8 +417,8 @@ works-modal-title-text {
 }
 
 .works-modal-description {
-    margin-bottom: 1.5rem;
-    line-height: 1.7;
+    margin-bottom: 1rem;
+    line-height: 1.6;
     color: var(--foreground0);
 }
 
@@ -432,7 +432,7 @@ works-modal-title-text {
 }
 
 .works-modal-markdown-p {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .works-modal-markdown-p:last-child {
@@ -447,7 +447,7 @@ works-modal-title-text {
 
 .works-modal-body {
     background-color: var(--background0);
-    padding: 1rem;
+    padding: 1.25rem;
     overflow-wrap: break-word;
     word-break: break-word;
     min-width: 0;
@@ -495,7 +495,7 @@ works-modal-title-text {
     }
 
     .works-modal-body {
-        padding: 1rem;
+        padding: 1.25rem;
     }
 
     .works-modal-img {
@@ -532,4 +532,51 @@ works-modal-title-text {
 
 .works-modal-content {
     animation: modal-scale-in 0.2s ease-out;
+}
+
+/* Simple list layout for TopPage */
+.works-simple-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1lh;
+}
+
+.works-simple-item {
+    display: flex;
+    gap: 2ch;
+    padding-bottom: 0.75lh;
+    border-bottom: 1px solid var(--foreground2);
+    cursor: pointer;
+}
+
+.works-simple-item:last-child {
+    border-bottom: none;
+}
+
+.works-simple-thumbnail {
+    width: 8rem;
+    height: 6rem;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 1px solid var(--foreground2);
+}
+
+.works-simple-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5lh;
+    min-width: 0;
+}
+
+.works-simple-description {
+    font-size: 0.875rem;
+    color: var(--foreground1);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
