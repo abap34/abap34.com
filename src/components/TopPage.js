@@ -18,7 +18,7 @@ export default function TopPage() {
     return (
         <main className="top-page">
             <column className="top-page-content">
-                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                <column box-="square" shear-="top" style={{ marginBottom: '1lh', alignSelf: 'flex-start', width: 'fit-content' }}>
                     <span is-="badge" variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Introduction
@@ -54,7 +54,7 @@ export default function TopPage() {
                     </div>
                 </div>
 
-                <column box-="square" shear-="top" style={{ marginBottom: '1lh' }}>
+                <column box-="square" shear-="top" style={{ marginBottom: '1lh', alignSelf: 'flex-start', width: 'fit-content' }}>
                     <span is-="badge" variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
                         Works

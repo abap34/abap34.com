@@ -25,7 +25,7 @@ export default function RecentPosts() {
 
     useEffect(() => {
         fetchPosts().then((posts) => {
-            setPosts(posts.slice(0, 4));
+            setPosts(posts.slice(0, 5));
         });
     }, [language]);
 
