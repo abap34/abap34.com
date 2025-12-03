@@ -1,5 +1,7 @@
+import { useCallback } from 'react';
 import { ExternalLink } from 'lucide-react';
 import Tag from './Tag';
+import { useFocusContext } from '../context/FocusContext';
 import './SearchResult.css';
 
 // ドメイン名を抽出する関数
@@ -12,9 +14,30 @@ function extractDomain(url) {
     }
 }
 
-export default function BlogPostItem({ post, maxTags = 3 }) {
+export default function BlogPostItem({
+    post,
+    maxTags = 3,
+    focusId
+}) {
+    const { activeFocusId } = useFocusContext();
+    const isFocused = focusId ? activeFocusId === focusId : false;
+    const handleActivate = useCallback(() => {
+        if (!post?.url || typeof window === 'undefined') {
+            return;
+        }
+        const newWindow = window.open(post.url, '_blank', 'noopener,noreferrer');
+        if (newWindow) {
+            newWindow.opener = null;
+        }
+    }, [post]);
+
     return (
-        <column className="search-post-item">
+        <column
+            className={`search-post-item ${isFocused ? 'keyboard-focused' : ''}`}
+            data-focus-id={focusId}
+            data-focus-activate="self"
+            onClick={handleActivate}
+        >
             <row className="search-post-date">
                 {post.post_date}
                 {post.external && (
@@ -24,7 +47,13 @@ export default function BlogPostItem({ post, maxTags = 3 }) {
                     </span>
                 )}
             </row>
-            <a href={post.url} target="_blank" rel="noopener noreferrer" className="search-post-title-link">
+            <a
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="search-post-title-link"
+                onClick={(event) => event.stopPropagation()}
+            >
                 {post.title}
             </a>
             <row className="works-card-tags">

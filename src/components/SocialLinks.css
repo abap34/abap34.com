@@ -12,10 +12,20 @@
     justify-content: center;
     color: var(--foreground1);
     text-decoration: none;
+    position: relative;
 }
 
 .social-link:hover {
     color: var(--accent0);
+}
+
+.social-link.keyboard-focused {
+    color: var(--background0);
+    background-color: var(--accent0);
+    border-radius: 999px;
+    box-shadow: 0 0 0 2px var(--accent0), 0 6px 16px rgba(0, 0, 0, 0.35);
+    transform: scale(1.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .social-icon {

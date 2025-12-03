@@ -15,7 +15,7 @@
 
 .sidebar-navigation {
     font-family: var(--font-family);
-    line-height: 1;
+    line-height: 0.5;
     gap: 0.75rem;
 }
 
@@ -51,6 +51,13 @@
 .sidebar-link.active {
     color: var(--accent0);
     background-color: var(--background1);
+    border-left-color: var(--accent0);
+    font-weight: bold;
+}
+
+.sidebar-link.keyboard-focused {
+    color: var(--background0);
+    background-color: var(--accent0);
     border-left-color: var(--accent0);
     font-weight: bold;
 }

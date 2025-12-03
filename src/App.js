@@ -7,6 +7,8 @@ import SearchResult from './components/SearchResult';
 import Sidebar from './components/Sidebar';
 import TopPage from './components/TopPage';
 import Works from './components/Works';
+import GuideModal from './components/GuideModal';
+import { FocusProvider } from "./context/FocusContext";
 import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
 import SidebarContext, { SidebarProvider } from "./context/SidebarContext";
 
@@ -81,46 +83,49 @@ function Abap34Com() {
 
   return (
     <Router>
-      <div
-        variant-="background0"
-        className="app-layout"
-      >
-        <Header />
-        <div className="app-main">
-          {/* デスクトップ用サイドバー */}
-          <div className="app-sidebar-desktop">
-            <Sidebar />
-          </div>
-
-          {/* モバイル用オーバーレイサイドバー */}
-          {isOpen && (
-            <div className="app-sidebar-mobile">
-              <div
-                className="app-sidebar-overlay"
-                onClick={() => setIsOpen(false)}
-              ></div>
-              {/* サイドバー */}
-              <div
-                className="app-sidebar-panel"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Sidebar />
-              </div>
+      <FocusProvider>
+        <div
+          variant-="background0"
+          className="app-layout"
+        >
+          <Header />
+          <div className="app-main">
+            {/* デスクトップ用サイドバー */}
+            <div className="app-sidebar-desktop">
+              <Sidebar />
             </div>
-          )}
 
-          <div className="app-content">
-            <Routes>
-              <Route path="/" element={<TopPage />} />
-              <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
-              <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} showTagFilter={true} /></PageWrapper>} />
-              <Route path="/blog" element={<PageWrapper><SearchResult /></PageWrapper>} />
-              <Route path="/search" element={<PageWrapper><SearchResult /></PageWrapper>} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            {/* モバイル用オーバーレイサイドバー */}
+            {isOpen && (
+              <div className="app-sidebar-mobile">
+                <div
+                  className="app-sidebar-overlay"
+                  onClick={() => setIsOpen(false)}
+                ></div>
+                {/* サイドバー */}
+                <div
+                  className="app-sidebar-panel"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Sidebar />
+                </div>
+              </div>
+            )}
+
+            <div className="app-content">
+              <Routes>
+                <Route path="/" element={<TopPage />} />
+                <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
+                <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} showTagFilter={true} /></PageWrapper>} />
+                <Route path="/blog" element={<PageWrapper><SearchResult /></PageWrapper>} />
+                <Route path="/search" element={<PageWrapper><SearchResult /></PageWrapper>} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </div>
+          <GuideModal />
         </div>
-      </div>
+      </FocusProvider>
     </Router>
   );
 }

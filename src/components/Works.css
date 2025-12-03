@@ -553,10 +553,25 @@ works-modal-title-text {
     padding-bottom: 0.75lh;
     border-bottom: 1px solid var(--foreground2);
     cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
 
 .works-simple-item:last-child {
     border-bottom: none;
+}
+
+.works-simple-item.keyboard-focused {
+    background-color: var(--accent0);
+    color: var(--background0);
+    padding: 0.5lh 1ch;
+    margin: -0.5lh -1ch;
+    border-bottom-color: var(--accent0);
+    animation: works-focus-glide 0.25s ease;
+}
+
+.works-simple-item.keyboard-focused .search-post-title-link,
+.works-simple-item.keyboard-focused .works-simple-description {
+    color: var(--background0);
 }
 
 .works-simple-thumbnail {
@@ -585,4 +600,13 @@ works-modal-title-text {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+@keyframes works-focus-glide {
+    0% {
+        transform: translateY(4px) scale(0.98);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }

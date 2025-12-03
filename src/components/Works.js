@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaGithub, FaTag } from "react-icons/fa6";
 import { X } from "lucide-react";
+import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import yaml from "yaml";
 import SearchBar from './SearchBar';
 import Tag from './Tag';
+import { useFocusContext } from "../context/FocusContext";
 import './SearchResult.css';
 import './Works.css';
 
@@ -102,6 +104,18 @@ function DeletableTag({ name, label }) {
 }
 
 const WorkModal = ({ work, open, onClose }) => {
+    useEffect(() => {
+        if (!open || typeof window === 'undefined') return undefined;
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [open, onClose]);
+
     if (!open) return null
 
     const modalContent = (
@@ -205,11 +219,20 @@ const WorkModal = ({ work, open, onClose }) => {
     return createPortal(modalContent, document.body);
 }
 
-export default function Works({ title, path, defaultVisibleCount = 6, compact = false, showTagFilter = false, simple = false }) {
+export default function Works({
+    title,
+    path,
+    defaultVisibleCount = 6,
+    compact = false,
+    showTagFilter = false,
+    simple = false,
+    showViewAllLink = false
+}) {
     const [works, setWorks] = useState({})
     const [selectedWork, setSelectedWork] = useState(null)
     const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
     const [isLoading, setIsLoading] = useState(true)
+    const { setWorksItemCount, activeFocusId, lockNavigation, unlockNavigation } = useFocusContext()
 
     useEffect(() => {
         setIsLoading(true)
@@ -242,6 +265,31 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
     const tags = getSearchTags();
     const workEntries = Object.entries(works);
     const filteredWorks = filterWorksByQueries(filterWorksByTags(workEntries, tags), queries);
+    const visibleWorks = filteredWorks.slice(0, visibleCount);
+
+    useEffect(() => {
+        if (simple) {
+            const totalItems = visibleWorks.length + (showViewAllLink ? 1 : 0);
+            setWorksItemCount(totalItems);
+        }
+    }, [setWorksItemCount, showViewAllLink, simple, visibleWorks.length]);
+
+    useEffect(() => {
+        if (!simple && showTagFilter) {
+            setWorksItemCount(visibleWorks.length);
+        }
+    }, [setWorksItemCount, showTagFilter, simple, visibleWorks.length]);
+
+    useEffect(() => {
+        if (selectedWork) {
+            lockNavigation();
+        } else {
+            unlockNavigation();
+        }
+        return () => {
+            unlockNavigation();
+        };
+    }, [selectedWork, lockNavigation, unlockNavigation]);
 
     // Simple list mode (like RecentPosts)
     if (simple) {
@@ -254,38 +302,60 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                 ) : (
                     <>
                         <div className="works-simple-grid">
-                            {filteredWorks.slice(0, visibleCount).map(([index, work]) => (
-                                <div key={index} className="works-simple-item" onClick={() => handleWorkClick(work)}>
-                                    {work.img && (
-                                        <img
-                                            src={work.img}
-                                            alt={work.title}
-                                            className="works-simple-thumbnail"
-                                        />
-                                    )}
-                                    <column className="works-simple-content">
-                                        <div className="search-post-title-link">
-                                            {work.title}
-                                        </div>
-                                        {(work.short_desc || work.desc) && (
-                                            <div className="works-simple-description">
-                                                {work.short_desc || work.desc}
-                                            </div>
+                            {visibleWorks.map(([index, work], arrayIndex) => {
+                                const focusId = `top-item-works-${arrayIndex}`;
+                                const isFocused = activeFocusId === focusId;
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`works-simple-item ${isFocused ? 'keyboard-focused' : ''}`}
+                                        onClick={() => handleWorkClick(work)}
+                                        data-focus-id={focusId}
+                                        data-focus-activate="self"
+                                    >
+                                        {work.img && (
+                                            <img
+                                                src={work.img}
+                                                alt={work.title}
+                                                className="works-simple-thumbnail"
+                                            />
                                         )}
-                                        <row className="works-card-tags">
-                                            {work.tags?.slice(0, 3).map((tag, i) => (
-                                                <Tag key={i} name={tag} targetPage="/works">{tag}</Tag>
-                                            ))}
-                                            {work.tags?.length > 3 && (
-                                                <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
-                                                    +{work.tags.length - 3}
-                                                </span>
+                                        <column className="works-simple-content">
+                                            <div className="search-post-title-link">
+                                                {work.title}
+                                            </div>
+                                            {(work.short_desc || work.desc) && (
+                                                <div className="works-simple-description">
+                                                    {work.short_desc || work.desc}
+                                                </div>
                                             )}
-                                        </row>
-                                    </column>
-                                </div>
-                            ))}
+                                            <row className="works-card-tags">
+                                                {work.tags?.slice(0, 3).map((tag, i) => (
+                                                    <Tag key={i} name={tag} targetPage="/works">{tag}</Tag>
+                                                ))}
+                                                {work.tags?.length > 3 && (
+                                                    <span style={{color: 'var(--foreground2)', fontSize: '0.8rem'}}>
+                                                        +{work.tags.length - 3}
+                                                    </span>
+                                                )}
+                                            </row>
+                                        </column>
+                                    </div>
+                                );
+                            })}
                         </div>
+                        {showViewAllLink && (
+                            <column style={{ marginTop: '2lh', textAlign: 'left' }}>
+                                <Link
+                                    to="/works"
+                                    className={`search-post-title-link ${activeFocusId === `top-item-works-${visibleWorks.length}` ? 'keyboard-focused' : ''}`}
+                                    data-focus-id={`top-item-works-${visibleWorks.length}`}
+                                    data-focus-activate="self"
+                                >
+                                    すべての作品をみる →
+                                </Link>
+                            </column>
+                        )}
                     </>
                 )}
 
@@ -407,59 +477,65 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
                                 Found <span className="search-count-number">{filteredWorks.length}</span> projects
                             </div>
                             <div className="works-grid">
-                                {filteredWorks.slice(0, visibleCount).map(([index, work]) => (
-                                    <div
-                                        key={index}
-                                        box-="square"
-                                        shear-="top"
-                                        className="works-card"
-                                        onClick={() => handleWorkClick(work)}
-                                    >
-                                        <span is-="badge" variant-="foreground0"
-                                            style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
-                                            {work.title}
-                                        </span>
+                                {visibleWorks.map(([index, work], arrayIndex) => {
+                                    const focusId = `top-item-works-${arrayIndex}`;
+                                    const isFocused = activeFocusId === focusId;
+                                    return (
+                                        <div
+                                            key={index}
+                                            box-="square"
+                                            shear-="top"
+                                            className={`works-card ${isFocused ? 'keyboard-focused' : ''}`}
+                                            onClick={() => handleWorkClick(work)}
+                                            data-focus-id={focusId}
+                                            data-focus-activate="self"
+                                        >
+                                            <span is-="badge" variant-="foreground0"
+                                                style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                                {work.title}
+                                            </span>
 
-                                        <div className="works-card-content">
-                                            <div className="works-card-period">{work.period}</div>
+                                            <div className="works-card-content">
+                                                <div className="works-card-period">{work.period}</div>
 
-                                            {work.img && (
-                                                <div className="works-card-image-container">
-                                                    <img
-                                                        src={work.img}
-                                                        alt={work.title}
-                                                        className="works-card-image"
-                                                    />
+                                                {work.img && (
+                                                    <div className="works-card-image-container">
+                                                        <img
+                                                            src={work.img}
+                                                            alt={work.title}
+                                                            className="works-card-image"
+                                                        />
+                                                    </div>
+                                                )}
+
+                                                <div className="works-card-description">
+                                                    {work.short_desc || work.desc || 'No description available'}
                                                 </div>
-                                            )}
 
-                                            <div className="works-card-description">
-                                                {work.short_desc || work.desc || 'No description available'}
-                                            </div>
+                                                {work.repo && (
+                                                    <div className="works-card-repo">
+                                                        <FaGithub className="works-card-repo-icon" />
+                                                        <a
+                                                            href={`https://github.com/${work.repo}`}
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                            className="works-card-repo-link"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        >
+                                                            {work.repo}
+                                                        </a>
+                                                    </div>
+                                                )}
 
-                                            {work.repo && (
-                                                <div className="works-card-repo">
-                                                    <FaGithub className="works-card-repo-icon" />
-                                                    <a
-                                                        href={`https://github.com/${work.repo}`}
-                                                        target="_blank"
-                                                        rel="noreferrer"
-                                                        className="works-card-repo-link"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    >
-                                                        {work.repo}
-                                                    </a>
+                                                <div className="works-card-tags">
+                                                    {work.tags?.map((tag, i) => (
+                                                        <Tag key={i} name={tag}>{tag}</Tag>
+                                                    ))}
                                                 </div>
-                                            )}
-
-                                            <div className="works-card-tags">
-                                                {work.tags?.map((tag, i) => (
-                                                    <Tag key={i} name={tag}>{tag}</Tag>
-                                                ))}
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </>
                     )}
@@ -490,59 +566,65 @@ export default function Works({ title, path, defaultVisibleCount = 6, compact = 
             ) : (
                 <>
                     <div className="works-grid">
-                        {filteredWorks.slice(0, visibleCount).map(([index, work]) => (
-                            <div
-                                key={index}
-                                box-="square"
-                                shear-="top"
-                                className="works-card"
-                                onClick={() => handleWorkClick(work)}
-                            >
-                                <span is-="badge" variant-="foreground0"
-                                    style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
-                                    {work.title}
-                                </span>
+                        {visibleWorks.map(([index, work], arrayIndex) => {
+                            const focusId = `top-item-works-${arrayIndex}`;
+                            const isFocused = activeFocusId === focusId;
+                            return (
+                                <div
+                                    key={index}
+                                    box-="square"
+                                    shear-="top"
+                                    className={`works-card ${isFocused ? 'keyboard-focused' : ''}`}
+                                    onClick={() => handleWorkClick(work)}
+                                    data-focus-id={focusId}
+                                    data-focus-activate="self"
+                                >
+                                    <span is-="badge" variant-="foreground0"
+                                        style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}>
+                                        {work.title}
+                                    </span>
 
-                                <div className="works-card-content">
-                                    <div className="works-card-period">{work.period}</div>
-                                    
-                                    {work.img && (
-                                        <div className="works-card-image-container">
-                                            <img
-                                                src={work.img}
-                                                alt={work.title}
-                                                className="works-card-image"
-                                            />
+                                    <div className="works-card-content">
+                                        <div className="works-card-period">{work.period}</div>
+                                        
+                                        {work.img && (
+                                            <div className="works-card-image-container">
+                                                <img
+                                                    src={work.img}
+                                                    alt={work.title}
+                                                    className="works-card-image"
+                                                />
+                                            </div>
+                                        )}
+
+                                        <div className="works-card-description">
+                                            {work.short_desc || work.desc || 'No description available'}
                                         </div>
-                                    )}
 
-                                    <div className="works-card-description">
-                                        {work.short_desc || work.desc || 'No description available'}
-                                    </div>
+                                        {work.repo && (
+                                            <div className="works-card-repo">
+                                                <FaGithub className="works-card-repo-icon" />
+                                                <a
+                                                    href={`https://github.com/${work.repo}`}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="works-card-repo-link"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    {work.repo}
+                                                </a>
+                                            </div>
+                                        )}
 
-                                    {work.repo && (
-                                        <div className="works-card-repo">
-                                            <FaGithub className="works-card-repo-icon" />
-                                            <a
-                                                href={`https://github.com/${work.repo}`}
-                                                target="_blank"
-                                                rel="noreferrer"
-                                                className="works-card-repo-link"
-                                                onClick={(e) => e.stopPropagation()}
-                                            >
-                                                {work.repo}
-                                            </a>
+                                        <div className="works-card-tags">
+                                            {work.tags?.map((tag, i) => (
+                                                <Tag key={i} name={tag} targetPage="/works">{tag}</Tag>
+                                            ))}
                                         </div>
-                                    )}
-
-                                    <div className="works-card-tags">
-                                        {work.tags?.map((tag, i) => (
-                                            <Tag key={i} name={tag} targetPage="/works">{tag}</Tag>
-                                        ))}
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {selectedWork && (

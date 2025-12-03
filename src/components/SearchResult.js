@@ -5,6 +5,7 @@ import BlogPostItem from './BlogPostItem';
 import SeachBar from './SearchBar';
 import './SearchResult.css';
 import TagList from './TagList';
+import { useFocusContext } from '../context/FocusContext';
 
 async function fetchPosts() {
     try {
@@ -143,6 +144,7 @@ function DeleatableQuery({ query }) {
 export default function SearchResult() {
     const [posts, setPosts] = useState([]);
     const [allTags, setAllTags] = useState([]);
+    const { setRecentItemCount } = useFocusContext();
 
     useEffect(() => {
         fetchPosts().then((posts) => {
@@ -168,6 +170,10 @@ export default function SearchResult() {
     const queries = getSearchQueries();
 
     const searchedPosts = searchPostsByQueries(searchPostsByTags(posts, tags), queries);
+
+    useEffect(() => {
+        setRecentItemCount(searchedPosts.length);
+    }, [searchedPosts.length, setRecentItemCount]);
     return (
         <main className="search-container">
             <column className="search-main">
@@ -188,8 +194,8 @@ export default function SearchResult() {
                 <div className="search-count">Found <span className="search-count-number">{searchedPosts.length}</span> posts</div>
 
                 <column className="search-posts-list">
-                    {searchedPosts.map((post) => (
-                        <BlogPostItem key={post.url} post={post} maxTags={4} />
+                    {searchedPosts.map((post, index) => (
+                        <BlogPostItem key={post.url} post={post} maxTags={4} focusId={`top-item-recent-${index}`} />
                     ))}
                 </column>
             </column>
@@ -198,4 +204,3 @@ export default function SearchResult() {
         </main>
     );
 }
-
