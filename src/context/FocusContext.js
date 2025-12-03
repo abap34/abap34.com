@@ -67,31 +67,6 @@ export function FocusProvider({ children }) {
         setWorksColumns(getWorksColumnCount(location.pathname));
     }, [location.pathname]);
 
-    useEffect(() => {
-        const currentPathIndex = SIDEBAR_LINKS.indexOf(location.pathname);
-        if (currentPathIndex >= 0) {
-            setSidebarIndex(currentPathIndex);
-        }
-        if (isHomePage) {
-            setRegion('sidebar');
-            setMode('section');
-            setSectionIndex(SECTION_INDEX.INTRODUCTION);
-            setItemIndex(0);
-            return;
-        }
-        if (isStandalonePage) {
-            setRegion('top');
-            setSectionIndex(standaloneSectionIndex);
-            setMode('items');
-            setItemIndex(0);
-            return;
-        }
-        setRegion('sidebar');
-        setMode('section');
-        setSectionIndex(SECTION_INDEX.INTRODUCTION);
-        setItemIndex(0);
-    }, [isHomePage, isStandalonePage, location.pathname, standaloneSectionIndex]);
-
     const sectionMeta = useMemo(() => ({
         [SECTION_INDEX.INTRODUCTION]: {
             supportsItems: introductionItemCount > 0,
@@ -123,6 +98,14 @@ export function FocusProvider({ children }) {
         setItemIndex(0);
     }, []);
 
+    const focusStandaloneSection = useCallback((section) => {
+        if (typeof section === 'undefined') return;
+        setRegion('top');
+        setSectionIndex(section);
+        setMode('items');
+        setItemIndex(0);
+    }, []);
+
     const activateTopFromSidebar = useCallback(() => {
         setRegion('top');
         setMode('section');
@@ -133,6 +116,22 @@ export function FocusProvider({ children }) {
     const activateTopPage = useCallback(() => {
         setRegion('top');
     }, []);
+
+    useEffect(() => {
+        const currentPathIndex = SIDEBAR_LINKS.indexOf(location.pathname);
+        if (currentPathIndex >= 0) {
+            setSidebarIndex(currentPathIndex);
+        }
+        if (isHomePage) {
+            focusSidebar(0);
+            return;
+        }
+        if (isStandalonePage) {
+            focusStandaloneSection(standaloneSectionIndex);
+            return;
+        }
+        focusSidebar(0);
+    }, [focusSidebar, focusStandaloneSection, isHomePage, isStandalonePage, location.pathname, standaloneSectionIndex]);
 
     const getActiveFocusId = useCallback(() => {
         if (region === 'sidebar') {
@@ -215,11 +214,13 @@ export function FocusProvider({ children }) {
             }
             if (targetPath === '/' && location.pathname === '/') {
                 activateTopFromSidebar();
+            } else if (targetPath === location.pathname) {
+                focusStandaloneSection(STANDALONE_SECTION_MAP[targetPath]);
             }
             return true;
         }
         return false;
-    }, [activateTopFromSidebar, location.pathname, moveSidebarFocus, navigationLocked, region, sidebarIndex]);
+    }, [activateTopFromSidebar, focusStandaloneSection, location.pathname, moveSidebarFocus, navigationLocked, region, sidebarIndex]);
 
     const clampItemIndex = useCallback((count) => {
         setItemIndex((prev) => Math.min(prev, Math.max(count - 1, 0)));
