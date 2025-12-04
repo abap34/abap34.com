@@ -74,6 +74,11 @@ a:hover {
   color: var(--foreground0);
 }
 
+/* WebTUI Box Background */
+[box-] {
+  background-color: var(--background0);
+}
+
 /* WebTUI Badge Focus Fix - Only for TopPage box section headers, not tags */
 .top-page [box-] > [is-="badge"] {
   outline: none;
@@ -131,7 +136,7 @@ a:hover {
 
 body,
 html {
-  background-color: var(--background0);
+  background-color: transparent;
   color: var(--foreground0);
   font-family: var(--font-family);
   font-size: var(--font-size);

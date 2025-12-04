@@ -1,6 +1,9 @@
 .app-layout {
     min-height: 100vh;
     font-family: var(--font-family);
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
 }
 
 .app-main {
