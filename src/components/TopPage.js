@@ -26,7 +26,7 @@ export default function TopPage() {
                     shear-="top"
                     tabIndex={-1}
                     className={`top-page-section ${sectionFocused(SECTION_INDEX.INTRODUCTION) ? 'keyboard-focused' : ''}`}
-                    style={{ marginBottom: '1lh', alignSelf: 'flex-start', width: 'fit-content' }}
+                    style={{ marginBottom: '1lh', alignSelf: 'flex-start', width: '100%', maxWidth: '1800px' }}
                     data-focus-id={`top-section-${SECTION_INDEX.INTRODUCTION}`}
                 >
                     <span

@@ -27,6 +27,8 @@
     max-width: 100%;
     overflow-y: auto; /* Make this container scrollable */
     scrollbar-width: none; /* Hide scrollbar for Firefox */
+    background-color: var(--background0);
+    padding: 1rem;
 }
 
 .search-main::-webkit-scrollbar {

@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './components/App.css';
 import Background from './components/Background';
 import Header from './components/Header';
+import ParticleLife from './components/ParticleLife';
 import SearchResult from './components/SearchResult';
 import Sidebar from './components/Sidebar';
 import TopPage from './components/TopPage';
@@ -88,6 +89,7 @@ function Abap34Com() {
           variant-="background0"
           className="app-layout"
         >
+          <ParticleLife />
           <Header />
           <div className="app-main">
             {/* デスクトップ用サイドバー */}
