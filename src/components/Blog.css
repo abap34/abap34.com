@@ -224,6 +224,10 @@
     color: inherit;
 }
 
+[data-webtui-theme="catppuccin-mocha"] .blog-timeline-card {
+    background-color: rgba(186, 194, 222, 0.05);
+}
+
 .blog-timeline-card:hover {
     border-color: #2563eb;
 }

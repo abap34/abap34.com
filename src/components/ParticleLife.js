@@ -20,23 +20,43 @@ const ParticleLife = () => {
         }
 
         // Canvas サイズを設定
+        let sizeScaleFactor = 1.0;
+        let scaledMaxDistance = 100;
+        let scaledMaxDistanceSq = 10000;
+        let scaledRMin = 8;
+        let scaledGridSize = 100;
+
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+
+            // 画面サイズに応じたスケーリング係数を計算
+            // 基準サイズ: 1920x1080
+            const baseWidth = 1920;
+            const baseHeight = 1080;
+            const baseArea = baseWidth * baseHeight;
+            const currentArea = canvas.width * canvas.height;
+
+            // 面積の比の平方根でスケーリング（線形に近い効果）
+            sizeScaleFactor = Math.sqrt(currentArea / baseArea);
+
+            // 距離パラメータもスケーリング
+            scaledMaxDistance = 100 * sizeScaleFactor;
+            scaledMaxDistanceSq = scaledMaxDistance * scaledMaxDistance;
+            scaledRMin = 8 * sizeScaleFactor;
+            scaledGridSize = scaledMaxDistance;
         };
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
         // パーティクルの設定
-        const PARTICLE_COUNT = 350;
+        const BASE_PARTICLE_COUNT = 350;
+        // 画面サイズに応じた粒子数を計算（最小100、最大1000）
+        const PARTICLE_COUNT = Math.max(100, Math.min(1000, Math.floor(BASE_PARTICLE_COUNT * sizeScaleFactor)));
         const PARTICLE_TYPES = 3;
         const PARTICLE_RADIUS = 1.8;
-        const MAX_DISTANCE = 100;
-        const MAX_DISTANCE_SQ = MAX_DISTANCE * MAX_DISTANCE;
-        const RMIN = 8;
         const FRICTION = 0.88;
         const TIME_SCALE = 0.8;
-        const GRID_SIZE = MAX_DISTANCE;
 
         // 色の設定（ダークモード専用）
         const colors = [
@@ -86,12 +106,12 @@ const ParticleLife = () => {
 
         // Particle Life標準の力関数
         const forceFunction = (r, a) => {
-            if (r < RMIN) {
-                return (r / RMIN - 1) * 1.2;
-            } else if (r < MAX_DISTANCE) {
+            if (r < scaledRMin) {
+                return (r / scaledRMin - 1) * 1.2;
+            } else if (r < scaledMaxDistance) {
                 const beta = 0.4;
-                const smoothFactor = 1 - Math.abs(2 * r / MAX_DISTANCE - 1 - beta) / (1 - beta);
-                return a * smoothFactor * (1 - (r / MAX_DISTANCE) * 0.2);
+                const smoothFactor = 1 - Math.abs(2 * r / scaledMaxDistance - 1 - beta) / (1 - beta);
+                return a * smoothFactor * (1 - (r / scaledMaxDistance) * 0.2);
             }
             return 0;
         };
@@ -110,8 +130,8 @@ const ParticleLife = () => {
                 let fx = 0;
                 let fy = 0;
 
-                const gridX = Math.floor(this.x / GRID_SIZE);
-                const gridY = Math.floor(this.y / GRID_SIZE);
+                const gridX = Math.floor(this.x / scaledGridSize);
+                const gridY = Math.floor(this.y / scaledGridSize);
 
                 for (let dx = -1; dx <= 1; dx++) {
                     for (let dy = -1; dy <= 1; dy++) {
@@ -126,7 +146,7 @@ const ParticleLife = () => {
                             const dy_dist = other.y - this.y;
                             const distanceSq = dx_dist * dx_dist + dy_dist * dy_dist;
 
-                            if (distanceSq > 0 && distanceSq < MAX_DISTANCE_SQ) {
+                            if (distanceSq > 0 && distanceSq < scaledMaxDistanceSq) {
                                 const distance = Math.sqrt(distanceSq);
                                 const a = rules[this.type][other.type];
                                 const force = forceFunction(distance, a);
@@ -152,6 +172,10 @@ const ParticleLife = () => {
                 // 小さなランダムノイズを追加
                 fx += (Math.random() - 0.5) * 0.003;
                 fy += (Math.random() - 0.5) * 0.003;
+
+                // 画面サイズに応じたスケーリングを適用
+                fx *= sizeScaleFactor;
+                fy *= sizeScaleFactor;
 
                 this.vx = (this.vx + fx * TIME_SCALE) * FRICTION;
                 this.vy = (this.vy + fy * TIME_SCALE) * FRICTION;
@@ -194,8 +218,8 @@ const ParticleLife = () => {
         const buildGrid = () => {
             const grid = {};
             for (const particle of particles) {
-                const gridX = Math.floor(particle.x / GRID_SIZE);
-                const gridY = Math.floor(particle.y / GRID_SIZE);
+                const gridX = Math.floor(particle.x / scaledGridSize);
+                const gridY = Math.floor(particle.y / scaledGridSize);
                 const key = `${gridX},${gridY}`;
                 if (!grid[key]) grid[key] = [];
                 grid[key].push(particle);
