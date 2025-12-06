@@ -26,7 +26,7 @@ export default function GuideModal() {
         <div className="guide-modal" role="status" aria-live="polite">
             <div className="guide-modal-body">
                 <div className="guide-modal-row">
-                    <span className="guide-modal-keys">hjkl / ←↑→↓</span>
+                    <span className="guide-modal-keys">←↑→↓</span>
                     <span className="guide-modal-label">Move</span>
                 </div>
                 <div className="guide-modal-row">

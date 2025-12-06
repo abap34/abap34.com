@@ -201,15 +201,15 @@ export function FocusProvider({ children }) {
 
     const handleSidebarKeys = useCallback((event) => {
         if (keyboardDisabled || navigationLocked || region !== 'sidebar') return false;
-        if (!['j', 'k', 'h', 'l', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(event.key)) {
+        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(event.key)) {
             return false;
         }
         event.preventDefault();
-        if (event.key === 'j' || event.key === 'ArrowDown' || event.key === 'l' || event.key === 'ArrowRight') {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
             moveSidebarFocus('next');
             return true;
         }
-        if (event.key === 'k' || event.key === 'ArrowUp' || event.key === 'h' || event.key === 'ArrowLeft') {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
             moveSidebarFocus('prev');
             return true;
         }
@@ -286,7 +286,7 @@ export function FocusProvider({ children }) {
     const handleTopKeys = useCallback((event) => {
         if (keyboardDisabled || navigationLocked || region !== 'top') return false;
         const key = event.key;
-        if (!['j', 'k', 'h', 'l', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape'].includes(key)) {
+        if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape'].includes(key)) {
             return false;
         }
         const meta = sectionMeta[sectionIndex];
@@ -311,30 +311,30 @@ export function FocusProvider({ children }) {
             }
 
             if (meta.type === 'works') {
-                if (key === 'j' || key === 'ArrowDown') {
+                if (key === 'ArrowDown') {
                     handleWorksMove(1, 0);
                     return true;
                 }
-                if (key === 'k' || key === 'ArrowUp') {
+                if (key === 'ArrowUp') {
                     handleWorksMove(-1, 0);
                     return true;
                 }
-                if (key === 'l' || key === 'ArrowRight') {
+                if (key === 'ArrowRight') {
                     handleWorksMove(0, 1);
                     return true;
                 }
-                if (key === 'h' || key === 'ArrowLeft') {
+                if (key === 'ArrowLeft') {
                     handleWorksMove(0, -1);
                     return true;
                 }
                 return true;
             }
 
-            if (key === 'j' || key === 'ArrowDown' || key === 'l' || key === 'ArrowRight') {
+            if (key === 'ArrowDown' || key === 'ArrowRight') {
                 handleItemMove(1);
                 return true;
             }
-            if (key === 'k' || key === 'ArrowUp' || key === 'h' || key === 'ArrowLeft') {
+            if (key === 'ArrowUp' || key === 'ArrowLeft') {
                 handleItemMove(-1);
                 return true;
             }
@@ -342,11 +342,11 @@ export function FocusProvider({ children }) {
         }
 
         if (mode === 'section') {
-            if (key === 'j' || key === 'l' || key === 'ArrowDown' || key === 'ArrowRight') {
+            if (key === 'ArrowDown' || key === 'ArrowRight') {
                 handleSectionMove('next');
                 return true;
             }
-            if (key === 'k' || key === 'h' || key === 'ArrowUp' || key === 'ArrowLeft') {
+            if (key === 'ArrowUp' || key === 'ArrowLeft') {
                 handleSectionMove('prev');
                 return true;
             }
@@ -382,30 +382,30 @@ export function FocusProvider({ children }) {
         }
 
         if (meta.type === 'works') {
-            if (key === 'j' || key === 'ArrowDown') {
+            if (key === 'ArrowDown') {
                 handleWorksMove(1, 0);
                 return true;
             }
-            if (key === 'k' || key === 'ArrowUp') {
+            if (key === 'ArrowUp') {
                 handleWorksMove(-1, 0);
                 return true;
             }
-            if (key === 'l' || key === 'ArrowRight') {
+            if (key === 'ArrowRight') {
                 handleWorksMove(0, 1);
                 return true;
             }
-            if (key === 'h' || key === 'ArrowLeft') {
+            if (key === 'ArrowLeft') {
                 handleWorksMove(0, -1);
                 return true;
             }
             return true;
         }
 
-        if (key === 'j' || key === 'ArrowDown' || key === 'l' || key === 'ArrowRight') {
+        if (key === 'ArrowDown' || key === 'ArrowRight') {
             handleItemMove(1);
             return true;
         }
-        if (key === 'k' || key === 'ArrowUp' || key === 'h' || key === 'ArrowLeft') {
+        if (key === 'ArrowUp' || key === 'ArrowLeft') {
             handleItemMove(-1);
             return true;
         }
