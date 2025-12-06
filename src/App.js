@@ -12,6 +12,7 @@ import GuideModal from './components/GuideModal';
 import { FocusProvider } from "./context/FocusContext";
 import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
 import SidebarContext, { SidebarProvider } from "./context/SidebarContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 function PageWrapper({ children }) {
   return (
@@ -23,11 +24,13 @@ function PageWrapper({ children }) {
 
 function App() {
   return (
-    <LanguageProvider>
-      <SidebarProvider>
-        <Abap34Com />
-      </SidebarProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <SidebarProvider>
+          <Abap34Com />
+        </SidebarProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

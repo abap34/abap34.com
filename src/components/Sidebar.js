@@ -1,7 +1,8 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import LanguageContext from '../context/LanguageContext';
 import SidebarContext from '../context/SidebarContext';
+import { useTheme } from '../context/ThemeContext';
 import { SIDEBAR_LINKS, useFocusContext } from '../context/FocusContext';
 import './Sidebar.css';
 
@@ -13,33 +14,13 @@ const NAV_ITEMS = [
 ];
 
 export default function Sidebar() {
-    const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const getInitialTheme = () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme !== null) {
-            return savedTheme === 'dark';
-        }
-        return isDarkOS;
-    };
-
-    const [isDark, setIsDark] = useState(getInitialTheme);
+    const { isDark, setIsDark } = useTheme();
     const { language, toggleLanguage } = useContext(LanguageContext);
     const { setIsOpen } = useContext(SidebarContext);
     const location = useLocation();
     const sidebarRef = useRef(null);
     const { focusState, activeFocusId } = useFocusContext();
     const focusedIndex = focusState.region === 'sidebar' ? focusState.sidebarIndex : -1;
-
-    useEffect(() => {
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-mocha');
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.removeAttribute('data-webtui-theme');
-        }
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    }, [isDark]);
 
     useEffect(() => {
         if (focusedIndex >= 0 && sidebarRef.current && focusState.region === 'sidebar') {
