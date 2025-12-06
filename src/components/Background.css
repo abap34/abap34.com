@@ -3,6 +3,10 @@
     border-radius: 0;
 }
 
+[data-webtui-theme="catppuccin-mocha"] .background-focusable {
+    background-color: rgba(186, 194, 222, 0.05);
+}
+
 .background-focusable[data-has-url="true"] {
     cursor: pointer;
 }
