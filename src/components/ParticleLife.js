@@ -25,6 +25,7 @@ const ParticleLife = () => {
         let scaledMaxDistanceSq = 10000;
         let scaledRMin = 8;
         let scaledGridSize = 100;
+        let scaledParticleRadius = 1.8;
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
@@ -45,6 +46,7 @@ const ParticleLife = () => {
             scaledMaxDistanceSq = scaledMaxDistance * scaledMaxDistance;
             scaledRMin = 8 * sizeScaleFactor;
             scaledGridSize = scaledMaxDistance;
+            scaledParticleRadius = 1.8 * sizeScaleFactor;
         };
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -54,7 +56,6 @@ const ParticleLife = () => {
         // 画面サイズに応じた粒子数を計算（最小100、最大1000）
         const PARTICLE_COUNT = Math.max(100, Math.min(1000, Math.floor(BASE_PARTICLE_COUNT * sizeScaleFactor)));
         const PARTICLE_TYPES = 3;
-        const PARTICLE_RADIUS = 1.8;
         const FRICTION = 0.88;
         const TIME_SCALE = 0.8;
 
@@ -72,9 +73,10 @@ const ParticleLife = () => {
             'rgba(148, 226, 213, 1.0)'
         ];
 
-        // グラデーションをキャッシュ
+        // グラデーションをキャッシュ（ベース半径で作成）
+        const BASE_PARTICLE_RADIUS = 1.8;
         const gradientCache = colors.map((color, type) => {
-            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, PARTICLE_RADIUS * 3.5);
+            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, BASE_PARTICLE_RADIUS * 3.5);
             gradient.addColorStop(0, glowColors[type]);
             gradient.addColorStop(0.15, glowColors[type]);
             gradient.addColorStop(0.35, color);
@@ -200,11 +202,12 @@ const ParticleLife = () => {
 
                 ctx.save();
                 ctx.translate(this.x, this.y);
+                ctx.scale(sizeScaleFactor, sizeScaleFactor);
                 ctx.globalAlpha = blinkIntensity;
 
                 ctx.fillStyle = gradientCache[this.type];
                 ctx.beginPath();
-                ctx.arc(0, 0, PARTICLE_RADIUS * 3.5, 0, Math.PI * 2);
+                ctx.arc(0, 0, BASE_PARTICLE_RADIUS * 3.5, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.restore();
