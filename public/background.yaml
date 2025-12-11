@@ -31,3 +31,7 @@ others:
     url: "https://summerofcode.withgoogle.com/programs/2025/projects/9PZY6C2m"
     description: "「Development of a New Language Server for Julia」 というプロポーザルが Julia に採択されました。 Julia の新しい Language Server の開発に取り組んでいました。"
     period: "2025"
+  - title: "TA: 関数型プログラミング基礎"
+    url: "https://syllabus.s.isct.ac.jp/courses/-/-/-/202502452"
+    description: ""
+    period: "2025"
