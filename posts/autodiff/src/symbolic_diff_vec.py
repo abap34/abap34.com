@@ -24,12 +24,12 @@ class Expression:
     def all_variable(self):
         return self.root.all_symbols(set())
     
-    def grad(self, symplify=False):
+    def grad(self, simplify=False):
         symbols = self.all_variable()
         result = {}
         for symbol in symbols:
             df = self.diff(symbol)
-            if symplify:
+            if simplify:
                 df = df.simplify()
             result[symbol] = df
         return result
@@ -234,4 +234,4 @@ print('f             :', f)
 f.plot().write_png('../fig/expr_example.png')
 print('f(x=1, y=2)   :', f({'x': 1, 'y': 2}))
 print('∇f            :', f.grad())
-print('∇f (simple)   :', f.grad(symplify=True))
+print('∇f (simple)   :', f.grad(simplify=True))
