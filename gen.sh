@@ -1,1 +1,4 @@
-python3 blog_builder/generate.py $1
+#!/usr/bin/env bash
+set -euo pipefail
+
+uv run blog_builder/generate.py "$@"
