@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#     "numpy",
+#     "scikit-learn",
+#     "tqdm",
+# ]
+# ///
 """
 TF-IDF ベクトルの事前計算スクリプト
 """

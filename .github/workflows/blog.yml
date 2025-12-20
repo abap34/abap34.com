@@ -38,6 +38,9 @@ jobs:
         run: |
             git submodule update --init --recursive --remote 
 
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v2
+
       - name: Compile almo.cpp
         run: |
           cd ./almo
@@ -80,25 +83,21 @@ jobs:
         if:  ${{ steps.check.outputs.all_changed_files }} != ""
         run: echo "REBUILD=true" >> $GITHUB_ENV
 
-      - name: Add required packages
-        run: |
-          python3 -m pip install beautifulsoup4 scikit-learn numpy tqdm requests aiohttp aiofiles
-      
       - name: Precompute TF-IDF vectors (if full rebuild needed)
         if: env.REBUILD == 'true'
         run: |
           echo "Full rebuild detected, precomputing TF-IDF vectors..."
-          python3 blog_builder/precompute_vectors.py
+          uv run blog_builder/precompute_vectors.py
           
       - name: Generate HTML
         env:
           SKIP_WIP_ARTICLES: true
         run: |
-          python3 blog_builder/build.py
+          uv run blog_builder/build.py
 
       - name: Update RSS
         run: |
-          python3 blog_builder/rss.py
+          uv run blog_builder/rss.py
       
       - name: Clean up
         run: |

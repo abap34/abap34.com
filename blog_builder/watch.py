@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
+# /// script
+# dependencies = [
+#     "aiofiles",
+#     "aiohttp",
+#     "click",
+#     "psutil",
+#     "qrcode",
+#     "watchdog",
+# ]
+# ///
 
 import asyncio
 import json
 import logging
 import os
 import pathlib
+import shutil
 import subprocess
 import sys
 import threading
@@ -145,6 +156,22 @@ class AsyncBuildManager:
         self.build_count = 0
         self.current_build_task = None
         self.pending_build_params = None
+
+    @staticmethod
+    def _build_command(article_name: str, with_navigation: bool = True) -> List[str]:
+        """Construct command to run build script via uv if available."""
+        uv_path = shutil.which("uv")
+        if uv_path:
+            cmd = [uv_path, "run", "blog_builder/build.py"]
+        else:
+            cmd = [sys.executable, "blog_builder/build.py"]
+
+        cmd.extend(["--article", article_name])
+
+        if not with_navigation:
+            cmd.append("--no-navigation")
+
+        return cmd
     
     async def build_article(self, article_name: str, with_navigation: bool = False, use_fake_data: bool = False) -> Dict[str, Any]:
         build_params = {
@@ -176,14 +203,8 @@ class AsyncBuildManager:
                     result = await self._build_with_fake_data(article_name, build_id)
                 else:
                     # 実データモード：build.pyを呼び出し
-                    cmd = [
-                        sys.executable, "blog_builder/build.py",
-                        "--article", article_name
-                    ]
-                    
-                    if not with_navigation:
-                        cmd.append("--no-navigation")
-                    
+                    cmd = self._build_command(article_name, with_navigation=with_navigation)
+
                     print(f"Starting build #{build_id} for {article_name}")
                     
                     # 非同期でプロセス実行
@@ -248,11 +269,7 @@ class AsyncBuildManager:
         
         try:
             # まずノーマルビルドを実行（ナビゲーション無し）
-            cmd = [
-                sys.executable, "blog_builder/build.py",
-                "--article", article_name,
-                "--no-navigation"
-            ]
+            cmd = self._build_command(article_name, with_navigation=False)
             
             process = await asyncio.create_subprocess_exec(
                 *cmd,
@@ -901,11 +918,11 @@ def main(article, port, navigation, auto_reload, help_extended):
         print("- WebSocketベースのライブリロード")
         print("- 非同期ビルド処理")
         print("使用例:")
-        print("  python3 watch.py                    # インタラクティブ選択")
-        print("  python3 watch.py my_article         # 記事指定（偽データ）")
-        print("  python3 watch.py my_article -n      # ナビゲーション有効")
-        print("  python3 watch.py my_article -r      # 自動リロード有効")
-        print("  python3 watch.py my_article -n -r   # 全機能有効")
+        print("  uv run blog_builder/watch.py                    # インタラクティブ選択")
+        print("  uv run blog_builder/watch.py my_article         # 記事指定（偽データ）")
+        print("  uv run blog_builder/watch.py my_article -n      # ナビゲーション有効")
+        print("  uv run blog_builder/watch.py my_article -r      # 自動リロード有効")
+        print("  uv run blog_builder/watch.py my_article -n -r   # 全機能有効")
         return
     
     # 記事選択

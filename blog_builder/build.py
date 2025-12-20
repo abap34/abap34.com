@@ -1,4 +1,16 @@
 
+# /// script
+# dependencies = [
+#     "aiofiles",
+#     "aiohttp",
+#     "beautifulsoup4",
+#     "numpy",
+#     "requests",
+#     "scikit-learn",
+#     "tqdm",
+# ]
+# ///
+
 import argparse
 import asyncio
 import json
@@ -1663,14 +1675,14 @@ def main() -> int:
         epilog="""
 使用例:
   # 全記事ビルド
-  python3 build.py
+  uv run blog_builder/build.py
   
   # 特定記事のみビルド
-  python3 build.py --article my_article.md
-  python3 build.py -a my_article
+  uv run blog_builder/build.py --article my_article.md
+  uv run blog_builder/build.py -a my_article
   
   # ナビゲーション無しで高速ビルド（開発用）
-  python3 build.py -a my_article --no-navigation
+  uv run blog_builder/build.py -a my_article --no-navigation
   
   # ビルドは常に実データを使用
         """

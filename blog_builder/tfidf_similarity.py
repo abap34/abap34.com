@@ -1,3 +1,9 @@
+# /// script
+# dependencies = [
+#     "numpy",
+#     "scikit-learn",
+# ]
+# ///
 """
 TF-IDF ベースの記事類似度計算モジュール
 """
