@@ -357,7 +357,7 @@ main()
 <div class="link-card">
     <a href="https://github.com/aviatesk/JET.jl" target="_blank" rel="noopener noreferrer" class="link-card-container">
         <div class="link-card-image">
-            <img src="https://opengraph.githubassets.com/6f86cc9e7271a57ef703f146323e2e43ca814d20cd0670e02a678776099c27cf/aviatesk/JET.jl" alt="GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
+            <img src="https://opengraph.githubassets.com/0bae6cbaf4d7d9d6f28f0149e25a06f2160db08d76c390930b87481f67c4d06c/aviatesk/JET.jl" alt="GitHub - aviatesk/JET.jl: A code analyzer for Julia. No need for additional type annotations." onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo='" loading="lazy">
         </div>
         <div class="link-card-content">
             <div>
@@ -365,8 +365,8 @@ main()
                     <img src="https://github.com/fluidicon.png" alt="" class="link-card-favicon" onerror="this.style.display='none'">
                     <span class="link-card-domain">GitHub</span>
                 </div>
-                <h3 class="link-card-title">GitHub - aviatesk/JET.jl: An experimental code analyzer for Julia. No need for additional type annot</h3>
-                <p class="link-card-description">An experimental code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl</p>
+                <h3 class="link-card-title">GitHub - aviatesk/JET.jl: A code analyzer for Julia. No need for additional type annotations.</h3>
+                <p class="link-card-description">A code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl</p>
             </div>
             <div class="link-card-footer">
                 <span class="link-card-url">github.com/aviatesk/JET.jl</span>
