@@ -1,3 +1,6 @@
+# /// script
+# dependencies = []
+# ///
 """RSS feed generator for blog posts"""
 
 import json
@@ -130,6 +133,5 @@ def main() -> None:
 
 if __name__ == '__main__':
     exit(main())
-
 
 

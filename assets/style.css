@@ -133,6 +133,14 @@ body {
 
 }
 
+.header-inner {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .article-header {
     padding: 1rem;
     /* margin-bottom: 1rem; */

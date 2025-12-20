@@ -1,3 +1,8 @@
+# /// script
+# dependencies = [
+#     "requests",
+# ]
+# ///
 """記事テンプレート生成スクリプト"""
 
 import json
