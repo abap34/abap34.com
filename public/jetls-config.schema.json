@@ -1,0 +1,188 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$ref": "#/$defs/JETLS.JETLSConfig__5f2736aac9cfedc3",
+    "$defs": {
+        "Bool__5d3b799b1e2eefc8": {
+            "type": "boolean"
+        },
+        "Float64__86b4ee2e5e69187d": {
+            "type": "number"
+        },
+        "Glob.FilenameMatch{String}__ba2567238955a0b5": {
+            "type": "string"
+        },
+        "String__f000e81cec2244bc": {
+            "type": "string"
+        },
+        "JETLS.JETLSConfig__5f2736aac9cfedc3": {
+            "properties": {
+                "diagnostic": {
+                    "properties": {
+                        "enabled": {
+                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8"
+                        },
+                        "patterns": {
+                            "items": {
+                                "properties": {
+                                    "__pattern_value__": {
+                                        "$ref": "#/$defs/String__f000e81cec2244bc"
+                                    },
+                                    "match_by": {
+                                        "type": "string",
+                                        "enum": [
+                                            "code",
+                                            "message"
+                                        ]
+                                    },
+                                    "pattern": {
+                                        "anyOf": [
+                                            {
+                                                "format": "regex",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "$ref": "#/$defs/String__f000e81cec2244bc"
+                                            }
+                                        ]
+                                    },
+                                    "severity": {
+                                        "oneOf": [
+                                            {
+                                                "minimum": 0,
+                                                "type": "integer",
+                                                "maximum": 4
+                                            },
+                                            {
+                                                "type": "string",
+                                                "enum": [
+                                                    "off",
+                                                    "error",
+                                                    "warning",
+                                                    "warn",
+                                                    "information",
+                                                    "info",
+                                                    "hint"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "match_type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "literal",
+                                            "regex"
+                                        ]
+                                    },
+                                    "path": {
+                                        "$ref": "#/$defs/Glob.FilenameMatch{String}__ba2567238955a0b5"
+                                    }
+                                },
+                                "required": [
+                                    "pattern",
+                                    "match_by",
+                                    "match_type",
+                                    "severity"
+                                ],
+                                "additionalProperties": false,
+                                "type": "object"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "full_analysis": {
+                    "properties": {
+                        "auto_instantiate": {
+                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8"
+                        },
+                        "debounce": {
+                            "$ref": "#/$defs/Float64__86b4ee2e5e69187d"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "formatter": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "enum": [
+                                "JuliaFormatter",
+                                "Runic"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "custom": {
+                                    "properties": {
+                                        "executable_range": {
+                                            "type": "string"
+                                        },
+                                        "executable": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "executable"
+                                    ],
+                                    "additionalProperties": false,
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "custom"
+                            ],
+                            "additionalProperties": false,
+                            "type": "object"
+                        }
+                    ]
+                },
+                "testrunner": {
+                    "properties": {
+                        "executable": {
+                            "$ref": "#/$defs/String__f000e81cec2244bc"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "initialization_options": {
+                    "properties": {
+                        "analysis_overrides": {
+                            "items": {
+                                "properties": {
+                                    "module_name": {
+                                        "$ref": "#/$defs/String__f000e81cec2244bc"
+                                    },
+                                    "path": {
+                                        "$ref": "#/$defs/Glob.FilenameMatch{String}__ba2567238955a0b5"
+                                    }
+                                },
+                                "required": [
+                                    "path"
+                                ],
+                                "additionalProperties": false,
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "n_analysis_workers": {
+                            "minimum": -9223372036854775808,
+                            "type": "integer",
+                            "maximum": 9223372036854775807
+                        }
+                    },
+                    "additionalProperties": false,
+                    "type": "object"
+                }
+            },
+            "required": [
+                "formatter"
+            ],
+            "additionalProperties": false,
+            "type": "object"
+        }
+    }
+}
