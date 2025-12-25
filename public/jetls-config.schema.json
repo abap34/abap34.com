@@ -178,9 +178,6 @@
                     "type": "object"
                 }
             },
-            "required": [
-                "formatter"
-            ],
             "additionalProperties": false,
             "type": "object"
         }
