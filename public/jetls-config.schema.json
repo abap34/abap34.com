@@ -19,16 +19,15 @@
                 "diagnostic": {
                     "properties": {
                         "enabled": {
-                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8"
+                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8",
+                            "description": "Enable or disable all JETLS diagnostics. When set to false, no diagnostic messages will be shown."
                         },
                         "patterns": {
                             "items": {
                                 "properties": {
-                                    "__pattern_value__": {
-                                        "$ref": "#/$defs/String__f000e81cec2244bc"
-                                    },
                                     "match_by": {
                                         "type": "string",
+                                        "description": "What to match against: 'code' matches against diagnostic codes (e.g., 'lowering/unused-argument'), 'message' matches against diagnostic message text.",
                                         "enum": [
                                             "code",
                                             "message"
@@ -43,7 +42,8 @@
                                             {
                                                 "$ref": "#/$defs/String__f000e81cec2244bc"
                                             }
-                                        ]
+                                        ],
+                                        "description": "The pattern to match (e.g., 'lowering/unused-argument' for code matching, or 'Macro name .*' for message matching)."
                                     },
                                     "severity": {
                                         "oneOf": [
@@ -64,17 +64,20 @@
                                                     "hint"
                                                 ]
                                             }
-                                        ]
+                                        ],
+                                        "description": "Severity level: 'error'/1 for critical issues, 'warning'/'warn'/2 for potential problems, 'information'/'info'/3 for informational messages, 'hint'/4 for suggestions, 'off'/0 to disable."
                                     },
                                     "match_type": {
                                         "type": "string",
+                                        "description": "How to interpret the pattern: 'literal' for exact string match, 'regex' for regular expression match.",
                                         "enum": [
                                             "literal",
                                             "regex"
                                         ]
                                     },
                                     "path": {
-                                        "$ref": "#/$defs/Glob.FilenameMatch{String}__ba2567238955a0b5"
+                                        "$ref": "#/$defs/Glob.FilenameMatch{String}__ba2567238955a0b5",
+                                        "description": "Optional glob pattern to restrict this configuration to specific files (e.g., 'test/**/*.jl'). Patterns are matched against file paths relative to the workspace root. Supports globstar (**) for matching directories recursively."
                                     }
                                 },
                                 "required": [
@@ -86,23 +89,28 @@
                                 "additionalProperties": false,
                                 "type": "object"
                             },
-                            "type": "array"
+                            "type": "array",
+                            "description": "Fine-grained control over diagnostics through pattern matching. See [Pattern-based diagnostic configuration](https://aviatesk.github.io/JETLS.jl/release/configuration/#config/diagnostic/patterns)."
                         }
                     },
                     "additionalProperties": false,
-                    "type": "object"
+                    "type": "object",
+                    "description": "Diagnostic configuration. See [Diagnostic configuration](https://aviatesk.github.io/JETLS.jl/release/configuration/#config/diagnostic)."
                 },
                 "full_analysis": {
                     "properties": {
                         "auto_instantiate": {
-                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8"
+                            "$ref": "#/$defs/Bool__5d3b799b1e2eefc8",
+                            "description": "When enabled, JETLS automatically runs Pkg.instantiate() for packages that have not been instantiated yet (e.g., freshly cloned repositories). This allows full analysis to work immediately upon opening such packages. Note that this will automatically create a Manifest.toml file when the package has not been instantiated yet."
                         },
                         "debounce": {
-                            "$ref": "#/$defs/Float64__86b4ee2e5e69187d"
+                            "$ref": "#/$defs/Float64__86b4ee2e5e69187d",
+                            "description": "Debounce time in seconds before triggering full analysis after a document change."
                         }
                     },
                     "additionalProperties": false,
-                    "type": "object"
+                    "type": "object",
+                    "description": "Configuration for full JET analysis. See [Full analysis configuration](https://aviatesk.github.io/JETLS.jl/release/configuration/#config/full_analysis)."
                 },
                 "formatter": {
                     "oneOf": [
@@ -137,16 +145,19 @@
                             "additionalProperties": false,
                             "type": "object"
                         }
-                    ]
+                    ],
+                    "description": "Formatter configuration. Can be a preset name ('Runic' or 'JuliaFormatter') or a custom formatter object. See [Formatting configuration](https://aviatesk.github.io/JETLS.jl/release/configuration/#config/formatter)."
                 },
                 "testrunner": {
                     "properties": {
                         "executable": {
-                            "$ref": "#/$defs/String__f000e81cec2244bc"
+                            "$ref": "#/$defs/String__f000e81cec2244bc",
+                            "description": "Path to the TestRunner.jl executable. If not set, uses 'testrunner' from PATH."
                         }
                     },
                     "additionalProperties": false,
-                    "type": "object"
+                    "type": "object",
+                    "description": "TestRunner integration configuration. See [TestRunner integration](https://aviatesk.github.io/JETLS.jl/release/configuration/#config/testrunner)."
                 },
                 "initialization_options": {
                     "properties": {
@@ -171,11 +182,13 @@
                         "n_analysis_workers": {
                             "minimum": -9223372036854775808,
                             "type": "integer",
-                            "maximum": 9223372036854775807
+                            "maximum": 9223372036854775807,
+                            "description": "Number of analysis worker tasks. Default is 1. See [documentation](https://aviatesk.github.io/JETLS.jl/release/launching/#init-options/n_analysis_workers) for details and current limitations."
                         }
                     },
                     "additionalProperties": false,
-                    "type": "object"
+                    "type": "object",
+                    "description": "Static initialization options sent to JETLS during startup. These settings require a server restart to take effect."
                 }
             },
             "additionalProperties": false,
