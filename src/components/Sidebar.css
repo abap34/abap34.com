@@ -1,9 +1,12 @@
 .sidebar {
     width: 16rem;
     height: 100%;
-    border-right: 1px solid var(--foreground2);
+    border-right: 1px solid var(--glass-border-color);
     padding: 1.5rem 1rem;
-    background-color: var(--background0);
+    background: var(--glass-background);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     overflow-y: auto;
     position: relative;
     z-index: 200;

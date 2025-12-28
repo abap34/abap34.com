@@ -17,9 +17,8 @@ function FocusableEntry({ children, focusId, isFocused, url }) {
         <column
             className={`background-focusable ${isFocused ? 'keyboard-focused' : ''}`}
             style={{
-                margin: '0 0.5rem 0.5rem',
-                padding: '0.5rem',
-                borderBottom: '1px solid var(--foreground2)',
+                margin: '0 0 0.75rem',
+                padding: '0.75rem',
                 gap: '0.25rem'
             }}
             data-focus-id={focusId}

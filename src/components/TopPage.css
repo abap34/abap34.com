@@ -21,9 +21,13 @@
 }
 
 .top-page-section {
-    border: 2px solid transparent;
+    border: 1px solid var(--glass-border-color);
     border-radius: 0.75rem;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    background: var(--glass-background);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, background 0.3s ease;
     position: relative;
     max-width: 100%;
     box-sizing: border-box;
@@ -34,7 +38,7 @@
     border-color: var(--accent0);
     box-shadow:
         0 0 0 2px var(--accent0),
-        0 12px 32px rgba(0, 0, 0, 0.35);
+        0 18px 48px rgba(0, 0, 0, 0.45);
     transform: translateY(-2px);
     animation: top-page-focus-glide 0.25s cubic-bezier(0.15, 0.75, 0.35, 1);
 }

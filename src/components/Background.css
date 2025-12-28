@@ -1,10 +1,9 @@
 .background-focusable {
     transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
-    border-radius: 0;
-}
-
-[data-webtui-theme="catppuccin-mocha"] .background-focusable {
-    background-color: rgba(186, 194, 222, 0.05);
+    border-radius: 0.75rem;
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border-color);
+    box-shadow: var(--glass-shadow);
 }
 
 .background-focusable[data-has-url="true"] {
@@ -12,11 +11,13 @@
 }
 
 .background-focusable.keyboard-focused {
-    background-color: var(--accent0);
-    color: var(--background0);
+    border-color: var(--accent0);
+    box-shadow:
+        0 0 0 2px var(--accent0),
+        0 16px 36px rgba(0, 0, 0, 0.4);
     transform: translateX(0.5ch);
 }
 
 .background-focusable.keyboard-focused a {
-    color: var(--background0);
+    color: var(--accent0);
 }
