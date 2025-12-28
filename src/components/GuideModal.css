@@ -3,12 +3,12 @@
     bottom: 2.5ch;
     left: 2.5ch;
     width: min(20rem, calc(100vw - 3rem));
-    background-color: var(--background1);
-    border: 1px solid var(--foreground2);
+    background: var(--glass-background);
+    border: 1px solid var(--glass-border-color);
     border-radius: 0.5rem;
-    box-shadow:
-        0 0 0 1px var(--background3),
-        0 10px 30px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     color: var(--foreground0);
     font-family: var(--font-family), 'JetBrains Mono', monospace;
     z-index: 100000;

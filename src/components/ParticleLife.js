@@ -58,6 +58,13 @@ const ParticleLife = () => {
         const PARTICLE_TYPES = 3;
         const FRICTION = 0.88;
         const TIME_SCALE = 0.8;
+        const STRETCH_STIFFNESS = 0.16;
+        const STRETCH_DAMPING = 0.58;
+        const MAX_STRETCH_BASE = 150;
+        const STRETCH_SHIFT_FACTOR = 0.85;
+        const STRETCH_ELONGATION = 4.3;
+        const TAIL_RADIUS_FACTOR = 0.85;
+        const FORCE_SCALE = 0.65;
 
         // 色の設定（ダークモード専用）
         const colors = [
@@ -66,22 +73,24 @@ const ParticleLife = () => {
             'rgba(148, 226, 213, 0.7)'   // accent2
         ];
 
-        // グローエフェクト用の色
         const glowColors = [
-            'rgba(186, 194, 222, 1.0)',
-            'rgba(180, 190, 254, 1.0)',
-            'rgba(148, 226, 213, 1.0)'
+            'rgba(235, 238, 255, 1)',
+            'rgba(216, 224, 255, 1)',
+            'rgba(198, 245, 233, 1)'
         ];
 
-        // グラデーションをキャッシュ（ベース半径で作成）
-        const BASE_PARTICLE_RADIUS = 1.8;
+        const adjustAlpha = (color, alpha) => color.replace(/[\d.]+\)$/g, `${alpha})`);
+
+        const BASE_PARTICLE_RADIUS = 1.9;
+
         const gradientCache = colors.map((color, type) => {
-            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, BASE_PARTICLE_RADIUS * 3.5);
-            gradient.addColorStop(0, glowColors[type]);
-            gradient.addColorStop(0.15, glowColors[type]);
-            gradient.addColorStop(0.35, color);
-            gradient.addColorStop(0.7, colors[type].replace(/[\d.]+\)$/g, '0.15)'));
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            const radius = BASE_PARTICLE_RADIUS * 4.8;
+            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius);
+            gradient.addColorStop(0.0, adjustAlpha(glowColors[type], 1));
+            gradient.addColorStop(0.2, adjustAlpha(glowColors[type], 0.85));
+            gradient.addColorStop(0.45, adjustAlpha(color, 0.65));
+            gradient.addColorStop(0.72, adjustAlpha(color, 0.28));
+            gradient.addColorStop(1, adjustAlpha(color, 0));
             return gradient;
         });
 
@@ -118,6 +127,13 @@ const ParticleLife = () => {
             return 0;
         };
 
+        const wrapDelta = (target, current, max) => {
+            let delta = target - current;
+            if (delta > max / 2) delta -= max;
+            if (delta < -max / 2) delta += max;
+            return delta;
+        };
+
         // パーティクルクラス
         class Particle {
             constructor() {
@@ -126,6 +142,13 @@ const ParticleLife = () => {
                 this.vx = 0;
                 this.vy = 0;
                 this.type = Math.floor(Math.random() * PARTICLE_TYPES);
+                this.renderX = this.x;
+                this.renderY = this.y;
+                this.renderVX = 0;
+                this.renderVY = 0;
+                this.stretchVectorX = 0;
+                this.stretchVectorY = 0;
+                this.squish = 0;
             }
 
             update(particles, grid, frameCount) {
@@ -151,7 +174,7 @@ const ParticleLife = () => {
                             if (distanceSq > 0 && distanceSq < scaledMaxDistanceSq) {
                                 const distance = Math.sqrt(distanceSq);
                                 const a = rules[this.type][other.type];
-                                const force = forceFunction(distance, a);
+                                const force = forceFunction(distance, a) * FORCE_SCALE;
 
                                 if (distance > 0.01) {
                                     const strength = force / distance;
@@ -190,6 +213,22 @@ const ParticleLife = () => {
                 if (this.x > canvas.width) this.x = 0;
                 if (this.y < 0) this.y = canvas.height;
                 if (this.y > canvas.height) this.y = 0;
+
+                // 画面上での表示位置はターゲット位置をスプリングで追従させ、餅のように伸びる感覚を出す
+                const dxToTarget = wrapDelta(this.x, this.renderX, canvas.width);
+                const dyToTarget = wrapDelta(this.y, this.renderY, canvas.height);
+                this.renderVX = (this.renderVX + dxToTarget * STRETCH_STIFFNESS) * STRETCH_DAMPING;
+                this.renderVY = (this.renderVY + dyToTarget * STRETCH_STIFFNESS) * STRETCH_DAMPING;
+                this.renderX = (this.renderX + this.renderVX + canvas.width) % canvas.width;
+                this.renderY = (this.renderY + this.renderVY + canvas.height) % canvas.height;
+                this.stretchVectorX = wrapDelta(this.x, this.renderX, canvas.width);
+                this.stretchVectorY = wrapDelta(this.y, this.renderY, canvas.height);
+
+                const stretchMagnitude = Math.sqrt(this.stretchVectorX * this.stretchVectorX + this.stretchVectorY * this.stretchVectorY);
+                const normalizedStretch = Math.min(1, stretchMagnitude / (MAX_STRETCH_BASE * sizeScaleFactor));
+                const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                const targetSquish = Math.min(1.35, normalizedStretch * 1.05 + speed * 0.45);
+                this.squish += (targetSquish - this.squish) * 0.15;
             }
 
             draw(ctx, frameCount) {
@@ -200,14 +239,45 @@ const ParticleLife = () => {
                     blinkIntensity = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(frameCount * pattern.speed));
                 }
 
+                const stretchDx = this.stretchVectorX;
+                const stretchDy = this.stretchVectorY;
+                const stretchDistance = Math.sqrt(stretchDx * stretchDx + stretchDy * stretchDy);
+                const maxStretch = MAX_STRETCH_BASE * sizeScaleFactor;
+                const clampedStretch = Math.min(stretchDistance, maxStretch);
+                const normalizedStretch = clampedStretch / maxStretch;
+                const hasStretch = stretchDistance > 0.001;
+                const squish = this.squish;
+                const baseRadius = BASE_PARTICLE_RADIUS * 2.5;
+                const headRadiusX = baseRadius * (1 + normalizedStretch * STRETCH_ELONGATION + squish * 0.7);
+                const headRadiusY = baseRadius * Math.max(0.18, 1 - normalizedStretch * 0.55 - squish * 0.35);
+                const tailRadius = baseRadius * (0.7 + normalizedStretch * 1.45 + squish * 0.65) * TAIL_RADIUS_FACTOR;
+                const stretchOffset = normalizedStretch * STRETCH_SHIFT_FACTOR * scaledMaxDistance * 0.2 + squish * 6 * sizeScaleFactor;
+                const tailOffset = -Math.min(clampedStretch * (1.05 + squish * 0.2), scaledMaxDistance * 0.65);
+                const headOffset = hasStretch ? stretchOffset : 0;
+                const angle = hasStretch ? Math.atan2(stretchDy, stretchDx) : 0;
+
                 ctx.save();
-                ctx.translate(this.x, this.y);
+                ctx.translate(this.renderX, this.renderY);
+                if (hasStretch) {
+                    ctx.rotate(angle);
+                }
                 ctx.scale(sizeScaleFactor, sizeScaleFactor);
+                ctx.fillStyle = gradientCache[this.type];
                 ctx.globalAlpha = blinkIntensity;
 
-                ctx.fillStyle = gradientCache[this.type];
+                const eccentricity = normalizedStretch + squish * 0.45;
+                const ellipseRadiusX = baseRadius * (1 + eccentricity * STRETCH_ELONGATION);
+                const ellipseRadiusY = baseRadius * Math.max(0.2, 1 - eccentricity * 0.6);
                 ctx.beginPath();
-                ctx.arc(0, 0, BASE_PARTICLE_RADIUS * 3.5, 0, Math.PI * 2);
+                ctx.ellipse(
+                    hasStretch ? (headOffset + tailOffset) * 0.5 : 0,
+                    0,
+                    ellipseRadiusX,
+                    ellipseRadiusY,
+                    0,
+                    0,
+                    Math.PI * 2
+                );
                 ctx.fill();
 
                 ctx.restore();

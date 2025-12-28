@@ -99,6 +99,10 @@ a:hover {
   --accent0: #4c4f69;
   --accent1: #7287fd;
   --accent2: #209fb5;
+  --glass-background: rgba(255, 255, 255, 0.78);
+  --glass-border-color: rgba(92, 95, 119, 0.2);
+  --glass-shadow: 0 25px 50px rgba(15, 15, 25, 0.1);
+  --glass-blur: 18px;
   --font-size: 16px;
   --line-height: 1.3;
   --font-weight-bold: 700;
@@ -122,6 +126,18 @@ a:hover {
   --accent0: #cdd6f4;
   --accent1: #b4befe;
   --accent2: #94e2d5;
+  --glass-background: rgba(17, 17, 27, 0.55);
+  --glass-border-color: rgba(148, 226, 213, 0.15);
+  --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  --glass-blur: 18px;
+}
+
+.glass-panel {
+  background: var(--glass-background);
+  border: 1px solid var(--glass-border-color);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 @media (max-width: 768px), (pointer: coarse) {
