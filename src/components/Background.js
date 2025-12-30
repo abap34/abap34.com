@@ -123,10 +123,10 @@ export default function Background({ compact = false }) {
                     entry(
                         (isFocused) => (
                             <>
-                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                                     {education.school}
                                 </div>
-                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                     {education.period}
                                 </div>
                             </>
@@ -145,10 +145,10 @@ export default function Background({ compact = false }) {
                     entry(
                         (isFocused) => (
                             <>
-                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                                     {career.company}
                                 </div>
-                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                     {career.period} | {career.worktype}
                                 </div>
                             </>
@@ -167,10 +167,10 @@ export default function Background({ compact = false }) {
                     entry(
                         (isFocused) => (
                             <>
-                                <div style={{ color: isFocused ? 'var(--background0)' : 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
+                                <div style={{ color: 'var(--foreground0)', fontWeight: 'var(--font-weight-bold)' }}>
                                     {other.title}
                                 </div>
-                                <div style={{ fontSize: '0.875rem', color: isFocused ? 'var(--background0)' : 'var(--foreground2)' }}>
+                                <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                     {other.period}
                                 </div>
                             </>
