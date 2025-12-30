@@ -130,7 +130,7 @@ export function FocusProvider({ children }) {
             setSidebarIndex(currentPathIndex);
         }
         if (isHomePage) {
-            focusSidebar(0);
+            activateTopFromSidebar();
             return;
         }
         if (isStandalonePage) {
@@ -138,7 +138,15 @@ export function FocusProvider({ children }) {
             return;
         }
         focusSidebar(0);
-    }, [focusSidebar, focusStandaloneSection, isHomePage, isStandalonePage, location.pathname, standaloneSectionIndex]);
+    }, [
+        activateTopFromSidebar,
+        focusSidebar,
+        focusStandaloneSection,
+        isHomePage,
+        isStandalonePage,
+        location.pathname,
+        standaloneSectionIndex
+    ]);
 
     const getActiveFocusId = useCallback(() => {
         if (keyboardDisabled) return null;
