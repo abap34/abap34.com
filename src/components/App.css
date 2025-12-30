@@ -52,10 +52,12 @@
 .page-wrapper {
     flex: 1;
     min-width: 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     padding-top: 1rem;
     padding-bottom: 0rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 @media (min-width: 768px) {

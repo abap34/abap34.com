@@ -5,8 +5,11 @@
 }
 
 .top-page-content {
-    padding: 1ch;
+    padding: 2ch;
     gap: 1lh;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .top-page-grid {
@@ -54,9 +57,9 @@
 
 @media (min-width: 768px) {
     .top-page-content {
-        padding: 2ch;
+        padding: 3ch;
     }
-    
+
     .top-page-grid {
         flex-direction: row;
     }
