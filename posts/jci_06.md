@@ -1390,6 +1390,7 @@ $$
 a'(v) = \begin{cases}
 \text{typeof(c)} &\quad v = \text{var} \\
 a(v) &\quad  \text{otherwise} \\
+
 \end{cases}
 $$
 
