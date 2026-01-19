@@ -1,33 +1,33 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const isDarkOS = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme !== null) {
-      return savedTheme === 'dark';
+    if (savedTheme) {
+      return savedTheme;
     }
-    return isDarkOS;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   };
 
-  const [isDark, setIsDark] = useState(getInitialTheme);
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.setAttribute('data-webtui-theme', 'catppuccin-mocha');
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
-      document.documentElement.removeAttribute('data-webtui-theme');
+      document.documentElement.removeAttribute('data-theme');
     }
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   return (
-    <ThemeContext.Provider value={{ isDark, setIsDark }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

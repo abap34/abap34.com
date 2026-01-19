@@ -1,0 +1,179 @@
+.home {
+  padding: 3rem 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.loading {
+  text-align: center;
+  padding: 6rem 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Hero Section */
+.hero {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+.name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  line-height: 2;
+  max-width: 700px;
+}
+
+.tagline p {
+  margin-bottom: 0.5rem;
+}
+
+.tagline p:last-child {
+  margin-bottom: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.social-link {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.social-link:hover {
+  color: var(--accent);
+}
+
+.social-link svg {
+  display: block;
+}
+
+.description {
+  color: var(--text-secondary);
+  line-height: 2;
+  font-size: 0.95rem;
+  max-width: 700px;
+  text-align: left;
+}
+
+.description p {
+  margin-bottom: 0.8rem;
+}
+
+/* Section */
+.section {
+  margin-bottom: 5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.section h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.view-all {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.view-all:hover {
+  color: var(--accent);
+}
+
+/* Works section uses Works.css */
+
+/* Timeline */
+.timeline-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.timeline-section h3 {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.timeline-item {
+  margin-bottom: 1.8rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--border);
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-title {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
+.timeline-period {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 0;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
