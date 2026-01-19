@@ -2,8 +2,10 @@ import { FaTag } from 'react-icons/fa';
 import './Tag.css';
 
 export default function Tag({ name, label, children, variant = "foreground1", targetPage = "/search" }) {
-    const handleClick = () => {
-        const params = new URLSearchParams(window.location.search);
+    const handleClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const params = new URLSearchParams();
         params.append('tag', name || children);
         window.location.href = `${targetPage}?${params.toString()}`;
     }

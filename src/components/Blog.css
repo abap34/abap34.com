@@ -214,21 +214,26 @@
     color: var(--foreground2);
 }
 
+.blog-timeline-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
 .blog-timeline-card {
     border: 1px solid var(--foreground2);
     border-radius: 0;
     padding: 0.75rem;
     transition: border-color 0.3s ease;
     display: block;
-    text-decoration: none;
-    color: inherit;
+    cursor: pointer;
 }
 
 [data-webtui-theme="catppuccin-mocha"] .blog-timeline-card {
     background-color: rgba(186, 194, 222, 0.05);
 }
 
-.blog-timeline-card:hover {
+.blog-timeline-card-link:hover .blog-timeline-card {
     border-color: #2563eb;
 }
 

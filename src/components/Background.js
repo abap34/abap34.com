@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import yaml from "yaml";
-import LanguageContext from "../context/LanguageContext";
 import { useFocusContext } from "../context/FocusContext";
+import LanguageContext from "../context/LanguageContext";
 import './Background.css';
 
 function FocusableEntry({ children, focusId, isFocused, url }) {
@@ -151,6 +151,11 @@ export default function Background({ compact = false }) {
                                 <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                     {career.period} | {career.worktype}
                                 </div>
+                                {career.project && (
+                                    <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)', marginTop: '0.25rem' }}>
+                                        {career.project}
+                                    </div>
+                                )}
                             </>
                         ),
                         `top-item-background-${educationCount + index}`,
@@ -173,6 +178,11 @@ export default function Background({ compact = false }) {
                                 <div style={{ fontSize: '0.875rem', color: 'var(--foreground2)' }}>
                                     {other.period}
                                 </div>
+                                {other.description && (
+                                    <div style={{ fontSize: '0.875rem', color: 'var(--foreground1)', marginTop: '0.25rem' }}>
+                                        {other.description}
+                                    </div>
+                                )}
                             </>
                         ),
                         `top-item-background-${educationCount + careerCount + index}`,
