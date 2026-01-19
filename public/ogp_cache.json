@@ -1,7 +1,7 @@
 {
   "14534eead9858fc26e3a5e4b756b4a42": {
     "data": {
-      "img_url": "https://lh7-us.googleusercontent.com/docs/AHkbwyIArU07cuzty_fXF2hqzhtext44RyRrolLFZwBX_xxwAalIci4DYlrsB1t0aHZzklTMVCWZ9WfDU6N3tbp4RmnLIxIBuE4HZwIqBQr3qycBqBH6CzsF=w1200-h630-p",
+      "img_url": "https://lh7-us.googleusercontent.com/docs/AHkbwyJ_BvCiLPbfeWYjXppYZ_OSwAR4b2hfHIN7MZHLMEpE6uX2XCiA6h1aZcSjeoE21vafZWlTscZbokhhcVY1ZvuxnvYobm2aDM290zNBHHx75-SwRQWx=w1200-h630-p",
       "fallback_img": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=",
       "title": "(public ver) proposal for GSoC 2025: JETLS ",
       "description": "2025 Proposal:  Development of a New Language Server for Julia   Name: XXXXXXXXXX Email: XXXXX@XXXXX Country & timezone: Japan, UTC+9 School Name & Study: Department of Computer Science, School of Com",
@@ -11,11 +11,11 @@
       "display_url": "docs.google.com/document/d/1rk39WzYwvI1jEx9FtYw...",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:33.330923"
+    "timestamp": "2026-01-19T17:14:40.621302"
   },
   "b5d223ec93bd0db8c1a47c0588e61bb6": {
     "data": {
-      "img_url": "https://opengraph.githubassets.com/0bae6cbaf4d7d9d6f28f0149e25a06f2160db08d76c390930b87481f67c4d06c/aviatesk/JET.jl",
+      "img_url": "https://opengraph.githubassets.com/dc55617a09e8494a2a42b84f8a816f79bd60b27ae47fc8a0d400daab058075e3/aviatesk/JET.jl",
       "fallback_img": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=",
       "title": "GitHub - aviatesk/JET.jl: A code analyzer for Julia. No need for additional type annotations.",
       "description": "A code analyzer for Julia. No need for additional type annotations. - aviatesk/JET.jl",
@@ -25,7 +25,7 @@
       "display_url": "github.com/aviatesk/JET.jl",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:33.487918"
+    "timestamp": "2026-01-19T17:14:40.929538"
   },
   "b4309183779a128f2d341fab533beb3b": {
     "data": {
@@ -39,7 +39,7 @@
       "display_url": "abap34.com/posts/jci_06.html",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:49.863585"
+    "timestamp": "2026-01-19T17:14:57.839517"
   },
   "4575fac570d9c05df8a713a86230d192": {
     "data": {
@@ -53,7 +53,7 @@
       "display_url": "trap.jp/post/2518/",
       "published_date": "<span class=\"link-card-date\">2025/03/17</span>"
     },
-    "timestamp": "2025-12-20T15:45:50.076099"
+    "timestamp": "2026-01-19T17:14:58.116037"
   },
   "2c00b87cebe34716bdf87cc18c427e1b": {
     "data": {
@@ -67,7 +67,7 @@
       "display_url": "trap.jp/post/2478/",
       "published_date": "<span class=\"link-card-date\">2025/02/09</span>"
     },
-    "timestamp": "2025-12-20T15:45:50.150338"
+    "timestamp": "2026-01-19T17:14:58.170615"
   },
   "44576d1b22b839b972010348460722e5": {
     "data": {
@@ -81,7 +81,7 @@
       "display_url": "github.com/abap34/server.abap34.com",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:49.730451"
+    "timestamp": "2026-01-19T17:14:57.593703"
   },
   "899d492f68e87493ce4b6cd0e9f52f67": {
     "data": {
@@ -95,7 +95,7 @@
       "display_url": "github.com/abap34/almo/pull/167",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:49.942004"
+    "timestamp": "2026-01-19T17:14:57.672905"
   },
   "a649827a0369fa6ef008c8f70f6a2f6e": {
     "data": {
@@ -109,7 +109,7 @@
       "display_url": "github.com/abap34/mu",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:50.001425"
+    "timestamp": "2026-01-19T17:14:57.732482"
   },
   "4cba594324e92fe9bac97cc4646dc4bb": {
     "data": {
@@ -123,7 +123,7 @@
       "display_url": "github.com/abap34/almo",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:49.822290"
+    "timestamp": "2026-01-19T17:14:57.540921"
   },
   "9b513954279f68b0ca82ef47154cf752": {
     "data": {
@@ -137,7 +137,7 @@
       "display_url": "github.com/lapisla-prover/lapisla-prover",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:45:50.066186"
+    "timestamp": "2026-01-19T17:14:57.796335"
   },
   "610b328b62b1f0ad5a391277b0e94664": {
     "data": {
@@ -151,7 +151,7 @@
       "display_url": "www.abap34.com/posts/gsoc2025_final_report.html",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:17.912676"
+    "timestamp": "2026-01-19T17:15:26.103191"
   },
   "d417561313dff3d519c0f98a09e2e063": {
     "data": {
@@ -165,7 +165,7 @@
       "display_url": "www.abap34.com/posts/gsoc2025.html",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:17.945494"
+    "timestamp": "2026-01-19T17:15:26.217535"
   },
   "2f7f8d98298262fdd1214cd3bd18077f": {
     "data": {
@@ -179,11 +179,11 @@
       "display_url": "github.com/abap34/galois-connection.lean/blob/m...",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:18.275524"
+    "timestamp": "2026-01-19T17:15:26.557089"
   },
   "59b0a49e8af10d392f0d267287302678": {
     "data": {
-      "img_url": "https://opengraph.githubassets.com/fc4b16b9a9f9bbdf62694131a29a33233b00d2b5ec1c7a648add44db32ef7efd/aviatesk/JETLS.jl",
+      "img_url": "https://opengraph.githubassets.com/7cdcc45a0c77600fc5b7a5155fe02f9a7f9e08a8322a6e5d23179b904965cfec/aviatesk/JETLS.jl",
       "fallback_img": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=",
       "title": "GitHub - aviatesk/JETLS.jl: A new language server for Julia, enabling modern, compiler-powered tooli",
       "description": "A new language server for Julia, enabling modern, compiler-powered tooling. - aviatesk/JETLS.jl",
@@ -193,7 +193,7 @@
       "display_url": "github.com/aviatesk/JETLS.jl",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:18.449480"
+    "timestamp": "2026-01-19T17:15:26.451551"
   },
   "013cd59717aea06f41237d1bd6af188c": {
     "data": {
@@ -207,11 +207,11 @@
       "display_url": "github.com/abap34/eta",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:18.385621"
+    "timestamp": "2026-01-19T17:15:26.645577"
   },
   "7b689148b0e46a61ee492ddd8eec3899": {
     "data": {
-      "img_url": "https://opengraph.githubassets.com/171e6297490442a2255bab9ec1bf4473209b848fa0fefb969e3fa5399a28bfa2/abap34/yogrt",
+      "img_url": "https://opengraph.githubassets.com/da1950cfee2f576109484cd0951c58f4426dc94a114a995c6d9745e1bbb6d479/abap34/yogrt",
       "fallback_img": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik00MCA0MEg4MFY4MEg0MFY0MFoiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTUiIHI9IjUiIGZpbGw9IiNDQ0MiLz4KPHA+PC9wYXRoPgo8cGF0aCBkPSJNNDUgNjVMNTUgNzVMNzUgNTUiIHN0cm9rZT0iI0NDQyIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+Cjwvc3ZnPgo=",
       "title": "GitHub - abap34/yogrt: A slide description DSL for people with a Programming Addiction.",
       "description": "A slide description DSL for people with a Programming Addiction. - abap34/yogrt",
@@ -221,7 +221,7 @@
       "display_url": "github.com/abap34/yogrt",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:18.218000"
+    "timestamp": "2026-01-19T17:15:26.828642"
   },
   "dfa1c038c996f76754d891cbc399c517": {
     "data": {
@@ -235,6 +235,6 @@
       "display_url": "hack.nikkei.com/blog/trap_kaggle_competition_2025/",
       "published_date": ""
     },
-    "timestamp": "2025-12-20T15:46:18.860716"
+    "timestamp": "2026-01-19T17:15:26.837399"
   }
 }
