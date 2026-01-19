@@ -57,21 +57,25 @@ function BlogTimeline({ posts }) {
                             {post.post_date}
                         </p>
 
-                        <column box-="square" shear-="top" className="blog-timeline-card">
-                            <a href={post.url} target="_blank" rel="noreferrer">
+                        <a
+                            href={post.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="blog-timeline-card-link"
+                        >
+                            <column box-="square" shear-="top" className="blog-timeline-card">
                                 <h3 className="blog-timeline-card-title">{post.title}</h3>
-                            </a>
 
-                            <img src={post.thumbnail_url} alt={post.title} className="blog-timeline-card-image" />
-                            <p className="blog-timeline-card-content"> {truncateContent(post.content) }</p>
+                                <img src={post.thumbnail_url} alt={post.title} className="blog-timeline-card-image" />
+                                <p className="blog-timeline-card-content"> {truncateContent(post.content)}</p>
 
-                            <row className="blog-timeline-card-tags">
-                                {post.tags.map((tag, index) => (
-                                    <Tag key={index}>{tag}</Tag>
-                                ))}
-                            </row>
-
-                        </column>
+                                <row className="blog-timeline-card-tags" onClick={(e) => e.preventDefault()}>
+                                    {post.tags.map((tag, index) => (
+                                        <Tag key={index} name={tag} targetPage="/search">{tag}</Tag>
+                                    ))}
+                                </row>
+                            </column>
+                        </a>
                     </column>
                 ))}
             </column>
