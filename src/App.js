@@ -13,6 +13,7 @@ import { FocusProvider } from "./context/FocusContext";
 import { LanguageContext, LanguageProvider } from "./context/LanguageContext";
 import SidebarContext, { SidebarProvider } from "./context/SidebarContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { useYamlData } from "./hooks/useYamlData";
 
 function PageWrapper({ children }) {
   return (
@@ -35,6 +36,26 @@ function App() {
 }
 
 function NotFound() {
+  const { data: uiText, isLoading } = useYamlData("/data/ui-text.yaml");
+
+  if (isLoading || !uiText) {
+    return (
+      <div
+        variant-="background0"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          gap: '1rem'
+        }}
+      >
+        <p variant-="foreground1">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div
       variant-="background0"
@@ -51,13 +72,13 @@ function NotFound() {
         variant-="foreground0"
         style={{ fontSize: '4rem', fontWeight: 'bold' }}
       >
-        404
+        {uiText.notFound.title}
       </h1>
       <p
         variant-="foreground1"
         style={{ fontSize: '1.5rem' }}
       >
-        Page not found
+        {uiText.notFound.message}
       </p>
       <img
         src="/img/404.png"
@@ -69,7 +90,7 @@ function NotFound() {
         variant-="accent0"
         style={{ textDecoration: 'none' }}
       >
-        ▶︎ Back to home
+        {uiText.notFound.backToHome}
       </a>
     </div>
   );
@@ -79,10 +100,11 @@ function NotFound() {
 function Abap34Com() {
   const { language } = React.useContext(LanguageContext);
   const { isOpen, setIsOpen } = React.useContext(SidebarContext);
-  const [filename, setFilename] = useState("/works.yaml");
+  const [filename, setFilename] = useState("/data/works.yaml");
+  const { data: uiText } = useYamlData("/data/ui-text.yaml");
 
   useEffect(() => {
-    setFilename(language === "ja" ? "/works.yaml" : "/works_en.yaml");
+    setFilename(language === "ja" ? "/data/works.yaml" : "/data/works_en.yaml");
   }, [language]);
 
   return (
@@ -121,7 +143,7 @@ function Abap34Com() {
               <Routes>
                 <Route path="/" element={<TopPage />} />
                 <Route path="/background" element={<PageWrapper><Background /></PageWrapper>} />
-                <Route path="/works" element={<PageWrapper><Works title="Projects" path={filename} defaultVisibleCount={null} showTagFilter={true} /></PageWrapper>} />
+                <Route path="/works" element={<PageWrapper><Works title={uiText?.sections.projects || "Projects"} path={filename} defaultVisibleCount={null} showTagFilter={true} /></PageWrapper>} />
                 <Route path="/blog" element={<PageWrapper><SearchResult /></PageWrapper>} />
                 <Route path="/search" element={<PageWrapper><SearchResult /></PageWrapper>} />
                 <Route path="*" element={<NotFound />} />

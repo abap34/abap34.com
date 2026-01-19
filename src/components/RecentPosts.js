@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { aboutContent } from "../config/content";
 import LanguageContext from "../context/LanguageContext";
 import BlogPostItem from './BlogPostItem';
 import { useFocusContext } from '../context/FocusContext';
+import { useYamlData } from "../hooks/useYamlData";
 
 async function fetchPosts() {
     try {
@@ -22,7 +22,7 @@ async function fetchPosts() {
 export default function RecentPosts() {
     const [posts, setPosts] = useState([]);
     const { language } = useContext(LanguageContext);
-    const content = aboutContent[language];
+    const { data: uiText } = useYamlData("/data/ui-text.yaml");
     const { setRecentItemCount, activeFocusId } = useFocusContext();
 
     useEffect(() => {
@@ -57,13 +57,13 @@ export default function RecentPosts() {
                             data-focus-id={viewAllFocusId}
                             data-focus-activate="self"
                         >
-                            {content.messages.viewAllPosts} →
+                            {uiText?.messages.viewAllPosts || 'View all posts'} →
                         </Link>
                     </column>
                 </>
             ) : (
                 <column style={{ color: 'var(--foreground2)' }}>
-                    <span>{content.messages.loadingPosts}</span>
+                    <span>{uiText?.messages.loadingPosts || 'Loading posts...'}</span>
                 </column>
             )}
         </column>

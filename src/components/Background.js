@@ -38,7 +38,7 @@ export default function Background({ compact = false }) {
     const { setBackgroundItemCount, activeFocusId } = useFocusContext();
 
     useEffect(() => {
-        let filename = language === "ja" ? "/background.yaml" : "/background_en.yaml";
+        let filename = language === "ja" ? "/data/background.yaml" : "/data/background_en.yaml";
         fetch(filename)
             .then((res) => res.text())
             .then((text) => setData(yaml.parse(text)));
