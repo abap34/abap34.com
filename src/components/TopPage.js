@@ -6,17 +6,27 @@ import Introduction from './Introduction';
 import './TopPage.css';
 import Works from './Works';
 import { SECTION_INDEX, useFocusContext } from '../context/FocusContext';
+import { useYamlData } from '../hooks/useYamlData';
 
 export default function TopPage() {
     const { language } = useContext(LanguageContext);
-    const [worksFilename, setWorksFilename] = useState("/works.yaml");
+    const [worksFilename, setWorksFilename] = useState("/data/works.yaml");
     const { activeFocusId, activateTopPage } = useFocusContext();
+    const { data: uiText, isLoading: uiTextLoading } = useYamlData("/data/ui-text.yaml");
 
     useEffect(() => {
-        setWorksFilename(language === "ja" ? "/works.yaml" : "/works_en.yaml");
+        setWorksFilename(language === "ja" ? "/data/works.yaml" : "/data/works_en.yaml");
     }, [language]);
 
     const sectionFocused = (index) => activeFocusId === `top-section-${index}`;
+
+    if (uiTextLoading || !uiText) {
+        return (
+            <main className="top-page">
+                <div style={{ color: 'var(--foreground2)', padding: '2rem' }}>Loading...</div>
+            </main>
+        );
+    }
 
     return (
         <main className="top-page" onMouseDown={activateTopPage}>
@@ -34,7 +44,7 @@ export default function TopPage() {
                         variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
                     >
-                        Introduction
+                        {uiText.sections.introduction}
                     </span>
                     <column style={{ padding: '2lh 2ch' }}>
                         <Introduction />
@@ -56,7 +66,7 @@ export default function TopPage() {
                                 variant-="foreground0"
                                 style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
                             >
-                                Recent Blog Posts
+                                {uiText.sections.recentBlogPosts}
                             </span>
                             <column style={{ padding: '2lh 2ch' }}>
                                 <RecentPosts />
@@ -78,7 +88,7 @@ export default function TopPage() {
                                 variant-="foreground0"
                                 style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
                             >
-                                Background
+                                {uiText.sections.background}
                             </span>
                             <column style={{ padding: '2lh 2ch' }}>
                                 <Background compact={false} />
@@ -100,7 +110,7 @@ export default function TopPage() {
                         variant-="foreground0"
                         style={{ '--badge-color': 'var(--background2)', '--badge-text': 'var(--foreground0)' }}
                     >
-                        Works
+                        {uiText.sections.works}
                     </span>
                     <column style={{ padding: '2lh 2ch' }}>
                         <Works

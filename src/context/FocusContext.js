@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { socialLinks } from '../config/content';
 
 export const SECTION_INDEX = {
     INTRODUCTION: 0,
@@ -46,7 +45,7 @@ export function FocusProvider({ children }) {
     const [recentItemCount, setRecentItemCount] = useState(0);
     const [backgroundItemCount, setBackgroundItemCount] = useState(0);
     const [worksItemCount, setWorksItemCount] = useState(0);
-    const introductionItemCount = socialLinks.length;
+    const [introductionItemCount, setIntroductionItemCount] = useState(0);
 
     const [worksColumns, setWorksColumns] = useState(() => getWorksColumnCount(location.pathname));
     const [navigationLocked, setNavigationLocked] = useState(false);
@@ -446,6 +445,7 @@ export function FocusProvider({ children }) {
         setRecentItemCount,
         setBackgroundItemCount,
         setWorksItemCount,
+        setIntroductionItemCount,
         introductionItemCount,
         activateTopPage,
         lockNavigation,
@@ -462,6 +462,7 @@ export function FocusProvider({ children }) {
         setRecentItemCount,
         setBackgroundItemCount,
         setWorksItemCount,
+        setIntroductionItemCount,
         lockNavigation,
         unlockNavigation
     ]);

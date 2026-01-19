@@ -8,6 +8,7 @@ import yaml from "yaml";
 import SearchBar from './SearchBar';
 import Tag from './Tag';
 import { useFocusContext } from "../context/FocusContext";
+import { useYamlData } from "../hooks/useYamlData";
 import './SearchResult.css';
 import './Works.css';
 
@@ -233,6 +234,7 @@ export default function Works({
     const [visibleCount, setVisibleCount] = useState(defaultVisibleCount)
     const [isLoading, setIsLoading] = useState(true)
     const { setWorksItemCount, activeFocusId, lockNavigation, unlockNavigation } = useFocusContext()
+    const { data: uiText } = useYamlData("/data/ui-text.yaml")
 
     useEffect(() => {
         setIsLoading(true)
@@ -297,7 +299,7 @@ export default function Works({
             <div>
                 {isLoading ? (
                     <column style={{ color: 'var(--foreground2)' }}>
-                        <span>Loading projects...</span>
+                        <span>{uiText?.messages.loadingProjects || 'Loading projects...'}</span>
                     </column>
                 ) : (
                     <>
@@ -344,7 +346,7 @@ export default function Works({
                                 );
                             })}
                         </div>
-                        {showViewAllLink && (
+                        {showViewAllLink && uiText && (
                             <column style={{ marginTop: '2lh', textAlign: 'left' }}>
                                 <Link
                                     to="/works"
@@ -352,7 +354,7 @@ export default function Works({
                                     data-focus-id={`top-item-works-${visibleWorks.length}`}
                                     data-focus-activate="self"
                                 >
-                                    すべての作品をみる →
+                                    {uiText.messages.viewAllWorks}
                                 </Link>
                             </column>
                         )}
@@ -374,7 +376,7 @@ export default function Works({
         return (
             <div>
                 {isLoading ? (
-                    <div className="works-loading">Loading projects...</div>
+                    <div className="works-loading">{uiText?.messages.loadingProjects || 'Loading projects...'}</div>
                 ) : (
                     <div className="works-grid-compact">
                         {filteredWorks.slice(0, visibleCount).map(([index, work]) => (
@@ -470,7 +472,7 @@ export default function Works({
                     )}
 
                     {isLoading ? (
-                        <div className="works-loading">Loading projects...</div>
+                        <div className="works-loading">{uiText?.messages.loadingProjects || 'Loading projects...'}</div>
                     ) : (
                         <>
                             <div className="search-count">
@@ -562,7 +564,7 @@ export default function Works({
             )}
 
             {isLoading ? (
-                <div className="works-loading">Loading projects...</div>
+                <div className="works-loading">{uiText?.messages.loadingProjects || 'Loading projects...'}</div>
             ) : (
                 <>
                     <div className="works-grid">

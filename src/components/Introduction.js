@@ -1,24 +1,47 @@
-import { useContext } from "react";
-import { introductionContent, socialLinks } from "../config/content";
-import LanguageContext from "../context/LanguageContext";
+import { useEffect } from "react";
+import { useYamlData, useStaticYamlData } from "../hooks/useYamlData";
+import { useFocusContext } from "../context/FocusContext";
 import './Introduction.css';
 import { SocialLinks } from "./SocialLinks";
 
 export default function Introduction() {
-    const { language } = useContext(LanguageContext);
-    const content = introductionContent[language];
+    const { data: content, isLoading: contentLoading } = useYamlData("/data/introduction.yaml");
+    const { data: socialLinksData, isLoading: linksLoading } = useStaticYamlData("/data/social-links.yaml");
+    const { setIntroductionItemCount } = useFocusContext();
+
+    useEffect(() => {
+        if (socialLinksData?.links) {
+            setIntroductionItemCount(socialLinksData.links.length);
+        }
+    }, [socialLinksData, setIntroductionItemCount]);
+
+    if (contentLoading || linksLoading) {
+        return (
+            <column className="intro-container">
+                <div style={{ color: 'var(--foreground2)' }}>Loading...</div>
+            </column>
+        );
+    }
+
+    if (!content || !socialLinksData) {
+        return (
+            <column className="intro-container">
+                <div style={{ color: 'var(--foreground2)' }}>Failed to load introduction</div>
+            </column>
+        );
+    }
 
     return (
         <column className="intro-container">
             <row className="intro-layout">
                 <column className="intro-profile">
                     <img
-                        src="/commic34.png"
+                        src={content.avatar}
                         alt="abap34"
                         className="intro-avatar"
                         size={240}
                     />
-                    <SocialLinks links={socialLinks} />
+                    <SocialLinks links={socialLinksData.links} />
                 </column>
 
                 <column className="intro-content">

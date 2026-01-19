@@ -1,0 +1,18 @@
+sections:
+  introduction: "Introduction"
+  recentBlogPosts: "Recent Blog Posts"
+  background: "Background"
+  works: "Works"
+  projects: "Projects"
+
+messages:
+  viewAllPosts: "View all publications"
+  viewAllWorks: "View all works →"
+  loadingPosts: "Loading publications..."
+  loadingProjects: "Loading projects..."
+  contactText: "abap0002 [at] gmail.com or Send me a message on"
+
+notFound:
+  title: "404"
+  message: "Page not found"
+  backToHome: "▶︎ Back to home"
