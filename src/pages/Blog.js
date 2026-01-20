@@ -1,18 +1,29 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { useSearchFilters } from '../hooks/useSearchFilters';
+import { highlightText } from '../utils/highlight';
 import '../styles/search.css';
 import './Blog.css';
 
+const POST_SOURCES = [
+  `${process.env.PUBLIC_URL || ''}/posts.json`,
+  'https://www.abap34.com/posts.json'
+];
+
 async function fetchPosts() {
-  try {
-    const response = await fetch('https://www.abap34.com/posts.json');
-    if (!response.ok) throw new Error('Failed to fetch posts');
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching posts:', error);
-    return [];
+  for (const source of POST_SOURCES) {
+    if (!source) continue;
+    try {
+      const response = await fetch(source);
+      if (!response.ok) throw new Error(`Failed to fetch posts from ${source}`);
+      return await response.json();
+    } catch (error) {
+      console.warn(`Error fetching posts from ${source}:`, error);
+    }
   }
+
+  console.error('All post sources failed to load.');
+  return [];
 }
 
 function extractDomain(url) {
@@ -26,7 +37,48 @@ function extractDomain(url) {
 
 function stripHtml(html = '') {
   if (!html) return '';
+
+  try {
+    if (typeof window !== 'undefined' && window.DOMParser) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      return doc.body.textContent || '';
+    }
+  } catch (error) {
+    console.warn('Failed to parse HTML content, falling back to regex.', error);
+  }
+
   return html.replace(/<[^>]+>/g, ' ');
+}
+
+function buildSnippet(content = '', keywords = [], snippetLength = 140) {
+  if (!content) return '';
+
+  const normalized = content.replace(/\s+/g, ' ').trim();
+  if (!normalized) return '';
+
+  if (keywords.length === 0) {
+    return normalized.length > snippetLength
+      ? `${normalized.slice(0, snippetLength)}…`
+      : normalized;
+  }
+
+  const lowerContent = normalized.toLowerCase();
+  const keywordPositions = keywords
+    .map((kw) => lowerContent.indexOf(kw))
+    .filter((index) => index >= 0)
+    .sort((a, b) => a - b);
+
+  const start =
+    keywordPositions.length > 0
+      ? Math.max(keywordPositions[0] - 20, 0)
+      : 0;
+  const end = Math.min(start + snippetLength, normalized.length);
+
+  const prefix = start > 0 ? '…' : '';
+  const suffix = end < normalized.length ? '…' : '';
+
+  return `${prefix}${normalized.slice(start, end)}${suffix}`;
 }
 
 export default function Blog() {
@@ -34,6 +86,10 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
   const { keyword, tags: selectedTags, setKeyword, addTag, removeTag, clearTags } = useSearchFilters();
   const [searchInput, setSearchInput] = useState(keyword);
+  const keywordTokens = useMemo(
+    () => keyword.trim().toLowerCase().split(/\s+/).filter(Boolean),
+    [keyword]
+  );
 
   useEffect(() => {
     fetchPosts().then((data) => {
@@ -46,11 +102,19 @@ export default function Blog() {
     setSearchInput(keyword);
   }, [keyword]);
 
+  const normalizedPosts = useMemo(
+    () =>
+      posts.map((post) => ({
+        ...post,
+        plainContent: stripHtml(post.content || '')
+      })),
+    [posts]
+  );
+
   const filteredPosts = useMemo(() => {
-    const keywords = keyword.trim().toLowerCase().split(/\s+/).filter(Boolean);
     const loweredTags = selectedTags.map((tag) => tag.toLowerCase());
 
-    return posts.filter((post) => {
+    return normalizedPosts.filter((post) => {
       const postTags = post.tags || [];
       const matchesTags = loweredTags.every((tag) =>
         postTags.some((postTag) => postTag.toLowerCase() === tag)
@@ -61,15 +125,15 @@ export default function Blog() {
         post.title,
         post.post_date,
         postTags.join(' '),
-        stripHtml(post.content || '')
+        post.plainContent
       ]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
 
-      return keywords.every((kw) => searchTarget.includes(kw));
+      return keywordTokens.every((kw) => searchTarget.includes(kw));
     });
-  }, [posts, keyword, selectedTags]);
+  }, [normalizedPosts, keywordTokens, selectedTags]);
 
   if (loading) {
     return <div className="loading">Loading...</div>;
@@ -145,8 +209,17 @@ export default function Blog() {
                 )}
               </div>
               <a href={post.url} target="_blank" rel="noopener noreferrer" className="post-title">
-                {post.title}
+                {highlightText(post.title, keywordTokens, `title-${index}`)}
               </a>
+              {post.plainContent && (
+                <p className="post-snippet">
+                  {highlightText(
+                    buildSnippet(post.plainContent, keywordTokens),
+                    keywordTokens,
+                    `snippet-${index}`
+                  )}
+                </p>
+              )}
               {post.tags && post.tags.length > 0 && (
                 <div className="tags">
                   {post.tags.map((tag, i) => (
