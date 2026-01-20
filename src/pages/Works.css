@@ -17,24 +17,6 @@
   font-weight: 700;
 }
 
-.search-input {
-  width: 100%;
-  max-width: 400px;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  background: var(--bg);
-  color: var(--text);
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
 /* Grid Layout - Compact Cards */
 .works-grid {
   display: grid;
@@ -148,34 +130,6 @@
   font-weight: 500;
   padding-top: 0.3rem;
   border-top: 1px solid var(--border);
-}
-
-/* Tags - Compact Style */
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.tag {
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
-  background: var(--hover);
-  color: var(--text-secondary);
-  border-radius: 4px;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.tag:hover {
-  background: var(--accent);
-  color: white;
-}
-
-.tag-more {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  font-weight: 600;
 }
 
 /* Modal */
