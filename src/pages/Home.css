@@ -95,8 +95,6 @@
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
 }
 
 .section h2 {
