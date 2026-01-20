@@ -13,8 +13,7 @@
 
 /* Hero Section */
 .hero {
-  padding: 5rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0 0;
   margin-bottom: 4rem;
   display: flex;
   flex-direction: column;
@@ -111,8 +110,13 @@
 }
 
 .view-all {
+  display: block;
+  text-align: right;
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  margin-top: 1.5rem;
   transition: color 0.2s;
 }
 
@@ -125,8 +129,13 @@
 /* Timeline */
 .timeline-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.timeline-section-full {
+  margin-top: 0;
 }
 
 .timeline-section h3 {
@@ -142,10 +151,26 @@
   margin-bottom: 1.8rem;
   padding-left: 1.5rem;
   border-left: 1px solid var(--border);
+  display: block;
 }
 
 .timeline-item:last-child {
   margin-bottom: 0;
+}
+
+.timeline-item-link {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.timeline-item-link:hover {
+  border-left-color: var(--accent);
+  padding-left: 1.8rem;
+}
+
+.timeline-item-link:hover .timeline-title {
+  color: var(--accent);
 }
 
 .timeline-title {
@@ -157,6 +182,20 @@
 .timeline-period {
   color: var(--text-secondary);
   font-size: 0.85rem;
+}
+
+.timeline-worktype {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  font-style: italic;
+}
+
+.timeline-description {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 768px) {
@@ -174,6 +213,13 @@
 
   .timeline-grid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 }

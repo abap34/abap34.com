@@ -23,6 +23,7 @@ export default function Home() {
 
   const education = backgroundData?.education || [];
   const careers = backgroundData?.careers || [];
+  const others = backgroundData?.others || [];
 
   return (
     <div className="home">
@@ -62,15 +63,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Recent Works */}
-      <section className="section">
-        <div className="section-header">
-          <h2>Recent Works</h2>
-          <Link to="/works" className="view-all">View all →</Link>
-        </div>
-        <Works limit={3} showSearch={false} showTitle={false} />
-      </section>
-
       {/* Background */}
       <section className="section">
         <h2>Background</h2>
@@ -78,22 +70,60 @@ export default function Home() {
           <div className="timeline-section">
             <h3>Education</h3>
             {education.map((edu, i) => (
-              <div key={i} className="timeline-item">
+              <a
+                key={i}
+                href={edu.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="timeline-item timeline-item-link"
+              >
                 <div className="timeline-title">{edu.school}</div>
                 <div className="timeline-period">{edu.period}</div>
-              </div>
+              </a>
             ))}
           </div>
           <div className="timeline-section">
             <h3>Work Experience</h3>
             {careers.map((career, i) => (
-              <div key={i} className="timeline-item">
+              <a
+                key={i}
+                href={career.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="timeline-item timeline-item-link"
+              >
                 <div className="timeline-title">{career.company}</div>
                 <div className="timeline-period">{career.period}</div>
-              </div>
+                {career.worktype && <div className="timeline-worktype">{career.worktype}</div>}
+              </a>
             ))}
           </div>
         </div>
+        <div className="timeline-section timeline-section-full">
+          <h3>Others</h3>
+          {others.map((other, i) => (
+            <a
+              key={i}
+              href={other.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="timeline-item timeline-item-link"
+            >
+              <div className="timeline-title">{other.title}</div>
+              <div className="timeline-period">{other.period}</div>
+              {other.description && <div className="timeline-description">{other.description}</div>}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Recent Works */}
+      <section className="section">
+        <div className="section-header">
+          <h2>Recent Works</h2>
+        </div>
+        <Works limit={2} showSearch={false} showTitle={false} />
+        <Link to="/works" className="view-all">View all →</Link>
       </section>
     </div>
   );

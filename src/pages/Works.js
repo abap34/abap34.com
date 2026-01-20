@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useYamlData } from '../hooks/useYamlData';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import './Works.css';
 
 export default function Works({ limit = null, showSearch = true, showTitle = true }) {
@@ -40,33 +40,46 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
 
       <div className="works-grid">
         {displayWorks.map(([id, work]) => (
-          <div
+          <article
             key={id}
             className="work-card"
             onClick={() => setSelectedWork(work)}
           >
             {work.img && (
-              <img src={work.img} alt={work.title} className="work-image" />
+              <div className="work-image-container">
+                <img src={work.img} alt={work.title} className="work-image" />
+                <div className="work-image-overlay">
+                  <span>View Details</span>
+                </div>
+              </div>
             )}
             <div className="work-content">
-              <h3>{work.title}</h3>
-              <p className="work-period">{work.period}</p>
-              <p className="work-description">{work.short_desc || work.desc}</p>
+              <div className="work-header">
+                <h3 className="work-title">{work.title}</h3>
+                <span className="work-period">{work.period}</span>
+              </div>
+              <p className="work-description">
+                {(work.short_desc || work.desc || '').substring(0, 80)}
+                {(work.short_desc || work.desc || '').length > 80 ? '...' : ''}
+              </p>
               {work.repo && (
                 <div className="work-repo">
-                  <FaGithub />
-                  <span>{work.repo}</span>
+                  <FaGithub size={12} />
+                  <span>{work.repo.split('/').pop()}</span>
                 </div>
               )}
-              {work.tags && (
+              {work.tags && work.tags.length > 0 && (
                 <div className="tags">
-                  {work.tags.map((tag, i) => (
+                  {work.tags.slice(0, 3).map((tag, i) => (
                     <span key={i} className="tag">{tag}</span>
                   ))}
+                  {work.tags.length > 3 && (
+                    <span className="tag-more">+{work.tags.length - 3}</span>
+                  )}
                 </div>
               )}
             </div>
-          </div>
+          </article>
         ))}
       </div>
 
@@ -90,12 +103,20 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
               </a>
             )}
             <div className="modal-description">{selectedWork.desc}</div>
+            {selectedWork.tags && selectedWork.tags.length > 0 && (
+              <div className="modal-tags">
+                {selectedWork.tags.map((tag, i) => (
+                  <span key={i} className="tag">{tag}</span>
+                ))}
+              </div>
+            )}
             {selectedWork.relatedlinks && selectedWork.relatedlinks.length > 0 && (
               <div className="modal-links">
                 <h3>Related Links</h3>
                 {selectedWork.relatedlinks.map((link, i) => (
                   <a key={i} href={link} target="_blank" rel="noopener noreferrer">
-                    {link} →
+                    <FaExternalLinkAlt size={12} />
+                    {link}
                   </a>
                 ))}
               </div>
