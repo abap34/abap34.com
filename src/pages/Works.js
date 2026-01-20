@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useYamlData } from '../hooks/useYamlData';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import { useSearchFilters } from '../hooks/useSearchFilters';
+import { highlightText } from '../utils/highlight';
 import '../styles/search.css';
 import './Works.css';
 
@@ -10,6 +11,10 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
   const [selectedWork, setSelectedWork] = useState(null);
   const { keyword, tags: selectedTags, setKeyword, addTag, removeTag, clearTags } = useSearchFilters();
   const [searchInput, setSearchInput] = useState(keyword);
+  const keywordTokens = useMemo(
+    () => keyword.trim().toLowerCase().split(/\s+/).filter(Boolean),
+    [keyword]
+  );
 
   useEffect(() => {
     setSearchInput(keyword);
@@ -18,7 +23,7 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
   const works = useMemo(() => Object.entries(worksData || {}), [worksData]);
 
   const filteredWorks = useMemo(() => {
-    const keywords = keyword.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const keywords = keywordTokens;
     const loweredTags = selectedTags.map((tag) => tag.toLowerCase());
 
     return works.filter(([_, work]) => {
@@ -44,7 +49,7 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
 
       return keywords.every((kw) => searchableText.includes(kw));
     });
-  }, [works, keyword, selectedTags]);
+  }, [works, keywordTokens, selectedTags]);
 
   const displayWorks = limit ? filteredWorks.slice(0, limit) : filteredWorks;
   const resultsCount = displayWorks.length;
@@ -140,13 +145,22 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
               )}
               <div className="work-content">
                 <div className="work-header">
-                  <h3 className="work-title">{work.title}</h3>
+                  <h3 className="work-title">
+                    {highlightText(work.title, keywordTokens, `work-title-${id}`)}
+                  </h3>
                   <span className="work-period">{work.period}</span>
                 </div>
-                <p className="work-description">
-                  {(work.short_desc || work.desc || '').substring(0, 80)}
-                  {(work.short_desc || work.desc || '').length > 80 ? '...' : ''}
-                </p>
+                {work.short_desc || work.desc ? (
+                  <p className="work-description">
+                    {highlightText(
+                      `${(work.short_desc || work.desc || '').substring(0, 80)}${
+                        (work.short_desc || work.desc || '').length > 80 ? '...' : ''
+                      }`,
+                      keywordTokens,
+                      `work-desc-${id}`
+                    )}
+                  </p>
+                ) : null}
                 {work.repo && (
                   <div className="work-repo">
                     <FaGithub size={12} />
@@ -186,7 +200,7 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
         <div className="modal" onClick={() => setSelectedWork(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={() => setSelectedWork(null)}>×</button>
-            <h2>{selectedWork.title}</h2>
+            <h2>{highlightText(selectedWork.title, keywordTokens, 'modal-title')}</h2>
             <p className="modal-period">{selectedWork.period}</p>
             {selectedWork.img && (
               <img src={selectedWork.img} alt={selectedWork.title} className="modal-image" />
@@ -201,7 +215,11 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
                 <FaGithub /> {selectedWork.repo}
               </a>
             )}
-            <div className="modal-description">{selectedWork.desc}</div>
+            {selectedWork.desc && (
+              <div className="modal-description">
+                {highlightText(selectedWork.desc, keywordTokens, 'modal-desc')}
+              </div>
+            )}
             {selectedWork.tags && selectedWork.tags.length > 0 && (
               <div className="modal-tags">
                 {selectedWork.tags.map((tag, i) =>

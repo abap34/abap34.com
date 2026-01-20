@@ -53,6 +53,13 @@
   color: var(--accent);
 }
 
+.post-snippet {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
 @media (max-width: 768px) {
   .post-card {
     padding: 1rem;
