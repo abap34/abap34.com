@@ -20,6 +20,26 @@ lapisla:
     - https://lapisla.net
     - https://docs.lapisla.net
 
+
+JETLS:
+  title: JETLS.jl
+  img: /works/img/jetls.png
+  repo: aviatesk/JETLS.jl
+  short_desc: Next-generation Language Server for Julia
+  desc: |
+    JETLS.jl is the next-generation Language Server for Julia.
+    It utilizes the latest Julia compiler toolchain to provide advanced analysis results.
+    As a team member, I work on the design and implementation of various features.
+  lang:
+    - Julia
+  tags:
+    - Julia
+    - Compiler
+    - Language Server
+    - OSS
+  period: 2025-
+
+
 eta:
   title: eta
   img: /works/img/eta.png
@@ -39,23 +59,6 @@ eta:
     - https://abap34.github.io/eta-presentation
     - https://github.com/abap34/eta
 
-JETLS:
-  title: JETLS.jl
-  img: /works/img/jetls.png
-  repo: aviatesk/JETLS.jl
-  short_desc: Next-generation Language Server for Julia
-  desc: |
-    JETLS.jl is the next-generation Language Server for Julia.
-    It utilizes the latest Julia compiler toolchain to provide advanced analysis results.
-    As a team member, I work on the design and implementation of various features.
-  lang:
-    - Julia
-  tags:
-    - Julia
-    - Compiler
-    - Language Server
-    - OSS
-  period: 2025
 
 mu:
   title: mu
