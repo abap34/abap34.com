@@ -8,167 +8,268 @@
 }
 
 .page-header {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .search-input {
   width: 100%;
-  max-width: 500px;
-  padding: 0.75rem 1rem;
+  max-width: 400px;
+  padding: 0.6rem 0.9rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
   background: var(--bg);
   color: var(--text);
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 
 .search-input:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
+/* Grid Layout - Compact Cards */
 .works-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
 }
 
 .work-card {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 2rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .work-card:hover {
-  opacity: 0.7;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--accent);
+}
+
+/* Image Container with Overlay */
+.work-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--hover);
 }
 
 .work-image {
   width: 100%;
-  max-width: 600px;
-  height: auto;
+  height: 100%;
   object-fit: cover;
-  border: 1px solid var(--border);
-  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
 }
 
+.work-card:hover .work-image {
+  transform: scale(1.05);
+}
+
+.work-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.work-card:hover .work-image-overlay {
+  opacity: 1;
+}
+
+.work-image-overlay span {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Card Content */
 .work-content {
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.6rem;
+  flex: 1;
 }
 
-.work-content h3 {
-  font-size: 1.2rem;
+.work-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.work-title {
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--text);
 }
 
 .work-period {
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .work-description {
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  line-height: 1.8;
-  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
 }
 
 .work-repo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   color: var(--accent);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--border);
 }
 
+/* Tags - Compact Style */
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
+  gap: 0.4rem;
 }
 
 .tag {
-  border: 1px solid var(--border);
-  padding: 0.2rem 0.6rem;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  background: var(--hover);
   color: var(--text-secondary);
-  transition: color 0.2s, border-color 0.2s;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
 .tag:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+.tag-more {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 600;
 }
 
 /* Modal */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 2rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-content {
   background: var(--bg);
   border-radius: 12px;
-  max-width: 800px;
+  max-width: 700px;
   width: 100%;
-  max-height: 90vh;
+  max-height: 85vh;
   overflow-y: auto;
   padding: 2rem;
   position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-close {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--text-secondary);
-  background: none;
+  background: var(--hover);
   border: none;
   cursor: pointer;
   padding: 0;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  transition: all 0.2s;
 }
 
 .modal-close:hover {
-  background: var(--hover);
+  background: var(--accent);
+  color: white;
+  transform: rotate(90deg);
 }
 
 .modal-content h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  padding-right: 2rem;
 }
 
 .modal-period {
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
+  font-size: 0.9rem;
 }
 
 .modal-image {
   width: 100%;
-  max-height: 400px;
+  max-height: 350px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
 }
 
 .modal-repo {
@@ -177,34 +278,74 @@
   gap: 0.5rem;
   color: var(--accent);
   margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.modal-repo:hover {
+  opacity: 0.7;
 }
 
 .modal-description {
-  line-height: 1.8;
-  color: var(--text-secondary);
+  line-height: 1.7;
+  color: var(--text);
   white-space: pre-wrap;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .modal-links {
-  border-top: 1px solid var(--border);
-  padding-top: 1.5rem;
+  padding-top: 0.5rem;
 }
 
 .modal-links h3 {
   margin-bottom: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .modal-links a {
-  display: block;
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
   color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+  word-break: break-all;
+}
+
+.modal-links a:hover {
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .works-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
   .works-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .work-card:hover {
+    transform: none;
   }
 
   .modal {
@@ -213,9 +354,28 @@
 
   .modal-content {
     padding: 1.5rem;
+    max-height: 90vh;
   }
 
   .modal-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .work-content {
+    padding: 0.8rem;
+  }
+
+  .work-title {
+    font-size: 0.95rem;
+  }
+
+  .work-description {
+    font-size: 0.8rem;
   }
 }
