@@ -10,21 +10,23 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
   const { data: worksData, isLoading } = useYamlData('/data/works.yaml');
   const [selectedWork, setSelectedWork] = useState(null);
   const { keyword, tags: selectedTags, setKeyword, addTag, removeTag, clearTags } = useSearchFilters();
-  const [searchInput, setSearchInput] = useState(keyword);
+  const activeKeyword = showSearch ? keyword : '';
+  const activeTags = showSearch ? selectedTags : [];
+  const [searchInput, setSearchInput] = useState(activeKeyword);
   const keywordTokens = useMemo(
-    () => keyword.trim().toLowerCase().split(/\s+/).filter(Boolean),
-    [keyword]
+    () => activeKeyword.trim().toLowerCase().split(/\s+/).filter(Boolean),
+    [activeKeyword]
   );
 
   useEffect(() => {
-    setSearchInput(keyword);
-  }, [keyword]);
+    setSearchInput(activeKeyword);
+  }, [activeKeyword]);
 
   const works = useMemo(() => Object.entries(worksData || {}), [worksData]);
 
   const filteredWorks = useMemo(() => {
     const keywords = keywordTokens;
-    const loweredTags = selectedTags.map((tag) => tag.toLowerCase());
+    const loweredTags = activeTags.map((tag) => tag.toLowerCase());
 
     return works.filter(([_, work]) => {
       const workTags = work.tags || [];
@@ -49,11 +51,11 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
 
       return keywords.every((kw) => searchableText.includes(kw));
     });
-  }, [works, keywordTokens, selectedTags]);
+  }, [works, keywordTokens, activeTags]);
 
   const displayWorks = limit ? filteredWorks.slice(0, limit) : filteredWorks;
   const resultsCount = displayWorks.length;
-  const hasActiveFilters = keyword.trim().length > 0 || selectedTags.length > 0;
+  const hasActiveFilters = activeKeyword.trim().length > 0 || activeTags.length > 0;
 
   if (isLoading) {
     return <div className="loading">Loading...</div>;
