@@ -11,7 +11,10 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
   const [selectedWork, setSelectedWork] = useState(null);
   const { keyword, tags: selectedTags, setKeyword, addTag, removeTag, clearTags } = useSearchFilters();
   const activeKeyword = showSearch ? keyword : '';
-  const activeTags = showSearch ? selectedTags : [];
+  const activeTags = useMemo(
+    () => showSearch ? selectedTags : [],
+    [showSearch, selectedTags]
+  );
   const [searchInput, setSearchInput] = useState(activeKeyword);
   const keywordTokens = useMemo(
     () => activeKeyword.trim().toLowerCase().split(/\s+/).filter(Boolean),

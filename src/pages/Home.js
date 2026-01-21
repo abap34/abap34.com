@@ -32,7 +32,7 @@ export default function Home() {
         <img src={intro?.avatar} alt="avatar" className="avatar" />
         <h1 className="name">{intro?.name}</h1>
         <div className="tagline">
-          {intro?.mainDescription.split(/[\.．]/).filter(s => s).map((sentence, i) => (
+          {intro?.mainDescription.split(/[.．]/).filter(s => s).map((sentence, i) => (
             <p key={i}>{sentence}．</p>
           ))}
         </div>
