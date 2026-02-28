@@ -61,7 +61,6 @@ body {
     width: 100%;
     min-height: 100vh;
     /* 画面全体に背景が伸びるようにする */
-    background-color: #fff;
     color: #333;
     font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
     line-height: 1.5;
@@ -72,6 +71,13 @@ body {
 
     /* 長い単語も強制的に改行 */
     word-wrap: break-word;
+}
+
+body {
+    background-color: #fcfcf8;
+    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1px, transparent 1.2px);
+    background-size: 24px 24px;
+    background-attachment: fixed;
 }
 
 /* 句読点だけは日本語フォントを使う */
@@ -438,6 +444,12 @@ footer {
       Responsive
       =============================================== */
 @media (max-width: 768px) {
+    body,
+    body.light-mode {
+        background-size: 20px 20px !important;
+        background-attachment: scroll !important;
+    }
+
     .article-body {
         flex-direction: column;
         padding: 0 1rem;
@@ -718,6 +730,7 @@ footer {
 /* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
     background-color: #1f2022 !important;
+    background-image: none !important;
     color: #e0e0e0 !important;
 }
 
@@ -887,7 +900,10 @@ body.dark-mode button {
 
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
 body.light-mode {
-    background-color: #fff !important;
+    background-color: #fcfcf8 !important;
+    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1px, transparent 1.2px) !important;
+    background-size: 24px 24px !important;
+    background-attachment: fixed !important;
     color: #333 !important;
 }
 
