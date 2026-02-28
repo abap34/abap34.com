@@ -11,6 +11,7 @@
   --border: #d4d4d4;
   --accent: #2563eb;
   --hover: #f0f0f0;
+  --dot-color: rgba(44, 44, 44, 0.1);
   --font-mono: ui-monospace, 'SF Mono', Consolas, 'Liberation Mono', Menlo, Monaco, 'Courier New', monospace;
 }
 
@@ -21,13 +22,17 @@
   --border: #404040;
   --accent: #60a5fa;
   --hover: #1a1a1a;
+  --dot-color: rgba(229, 229, 229, 0.16);
 }
 
 body {
   font-family: var(--font-mono);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--dot-color) 1.8px, transparent 2.2px);
+  background-size: 44px 44px;
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.8;
   transition: background 0.3s, color 0.3s;
