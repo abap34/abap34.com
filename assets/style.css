@@ -25,8 +25,8 @@ body {
 
 body {
     background-color: #fcfcf8;
-    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1px, transparent 1.2px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1.5px, transparent 1.8px);
+    background-size: 36px 36px;
     background-attachment: fixed;
 }
 
@@ -395,8 +395,9 @@ footer {
       =============================================== */
 @media (max-width: 768px) {
     body,
-    body.light-mode {
-        background-size: 20px 20px !important;
+    body.light-mode,
+    body.dark-mode {
+        background-size: 30px 30px !important;
         background-attachment: scroll !important;
     }
 
@@ -680,7 +681,9 @@ footer {
 /* ▼ ダークモード用オーバーライド (ユーザが手動でダークモードを選択した場合) */
 body.dark-mode {
     background-color: #1f2022 !important;
-    background-image: none !important;
+    background-image: radial-gradient(circle, rgba(224, 230, 255, 0.18) 1.5px, transparent 1.8px) !important;
+    background-size: 36px 36px !important;
+    background-attachment: fixed !important;
     color: #e0e0e0 !important;
 }
 
@@ -851,8 +854,8 @@ body.dark-mode button {
 /* ▼ ライトモード強制用オーバーライド (ユーザが明示的にライトモードを選択した場合) */
 body.light-mode {
     background-color: #fcfcf8 !important;
-    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1px, transparent 1.2px) !important;
-    background-size: 24px 24px !important;
+    background-image: radial-gradient(circle, rgba(128, 140, 168, 0.24) 1.5px, transparent 1.8px) !important;
+    background-size: 36px 36px !important;
     background-attachment: fixed !important;
     color: #333 !important;
 }
