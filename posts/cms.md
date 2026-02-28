@@ -23,26 +23,32 @@ featured: false
 
 {@ogp https://github.com/abap34/cms.abap34.com}
 
+## 実現方法
 
-このブログは almo という自作の (変な) C++ 製の md2html を GitHub Actions で動かして GitHub 上に直接コンテンツを 置いて Vercel でホストするという構成です。
+このブログは almo という自作の (変な) C++ 製の md2html を GitHub Actions で動かし、 GitHub 上に直接コンテンツを置いて Vercel でホストするという構成です。
 
 
 正直多少のサーバ代はそんなに気にしていませんが、維持作業が面倒なのでなるべくクライアントで完結させたいと思っています。
 
 そのため、Emscripten で .wasm にコンパイルしてクライアント側でパースと表示までさせています。
 
-コンテンツも変わらず GitHub 上で管理しています。普通にログインさせ、変更をコミット、Publish ボタンで PR作成 → Merge という形です。ただ画像だけはさすがにそのうちなんとかする必要はあるかなといった感じです。
+{@ogp https://github.com/abap34/almo/pull/173}
+
+(meson にビルド書き換えるのも 1年以上放置してしまっているのでいずれやりたい…)
+
+同様に、コンテンツも変わらず GitHub 上で管理しています。普通にログインさせ、変更をコミット、Publish ボタンで PR作成 → Merge という形です。ただ画像だけはさすがにそのうちなんとかする必要はあるかなといった感じです。
 
 
 PWA 化してスマホでも執筆体験はかなり良好です。
 
 
 ![電池がやばい](https://abap34.com/posts/cms/IMG_7535.png)
-![プレビュー](https://abap34.com/posts/cms/IMG_7536.png)
 
-なんなら標準のメモアプリよりこっちの方が使いやすいまである。
+![プレビュー](https://abap34.com/posts/cms/IMG_7538.png)
 
-今後は例えば (非技術書も含めて) 最近読んだ本、みたいな今までだと Twitter に行っていた話を雑に書いていこうと思います。見逃すな 🫵⭐️ 
+いいですね。
+
+今後は例えば最近読んだ本、のようなこれまでだと Twitter に行っていた話を雑に書いていこうと思います。帰りの電車で1本書くくらいの雑さのつもりです。見逃すな 🫵⭐️ 
 
 RSS: [https://www.abap34.com/rss.xml](https://www.abap34.com/rss.xml)
 
