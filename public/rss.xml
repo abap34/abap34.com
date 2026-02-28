@@ -5,7 +5,22 @@
 <link>https://abap34.com/blog</link>
 <description>abap34's blog</description>
 <language>ja</language>
-<lastBuildDate>Sat, 28 Feb 2026 17:16:09 +0000</lastBuildDate>
+<lastBuildDate>Sat, 28 Feb 2026 17:56:25 +0000</lastBuildDate>
+<item>
+<guid>https://abap34.com/posts/cms.html</guid>
+<title>CMS を作ったので雑な記事を書いていきます</title>
+<link>https://abap34.com/posts/cms.html</link>
+<pubDate>Sat, 28 Feb 2026 00:00:00 +0000</pubDate>
+<author>@abap34</author>
+<description>
+あらすじ
+
+近年、Twitter の @abap34 のアカウントが周りに広まりつつあり、余計なことが書けなくなってしまいました。その対策として、ブログをもう少しラフに書けるようにしようと思い、スマホからでも気軽に投稿できるように CMS を (Claude が) 作りました。
+
+
+&lt;div class=&quot;link-card&quot;&gt;     &lt;a href=&quot;https://github.com/abap34/cms.abap34.com&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; class=&quot;link-card-container&quot;&gt;         &lt;div class=&quot;link-card-image&quot;&gt;             &lt;img src=&quot;https://opengraph.githubassets.com/61991a6eb33a49e425b27f739d376b37d30e26efb3e94a6e2dc03db4fd155f21/abap34/cms.abap34.com&quot; alt=&quot;GitHub - abap34/cms...</description>
+</item>
+
 <item>
 <guid>https://abap34.com/posts/hurikaeri_2025_0.html</guid>
 <title>2025年度前期振り返り</title>
@@ -493,21 +508,6 @@ Rust とかで書き換えるのは個人的にありでしたが、開発メン
 
 pybind11
 &lt;a href=&quot;https://github.com/p...</description>
-</item>
-
-<item>
-<guid>https://abap34.com/posts/dacq.html</guid>
-<title>mini Kaggle を streamlit で作った</title>
-<link>https://abap34.com/posts/dacq.html</link>
-<pubDate>Sun, 12 May 2024 00:00:00 +0000</pubDate>
-<author>@abap34</author>
-<description>
-開発の経緯
-
-ギャグの人数がいるサークル用に、昨年から部内コンペ用のプラットフォームを運営しています。
-今は昨年作った Go製のものが稼働しているのですが、いくつかの課題を抱えていました。
-評価指標が全然使えない評価指標の計算まで全て Goで自前で書いたものだったので、新しい評価指標を追加するのが大変です。 Python で書かれたライブラリを使いたいところです。引き継ぎがやばそう今後後輩に引き継いでいくことを考えると、機械学習に興味があってかつ Webができる人に見てもらう必要があります。 流石にまずそうです。
-&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;ja&quot; dir=&quot;ltr&quot;&gt;新歓が終わって、158人の部員がKaggleコミュニティに入ってくれました🤲´-&lt;br&gt;mlに興味がある人が多くてうれしい&lt;br&gt;運営がんばります‼️ &lt;a href=&quot;https://twitter.com/hashtag/trap1kaggle?src=hash&amp;amp;ref_src=twsrc%5Etfw&quot;&gt;#trap1kaggle&lt;/a&gt;&lt;/p&gt;&amp;md...</description>
 </item>
 
 </channel>
