@@ -1,6 +1,6 @@
 {
-    "buildCommand": "npm run build",
+    "buildCommand": "bash scripts/vercel-build.sh",
     "outputDirectory": "build",
-    "installCommand": "npm install",
+    "installCommand": "npm install && curl -LsSf https://astral.sh/uv/install.sh | sh",
     "framework": "create-react-app"
 }
