@@ -48,3 +48,4 @@ public/tfidf_cache.pkl
 blog_builder/__pycache__/
 posts/galois_connection_and_program_analysis/proof/\#galois_connection.v\#
 memo/
+/.vercel
