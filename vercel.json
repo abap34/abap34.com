@@ -1,5 +1,5 @@
 {
-    "buildCommand": "git submodule update --init --recursive --remote && cd almo && bash ./scripts/setup.sh && g++ -std=c++23 ./build/almo.cpp -o ./build/almo && cd .. && REBUILD=true SKIP_WIP_ARTICLES=true python3 -m uv run blog_builder/build.py && python3 -m uv run blog_builder/rss.py && npm run build",
+    "buildCommand": "bash scripts/vercel-build.sh",
     "outputDirectory": "build",
     "installCommand": "npm install && pip install uv",
     "framework": "create-react-app"
