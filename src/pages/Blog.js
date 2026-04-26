@@ -135,6 +135,20 @@ export default function Blog() {
     });
   }, [normalizedPosts, keywordTokens, selectedTags]);
 
+  const groupedPosts = useMemo(() => {
+    const groups = [];
+    let currentYear = null;
+    for (const post of filteredPosts) {
+      const year = (post.post_date || '').slice(0, 4) || '—';
+      if (year !== currentYear) {
+        groups.push({ year, posts: [] });
+        currentYear = year;
+      }
+      groups[groups.length - 1].posts.push(post);
+    }
+    return groups;
+  }, [filteredPosts]);
+
   if (loading) {
     return <div className="loading">Loading...</div>;
   }
@@ -197,44 +211,46 @@ export default function Blog() {
         </div>
       ) : (
         <div className="posts-list">
-          {filteredPosts.map((post, index) => (
-            <article key={index} className="post-card">
-              <div className="post-header">
-                <div className="post-date">{post.post_date}</div>
-                {post.external && (
-                  <div className="post-external">
-                    <ExternalLink size={14} />
-                    <span>{extractDomain(post.url)}</span>
-                  </div>
-                )}
+          {groupedPosts.map(({ year, posts: yearPosts }) => (
+            <div key={year} className="year-group">
+              <div className="year-label">{year}</div>
+              <div className="year-posts">
+                {yearPosts.map((post, index) => (
+                  <article key={index} className="post-row">
+                    <div className="post-row-meta">
+                      <span className="post-date">{(post.post_date || '').slice(5)}</span>
+                    </div>
+                    <div className="post-row-body">
+                      <div className="post-title-line">
+                        <a href={post.url} target="_blank" rel="noopener noreferrer" className="post-title">
+                          {highlightText(post.title, keywordTokens, `title-${year}-${index}`)}
+                        </a>
+                        {post.external && (
+                          <span className="post-external">
+                            <ExternalLink size={11} />
+                            <span>{extractDomain(post.url)}</span>
+                          </span>
+                        )}
+                      </div>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="tags">
+                          {post.tags.map((tag, i) => (
+                            <button
+                              type="button"
+                              key={`${post.title}-${tag}-${i}`}
+                              className="tag tag-button"
+                              onClick={() => addTag(tag)}
+                            >
+                              {tag}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                ))}
               </div>
-              <a href={post.url} target="_blank" rel="noopener noreferrer" className="post-title">
-                {highlightText(post.title, keywordTokens, `title-${index}`)}
-              </a>
-              {post.plainContent && (
-                <p className="post-snippet">
-                  {highlightText(
-                    buildSnippet(post.plainContent, keywordTokens),
-                    keywordTokens,
-                    `snippet-${index}`
-                  )}
-                </p>
-              )}
-              {post.tags && post.tags.length > 0 && (
-                <div className="tags">
-                  {post.tags.map((tag, i) => (
-                    <button
-                      type="button"
-                      key={`${post.title}-${tag}-${i}`}
-                      className="tag tag-button"
-                      onClick={() => addTag(tag)}
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </article>
+            </div>
           ))}
         </div>
       )}
