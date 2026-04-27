@@ -51,35 +51,6 @@ function stripHtml(html = '') {
   return html.replace(/<[^>]+>/g, ' ');
 }
 
-function buildSnippet(content = '', keywords = [], snippetLength = 140) {
-  if (!content) return '';
-
-  const normalized = content.replace(/\s+/g, ' ').trim();
-  if (!normalized) return '';
-
-  if (keywords.length === 0) {
-    return normalized.length > snippetLength
-      ? `${normalized.slice(0, snippetLength)}…`
-      : normalized;
-  }
-
-  const lowerContent = normalized.toLowerCase();
-  const keywordPositions = keywords
-    .map((kw) => lowerContent.indexOf(kw))
-    .filter((index) => index >= 0)
-    .sort((a, b) => a - b);
-
-  const start =
-    keywordPositions.length > 0
-      ? Math.max(keywordPositions[0] - 20, 0)
-      : 0;
-  const end = Math.min(start + snippetLength, normalized.length);
-
-  const prefix = start > 0 ? '…' : '';
-  const suffix = end < normalized.length ? '…' : '';
-
-  return `${prefix}${normalized.slice(start, end)}${suffix}`;
-}
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
@@ -217,9 +188,6 @@ export default function Blog() {
               <div className="year-posts">
                 {yearPosts.map((post, index) => (
                   <article key={index} className="post-row">
-                    <div className="post-row-meta">
-                      <span className="post-date">{(post.post_date || '').slice(5)}</span>
-                    </div>
                     <div className="post-row-body">
                       <div className="post-title-line">
                         <a href={post.url} target="_blank" rel="noopener noreferrer" className="post-title">

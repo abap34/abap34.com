@@ -47,18 +47,6 @@
   line-height: 1.4;
 }
 
-.post-row-meta {
-  flex-shrink: 0;
-  width: 4rem;
-  padding-top: 0.15rem;
-}
-
-.post-date {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  white-space: nowrap;
-}
-
 .post-external {
   display: flex;
   align-items: center;
@@ -92,11 +80,9 @@
   color: var(--accent);
 }
 
-.post-snippet {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-top: 0.4rem;
+.blog-page .tag {
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
 }
 
 @media (max-width: 768px) {
