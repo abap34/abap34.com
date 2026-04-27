@@ -1,7 +1,0 @@
-# This workflow is disabled.
-# Blog builds are now handled by Vercel directly.
-# See vercel.json for the build configuration.
-name: Page Builder by ALMO (disabled)
-
-on:
-  workflow_dispatch: # manual trigger only, if ever needed
