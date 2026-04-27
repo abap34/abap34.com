@@ -53,11 +53,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="description">
-          {intro?.detailedDescription?.map((line, i) => (
-            line === '' ? <br key={i} /> : <p key={i}>{line}</p>
-          ))}
-        </div>
       </section>
 
       {/* Background */}
@@ -102,6 +97,15 @@ export default function Home() {
         </div>
         <Works limit={2} showSearch={false} showTitle={false} />
         <Link to="/works" className="view-all">View all →</Link>
+      </section>
+
+      <section className="section">
+        <h2>About</h2>
+        <div className="description">
+          {intro?.detailedDescription?.map((line, i) => (
+            line === '' ? <br key={i} /> : <p key={i}>{line}</p>
+          ))}
+        </div>
       </section>
     </div>
   );
