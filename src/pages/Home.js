@@ -29,33 +29,30 @@ export default function Home() {
     <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        <img src={intro?.avatar} alt="avatar" className="avatar" />
-        <h1 className="name">{intro?.name}</h1>
-        <div className="tagline">
-          {intro?.mainDescription.split(/[.．]/).filter(s => s).map((sentence, i) => (
-            <p key={i}>{sentence}．</p>
-          ))}
+        <div className="hero-main">
+          <img src={intro?.avatar} alt="avatar" className="avatar" />
+          <div className="hero-text">
+            <h1 className="name">{intro?.name}</h1>
+            <p className="tagline">{intro?.mainDescription}</p>
+            <div className="social-links">
+              {socialData?.links?.map((link) => {
+                const Icon = iconComponents[link.icon];
+                return (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-link"
+                    title={link.name}
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </div>
-
-        {/* Social Links */}
-        <div className="social-links">
-          {socialData?.links?.map((link) => {
-            const Icon = iconComponents[link.icon];
-            return (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link"
-                title={link.name}
-              >
-                <Icon size={20} />
-              </a>
-            );
-          })}
-        </div>
-
         <div className="description">
           {intro?.detailedDescription?.map((line, i) => (
             line === '' ? <br key={i} /> : <p key={i}>{line}</p>
@@ -70,31 +67,19 @@ export default function Home() {
           <div className="timeline-section">
             <h3>Education</h3>
             {education.map((edu, i) => (
-              <a
-                key={i}
-                href={edu.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="timeline-item timeline-item-link"
-              >
-                <div className="timeline-title">{edu.school}</div>
-                <div className="timeline-period">{edu.period}</div>
+              <a key={i} href={edu.url} target="_blank" rel="noopener noreferrer" className="timeline-item timeline-item-link">
+                <span className="timeline-period">{edu.period}</span>
+                <span className="timeline-title">{edu.school}</span>
               </a>
             ))}
           </div>
           <div className="timeline-section">
             <h3>Work Experience</h3>
             {careers.map((career, i) => (
-              <a
-                key={i}
-                href={career.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="timeline-item timeline-item-link"
-              >
-                <div className="timeline-title">{career.company}</div>
-                <div className="timeline-period">{career.period}</div>
-                {career.worktype && <div className="timeline-worktype">{career.worktype}</div>}
+              <a key={i} href={career.url} target="_blank" rel="noopener noreferrer" className="timeline-item timeline-item-link">
+                <span className="timeline-period">{career.period}</span>
+                <span className="timeline-title">{career.company}</span>
+                {career.worktype && <span className="timeline-worktype">{career.worktype}</span>}
               </a>
             ))}
           </div>
@@ -102,16 +87,9 @@ export default function Home() {
         <div className="timeline-section timeline-section-full">
           <h3>Others</h3>
           {others.map((other, i) => (
-            <a
-              key={i}
-              href={other.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="timeline-item timeline-item-link"
-            >
-              <div className="timeline-title">{other.title}</div>
-              <div className="timeline-period">{other.period}</div>
-              {other.description && <div className="timeline-description">{other.description}</div>}
+            <a key={i} href={other.url} target="_blank" rel="noopener noreferrer" className="timeline-item timeline-item-link">
+              <span className="timeline-period">{other.period}</span>
+              <span className="timeline-title">{other.title}</span>
             </a>
           ))}
         </div>

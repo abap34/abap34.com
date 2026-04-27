@@ -135,7 +135,6 @@ export default function Blog() {
   return (
     <div className="blog-page">
       <div className="page-header">
-        <h1>Blog</h1>
         <form className="search-form" onSubmit={handleSearchSubmit}>
           <input
             type="text"

@@ -82,7 +82,6 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
     <div className="works-page">
       {showTitle && (
         <div className="page-header">
-          <h1>Works</h1>
           {showSearch && (
             <>
               <form className="search-form" onSubmit={handleSearchSubmit}>
