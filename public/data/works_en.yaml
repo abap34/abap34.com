@@ -40,24 +40,6 @@ JETLS:
   period: 2025-
 
 
-eta:
-  title: eta
-  img: /works/img/eta.png
-  repo: abap34/eta
-  short_desc: Scheme-based Scheme Processing System
-  desc: |
-    eta is a Scheme-based Scheme processing system.
-    It implements first-class continuations (call/cc) and tail call optimization.
-  lang:
-    - Scheme
-  tags:
-    - Scheme
-    - Language Processing System
-    - OSS
-  period: 2025
-  relatedlinks:
-    - https://abap34.github.io/eta-presentation
-    - https://github.com/abap34/eta
 
 
 mu:
@@ -161,6 +143,26 @@ competitions:
   relatedlinks:
     - https://trap.jp/post/2518/
     - https://trap.jp/post/1975/
+
+eta:
+  title: eta
+  img: /works/img/eta.png
+  repo: abap34/eta
+  short_desc: Scheme-based Scheme Processing System
+  desc: |
+    eta is a Scheme-based Scheme processing system.
+    It implements first-class continuations (call/cc) and tail call optimization.
+  lang:
+    - Scheme
+  tags:
+    - Scheme
+    - Language Processing System
+    - OSS
+  period: 2025
+  relatedlinks:
+    - https://abap34.github.io/eta-presentation
+    - https://github.com/abap34/eta
+
 
 Q_Q:
   title: Q_Q
