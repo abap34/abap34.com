@@ -53,14 +53,14 @@ body {
 
 /* モバイル用サイドバーの基本スタイル */
 .mobile-sidebar {
-    max-width: 1400px;
+    max-width: 1560px;
     margin: 0 auto;
     padding: 0 1rem;
 }
 
 .article-body {
     display: flex;
-    max-width: 1400px;
+    max-width: 1560px;
     margin: 0 auto;
     padding: 0 1rem;
     gap: 2rem;
@@ -151,7 +151,7 @@ body {
     padding: 1rem;
     /* margin-bottom: 1rem; */
     padding-top: 6rem;
-    max-width: 800px;
+    max-width: 920px;
     margin: 0 auto;
 }
 
@@ -896,8 +896,7 @@ pre code.hljs {
     display: block;
     overflow-x: auto;
     padding: 0em !important;
-    /* background は透明に */
-    background: none !important;
+    background: transparent !important;
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -915,6 +914,11 @@ code {
 }
 
 pre {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background-color: #f6f8fa;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -922,6 +926,55 @@ pre {
 
 pre::-webkit-scrollbar {
     display: none;
+}
+
+.cb {
+    background-color: #f6f8fa !important;
+    border-color: #d0d7de !important;
+}
+
+.cb-toolbar {
+    background-color: #f1f3f5 !important;
+    border-bottom-color: #d0d7de !important;
+}
+
+.cb-body,
+.cb-gutter,
+.cb-pre,
+.cb pre,
+.cb code.hljs {
+    background-color: #f6f8fa !important;
+}
+
+.cb-pre,
+.cb pre {
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+}
+
+body.dark-mode pre {
+    border-color: #3a3f4b !important;
+    background-color: #282c34 !important;
+}
+
+body.dark-mode pre code.hljs,
+body.dark-mode .cb,
+body.dark-mode .cb-body,
+body.dark-mode .cb-gutter,
+body.dark-mode .cb-pre,
+body.dark-mode .cb pre,
+body.dark-mode .cb code.hljs {
+    background-color: #282c34 !important;
+}
+
+body.dark-mode .cb {
+    border-color: #3a3f4b !important;
+}
+
+body.dark-mode .cb-toolbar {
+    background-color: #24272e !important;
+    border-bottom-color: #3a3f4b !important;
 }
 
 body.light-mode .content a {
@@ -1056,13 +1109,14 @@ body.light-mode button {
    OGPリンクカード
    =============================================== */
 .link-card {
-    margin: 16px 0;
+    margin: 1rem auto;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     background: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    width: min(100%, 680px);
+    max-width: 680px;
 }
 
 .link-card:hover {
