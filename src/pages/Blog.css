@@ -1,26 +1,24 @@
 .blog-page {
-  padding: 2rem 0;
+  padding: 1.5rem 0 0;
 }
 
 .posts-list {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.75rem;
 }
 
-/* Year group */
 .year-group {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .year-label {
-  font-size: 0.82rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
 }
 
 .year-posts {
@@ -28,14 +26,12 @@
   flex-direction: column;
 }
 
-/* Individual post row */
 .post-row {
   display: flex;
   align-items: baseline;
   gap: 1rem;
-  padding: 0.45rem 0;
+  padding: 0.12rem 0 0.12rem 1rem;
   position: relative;
-  padding-left: 1rem;
 }
 
 .post-row::before {
@@ -69,11 +65,10 @@
 }
 
 .post-title {
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--text);
   line-height: 1.5;
-  transition: color 0.15s;
 }
 
 .post-title:hover {
@@ -81,8 +76,7 @@
 }
 
 .blog-page .tag {
-  font-size: 0.65rem;
-  padding: 0.1rem 0.4rem;
+  font-size: 0.78rem;
 }
 
 @media (max-width: 768px) {

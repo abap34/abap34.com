@@ -78,8 +78,21 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
     setSelectedWork(null);
   };
 
+  const openWork = (work) => {
+    setSelectedWork(work);
+  };
+
+  const handleWorkKeyDown = (event, work) => {
+    if (event.target !== event.currentTarget) return;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openWork(work);
+    }
+  };
+
   return (
-    <div className="works-page">
+    <div className={`works-page${showTitle ? '' : ' works-page-embedded'}`}>
       {showTitle && (
         <div className="page-header">
           {showSearch && (
@@ -132,48 +145,42 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
           条件に一致する作品がありません。別のキーワードやタグを試してみてください。
         </div>
       ) : (
-        <div className="works-grid">
+        <div className="works-list">
           {displayWorks.map(([id, work]) => (
             <article
               key={id}
-              className="work-card"
-              onClick={() => setSelectedWork(work)}
+              className="work-row"
+              role="button"
+              tabIndex={0}
+              aria-label={`${work.title} の詳細を表示`}
+              onClick={() => openWork(work)}
+              onKeyDown={(event) => handleWorkKeyDown(event, work)}
             >
-              {work.img && (
-                <div className="work-image-container">
-                  <img src={work.img} alt={work.title} className="work-image" />
-                  <div className="work-image-overlay">
-                    <span>View Details</span>
-                  </div>
-                </div>
-              )}
-              <div className="work-content">
-                <div className="work-header">
+              <div className="work-row-body">
+                <div className="work-title-line">
                   <h3 className="work-title">
                     {highlightText(work.title, keywordTokens, `work-title-${id}`)}
                   </h3>
-                  <span className="work-period">{work.period}</span>
+                  {work.period && <span className="work-period">{work.period}</span>}
+                  {work.repo && (
+                    <span className="work-repo">
+                      <FaGithub size={11} />
+                      <span>{work.repo.split('/').pop()}</span>
+                    </span>
+                  )}
                 </div>
                 {work.short_desc || work.desc ? (
-                  <p className="work-description">
+                  <p className="work-summary">
                     {highlightText(
-                      `${(work.short_desc || work.desc || '').substring(0, 80)}${
-                        (work.short_desc || work.desc || '').length > 80 ? '...' : ''
-                      }`,
+                      work.short_desc || work.desc || '',
                       keywordTokens,
                       `work-desc-${id}`
                     )}
                   </p>
                 ) : null}
-                {work.repo && (
-                  <div className="work-repo">
-                    <FaGithub size={12} />
-                    <span>{work.repo.split('/').pop()}</span>
-                  </div>
-                )}
                 {work.tags && work.tags.length > 0 && (
                   <div className="tags">
-                    {work.tags.slice(0, 3).map((tag, i) =>
+                    {work.tags.map((tag, i) =>
                       showSearch ? (
                         <button
                           type="button"
@@ -189,9 +196,6 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
                         </span>
                       )
                     )}
-                    {work.tags.length > 3 && (
-                      <span className="tag-more">+{work.tags.length - 3}</span>
-                    )}
                   </div>
                 )}
               </div>
@@ -202,13 +206,25 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
 
       {selectedWork && (
         <div className="modal" onClick={() => setSelectedWork(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedWork(null)}>×</button>
-            <h2>{highlightText(selectedWork.title, keywordTokens, 'modal-title')}</h2>
-            <p className="modal-period">{selectedWork.period}</p>
-            {selectedWork.img && (
-              <img src={selectedWork.img} alt={selectedWork.title} className="modal-image" />
-            )}
+          <div
+            className="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="work-detail-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="modal-close"
+              aria-label="Close details"
+              onClick={() => setSelectedWork(null)}
+            >
+              ×
+            </button>
+            <h2 id="work-detail-title">
+              {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
+            </h2>
+            {selectedWork.period && <p className="modal-period">{selectedWork.period}</p>}
             {selectedWork.repo && (
               <a
                 href={`https://github.com/${selectedWork.repo}`}
@@ -218,6 +234,13 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
               >
                 <FaGithub /> {selectedWork.repo}
               </a>
+            )}
+            {selectedWork.lang && selectedWork.lang.length > 0 && (
+              <div className="modal-meta">
+                {selectedWork.lang.map((lang) => (
+                  <span key={lang}>{lang}</span>
+                ))}
+              </div>
             )}
             {selectedWork.desc && (
               <div className="modal-description">

@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useYamlData, useStaticYamlData } from '../hooks/useYamlData';
 import { FaGithub, FaTwitter, FaSpeakerDeck, FaLinkedin } from 'react-icons/fa';
-import Works from './Works';
 import './Home.css';
 
 const iconComponents = {
@@ -56,7 +54,7 @@ export default function Home() {
       </section>
 
       {/* Background */}
-      <section className="section">
+      <section className="section background-section">
         <h2>Background</h2>
         <div className="timeline-grid">
           <div className="timeline-section">
@@ -90,17 +88,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Recent Works */}
       <section className="section">
-        <div className="section-header">
-          <h2>Recent Works</h2>
-        </div>
-        <Works limit={2} showSearch={false} showTitle={false} />
-        <Link to="/works" className="view-all">View all →</Link>
-      </section>
-
-      <section className="section">
-        <h2>About</h2>
         <div className="description">
           {intro?.detailedDescription?.map((line, i) => (
             line === '' ? <br key={i} /> : <p key={i}>{line}</p>
