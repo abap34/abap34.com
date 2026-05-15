@@ -20,6 +20,13 @@ featured: false
 
 今日は，最近作っているスライド記述言語 ss について紹介します．
 
+まだ作りました！ってツイートもしてないし周りの数人に見せてみてるくらいの段階ですが，
+少しだけ説明の文章を置いておきたいと思います．
+
+
+一応，すでに 60ページほどのスライドを作るのに不便がない程度にはなっています．
+
+
 {@ogp https://github.com/abap34/ss}
 
 ![](ss_lang/image.png)
@@ -80,16 +87,16 @@ fn analysis_example_figs(caption: string) -> object
 end
 
 page program_analysis_intro
-    let title = slide_title "コンパイル例"
-    let t1 = main_text <<
-    ss で作ったスライドの例 →
-    >>
+  let title = slide_title "コンパイル例"
+  let t1 = main_text <<
+  ss で作ったスライドの例 →
+  >>
 
-    let right = analysis_example_figs("デモ")
-    t1.width == 600
-    let body = two_columns(t1, right)
+  let right = analysis_example_figs("デモ")
+  t1.width == 600
+  let body = two_columns(t1, right)
 
-    page_no
+  page_no
 end
 ```
 
