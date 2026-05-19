@@ -33,7 +33,7 @@ export default function Home() {
             <h1 className="name">{intro?.name}</h1>
             <p className="tagline">
               {intro?.mainDescription}{' '}
-              <a href="/cv/cv-casual-ja.html">CV (ja)</a>
+              <a href="/cv/cv-casual-ja.html">Resume (ja)</a>
             </p>
             <div className="social-links">
               {socialData?.links?.map((link) => {
