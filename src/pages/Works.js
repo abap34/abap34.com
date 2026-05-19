@@ -221,6 +221,15 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
             >
               ×
             </button>
+            {selectedWork.img && (
+              <div className="modal-image-frame">
+                <img
+                  src={selectedWork.img}
+                  alt={`${selectedWork.title} preview`}
+                  className="modal-image"
+                />
+              </div>
+            )}
             <h2 id="work-detail-title">
               {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
             </h2>
