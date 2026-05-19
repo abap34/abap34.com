@@ -31,7 +31,10 @@ export default function Home() {
           <img src={intro?.avatar} alt="avatar" className="avatar" />
           <div className="hero-text">
             <h1 className="name">{intro?.name}</h1>
-            <p className="tagline">{intro?.mainDescription}</p>
+            <p className="tagline">
+              {intro?.mainDescription}{' '}
+              <a href="/cv/cv-casual-ja.html">CV (ja)</a>
+            </p>
             <div className="social-links">
               {socialData?.links?.map((link) => {
                 const Icon = iconComponents[link.icon];
