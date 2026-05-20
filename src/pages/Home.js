@@ -91,13 +91,6 @@ export default function Home() {
         </div>
       </section>
 
-      // <section className="section">
-      //   <div className="description">
-      //     {intro?.detailedDescription?.map((line, i) => (
-      //       line === '' ? <br key={i} /> : <p key={i}>{line}</p>
-      //     ))}
-      //   </div>
-      // </section>
-    </div>
+   </div>
   );
 }
