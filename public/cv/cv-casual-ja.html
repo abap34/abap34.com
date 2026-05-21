@@ -133,12 +133,12 @@
   <body>
     <main>
       <nav><a href="/">abap34.com</a></nav>
-      <h1 id="resume-casual">Resume (Casual)</h1>
+      <h1 id="resume">Resume</h1>
       <p class="cv-name">Yuchi Yamaguchi (山口 悠地)</p>
       <img src="/yuchi.png" alt="Yuchi" width="200" height="200">
       <nav class="toc" aria-label="目次">
       <ol>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#連絡先">連絡先</a></li>
       <li><a href="#興味の方向性">興味の方向性</a></li>
       <li class="toc-child"><a href="#具体的な興味">具体的な興味</a></li>
       <li><a href="#経歴">経歴</a></li>
@@ -153,23 +153,22 @@
       <li><a href="#取り組みたい仕事">取り組みたい仕事</a></li>
       </ol>
       </nav>
-      <h2 id="contact">Contact</h2>
+      <h2 id="連絡先">連絡先</h2>
       <p>Email: <a href="mailto:yuchi@abap34.com">yuchi@abap34.com</a></p>
       <p>GitHub: <a href="https://github.com/abap34">@abap34</a></p>
       <p>Twitter: <a href="https://twitter.com/abap34">@abap34</a></p>
       <p>SpeakerDeck: <a href="https://speakerdeck.com/abap34">@abap34</a></p>
       <p>Website: <a href="https://abap34.com">abap34.com</a></p>
-      <p>プロジェクトの一覧などは <a href="https://abap34.com/works">abap34.com/works</a> あるいは GitHub を確認してください．</p>
+      <p>プロジェクトの一覧などは <a href="https://abap34.com/works">[abap34.com/works]</a> あるいは GitHub を確認してください．</p>
       <h2 id="興味の方向性">興味の方向性</h2>
-      <p>さまざまな問題のための一般的な解決策を見出すことに楽しさを感じることが多いです．</p>
+      <p>とくに大目標を定めない (より過激には，定めるべきではないと思っている) タイプで，細かい取り組んでいるトピックはかなり流動的です．</p>
+      <p>ただ，大雑把にはさまざまな問題のための一般的な解決策を見出すことに楽しさを感じることが多く，基盤となるソフトウェアや理論に興味が向いていることが多いです．</p>
       <p>ただし，そのために個別の問題に向き合うことをやめるわけではなく，</p>
       <ul>
       <li>個別の問題に対する解決策の追求</li>
       <li>そこから得られた知見をもとに一般的な解決策を見出す</li>
       </ul>
       <p>というサイクルを回すことが大事だと思っています．</p>
-      <p>そのため，興味の方向性を聞かれた際にはだいたい「<strong>理論と実装のどちらもやれるようになりたい</strong>」と答えることが多いです．</p>
-      <p>とくに大目標を定めない (より過激には，定めるべきではないと思っている) タイプなので，具体的に取り組む領域はかなり変遷しています．</p>
       <h3 id="具体的な興味">具体的な興味</h3>
       <p>中学生・高校生ごろには主に機械学習に興味を持っており，
       機械学習コンペ (後述) や数理最適化の勉強などをしていました．</p>
@@ -215,9 +214,9 @@
       </ul>
       <h3 id="その他">その他</h3>
       <ul>
-      <li>2025年 Google Summer of Code 2025 ─ Development of a New Language Server for Julia
+      <li>2025年 Google Summer of Code 2025 ─ Development of a New Language Server for Julia (Org: Julia Language)
       <ul>
-      <li><a href="https://www.abap34.com/posts/gsoc2025_final_report.html">Final Report</a></li>
+      <li><a href="https://www.abap34.com/posts/gsoc2025_final_report.html">[Final Report]</a></li>
       </ul>
       </li>
       <li>2025年 Teaching Assistant: 関数型プログラミング基礎</li>
@@ -225,50 +224,46 @@
       <h2 id="スキル">スキル</h2>
       <p>コンピュータサイエンス (とくにプログラミング言語処理系，静的プログラム解析，機械学習) に関する基本的な知識と 10 年以上のプログラミング経験があります．</p>
       <p>よく使うプログラミング言語は Julia, Python, C++, JavaScript, Scheme などですが，基本的に特定の言語に対する苦手意識などはあまりなく，必要に応じて新しい言語を学びながらプロジェクトを進めたいタイプです．</p>
-      <p>Git/GitHub や CI/CD，Docker などのコンテナ技術なども日常的に使用しています．</p>
+      <p>Git/GitHub や CI/CD，Docker などの基本的な開発ツールも日常的に使用しています．</p>
       <h3 id="専門分野に関連するもの">専門分野に関連するもの</h3>
-      <p>コンパイラに対する知識があります．具体的にはさまざまなプログラミング言語処理系をイチから作る能力があり，例えば</p>
+      <p>プログラミング言語処理系に対する知識と開発経験があります．例えば</p>
       <ul>
-      <li>抽象解釈による型解析を備えたインタプリタ: <a href="https://github.com/abap34/mu">abap34/mu</a></li>
-      <li>call/cc, TCO などが実装された Scheme インタプリタ: <a href="https://github.com/abap34/eta">abap34/eta</a></li>
-      <li>型解析や多段階計算などを備えたスライド記述言語 <a href="https://github.com/abap34/ss">abap34/ss</a></li>
-      <li>拡張 Markdown パーサ <a href="https://github.com/abap34/almo">abap34/almo</a></li>
+      <li>抽象解釈による型解析を備えたインタプリタ: <a href="https://github.com/abap34/mu">[abap34/mu]</a></li>
+      <li>call/cc, TCO などが実装された Scheme インタプリタ: <a href="https://github.com/abap34/eta">[abap34/eta]</a></li>
+      <li>型解析や多段階計算などを備えたスライド記述言語 <a href="https://github.com/abap34/ss">[abap34/ss]</a></li>
+      <li>拡張 Markdown パーサ <a href="https://github.com/abap34/almo">[abap34/almo]</a></li>
       </ul>
       <p>などを開発しています．</p>
-      <p>OS などのシステムソフトウェアに対する知識が必要な開発の経験もあります．
-      例えば</p>
+      <p>OS などのシステムソフトウェアの知識が必要な開発の経験があります．例えば</p>
       <ul>
-      <li>libuv などを使わない自作 JS Runtime <a href="https://github.com/abap34/KoBun">abap34/KoBun</a></li>
+      <li>libuv などを使わない自作 JS Runtime <a href="https://github.com/abap34/KoBun">[abap34/KoBun]</a></li>
       </ul>
       <p>などを開発しています．</p>
       <p>これらを横断する例として</p>
       <ul>
-      <li>Julia の次世代 Language Server <a href="https://github.com/aviatesk/JETLS.jl">aviatesk/JETLS.jl</a></li>
+      <li>Julia の次世代 Language Server <a href="https://github.com/aviatesk/JETLS.jl">[aviatesk/JETLS.jl]</a></li>
       </ul>
-      <p>のCore Contributor をしていました．</p>
+      <p>の Core Contributor をしていました．</p>
       <p>抽象解釈などによるプログラム解析の理論や，モデル検査，定理証明支援系など形式検証についての基本的な知識があります．
       例えば</p>
       <ul>
-      <li>LK にもとづく定理証明支援系 <a href="https://github.com/lapisla-prover/lapisla-prover">lapisla-prover/lapisla-prover</a></li>
+      <li>LK にもとづく定理証明支援系 <a href="https://github.com/lapisla-prover/lapisla-prover">[lapisla-prover/lapisla-prover]</a></li>
       </ul>
-      <p>をチームで開発したこともあります．</p>
-      <p>また，プログラミング言語理論に関する他の領域 (プログラム意味論，型システムなど) に対する入門的な知識もあります．</p>
+      <p>をチームで開発したことがあります．</p>
       <h3 id="データサイエンス機械学習数理最適化に関連するもの">データサイエンス・機械学習・数理最適化に関連するもの</h3>
       <p>機械学習に対しても長く興味を持っています．</p>
       <p>例えば，高校生のときには機械学習コンペディションにいくらか参加しており，</p>
       <ul>
-      <li>第 85 回日本循環器学会学術集会 における心筋梗塞の検出予測コンペで優勝 <a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">solution</a></li>
+      <li>第 85 回日本循環器学会学術集会 における心筋梗塞の検出予測コンペでの優勝経験 <a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">[solution]</a></li>
       </ul>
-      <p>したことがあります．</p>
-      <p>データ分析コンペの運営経験もあり，
-      大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催し，どのコンペティションも大きな問題なく終了することができました．</p>
-      <p>その準備のために BigQuery などを用いた大規模データの処理の経験もあります．</p>
-      <p>機械学習の基礎的な側面に対する基本的な知識もあり，
-      例えば</p>
+      <p>などがあります．</p>
+      <p>また，データ分析コンペの運営経験もあり，大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催しました．</p>
+      <p>どのコンペティションも大きな問題なく終了することができ，その準備のために BigQuery などを用いた大規模データの収集や処理の経験もあります．</p>
+      <p>機械学習の基礎的な側面に対する興味を持っており，例えば</p>
       <ul>
-      <li>自動微分の理論と実装に関する発表 <a href="https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen">slide</a></li>
-      <li>並列計算における乱数生成に関する発表 <a href="https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng">slide</a></li>
-      <li>自作の深層学習フレームワークの開発 <a href="https://github.com/abap34/JITrench.jl">abap34/JITrench.jl</a></li>
+      <li>自動微分の理論と実装に関する発表 <a href="https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen">[slide]</a></li>
+      <li>並列計算における乱数生成に関する発表 <a href="https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng">[slide]</a></li>
+      <li>自作の深層学習フレームワークの開発 <a href="https://github.com/abap34/JITrench.jl">[abap34/JITrench.jl]</a></li>
       </ul>
       <p>などの経験があります．</p>
       <h3 id="その他の細かいスキル">その他の細かいスキル</h3>
@@ -276,9 +271,9 @@
       <p>React / Next.js を使ったフロントエンド開発，FastAPI などを使ったバックエンド開発の経験，streamlit などを使ったサービスの開発経験などがあります．</p>
       <p>例えば</p>
       <ul>
-      <li>オンラインジャッジシステム (React, FastAPI) <a href="https://www.abap34.com/posts/oj_abap34.html">post</a></li>
-      <li>コンペプラットフォーム (streamlit) <a href="https://www.abap34.com/posts/dacq.html">post</a></li>
-      <li>個人サイト (React) <a href="https://abap34.com">abap34.com</a></li>
+      <li>オンラインジャッジシステム (React, FastAPI) <a href="https://www.abap34.com/posts/oj_abap34.html">[post]</a></li>
+      <li>コンペプラットフォーム (streamlit) <a href="https://www.abap34.com/posts/dacq.html">[post]</a></li>
+      <li>個人サイト (React) <a href="https://abap34.com">[abap34.com]</a></li>
       </ul>
       <p>などを開発しています．</p>
       <h2 id="リーダシップをとった経験">リーダシップをとった経験</h2>
@@ -290,8 +285,8 @@
       <p>などを行いました．
       コンペティションの規模は徐々に拡大し，最終的に 110 人以上の参加者から 1700件以上の提出を集めるまで成長しました．</p>
       <ul>
-      <li><a href="https://x.com/abap34/status/1811009775033078126/photo/">関連ツイート 1</a></li>
-      <li><a href="https://x.com/abap34/status/1813519964734910959/photo/1">関連ツイート 2</a></li>
+      <li><a href="https://x.com/abap34/status/1811009775033078126/photo/">[関連ツイート 1]</a></li>
+      <li><a href="https://x.com/abap34/status/1813519964734910959/photo/1">[関連ツイート 2]</a></li>
       </ul>
       <p>この際，新入生へのヒアリングを通して
       「コンペティションの最初の提出までのハードルの高さ」を課題として特定し，
@@ -299,11 +294,11 @@
       その結果，最終的にどのコンペでもほぼ全員がコンペに複数回提出するという目標を達成することができました．</p>
       <p>具体的な取り組みなどは開催ブログとして共有し，後輩や他大学の学生などが参考にできるようにしています．</p>
       <ul>
-      <li>初年度の開催記録 <a href="https://trap.jp/post/1918/">post</a></li>
-      <li>開催経験から得られた知見をまとめたブログ <a href="https://www.abap34.com/posts/community_competetion_tips.html">post</a></li>
+      <li>初年度の開催記録 <a href="https://trap.jp/post/1918/">[post]</a></li>
+      <li>開催経験から得られた知見をまとめたブログ <a href="https://www.abap34.com/posts/community_competetion_tips.html">[post]</a></li>
       </ul>
       <h2 id="取り組みたい仕事">取り組みたい仕事</h2>
-      <p>これまでの一般に公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などの対外発表に繋げられることを強く希望しています．</p>
+      <p>これまでの一般に公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを強く希望しています．</p>
     </main>
   </body>
 </html>
