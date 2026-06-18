@@ -14,7 +14,7 @@ twitter_site: @abap34
 featured: false
 ---
 
-**※ 6/18 追記 この記事は古くなっています．現在は多段階計算は廃止され，代わりに標準的でない実行モデルの採用などのより変な言語へと進化しています．興味があるかたは GitHub の README を見てください．**
+**※ 6/18 追記 この記事は古くなっています．現在は多段階計算は廃止され，代わりに標準的でない実行モデルの採用などにより変な言語へと進化しています．興味があるかたは GitHub の README を見てください．**
 **こちらもどうぞ．**
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">最近作ってるものの宣伝 <br>かなりいろいろなことをしているスライド記述言語で、WYSIWYG で編集する機能を追加してみた <br><br>かつその結果はソースコード側に反映するようになっていて、ソースコード単体でスライドは完結する (テキストでの編集とGUI での調整を相互にできる😼) <a href="https://t.co/DuKzfuT8F0">https://t.co/DuKzfuT8F0</a> <a href="https://t.co/qP6Kj3FSkN">pic.twitter.com/qP6Kj3FSkN</a></p>&mdash; abap34 (@abap34) <a href="https://x.com/abap34/status/2067182072436072831?ref_src=twsrc%5Etfw">June 17, 2026</a></blockquote> <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
