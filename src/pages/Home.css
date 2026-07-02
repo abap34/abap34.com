@@ -1,7 +1,8 @@
 .home {
   padding: 1.5rem 0 0;
-  max-width: 800px;
+  max-width: 860px;
   margin: 0 auto;
+  font-family: var(--font-mono);
 }
 
 .loading {
@@ -17,16 +18,17 @@
 
 .hero-main {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 1rem;
 }
 
 .avatar {
-  width: 72px;
-  height: 72px;
+  width: 9.5rem;
+  height: auto;
   border-radius: 0;
   object-fit: cover;
   flex-shrink: 0;
+  align-self: stretch;
 }
 
 .hero-text {
@@ -51,28 +53,29 @@
   font-weight: 600;
 }
 
-.tagline {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.55;
+.social-links {
+  display: grid;
+  gap: 0.1rem;
+  list-style: disc;
+  padding-left: 1.2rem;
 }
 
-.social-links {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.25rem;
+.social-link-item {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.social-link-name {
+  color: var(--text);
 }
 
 .social-link {
-  color: var(--text-secondary);
+  margin-left: 0.35rem;
 }
 
 .social-link:hover {
   color: var(--accent);
-}
-
-.social-link svg {
-  display: block;
 }
 
 .section {
@@ -160,13 +163,13 @@
 
 @media (max-width: 768px) {
   .hero-main {
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0.9rem;
   }
 
   .avatar {
-    width: 60px;
-    height: 60px;
+    width: 7rem;
+    height: auto;
   }
 
   .timeline-grid {

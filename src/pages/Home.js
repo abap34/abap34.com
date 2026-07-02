@@ -1,14 +1,6 @@
 import React from 'react';
 import { useYamlData, useStaticYamlData } from '../hooks/useYamlData';
-import { FaGithub, FaTwitter, FaSpeakerDeck, FaLinkedin } from 'react-icons/fa';
 import './Home.css';
-
-const iconComponents = {
-  FaGithub,
-  FaTwitter,
-  FaSpeakerDeck,
-  FaLinkedin
-};
 
 export default function Home() {
   const { data: intro, isLoading: introLoading } = useYamlData('/data/introduction.yaml');
@@ -31,27 +23,25 @@ export default function Home() {
           <img src={intro?.avatar} alt="avatar" className="avatar" />
           <div className="hero-text">
             <h1 className="name">{intro?.name}</h1>
-            <p className="tagline">
-              {intro?.mainDescription}{' '}
-              <a href="/cv/cv-casual-ja.html">Resume (ja)</a>
-            </p>
-            <div className="social-links">
+            <ul className="social-links" aria-label="social links">
               {socialData?.links?.map((link) => {
-                const Icon = iconComponents[link.icon];
+                const isExternalLink = /^https?:\/\//.test(link.url);
+
                 return (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    title={link.name}
-                  >
-                    <Icon size={16} />
-                  </a>
+                  <li key={link.name} className="social-link-item">
+                    <span className="social-link-name">{link.name}:</span>
+                    <a
+                      href={link.url}
+                      target={isExternalLink ? '_blank' : undefined}
+                      rel={isExternalLink ? 'noopener noreferrer' : undefined}
+                      className="social-link"
+                    >
+                      {link.text}
+                    </a>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           </div>
         </div>
       </section>
