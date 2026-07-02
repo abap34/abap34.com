@@ -1,13 +1,40 @@
 import React from 'react';
-import { useYamlData, useStaticYamlData } from '../hooks/useYamlData';
+import { useYamlData } from '../hooks/useYamlData';
 import './Home.css';
+
+const socialLinks = [
+  {
+    name: 'github',
+    url: 'https://github.com/abap34',
+    text: '@abap34',
+  },
+  {
+    name: 'twitter',
+    url: 'https://twitter.com/abap34',
+    text: '@abap34',
+  },
+  {
+    name: 'speakerdeck',
+    url: 'https://speakerdeck.com/abap34',
+    text: '@abap34',
+  },
+  {
+    name: 'linkedin',
+    url: 'https://www.linkedin.com/in/yuchi-yamaguchi-981a83332',
+    text: 'Yuchi Yamaguchi',
+  },
+  {
+    name: 'resume',
+    url: '/cv/cv-casual-ja.html',
+    text: 'Resume (ja)',
+  },
+];
 
 export default function Home({ abapNumber }) {
   const { data: intro, isLoading: introLoading } = useYamlData('/data/introduction.yaml');
-  const { data: socialData, isLoading: socialLoading } = useStaticYamlData('/data/social-links.yaml');
   const { data: backgroundData, isLoading: bgLoading } = useYamlData('/data/background.yaml');
 
-  if (introLoading || socialLoading || bgLoading) {
+  if (introLoading || bgLoading) {
     return <div className="loading">Loading...</div>;
   }
 
@@ -24,7 +51,7 @@ export default function Home({ abapNumber }) {
           <div className="hero-text">
             <h1 className="name">@abap{abapNumber}</h1>
             <ul className="social-links" aria-label="social links">
-              {socialData?.links?.map((link) => {
+              {socialLinks.map((link) => {
                 const isExternalLink = /^https?:\/\//.test(link.url);
 
                 return (
