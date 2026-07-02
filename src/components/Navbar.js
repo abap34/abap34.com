@@ -6,7 +6,7 @@ import { LanguageContext } from '../context/LanguageContext';
 import { ThemeContext } from '../context/ThemeContext';
 import './Navbar.css';
 
-export default function Navbar() {
+export default function Navbar({ onIncrementAbapNumber }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { language, setLanguage } = useContext(LanguageContext);
   const location = useLocation();
@@ -37,6 +37,14 @@ export default function Navbar() {
         <Link to="/" className="logo"></Link>
 
         <div className="nav-center">
+          <button
+            type="button"
+            className="nav-link nav-plus"
+            onClick={onIncrementAbapNumber}
+            aria-label="increment abap number"
+          >
+            +
+          </button>
           <Link to="/" className={isActive('/') ? 'nav-link active' : 'nav-link'}>
             home
           </Link>

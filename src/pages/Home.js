@@ -2,7 +2,7 @@ import React from 'react';
 import { useYamlData, useStaticYamlData } from '../hooks/useYamlData';
 import './Home.css';
 
-export default function Home() {
+export default function Home({ abapNumber }) {
   const { data: intro, isLoading: introLoading } = useYamlData('/data/introduction.yaml');
   const { data: socialData, isLoading: socialLoading } = useStaticYamlData('/data/social-links.yaml');
   const { data: backgroundData, isLoading: bgLoading } = useYamlData('/data/background.yaml');
@@ -22,7 +22,7 @@ export default function Home() {
         <div className="hero-main">
           <img src={intro?.avatar} alt="avatar" className="avatar" />
           <div className="hero-text">
-            <h1 className="name">{intro?.name}</h1>
+            <h1 className="name">@abap{abapNumber}</h1>
             <ul className="social-links" aria-label="social links">
               {socialData?.links?.map((link) => {
                 const isExternalLink = /^https?:\/\//.test(link.url);
