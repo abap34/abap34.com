@@ -13,8 +13,8 @@ import { visit } from 'unist-util-visit';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, '..');
-const sourcePath = resolve(root, 'public/cv/cv-casual-ja.md');
-const outputPath = resolve(root, 'public/cv/cv-casual-ja.html');
+const sourcePath = resolve(root, 'public/cv/cv-ja.md');
+const outputPath = resolve(root, 'public/cv/cv-ja.html');
 
 const markdown = readFileSync(sourcePath, 'utf8');
 const headings = [];

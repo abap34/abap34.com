@@ -5,23 +5,48 @@
 }
 
 :root {
-  --bg: #ffffff;
-  --text: #000000;
-  --text-secondary: #333333;
-  --border: #dddddd;
-  --accent: #0000ee;
-  --hover: #f5f5f5;
-  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
-  --font-mono: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  color-scheme: light;
+  --bg: #f7f3e9;
+  --panel: #f7f3e9;
+  --text: #1f2527;
+  --text-secondary: #5c6668;
+  --border: #ddd6ca;
+  --rule: #747d7f;
+  --faint: #c9c0b4;
+  --accent: #52666a;
+  --accent-warm: #1f2527;
+  --hover: #eee8dd;
+  --content-width: 88ch;
+  --font-mono: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'IBM Plex Mono', Consolas, 'Liberation Mono', Menlo, 'Hiragino Sans', 'Yu Gothic', Meiryo, monospace;
+  --font-body: var(--font-mono);
 }
 
 [data-theme="dark"] {
-  --bg: #111111;
-  --text: #f2f2f2;
-  --text-secondary: #c4c4c4;
-  --border: #2b2b2b;
-  --accent: #8ab4f8;
-  --hover: #1a1a1a;
+  color-scheme: dark;
+  --bg: #0b0d0e;
+  --panel: #0b0d0e;
+  --text: #e8e2d2;
+  --text-secondary: #b8b2a2;
+  --border: #273033;
+  --rule: #6d7779;
+  --faint: #273033;
+  --accent: #b8b2a2;
+  --accent-warm: #e8e2d2;
+  --hover: #151a1c;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f3e9;
+  --panel: #f7f3e9;
+  --text: #1f2527;
+  --text-secondary: #5c6668;
+  --border: #ddd6ca;
+  --rule: #747d7f;
+  --faint: #c9c0b4;
+  --accent: #52666a;
+  --accent-warm: #1f2527;
+  --hover: #eee8dd;
 }
 
 body {
@@ -30,9 +55,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg);
   color: var(--text);
-  line-height: 1.55;
-  font-size: 16px;
+  line-height: 24px;
+  font-size: 15px;
   letter-spacing: 0;
+  font-feature-settings: "calt" 1, "liga" 1;
+  font-variant-ligatures: common-ligatures contextual;
+  font-variant-numeric: tabular-nums slashed-zero;
+  text-rendering: optimizeLegibility;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+code,
+kbd,
+samp,
+strong {
+  font-family: inherit;
 }
 
 code {

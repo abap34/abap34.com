@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 const args = process.argv.slice(2);
 const fix = args.includes('--fix');
 const files = args.filter((arg) => arg !== '--fix');
-const targets = files.length > 0 ? files : ['public/cv/cv-casual-ja.md'];
+const targets = files.length > 0 ? files : ['public/cv/cv-ja.md'];
 
 function splitInlineCode(line) {
   return line.split(/(`[^`]*`)/g);

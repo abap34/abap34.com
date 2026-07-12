@@ -1,10 +1,10 @@
 .navbar {
   background: var(--bg);
-  padding: 1.5rem 0 0;
+  padding: 1lh 0 0;
 }
 
 .navbar-content {
-  max-width: 800px;
+  width: min(100%, calc(var(--content-width) + 4rem));
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -23,24 +23,38 @@
 
 .nav-center {
   display: flex;
-  gap: 0.75rem;
+  gap: 1ch;
   align-items: center;
+  font-family: var(--font-mono);
 }
 
 .nav-link {
-  font-size: 1rem;
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+  color: var(--text);
+  font-size: 0.95rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-link::before {
+  content: "[";
+  color: var(--text-secondary);
+}
+
+.nav-link::after {
+  content: "]";
+  color: var(--text-secondary);
 }
 
 .nav-link:hover {
   color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
 }
 
 .nav-link.active {
-  color: var(--accent);
-  font-weight: 400;
+  color: var(--text);
+  font-weight: 600;
 }
 
 .nav-plus {
@@ -50,7 +64,7 @@
 
 .nav-actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 1ch;
   align-items: center;
   flex-shrink: 0;
   margin-left: auto;
@@ -64,6 +78,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .nav-button:hover {
@@ -83,10 +99,11 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: var(--panel);
+  border: 1px solid var(--rule);
   z-index: 1000;
   min-width: 96px;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.18);
 }
 
 .lang-option {
