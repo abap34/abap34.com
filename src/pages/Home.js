@@ -164,8 +164,6 @@ export default function Home({ abapNumber }) {
           <TimelineGroup title="その他" items={others} getTitle={(other) => other.title} />
         </div>
       </Panel>
-
-      <p className="endmark" aria-label="以上">以上</p>
     </div>
   );
 }
