@@ -1,14 +1,13 @@
 ss:
   title: ss
-  img: /works/img/ss.png
+  img: /img/ss.png
   repo: abap34/ss
   short_desc: A slide description language combining powerful abstraction capabilities with ease of use
   desc: |
     ss is a slide description language and its implementation written in Zig.
-    By describing slides as highly expressive programs, it greatly reduces the burden of creating formulaic slides compared with existing slide description languages based on WYSIWYG interfaces or markup languages.
-    It also addresses weaknesses of conventional slide description languages, such as fine-grained layout adjustments and data management.
-    We made it possible for users to adjust object positions through a WYSIWYG editor while keeping the program as the Single Source of Truth (SSoT).
-    Its nonstandard execution model based on dependency analysis also makes it possible to implement features such as tables of contents and automatic theorem numbering (1) without iterative computation, (2) at the user level, and (3) declaratively.
+    By describing slides as highly expressive programs, it greatly reduces the burden of creating routine slides compared with existing WYSIWYG editors and markup-based slide description languages.
+    It also addresses shortcomings of conventional slide description languages, such as the complexity of fine-grained layout adjustments and data management. Users can adjust object positions through a WYSIWYG editor while keeping the program as the Single Source of Truth (SSoT).
+    Its nonstandard execution model based on dependency analysis also makes it possible to define features such as tables of contents and automatic theorem numbering (1) without iterative computation, (2) at the user level, and (3) declaratively.
     These are highly advanced capabilities not found in existing languages.
   lang:
     - Zig
