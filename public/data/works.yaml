@@ -1,3 +1,26 @@
+ss:
+  title: ss
+  img: /works/img/ss.png
+  repo: abap34/ss
+  short_desc: 強力な抽象化能力と使いやすさを両立したスライド記述言語
+  desc: | 
+    ss はスライド記述言語とその Zig 製の処理系です．
+    スライドを表現力の高いプログラムとして記述することで，既存の WYSIWYG エディタやマークアップ言語を用いたスライド記述と比較して定型的なスライド作成の負担を大幅に軽減することができます．
+    微妙なレイアウトの調整やデータのマネジメントなどの従来のスライド記述言語の弱点にもアプローチしており，
+    プログラムを Single Source of Truth (SSoT) としたままオブジェクトの位置を WYSIWYG エディタとして調整したり，
+    依存解析に基づく非標準的な実行モデルにより Table of Contents や定理の自動番号付などを (1) 反復計算なしに (2) ユーザレベルで (3) 宣言的に記述する ことを実現しています．
+    これは既存言語にはない非常に先進的なものです．
+  lang:
+    - Zig
+  tags:
+    - スライド記述言語
+    - 言語処理系
+    - Zig
+    - プログラミング言語
+  period: 2026
+  relatedlinks:
+    - https://www.abap34.com/posts/ss_lang.html
+
 lapisla:
   title: lapisla
   img: /works/img/lapisla.png
@@ -29,6 +52,8 @@ JETLS:
     JETLS.jl は Julia の次世代 Language Server です。
     最新の Julia コンパイラツールチェインを利用して、高度な解析結果を提供します。
     チームメンバの一人として，さまざまな機能の設計・実装を担当しています。
+    Google of Summer of Code 2025 の Student Contributor として参加もしていました．
+    また，内容について PPL 2025 でポスター発表を行いました．
   lang:
     - Julia
   tags:
