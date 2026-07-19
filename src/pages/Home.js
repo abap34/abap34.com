@@ -105,7 +105,6 @@ export default function Home({ abapNumber }) {
           <img src={intro?.avatar} alt="avatar" className="avatar" />
           <div className="hero-copy">
             <h1 className="wordmark">@abap{abapNumber}</h1>
-            <p className="hero-description">{intro?.mainDescription}</p>
             <ul className="identity-list" aria-label="基本情報">
               <li>
                 <MapPin size={14} aria-hidden="true" />
