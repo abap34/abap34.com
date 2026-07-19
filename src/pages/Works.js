@@ -221,6 +221,10 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
             >
               ×
             </button>
+            <h2 id="work-detail-title">
+              {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
+            </h2>
+            {selectedWork.period && <p className="modal-period">{selectedWork.period}</p>}
             {selectedWork.img && (
               <div className="modal-image-frame">
                 <img
@@ -230,10 +234,6 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
                 />
               </div>
             )}
-            <h2 id="work-detail-title">
-              {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
-            </h2>
-            {selectedWork.period && <p className="modal-period">{selectedWork.period}</p>}
             {selectedWork.repo && (
               <a
                 href={`https://github.com/${selectedWork.repo}`}
