@@ -3,6 +3,7 @@ import { ExternalLink, FileText, Mail, MapPin } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { SiSpeakerdeck } from 'react-icons/si';
+import { InkLeader, InkRule, InkUnderline } from '../components/InkMarks';
 import { useYamlData } from '../hooks/useYamlData';
 import './Home.css';
 
@@ -37,7 +38,8 @@ function Panel({ id, title, children }) {
   return (
     <section className="ledger-panel ledger-section" id={id} aria-labelledby={`${id}-title`}>
       <h2 className="ledger-title" id={`${id}-title`}>
-        <span>{title}</span>
+        <InkUnderline variant={id === 'contact' ? 'rise' : 'settle'}>{title}</InkUnderline>
+        <InkRule variant={id === 'contact' ? 'settle' : 'rise'} />
       </h2>
       {children}
     </section>
@@ -59,6 +61,7 @@ function TimelineGroup({ title, items, getTitle, getMeta }) {
             className="ledger-record ledger-record-link"
           >
             <span className="ledger-record-period">{item.period}</span>
+            <InkLeader variant={i % 3} />
             <span className="ledger-record-main">
               <span className="ledger-record-title">{getTitle(item)}</span>
               {getMeta?.(item) && <span className="ledger-record-meta">{getMeta(item)}</span>}
@@ -109,16 +112,20 @@ export default function Home({ abapNumber }) {
               <li>
                 <MapPin size={14} aria-hidden="true" />
                 <a href="https://maps.app.goo.gl/C4J51xh2Pt4yXpM27" target="_blank" rel="noopener noreferrer">
-                  Ookayama
+                  <InkUnderline variant="rise">Ookayama</InkUnderline>
                 </a>
               </li>
               <li>
                 <Mail size={14} aria-hidden="true" />
-                <a href="mailto:yuchi@abap34.com">yuchi@abap34.com</a>
+                <a href="mailto:yuchi@abap34.com">
+                  <InkUnderline variant="quiet">yuchi@abap34.com</InkUnderline>
+                </a>
               </li>
               <li>
                 <FileText size={14} aria-hidden="true" />
-                <a href="/cv/cv-ja.html">cv-ja.html</a>
+                <a href="/cv/resume-ja.html">
+                  <InkUnderline variant="settle">resume-ja.html</InkUnderline>
+                </a>
               </li>
             </ul>
           </div>
@@ -127,7 +134,7 @@ export default function Home({ abapNumber }) {
 
       <Panel id="contact" title="Contact">
         <ul className="dispatch-list">
-          {socialLinks.map((link) => {
+          {socialLinks.map((link, index) => {
             const Icon = link.icon;
             const isExternalLink = /^https?:\/\//.test(link.url);
 
@@ -137,6 +144,7 @@ export default function Home({ abapNumber }) {
                   <Icon aria-hidden="true" />
                   {link.name}
                 </span>
+                <InkLeader variant={index % 3} />
                 <a
                   href={link.url}
                   target={isExternalLink ? '_blank' : undefined}

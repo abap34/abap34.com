@@ -139,6 +139,7 @@
   background: none;
   color: var(--accent);
   text-decoration: underline;
+  text-decoration-style: wavy;
   text-underline-offset: 0.18em;
 }
 

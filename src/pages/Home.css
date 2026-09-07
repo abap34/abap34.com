@@ -1,13 +1,11 @@
 .home {
   --home-panel-pad-x: clamp(1rem, 3vw, 2ch);
-  --home-rule-glyphs: "────────────────────────────────────────────────────────────────────────────────────────────────";
-  --home-leader-dots: "................";
   display: grid;
   gap: 1.5lh;
   width: min(100%, var(--content-width));
   margin: 0 auto;
   padding: 1lh 0 3lh;
-  font-family: var(--font-mono);
+  font-family: var(--font-hand);
   font-variant-numeric: tabular-nums slashed-zero;
 }
 
@@ -19,7 +17,7 @@
   text-align: center;
   padding: 6rem 0;
   color: var(--text-secondary);
-  font-family: var(--font-mono);
+  font-family: var(--font-hand);
   font-size: 0.95rem;
 }
 
@@ -55,16 +53,16 @@
   line-height: inherit;
 }
 
-.ledger-title::after {
-  content: var(--home-rule-glyphs) / "";
+.ledger-title .ink-rule {
   grid-column: 2;
+  align-self: center;
+  width: 100%;
+  height: 0.55em;
   min-width: 0;
-  overflow: hidden;
   color: var(--rule);
-  white-space: nowrap;
 }
 
-.ledger-title span:last-child {
+.ledger-title > .ink-underline {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -92,7 +90,7 @@
   margin: 0;
   color: var(--text);
   font-weight: 600;
-  font-size: 1.28rem;
+  font-size: clamp(1.42rem, 1.3rem + 0.35vw, 1.58rem);
   line-height: inherit;
 }
 
@@ -116,6 +114,14 @@
   gap: 0.7ch;
   align-items: baseline;
   min-width: 0;
+}
+
+.identity-list a {
+  text-decoration: none;
+}
+
+.identity-list a:hover {
+  text-decoration: none;
 }
 
 .identity-list svg {
@@ -179,19 +185,15 @@
   text-decoration: none;
 }
 
-.ledger-record::before {
-  content: var(--home-leader-dots) / "";
+.ledger-record > .ink-leader {
   grid-column: 2;
   grid-row: 1;
-  min-width: 0;
-  overflow: hidden;
-  color: var(--faint);
-  white-space: nowrap;
 }
 
 .ledger-record-link:hover .ledger-record-title {
   color: var(--accent);
   text-decoration: underline;
+  text-decoration-style: wavy;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }
@@ -243,14 +245,28 @@
   min-width: 0;
 }
 
-.dispatch-list li::before {
-  content: var(--home-leader-dots) / "";
+.dispatch-list li > .ink-leader {
   grid-column: 2;
   grid-row: 1;
+}
+
+.ink-leader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   min-width: 0;
   overflow: hidden;
-  color: var(--faint);
-  white-space: nowrap;
+  color: var(--rule);
+  opacity: 0.78;
+}
+
+.ink-leader i {
+  display: block;
+  width: 3px;
+  height: 3px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .dispatch-label {
@@ -289,6 +305,7 @@
 .dispatch-list a:hover {
   color: var(--accent);
   text-decoration: underline;
+  text-decoration-style: wavy;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
 }

@@ -6,6 +6,7 @@
     "node": ">=22.0.0"
   },
   "dependencies": {
+    "@fontsource/klee-one": "^5.3.0",
     "@headlessui/react": "^2.1.5",
     "@heroicons/react": "^2.1.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -36,6 +37,7 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
+    "rough-notation": "^0.5.1",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "web-vitals": "^2.1.4",

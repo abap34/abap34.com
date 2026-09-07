@@ -4,6 +4,7 @@ import { MdLanguage } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 import { LanguageContext } from '../context/LanguageContext';
 import { ThemeContext } from '../context/ThemeContext';
+import InkAnnotation from './InkAnnotation';
 import './Navbar.css';
 
 export default function Navbar({ onIncrementAbapNumber }) {
@@ -46,13 +47,13 @@ export default function Navbar({ onIncrementAbapNumber }) {
             +
           </button>
           <Link to="/" className={isActive('/') ? 'nav-link active' : 'nav-link'}>
-            home
+            <InkAnnotation type="circle" show={isActive('/')} padding={3}>home</InkAnnotation>
           </Link>
           <Link to="/works" className={isActive('/works') ? 'nav-link active' : 'nav-link'}>
-            works
+            <InkAnnotation type="circle" show={isActive('/works')} padding={3}>works</InkAnnotation>
           </Link>
           <Link to="/blog" className={isActive('/blog') ? 'nav-link active' : 'nav-link'}>
-            blog
+            <InkAnnotation type="circle" show={isActive('/blog')} padding={3}>blog</InkAnnotation>
           </Link>
         </div>
 
@@ -74,13 +75,13 @@ export default function Navbar({ onIncrementAbapNumber }) {
                   onClick={() => handleLanguageChange('ja')}
                   className={`lang-option ${language === 'ja' ? 'active' : ''}`}
                 >
-                  日本語
+                  <InkAnnotation type="circle" show={language === 'ja'} padding={3}>日本語</InkAnnotation>
                 </button>
                 <button
                   onClick={() => handleLanguageChange('en')}
                   className={`lang-option ${language === 'en' ? 'active' : ''}`}
                 >
-                  English
+                  <InkAnnotation type="circle" show={language === 'en'} padding={3}>English</InkAnnotation>
                 </button>
               </div>
             )}

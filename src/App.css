@@ -8,30 +8,31 @@
   color-scheme: light;
   --bg: #f7f3e9;
   --panel: #f7f3e9;
-  --text: #1f2527;
-  --text-secondary: #5c6668;
+  --text: #24313a;
+  --text-secondary: #586875;
   --border: #ddd6ca;
-  --rule: #747d7f;
+  --rule: #71808b;
   --faint: #c9c0b4;
-  --accent: #52666a;
-  --accent-warm: #1f2527;
+  --accent: #3f6380;
+  --accent-warm: #263b4b;
   --hover: #eee8dd;
   --content-width: 88ch;
   --font-mono: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'IBM Plex Mono', Consolas, 'Liberation Mono', Menlo, 'Hiragino Sans', 'Yu Gothic', Meiryo, monospace;
-  --font-body: var(--font-mono);
+  --font-hand: 'Klee One', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  --font-body: var(--font-hand);
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
   --bg: #0b0d0e;
   --panel: #0b0d0e;
-  --text: #e8e2d2;
-  --text-secondary: #b8b2a2;
+  --text: #dce7ef;
+  --text-secondary: #a9bac7;
   --border: #273033;
-  --rule: #6d7779;
+  --rule: #748896;
   --faint: #273033;
-  --accent: #b8b2a2;
-  --accent-warm: #e8e2d2;
+  --accent: #a9c5db;
+  --accent-warm: #dce7ef;
   --hover: #151a1c;
 }
 
@@ -39,18 +40,19 @@
   color-scheme: light;
   --bg: #f7f3e9;
   --panel: #f7f3e9;
-  --text: #1f2527;
-  --text-secondary: #5c6668;
+  --text: #24313a;
+  --text-secondary: #586875;
   --border: #ddd6ca;
-  --rule: #747d7f;
+  --rule: #71808b;
   --faint: #c9c0b4;
-  --accent: #52666a;
-  --accent-warm: #1f2527;
+  --accent: #3f6380;
+  --accent-warm: #263b4b;
   --hover: #eee8dd;
 }
 
 body {
   font-family: var(--font-body);
+  -webkit-text-stroke-width: 0.3px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg);
@@ -106,6 +108,38 @@ a {
 
 a:hover {
   color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+}
+
+.ink-annotation {
+  position: relative;
+  display: inline-block;
+}
+
+.ink-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.ink-underline-line {
+  position: absolute;
+  right: -0.06em;
+  bottom: -0.16em;
+  left: -0.06em;
+  width: calc(100% + 0.12em);
+  height: 0.38em;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.ink-underline-line path,
+.ink-rule path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.05;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 
 button {

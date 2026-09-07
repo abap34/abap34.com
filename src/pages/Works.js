@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useYamlData } from '../hooks/useYamlData';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import InkAnnotation from '../components/InkAnnotation';
+import { InkUnderline } from '../components/InkMarks';
 import { useSearchFilters } from '../hooks/useSearchFilters';
 import { highlightText } from '../utils/highlight';
 import '../styles/search.css';
@@ -120,7 +122,7 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
                         className="filter-chip"
                         onClick={() => removeTag(tag)}
                       >
-                        {tag}
+                        <InkAnnotation type="circle" padding={3}>{tag}</InkAnnotation>
                       </button>
                     ))}
                     <button type="button" className="filter-clear" onClick={clearTags}>
@@ -222,7 +224,9 @@ export default function Works({ limit = null, showSearch = true, showTitle = tru
               ×
             </button>
             <h2 id="work-detail-title">
-              {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
+              <InkUnderline variant="rise">
+                {highlightText(selectedWork.title, keywordTokens, 'modal-title')}
+              </InkUnderline>
             </h2>
             {selectedWork.period && <p className="modal-period">{selectedWork.period}</p>}
             {selectedWork.img && (

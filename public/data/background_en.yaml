@@ -1,13 +1,16 @@
 education:
   - school: "School of Computing, Tokyo Institute of Technology"
-    period: "2022/04 ~"
+    period: "2022/04 ~ 2026/09"
     url: https://www.isct.ac.jp/ja/001/about/organizations/school-of-computing
   - school: "Department of Computer Science, School of Computing, Tokyo Institute of Technology"
-    period: "2023/04 ~"
+    period: "2023/04 ~ 2026/09"
     url: https://educ.titech.ac.jp/cs/
-  - school: "Programming Systems Group, Department of Computer Science, School of Computing, Tokyo Institute of Technology"
+  - school: "Programming Systems Group, Department of Computer Science, School of Computing, Institute of Science Tokyo"
     period: "2025/04 ~"
     url: https://www.psg.c.titech.ac.jp/
+  - school: "Master's Program, Computer Science Graduate Major, Department of Computer Science, School of Computing, Institute of Science Tokyo"
+    period: "2026/09 ~"
+    url: https://educ.titech.ac.jp/cs/eng/education/cs_graduate/
 
 careers:
   - company: "DENSO IT Laboratory"

@@ -1,13 +1,16 @@
 education:
   - school: "東京工業大学 情報理工学院"
-    period: "2022/04 ~"
+    period: "2022/04 ~ 2026/09"
     url: https://www.isct.ac.jp/ja/001/about/organizations/school-of-computing
   - school: "東京工業大学 情報理工学院 情報工学系"
-    period: "2023/04 ~"
+    period: "2023/04 ~ 2026/09"
     url: https://educ.titech.ac.jp/cs/
-  - school: "東京工業大学 情報理工学院 情報工学系 Programming Systems Group (渡部研究室)"
+  - school: "東京科学大学 情報理工学院 情報工学系 Programming Systems Group (渡部研究室)"
     period: "2025/04 ~"
     url: https://www.psg.c.titech.ac.jp/
+  - school: "東京科学大学 大学院 情報理工学院情報工学系 修士課程 (情報工学コース)"
+    period: "2026/09 ~"
+    url: https://educ.titech.ac.jp/cs/education/cs_graduate/
 
 careers:
   - company: "DENSO IT Laboratory"

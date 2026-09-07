@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('@fontsource/klee-one/files/klee-one-japanese-400-normal.woff2') format('woff2');
+  unicode-range: U+3000-30ff, U+31f0-31ff, U+3400-4dbf, U+4e00-9fff, U+f900-faff, U+ff00-ffef;
+}
+
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('@fontsource/klee-one/files/klee-one-japanese-600-normal.woff2') format('woff2');
+  unicode-range: U+3000-30ff, U+31f0-31ff, U+3400-4dbf, U+4e00-9fff, U+f900-faff, U+ff00-ffef;
+}
+
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('@fontsource/klee-one/files/klee-one-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-024f, U+1e00-1eff, U+2000-206f, U+20a0-20cf, U+2100-214f, U+2190-21ff, U+2212, U+feff, U+fffd;
+}
+
+@font-face {
+  font-family: 'Klee One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url('@fontsource/klee-one/files/klee-one-latin-600-normal.woff2') format('woff2');
+  unicode-range: U+0000-024f, U+1e00-1eff, U+2000-206f, U+20a0-20cf, U+2100-214f, U+2190-21ff, U+2212, U+feff, U+fffd;
+}

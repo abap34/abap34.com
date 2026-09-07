@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
+import InkAnnotation from '../components/InkAnnotation';
 import { useSearchFilters } from '../hooks/useSearchFilters';
 import { highlightText } from '../utils/highlight';
 import '../styles/search.css';
@@ -158,7 +159,7 @@ export default function Blog() {
                   className="filter-chip"
                   onClick={() => removeTag(tag)}
                 >
-                  {tag}
+                  <InkAnnotation type="circle" padding={3}>{tag}</InkAnnotation>
                 </button>
               ))}
               <button type="button" className="filter-clear" onClick={clearTags}>
