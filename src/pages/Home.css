@@ -177,17 +177,12 @@
 
 .ledger-record {
   display: grid;
-  grid-template-columns: 12ch 16ch minmax(0, 1fr);
+  grid-template-columns: 12ch minmax(0, 1fr);
   column-gap: 1ch;
   align-items: baseline;
   padding-block: 0.08lh;
   color: inherit;
   text-decoration: none;
-}
-
-.ledger-record > .ink-leader {
-  grid-column: 2;
-  grid-row: 1;
 }
 
 .ledger-record-link:hover .ledger-record-title {
@@ -207,7 +202,7 @@
 }
 
 .ledger-record-main {
-  grid-column: 3;
+  grid-column: 2;
   grid-row: 1;
   display: flex;
   min-width: 0;
@@ -340,8 +335,19 @@
   }
 
   .ledger-record {
-    grid-template-columns: 9ch 8ch minmax(0, 1fr);
-    column-gap: 1ch;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.04lh;
+    padding-block: 0.18lh;
+  }
+
+  .ledger-record-period {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .ledger-record-main {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .dispatch-list li {

@@ -52,7 +52,7 @@ export function InkRule({ className = '', variant = 'quiet' }) {
 export function InkLeader({ className = '', variant = 0 }) {
   return (
     <span className={`ink-leader ${className}`.trim()} aria-hidden="true">
-      {Array.from({ length: 14 }, (_, index) => {
+      {Array.from({ length: 8 }, (_, index) => {
         const patternIndex = (index + variant * 3) % dotOffsets.length;
         return (
           <i
