@@ -61,6 +61,7 @@ function TimelineGroup({ title, items, getTitle, getMeta }) {
             className="ledger-record ledger-record-link"
           >
             <span className="ledger-record-period">{item.period}</span>
+            <InkLeader variant={i % 3} />
             <span className="ledger-record-main">
               <span className="ledger-record-title">{getTitle(item)}</span>
               {getMeta?.(item) && <span className="ledger-record-meta">{getMeta(item)}</span>}
