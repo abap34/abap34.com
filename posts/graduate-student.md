@@ -6,8 +6,8 @@ tag: [日記, 大学, 院試]
 twitter_id: abap34
 github_id: abap34
 mail: abap0002@gmail.com
-ogp_url: 
-description: 
+ogp_url:
+description:
 url: https://abap34.com/posts/graduate-student.html
 site_name: abap34's blog
 twitter_site: @abap34
@@ -38,7 +38,7 @@ GSoC に参加していたため 4 年生を 1 年 + 半年 やり　([https://w
 - 過去問は配布されているものもありますが，ここに 20 年分くらいあります: [https://github.com/diohabara/open_inshi](https://github.com/diohabara/open_inshi)
 
 
-勉強時間が十分にある場合，大問 2, 3 は高い確率で素早く高い点数が取れると思うので，そちらで確実に点を取りつつ，大問 1  を時間かけて解いて大事故を起こさず得点するのが再現性が合格点の取り方な気はします．(**アテにはしないでください**)
+勉強時間が十分にある場合，大問 2, 3 は高い確率で素早く高い点数が取れると思うので，そちらで確実に点を取りつつ，大問 1  を時間かけて解いて大事故を起こさず得点するのが再現性のある合格点の取り方な気はします．(**アテにはしないでください**)
 
 
 口頭試問は，私は大したことを聞かれませんでしたが，長い人は長かったのでなんかあるのかもしれません (謎)
@@ -49,12 +49,3 @@ GSoC に参加していたため 4 年生を 1 年 + 半年 やり　([https://w
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/J09d83b56FU?si=Ch2nyi824YjX_j07" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
-
-
-
-
-
-
-
