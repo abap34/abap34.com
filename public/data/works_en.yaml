@@ -143,7 +143,7 @@ blog:
   repo: abap34/my-site
   short_desc: "The blog of this website"
   desc: |
-    Many technical articles are posted on [this website's blog](https://www.abap34.com/blog).
+    Many technical articles are posted on this website's blog.
   tags:
     - Compiler
     - Mathematics
