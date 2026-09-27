@@ -94,6 +94,83 @@
         margin: 0.2rem 0;
       }
 
+      .cv-history-entry {
+        display: grid;
+        grid-template-columns: 18ch minmax(0, 1fr);
+        column-gap: 0.75rem;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cv-period {
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+        color: var(--muted);
+      }
+
+      @media (max-width: 520px) {
+        .cv-history-entry {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .cv-details > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      .cv-details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .cv-details > summary::after {
+        content: '';
+        flex: 0 0 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.15rem;
+        border-right: 1.5px solid var(--muted);
+        border-bottom: 1.5px solid var(--muted);
+        transform: rotate(-45deg);
+      }
+
+      .cv-details[open] > summary::after {
+        transform: rotate(45deg);
+      }
+
+      .cv-details > summary:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--muted);
+        text-underline-offset: 0.2em;
+      }
+
+      .cv-details > summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .cv-details > ul,
+      .cv-details > ol {
+        margin: 0.2rem 0 0.4rem 1.35rem;
+      }
+
+      .cv-details > ul {
+        list-style-type: circle;
+      }
+
+      .cv-details > ul > li,
+      .cv-details > ol > li {
+        margin-left: 0;
+      }
+
+      .cv-details > ul > li > p,
+      .cv-details > ol > li > p {
+        margin: 0.2rem 0;
+      }
+
       a {
         color: var(--accent);
         text-underline-offset: 0.15em;
@@ -150,12 +227,12 @@
       <li><a href="#連絡先各種アカウント">連絡先・各種アカウント</a></li>
       <li><a href="#経歴">経歴</a></li>
       <li class="toc-child"><a href="#学歴">学歴</a></li>
-      <li class="toc-child"><a href="#職歴">職歴</a></li>
-      <li class="toc-child"><a href="#その他">その他</a></li>
+      <li class="toc-child"><a href="#インターンシップ参加プログラムなど">インターンシップ・参加プログラムなど</a></li>
+      <li class="toc-child"><a href="#その他の活動--表彰など">その他の活動 / 表彰など</a></li>
       <li><a href="#興味の方向性">興味の方向性</a></li>
       <li class="toc-child"><a href="#具体的な興味">具体的な興味</a></li>
       <li><a href="#スキル">スキル</a></li>
-      <li class="toc-child"><a href="#専門分野に関連するもの">専門分野に関連するもの</a></li>
+      <li class="toc-child"><a href="#プログラミング言語に関連するもの">プログラミング言語に関連するもの</a></li>
       <li class="toc-child"><a href="#データサイエンス機械学習数理最適化に関連するもの">データサイエンス・機械学習・数理最適化に関連するもの</a></li>
       <li class="toc-child"><a href="#細かいスキル">細かいスキル</a></li>
       <li class="toc-child"><a href="#言語コミュニケーション">言語・コミュニケーション</a></li>
@@ -176,40 +253,55 @@
       <h2 id="経歴">経歴</h2>
       <h3 id="学歴">学歴</h3>
       <ul>
-      <li>-2022 年3月 東海高等学校</li>
-      <li>2022 年4月- 東京工業大学情報理工学院</li>
-      <li>2023 年4月- 東京工業大学情報理工学院情報工学系</li>
-      <li>2025 年4月- 東京工業大学情報理工学院 情報工学系 Programming Systems Group (渡部研究室)</li>
+      <li><span class="cv-history-entry"><span class="cv-period"><time datetime="2019-04">2019/04</time> – <time datetime="2022-03">2022/03</time></span><span>東海高等学校</span></span></li>
+      <li><span class="cv-history-entry"><span class="cv-period"><time datetime="2022-04">2022/04</time> – <time datetime="2026-09">2026/09</time></span><span>東京工業大学情報理工学院</span></span></li>
+      <li><span class="cv-history-entry"><span class="cv-period"><time datetime="2022-04">2022/04</time> – <time datetime="2026-09">2026/09</time></span><span>同情報工学系</span></span></li>
+      <li><span class="cv-history-entry"><span class="cv-period"><time datetime="2025-04">2025/04</time> – <time datetime="2026-09">2026/09</time></span><span>同 Programming System Group (渡部研究室)</span></span></li>
+      <li><span class="cv-history-entry"><span class="cv-period"><time datetime="2026-09">2026/09</time> – </span><span>東京科学大学 (旧: 東京工業大学) 情報理工学院情報工学系修士課程 (情報工学コース)</span></span></li>
       </ul>
-      <h3 id="職歴">職歴</h3>
+      <h3 id="インターンシップ参加プログラムなど">インターンシップ・参加プログラムなど</h3>
       <ul>
-      <li>2022 年 7月 - 2022年 9月 DENSO IT Laboratory
-      <ul>
+      <li><details class="cv-details"><summary><span class="cv-history-entry"><span class="cv-period"><time datetime="2022-07">2022/07</time> – <time datetime="2022-09">2022/09</time></span><span>DENSO IT Laboratory
+      </span></span></summary><ul>
       <li>DNN を用いた超高解像度画像に対する異常検知の研究開発</li>
       </ul>
-      </li>
-      <li>2023 年 3月 - 2023年 4月 株式会社サイカ
-      <ul>
+      </details></li>
+      <li><details class="cv-details"><summary><span class="cv-history-entry"><span class="cv-period"><time datetime="2023-03">2023/03</time> – <time datetime="2023-04">2023/04</time></span><span>株式会社サイカ
+      </span></span></summary><ul>
       <li>Julia 言語を用いたハイパフォーマンスな数理最適化ライブラリの開発</li>
       </ul>
-      </li>
-      <li>2024 年 11月 - 2025年 5月 日本経済新聞社
-      <ul>
+      </details></li>
+      <li><details class="cv-details"><summary><span class="cv-history-entry"><span class="cv-period"><time datetime="2024-11">2024/11</time> – <time datetime="2025-05">2025/05</time></span><span>日本経済新聞社
+      </span></span></summary><ul>
       <li>LLM を用いたサービスのバックエンド開発，データ分析コンペの作問・運営</li>
       </ul>
+      </details></li>
+      <li><details class="cv-details"><summary><span class="cv-history-entry"><span class="cv-period"><time datetime="2025">2025</time></span><span>Google Summer of Code 2025 ─ Development of a New Language Server for Julia (Org: Julia Language)
+      </span></span></summary><ul>
+      <li>
+      <p><a href="https://www.abap34.com/posts/gsoc2025_final_report.html">[Final Report]</a></p>
       </li>
       </ul>
-      <h3 id="その他">その他</h3>
-      <ul>
-      <li>2025年 Google Summer of Code 2025 ─ Development of a New Language Server for Julia (Org: Julia Language)
-      <ul>
-      <li><a href="https://www.abap34.com/posts/gsoc2025_final_report.html">[Final Report]</a></li>
+      </details></li>
       </ul>
-      </li>
-      <li>2025年 Teaching Assistant: 関数型プログラミング基礎</li>
+      <h3 id="その他の活動--表彰など">その他の活動 / 表彰など</h3>
+      <ul>
+      <li><details class="cv-details"><summary>Teaching Assistant
+      </summary><ul>
+      <li>関数型プログラミング基礎 (2025年)</li>
+      </ul>
+      </details></li>
+      <li><details class="cv-details"><summary>受賞歴 / コンテスト
+      </summary><ul>
+      <li>東京科学大学リーダーシップ賞</li>
+      <li>第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 1位 (¥50,000)　<a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">[solution]</a></li>
+      <li>atmaCup #16 学生 14位 (¥10,000)</li>
+      <li>atmaCup #21 学生 5位 (¥20,000)</li>
+      </ul>
+      </details></li>
       </ul>
       <h2 id="興味の方向性">興味の方向性</h2>
-      <p>とくに大目標を定めない (より過激には，定めるべきではないと思っている) タイプで，細かい取り組んでいるトピックはかなり流動的です．</p>
+      <p>とくに目標を定めないタイプで，細かい取り組んでいるトピックはかなり流動的です．</p>
       <p>ただ，大雑把には広い範囲の問題に役立つ一般的な解決策を見出すことに楽しさを感じることが多く，基盤となるソフトウェアや理論に興味が向いていることが多いです．</p>
       <p>ただし，個別の問題に向き合うことをやめるわけではなく，</p>
       <ul>
@@ -223,75 +315,69 @@
       <p>大学入学以降はコンパイラやプログラミング言語そのものに対する興味が増し，関連する分野の研究と開発を行っています．</p>
       <p>現在主に興味があるトピックは以下の通りです．</p>
       <ul>
-      <li>プログラム解析関連
-      <ul>
-      <li>とくに抽象解釈などによる静的解析の理論</li>
-      <li>開発支援ソフトウェアの実装</li>
-      </ul>
-      </li>
+      <li>プログラム解析関連，とくに抽象解釈などによる静的解析の理論</li>
       <li>最適化コンパイラ</li>
-      <li>形式検証</li>
       <li>コンパイラインフラ (LLVM, MLIR など)</li>
       <li>ML System</li>
       </ul>
       <h2 id="スキル">スキル</h2>
-      <p>コンピュータサイエンス (とくにプログラミング言語処理系，静的プログラム解析，機械学習) に関する基本的な知識と 10 年以上のプログラミング経験があります．</p>
-      <p>よく使うプログラミング言語は Julia, Python, C++, JavaScript, Scheme などですが，基本的に特定の言語に対する苦手意識などはあまりなく，必要に応じて新しい言語を学びながらプロジェクトを進めたいタイプです．</p>
-      <p>Git/GitHub や CI/CD，Docker などの基本的な開発ツールやコーディングエージェントも日常的に使用しています．</p>
-      <p>プロジェクトの一覧などは <a href="https://abap34.com/works">[abap34.com/works]</a> あるいは GitHub を確認してください．</p>
-      <h3 id="専門分野に関連するもの">専門分野に関連するもの</h3>
-      <p>プログラミング言語処理系に対する知識と開発経験があります．例えば</p>
+      <h3 id="プログラミング言語に関連するもの">プログラミング言語に関連するもの</h3>
       <ul>
-      <li>依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 <a href="https://github.com/abap34/ss">[abap34/ss]</a></li>
+      <li><details class="cv-details"><summary>プログラミング言語処理系に対する知識と開発
+      </summary><ul>
+      <li>依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 <a href="https://github.com/abap34/ss">[abap34/ss]</a>  (<a href="https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution">[SPLASH/ISSTA 2026 SRC で発表]</a>)</li>
       <li>抽象解釈による型解析を備えたインタプリタ: <a href="https://github.com/abap34/mu">[abap34/mu]</a></li>
       <li>call/cc, TCO などが実装された Scheme インタプリタ: <a href="https://github.com/abap34/eta">[abap34/eta]</a></li>
       <li>拡張 Markdown パーサ <a href="https://github.com/abap34/almo">[abap34/almo]</a></li>
       </ul>
-      <p>などを開発しています．</p>
-      <p>OS などのシステムソフトウェアの知識が必要な開発の経験があります．例えば</p>
-      <ul>
+      </details></li>
+      <li><details class="cv-details"><summary>OS などのシステムソフトウェアの知識と開発
+      </summary><ul>
       <li>libuv などを使わない自作 JS Runtime <a href="https://github.com/abap34/KoBun">[abap34/KoBun]</a></li>
       </ul>
-      <p>などを開発しています．</p>
-      <p>これらを横断する例として</p>
-      <ul>
-      <li>Julia の次世代 Language Server <a href="https://github.com/aviatesk/JETLS.jl">[aviatesk/JETLS.jl]</a></li>
+      </details></li>
+      <li><details class="cv-details"><summary>これらを横断する例
+      </summary><ul>
+      <li>Julia の次世代 Language Server <a href="https://github.com/aviatesk/JETLS.jl">[aviatesk/JETLS.jl]</a> (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025 でポスター発表)</li>
       </ul>
-      <p>の Core Contributor をしていました．</p>
-      <p>抽象解釈などによるプログラム解析の理論や，モデル検査，定理証明支援系など形式検証についての基本的な知識があります．
-      例えば</p>
-      <ul>
-      <li>LK にもとづく定理証明支援系 <a href="https://github.com/lapisla-prover/lapisla-prover">[lapisla-prover/lapisla-prover]</a></li>
+      </details></li>
+      <li><details class="cv-details"><summary>抽象解釈などによるプログラム解析の理論や，モデル検査，定理証明支援系など形式検証についての基本的な知識と開発
+      </summary><ul>
+      <li>LK にもとづく定理証明支援系 <a href="https://github.com/lapisla-prover/lapisla-prover">[lapisla-prover/lapisla-prover]</a> (traP 冬ハッカソン 2024 技術賞)</li>
       </ul>
-      <p>をチームで開発したことがあります．</p>
+      </details></li>
+      </ul>
       <h3 id="データサイエンス機械学習数理最適化に関連するもの">データサイエンス・機械学習・数理最適化に関連するもの</h3>
-      <p>機械学習に対しても長く興味を持っています．</p>
-      <p>例えば，高校生のときにはデータ分析コンペティションにいくらか参加しており，</p>
       <ul>
-      <li>第 85 回日本循環器学会学術集会 における心筋梗塞の検出予測コンペでの優勝経験 <a href="https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution">[solution]</a></li>
+      <li><details class="cv-details"><summary>データ分析コンペティションへの参加
+      </summary><ul>
+      <li>atmaCup などの短期コンにたまに参加しています．</li>
+      <li>大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催しました．どのコンペティションも大きな問題なく終了することができ，その準備のために BigQuery などを用いた大規模データの収集や処理の経験があります．</li>
       </ul>
-      <p>などがあります．</p>
-      <p>また，データ分析コンペの運営経験もあり，大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催しました．</p>
-      <p>どのコンペティションも大きな問題なく終了することができ，その準備のために BigQuery などを用いた大規模データの収集や処理の経験もあります．</p>
-      <p>機械学習のソフトウェア的な基盤に対する興味を持っており，例えば</p>
-      <ul>
+      </details></li>
+      <li><details class="cv-details"><summary>機械学習のソフトウェア的な基盤
+      </summary><ul>
+      <li>自作の深層学習フレームワークの開発 <a href="https://github.com/abap34/JITrench.jl">[abap34/JITrench.jl]</a></li>
       <li>自動微分の理論と実装に関する発表 <a href="https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen">[slide]</a></li>
       <li>並列計算における乱数生成に関する発表 <a href="https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng">[slide]</a></li>
-      <li>自作の深層学習フレームワークの開発 <a href="https://github.com/abap34/JITrench.jl">[abap34/JITrench.jl]</a></li>
       </ul>
-      <p>などの経験があります．</p>
+      </details></li>
+      </ul>
       <h3 id="細かいスキル">細かいスキル</h3>
-      <p>初歩的な Web 開発の経験があります．</p>
-      <p>React / Next.js を使ったフロントエンド開発，FastAPI などを使ったバックエンド開発の経験，streamlit などを使ったサービスの開発経験などがあります．</p>
-      <p>例えば</p>
       <ul>
+      <li><details class="cv-details"><summary>Web フロントエンド・バックエンド開発の経験
+      </summary><ul>
       <li>オンラインジャッジシステム (React, FastAPI) <a href="https://www.abap34.com/posts/oj_abap34.html">[post]</a></li>
       <li>コンペプラットフォーム (streamlit) <a href="https://www.abap34.com/posts/dacq.html">[post]</a></li>
       <li>個人サイト (React) <a href="https://abap34.com">[abap34.com]</a></li>
       </ul>
-      <p>などを開発しています．</p>
-      <p>そのほかにも普段使っているさまざまなソフトウェアでバグや機能不足などに気がついたときにはいろいろとパッチを送っています．</p>
-      <p>また，技術発信も比較的積極的に行っており，<a href="https://www.abap34.com/blog">[ブログ]</a> や <a href="https://speakerdeck.com/abap34">[SpeakerDeck]</a> などに記事や発表資料を公開しています．</p>
+      </details></li>
+      <li><details class="cv-details"><summary>技術発信
+      </summary><ul>
+      <li><a href="https://www.abap34.com/blog">[ブログ]</a> や <a href="https://speakerdeck.com/abap34">[SpeakerDeck]</a> などに記事や発表資料を公開しています．</li>
+      </ul>
+      </details></li>
+      </ul>
       <h3 id="言語コミュニケーション">言語・コミュニケーション</h3>
       <ul>
       <li>日本語: ネイティブ</li>
@@ -325,20 +411,12 @@
       <h2 id="取り組みたい仕事働き方など">取り組みたい仕事・働き方など</h2>
       <h3 id="強く希望していること">強く希望していること</h3>
       <ul>
-      <li>公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています．
-      <ul>
-      <li>逆にこれが満たされているのであれば具体的な内容にたいしてはそこまで強いこだわりはありません．</li>
-      </ul>
-      </li>
+      <li>公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています． 逆にこれが満たされているのであれば具体的な内容にたいしてはそこまで強いこだわりはありません．</li>
       <li>連続して作業しすぎると頭痛が出てしまうことがよくあります．1, 2時間に一度軽く外の空気を吸うだけでかなり予防できるのでそれが可能な環境を望んでいます．</li>
       </ul>
       <h3 id="満たされると嬉しいが必ずしもそうでなくてもよいこと">満たされると嬉しいが必ずしもそうでなくてもよいこと</h3>
       <ul>
-      <li>高い頻度でオフィスに出社できる方が望ましいです．
-      <ul>
-      <li>技術的に面白いことをしている人とオフィスで話せることが大きな理由なので，それが満たされているのであればそこまで気にしていません．</li>
-      </ul>
-      </li>
+      <li>高い頻度でオフィスに出社できる方が望ましいです．技術的に面白いことをしている人とオフィスで話せることが大きな理由なので，それが満たされているのであればそこまで気にしていません．</li>
       </ul>
       <h2 id="その他メモ">その他メモ</h2>
       <ul>

@@ -70,6 +70,101 @@ ${tocHeadings
 </nav>`;
 }
 
+function collapseNestedLists() {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'li') {
+        return;
+      }
+
+      const listIndex = node.children.findIndex(
+        (child) => child.type === 'element' && ['ul', 'ol'].includes(child.tagName),
+      );
+      if (listIndex < 0) {
+        return;
+      }
+
+      const summaryChildren = node.children.slice(0, listIndex).flatMap((child) =>
+        child.type === 'element' && child.tagName === 'p' ? child.children : [child],
+      );
+      if (summaryChildren.every((child) => child.type === 'text' && !child.value.trim())) {
+        return;
+      }
+
+      node.children = [{
+        type: 'element',
+        tagName: 'details',
+        properties: { className: ['cv-details'] },
+        children: [
+          { type: 'element', tagName: 'summary', properties: {}, children: summaryChildren },
+          ...node.children.slice(listIndex),
+        ],
+      }];
+    });
+  };
+}
+
+function alignHistoryDates() {
+  return (tree) => {
+    let inHistory = false;
+    for (const section of tree.children) {
+      if (section.type !== 'element') continue;
+      if (section.tagName === 'h2') {
+        inHistory = section.properties.id === '経歴';
+      }
+      if (!inHistory || !['ul', 'ol'].includes(section.tagName)) continue;
+
+      visit(section, 'element', (node) => {
+        if (node.tagName !== 'li') return;
+        const first = node.children.find(
+          (child) => child.type !== 'text' || child.value.trim(),
+        );
+        const label = first?.tagName === 'details'
+          ? first.children[0]
+          : first?.tagName === 'p' ? first : node;
+        const text = label.children[0];
+        if (text?.type !== 'text') return;
+
+        const match = /^\s*(\d{4})\s*年(?:\s*(\d{1,2})\s*月)?(?:\s*([-–—〜])\s*(?:(\d{4})\s*年(?:\s*(\d{1,2})\s*月)?)?)?\s+(?=\S)/.exec(text.value);
+        if (!match) return;
+
+        const [, startYear, startMonth, separator, endYear, endMonth] = match;
+        const time = (year, month) => {
+          const paddedMonth = month?.padStart(2, '0');
+          return {
+            type: 'element',
+            tagName: 'time',
+            properties: { dateTime: paddedMonth ? `${year}-${paddedMonth}` : year },
+            children: [{ type: 'text', value: paddedMonth ? `${year}/${paddedMonth}` : year }],
+          };
+        };
+        const period = [time(startYear, startMonth)];
+        if (separator) period.push({ type: 'text', value: ' – ' });
+        if (endYear) period.push(time(endYear, endMonth));
+
+        label.children = [{
+          type: 'element',
+          tagName: 'span',
+          properties: { className: ['cv-history-entry'] },
+          children: [
+            {
+              type: 'element', tagName: 'span',
+              properties: { className: ['cv-period'] }, children: period,
+            },
+            {
+              type: 'element', tagName: 'span', properties: {},
+              children: [
+                { type: 'text', value: text.value.slice(match[0].length) },
+                ...label.children.slice(1),
+              ],
+            },
+          ],
+        }];
+      });
+    }
+  };
+}
+
 const renderedMarkdown = String(
   await unified()
     .use(remarkParse)
@@ -77,6 +172,8 @@ const renderedMarkdown = String(
     .use(normalizeHeadings)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
+    .use(collapseNestedLists)
+    .use(alignHistoryDates)
     .use(rehypeStringify)
     .process(markdown),
 );
@@ -179,6 +276,83 @@ const html = `<!doctype html>
       }
 
       li {
+        margin: 0.2rem 0;
+      }
+
+      .cv-history-entry {
+        display: grid;
+        grid-template-columns: 18ch minmax(0, 1fr);
+        column-gap: 0.75rem;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .cv-period {
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+        color: var(--muted);
+      }
+
+      @media (max-width: 520px) {
+        .cv-history-entry {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .cv-details > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      .cv-details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .cv-details > summary::after {
+        content: '';
+        flex: 0 0 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.15rem;
+        border-right: 1.5px solid var(--muted);
+        border-bottom: 1.5px solid var(--muted);
+        transform: rotate(-45deg);
+      }
+
+      .cv-details[open] > summary::after {
+        transform: rotate(45deg);
+      }
+
+      .cv-details > summary:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--muted);
+        text-underline-offset: 0.2em;
+      }
+
+      .cv-details > summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .cv-details > ul,
+      .cv-details > ol {
+        margin: 0.2rem 0 0.4rem 1.35rem;
+      }
+
+      .cv-details > ul {
+        list-style-type: circle;
+      }
+
+      .cv-details > ul > li,
+      .cv-details > ol > li {
+        margin-left: 0;
+      }
+
+      .cv-details > ul > li > p,
+      .cv-details > ol > li > p {
         margin: 0.2rem 0;
       }
 
