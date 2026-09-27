@@ -23,10 +23,10 @@ Website: [abap34.com](https://abap34.com)
 #### 学歴
 
 -  2019年 4月-2022 年 3月 東海高等学校
--  2022年 4月-2026 年 9月 東京工業大学情報理工学院
--  2022年 4月-2026 年 9月 同情報工学系
--  2025年 4月-2026 年 9月 同 Programming System Group (渡部研究室)
--  2026年 9月- 東京科学大学 (旧: 東京工業大学) 情報理工学院情報工学系修士課程 (情報工学コース)
+-  2022年 4月-2026 年 9月 東京工業大学 情報理工学院
+-  2022年 4月-2026 年 9月 東京工業大学 情報理工学院 情報工学系
+-  2025年 4月-2026 年 9月 東京工業大学 情報理工学院 Programming System Group (渡部研究室)
+-  2026年 9月- 東京科学大学 (旧: 東京工業大学) 情報理工学院 情報工学系修士課程 (情報工学コース)
 
 #### インターンシップ・参加プログラムなど
 
@@ -81,40 +81,56 @@ Website: [abap34.com](https://abap34.com)
 ### スキル
 
 - コンピュータサイエンス (とくにプログラミング言語，機械学習) に関する知識， 10 年以上のプログラミング経験があります．
+- 
 
 #### プログラミング言語に関連するもの
 
-- プログラミング言語処理系に対する知識と開発
-  - 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  ([[SPLASH/ISSTA 2026 SRC で発表]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution))
-  - 抽象解釈による型解析を備えたインタプリタ: [[abap34/mu]](https://github.com/abap34/mu)
-  - call/cc, TCO などが実装された Scheme インタプリタ: [[abap34/eta]](https://github.com/abap34/eta)
-  - 拡張 Markdown パーサ [[abap34/almo]](https://github.com/abap34/almo)
-- OS などのシステムソフトウェアの知識と開発
-  - libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
-- これらを横断する例
-  - Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025 でポスター発表)
-- 抽象解釈などによるプログラム解析の理論や，モデル検査，定理証明支援系など形式検証についての基本的な知識と開発
-  - LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞)
+プログラミング言語，形式手法，システムソフトウェアに関する知識と開発経験があります．関連するソフトウェア・研究として
 
+- 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  ([[SPLASH/ISSTA 2026 SRC で発表]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution))
+- 抽象解釈による型解析を備えたインタプリタ: [[abap34/mu]](https://github.com/abap34/mu)
+- call/cc, TCO などが実装された Scheme インタプリタ: [[abap34/eta]](https://github.com/abap34/eta)
+- 拡張 Markdown パーサ [[abap34/almo]](https://github.com/abap34/almo)
+-  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞)
+-  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025 でポスター発表)
+- libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
+  
+などがあります．
 
 #### データサイエンス・機械学習・数理最適化に関連するもの
 
-- データ分析コンペティションへの参加
-  - atmaCup などの短期コンにたまに参加しています． 
-  - 大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催しました．どのコンペティションも大きな問題なく終了することができ，その準備のために BigQuery などを用いた大規模データの収集や処理の経験があります．
-- 機械学習のソフトウェア的な基盤
-  - 自作の深層学習フレームワークの開発 [[abap34/JITrench.jl]](https://github.com/abap34/JITrench.jl)
-  - 自動微分の理論と実装に関する発表 [[slide]](https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen)
-  - 並列計算における乱数生成に関する発表 [[slide]](https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng)
+機械学習に対しても長く興味を持っています．
+
+例えば，高校生のときにはデータ分析コンペティションにいくらか参加しており，
+
+- 第 85 回日本循環器学会学術集会 における心筋梗塞の検出予測コンペでの優勝経験 [[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
+
+などがあります．
+
+また，データ分析コンペの運営経験もあり，大学のサークルにおいて立ち上げたコミュニティにおいて 5 回コンペティションを開催しました．
+
+どのコンペティションも大きな問題なく終了することができ，その準備のために BigQuery などを用いた大規模データの収集や処理の経験もあります．
+
+機械学習のソフトウェア的な基盤に対する興味を持っており，例えば
+
+- 自動微分の理論と実装に関する発表 [[slide]](https://speakerdeck.com/abap34/julia-tokyo-number-11-toku-juliadebu-kuzi-dong-wei-fen)
+- 並列計算における乱数生成に関する発表 [[slide]](https://speakerdeck.com/abap34/bing-lie-hua-shi-dai-noluan-shu-sheng-cheng)
+- 自作の深層学習フレームワークの開発 [[abap34/JITrench.jl]](https://github.com/abap34/JITrench.jl)
+
+などの経験があります．
+
 
 #### 細かいスキル
 
-- Web フロントエンド・バックエンド開発の経験
+- Web フロントエンド・バックエンド開発・運用の経験
   - オンラインジャッジシステム (React, FastAPI) [[post]](https://www.abap34.com/posts/oj_abap34.html)
   - コンペプラットフォーム (streamlit) [[post]](https://www.abap34.com/posts/dacq.html)
   - 個人サイト (React) [[abap34.com]](https://abap34.com)
-- 技術発信 
-  - [[ブログ]](https://www.abap34.com/blog) や [[SpeakerDeck]](https://speakerdeck.com/abap34) などに記事や発表資料を公開しています．
+
+#### 技術発信
+
+- [[ブログ]](https://www.abap34.com/blog)
+- [[SpeakerDeck]](https://speakerdeck.com/abap34)
 
 #### 言語・コミュニケーション
 
@@ -153,12 +169,14 @@ Website: [abap34.com](https://abap34.com)
 
 #### 強く希望していること
 
-- 公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています． 逆にこれが満たされているのであれば具体的な内容にたいしてはそこまで強いこだわりはありません．
+- 公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています． 
+  - 逆にこれが満たされているのであれば具体的な内容にたいしてはそこまで強いこだわりはありません．
 - 連続して作業しすぎると頭痛が出てしまうことがよくあります．1, 2時間に一度軽く外の空気を吸うだけでかなり予防できるのでそれが可能な環境を望んでいます．
 
 #### 満たされると嬉しいが必ずしもそうでなくてもよいこと
 
-- 高い頻度でオフィスに出社できる方が望ましいです．技術的に面白いことをしている人とオフィスで話せることが大きな理由なので，それが満たされているのであればそこまで気にしていません．
+- 高い頻度でオフィスに出社できる方が望ましいです．
+  - 技術的に面白いことをしている人とオフィスで話せることが大きな理由なので，それが満たされているのであればそこまで気にしていません．
 
 ### その他メモ
 
