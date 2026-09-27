@@ -86,9 +86,9 @@ function alignHistoryDates() {
           (child) => child.type !== 'text' || child.value.trim(),
         );
         const label = first?.tagName === 'details'
-          ? first.children[0]
+          ? first.children.find((child) => child.type === 'element' && child.tagName === 'summary')
           : first?.tagName === 'p' ? first : node;
-        const text = label.children[0];
+        const text = label?.children?.[0];
         if (text?.type !== 'text') return;
 
         const match = /^\s*(\d{4})\s*年(?:\s*(\d{1,2})\s*月)?(?:\s*([-–—〜])\s*(?:(\d{4})\s*年(?:\s*(\d{1,2})\s*月)?)?)?\s+(?=\S)/.exec(text.value);
@@ -253,6 +253,7 @@ const html = `<!doctype html>
         display: grid;
         grid-template-columns: 18ch minmax(0, 1fr);
         column-gap: 0.75rem;
+        flex: 1;
         min-width: 0;
       }
 
@@ -266,6 +267,58 @@ const html = `<!doctype html>
         .cv-history-entry {
           grid-template-columns: minmax(0, 1fr);
         }
+      }
+
+      details > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        list-style: none;
+        cursor: pointer;
+      }
+
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details > summary::after {
+        content: '';
+        flex: 0 0 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.15rem;
+        border-right: 1.5px solid var(--muted);
+        border-bottom: 1.5px solid var(--muted);
+        transform: rotate(45deg);
+      }
+
+      details[open] > summary::after {
+        transform: rotate(225deg);
+      }
+
+      details > summary:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--muted);
+        text-underline-offset: 0.2em;
+      }
+
+      details > summary:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      details > ul,
+      details > ol {
+        margin: 0.2rem 0 0.4rem 1.35rem;
+      }
+
+      details > ul {
+        list-style-type: circle;
+      }
+
+      details > ul > li > p,
+      details > ol > li > p {
+        margin: 0.2rem 0;
       }
 
       a {

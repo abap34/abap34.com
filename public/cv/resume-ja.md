@@ -30,26 +30,49 @@ Website: [abap34.com](https://abap34.com)
 
 #### インターンシップ・参加プログラムなど
 
-- 2022 年 7月 - 2022年 9月 DENSO IT Laboratory
+- <details>
+  <summary>2022 年 7月 - 2022年 9月 DENSO IT Laboratory</summary>
+
   - DNN を用いた超高解像度画像に対する異常検知の研究開発
-- 2023 年 3月 - 2023年 4月 株式会社サイカ
+
+  </details>
+- <details>
+  <summary>2023 年 3月 - 2023年 4月 株式会社サイカ</summary>
+
   - Julia 言語を用いたハイパフォーマンスな数理最適化ライブラリの開発
-- 2024 年 11月 - 2025年 5月 日本経済新聞社
+
+  </details>
+- <details>
+  <summary>2024 年 11月 - 2025年 5月 日本経済新聞社</summary>
+
   - LLM を用いたサービスのバックエンド開発，データ分析コンペの作問・運営
-- 2025年 Google Summer of Code 2025 ─ Development of a New Language Server for Julia (Org: Julia Language)
+
+  </details>
+- <details>
+  <summary>2025年 Google Summer of Code 2025 ─ Development of a New Language Server for Julia (Org: Julia Language)</summary>
+
   - Julia 言語の次世代 Language Server の開発
   - [[Final Report]](https://www.abap34.com/posts/gsoc2025_final_report.html)
 
+  </details>
   
 #### その他の活動 / 表彰など
 
-- Teaching Assistant
+- <details>
+  <summary>Teaching Assistant</summary>
+
   - 関数型プログラミング基礎 (2025年)
-- 受賞歴 / コンテスト
+
+  </details>
+- <details>
+  <summary>受賞歴 / コンテスト</summary>
+
   - 東京科学大学リーダーシップ賞  
   - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 1位 (¥50,000)　[[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
   - atmaCup #16 学生 14位 (¥10,000)
   - atmaCup #21 学生 5位 (¥20,000) 
+
+  </details>
 
 ### 興味の方向性
 
@@ -80,19 +103,18 @@ Website: [abap34.com](https://abap34.com)
 
 ### スキル
 
-- コンピュータサイエンス (とくにプログラミング言語，機械学習) に関する知識， 10 年以上のプログラミング経験があります．
-- 
+- コンピュータサイエンス (とくにプログラミング言語，機械学習関連) に関する知識， 10 年以上のプログラミング経験があります．
 
 #### プログラミング言語に関連するもの
 
 プログラミング言語，形式手法，システムソフトウェアに関する知識と開発経験があります．関連するソフトウェア・研究として
 
-- 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  ([[SPLASH/ISSTA 2026 SRC で発表]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution))
+- 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  [[SPLASH/ISSTA 2026 SRC]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution)
 - 抽象解釈による型解析を備えたインタプリタ: [[abap34/mu]](https://github.com/abap34/mu)
 - call/cc, TCO などが実装された Scheme インタプリタ: [[abap34/eta]](https://github.com/abap34/eta)
 - 拡張 Markdown パーサ [[abap34/almo]](https://github.com/abap34/almo)
 -  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞)
--  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025 でポスター発表)
+-  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025)
 - libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
   
 などがあります．
@@ -177,7 +199,3 @@ Website: [abap34.com](https://abap34.com)
 
 - 高い頻度でオフィスに出社できる方が望ましいです．
   - 技術的に面白いことをしている人とオフィスで話せることが大きな理由なので，それが満たされているのであればそこまで気にしていません．
-
-### その他メモ
-
-- 経済的な問題がクリアできれば博士後期過程へ進学したいと考えています．
