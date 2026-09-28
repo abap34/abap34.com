@@ -144,10 +144,11 @@ Website: [abap34.com](https://abap34.com)
 
 #### 細かいスキル
 
-- Web フロントエンド・バックエンド開発・運用の経験
-  - オンラインジャッジシステム (React, FastAPI) [[post]](https://www.abap34.com/posts/oj_abap34.html)
-  - コンペプラットフォーム (streamlit) [[post]](https://www.abap34.com/posts/dacq.html)
-  - 個人サイト (React) [[abap34.com]](https://abap34.com)
+Web フロントエンド・バックエンド開発・運用の経験があります．例えば
+
+- オンラインジャッジシステム (React, FastAPI) [[post]](https://www.abap34.com/posts/oj_abap34.html)
+- コンペプラットフォーム (streamlit) [[post]](https://www.abap34.com/posts/dacq.html)
+- 個人サイト (React) [[abap34.com]](https://abap34.com)
 
 #### 技術発信
 
