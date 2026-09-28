@@ -55,7 +55,7 @@ Website: [abap34.com](https://abap34.com)
   - [[Final Report]](https://www.abap34.com/posts/gsoc2025_final_report.html)
 
   </details>
-  
+
 #### その他の活動 / 表彰など
 
 - <details>
@@ -67,10 +67,10 @@ Website: [abap34.com](https://abap34.com)
 - <details>
   <summary>受賞歴 / コンテスト</summary>
 
-  - 東京科学大学リーダーシップ賞  
+  - 東京科学大学学生リーダーシップ賞
   - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 1位 (¥50,000)　[[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
   - atmaCup #16 学生 14位 (¥10,000)
-  - atmaCup #21 学生 5位 (¥20,000) 
+  - atmaCup #21 学生 5位 (¥20,000)
 
   </details>
 
@@ -116,7 +116,7 @@ Website: [abap34.com](https://abap34.com)
 -  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞)
 -  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025)
 - libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
-  
+
 などがあります．
 
 #### データサイエンス・機械学習・数理最適化に関連するもの
@@ -191,7 +191,7 @@ Website: [abap34.com](https://abap34.com)
 
 #### 強く希望していること
 
-- 公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています． 
+- 公開した成果が次の面白い仕事につながってきた経験から，成果を OSS や論文などのかたちで対外発表に繋げられることを希望しています．
   - 逆にこれが満たされているのであれば具体的な内容にたいしてはそこまで強いこだわりはありません．
 - 連続して作業しすぎると頭痛が出てしまうことがよくあります．1, 2時間に一度軽く外の空気を吸うだけでかなり予防できるのでそれが可能な環境を望んでいます．
 
