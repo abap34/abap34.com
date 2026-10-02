@@ -82,8 +82,25 @@ ss の基本的な目標の一つとして，ごく簡単なスライドはご�
 書き始めて大体終わるまではかなり早目に終わらせておいたのですが，案の定直前に直しで大変なことになるなどしました．修論はもっと計画的にやりたい．
 
 
-
 後輩のみなさんはぜひ反面教師にしてください．
+
+
+## abap34.com / cms.abap34.com
+
+またまたトップページのデザインを刷新したのと，cms を作りました．
+
+
+![](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/hurikaeri_2026_0/image-20261002191120-29dfc26d.webp)
+
+CMS は md パーサとして [abap34/almo](https://github.com/abap34/almo) を WebAssembly で動かすおもしろ構成として出発しましたが，
+その後
+
+- 画像貼り付けのサポート
+  - 執筆時はメモリに持っておいて保存時に Vercel Blob Storage にアップロード
+- 執筆時に間違えてタブを閉じても事故らないように明示的な保存とは別で本文だけは localStorage に自動保存 
+
+
+などなど進化してまともな使い心地になっています．almo についてもパフォーマンスを向上させたいですね．
 
 
 ## JETLS.jl
