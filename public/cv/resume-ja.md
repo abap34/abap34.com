@@ -65,13 +65,12 @@ Website: [abap34.com](https://abap34.com)
 
   </details>
 - <details>
-  <summary>受賞歴 / コンテスト</summary>
+  <summary>受賞歴</summary>
 
-  - 東京科学大学学生リーダーシップ賞
-  - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 1位 (¥50,000)　[[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
-  - atmaCup #16 学生 14位 (¥10,000)
-  - atmaCup #21 学生 5位 (¥20,000)
-
+  - Second Place Award ACM Student Research Competition in SPLASH/ISSTA 2026
+  - 東京科学大学学生リーダーシップ賞 
+  - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 優勝 [[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
+  
   </details>
 
 ### 興味の方向性
