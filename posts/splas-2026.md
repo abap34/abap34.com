@@ -57,7 +57,7 @@ featured: false
 そのせいでお肌の調子も悪くなり会期中はずっとビジュが悪化していました。
 
 
-[^2]: 買った服は一回洗わないとくしゃみが止まらなくなる謎の体質のため
+[^2]: 買った服は着る前に一度洗わないとくしゃみが止まらなくなる謎の体質のため
 
 
 夜の便だったので割と余裕を持って羽田空港へ行き，最後のラーメンを食べて搭乗口へ．
@@ -190,9 +190,9 @@ Keynote を途中退室してポスター発表を準備して、発表を始め
 これは卑下ではなく FLEX として捉えてもらいたいんですが、自分のやつが研究内容は一番面白いだろうと思っているので、発表があまりうまくできなかったがために２位になってしまったと捉えていて、その意味でとても悔しいです。もっと強くなります。普通に研究内容がおもんなかった場合はすみません。
 
 
-表彰もしていただきました。ありがとうございます！
+ありがとうございます！
 
-![](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/splas-2026/image-20261010125758-1732d9dd.webp)
+![ ^_^ ](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/splas-2026/image-20261010125758-1732d9dd.webp)
 
 ホテルで預けていた荷物をピックアップし、会場に戻るとレセプションで東大の千葉磁先生、芝浦工大の青谷先生、大分大の紙名先生が集まっていらっしゃったのでしばらくお話しました。その後先生方と晩御飯を食べました。何故か本格カレーを食べました [^3] が、とても美味しかったです。
 
@@ -228,7 +228,7 @@ Keynote を途中退室してポスター発表を準備して、発表を始め
 あとチャッピーはありえないくらい役に立ちました。
 
 ### Funny の意味で面白かったこと
-- UCLA の博士課程の方に話しかけられて、「院生になったばかりで～」 みたいな話をしたら「日本の大学院生の Funding は厳しいって聞いたよ」というTwitter お約束トークが本当に発生して笑ってしまいました。「いちばん有名な Funding は 採択率が10% くらいだけどこれに選ばれても $1500 / month くらいだよ」って言ったら 「OMG! Hahaha」 と言われ いや何わろとんねん となりました。
+- UCLA の博士課程の方に話しかけられて、「院生になったばかりで～」 みたいな話をしたら「日本の大学院生の Funding は厳しいって聞いたよ」というTwitter お約束トークが本当に発生して笑ってしまいました。「いちばん有名な Funding は 採択率が10% くらいだけどこれに選ばれても $1500 / month くらいだよ」って言ったら 「OMG! Hahaha」 と言われいや何わろとんねん となりました。
 - パネルで「論文書くのは上手いやつが書いた実際試したら役に立たない GC 多すぎ」「レビュワーがアイスクリームの好みくらいどうでもいいことをネチネチ聞いてきてウザイ」といったお約束愚痴を言っていて万国共通なんだ、と思いました (誤訳していたらすみません)
 
 ### とはいえ
@@ -249,13 +249,12 @@ Keynote を途中退室してポスター発表を準備して、発表を始め
 
 研究頑張ります。英語も頑張ります。また行きたいです！
 
-![](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/splas-2026/image-20261010130530-aaa311b8.webp)
+![ありがとうございます](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/splas-2026/image-20261010130530-aaa311b8.webp)
 
 
 ## 今日の一曲
 
-わかった顔して Twitter で千葉雄喜にアレコレ言っているオタク頼むから全員インターネットをやめて欲しい．
-
+Twitter で千葉雄喜にアレコレ言っているオタク頼むから全員インターネットをやめて欲しい
 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Jd69dMjmMY4?si=MElwr6fY1kTCp58i" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
