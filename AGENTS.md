@@ -38,6 +38,7 @@ npm start
 ```bash
 bash scripts/vercel-build.sh
 # almo C++ コンパイラのビルド → REBUILD=true SKIP_WIP_ARTICLES=true uv run blog_builder/build.py → RSS 生成 → npm run build
+# npm run build はソースマップを生成せず，postbuild で配信用画像の縮小とビルド用ファイルの除去を行う．
 ```
 
 ## アーキテクチャ
@@ -71,6 +72,7 @@ public/
 3. TF-IDF 類似度（`public/tfidf_cache.pkl` にキャッシュ）とタグベースで関連記事を計算し、HTML のプレースホルダーを置換する
 4. `public/posts.json` に記事メタデータ（title・date・tags・url・thumbnail）を追記
 5. `config/external_articles.json` の外部記事を `posts.json` にマージ
+6. `npm run build` 後に `scripts/optimize-static-assets.py` が `build/` 内の静止画像を幅 1920 px・高さ 3840 px 以内に縮小する．元画像と URL は保持し，小さくなる場合だけ出力を置き換える．GIF・複数フレーム画像は保持する．ビルド用キャッシュ，ソースマップ，開発環境のファイルを配信出力から除去する．
 
 ## 記事フォーマット
 
