@@ -42,7 +42,7 @@
     --accent: #3f6380;
     --wash: #eee8dd;
     --code-paper: #f0ede5;
-    --notebook-rule: rgba(113, 128, 139, 0.25);
+    --notebook-rule: rgba(113, 128, 139, 0.5);
     --note-paper: #f3f0e6;
     --note-edge: rgba(113, 128, 139, 0.12);
     --note-adhesive: rgba(113, 128, 139, 0.045);
@@ -63,7 +63,7 @@ body.dark-mode {
     --accent: #a9c5db;
     --wash: #151a1c;
     --code-paper: #151a1c;
-    --notebook-rule: rgba(116, 136, 150, 0.25);
+    --notebook-rule: rgba(116, 136, 150, 0.30);
     --note-paper: #131718;
     --note-edge: rgba(116, 136, 150, 0.16);
     --note-adhesive: rgba(116, 136, 150, 0.055);
@@ -107,9 +107,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
     font-family: var(--font-hand);
     font-size: 0.95rem;
 }
-.header-inner { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.header-inner a { color: inherit; text-decoration: none; }
-.header-logo { font-weight: 600; }
+.header-inner { min-width: 0; padding: 0.15rem 0.35rem; margin: -0.15rem -0.35rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-family: var(--font-reading, var(--font-hand)); font-weight: 700; }
+.header-inner a { display: inline-block; color: inherit; text-decoration: none; transform-origin: left center; transition: transform 160ms ease, color 160ms ease; }
 .header-controls { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
 #theme-toggle { width: 2rem; height: 2rem; padding: 0; border: 0; border-radius: 50%; }
 #theme-toggle:hover { background: var(--wash); }
@@ -146,7 +145,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .side-sticky, .right-sidebar-sticky { position: sticky; top: 5rem; }
 .side, .right-sidebar { align-self: stretch; }
 .sidebar, .right-sidebar-sticky { max-height: calc(100vh - 6rem); overflow: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-.sidebar::before { content: '目次'; display: block; margin: 0 0 0.75rem; color: var(--muted); font: 600 0.9rem/1.6 var(--font-hand); }
+.sidebar::before { content: '目次'; display: block; margin: 0 0 0.75rem; color: var(--muted); font: 700 0.9rem/1.6 var(--font-reading, var(--font-hand)); }
 .toc_title { display: none; }
 #toc, #mobile-toc-list { list-style: none; padding: 0; margin: 0; font-size: 0.78rem; line-height: 1.75; }
 #toc li, #mobile-toc-list li { margin: 0.4rem 0; }
@@ -159,7 +158,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .content.notebook-ruled { position: relative; isolation: isolate; }
 /* 横罫は，実際の行の下に置く一枚の SVG で描く． */
 .notebook-rules { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: -1; pointer-events: none; user-select: none; }
-.notebook-rules path { fill: none; stroke: var(--notebook-rule); stroke-width: 0.6; stroke-linecap: butt; }
+.notebook-rules path { fill: none; stroke: var(--notebook-rule); stroke-width: 0.8; stroke-dasharray: 1 3; stroke-linecap: round; }
 .content :is(h1, h2, h3, h4, h5, h6) {
     margin: 2.75em 0 1em;
     font-family: var(--font-reading, var(--font-hand));
@@ -176,8 +175,8 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 .content :is(h4, h5, h6) { font-size: 1.05em; }
 /* 章番号と小見出し番号を，本文の左端から添える． */
 .content { counter-reset: note-section; }
-.content :is(h1, h2) { position: relative; counter-increment: note-section; counter-reset: note-subsection; padding-left: 1.5em; }
-.content :is(h1, h2)::before { content: counter(note-section, decimal-leading-zero); position: absolute; top: 0.25em; left: 0; color: var(--accent); font: 400 0.8em/1.6 var(--font-mono); white-space: nowrap; }
+.content :is(h1, h2):not(.footnote-heading) { position: relative; counter-increment: note-section; counter-reset: note-subsection; padding-left: 1.5em; }
+.content :is(h1, h2):not(.footnote-heading)::before { content: counter(note-section, decimal-leading-zero); position: absolute; top: 0.25em; left: 0; color: var(--accent); font: 400 0.8em/1.6 var(--font-mono); white-space: nowrap; }
 .content h3:not(.related-title) { position: relative; counter-increment: note-subsection; padding-left: 2em; }
 .content h3:not(.related-title)::before { content: counter(note-section) '.' counter(note-subsection); position: absolute; top: 0.25em; left: 0; color: var(--muted); font: 400 0.7em/1.6 var(--font-mono); white-space: nowrap; }
 .content > h2:first-of-type { margin-top: 0.75rem; }
@@ -257,6 +256,8 @@ table tbody tr:nth-child(even) { background: var(--wash); }
 .wave-underline { text-decoration: underline wavy; text-decoration-color: var(--accent); text-underline-offset: 0.2em; }
 .footnote-ref { font-size: 0.75em; vertical-align: super; }
 .footnotes { margin-top: 2em; padding-top: 1em; border-top: 1px solid var(--border); font-size: 0.85em; }
+.footnote:has(.footnote-def) { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.content .footnote-heading { margin: 0 0 1rem; font-size: 1rem; font-weight: 700; }
 .footnote-def { display: block; margin: 0.75em 0; }
 .footnote-def p { margin: 0; }
 
@@ -277,7 +278,7 @@ table tbody tr:nth-child(even) { background: var(--wash); }
 .responsive-card { display: flex; align-items: center; padding: 1rem; gap: 1rem; }
 .content .responsive-card img { width: 35%; margin: 0; max-height: 10rem; }
 .related-articles { margin: 0 0 2rem; }
-.related-title { margin: 0 0 1rem; color: var(--muted); font: 600 0.9rem/1.6 var(--font-hand); }
+.related-title { margin: 0 0 1rem; color: var(--muted); font: 700 0.9rem/1.6 var(--font-reading, var(--font-hand)); }
 .right-sidebar-sticky { padding: 0.3rem 0.4rem 1rem; }
 .related-item {
     position: relative;
@@ -297,13 +298,23 @@ table tbody tr:nth-child(even) { background: var(--wash); }
 .nav-item { flex: 1; min-width: 0; }
 .nav-item:empty { visibility: hidden; }
 .nav-item a { display: flex; flex-direction: column; gap: 0.6rem; padding: 1rem 0; border-top: 1px solid var(--border); text-decoration: none; }
-.nav-direction { color: var(--muted); font-size: 0.75rem; }
+.nav-direction { color: var(--muted); font-size: 0.75rem; font-weight: 700; }
 .nav-title { color: var(--ink); font: 600 1rem/1.7 var(--font-hand); }
 .nav-next { text-align: right; }
 .mobile-related-articles { display: none; }
 .mobile-related-articles .related-articles { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); gap: 1rem; }
-.mobile-related-articles .related-title { grid-column: 1 / -1; margin: 1rem 0 0; font: 600 0.9rem/1.6 var(--font-hand); color: var(--muted); }
+.mobile-related-articles .related-title { grid-column: 1 / -1; margin: 1rem 0 0; font: 700 0.9rem/1.6 var(--font-reading, var(--font-hand)); color: var(--muted); }
 .mobile-related-articles .related-item { margin-bottom: 0.5rem; }
+:is(.nav-item, .related-item) a { transform-origin: left center; transition: transform 160ms ease; }
+.header-inner a:focus-visible { transform: scale(1.04); color: var(--accent); text-decoration: underline; }
+:is(.nav-item, .related-item) a:focus-visible { transform: scale(1.02); }
+@media (hover: hover) and (pointer: fine) {
+    .header-inner a:hover { transform: scale(1.04); color: var(--accent); text-decoration: underline; }
+    :is(.nav-item, .related-item) a:hover { transform: scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .header-inner a, :is(.nav-item, .related-item) a { transition: none; }
+}
 footer { padding: 3rem 1.5rem; text-align: center; color: var(--muted); font: 0.8rem/1.6 var(--font-hand); }
 
 /* 付箋の幅を確保できなくなる前に，関連記事を本文の下へ移す． */
@@ -313,7 +324,7 @@ footer { padding: 3rem 1.5rem; text-align: center; color: var(--muted); font: 0.
     .mobile-related-articles { display: block; }
     .mobile-sidebar { display: block; width: min(100% - 3rem, var(--reading-width)); margin: 0 auto 2rem; }
     .mobile-sidebar details { margin: 0; padding: 0.7rem 1rem; }
-    .mobile-sidebar summary { font: 600 0.95rem/1.8 var(--font-hand); }
+    .mobile-sidebar summary { font: 700 0.95rem/1.8 var(--font-reading, var(--font-hand)); }
     .mobile-sidebar .sidebar { max-height: 50vh; margin-top: 1rem; }
     .mobile-sidebar .sidebar::before { display: none; }
 }

@@ -142,6 +142,14 @@
     <!-- 4) TOC 自動生成スクリプトなど -->
     <script>
         const tocContainer = document.querySelector("#toc");
+        const footnoteSection = document.querySelector(".footnote");
+        if (footnoteSection?.querySelector(".footnote-def")) {
+            const heading = document.createElement("h2");
+            heading.className = "footnote-heading";
+            heading.id = "footnotes";
+            heading.textContent = "脚注";
+            footnoteSection.prepend(heading);
+        }
         const tocTitle = document.createElement("div");
         tocTitle.innerHTML = title;
         tocTitle.classList.add("toc_title");
