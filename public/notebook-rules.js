@@ -175,8 +175,9 @@
             const row = rows[index];
             const next = rows[index + 1];
             // 箇条書きの項目間や背の高い数式でも，罫線が次の文字に重ならないようにする．
-            const offset = next ? Math.min(4, (next.top - row.bottom) / 2) : 4;
-            if (offset < 1.75) continue;
+            const clearance = next ? (next.top - row.bottom) / 2 : Infinity;
+            if (clearance < 1.75) continue;
+            const offset = Math.min(1, clearance);
             const y = row.bottom - origin.top + offset;
             segments.push(`M${row.start},${y.toFixed(2)}H${(row.right - 1.5).toFixed(2)}`);
         }

@@ -231,3 +231,10 @@ Keynote を途中退室してポスター発表を準備して、発表を始め
 研究頑張ります。英語も頑張ります。また行きたいです！
 
 ![](https://mqxmujnlndxwmeoq.public.blob.vercel-storage.com/posts/splas-2026/image-20261010130530-aaa311b8.webp)
+
+
+## 今日の一曲
+
+わかった顔して Twitter で千葉雄喜にアレコレ言っているオタク頼むから全員インターネットをやめて欲しい．
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Jd69dMjmMY4?si=MElwr6fY1kTCp58i" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
