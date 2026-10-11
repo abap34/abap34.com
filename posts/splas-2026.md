@@ -64,26 +64,26 @@ featured: false
 
 が、入国審査では
 
->「Why are you here?」
->
->「学会です」
->
->「Student?」
->
->「大学院生です」
->
->「Place your thumb straight down here. (指紋採取)」
->
->「 (親指を人間の視線に対して垂直に置く) (これが “Straight” だと思っている)」
->
-> 「No, STRAIGHT」
->
->  「 (？？)」
->
-> 「You're a graduate student, aren't you? (キレ気味)」
->
-> 「 (ここで察して人間の視線に対して視線と並行に置く)」
->
+> 「Why are you here?」
+> 
+> 「学会です」
+> 
+> 「Student?」
+> 
+> 「大学院生です」
+> 
+> 「Place your thumb straight down here. (指紋採取)」
+> 
+> 「 (親指を人間の視線に対して垂直に置く) (これが “Straight” だと思っている)」
+> 
+>  「No, STRAIGHT」
+> 
+>   「 (？？)」
+> 
+>  「You're a graduate student, aren't you? (キレ気味)」
+> 
+>  「 (ここで察して人間の視線に対して視線と並行に置く)」
+
 
 
 えー俺が悪いんでしょうか？？
