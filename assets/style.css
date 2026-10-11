@@ -184,6 +184,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visib
 /* almo がブロックの直後に出力する改行による二重の余白を避ける． */
 .content :is(h1, h2, h3, h4, h5, h6, p, ul, ol, pre, table, .code-block, .math-block, blockquote) + br { display: none; }
 .content > br:first-child { display: none; }
+/* 罫線のないブロック境界の空白だけを詰める．本文中の空行は通常の br を使う． */
 .content .notebook-blank-line { display: block; height: 0.9em; height: 0.5lh; }
 .content p { margin: 0 0 1.5em; }
 .content strong { font-weight: 600; }

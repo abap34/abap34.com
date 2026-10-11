@@ -48,9 +48,34 @@
         }
     }
 
+    function hasInlineContent(lineBreak, direction) {
+        for (let node = lineBreak[direction]; node; node = node[direction]) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.textContent.trim()) return true;
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.matches('br, .notebook-blank-line, script, style, template, [hidden]')) continue;
+                const style = getComputedStyle(node);
+                if (style.display === 'none' || style.visibility !== 'visible') continue;
+                if (!['inline', 'inline-block', 'contents'].includes(style.display)) return false;
+                if (node.textContent.trim()) return true;
+            }
+        }
+        return false;
+    }
+
+    function hasProseOnBothSides(lineBreak) {
+        return hasInlineContent(lineBreak, 'previousSibling') && hasInlineContent(lineBreak, 'nextSibling');
+    }
+
     function compactBlankLines() {
+        // 本文の追加などで前後が文章につながったら，通常の空行に戻す．
+        for (const blank of article.querySelectorAll('.notebook-blank-line')) {
+            if (hasProseOnBothSides(blank)) blank.replaceWith(document.createElement('br'));
+        }
         for (const lineBreak of article.querySelectorAll('br')) {
             if (lineBreak.closest(excluded)) continue;
+            // 罫線を引く本文中の空行は br のまま残し，通常の一行分の高さを保つ．
+            if (hasProseOnBothSides(lineBreak)) continue;
             let previous = lineBreak.previousSibling;
             while (previous && (
                 previous.nodeType === Node.COMMENT_NODE ||
@@ -58,7 +83,7 @@
                 (previous.nodeType === Node.ELEMENT_NODE && previous.matches('script, style'))
             )) previous = previous.previousSibling;
             if (previous?.nodeType !== Node.ELEMENT_NODE || !previous.matches('br, .notebook-blank-line')) continue;
-            // 行を終える最初の br は残し，空行だけを半行分の余白にする．
+            // 行を終える最初の br は残し，罫線を引かない空白だけを半行分にする．
             const blank = document.createElement('span');
             blank.className = 'notebook-blank-line';
             blank.setAttribute('aria-hidden', 'true');
@@ -81,21 +106,6 @@
             }
         }
 
-        function hasInlineContent(lineBreak, direction) {
-            for (let node = lineBreak[direction]; node; node = node[direction]) {
-                if (node.nodeType === Node.TEXT_NODE) {
-                    if (node.textContent.trim()) return true;
-                } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (node.matches('br, .notebook-blank-line, script, style, template, [hidden]')) continue;
-                    const style = getComputedStyle(node);
-                    if (style.display === 'none' || style.visibility !== 'visible') continue;
-                    if (!['inline', 'inline-block', 'contents'].includes(style.display)) return false;
-                    if (node.textContent.trim()) return true;
-                }
-            }
-            return false;
-        }
-
         // almo の本文は p 要素だけでなく，テキストと br の並びでも出力される．
         // インライン要素を含めて行を測り，箇条書きや引用は各ブロックの幅を使う．
         function measure(element, owner) {
@@ -109,24 +119,13 @@
                     range.selectNodeContents(node);
                     addRects(owner, range.getClientRects());
                 } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    if (node.matches('.notebook-blank-line')) {
-                        if (hasInlineContent(node, 'previousSibling') && hasInlineContent(node, 'nextSibling')) {
-                            const rect = node.getBoundingClientRect();
-                            if (rect.width && rect.height) {
-                                // 短くした空行では余白の中央を基準に罫線を置く．
-                                const center = rect.top + rect.height / 2;
-                                addRects(owner, [{ top: center - 0.5, bottom: center + 0.5, width: rect.width, height: 1 }]);
-                            }
-                        }
-                        continue;
-                    }
                     if (node.matches(excluded)) continue;
                     const style = getComputedStyle(node);
                     if (style.display === 'none' || style.visibility !== 'visible') continue;
                     if (node.tagName === 'BR') {
                         // 空行もブラウザーの実際の行位置で測る．br の矩形は幅が 0 になる．
                         // 前後が文章につながらない，ブロック境界の空行は除く．
-                        if (hasInlineContent(node, 'previousSibling') && hasInlineContent(node, 'nextSibling')) {
+                        if (hasProseOnBothSides(node)) {
                             addRects(owner, node.getClientRects(), true);
                         }
                     } else if (node.matches(atomicInline)) {
