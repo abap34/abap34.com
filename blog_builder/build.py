@@ -768,9 +768,11 @@ class ArticleBuilder:
 
     def generate_mobile_sidebar_html(self) -> str:
         html = ['<div class="mobile-sidebar">']
+        html.append('<details><summary>目次</summary>')
         html.append('<div class="sidebar">')
         html.append('<ul id="mobile-toc-list"></ul>')
         html.append("</div>")
+        html.append("</details>")
         html.append("</div>")
 
         # TOCをモバイル版にもコピーするJavaScript

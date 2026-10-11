@@ -25,7 +25,7 @@
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="{{twitter_site}}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- ハイライトJS / FontAwesome -->
     <link rel="stylesheet" id="highlight-theme"
@@ -48,7 +48,11 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
     <!-- CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&amp;display=swap">
     {{style}}
+    <script defer src="/notebook-rules.js?v=15"></script>
 
     <!-- テンプレート置換用のスクリプト変数等 -->
     <script>
@@ -63,13 +67,13 @@
         <div class="header-inner">
             <!-- クリックすると sidebar を表示/非表示 -->
             <a href="https://abap34.com" class="header-logo">abap34.com</a>
-            > <a href="https://abap34.com/blog">/blog</a> > <a href="{{url}}">/{{title}}</a>
+            / <a href="https://abap34.com/blog">blog</a> <span class="header-current">/ <a href="{{url}}">{{title}}</a></span>
         </div>
 
         <!-- トグルボタンとツイートボタンをグループ化 -->
         <div class="header-controls" style="display: flex;">
             <!-- ダークモードトグルボタン -->
-            <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            <button id="theme-toggle" aria-label="配色を切り替える">🌙</button>
             <!-- ツイートボタン -->
             <div class="tweet-button">
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
@@ -81,7 +85,7 @@
 
 
     <div class="article-header">
-        <div class="title">{{title}}</div>
+        <h1 class="title">{{title}}</h1>
         <script>title = document.querySelector(".title").innerHTML;</script>
         <br>
         <div class="date">{{date}}</div>
@@ -105,7 +109,7 @@
         </div>
 
         <!-- メイン本文 -->
-        <div class="content">
+        <main class="content" id="article-content">
             {{contents}}
 
             <hr>
@@ -121,7 +125,7 @@
             <script src="https://utteranc.es/client.js" repo="abap34/abap34com-comment" issue-term="og:title"
                 label="comment" theme="github-light" crossorigin="anonymous" async>
                 </script>
-        </div>
+        </main>
 
         <!-- 右サイドバー (関連記事) -->
         <div class="right-sidebar">
@@ -166,8 +170,8 @@
             if (element) observer.observe(element);
         });
 
-        const first_item = document.querySelector(`#toc a[href="#${page_contents[0].id}"]`);
-        first_item.classList.add("active");
+        const first_item = document.querySelector("#toc a");
+        first_item?.classList.add("active");
         let prev_item = first_item;
 
         function onIntersection(entries) {
@@ -177,7 +181,7 @@
                 if (tocItem) {
                     if (entry.isIntersecting) {
                         tocItem.classList.add("active");
-                        prev_item.classList.remove("active");
+                        prev_item?.classList.remove("active");
                         prev_item = tocItem;
                     }
                 }
@@ -246,38 +250,6 @@
         // コードブロックに行数とコピー機能を追加
         /// コードブロックに行数とコピー機能を追加（pre/code は保持）
         (() => {
-            // 付随スタイル（必要なら一度だけ注入）
-            if (!document.getElementById('cb-ln-style')) {
-                const style = document.createElement('style');
-                style.id = 'cb-ln-style';
-                style.textContent = `
-.cb{position:relative;margin:1rem 0;border:1px solid #d0d7de;border-radius:.4rem;overflow:hidden;background:#f6f8fa}
-.cb-toolbar{display:flex;justify-content:space-between;align-items:center;font:12px/1.2 ui-monospace,Menlo,Consolas,monospace;background:#f1f3f5;padding:.35rem .5rem;border-bottom:1px solid #d0d7de}
-.cb-lang{opacity:.7}
-.cb-copy{cursor:pointer;border:0;background:#eee;padding:.25rem .5rem;border-radius:.25rem}
-.cb-copy:active{transform:translateY(1px)}
-.cb-body{display:grid;grid-template-columns:auto 1fr;background:#f6f8fa}
-.cb-gutter{margin:0; padding:0rem .5rem .5rem .5rem; list-style:none; counter-reset:ln; text-align:right; user-select:none; overflow:auto; border-right:1px solid #d0d7de;background:#f6f8fa}
-.cb-gutter li{counter-increment:ln; line-height:1.5; font:13px/1.5 ui-monospace,Menlo,Consolas,monospace; opacity:.55}
-.cb-gutter li::before{content: counter(ln);}
-.cb-pre{margin:0; padding:.5rem .75rem; overflow:auto;background:#f6f8fa}
-.cb.dark{border-color:#3a3f4b;background:#282c34}
-.cb.dark .cb-toolbar{background:#24272e;border-bottom-color:#3a3f4b;color:#ddd}
-.cb.dark .cb-copy{background:#3a3a3a;color:#eee}
-.cb.dark .cb-body,.cb.dark .cb-gutter,.cb.dark .cb-pre{background:#282c34}
-.cb.dark .cb-gutter{border-right-color:#3a3f4b}
-@media (max-width: 768px){
-    .cb-toolbar{font-size:10px;padding:.25rem .4rem}
-    .cb-copy{font-size:10px;padding:.2rem .35rem}
-    .cb-body{grid-template-columns:auto minmax(0,1fr)}
-    .content .cb-gutter{margin:0!important}
-    .cb-gutter{padding:.375rem .25rem .375rem .2rem}
-    .cb-pre{padding:.375rem .4rem}
-}
-`;
-                document.head.appendChild(style);
-            }
-
             const isDark = () => document.body.classList.contains('dark-mode');
 
             document.querySelectorAll('pre > code').forEach((code) => {
@@ -363,8 +335,6 @@
         })();
 
 
-
-    </script>
 
     </script>
 
