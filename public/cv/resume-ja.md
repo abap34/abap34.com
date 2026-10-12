@@ -2,7 +2,7 @@
 
 <p class="cv-name">Yuchi Yamaguchi (山口 悠地)</p>
 
-<img src="/yuchi.png" alt="Yuchi" width="200" height="200" >
+<img src="/yuchi.png" alt="Yuchi" width="200" >
 
 ### 連絡先・各種アカウント
 
