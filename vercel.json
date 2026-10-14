@@ -2,5 +2,12 @@
     "buildCommand": "bash scripts/vercel-build.sh",
     "outputDirectory": "build",
     "installCommand": "npm install && curl -LsSf https://astral.sh/uv/install.sh | sh",
-    "framework": "create-react-app"
+    "framework": "create-react-app",
+    "redirects": [
+        {
+            "source": "/cv/cv-ja.html",
+            "destination": "/cv/resume-ja.html",
+            "permanent": true
+        }
+    ]
 }
