@@ -69,7 +69,7 @@ Website: [abap34.com](https://abap34.com)
 
   - Second Place Award ACM Student Research Competition in SPLASH/ISSTA 2026
   - 東京科学大学学生リーダーシップ賞 
-  - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 優勝 [[solution]](https://speakerdeck.com/chizuchizu/quan-guo-yi-liao-aikontesuto-2021-1st-place-solution)
+  - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 優勝 (¥50,000), atmaCup #16 学生 14位 (¥10,000), atmaCup #21 学生 5位 (¥20,000)
   
   </details>
 
@@ -108,12 +108,12 @@ Website: [abap34.com](https://abap34.com)
 
 プログラミング言語，形式手法，システムソフトウェアに関する知識と開発経験があります．関連するソフトウェア・研究として
 
-- 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  [[SPLASH/ISSTA 2026 SRC]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution)
+- 依存順の実行モデル，各種エディタ支援，インクリメンタル・並列ビルドなどを備えたスライド記述言語 [[abap34/ss]](https://github.com/abap34/ss)  [[SPLASH/ISSTA 2026 SRC (Second Place Winner)]](https://conf.researchr.org/details/splash-issta-2026/splash-issta-2026-student-research-competition/5/ss-A-Slide-Description-Language-with-Dependence-Scheduled-Execution)
 - 抽象解釈による型解析を備えたインタプリタ: [[abap34/mu]](https://github.com/abap34/mu)
 - call/cc, TCO などが実装された Scheme インタプリタ: [[abap34/eta]](https://github.com/abap34/eta)
 - 拡張 Markdown パーサ [[abap34/almo]](https://github.com/abap34/almo)
--  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞)
--  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) (Google Summer of Code 2025 で Student Contributor として参加) (PPL 2025)
+-  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞) [[blog]](https://trap.jp/post/2478/)
+-  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) [[GSoC 2025]](https://summerofcode.withgoogle.com/archive/2025/projects/9PZY6C2m) [[PPL 2025]](https://jssst-ppl.org/workshop/2026/program.html)
 - libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
 
 などがあります．
@@ -186,6 +186,8 @@ Web フロントエンド・バックエンド開発・運用の経験があり�
 
 - 初年度の開催記録 [[post]](https://trap.jp/post/1918/)
 - 開催経験から得られた知見をまとめたブログ [[post]](https://www.abap34.com/posts/community_competetion_tips.html)
+
+そのほか， Google Summer of Code での取り組みや関連する OSS 活動，コミュニティ活動などが評価され，2026年度の東京科学大学生リーダーシップ賞を受賞しました．
 
 ### 取り組みたい仕事・働き方など
 
