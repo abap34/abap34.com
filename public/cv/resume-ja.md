@@ -20,6 +20,12 @@ Website: [abap34.com](https://abap34.com)
 
 ### 経歴
 
+現在の所属:
+
+- 東京科学大学 情報理工学院 情報工学系修士課程 1年 (情報工学コース)
+- Programming System Group (指導教員: 渡部卓雄先生)
+
+
 #### 学歴
 
 -  2019年 4月-2022 年 3月 東海高等学校
@@ -68,9 +74,9 @@ Website: [abap34.com](https://abap34.com)
   <summary>受賞歴</summary>
 
   - Second Place Award ACM Student Research Competition in SPLASH/ISSTA 2026
-  - 東京科学大学学生リーダーシップ賞 
+  - 東京科学大学学生リーダーシップ賞
   - 第 85 回日本循環器学会学術集会 全国医療 AI コンテスト 優勝 (¥50,000), atmaCup #16 学生 14位 (¥10,000), atmaCup #21 学生 5位 (¥20,000)
-  
+
   </details>
 
 ### 興味の方向性
