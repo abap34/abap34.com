@@ -46,7 +46,7 @@ function Panel({ id, title, children }) {
   );
 }
 
-function TimelineGroup({ title, items, getTitle, getMeta }) {
+function TimelineGroup({ title, items, getTitle }) {
   if (!items.length) return null;
 
   return (
@@ -64,7 +64,6 @@ function TimelineGroup({ title, items, getTitle, getMeta }) {
             <InkLeader variant={i % 3} />
             <span className="ledger-record-main">
               <span className="ledger-record-title">{getTitle(item)}</span>
-              {getMeta?.(item) && <span className="ledger-record-meta">{getMeta(item)}</span>}
             </span>
           </a>
         ))}
@@ -82,8 +81,6 @@ export default function Home({ abapNumber }) {
   }
 
   const education = backgroundData?.education || [];
-  const careers = backgroundData?.careers || [];
-  const others = backgroundData?.others || [];
 
   if (abapNumber === 256) {
     return (
@@ -162,13 +159,6 @@ export default function Home({ abapNumber }) {
       <Panel id="background" title="Background">
         <div className="timeline-ledger">
           <TimelineGroup title="学歴" items={education} getTitle={(edu) => edu.school} />
-          <TimelineGroup
-            title="職歴"
-            items={careers}
-            getTitle={(career) => career.company}
-            getMeta={(career) => career.worktype}
-          />
-          <TimelineGroup title="その他" items={others} getTitle={(other) => other.title} />
         </div>
       </Panel>
     </div>
