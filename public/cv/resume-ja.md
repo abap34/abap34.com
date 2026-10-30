@@ -67,7 +67,8 @@ Website: [abap34.com](https://abap34.com)
 - <details>
   <summary>Teaching Assistant</summary>
 
-  - 関数型プログラミング基礎 (2025年)
+  - [関数型プログラミング基礎](https://syllabus.s.isct.ac.jp/courses/-/-/-/202502452) (2025年)
+  - [関数型プログラミング基礎](https://syllabus.s.isct.ac.jp/courses/-/-/-/202602452) (2026年)
 
   </details>
 - <details>
