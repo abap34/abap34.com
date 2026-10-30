@@ -4,6 +4,11 @@
 
 <img src="/yuchi.png" alt="Yuchi" width="200" >
 
+## 所属
+
+- 東京科学大学 情報理工学院 情報工学系修士課程 1年 (情報工学コース)
+- Programming System Group (指導教員: 渡部卓雄先生)
+
 ### 連絡先・各種アカウント
 
 Email: [yuchi@abap34.com](mailto:yuchi@abap34.com)
@@ -16,15 +21,11 @@ SpeakerDeck: [@abap34](https://speakerdeck.com/abap34)
 
 Website: [abap34.com](https://abap34.com)
 
+LinkedIn: [Yuchi Yamaguchi](https://www.linkedin.com/in/yuchi-yamaguchi-981a83332/)
+
 メールもしくは Twitter の DM がもっとも連絡がつきやすいです．
 
 ### 経歴
-
-現在の所属:
-
-- 東京科学大学 情報理工学院 情報工学系修士課程 1年 (情報工学コース)
-- Programming System Group (指導教員: 渡部卓雄先生)
-
 
 #### 学歴
 
@@ -65,7 +66,7 @@ Website: [abap34.com](https://abap34.com)
 #### その他の活動 / 表彰など
 
 - <details>
-  <summary>Teaching Assistant</summary>
+  <summary>教育関連</summary>
 
   - [関数型プログラミング基礎](https://syllabus.s.isct.ac.jp/courses/-/-/-/202502452) (2025年)
   - [関数型プログラミング基礎](https://syllabus.s.isct.ac.jp/courses/-/-/-/202602452) (2026年)
@@ -119,7 +120,7 @@ Website: [abap34.com](https://abap34.com)
 - 抽象解釈による型解析を備えたインタプリタ: [[abap34/mu]](https://github.com/abap34/mu)
 - call/cc, TCO などが実装された Scheme インタプリタ: [[abap34/eta]](https://github.com/abap34/eta)
 - 拡張 Markdown パーサ [[abap34/almo]](https://github.com/abap34/almo)
--  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) (traP 冬ハッカソン 2024 技術賞) [[blog]](https://trap.jp/post/2478/)
+-  LK にもとづく定理証明支援系 [[lapisla-prover/lapisla-prover]](https://github.com/lapisla-prover/lapisla-prover) [[blog]](https://trap.jp/post/2478/) (traP 冬ハッカソン 2024 技術賞)
 -  Julia の次世代 Language Server [[aviatesk/JETLS.jl]](https://github.com/aviatesk/JETLS.jl) [[GSoC 2025]](https://summerofcode.withgoogle.com/archive/2025/projects/9PZY6C2m) [[PPL 2025]](https://jssst-ppl.org/workshop/2026/program.html)
 - libuv などを使わない自作 JS Runtime [[abap34/KoBun]](https://github.com/abap34/KoBun)
 
